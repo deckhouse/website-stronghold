@@ -1,0 +1,88 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: nginx-config
+  annotations:
+    werf.io/weight: "1"
+data:
+  nginx.conf: |-
+    worker_processes auto;
+
+    error_log /dev/stderr warn;
+    pid       /tmp/nginx.pid;
+
+    events {
+      worker_connections 1024;
+      multi_accept on;
+    }
+
+    http {
+      include               /etc/nginx/mime.types;
+      default_type          application/octet-stream;
+
+      client_body_temp_path /tmp/client_temp;
+      proxy_temp_path       /tmp/proxy_temp;
+      fastcgi_temp_path     /tmp/fastcgi_temp;
+      uwsgi_temp_path       /tmp/uwsgi_temp;
+      scgi_temp_path        /tmp/scgi_temp;
+
+
+      access_log off;
+
+      log_format json_combined escape=json '{ "time_local": "$time_local", '
+        '"host": "$host", '
+        '"remote_addr": "$remote_addr", '
+        '"remote_user": "$remote_user", '
+        '"request": "$request", '
+        '"status": "$status", '
+        '"body_bytes_sent": "$body_bytes_sent", '
+        '"request_time": "$request_time", '
+        '"http_referrer": "$http_referer", '
+        '"http_user_agent": "$http_user_agent" }';
+
+      keepalive_timeout  65;
+
+      ssi off;
+      gzip off;
+      port_in_redirect off;
+      absolute_redirect off;
+
+      map $host $lang {
+          hostnames;
+          "deckhouse.ru"   "ru";
+          "*.deckhouse.ru"   "ru";
+          # for test environments
+          "deckhouse-ru.*" "ru";
+          default       "en";
+      }
+
+      server {
+        listen   8080;
+        server_name _;
+
+        root   /app;
+        index  index.html readme.html;
+        error_page 403 404 /$lang/documentation/404/;
+
+        charset utf-8;
+        access_log     /dev/stdout json_combined;
+
+        location /link_test_report.txt {
+            deny all;
+        }
+
+        location = /healthz {
+            access_log  off;
+            add_header Content-Type text/plain;
+            return 200;
+        }
+
+        location ~* ^/products/{{ .Values.productCode }}/(?<path>(documentation|guides|modules|gs|reference)/.*)$  {
+            try_files /$lang/$path /$lang/$path/index.html /$lang/$path/ $path $path/index.html $path/ =404;
+        }
+
+        location / {
+            try_files /$lang/$uri /$lang/$uri/index.html /$lang/$uri/ $uri $uri/index.html $uri/ =404;
+        }
+      }
+    }

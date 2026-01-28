@@ -1,0 +1,27 @@
+configVersion: 1
+project: deckhouse-web-stronghold
+---
+
+image: web-artifacts
+fromImage: hugomods/hugo:debian-ci-0.150.1
+final: false
+shell:
+  setup:
+  - hugo -s /src -d /out --minify --enableGitInfo=false
+git:
+- add: /
+  to: /src
+  includePaths:
+    - config/
+    - content
+    - go.*
+  stageDependencies:
+    setup: ['**/*']
+---
+image: web
+fromImage: nginx:1.29.3-alpine
+import:
+- image: web-artifacts
+  add: /out
+  to: /app
+  before: setup

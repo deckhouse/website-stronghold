@@ -1,0 +1,97 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  annotations:
+    "werf.io/replicas-on-creation": "1"
+    "pod-reloader.deckhouse.io/auto": "true"
+    "werf.io/weight": "2"
+  labels:
+    service: frontend
+    app.kubernetes.io/part-of: deckhouse-web-{{ .Values.productCode }}
+spec:
+  minReadySeconds: 5
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      service: frontend
+  template:
+    metadata:
+      labels:
+        service: frontend
+    spec:
+      imagePullSecrets:
+        - name: deckhouse-registry-site
+      priorityClassName: {{ pluck .Values.werf.env .Values.priorityClassName | first | default .Values.priorityClassName._default }}
+      containers:
+        - name: web
+          image: {{ index .Values.werf.image "web" }}
+          command: ["nginx", "-g", "daemon off;"]
+          {{- include "resources" . | nindent 10 }}
+          ports:
+          - containerPort: 8080
+            name: http
+            protocol: TCP
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/usr/sbin/nginx", "-s", "quit"]
+          startupProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            {{- include "startup_probe" . | indent 12 }}
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            {{- include "liveness_probe" . | indent 12 }}
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            {{- include "readiness_probe" . | indent 12 }}
+          volumeMounts:
+            - name: nginx-config
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+      volumes:
+        - name: nginx-config
+          configMap:
+            name: nginx-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+spec:
+  clusterIP: None
+  selector:
+    service: frontend
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 8080
+---
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: frontend
+spec:
+  targetRef:
+    apiVersion: "apps/v1"
+    kind: Deployment
+    name: frontend
+  updatePolicy:
+    updateMode: "Auto"
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: frontend
+spec:
+  maxUnavailable: 1
+  selector:
+    matchLabels:
+      service: frontend

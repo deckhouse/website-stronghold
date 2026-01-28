@@ -1,0 +1,142 @@
+# WF for deploying to production
+
+name: Deploy to production
+
+on:
+  pull_request:
+    types:
+      - closed
+
+# Cancel in-progress jobs for the same tag/branch.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: "regular"
+    if: >
+      github.event.pull_request.merged == true &&
+      github.event.pull_request.base.ref == 'main' &&
+      startsWith(github.repository, 'deckhouse/')
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.merge_commit_sha || github.sha }}
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Set environment
+        id: env
+        run: |
+          echo "env=production" >> $GITHUB_OUTPUT
+
+      - name: Import secrets
+        id: secrets
+        uses: hashicorp/vault-action@v2
+        with:
+          url: https://seguro.flant.com
+          path: github
+          role: deckhouse-web-products
+          method: jwt
+          jwtGithubAudience: github-access-aud
+          secrets: |
+            projects/data/6db2f1ee-9b6f-4f4f-8381-2fb43060478a/github/registry_host DECKHOUSE_REGISTRY_HOST | DECKHOUSE_REGISTRY_HOST ;
+            projects/data/6db2f1ee-9b6f-4f4f-8381-2fb43060478a/github/registry_host DECKHOUSE_DEV_REGISTRY_HOST | DECKHOUSE_DEV_REGISTRY_HOST ;
+            projects/data/101ceaca-97cd-462f-aed5-070d9b9de175/dev-registry/writetoken login | DECKHOUSE_DEV_REGISTRY_USER ;
+            projects/data/101ceaca-97cd-462f-aed5-070d9b9de175/dev-registry/writetoken password | DECKHOUSE_DEV_REGISTRY_PASSWORD ;
+            projects/data/101ceaca-97cd-462f-aed5-070d9b9de175/registry-write/demotoken login | DECKHOUSE_REGISTRY_USER ;
+            projects/data/101ceaca-97cd-462f-aed5-070d9b9de175/registry-write/demotoken password | DECKHOUSE_REGISTRY_PASSWORD ;
+            projects/data/6db2f1ee-9b6f-4f4f-8381-2fb43060478a/github/registry_host DECKHOUSE_REGISTRY_READ_HOST | DECKHOUSE_REGISTRY_READ_HOST ;
+            projects/data/6db2f1ee-9b6f-4f4f-8381-2fb43060478a/github/registry_read_token login | DECKHOUSE_REGISTRY_READ_USER ;
+            projects/data/6db2f1ee-9b6f-4f4f-8381-2fb43060478a/github/registry_read_token password | DECKHOUSE_REGISTRY_READ_PASSWORD ;
+            projects/data/6db2f1ee-9b6f-4f4f-8381-2fb43060478a/github/documentation_deploy_secret KUBECONFIG_BASE64_PROD_25 | KUBECONFIG_BASE64_PROD ;
+
+      - name: Check dev registry credentials
+        id: check_dev_registry
+        env:
+          HOST: ${{steps.secrets.outputs.DECKHOUSE_DEV_REGISTRY_HOST}}
+        run: |
+          if [[ -n $HOST ]]; then
+            echo "has_credentials=true" >> $GITHUB_OUTPUT
+            echo "web_registry_path=${{steps.secrets.outputs.DECKHOUSE_DEV_REGISTRY_HOST }}/deckhouse/site" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Login to dev registry
+        uses: docker/login-action@v3
+        if: ${{ steps.check_dev_registry.outputs.has_credentials == 'true' }}
+        with:
+          registry: ${{ steps.secrets.outputs.DECKHOUSE_DEV_REGISTRY_HOST }}
+          username: ${{ steps.secrets.outputs.DECKHOUSE_DEV_REGISTRY_USER }}
+          password: ${{ steps.secrets.outputs.DECKHOUSE_DEV_REGISTRY_PASSWORD }}
+          logout: false
+
+      - name: Check rw registry credentials
+        id: check_rw_registry
+        env:
+          HOST: ${{steps.secrets.outputs.DECKHOUSE_REGISTRY_HOST}}
+        run: |
+          if [[ -n $HOST ]]; then
+            echo "has_credentials=true" >> $GITHUB_OUTPUT
+            echo "web_registry_path=${{steps.secrets.outputs.DECKHOUSE_REGISTRY_HOST }}/deckhouse/site" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Login to rw registry
+        uses: docker/login-action@v3
+        if: ${{ steps.check_rw_registry.outputs.has_credentials == 'true' }}
+        with:
+          registry: ${{ steps.secrets.outputs.DECKHOUSE_REGISTRY_HOST }}
+          username: ${{ steps.secrets.outputs.DECKHOUSE_REGISTRY_USER }}
+          password: ${{ steps.secrets.outputs.DECKHOUSE_REGISTRY_PASSWORD }}
+          logout: false
+
+      - name: Check readonly registry credentials
+        id: check_readonly_registry
+        env:
+          HOST: ${{ steps.secrets.outputs.DECKHOUSE_REGISTRY_READ_HOST }}
+        run: |
+          if [[ -n $HOST ]]; then
+            echo "has_credentials=true" >> $GITHUB_OUTPUT
+            echo "web_registry_path=${{ steps.secrets.outputs.DECKHOUSE_REGISTRY_READ_HOST }}/deckhouse/site" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Login to readonly registry
+        uses: docker/login-action@v3
+        if: ${{ steps.check_readonly_registry.outputs.has_credentials == 'true' }}
+        with:
+          registry: ${{ steps.secrets.outputs.DECKHOUSE_REGISTRY_READ_HOST }}
+          username: ${{ steps.secrets.outputs.DECKHOUSE_REGISTRY_READ_USER }}
+          password: ${{ steps.secrets.outputs.DECKHOUSE_REGISTRY_READ_PASSWORD }}
+          logout: false
+
+      - name: Build
+        id: build
+        uses: werf/actions/build@v2
+        with:
+          channel: beta
+          kube-config-base64-data: ${{ steps.secrets.outputs.KUBECONFIG_BASE64_PROD }}
+        env:
+          WERF_VIRTUAL_MERGE: 0
+          WERF_ENV: ${{ steps.env.outputs.env }}
+          WERF_REPO: ${{ steps.check_rw_registry.outputs.web_registry_path }}
+          WERF_SECONDARY_REPO: ${{ steps.check_dev_registry.outputs.web_registry_path }}
+          WERF_SET_URL: "global.url=deckhouse.io"
+          WERF_SET_URL_RU: "global.url_ru=deckhouse.ru"
+
+      - name: Deploy to ${{ steps.env.outputs.env }}
+        id: deploy
+        uses: werf/actions/converge@v2
+        with:
+          channel: beta
+          kube-config-base64-data: ${{ steps.secrets.outputs.KUBECONFIG_BASE64_PROD }}
+        env:
+          WERF_ENV: ${{ steps.env.outputs.env }}
+          WERF_VIRTUAL_MERGE: 0
+          WERF_REPO: ${{ steps.check_readonly_registry.outputs.web_registry_path }}
+          WERF_SET_URL: "global.url=deckhouse.io"
+          WERF_SET_URL_RU: "global.url_ru=deckhouse.ru"

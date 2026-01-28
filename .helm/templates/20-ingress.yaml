@@ -1,0 +1,50 @@
+{{- $hostEn := .Values.global.url }}
+{{- $hostRu := .Values.global.url_ru }}
+{{- $hosts := list -}}
+{{- $hosts = append $hosts (dict "Lang" "en" "URL" $hostEn) -}}
+{{- $hosts = append $hosts (dict "Lang" "ru" "URL" $hostRu) -}}
+
+{{- range $hosts }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: main-{{ .Lang }}
+  annotations:
+    nginx.ingress.kubernetes.io/from-to-www-redirect: "true"
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-origin: '*'
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      proxy_set_header X-Original-URI         $request_uri;
+      ssi on;
+      ssi_silent_errors on;
+{{- if ne $.Values.werf.env "production" }}
+    nginx.ingress.kubernetes.io/auth-signin: https://$host/dex-authenticator/sign_in
+    nginx.ingress.kubernetes.io/auth-url: https://deckhouse-web-{{ .Lang }}-dex-authenticator.deckhouse-web-{{ $.Values.werf.env }}.svc.cluster.local/dex-authenticator/auth
+    nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-User,X-Auth-Request-Email
+{{- end }}
+spec:
+  ingressClassName: {{ pluck $.Values.werf.env $.Values.ingressClass | first | default $.Values.ingressClass._default | quote }}
+  tls:
+  - hosts:
+      - {{ .URL }}
+{{- if eq $.Values.werf.env "production" }}
+      - www.{{ .URL }}
+{{- end }}
+{{- if eq $.Values.werf.env "production" }}
+    secretName: star-{{ .URL | replace "." "-" }}
+{{- else }}
+    secretName: {{ pluck $.Values.werf.env $.Values.wildCertificateSecret | first | default $.Values.wildCertificateSecret._default }}
+{{- end }}
+  rules:
+  - host: {{ .URL }}
+    http:
+      paths:
+      - path: /products/{{ $.Values.productCode }}/documentation
+        pathType: Prefix
+        backend:
+          service:
+            name: frontend
+            port:
+              name: http
+---
+{{ end -}}

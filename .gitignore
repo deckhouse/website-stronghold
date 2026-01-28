@@ -1,0 +1,41 @@
+# Binaries for programs and plugins
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Test binary, build with `go test -c`
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+.env
+# Project-local glide cache, RE: https://github.com/Masterminds/glide/issues/736
+.glide/
+
+# vim
+*.swp
+
+# IDE
+.project
+.settings
+.idea/
+.vscode
+__debug_bin*
+venv/
+out/
+
+# local development deckhouse binary
+/deckhouse/deckhouse
+
+# macOS Finder files
+*.DS_Store
+._*
+
+# Dev environment
+bin/
+include/
+
+# HuGo public directory and lock file
+public
+.hugo_build.lock

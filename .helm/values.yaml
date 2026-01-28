@@ -1,0 +1,24 @@
+# This is a <PART> of URL in the template /products/<PART>/
+productCode: stronghold
+
+priorityClassName:
+  _default: develop
+  production: production-medium
+  web-production: production-medium
+
+ingressClass:
+  _default: nginx
+
+certificateClusterIssuer:
+  _default: letsencrypt
+  production: letsencrypt-nginx
+
+wildCertificateSecret:
+  _default: wildcard-test-flant-dev
+  web-stage: wildcard-stage-flant-dev
+
+resources:
+  requests:
+    memory:
+      _default: 32M
+      web-production: 150M

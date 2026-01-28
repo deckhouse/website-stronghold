@@ -1,0 +1,6 @@
+.github/            @z9r5
+.helm/              @z9r5
+.werf/              @z9r5
+config/             @z9r5
+go.*                @z9r5
+werf.*              @z9r5

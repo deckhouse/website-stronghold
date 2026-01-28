@@ -1,0 +1,25 @@
+name: Lint Markdown
+
+on:
+  push:
+
+jobs:
+  lint-markdown:
+    runs-on: ubuntu-latest
+    name: Lint Markdown Files
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run markdownlint
+        run: make lint-markdown
+
+      - name: How to fix linting errors
+        if: failure()
+        run: |
+          echo "::error::Markdown linting failed!"
+          echo "To fix the errors automatically, run:"
+          echo "  make lint-markdown-fix"
+          echo ""
+          echo "Or fix them manually according to the errors shown above."
+

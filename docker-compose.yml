@@ -1,0 +1,22 @@
+services:
+  frontend:
+    image: nginx:latest
+    volumes:
+      - ".werf/nginx-local.conf:/etc/nginx/nginx.conf:ro"
+    ports:
+      - "80:80"
+    depends_on:
+      - hugo
+
+  hugo:
+    image: hugomods/hugo:debian-ci-0.150.1
+    user: "${UID:-1000}:${GID:-1000}"
+    environment:
+      - HUGO_ENABLEGITINFO=false
+    command: server --renderToMemory --printPathWarnings --printI18nWarnings --bind=0.0.0.0 -p 1313 --liveReloadPort 80 --noBuildLock --enableGitInfo=false
+    ports:
+      - "1313:1313"
+      - "1314:1314"
+    volumes:
+      - "./:/src"
+      #- "../hugo-web-product-module/:/hugo-web-product-module:ro"
