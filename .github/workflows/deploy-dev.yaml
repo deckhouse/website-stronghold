@@ -104,8 +104,8 @@ jobs:
         with:
           channel: beta
           kube-config-base64-data: ${{ steps.secrets.outputs.KUBECONFIG_BASE64_DEV }}
+          env: ${{ steps.env.outputs.env }}
         env:
-          WERF_ENV: ${{ steps.env.outputs.env }}
           WERF_REPO: ${{ steps.check_dev_registry.outputs.web_registry_path }}
           WERF_SET_URL: "global.url=deckhouse.${{ steps.env.outputs.env }}.flant.dev"
           WERF_SET_URL_RU: "global.url_ru=deckhouse-ru.${{ steps.env.outputs.env }}.flant.dev"
