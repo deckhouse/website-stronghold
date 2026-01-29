@@ -120,9 +120,9 @@ jobs:
         with:
           channel: beta
           kube-config-base64-data: ${{ steps.secrets.outputs.KUBECONFIG_BASE64_PROD }}
+          env: ${{ steps.env.outputs.env }}
         env:
           WERF_VIRTUAL_MERGE: 0
-          WERF_ENV: ${{ steps.env.outputs.env }}
           WERF_REPO: ${{ steps.check_rw_registry.outputs.web_registry_path }}
           WERF_SECONDARY_REPO: ${{ steps.check_dev_registry.outputs.web_registry_path }}
           WERF_SET_URL: "global.url=deckhouse.io"
@@ -134,8 +134,8 @@ jobs:
         with:
           channel: beta
           kube-config-base64-data: ${{ steps.secrets.outputs.KUBECONFIG_BASE64_PROD }}
+          env: ${{ steps.env.outputs.env }}
         env:
-          WERF_ENV: ${{ steps.env.outputs.env }}
           WERF_VIRTUAL_MERGE: 0
           WERF_REPO: ${{ steps.check_readonly_registry.outputs.web_registry_path }}
           WERF_SET_URL: "global.url=deckhouse.io"
