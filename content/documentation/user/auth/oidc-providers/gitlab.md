@@ -1,0 +1,11 @@
+---
+title: "Gitlab"
+weight: 20
+---
+
+## Gitlab
+
+1. Visit Settings > Applications.
+1. Fill out Name and Redirect URIs.
+1. Making sure to select the "openid" scope.
+1. Copy client ID and secret.
