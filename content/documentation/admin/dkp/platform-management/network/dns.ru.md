@@ -1,6 +1,5 @@
 ---
 title: "Настройка DNS"
-linkTitle: "Настройка DNS"
 weight: 40
 url: /documentation/admin/platform-management/network/dns/
 ---

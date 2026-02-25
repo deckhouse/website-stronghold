@@ -1,6 +1,5 @@
 ---
 title: "Обзор"
-linkTitle: "Обзор"
 weight: 10
 ---
 

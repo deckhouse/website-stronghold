@@ -1,6 +1,5 @@
 ---
 title: "Конфигурация групп узлов"
-linkTitle: "Конфигурация групп узлов"
 weight: 30
 url: /documentation/admin/platform-management/node-management/configuration/
 ---
