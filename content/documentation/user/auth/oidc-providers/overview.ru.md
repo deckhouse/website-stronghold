@@ -1,5 +1,6 @@
 ---
-title: "Обзор"
+title: "Конфигурация провайдера OIDC"
+linkTitle: "Обзор"
 weight: 10
 ---
 

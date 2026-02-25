@@ -1,5 +1,6 @@
 ---
-title: "OIDC"
+title: "OIDC method"
+linkTitle: "OIDC"
 weight: 20
 ---
 

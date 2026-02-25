@@ -1,5 +1,6 @@
 ---
-title: "JWT"
+title: "JWT method"
+linkTitle: "JWT"
 weight: 30
 ---
 

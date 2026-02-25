@@ -1,5 +1,6 @@
 ---
-title: "Overview"
+title: "OIDC provider configuration"
+linkTitle: "Overview"
 weight: 10
 ---
 

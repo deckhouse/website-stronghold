@@ -1,5 +1,6 @@
 ---
-title: "Kubernetes"
+title: "Kubernetes auth method"
+linkTitle: "Kubernetes"
 weight: 80
 ---
 

@@ -1,5 +1,6 @@
 ---
 title: "Userpass method"
+linkTitle: "Userpass"
 weight: 50
 ---
 

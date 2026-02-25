@@ -1,5 +1,6 @@
 ---
-title: "Keycloak"
+title: "OIDC провайдер Keycloak"
+linkTitle: "Keycloak"
 weight: 30
 ---
 

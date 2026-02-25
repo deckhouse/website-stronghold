@@ -1,5 +1,6 @@
 ---
-title: "Kubernetes"
+title: "Метод аутентификации Kubernetes"
+linkTitle: "Kubernetes"
 weight: 80
 ---
 

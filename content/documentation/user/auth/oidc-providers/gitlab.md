@@ -1,5 +1,6 @@
 ---
-title: "Gitlab"
+title: "GitLab OIDC provider"
+linkTitle: "Gitlab"
 weight: 20
 ---
 

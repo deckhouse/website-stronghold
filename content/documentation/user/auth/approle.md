@@ -1,5 +1,6 @@
 ---
-title: "Approle"
+title: "AppRole method"
+linkTitle: "Approle"
 weight: 40
 ---
 

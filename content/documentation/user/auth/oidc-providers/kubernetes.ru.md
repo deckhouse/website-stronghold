@@ -1,5 +1,6 @@
 ---
-title: "Kubernetes"
+title: "Kubernetes как провайдер OIDC"
+linkTitle: "Kubernetes"
 weight: 40
 ---
 

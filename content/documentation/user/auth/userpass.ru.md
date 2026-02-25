@@ -1,5 +1,6 @@
 ---
-title: "Userpass"
+title: "Метод Userpass"
+linkTitle: "Userpass"
 weight: 50
 ---
 

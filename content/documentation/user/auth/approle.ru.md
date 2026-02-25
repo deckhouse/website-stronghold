@@ -1,5 +1,6 @@
 ---
-title: "Approle"
+title: "Метод Approle"
+linkTitle: "Approle"
 weight: 40
 ---
 
