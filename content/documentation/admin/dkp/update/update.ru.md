@@ -98,7 +98,7 @@ d8 k get deckhouserelease
 d8 k get modulereleases
 ```
 
-{{% details "Схема использования параметра releaseChannel при установке и в процессе работы платформы" %}}
+{{% details summary="Схема использования параметра releaseChannel при установке и в процессе работы платформы" %}}
 ![Схема использования параметра releaseChannel при установке и в процессе работы платформы](/images/common/deckhouse-update-process.png)
 {{% /details %}}
 

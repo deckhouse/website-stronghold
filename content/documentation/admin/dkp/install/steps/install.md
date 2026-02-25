@@ -28,7 +28,7 @@ The YAML installation configuration file includes parameters for several resourc
 
 <!-- TODO: fix the manifests -->
 
-{{% details "Example Installation Configuration File..." %}}
+{{% details summary="Example Installation Configuration File..." %}}
 
 ```yaml
 apiVersion: deckhouse.io/v1
@@ -122,7 +122,7 @@ An optional YAML file of installation resources contains Kubernetes resource man
 
 **Attention!** You cannot use ModuleConfig for **built-in** modules in the installation resources file. Use the [configuration file](#installation-configuration-file) for configuring built-in modules.
 
-{{% details "Example Installation Resources File..." %}}
+{{% details summary="Example Installation Resources File..." %}}
 
 ```yaml
 ---
@@ -265,7 +265,7 @@ After a successful platform installation, the installer can run a script on one 
 
 You can specify a post-bootstrap script with the `--post-bootstrap-script-path` parameter during the installation run (see below).
 
-{{% details "Example of a Script Displaying the Load Balancer's IP Address..." %}}
+{{% details summary="Example of a Script Displaying the Load Balancer's IP Address..." %}}
 Example of a script that displays the load balancer's IP address after the cluster deployment in the cloud and the platform installation:
 
 ```shell

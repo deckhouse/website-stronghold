@@ -42,7 +42,7 @@ url: /documentation/admin/platform-management/node-management/configuration/
 Переменные, которые доступны для использования в шаблонизаторе:
 <ul>
 <li><code>.cloudProvider</code> (для групп узлов с nodeType <code>CloudEphemeral</code> или <code>CloudPermanent</code>) — массив данных облачного провайдера.
-{{% details "Пример данных..." %}}
+{{% details summary="Пример данных..." %}}
 ```yaml
 cloudProvider:
   instanceClassKind: OpenStackInstanceClass
@@ -75,7 +75,7 @@ cloudProvider:
 <li><code>.cri</code> — используемый CRI (с версии Deckhouse 1.49 используется только <code>Containerd</code>).</li>
 <li><code>.kubernetesVersion</code> — используемая версия Kubernetes.</li>
 <li><code>.nodeUsers</code> — массив данных о пользователях узла, добавленных через ресурс <a href="/modules/node-manager/cr.html#nodeuser">NodeUser</a>.
-{{% details "Пример данных..." %}}
+{{% details summary="Пример данных..." %}}
 ```yaml
 nodeUsers:
 - name: user1
@@ -90,7 +90,7 @@ nodeUsers:
 {{% /details %}}
 </li>
 <li><code>.nodeGroup</code> — массив данных группы узлов.
-{{% details "Пример данных..." %}}
+{{% details summary="Пример данных..." %}}
 ```yaml
 nodeGroup:
   cri:
