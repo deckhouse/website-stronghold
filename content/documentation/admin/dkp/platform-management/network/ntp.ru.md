@@ -1,5 +1,5 @@
 ---
-title: "Управление NTP"
+title: "Настройка NTP"
 linkTitle: "Настройка NTP"
 weight: 50
 url: /documentation/admin/platform-management/network/ntp/

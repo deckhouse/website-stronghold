@@ -1,5 +1,5 @@
 ---
-title: "Механизм секретов KV"
+title: "Обзор"
 linkTitle: "Обзор"
 weight: 10
 ---

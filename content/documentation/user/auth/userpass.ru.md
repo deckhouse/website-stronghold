@@ -1,5 +1,5 @@
 ---
-title: "Метод Userpass"
+title: "Userpass"
 weight: 50
 ---
 
