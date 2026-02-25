@@ -1,5 +1,6 @@
 ---
 title: "Deckhouse Stronghold administrator guide"
+linkTitle: "Introduction"
 weight: 10
 ---
 

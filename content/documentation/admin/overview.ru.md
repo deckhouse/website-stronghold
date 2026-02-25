@@ -1,5 +1,6 @@
 ---
 title: "Руководство администратора Deckhouse Stronghold"
+linkTitle: "Введение"
 weight: 10
 ---
 

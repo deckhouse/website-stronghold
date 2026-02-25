@@ -1,5 +1,6 @@
 ---
 title: "Deckhouse Stronghold documentation"
+linkTitle: "Introduction"
 weight: 10
 params:
   no_list: true

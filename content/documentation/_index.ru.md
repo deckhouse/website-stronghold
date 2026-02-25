@@ -1,5 +1,6 @@
 ---
 title: "Документация Deckhouse Stronghold"
+linkTitle: "Введение"
 description: Документация продукта Deckhouse Stronghold
 weight: 10
 params:

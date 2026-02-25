@@ -1,5 +1,6 @@
 ---
 title: "Механизм секретов KV"
+linkTitle: "Обзор"
 weight: 10
 ---
 

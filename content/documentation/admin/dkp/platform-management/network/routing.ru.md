@@ -1,5 +1,6 @@
 ---
 title: "Управление маршрутизацией"
+linkTitle: "Настройка маршрутизации"
 weight: 30
 url: /documentation/admin/platform-management/network/routing/
 ---
