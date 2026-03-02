@@ -48,7 +48,7 @@ jobs:
           find ./public/en ./public/ru -type f -name "*.html" -exec sed -i "s|/products/${APP_NAME}/|/|g" {} +
 
       - name: Upload site artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: built-site
           path: public/
