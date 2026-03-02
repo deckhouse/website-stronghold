@@ -121,6 +121,7 @@ the literal value that matches `userattr` should be present in the filter to
 ensure that the search returns a unique result that takes `userattr` into
 consideration for entity alias mapping purposes and avoid possible collisions on login.
 {{< /alert >}}
+
 #### Binding - anonymous search
 
 - `discoverdn` (bool, optional) - If true, use anonymous bind to discover the bind DN of a user
@@ -136,6 +137,7 @@ the literal value that matches `userattr` should be present in the filter to
 ensure that the search returns a unique result that takes `userattr` into
 consideration for entity alias mapping purposes and avoid possible collisions on login.
 {{< /alert >}}
+
 #### Alias dereferencing
 
 - `dereference_aliases` (string, optional) - Control how aliases are dereferenced when performing the search. Possible values are: `never`, `finding`, `searching`, and `always`. `finding` will only dereference aliases during name resolution of the base. `searching` will dereference aliases after name resolution.

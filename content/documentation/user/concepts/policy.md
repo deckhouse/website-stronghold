@@ -153,6 +153,7 @@ In addition to the standard set, there are some capabilities that do not map to 
 {{< alert level="info" >}}
 Capabilities usually map to the HTTP verb, and not the underlying action taken. This can be a common source of confusion. Generating database credentials creates database credentials, but the HTTP request is a GET which corresponds to a `read` capability. Thus, to grant access to generate database credentials, the policy would grant read access on the appropriate path.
 {{< /alert >}}
+
 ## Templated policies
 
 The policy syntax allows for doing variable replacement in some policy strings with values available to the token. Currently identity information can be injected, and currently the path keys in policies allow injection.
@@ -364,6 +365,7 @@ path "secret/foo" {
 {{< alert level="info" >}}
 The only value that can be used with the `*` parameter is `[]`.
 {{< /alert >}}
+
 #### Default values
 
 Evaluation of policies with `allowed_parameters`, `denied_parameters`, and `required_parameters` happens without consideration of parameters' default values.

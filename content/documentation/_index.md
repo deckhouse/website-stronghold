@@ -26,5 +26,3 @@ We will do our best to help you.
 
 If you are an Enterprise Edition user, reach out via <a href="mailto:support@deckhouse.io">support@deckhouse.io</a>.
 We will be glad to provide assistance.
-
-
