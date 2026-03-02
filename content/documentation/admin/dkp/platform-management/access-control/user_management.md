@@ -96,7 +96,7 @@ create a configuration file:
 
 To configure an external provider, use the DexProvider resource.
 
-### GitHub
+### GitHub {#github}
 
 Example of a manifest for configuring a provider to integrate with GitHub:
 
@@ -129,7 +129,7 @@ If the GitHub organization is managed by a client, do the following:
 
 Once you go through these steps, your application will be ready for use as an authentication provider via GitHub.
 
-### GitLab
+### GitLab {#gitlab}
 
 Example of a manifest for configuring a provider to integrate with GitLab:
 
@@ -178,7 +178,7 @@ For GitLab 16.0 or newer:
     Trusted applications are automatically authorized on GitLab OAuth flow.
 1. Use `Application ID` and `Secret` that you receive in the custom `DexProvider` resource.
 
-### Atlassian Crowd
+### Atlassian Crowd {#atlassian-crowd}
 
 Example of a manifest for configuring a provider to integrate with Atlassian Crowd:
 
@@ -206,7 +206,7 @@ To create a generic application in Atlassian Crowd, follow these steps:
 1. Use `Application Name` and `Password` that you receive in the [DexProvider](/modules/user-authn/cr.html#dexprovider) resource.
 1. Specify CROWD groups in lowercase for the `DexProvider` resource.
 
-### Bitbucket Cloud
+### Bitbucket Cloud {#bitbucket-cloud}
 
 Example of a manifest for configuring a provider to integrate with Bitbucket:
 
@@ -234,7 +234,7 @@ To set up authentication in Bitbucket, follow these steps:
 1. Allow access for `Account: Read` and `Workspace membership: Read`.
 1. Specify `Key` and `Secret` that you receive in the custom `DexProvider` resource.
 
-### LDAP
+### LDAP {#ldap}
 
 Example of a manifest for configuring a provider to integrate with Active Directory:
 
@@ -279,7 +279,7 @@ To set up authentication in LDAP, follow these steps:
 1. If LDAP has anonymous read access configured, these settings can be skipped.
 1. In the `bindPW` parameter, specify the password in plain text. Hashed password can't be used.
 
-### OIDC (OpenID Connect)
+### OIDC (OpenID Connect) {#oidc-openid-connect}
 
 Authentication via an OIDC provider requires registering a client or creating an application.
 To do this, follow a guide from a respective provider: [Okta](https://help.okta.com/en-us/Content/Topics/Apps/Apps_App_Integration_Wizard_OIDC.htm), [Keycloak](https://www.keycloak.org/docs/latest/server_admin/index.html#proc-creating-oidc-client_server_administration_guide), [Gluu](https://gluu.org/docs/gluu-server/4.4/admin-guide/openid-connect/#manual-client-registration), or [Blitz](https://docs.identityblitz.com/latest/integration-guide/oidc-app-enrollment.html).

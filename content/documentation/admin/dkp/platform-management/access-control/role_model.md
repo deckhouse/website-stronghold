@@ -15,7 +15,7 @@ There are two types of roles:
 Platform permissions are configured using the standard Kubernetes RBAC approach.
 This involves creating `RoleBinding` or `ClusterRoleBinding` resources to assign the appropriate role.
 
-### Use roles
+### Use roles {#use-roles}
 
 Use roles grant permissions to a user **within a specified project** and define access to project resources.
 These roles can only be used with a `RoleBinding` resource.
@@ -67,7 +67,7 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
 ```
 
-### Manage roles
+### Manage roles {#manage-roles}
 
 Manage roles grant permissions to manage the following:
 

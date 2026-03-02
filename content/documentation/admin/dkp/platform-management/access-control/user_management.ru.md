@@ -90,7 +90,7 @@ spec:
 
 Для настройки внешних провайдеров используется ресурс DexProvider.
 
-### GitHub
+### GitHub {#github}
 
 В примере представлены настройки провайдера для интеграции с GitHub:
 
@@ -123,7 +123,7 @@ spec:
 
 После выполнения этих шагов ваше приложение будет готово для использования в качестве провайдера аутентификации через GitHub.
 
-### GitLab
+### GitLab {#gitlab}
 
 В примере представлены настройки провайдера для интеграции с GitLab.
 
@@ -173,7 +173,7 @@ spec:
 
 1. Полученные `Application ID` и `Secret` укажите в кастомном ресурсе `DexProvider`.
 
-### Atlassian Crowd
+### Atlassian Crowd {#atlassian-crowd}
 
 В примере представлены настройки провайдера для интеграции с Atlassian Crowd.
 
@@ -201,7 +201,7 @@ spec:
 1. Полученные `Application Name` и `Password` укажите в ресурсе DexProvider.
 1. Группы CROWD укажите в lowercase-формате для ресурса `DexProvider`.
 
-### Bitbucket Cloud
+### Bitbucket Cloud {#bitbucket-cloud}
 
 В примере представлены настройки провайдера для интеграции с Bitbucket.
 
@@ -229,7 +229,7 @@ spec:
 1. Разрешите доступ для `Account: Read` и `Workspace membership: Read`.
 1. Полученные `Key` и `Secret` укажите в кастомном ресурсе `DexProvider`.
 
-### LDAP
+### LDAP {#ldap}
 
 В примере представлены настройки провайдера для интеграции с Active Directory:
 
@@ -274,7 +274,7 @@ spec:
 1. Если в LDAP настроен анонимный доступ на чтение, настройки можно не указывать.
 1. В параметре `bindPW` укажите пароль в plain-виде. Стратегии с передачей хешированных паролей не предусмотрены.
 
-### OIDC (OpenID Connect)
+### OIDC (OpenID Connect) {#oidc-openid-connect}
 
 Аутентификация через OIDC-провайдера требует регистрации клиента (или создания приложения). Сделайте это по документации вашего провайдера (например, [Okta](https://help.okta.com/en-us/Content/Topics/Apps/Apps_App_Integration_Wizard_OIDC.htm), [Keycloak](https://www.keycloak.org/docs/latest/server_admin/index.html#proc-creating-oidc-client_server_administration_guide), [Gluu](https://gluu.org/docs/gluu-server/4.4/admin-guide/openid-connect/#manual-client-registration) или [Blitz](https://docs.identityblitz.ru/latest/integration-guide/oidc-app-enrollment.html)).
 

@@ -8,7 +8,7 @@ url: /documentation/admin/install/steps/install/
 
 To install the platform, you need to prepare a YAML configuration file for installation and, if necessary, a YAML file for resources that need to be created after a successful installation of the platform.
 
-### Installation Configuration File
+### Installation Configuration File {#installation-configuration-file}
 
 The YAML installation configuration file includes parameters for several resources (manifests):
 
