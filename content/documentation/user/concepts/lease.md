@@ -28,7 +28,7 @@ When a token is revoked, Stronghold revokes all leases that were created using i
 
 {{< alert level="info" >}}
 The Key/Value backend, which stores arbitrary secrets, doesn't issue leases but sometimes returns a lease duration.
-For details, refer to the [`kv` secrets engine documentation](../secrets-engines/kv/overview/).
+For details, refer to the [`kv` secrets engine documentation](../../secrets-engines/kv/overview/).
 {{< /alert >}}
 
 ## Lease IDs

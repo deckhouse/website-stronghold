@@ -10,7 +10,7 @@ Each auth method has a specific use case.
 Before interacting with Stronghold, each client must _authenticate_ using one of the supported authentication methods.
 Upon successful authentication, a token is generated, which is conceptually similar to a session ID on a website.
 The token may have attached policy, which is mapped at the authentication time.
-For details on this process, refer to [Policies](policy/).
+For details on this process, refer to [Policies](../policy/).
 
 ## Authentication methods
 

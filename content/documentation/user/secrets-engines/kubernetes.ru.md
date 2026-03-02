@@ -13,7 +13,7 @@ Kubernetes Secrets Engine для Stronghold генерирует токены д
 и [Kubernetes RBAC](https://kubernetes.io/docs/reference/access-authn-authz/rbac/).
 
 {{< alert level="warning" >}}
-Мы не рекомендуем использовать токены, созданные механизмом секретов Kubernetes, для аутентификации с помощью [Kubernetes Auth Method](../auth/kubernetes/). Это приведет к созданию множества уникальных идентификаторов в Stronghold, которыми будет сложно управлять.
+Мы не рекомендуем использовать токены, созданные механизмом секретов Kubernetes, для аутентификации с помощью [Kubernetes Auth Method](../../auth/kubernetes/). Это приведет к созданию множества уникальных идентификаторов в Stronghold, которыми будет сложно управлять.
 {{< /alert >}}
 
 ## Настройка

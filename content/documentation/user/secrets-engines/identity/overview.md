@@ -28,7 +28,7 @@ controlling the access of tokens that are already issued.
 
 **NOTE:** This secrets engine will be mounted by default. This secrets engine
 cannot be disabled or moved. For more conceptual overview on identity, refer to
-the [Identity](../../concepts/identity/) documentation.
+the [Identity](../../../concepts/identity/) documentation.
 
 {{< /alert >}}
 

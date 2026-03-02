@@ -18,7 +18,7 @@ documentation.
 {{< alert level="warning" >}}
 
 **Note:** We do not recommend using tokens created by the Kubernetes Secrets Engine to
-   authenticate with the [Stronghold Kubernetes Auth Method](../auth/kubernetes/). This will
+   authenticate with the [Stronghold Kubernetes Auth Method](../../auth/kubernetes/). This will
    generate many unique identities in Stronghold that will be hard to manage.
 
 {{< /alert >}}

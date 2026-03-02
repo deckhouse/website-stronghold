@@ -150,7 +150,7 @@ the root user's credentials.
 
 | Database                                                   | Root Credential Rotation | Dynamic Roles | Static Roles | Username Customization | Credential Types |
 |------------------------------------------------------------|--------------------------|---------------|--------------|------------------------|------------------|
-| [MySQL/MariaDB](mysql/) | Yes                      | Yes           | Yes          | Yes                    | password         |
+| [MySQL/MariaDB](mysql-maria/) | Yes                      | Yes           | Yes          | Yes                    | password         |
 | [PostgreSQL](postgresql/)     | Yes                      | Yes           | Yes          | Yes                    | password         |
 
 ## Credential types

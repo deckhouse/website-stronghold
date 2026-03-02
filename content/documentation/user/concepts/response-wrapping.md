@@ -62,7 +62,7 @@ Wrapping process:
 5. The new response is returned to the client.
 
 {{< alert level="info" >}}
-The minimum and maximum TTL of wrapping tokens is controlled by [policies](policy/).
+The minimum and maximum TTL of wrapping tokens is controlled by [policies](../policy/).
 {{< /alert >}}
 
 ## Verifying a wrapping token

@@ -141,7 +141,7 @@ username           v-strongholduser-e2978cd0-ugp7iqI2hdlff5hfjylJ-1602537260
 
 | База данных                                           | Изменение Root пользователя | Динамические роли | Статические роли | Кастомизация имени пользователя  | Тип учетных данных |
 |-------------------------------------------------------|-----------------------------|-------------------|------------------|----------------------------------|--------------------|
-| [MySQL/MariaDB](mysql/)  | Yes                         | Yes               | Yes              | Yes                              | password           |
+| [MySQL/MariaDB](mysql-maria/)  | Yes                         | Yes               | Yes              | Yes                              | password           |
 | [PostgreSQL](postgresql/)      | Yes                         | Yes               | Yes              | Yes                              | password           |
 | [Clickhouse](clickhouse/)      | Yes                         | Yes               | Yes              | Yes                              | password           |
 

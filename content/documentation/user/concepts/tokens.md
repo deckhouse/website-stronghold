@@ -14,7 +14,7 @@ All external authentication mechanisms map down to dynamically created tokens.
 These tokens have all the same properties as a normal manually created token.
 
 Within Stronghold, tokens map to information.
-The most important information mapped to a token is a set of one or more attached [policies](policy/).
+The most important information mapped to a token is a set of one or more attached [policies](../policy/).
 These policies control what the token holder is allowed to do within Stronghold.
 Other mapped information includes metadata that can be viewed and is added to the audit log,
 such as creation time, last renewal time, and more.

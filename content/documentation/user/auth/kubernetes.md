@@ -164,7 +164,7 @@ table summarizes the options, each of which is explained in more detail below.
 {{< alert level="info" >}}
 
 **Note:** By default, Kubernetes currently extends the lifetime of admission
-injected service account tokens to a year to help smooth the transition to short-lived tokens. If you would like to disable this, set [--service-account-extend-token-expiration=false](https://kubernetes.io/docs/reference/command-line-tools-reference/kube-apiserver/#options) for `kube-apiserver` or specify your own `serviceAccountToken` volume mount. See [this section](oidc-providers/kubernetes/#specifying-ttl-and-audience) for an example.
+injected service account tokens to a year to help smooth the transition to short-lived tokens. If you would like to disable this, set [--service-account-extend-token-expiration=false](https://kubernetes.io/docs/reference/command-line-tools-reference/kube-apiserver/#options) for `kube-apiserver` or specify your own `serviceAccountToken` volume mount. See [this section](../oidc-providers/kubernetes/#specifying-ttl-and-audience) for an example.
 
 {{< /alert >}}
 
@@ -232,7 +232,7 @@ JWT tokens Kubernetes generates can also be verified using Kubernetes as an OIDC
 provider. The JWT auth method documentation has [instructions][k8s-jwt-auth] for
 setting up JWT auth with Kubernetes as the OIDC provider.
 
-[k8s-jwt-auth]: oidc-providers/kubernetes.html
+[k8s-jwt-auth]: ../oidc-providers/kubernetes/
 
 This solution allows you to use short-lived tokens for all clients and removes
 the need for a reviewer JWT. However, the client tokens cannot be revoked before

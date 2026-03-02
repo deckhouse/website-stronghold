@@ -5,7 +5,7 @@ weight: 20
 
 Stronghold is an OpenID Connect ([OIDC](https://openid.net/specs/openid-connect-core-1_0.html))
 identity provider. This enables client applications that speak the OIDC protocol to leverage
-Stronghold's source of [identity](../../concepts/identity/) and wide range of [authentication methods](../../concepts/auth/)
+Stronghold's source of [identity](../../../concepts/identity/) and wide range of [authentication methods](../../../concepts/auth/)
 when authenticating end-users. Client applications can configure their authentication logic
 to talk to Stronghold. Once enabled, Stronghold will act as the bridge to other identity providers via
 its existing authentication methods. Client applications can also obtain identity information
