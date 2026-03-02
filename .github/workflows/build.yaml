@@ -16,7 +16,7 @@ jobs:
       image: hugomods/hugo:debian-ci-0.150.1
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           submodules: recursive
           fetch-depth: 0
