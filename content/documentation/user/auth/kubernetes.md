@@ -20,7 +20,7 @@ Kubernetes auth.
 **Note:** If you are upgrading to Kubernetes v1.21+, ensure the config option
 `disable_iss_validation` is set to true. Assuming the default mount path, you
 can check with `d8 stronghold read -field disable_iss_validation auth/kubernetes/config`.
-See [Kubernetes 1.21](#kubernetes-1-21) below for more details.
+See [Kubernetes 1.21](#kubernetes-121) below for more details.
 
 {{< /alert >}}
 
@@ -138,9 +138,12 @@ validate the issuer by default. The Kubernetes API does the same validation when
 reviewing tokens, so enabling issuer validation on the Stronghold side is
 duplicated work. Without disabling Stronghold's issuer validation, it is not
 possible for a single Kubernetes auth configuration to work for default mounted
-pod tokens with both Kubernetes 1.20 and 1.21.. See [Discovering the service
-account `issuer`](#discovering-the-service-account-issuer) below for guidance if
+pod tokens with both Kubernetes 1.20 and 1.21.. See [Discovering the service account `issuer`](#discovering-the-service-account-issuer) below for guidance if
 you wish to enable issuer validation in Stronghold.
+
+### Discovering the service account `issuer`
+
+To find your cluster's service account issuer (e.g. for `disable_iss_validation`), see the [Kubernetes service account issuer documentation](https://kubernetes.io/docs/reference/access-authn-authz/service-accounts/#service-account-issuer).
 
 [k8s-1.21-changelog]: https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.21.md#api-change-2
 [short-lived-tokens]: #how-to-work-with-short-lived-kubernetes-tokens
@@ -201,7 +204,7 @@ d8 k create clusterrolebinding myapp-client-auth-delegator \
 
 #### Continue using long-lived tokens
 
-You can create a long-lived secret using the instructions [here][k8s-create-secret]
+You can create a long-lived secret using the [instructions for manually creating a service account token][k8s-create-secret]
 and use that as the `token_reviewer_jwt`. In this example, the `myapp` service
 account would need the `system:auth-delegator` ClusterRole:
 

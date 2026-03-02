@@ -6,7 +6,7 @@ hidden: true
 weight: 5
 ---
 
-# Auth methods
+## Auth methods
 
 Auth methods are the components in Stronghold that perform authentication and are
 responsible for assigning identity and a set of policies to a user. In all cases,

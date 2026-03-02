@@ -105,7 +105,7 @@ management tool.
 
 ### Binding parameters
 
-There are two alternate methods of resolving the user object used to authenticate the end user: _Search_ or _User Principal Name_. When using _Search_, the bind can be either anonymous or authenticated. User Principal Name is a method of specifying users supported by Active Directory. More information on UPN can be found [here](<https://msdn.microsoft.com/en-us/library/ms677605(v=vs.85).aspx#userPrincipalName>).
+There are two alternate methods of resolving the user object used to authenticate the end user: _Search_ or _User Principal Name_. When using _Search_, the bind can be either anonymous or authenticated. User Principal Name is a method of specifying users supported by Active Directory. More information on UPN can be found in the [Microsoft User Principal Name documentation](<https://msdn.microsoft.com/en-us/library/ms677605(v=vs.85).aspx#userPrincipalName>).
 
 #### Binding - authenticated search
 

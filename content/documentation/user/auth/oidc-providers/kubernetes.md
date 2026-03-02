@@ -38,8 +38,8 @@ Kubernetes cluster requirements:
 
 Configuration steps:
 
-1. Ensure OIDC discovery URLs do not require authentication, as detailed
-   [here][k8s-sa-issuer-discovery]:
+1. Ensure OIDC discovery URLs do not require authentication, as detailed in the
+   [Kubernetes service account issuer discovery documentation][k8s-sa-issuer-discovery]:
 
    ```bash
    d8 k create clusterrolebinding oidc-reviewer  \

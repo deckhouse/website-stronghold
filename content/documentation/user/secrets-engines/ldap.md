@@ -183,7 +183,7 @@ corresponds to a single LDIF statement. No de-duplication occurs and order is ma
 
 User account management is provided through LDIF entries. The LDIF entries may be a base64-encoded version of the
 LDIF string. The string will be parsed and validated to ensure that it adheres to LDIF syntax. A good reference
-for proper LDIF syntax can be found [here](https://ldap.com/ldif-the-ldap-data-interchange-format/).
+for proper LDIF syntax can be found in the [LDIF format reference](https://ldap.com/ldif-the-ldap-data-interchange-format/).
 
 Some important things to remember when crafting your LDIF entries:
 
@@ -205,7 +205,7 @@ password and enable the account.
   - The password must be enclosed in double quotes (`" "`)
   - The password must be in [`UTF16LE` format](https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-adts/6e803168-f140-4d23-b2d3-c3a8ab5917d2)
   - The password must be `base64`-encoded
-  - Additional details can be found [here](https://docs.microsoft.com/en-us/troubleshoot/windows-server/identity/set-user-password-with-ldifde)
+  - Additional details can be found in the [Microsoft guide to set user password with LDIFDE](https://docs.microsoft.com/en-us/troubleshoot/windows-server/identity/set-user-password-with-ldifde)
 
 - Once a user's password has been set, it can be enabled. AD uses the `userAccountControl` field for this purpose:
   - To enable the account, set `userAccountControl` to `512`
@@ -213,12 +213,12 @@ password and enable the account.
     `userAccountControl` value for this is: `65536`
   - `userAccountControl` flags are cumulative, so to set both of the above two flags, add up the two values
     (`512 + 65536 = 66048`): set `userAccountControl` to `66048`
-  - See [here](https://docs.microsoft.com/en-us/troubleshoot/windows-server/identity/useraccountcontrol-manipulate-account-properties#property-flag-descriptions)
+  - See [userAccountControl property flag descriptions](https://docs.microsoft.com/en-us/troubleshoot/windows-server/identity/useraccountcontrol-manipulate-account-properties#property-flag-descriptions)
     for details on `userAccountControl` flags
 
 `sAMAccountName` is a common field when working with AD users. It is used to provide compatibility with legacy
 Windows NT systems and has a limit of 20 characters. Keep this in mind when defining your `username_template`.
-See [here](https://docs.microsoft.com/en-us/windows/win32/adschema/a-samaccountname) for additional details.
+See [sAMAccountName attribute documentation](https://docs.microsoft.com/en-us/windows/win32/adschema/a-samaccountname) for additional details.
 
 Since the default `username_template` is longer than 20 characters which follows the template of `v_{{.DisplayName}}_{{.RoleName}}_{{random 10}}_{{unix_time}}`, we recommend customising the `username_template` on the role configuration to generate accounts with names less than 20 characters.
 
