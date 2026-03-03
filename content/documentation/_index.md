@@ -2,6 +2,9 @@
 title: "Deckhouse Stronghold documentation"
 linkTitle: "Introduction"
 weight: 10
+outputs:
+  - HTML
+  - search
 params:
   no_list: true
 cascade:
