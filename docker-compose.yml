@@ -5,6 +5,8 @@ services:
       - ".werf/nginx-local.conf:/etc/nginx/nginx.conf:ro"
     ports:
       - "80:80"
+    dns:
+      - 8.8.8.8
     depends_on:
       - hugo
 
@@ -19,4 +21,4 @@ services:
       - "1314:1314"
     volumes:
       - "./:/src"
-      #- "../hugo-web-product-module/:/hugo-web-product-module:ro"
+      - "../hugo-web-product-module/:/hugo-web-product-module:ro"
