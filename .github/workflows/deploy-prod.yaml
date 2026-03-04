@@ -68,7 +68,7 @@ jobs:
           fi
 
       - name: Login to dev registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         if: ${{ steps.check_dev_registry.outputs.has_credentials == 'true' }}
         with:
           registry: ${{ steps.secrets.outputs.DECKHOUSE_DEV_REGISTRY_HOST }}
@@ -87,7 +87,7 @@ jobs:
           fi
 
       - name: Login to rw registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         if: ${{ steps.check_rw_registry.outputs.has_credentials == 'true' }}
         with:
           registry: ${{ steps.secrets.outputs.DECKHOUSE_REGISTRY_HOST }}
@@ -106,7 +106,7 @@ jobs:
           fi
 
       - name: Login to readonly registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         if: ${{ steps.check_readonly_registry.outputs.has_credentials == 'true' }}
         with:
           registry: ${{ steps.secrets.outputs.DECKHOUSE_REGISTRY_READ_HOST }}
