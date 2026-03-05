@@ -90,7 +90,7 @@ jobs:
           fi
 
       - name: Login to dev registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         if: ${{ steps.check_dev_registry.outputs.has_credentials == 'true' }}
         with:
           registry: ${{ steps.secrets.outputs.DECKHOUSE_DEV_REGISTRY_HOST }}
