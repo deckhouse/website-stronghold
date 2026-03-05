@@ -9,7 +9,7 @@ jobs:
     name: Lint Markdown Files
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Run markdownlint
         run: make lint-markdown
