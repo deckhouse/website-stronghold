@@ -61,7 +61,7 @@ d8 system module enable stronghold
 
 По умолчанию, модуль запускается в режиме `Automatic` с инлетом `Ingress`. В текущей версии, другие режимы и инлеты не предусмотрены.
 
-Если установка Deckhouse Kubernetes Platform выполнена в закрытом окружении, то с помощью секции параметров [https](configuration.html#parameters-https) можно настроить использование SSL-сертификатов..
+Если установка Deckhouse Kubernetes Platform выполнена в закрытом окружении, то с помощью секции параметров [https](/modules/stronghold/configuration.html#parameters-https) можно настроить использование SSL-сертификатов..
 
 Также Deckhouse Stronghold можно включить в веб-интерфейсе администратора Deckhouse Kubernetes Platform, для этого выберите модуль stronghold, как показано на рисунке ниже:
 
