@@ -14,6 +14,7 @@ metadata:
     nginx.ingress.kubernetes.io/enable-cors: "true"
     nginx.ingress.kubernetes.io/cors-allow-origin: '*'
     nginx.ingress.kubernetes.io/configuration-snippet: |
+{{ include "redirects" . | nindent 6 }}
       proxy_set_header X-Original-URI         $request_uri;
       ssi on;
       ssi_silent_errors on;
