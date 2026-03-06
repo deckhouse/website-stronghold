@@ -3,8 +3,6 @@ title: "system"
 weight: 50
 ---
 
-{% raw %}
-
 
 ## system
 
@@ -6092,6 +6090,3 @@ weight: 50
 
 **200**: OK
 
-
-
-{% endraw %}

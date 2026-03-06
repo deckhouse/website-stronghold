@@ -3,8 +3,6 @@ title: "auth"
 weight: 20
 ---
 
-{% raw %}
-
 ## auth
 
 
@@ -3977,7 +3975,3 @@ Update user token policies
 
 
 **200**: OK
-
-
-
-{% endraw %}

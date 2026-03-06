@@ -3,8 +3,6 @@ title: "identity"
 weight: 40
 ---
 
-{% raw %}
-
 ## identity
 
 
@@ -2964,6 +2962,3 @@ Update, read or delete an alias ID.
 **204**: empty body
 
 
-
-
-{% endraw %}

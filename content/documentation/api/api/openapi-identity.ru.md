@@ -3,8 +3,6 @@ title: "identity"
 weight: 40
 ---
 
-{% raw %}
-
 ## identity
 
 
@@ -2963,6 +2961,3 @@ weight: 40
 
 **204**: пустое тело
 
-
-
-{% endraw %}
