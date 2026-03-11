@@ -29,9 +29,9 @@
     {{- if not .Params.hidden }}
     <li class="sidebar__submenu-item {{ if or (eq . $currentPage) (.IsAncestor $currentPage) }}active{{ end }}{{ if and (not .Params.external) .Pages }} sidebar__submenu-item_parent has-children{{ end }}">
         {{- $href := cond (and .Params.external .Params.url) .Params.url (cond .IsPage .RelPermalink "#") }}
-        {{- $isExternalURL := and .Params.url (hasPrefix .Params.url "http") }}
-        {{- $target := cond $isExternalURL "_blank" "" }}
-        {{- $rel := cond $isExternalURL "noopener noreferrer" "" }}
+        {{- $isExternal := and .Params.external .Params.url }}
+        {{- $target := cond $isExternal "_blank" "" }}
+        {{- $rel := cond $isExternal "noopener noreferrer" "" }}
         <a href="{{ $href }}" {{ with $target }}target="{{ . }}"{{ end }} {{ with $rel }}rel="{{ . }}"{{ end }}>
           <span class="sidebar__submenu-title" {{ if eq $level 1 }}style="font-size: 16px;"{{ end }}>
             {{- if .LinkTitle }}
