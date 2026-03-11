@@ -38,7 +38,7 @@
                 {{- .LinkTitle }}
             {{- else }}
                 {{- .File.BaseFileName | humanize }}
-            {{- end }}
+            {{- end }}{{ if $isExternal }} ↗{{ end }}
           </span>
         </a>
         
