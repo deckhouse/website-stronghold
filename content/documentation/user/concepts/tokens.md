@@ -205,19 +205,19 @@ but lack most of the flexibility and features of service tokens.
 
 This reference chart describes the difference in behavior between service and batch tokens.
 
-| | Service Tokens | Batch Tokens |
-| --- | --- | --- |
-| Can Be Root Tokens | Yes | No |
-| Can Create Child Tokens | Yes | No |
-| Can be Renewable | Yes | No |
-| Manually Revocable | Yes | No |
-| Can be Periodic | Yes | No |
-| Can have Explicit Max TTL | Yes | No (always uses a fixed TTL) |
-| Has Accessors | Yes | No |
-| Has Cubbyhole | Yes | No |
-| Revoked with Parent (if not orphan) | Yes | Stops Working |
-| Dynamic Secrets Lease Assignment | Self | Parent (if not orphan) |
-| Cost | Heavyweight; multiple storage writes per token creation | Lightweight; no storage cost for token creation |
+​ | Service Tokens | Batch Tokens
+--- | --- | ---
+Can Be Root Tokens | Yes | No
+Can Create Child Tokens | Yes | No
+Can be Renewable | Yes | No
+Manually Revocable | Yes | No
+Can be Periodic | Yes | No
+Can have Explicit Max TTL | Yes | No (always uses a fixed TTL)
+Has Accessors | Yes | No
+Has Cubbyhole | Yes | No
+Revoked with Parent (if not orphan) | Yes | Stops Working
+Dynamic Secrets Lease Assignment | Self | Parent (if not orphan)
+Cost | Heavyweight; multiple storage writes per token creation | Lightweight; no storage cost for token creation
 
 ### Service vs. batch token lease handling
 
