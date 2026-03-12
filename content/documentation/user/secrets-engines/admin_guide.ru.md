@@ -86,12 +86,12 @@ d8 system module enable stronghold
 - Токен доступа с полными правами через UI Deckhouse Admin.
 
   - Создайте [статического пользователя](/modules/user-authn/cr.html#user) и [группу](/modules/user-authn/cr.html#group) в Deckhouse Kubernetes Platform, или настройте аутентификацию через [внешние системы](/modules/user-authn/) (OIDC-провайдеров).
-  - Добавьте пользователя в список администраторов Deckhouse Stronghold, используя параметр [management.administrators](configuration.html#parameters-management-administrators).
+  - Добавьте пользователя в список администраторов Deckhouse Stronghold, используя параметр [management.administrators](/modules/stronghold/configuration.html#parameters-management-administrators).
   - Авторизуйтесь в веб-интерфейсе и получите токен. Для этого в навигационном меню нажмите [Кнопку авторизации](images/image1.ru.png) и в открывшемся меню нажмите на *Копировать токен*.
 
 - Токен доступа с полными правами через CLI.
   - Создайте [статического пользователя](/modules/user-authn/cr.html#user) и [группу](/modules/user-authn/cr.html#group) в Deckhouse Kubernetes Platform, или настройте аутентификацию через [внешние системы](/modules/user-authn/) (OIDC-провайдеров).
-  - Добавьте пользователя в список администраторов Deckhouse Stronghold, используя параметр [management.administrators](configuration.html#parameters-management-administrators).
+  - Добавьте пользователя в список администраторов Deckhouse Stronghold, используя параметр [management.administrators](/modules/stronghold/configuration.html#parameters-management-administrators).
   - Авторизуйтесь с помощью `d8 stronghold login`, выполнив следующие команды (укажите актуальный адрес в `VAULT_ADDR`):
 
     При аутентификации через внешние системы:
@@ -127,7 +127,7 @@ d8 system module enable stronghold
     token_meta_role      deckhouse_dex_authenticated
     ```
 
-> Полные права токена доступа подразумевают подключение политики `deckhouse_administrators` следующего вида: `path "*" { capabilities = ["create", "read", "update", "delete", "list", "patch", "sudo"]}`. Политика `deckhouse_administrators` автоматически подключается пользователям, перечисленным в списке администраторов Deckhouse Stronghold (параметр [management.administrators](configuration.html#parameters-management-administrators)). Пользователям не входящим в список администраторов подключается политика `default`.
+> Полные права токена доступа подразумевают подключение политики `deckhouse_administrators` следующего вида: `path "*" { capabilities = ["create", "read", "update", "delete", "list", "patch", "sudo"]}`. Политика `deckhouse_administrators` автоматически подключается пользователям, перечисленным в списке администраторов Deckhouse Stronghold (параметр [management.administrators](/modules/stronghold/configuration.html#parameters-management-administrators)). Пользователям не входящим в список администраторов подключается политика `default`.
 
 Получив токен, выполните следующие команды, которые позволят работать с хранилищем:
 
