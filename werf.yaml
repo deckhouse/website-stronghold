@@ -15,7 +15,9 @@ git:
     - config/
     - content
     - i18n/
+    - images/
     - layouts/
+    - static/
     - go.*
   stageDependencies:
     setup: ['**/*']

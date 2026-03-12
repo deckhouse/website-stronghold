@@ -8,7 +8,8 @@ services:
     dns:
       - 8.8.8.8
     depends_on:
-      - hugo
+      hugo:
+        condition: service_healthy    
 
   hugo:
     image: hugomods/hugo:debian-ci-0.150.1
@@ -22,3 +23,9 @@ services:
     volumes:
       - "./:/src"
       - "../hugo-web-product-module/:/hugo-web-product-module:ro"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s http://localhost:1313 > /dev/null || exit 1"]
+      interval: 5s
+      timeout: 2s
+      retries: 10
+      start_period: 1s
