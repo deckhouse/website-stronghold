@@ -1,0 +1,35 @@
+<div class="section-index">
+    {{ $parent := .Page }}
+    {{ $pages := (where .Site.Pages "Section" .Section).ByWeight }}
+    {{ $pages = (where $pages "Type" "!=" "search") }}
+    {{ $pages = (where $pages ".Params.hide_summary" "!=" true) }}
+    {{ $pages = (where $pages "Parent.File" "ne" nil) }}
+    {{ $pages = (where $pages "Parent.File.UniqueID" "==" $parent.File.UniqueID) }}
+    {{ if or $parent.Params.no_list (eq (len $pages) 0) }}
+    {{/* If no_list is true or we don't have subpages we don't show a list of subpages */}}
+    {{ else if $parent.Params.simple_list }}
+    {{/* If simple_list is true we show a bulleted list of subpages */}}
+    {{ T "section_list_title" }}:
+        <ul>
+            {{ range $pages }}
+                {{ $href := cond (and .Params.external .Params.url) .Params.url (cond (isset .Params "manuallink") .Params.manualLink (cond (isset .Params "manuallinkrelref") (relref . .Params.manualLinkRelref) .RelPermalink)) }}
+                {{ $isExternalURL := and .Params.url (hasPrefix .Params.url "http") }}
+                {{ $target := cond $isExternalURL "_blank" .Params.manualLinkTarget }}
+                {{ $rel := cond $isExternalURL "noopener noreferrer" (cond (eq $target "_blank") "noopener" "") }}
+                <li><a href="{{ $href }}"{{ with .Params.manualLinkTitle }} title="{{ . }}"{{ end }}{{ with $target }} target="{{ . }}"{{ end }}{{ with $rel }} rel="{{ . }}"{{ end }}>{{- .Title -}}</a></li>
+            {{ end }}
+        </ul>
+    {{ else }}
+    {{/* Otherwise show a nice formatted list of subpages with page descriptions (TODO) */}}
+        {{ range $pages }}
+            {{ $href := cond (and .Params.external .Params.url) .Params.url (cond (isset .Params "manuallink") .Params.manualLink (cond (isset .Params "manuallinkrelref") (relref . .Params.manualLinkRelref) .RelPermalink)) }}
+            {{ $isExternalURL := and .Params.url (hasPrefix .Params.url "http") }}
+            {{ $target := cond $isExternalURL "_blank" .Params.manualLinkTarget }}
+            {{ $rel := cond $isExternalURL "noopener noreferrer" (cond (eq $target "_blank") "noopener" "") }}
+            <div class="tiles_entry">
+                    <a href="{{ $href }}"{{ with .Params.manualLinkTitle }} title="{{ . }}"{{ end }}{{ with $target }} target="{{ . }}"{{ end }}{{ with $rel }} rel="{{ . }}"{{ end }}>{{- .Title -}}</a>
+                <p>{{ .Description | markdownify }}</p>
+            </div>
+        {{ end }}
+    {{ end }}
+</div>
