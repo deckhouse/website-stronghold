@@ -3,7 +3,7 @@ title: "Механизм секретов LDAP"
 weight: 80
 ---
 
-Механизм секретов LDAP обеспечивает управление учетными данными LDAP, а также динамическое создание учетных данных. Он поддерживает интеграцию с реализациями протокола LDAP v3, включая OpenLDAP, Active Directory и IBM Resource Access Control Facility (RACF).
+Механизм секретов LDAP обеспечивает управление учетными данными LDAP, а также динамическое создание учетных данных. Он поддерживает интеграцию с реализациями протокола LDAP v3, включая OpenLDAP, [ALD Pro](https://www.aldpro.ru/), Active Directory и IBM Resource Access Control Facility (RACF).
 
 Механизм секретов имеет три основные функции:
 

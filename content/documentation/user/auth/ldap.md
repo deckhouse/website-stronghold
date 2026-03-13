@@ -8,7 +8,8 @@ weight: 70
 The `ldap` auth method allows authentication using an existing LDAP
 server and user/password credentials. This allows Stronghold to be integrated
 into environments using LDAP without duplicating the user/pass configuration
-in multiple places.
+in multiple places. Stronghold supports integration with various LDAP directory
+services, including the Russian directory service [ALD Pro](https://www.aldpro.ru/).
 
 The mapping of groups and users in LDAP to Stronghold policies is managed by using
 the `users/` and `groups/` paths.
