@@ -7,7 +7,7 @@ Deckhouse Stronghold поставляется в редакциях Community Ed
 
 Deckhouse Stronghold CE доступен для использования в любой редакции Deckhouse Kubernetes Platform (DKP).
 
-Deckhouse Stronghold EE и Deckhouse Stronghold CSE лицензируются отдельно. Deckhouse Stronghold EE доступен для использования в любой **коммерческой редакции** DKP. Deckhouse Stronghold CSE будет доступен для использования только в редакции DKP CSE.
+Deckhouse Stronghold EE и Deckhouse Stronghold CSE лицензируются отдельно. Deckhouse Stronghold EE доступен для использования в любой **коммерческой редакции** DKP. Deckhouse Stronghold CSE доступен для использования только в редакции DKP CSE.
 
 Краткое сравнение ключевых возможностей и особенностей редакций Deckhouse Stronghold:
 
