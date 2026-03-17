@@ -68,7 +68,7 @@ Stronghold EE можно обновить до Stronghold CSE одним из с
    HA Mode                 active
    ```
 
-1. Остановите сервис Stronghold:
+1. Остановите сервис `stronghold`:
 
    ```shell
    sudo systemctl stop stronghold
@@ -83,7 +83,7 @@ Stronghold EE можно обновить до Stronghold CSE одним из с
    sudo chown stronghold:stronghold /opt/stronghold/stronghold
    ```
 
-1. Запустите сервис Stronghold:
+1. Запустите сервис `stronghold`:
 
    ```shell
    sudo systemctl start stronghold
@@ -109,7 +109,7 @@ Stronghold EE можно обновить до Stronghold CSE одним из с
 
 Обновление кластера с несколькими узлами выполняется поочерёдно, чтобы кластер оставался доступным.
 
-1. Определите текущего leader-узла:
+1. Определите текущий leader-узел:
 
    ```shell
    stronghold status
@@ -125,7 +125,7 @@ Stronghold EE можно обновить до Stronghold CSE одним из с
 
    Зафиксируйте leader-узел.
 
-1. Обновите все follower-узлы по одному. Для каждого follower-узла:
+1. Обновите все follower-узлы по одному. На каждом follower-узле:
 
    - Остановите сервис:
 
@@ -554,7 +554,7 @@ Stronghold EE можно обновить до Stronghold CSE одним из с
    - в ModuleConfig/stronghold указано `spec.source: stronghold-cse`;
    - в Module/stronghold указано `properties.source: stronghold-cse`.
 
-1. Проверьте поды Stronghold:
+1. Проверьте поды `stronghold`:
 
    ```shell
    d8 k -n d8-stronghold get po
@@ -593,7 +593,7 @@ Stronghold EE можно обновить до Stronghold CSE одним из с
      d8 k -n d8-stronghold create -f stronghold-keys.yaml
      ```
 
-   - Проверьте поды Stronghold:
+   - Проверьте поды `stronghold`:
 
      ```shell
      d8 k -n d8-stronghold get po
