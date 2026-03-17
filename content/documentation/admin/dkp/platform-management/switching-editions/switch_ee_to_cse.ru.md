@@ -11,7 +11,7 @@ Stronghold Enterprise Edition (EE) можно обновить до Stronghold C
 
 Поддерживается обновление с Stronghold EE 1.15.x до Stronghold CSE 1.16.0.
 
-Если используется версия Stronghold EE ниже 1.15.x, сначала обновитесь до последней версии ветки 1.15.x.
+Если используется версия Stronghold EE ниже 1.15.x, сначала [обновитесь до последней версии ветки](/products/stronghold/documentation/admin/update/update/) 1.15.x.
 
 При обновлении до Stronghold CSE возможна временная недоступность сервиса.
 
@@ -25,12 +25,7 @@ Stronghold Enterprise Edition (EE) можно обновить до Stronghold C
    stronghold version
    ```
 
-1. Сохраните unseal-ключи и root-токен в защищённое хранилище. Пример:
-
-   ```shell
-   d8 k -n d8-stronghold get secret stronghold-keys -o yaml > stronghold-keys.yaml
-   chmod 600 stronghold-keys.yaml
-   ```
+1. Сохраните unseal-ключи и root-токен в защищённое хранилище.
 
 1. Создайте снимок (snapshot) кластера Stronghold. Пример:
 
@@ -45,7 +40,7 @@ Stronghold Enterprise Edition (EE) можно обновить до Stronghold C
    ls -lh ./stronghold-*.snap
    ```
 
-   > Полученные файлы храните за пределами кластера DKP.
+   > Полученные файлы храните вне кластера Stronghold и вне узлов, на которых он запущен.
 
 1. Подготовьте пакет или бинарный файл Stronghold CSE 1.16.0 на каждом узле.
 
@@ -103,7 +98,7 @@ Stronghold Enterprise Edition (EE) можно обновить до Stronghold C
    - ошибки запуска отсутствуют;
    - версия соответствует 1.16.0 (CSE).
 
-1. При необходимости распечатайте Stronghold.
+1. При необходимости [распечатайте Stronghold](/products/stronghold/documentation/admin/standalone/raft_lost_quorum_recovery/#распечатывание-stronghold).
 
 ### Обновление кластера с несколькими узлами
 
@@ -117,7 +112,7 @@ Stronghold Enterprise Edition (EE) можно обновить до Stronghold C
 
    В выводе будет указан адрес текущего leader-узла в поле `HA Cluster`:
 
-   
+   ```console
    ...
    HA Cluster              https://10.241.32.36:8201
    ...
@@ -148,7 +143,7 @@ Stronghold Enterprise Edition (EE) можно обновить до Stronghold C
      sudo systemctl status stronghold --no-pager
      ```
 
-   - При необходимости распечатайте узел Stronghold.
+   - При необходимости [распечатайте узел Stronghold](/products/stronghold/documentation/admin/standalone/raft_lost_quorum_recovery/#распечатывание-stronghold).
 
    - Проверьте состояние узла:
 
@@ -195,7 +190,7 @@ Stronghold Enterprise Edition (EE) можно обновить до Stronghold C
    - ошибки запуска отсутствуют;
    - версия соответствует 1.16.0 (CSE).
 
-1. При необходимости распечатайте последний узел Stronghold.
+1. При необходимости [распечатайте последний узел Stronghold](/products/stronghold/documentation/admin/standalone/raft_lost_quorum_recovery/#распечатывание-stronghold).
 
 1. Выполните финальную проверку кластера:
 
@@ -378,15 +373,29 @@ Stronghold Enterprise Edition (EE) можно обновить до Stronghold C
    - объект ModuleConfig `stronghold` существует;
    - в `spec.settings.license` указан лицензионный ключ.
 
-1. Убедитесь, что используется Stronghold EE версии 1.15.x. Это можно сделать с помощью команды:
+1. Убедитесь, что используется Stronghold EE версии 1.15.x. Это можно сделать одним из следующих способов:
 
-   ```shell
-   d8 k -n d8-stronghold get pod -o yaml | grep version
-   ```
+   - Через веб-интерфейс Deckhouse — откройте главную страницу панели управления кластером (`https://console.<CLUSTER_DOMAIN>`) и проверьте, что в нижней части страницы указана версия 1.15.x с суффиксом `ee`.
 
-   В лейблах подов должна быть указана версия 1.15.x с суффиксом `ee`.
+   - По манифесту или образу пода. Для этого выполните команду:
 
-   Также проверить что используется Stronghold EE версии 1.15.x можно в веб-интерфейсе Deckhouse на главной странице панели управления кластером (`https://console.<CLUSTER_DOMAIN>`) — в нижней части страницы указана версия 1.15.x с суффиксом `ee`.
+     ```shell
+     d8 k -n d8-stronghold get pod -o yaml | grep version
+     ```
+
+     В лейблах подов должна быть указана версия 1.15.x с суффиксом `ee`.
+
+   - По логам. Для этого выполните команду:
+
+     ```shell
+     d8 k -n d8-stronghold logs stronghold-0 | head -20
+     ```
+
+     В стартовых строках баннера должна быть указана версия с редакцией:
+
+     ```console
+     Version: Stronghold v1.15.0+ee
+     ```
 
 ### Подготовка модуля к установке
 
