@@ -252,7 +252,7 @@ Stronghold Enterprise Edition (EE) можно обновить до Stronghold C
 
    Если ModuleConfig отсутствует, создайте его:
 
-   
+   ```shell
    cat | d8 k apply -f - <<EOF
    apiVersion: deckhouse.io/v1alpha1
    kind: ModuleConfig
@@ -277,7 +277,7 @@ Stronghold Enterprise Edition (EE) можно обновить до Stronghold C
 
 1. Создайте ресурс ModuleUpdatePolicy c ручным режимом обновления, указав в поле `releaseChannel` текущий канал обновлений, и примените его:
 
-   
+   ```shell
    cat <<EOF > stronghold-mup.yaml
    apiVersion: deckhouse.io/v1alpha2
    kind: ModuleUpdatePolicy
@@ -294,7 +294,7 @@ Stronghold Enterprise Edition (EE) можно обновить до Stronghold C
 
    Ожидаемый вывод:
 
-   
+   ```console
    NAME                       RELEASE CHANNEL   UPDATE MODE
    stronghold-update-policy   Stable            Manual
    ```
@@ -354,11 +354,30 @@ Stronghold Enterprise Edition (EE) можно обновить до Stronghold C
    d8 system queue list
    ```
 
-   Проверьте, что:
+   Ожидаемый вывод:
 
-   - Deployment `deckhouse` находится в состоянии `Ready`;
-   - есть под в статусе `leader`;
-   - очередь задач пуста.
+   - Deployment `deckhouse` находится в состоянии `Ready`:
+
+     ```console
+     NAME        READY   UP-TO-DATE   AVAILABLE   AGE
+     deckhouse   3/3     3            3           1d
+     ```
+
+   - Есть рабочий под в статусе `Running`:
+
+     ```console
+     NAME                        READY   STATUS    RESTARTS   AGE
+     deckhouse-596d944f95-d82m8  2/2     Running   0          1d
+     ```
+
+   - Очередь задач пуста:
+
+     ```console
+     Summary:
+     - 'main' queue: empty.
+     - 121 other queues (0 active, 121 empty): 0 tasks.
+     - no tasks to handle.
+     ```
 
 1. Убедитесь, что модуль `stronghold` включён и находится в рабочем состоянии:
 
@@ -534,7 +553,7 @@ Stronghold Enterprise Edition (EE) можно обновить до Stronghold C
 
    Ожидаемый вывод:
 
-   ```text
+   ```console
    NAME                       RELEASE CHANNEL   UPDATE MODE
    stronghold-update-policy   Stable            AutoPatch
    ```
@@ -549,7 +568,7 @@ Stronghold Enterprise Edition (EE) можно обновить до Stronghold C
 
    Ожидаемый вывод:
 
-   ```text
+   ```console
    NAME            STAGE                  SOURCE           PHASE   ENABLED   READY
    stronghold      General Availability   stronghold-cse   Ready   True      True
    ```
