@@ -368,7 +368,7 @@ Stronghold EE можно обновить до Stronghold CSE одним из с
 
    Проверьте, что:
 
-   - для `stronghold` значения `Enabled` и `Read`y равны `True`;
+   - для `stronghold` значения `Enabled` и `Ready` равны `True`;
    - объект ModuleConfig/stronghold существует;
    - в `spec.settings.license` указан лицензионный ключ.
 
