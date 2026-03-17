@@ -4,7 +4,7 @@ weight: 20
 url: /documentation/admin/platform-management/switching-editions/switch-ee-to-cse/
 ---
 
-Stronghold EE можно обновить до Stronghold CSE одним из следующих способов:
+Stronghold Enterprise Edition (EE) можно обновить до Stronghold Certified Security Edition (CSE) одним из следующих способов:
 
 - в исполнении Standalone;
 - в исполнении DKP.
@@ -32,7 +32,7 @@ Stronghold EE можно обновить до Stronghold CSE одним из с
    chmod 600 stronghold-keys.yaml
    ```
 
-1. Создайте снапшот кластера Stronghold. Пример:
+1. Создайте снимок (snapshot) кластера Stronghold. Пример:
 
    ```shell
    stronghold operator raft snapshot save stronghold-$(date +%F_%H-%M).snap
@@ -117,7 +117,7 @@ Stronghold EE можно обновить до Stronghold CSE одним из с
 
    В выводе будет указан адрес текущего leader-узла в поле `HA Cluster`:
 
-   ```shell
+   
    ...
    HA Cluster              https://10.241.32.36:8201
    ...
@@ -125,7 +125,7 @@ Stronghold EE можно обновить до Stronghold CSE одним из с
 
    Зафиксируйте leader-узел.
 
-1. Обновите все follower-узлы по одному. На каждом follower-узле:
+1. Поочерёдно обновите все follower-узлы. На каждом follower-узле:
 
    - Остановите сервис:
 
@@ -169,6 +169,7 @@ Stronghold EE можно обновить до Stronghold CSE одним из с
 
    ```shell
    stronghold operator step-down
+   # Подождите некоторое время.
    stronghold status
    ```
 
@@ -178,8 +179,8 @@ Stronghold EE можно обновить до Stronghold CSE одним из с
 
    ```shell
    sudo systemctl stop stronghold
-   # замените бинарный файл Stronghold EE на Stronghold CSE 1.16.0.
-   # при необходимости восстановите права:
+   # Замените бинарный файл Stronghold EE на Stronghold CSE 1.16.0.
+   # При необходимости восстановите права:
    # sudo chmod 511 /opt/stronghold/stronghold
    # sudo chown stronghold:stronghold /opt/stronghold/stronghold
    sudo systemctl start stronghold
@@ -228,7 +229,7 @@ Stronghold EE можно обновить до Stronghold CSE одним из с
    chmod 600 stronghold-keys.yaml
    ```
 
-1. Создайте резервную копию или снапшот кластера Stronghold. Пример:
+1. Создайте резервную копию или снимок (snapshot) кластера Stronghold. Пример:
 
    ```sh
    export STRONGHOLD_ADDR=https://$(d8 k -n d8-stronghold get ing stronghold -o json | jq -r '.spec.rules[0].host')
@@ -238,7 +239,7 @@ Stronghold EE можно обновить до Stronghold CSE одним из с
    d8 stronghold operator raft snapshot save stronghold-$(date +%F_%H-%M).snap
    ```
 
-   Проверить снапшот можно с помощью команды:
+   Проверить снимок можно с помощью команды:
 
    ```sh
    ls -lh ./stronghold-*.snap
@@ -256,7 +257,7 @@ Stronghold EE можно обновить до Stronghold CSE одним из с
 
    Если ModuleConfig отсутствует, создайте его:
 
-   ```yaml
+   
    cat | d8 k apply -f - <<EOF
    apiVersion: deckhouse.io/v1alpha1
    kind: ModuleConfig
@@ -277,11 +278,11 @@ Stronghold EE можно обновить до Stronghold CSE одним из с
    d8 k get module stronghold -o jsonpath='{.properties.releaseChannel}'
    ```
 
-   Если команда не выводит значение, используйте канал `stable`.
+   Если команда не выводит значение, используйте канал `stable` в следующем шаге.
 
-1. Создайте ресурс ModuleUpdatePolicy c ручным режимом обновления и примените его:
+1. Создайте ресурс ModuleUpdatePolicy c ручным режимом обновления, указав в поле `releaseChannel` текущий канал обновлений, и примените его:
 
-   ```yaml
+   
    cat <<EOF > stronghold-mup.yaml
    apiVersion: deckhouse.io/v1alpha2
    kind: ModuleUpdatePolicy
@@ -298,7 +299,7 @@ Stronghold EE можно обновить до Stronghold CSE одним из с
 
    Ожидаемый вывод:
 
-   ```shell
+   
    NAME                       RELEASE CHANNEL   UPDATE MODE
    stronghold-update-policy   Stable            Manual
    ```
@@ -333,7 +334,7 @@ Stronghold EE можно обновить до Stronghold CSE одним из с
    stronghold-update-policy
    ```
 
-   > Если используется DKP CSE 1.67 и ниже, либо если модуль ещё ни разу не запускался, команда может не вывести значение. Дополнительных действий в таком случае не требуется.
+   > Если используется DKP CSE 1.67 и ниже, либо если модуль ещё ни разу не запускался, вывод команды будет пустым. Дополнительные действия в таком случае не требуются.
 
 ### Проверки перед началом обновления
 
@@ -343,7 +344,12 @@ Stronghold EE можно обновить до Stronghold CSE одним из с
    d8 k -n d8-system get configmap d8-deckhouse-version-info -o yaml
    ```
 
-   Также проверить версию DKP можно с помощью UI на главной странице панели управления кластером (`https://console.<CLUSTER_DOMAIN>`).
+   Также проверить версию DKP можно в веб-интерфейсе Deckhouse на главной странице панели управления кластером (`https://console.<CLUSTER_DOMAIN>`).
+
+   > Если понадобится обновить или переключить редакцию DKP, воспользуйтесь инструкциями:
+   >
+   > - [инструкция по обновлению DKP](/products/kubernetes-platform/documentation/v1/admin/configuration/update/configuration.html);
+   > - [инструкция по переключению DKP EE на DKP CSE](/products/kubernetes-platform/documentation/v1/admin/configuration/registry/switching-editions.html).
 
 1. Убедитесь, что DKP работает штатно, leader-узел определён, очередь пуста:
 
@@ -369,7 +375,7 @@ Stronghold EE можно обновить до Stronghold CSE одним из с
    Проверьте, что:
 
    - для `stronghold` значения `Enabled` и `Ready` равны `True`;
-   - объект ModuleConfig/stronghold существует;
+   - объект ModuleConfig `stronghold` существует;
    - в `spec.settings.license` указан лицензионный ключ.
 
 1. Убедитесь, что используется Stronghold EE версии 1.15.x. Это можно сделать с помощью команды:
@@ -378,9 +384,9 @@ Stronghold EE можно обновить до Stronghold CSE одним из с
    d8 k -n d8-stronghold get pod -o yaml | grep version
    ```
 
-   В метках подов должна быть указана версия 1.15.x с суффиксом `ee`.
+   В лейблах подов должна быть указана версия 1.15.x с суффиксом `ee`.
 
-   Также проверить что используется Stronghold EE версии 1.15.x можно с помощью UI на главной странице панели управления кластером (`https://console.<CLUSTER_DOMAIN>`) — в нижней части страницы указана версия 1.15.x с суффиксом `ee`.
+   Также проверить что используется Stronghold EE версии 1.15.x можно в веб-интерфейсе Deckhouse на главной странице панели управления кластером (`https://console.<CLUSTER_DOMAIN>`) — в нижней части страницы указана версия 1.15.x с суффиксом `ee`.
 
 ### Подготовка модуля к установке
 
@@ -394,10 +400,10 @@ Stronghold EE можно обновить до Stronghold CSE одним из с
    mkdir modules
    mv module-stronghold.tar modules/.
 
-   # Адрес хранилища образов. Например: 10.129.0.18:5000 или my-registry.com
+   # Адрес хоста хранилища образов. Например, 10.129.0.18:5000 или my-registry.com
    export REGISTRY_HOST="<REGISTRY_HOST:PORT>"
 
-   # Адрес репозитория образов платформы DKP. Например: 10.129.0.18:5000/dkp-cse/stable
+   # Адрес хранилища образов DKP. Например, 10.129.0.18:5000/dkp-cse/stable
    export MODULES_MODULE_REPO="${REGISTRY_HOST}/<PATH_TO_DKP_REPO>"
 
    # Используйте учётную запись с правами на запись в хранилище образов.
@@ -459,7 +465,7 @@ Stronghold EE можно обновить до Stronghold CSE одним из с
 
 ### Переключение модуля Stronghold с редакции EE на CSE
 
-Обновите ModuleConfig Stronghold для использования нового ModuleSource:
+Обновите ModuleConfig `stronghold` для использования нового ModuleSource:
 
 1. Проверьте наличие ModuleConfig `stronghold`:
 
@@ -476,7 +482,7 @@ Stronghold EE можно обновить до Stronghold CSE одним из с
 
    Проверьте, что изменения применились:
 
-   - в ModuleConfig/stronghold присутствует `spec.source: stronghold-cse`;
+   - в ModuleConfig `stronghold` присутствует значение `spec.source: stronghold-cse`;
    - остальные поля в `spec.settings` не изменились.
 
 1. Если после переключения источника модуль сообщает о проблеме с лицензией, обновите только поле лицензии (`CSE_LICENSE`):
@@ -551,8 +557,8 @@ Stronghold EE можно обновить до Stronghold CSE одним из с
 
    - отсутствуют ошибки `auth`, `tls`, `x509`, `timeout`;
    - отсутствуют предупреждающие события;
-   - в ModuleConfig/stronghold указано `spec.source: stronghold-cse`;
-   - в Module/stronghold указано `properties.source: stronghold-cse`.
+   - в ModuleConfig `stronghold` указано `spec.source: stronghold-cse`;
+   - в Module `stronghold` указано `properties.source: stronghold-cse`.
 
 1. Проверьте поды `stronghold`:
 
@@ -563,7 +569,7 @@ Stronghold EE можно обновить до Stronghold CSE одним из с
    Проверьте, что:
 
    - отсутствуют состояния `ImagePullBackOff`, `ErrImagePull`, `CrashLoopBackOff`;
-   - поды `stronghold-*` находятся в состоянии `Running` и имеют готовность 2/2.
+   - поды `stronghold-*` находятся в состоянии `Running` и имеют готовность `2/2`.
 
 ### Альтернативный способ через установку нового кластера требуемой версии
 
@@ -576,7 +582,7 @@ Stronghold EE можно обновить до Stronghold CSE одним из с
 1. Начиная с раздела [Отключение автообновления модуля](#отключение-автообновления-модуля),  последовательно выполните все шаги на новом кластере.
 1. Восстановите резервную копию, unseal-ключи и root-токен. Команды выполняются на хосте, где находятся файлы резервной копии `stronghold-*.snap` и ключи `stronghold-keys.yaml`. Пример восстановления резервной копии кластера Stronghold:
 
-   - Восстановите снапшот:
+   - Восстановите снимок (snapshot):
 
      ```shell
      export STRONGHOLD_ADDR=https://$(d8 k -n d8-stronghold get ing stronghold -o json | jq -r '.spec.rules[0].host')
@@ -602,4 +608,4 @@ Stronghold EE можно обновить до Stronghold CSE одним из с
      Проверьте, что:
 
      - отсутствуют состояния `ImagePullBackOff`, `ErrImagePull`, `CrashLoopBackOff`;
-     - поды `stronghold-*` находятся в состоянии `Running` и имеют готовность 2/2.
+     - поды `stronghold-*` находятся в состоянии `Running` и имеют готовность `2/2`.
