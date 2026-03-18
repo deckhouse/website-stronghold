@@ -19,7 +19,9 @@ Stronghold Enterprise Edition (EE) можно обновить до Stronghold C
 
 ## Обновление в исполнении DKP
 
-> Поддерживается обновление с Stronghold EE 1.15.x до Stronghold CSE 1.16.0. Для перехода на Stronghold CSE требуется DKP CSE версии 1.73 и выше.
+{{< alert level="warning" >}}
+Для перехода на Stronghold CSE требуется DKP CSE версии 1.73 и выше.
+{{< /alert >}}
 
 Перед началом обновления выполните следующие действия:
 
