@@ -29,3 +29,6 @@ import:
   add: /out
   to: /app
   before: setup
+---
+cleanup:
+  disableKubernetesBasedPolicy: true
