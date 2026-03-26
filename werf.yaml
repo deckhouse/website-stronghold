@@ -1,5 +1,8 @@
 configVersion: 1
 project: deckhouse-web-stronghold
+
+cleanup:
+  disableKubernetesBasedPolicy: true
 ---
 
 image: web-artifacts
@@ -29,6 +32,3 @@ import:
   add: /out
   to: /app
   before: setup
----
-cleanup:
-  disableKubernetesBasedPolicy: true
