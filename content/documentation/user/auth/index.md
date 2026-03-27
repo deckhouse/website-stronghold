@@ -14,6 +14,8 @@ Stronghold will enforce authentication as part of the request processing. In mos
 Stronghold will delegate the authentication administration and decision to the relevant configured
 external auth method (e.g., Kubernetes).
 
+Stronghold also supports `WebAuthn` for passwordless authentication with `FIDO2` authenticators and `passkeys`.
+
 Having multiple auth methods enables you to use an auth method that makes the
 most sense for your use case of Stronghold and your organization.
 

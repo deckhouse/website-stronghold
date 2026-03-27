@@ -169,7 +169,7 @@ template {
 ```bash
 # Проверка конфигурации через пробный запуск:
 # Agent читает конфиг, проходит аутентификацию, создает файл и сразу завершается.
-stronghold-agent -config=/etc/stronghold-agent/agent.hcl -exit-after-auth -log-level=debug
+stronghold -config=/etc/stronghold-agent/agent.hcl -exit-after-auth -log-level=debug
 ```
 
 Что происходит при выполнении команды:
@@ -490,7 +490,7 @@ env_template "SPRING_PROFILES_ACTIVE" {
 
 ```bash
 # Команда для Agent, он запустит Java приложение с секретами в ENV.
-stronghold-agent -config=/etc/stronghold-agent/agent.hcl
+stronghold -config=/etc/stronghold-agent/agent.hcl
 ```
 
 Agent автоматически:

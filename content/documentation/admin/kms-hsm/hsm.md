@@ -1,22 +1,26 @@
 ---
-title: "Поддержка HSM"
-weight: 30
+title: "HSM support"
+weight: 10
 ---
 
-Stronghold поддерживает шифрование Root-ключа с использованием аппаратных модулей защиты (HSM), таких как TPM2, Rutoken ЭЦП 3.0, JaCarta и другие устройства с поддержкой стандарта PKCS11.  
-Для целей тестирования и разработки также поддерживается SoftHSM2.  
+Stronghold supports Root key encryption using hardware security modules (HSM) such as TPM2, Rutoken ECP 3.0, JaCarta, and other devices that support the PKCS11 standard.
+For testing and development purposes, SoftHSM2 is also supported.
 
-Для использования автоматического распечатывания через PKCS11 необходимо предварительно создать ключи в HSM и сконфигурировать Stronghold для работы с ними.
+{{< alert level="warning" >}}
+The HSM integration described on this page currently applies only to Standalone Stronghold installations. The examples below use a local configuration file and a `seal "pkcs11"` block in the standalone server configuration.
+{{< /alert >}}
+
+To use automatic unsealing via PKCS11, you must first create keys in the HSM and configure Stronghold to use them.
 
 ## SoftHSM2
 
-1. Установите необходимые пакеты:
+1. Install the required packages:
 
    ```shell
    apt install libsofthsm2 opensc
    ```
 
-1. Создайте конфигурацию для SoftHSM2:
+1. Create a configuration for SoftHSM2:
 
    ```shell
    mkdir /home/stronghold/softhsm
@@ -24,18 +28,18 @@ Stronghold поддерживает шифрование Root-ключа с ис
    echo "directories.tokendir = /home/stronghold/softhsm/" > /home/stronghold/softhsm2.conf
    ```
 
-1. Сгенерируйте ключи в HSM:
+1. Generate keys in the HSM:
 
-   ```shell
-   $ export SOFTHSM2_CONF=/home/stronghold/softhsm2.conf
-   $ HSMLIB="/usr/lib/x86_64-linux-gnu/softhsm/libsofthsm2.so"
-   $ pkcs11-tool --module $HSMLIB --init-token --so-pin 1234 --init-pin --pin 4321 --label my_token --login
+   ```console
+   export SOFTHSM2_CONF=/home/stronghold/softhsm2.conf
+   HSMLIB="/usr/lib/x86_64-linux-gnu/softhsm/libsofthsm2.so"
+   pkcs11-tool --module $HSMLIB --init-token --so-pin 1234 --init-pin --pin 4321 --label my_token --login
 
    Using slot 0 with a present token (0x0)
    Token successfully initialized
    User PIN successfully initialized
 
-   $ pkcs11-tool --module $HSMLIB -L
+   pkcs11-tool --module $HSMLIB -L
 
    Available slots:
    Slot 0 (0xe6829d3): SoftHSM slot ID 0xe6829d3
@@ -50,8 +54,7 @@ Stronghold поддерживает шифрование Root-ключа с ис
    Slot 1 (0x1): SoftHSM slot ID 0x1
      token state:   uninitialized
 
-
-   $ pkcs11-tool --module $HSMLIB --login --pin 4321 --keypairgen --key-type rsa:4096 --label "vault-rsa-key"
+   pkcs11-tool --module $HSMLIB --login --pin 4321 --keypairgen --key-type rsa:4096 --label "vault-rsa-key"
 
    Using slot 0 with a present token (0xe6829d3)
    Key pair generated:
@@ -65,12 +68,13 @@ Stronghold поддерживает шифрование Root-ключа с ис
      Access:     local
    ```
 
-   Пример конфигурации Stronghold (`config.hcl`)
+1. Example Stronghold configuration (`config.hcl`):
 
    ```console
    api_addr="https://0.0.0.0:8200"
    log_level = "warn"
    ui = true
+
    listener "tcp" {
      address = "0.0.0.0:8200"
      tls_cert_file = "/home/stronghold/cert.pem"
@@ -92,25 +96,26 @@ Stronghold поддерживает шифрование Root-ключа с ис
    }
    ```
 
-1. Запустите Stronghold:
+1. Start Stronghold:
 
    ```shell
    export SOFTHSM2_CONF=/home/stronghold/softhsm2.conf
    stronghold server -config config.hcl
    ```
 
-## Использование Рутокен ЭЦП 3.0
+## Using Rutoken ECDSA 3.0
 
-1. Скачайте и установите библиотеку `librtpkcs11ecp.so` с сайта [https://www.rutoken.ru/](https://www.rutoken.ru/support/download/pkcs/).
+1. Download and install the `librtpkcs11ecp.so` library from [https://www.rutoken.ru/](https://www.rutoken.ru/support/download/pkcs/).
 
-1. Сгенерируйте в токене пару ключей (публичный и приватный), которые будут использоваться для шифрования Root-ключа. Эта операция выполняется с помощью утилиты `pkcs11-tool` из пакета `opensc`:
+1. Generate a key pair (public and private) in the token, which will be used for Root key encryption.
+   This operation is performed with the `pkcs11-tool` utility from the `opensc` package:
 
-   ```shell
-   $ HSMLIB="/usr/lib/librtpkcs11ecp.so"
-   $ pkcs11-tool --module $HSMLIB --init-token --so-pin 87654321 \
-                 --init-pin --pin 12345678 --label my_token --login
-   $ pkcs11-tool --module $HSMLIB --login --pin 12345678 --keypairgen \
-                 --key-type rsa:2048 --label "vault-rsa-key"
+   ```console
+   HSMLIB="/usr/lib/librtpkcs11ecp.so"
+   pkcs11-tool --module $HSMLIB --init-token --so-pin 87654321 \
+               --init-pin --pin 12345678 --label my_token --login
+   pkcs11-tool --module $HSMLIB --login --pin 12345678 --keypairgen \
+               --key-type rsa:2048 --label "vault-rsa-key"
 
    Using slot 0 with a present token (0x0)
    Key pair generated:
@@ -124,7 +129,7 @@ Stronghold поддерживает шифрование Root-ключа с ис
      Access:     local
    ```
 
-1. Добавьте в конфигурацию Stronghold метод распечатки `pkcs11`:
+1. Add the `pkcs11` unseal method to the Stronghold configuration:
 
    ```console
    ...
@@ -136,7 +141,7 @@ Stronghold поддерживает шифрование Root-ключа с ис
    }
    ```
 
-1. Запустите Stronghold и выполните `init`:
+1. Start Stronghold and run `init`:
 
    ```shell
    systemctl start stronghold
@@ -144,9 +149,9 @@ Stronghold поддерживает шифрование Root-ключа с ис
    stronghold operator init
    ```
 
-1. Проверьте статус Stronghold:
+1. Check the Stronghold status:
 
-   ```shell
+   ```console
    stronghold status
 
    Key                      Value
@@ -164,9 +169,9 @@ Stronghold поддерживает шифрование Root-ключа с ис
    HA Enabled               false
    ```
 
-## Миграция с Shamir ключей на HSM
+## Migration from Shamir keys to HSM
 
-1. Измените конфигурацию Stronghold, добавив блок `seal`:
+1. Modify the Stronghold configuration by adding the `seal` block:
 
    ```console
    ...
@@ -178,23 +183,23 @@ Stronghold поддерживает шифрование Root-ключа с ис
    }
    ```
 
-1. Перезапустите Stronghold. В логах появится сообщение:
+1. Restart Stronghold. The logs will show a message:
 
    ```console
    2025-04-03T17:08:13.431+0300 [WARN]  core: entering seal migration mode; Stronghold will not automatically unseal even if using an autoseal: from_barrier_type=shamir to_barrier_type=pkcs11
    ```
 
-1. Выполните миграцию, введя ключи распечатки:
+1. Perform the migration by entering the unseal keys:
 
    ```shell
    stronghold operator unseal -migrate
    ```
 
-После завершения миграции Stronghold при перезапуске будет автоматически распечатываться с использованием `pkcs11`.
+After the migration is complete, Stronghold will automatically unseal using `pkcs11` on restart.
 
-## Миграция с HSM на Shamir ключи
+## Migration from HSM to Shamir keys
 
-1. Измените конфигурацию, добавив параметр `disabled = "true"` в раздел `seal`:
+1. Modify the configuration by adding the parameter `disabled = "true"` to the `seal` block:
 
    ```console
    ...
@@ -207,12 +212,12 @@ Stronghold поддерживает шифрование Root-ключа с ис
    }
    ```
 
-1. Перезапустите Stronghold.
+1. Restart Stronghold.
 
-1. Выполните миграцию, введя recovery-ключи:
+1. Perform the migration by entering the recovery keys:
 
    ```shell
    stronghold operator unseal -migrate
    ```
 
-После завершения миграции при каждом перезапуске Stronghold потребуется вводить ключи распечатки вручную.
+After the migration is complete, Stronghold will require manual entry of unseal keys on each restart.
