@@ -2407,7 +2407,7 @@ Configure WebAuthn backend
 | `auto_registration` | boolean | no | If true (default), new users can self-register. If false, only pre-created users (via user/ path) can register. |
 | `rp_display_name` | string | no | Human-readable name for the Relying Party. |
 | `rp_id` | string | no | Relying Party ID (e.g. localhost or your domain). Must match the origin's host. |
-| `rp_origins` | array | no | Allowed origins for WebAuthn (e.g. <https://vault.example.com>, <http://localhost:8200>). |
+| `rp_origins` | array | no | Allowed origins for WebAuthn (e.g. https://vault.example.com, http://localhost:8200). |
 
 #### Responses
 
