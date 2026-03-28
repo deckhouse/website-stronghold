@@ -1,20 +1,20 @@
 ---
 title: "Yandex Cloud KMS"
 weight: 15
-description: "Configure Stronghold auto-unseal with the yandexkms seal."
+description: "Configure Stronghold auto-unseal with the yandexcloudkms seal."
 ---
 
-Stronghold supports `seal "yandexkms"` for auto-unseal and root key protection through Yandex Cloud KMS.
+Stronghold supports `seal "yandexcloudkms"` for auto-unseal and root key protection through Yandex Cloud KMS.
 
 {{< alert level="warning" >}}
-`seal "yandexkms"` is currently supported only for Standalone Stronghold installations.
+`seal "yandexcloudkms"` is currently supported only for Standalone Stronghold installations.
 {{< /alert >}}
 
-Among cloud KMS seal integrations, Stronghold supports `yandexkms`. `awskms` and `gcpckms` configurations are not supported in Stronghold.
+Among cloud KMS seal integrations, Stronghold supports `yandexcloudkms`. `awskms` and `gcpckms` configurations are not supported in Stronghold.
 
-## What `seal "yandexkms"` does
+## What `seal "yandexcloudkms"` does
 
-The `seal "yandexkms"` configuration allows Stronghold to:
+The `seal "yandexcloudkms"` configuration allows Stronghold to:
 
 - use Yandex Cloud KMS for encryption and decryption operations related to the root key;
 - automatically unseal after restart without manual unseal key entry;
@@ -25,7 +25,7 @@ If double encryption is also enabled, the external KMS must be available not onl
 ## Configuration examples
 
 ```hcl
-seal "yandexkms" {
+seal "yandexcloudkms" {
   kms_key_id  = "abj1abc23def456ghi78"
   oauth_token = "y0_AQAAAA..."
 }
@@ -34,13 +34,13 @@ seal "yandexkms" {
 Example using a service account key:
 
 ```hcl
-seal "yandexkms" {
+seal "yandexcloudkms" {
   kms_key_id                = "abj1abc23def456ghi78"
   service_account_key_file = "/etc/stronghold/yc-sa-key.json"
 }
 ```
 
-## `seal "yandexkms"` parameters
+## `seal "yandexcloudkms"` parameters
 
 | Parameter | Required | Description |
 |-----------|----------|-------------|
@@ -59,7 +59,7 @@ Important details:
 
 ## Authentication order
 
-For `yandexkms`, authentication values are resolved in the following order:
+For `yandexcloudkms`, authentication values are resolved in the following order:
 
 1. Environment variables.
 2. Stronghold configuration file values.
@@ -82,7 +82,7 @@ You can use them instead of the corresponding configuration file parameters, or 
 
 During initialization, Stronghold checks that the configured key exists and that the process has permission to perform encryption with it.
 
-In practice, `seal "yandexkms"` requires:
+In practice, `seal "yandexcloudkms"` requires:
 
 - an existing symmetric key in Yandex Cloud KMS;
 - permissions to encrypt and decrypt with that key;

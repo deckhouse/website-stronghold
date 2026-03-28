@@ -1548,7 +1548,7 @@ List managed keys of a given type
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `type` | string | path | yes | The type of managed key (pkcs11, yandexkms) |
+| `type` | string | path | yes | The type of managed key (pkcs11, yandexcloudkms) |
 | `list` | string (true) | query | yes | Must be set to `true` |
 
 #### Responses
@@ -1570,7 +1570,7 @@ Read managed key configuration
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | The name of the managed key |
-| `type` | string | path | yes | The type of managed key (pkcs11, yandexkms) |
+| `type` | string | path | yes | The type of managed key (pkcs11, yandexcloudkms) |
 
 #### Responses
 
@@ -1589,7 +1589,7 @@ Update a managed key
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | The name of the managed key |
-| `type` | string | path | yes | The type of managed key (pkcs11, yandexkms) |
+| `type` | string | path | yes | The type of managed key (pkcs11, yandexcloudkms) |
 
 #### Request body parameters
 
@@ -1599,19 +1599,19 @@ Update a managed key
 | `allow_replace_key` | boolean | no | If true, allows users of the key to provide key material which may replace keys that were previously present. |
 | `allow_store_key` | boolean | no | If true, allows users of the key to provide key material where none was present. |
 | `any_mount` | boolean | no | If true, this key may be accessed by any mount without the mount's allowed_manage_keys field being set. |
-| `endpoint` | string | no | [yandexkms] Custom Yandex Cloud API endpoint (optional). |
+| `endpoint` | string | no | [yandexcloudkms] Custom Yandex Cloud API endpoint (optional). |
 | `force_rw_session` | boolean (default: False) | no | [pkcs11] If true, forces read/write sessions on the HSM. |
 | `key_bits` | integer | no | [pkcs11] For RSA keys, the desired key length in bits (2048, 3072, or 4096). |
 | `key_id` | string | no | [pkcs11] The id of a PKCS#11 key to use. |
 | `key_label` | string | no | [pkcs11] The label of a PKCS#11 key to use. |
-| `kms_key_id` | string | no | [yandexkms] The ID of the symmetric key in Yandex Cloud KMS. |
+| `kms_key_id` | string | no | [yandexcloudkms] The ID of the symmetric key in Yandex Cloud KMS. |
 | `library` | string | no | [pkcs11] The name of a kms_library stanza from server configuration. |
 | `max_parallel` | integer | no | [pkcs11] The maximum number of concurrent operations to the HSM. |
 | `mechanism` | string | no | [pkcs11] The mechanism for the given key, specified as a decimal or hexadecimal (prefixed by 0x) string. |
-| `oauth_token` | string | no | [yandexkms] OAuth token for Yandex Cloud authentication. Mutually exclusive with service_account_key_json. |
+| `oauth_token` | string | no | [yandexcloudkms] OAuth token for Yandex Cloud authentication. Mutually exclusive with service_account_key_json. |
 | `pin` | string | no | [pkcs11] The access PIN for the slot. |
 | `reverse_signature` | boolean (default: False) | no | [pkcs11] If true, reverses GOST signature bytes from the HSM (CryptoPro compatibility). |
-| `service_account_key_json` | string | no | [yandexkms] JSON of the authorized key for a Yandex Cloud service account. Stored inside Vault, not on the filesystem. Mutually exclusive with oauth_token. |
+| `service_account_key_json` | string | no | [yandexcloudkms] JSON of the authorized key for a Yandex Cloud service account. Stored inside Vault, not on the filesystem. Mutually exclusive with oauth_token. |
 | `slot` | string | no | [pkcs11] The slot number to use, specified as a string (e.g. "0"). |
 | `token_label` | string | no | [pkcs11] The slot token label to use. |
 | `usages` | string | no | A comma-delimited list of the allowed usages of this key. Valid values are encrypt, decrypt, sign, verify, wrap, unwrap, mac, and random. |
@@ -1631,7 +1631,7 @@ Delete a managed key
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | The name of the managed key |
-| `type` | string | path | yes | The type of managed key (pkcs11, yandexkms) |
+| `type` | string | path | yes | The type of managed key (pkcs11, yandexcloudkms) |
 
 #### Responses
 
@@ -1650,7 +1650,7 @@ Test managed key signing
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | The name of the managed key |
-| `type` | string | path | yes | The type of managed key (pkcs11, yandexkms) |
+| `type` | string | path | yes | The type of managed key (pkcs11, yandexcloudkms) |
 
 #### Request body parameters
 

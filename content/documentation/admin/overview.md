@@ -39,7 +39,7 @@ The platform’s Administrator Guide includes the following sections:
   - [Plugins in DKP](./plugins/dkp/) - plugin delivery through `ModuleConfig`, registration, and enablement in Deckhouse Kubernetes Platform.
 - KMS and HSM
   - [HSM support](./kms-hsm/hsm/) - PKCS11-based HSM integration for auto-unseal and root key protection; currently supported only for Standalone installations.
-  - [Yandex Cloud KMS](./kms-hsm/yandexkms/) - configure `seal "yandexkms"` for auto-unseal and root key protection; currently supported only for Standalone installations.
+  - [Yandex Cloud KMS](./kms-hsm/yandexcloudkms/) - configure `seal "yandexcloudkms"` for auto-unseal and root key protection; currently supported only for Standalone installations.
   - [Double encryption](./kms-hsm/sealwrap/) - the `seal wrap` mechanism that adds an extra encryption layer for critical data.
 
 If you have any questions, you can ask for assistance in our [Telegram channel](https://t.me/deckhouse). We will be happy to help and provide guidance.

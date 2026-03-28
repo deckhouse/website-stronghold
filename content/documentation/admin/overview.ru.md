@@ -39,7 +39,7 @@ weight: 10
   - [Плагины в DKP](./plugins/dkp/) - загрузка плагинов через `ModuleConfig`, регистрация и включение в Deckhouse Kubernetes Platform.
 - KMS и HSM
   - [Поддержка HSM](./kms-hsm/hsm/) - работа с PKCS11 HSM для auto-unseal и защиты root-ключа; поддерживается только для Standalone-инсталляции.
-  - [Yandex Cloud KMS](./kms-hsm/yandexkms/) - настройка `seal "yandexkms"` для auto-unseal и защиты root-ключа; поддерживается только для Standalone-инсталляции.
+  - [Yandex Cloud KMS](./kms-hsm/yandexcloudkms/) - настройка `seal "yandexcloudkms"` для auto-unseal и защиты root-ключа; поддерживается только для Standalone-инсталляции.
   - [Двойное шифрование](./kms-hsm/sealwrap/) - механизм `seal wrap`, который добавляет дополнительный уровень шифрования для критически важных данных.
 
 Если возникнут вопросы, вы можете обратиться за помощью в наш [Telegram-канал](https://t.me/deckhouse_ru). Мы обязательно поможем и проконсультируем.

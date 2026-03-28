@@ -30,7 +30,7 @@ This means:
 Stronghold supports the following managed key types:
 
 - `pkcs11`
-- `yandexkms`
+- `yandexcloudkms`
 
 ### `pkcs11`
 
@@ -54,9 +54,9 @@ stronghold write sys/managed-keys/pkcs11/my-hsm-key \
   usages=sign,verify
 ```
 
-### `yandexkms`
+### `yandexcloudkms`
 
-The `yandexkms` type is used for integration with Yandex Cloud KMS.
+The `yandexcloudkms` type is used for integration with Yandex Cloud KMS.
 
 Its configuration uses:
 
@@ -75,7 +75,7 @@ If neither `oauth_token` nor `service_account_key_json` is provided, Stronghold 
 Example:
 
 ```shell
-stronghold write sys/managed-keys/yandexkms/my-yc-key \
+stronghold write sys/managed-keys/yandexcloudkms/my-yc-key \
   kms_key_id=<kms_key_id> \
   oauth_token=<oauth_token> \
   usages=sign,verify
@@ -84,7 +84,7 @@ stronghold write sys/managed-keys/yandexkms/my-yc-key \
 Example using the virtual machine service account:
 
 ```shell
-stronghold write sys/managed-keys/yandexkms/my-yc-key \
+stronghold write sys/managed-keys/yandexcloudkms/my-yc-key \
   kms_key_id=<kms_key_id> \
   usages=sign,verify
 ```
@@ -94,7 +94,7 @@ The `oauth_token` and `service_account_key_json` parameters are mutually exclusi
 {{< /alert >}}
 
 {{< alert level="info" >}}
-For `yandexkms`, the set of allowed operations depends on the key itself and its configuration. If the managed key is going to be used by `pki` or `ssh`, it must support signing. For `transit`, the required operations depend on the selected usage scenario.
+For `yandexcloudkms`, the set of allowed operations depends on the key itself and its configuration. If the managed key is going to be used by `pki` or `ssh`, it must support signing. For `transit`, the required operations depend on the selected usage scenario.
 {{< /alert >}}
 
 ## Which secrets engines can use Managed Keys
@@ -171,7 +171,7 @@ stronghold delete sys/managed-keys/pkcs11/my-hsm-key
 ## Practical recommendations
 
 - Use `pkcs11` when keys live in a local or network-attached HSM exposed through a PKCS#11 library.
-- Use `yandexkms` when keys are managed in Yandex Cloud KMS.
+- Use `yandexcloudkms` when keys are managed in Yandex Cloud KMS.
 - Restrict `usages` to the minimum required operations.
 - If the key should not be available to every mount, do not enable `any_mount` and configure `allowed-managed-keys` explicitly.
 - Before attaching a key to `pki`, `ssh`, or `transit`, verify it with `test/sign` or another appropriate validation flow.

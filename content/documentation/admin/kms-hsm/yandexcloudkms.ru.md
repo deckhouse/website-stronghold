@@ -1,20 +1,20 @@
 ---
 title: "Yandex Cloud KMS"
 weight: 15
-description: "Настройка auto-unseal Stronghold через seal yandexkms."
+description: "Настройка auto-unseal Stronghold через seal yandexcloudkms."
 ---
 
-Stronghold поддерживает `seal "yandexkms"` для автоматического распечатывания и защиты root key с использованием Yandex Cloud KMS.
+Stronghold поддерживает `seal "yandexcloudkms"` для автоматического распечатывания и защиты root key с использованием Yandex Cloud KMS.
 
 {{< alert level="warning" >}}
-Поддержка `seal "yandexkms"` в текущем виде относится только к Standalone-установке Stronghold.
+Поддержка `seal "yandexcloudkms"` в текущем виде относится только к Standalone-установке Stronghold.
 {{< /alert >}}
 
-В cloud KMS seal-сценариях Stronghold поддерживает `yandexkms`. Конфигурации `awskms` и `gcpckms` в Stronghold не поддерживаются.
+В cloud KMS seal-сценариях Stronghold поддерживает `yandexcloudkms`. Конфигурации `awskms` и `gcpckms` в Stronghold не поддерживаются.
 
-## Что делает `seal "yandexkms"`
+## Что делает `seal "yandexcloudkms"`
 
-Конфигурация `seal "yandexkms"` позволяет Stronghold:
+Конфигурация `seal "yandexcloudkms"` позволяет Stronghold:
 
 - использовать Yandex Cloud KMS для операций шифрования и расшифровки, связанных с root key;
 - автоматически распечатываться после перезапуска без ручного ввода unseal-ключей;
@@ -25,7 +25,7 @@ Stronghold поддерживает `seal "yandexkms"` для автоматич
 ## Пример конфигурации
 
 ```hcl
-seal "yandexkms" {
+seal "yandexcloudkms" {
   kms_key_id = "abj1abc23def456ghi78"
   oauth_token = "y0_AQAAAA..."
 }
@@ -34,13 +34,13 @@ seal "yandexkms" {
 Пример с использованием сервисного аккаунта:
 
 ```hcl
-seal "yandexkms" {
+seal "yandexcloudkms" {
   kms_key_id = "abj1abc23def456ghi78"
   service_account_key_file = "/etc/stronghold/yc-sa-key.json"
 }
 ```
 
-## Параметры `seal "yandexkms"`
+## Параметры `seal "yandexcloudkms"`
 
 | Параметр | Обязательный | Описание |
 |----------|--------------|----------|
@@ -59,7 +59,7 @@ seal "yandexkms" {
 
 ## Порядок выбора учётных данных
 
-Для `yandexkms` используется следующий порядок при выборе аутентификации:
+Для `yandexcloudkms` используется следующий порядок при выборе аутентификации:
 
 1. Значения из переменных окружения.
 2. Значения из конфигурационного файла Stronghold.
@@ -82,7 +82,7 @@ seal "yandexkms" {
 
 При инициализации Stronghold проверяет, что указанный ключ существует и что у приложения есть право выполнять операции шифрования.
 
-На практике для работы `seal "yandexkms"` необходимо:
+На практике для работы `seal "yandexcloudkms"` необходимо:
 
 - существование симметричного ключа в Yandex Cloud KMS;
 - права на шифрование и расшифровку этим ключом;

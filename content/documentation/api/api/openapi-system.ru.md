@@ -1548,7 +1548,7 @@ weight: 50
 
 | Параметр | Тип | Расположение | Обязательный | Описание |
 |----------|-----|--------------|--------------|----------|
-| `type` | string | path | да | Тип управляемого ключа (pkcs11, yandexkms) |
+| `type` | string | path | да | Тип управляемого ключа (pkcs11, yandexcloudkms) |
 | `list` | string (true) | query | да | Должно быть установлено значение `true`. |
 
 #### Ответы
@@ -1570,7 +1570,7 @@ weight: 50
 | Параметр | Тип | Расположение | Обязательный | Описание |
 |----------|-----|--------------|--------------|----------|
 | `name` | string | path | да | Имя управляемого ключа |
-| `type` | string | path | да | Тип управляемого ключа (pkcs11, yandexkms) |
+| `type` | string | path | да | Тип управляемого ключа (pkcs11, yandexcloudkms) |
 
 #### Ответы
 
@@ -1589,7 +1589,7 @@ weight: 50
 | Параметр | Тип | Расположение | Обязательный | Описание |
 |----------|-----|--------------|--------------|----------|
 | `name` | string | path | да | Имя управляемого ключа |
-| `type` | string | path | да | Тип управляемого ключа (pkcs11, yandexkms) |
+| `type` | string | path | да | Тип управляемого ключа (pkcs11, yandexcloudkms) |
 
 #### Параметры тела запроса
 
@@ -1599,19 +1599,19 @@ weight: 50
 | `allow_replace_key` | boolean | нет | Если true, разрешает пользователям ключа предоставлять материал ключа, который может заменить ранее существовавшие ключи. |
 | `allow_store_key` | boolean | нет | Если true, разрешает пользователям ключа предоставлять материал ключа, если он ранее отсутствовал. |
 | `any_mount` | boolean | нет | Если true, к этому ключу можно обращаться из любой точки монтирования без указания поля allowed_manage_keys для этой точки монтирования. |
-| `endpoint` | string | нет | [yandexkms] Пользовательский endpoint API Yandex Cloud (необязательно). |
+| `endpoint` | string | нет | [yandexcloudkms] Пользовательский endpoint API Yandex Cloud (необязательно). |
 | `force_rw_session` | boolean (default: False) | нет | [pkcs11] Если true, принудительно использует на HSM сессии чтения/записи. |
 | `key_bits` | integer | нет | [pkcs11] Желаемая длина RSA-ключа в битах (2048, 3072 или 4096). |
 | `key_id` | string | нет | [pkcs11] Идентификатор PKCS#11-ключа для использования. |
 | `key_label` | string | нет | [pkcs11] Метка PKCS#11-ключа для использования. |
-| `kms_key_id` | string | нет | [yandexkms] Идентификатор симметричного ключа в Yandex Cloud KMS. |
+| `kms_key_id` | string | нет | [yandexcloudkms] Идентификатор симметричного ключа в Yandex Cloud KMS. |
 | `library` | string | нет | [pkcs11] Имя секции kms_library из конфигурации сервера. |
 | `max_parallel` | integer | нет | [pkcs11] Максимальное количество одновременных операций с HSM. |
 | `mechanism` | string | нет | [pkcs11] Механизм для указанного ключа в виде строки с десятичным или шестнадцатеричным значением (с префиксом 0x). |
-| `oauth_token` | string | нет | [yandexkms] OAuth-токен для аутентификации в Yandex Cloud. Взаимоисключает service_account_key_json. |
+| `oauth_token` | string | нет | [yandexcloudkms] OAuth-токен для аутентификации в Yandex Cloud. Взаимоисключает service_account_key_json. |
 | `pin` | string | нет | [pkcs11] PIN доступа к слоту. |
 | `reverse_signature` | boolean (default: False) | нет | [pkcs11] Если true, меняет порядок байтов подписи ГОСТ, полученной от HSM (совместимость с CryptoPro). |
-| `service_account_key_json` | string | нет | [yandexkms] JSON авторизованного ключа для сервисного аккаунта Yandex Cloud. Хранится внутри Vault, а не в файловой системе. Взаимоисключает oauth_token. |
+| `service_account_key_json` | string | нет | [yandexcloudkms] JSON авторизованного ключа для сервисного аккаунта Yandex Cloud. Хранится внутри Vault, а не в файловой системе. Взаимоисключает oauth_token. |
 | `slot` | string | нет | [pkcs11] Номер слота для использования, указывается строкой (например, "0"). |
 | `token_label` | string | нет | [pkcs11] Метка токена слота для использования. |
 | `usages` | string | нет | Список разрешенных назначений этого ключа, разделенный запятыми. Допустимые значения: encrypt, decrypt, sign, verify, wrap, unwrap, mac и random. |
@@ -1631,7 +1631,7 @@ weight: 50
 | Параметр | Тип | Расположение | Обязательный | Описание |
 |----------|-----|--------------|--------------|----------|
 | `name` | string | path | да | Имя управляемого ключа |
-| `type` | string | path | да | Тип управляемого ключа (pkcs11, yandexkms) |
+| `type` | string | path | да | Тип управляемого ключа (pkcs11, yandexcloudkms) |
 
 #### Ответы
 
@@ -1650,7 +1650,7 @@ weight: 50
 | Параметр | Тип | Расположение | Обязательный | Описание |
 |----------|-----|--------------|--------------|----------|
 | `name` | string | path | да | Имя управляемого ключа |
-| `type` | string | path | да | Тип управляемого ключа (pkcs11, yandexkms) |
+| `type` | string | path | да | Тип управляемого ключа (pkcs11, yandexcloudkms) |
 
 #### Параметры тела запроса
 
