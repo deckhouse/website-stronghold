@@ -326,7 +326,7 @@ where:
   - SSH access keys;
   - configuration file;
   - resources file, etc.
-- `<RELEASE_CHANNEL>` — [release channel](../../../../about/release_channels/) of the platform in kebab-case. It should match the one set in `config.yaml`:
+- `<RELEASE_CHANNEL>` — [release channel](../../release_channels/) of the platform in kebab-case. It should match the one set in `config.yaml`:
   - `alpha` — for the *Alpha* release channel;
   - `beta` — for the *Beta* release channel;
   - `early-access` — for the *Early Access* release channel;
