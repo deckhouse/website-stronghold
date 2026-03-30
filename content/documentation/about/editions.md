@@ -15,7 +15,7 @@ The table below provides a brief comparison of the Deckhouse Stronghold editions
 |---------------------------------------------------------------------------------------------------|------------------------------------|---------------------------------------------------------------|
 | Secure management of the secret lifecycle (storage, creation, delivery, revocation, and rotation) | {{< icon-edition type="supported" >}}        | {{< icon-edition type="supported" >}}               |
 | Support of IaC automation tools (Ansible, Terraform)                                              | {{< icon-edition type="supported" >}}        | {{< icon-edition type="supported" >}}               |
-| Support of authentication methods                                                                 | JWT, OIDC, Kubernetes, LDAP, Token, WebAuthn | JWT, OIDC, Kubernetes, LDAP, Token, WebAuthn        |
+| Support of authentication methods                                                                 | JWT, OIDC, Kubernetes, LDAP, Token, WebAuthn | JWT, OIDC, Kubernetes, LDAP, Token, WebAuthn, SAML  |
 | Support of KV, Kubernetes, Database, SSH, and PKI secret engines                                  | {{< icon-edition type="supported" >}}        | {{< icon-edition type="supported" >}}               |
 | Deploying to an air-gapped environment                                                            | {{< icon-edition type="supported" >}}        | {{< icon-edition type="supported" >}}               |
 | Web interface                                                                                     | {{< icon-edition type="supported" >}}        | {{< icon-edition type="supported" >}}               |
