@@ -5,8 +5,8 @@ weight: 80
 
 The LDAP secrets engine provides management of LDAP credentials as well as dynamic
 creation of credentials. It supports integration with implementations of the LDAP
-v3 protocol, including OpenLDAP, Active Directory, and IBM Resource Access Control
-Facility (RACF).
+v3 protocol, including OpenLDAP, [ALD Pro](https://www.aldpro.ru/), Active Directory,
+and IBM Resource Access Control Facility (RACF).
 
 The secrets engine has three primary features:
 - [Static Credentials](#static-credentials)

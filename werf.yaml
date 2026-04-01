@@ -1,5 +1,8 @@
 configVersion: 1
 project: deckhouse-web-stronghold
+
+cleanup:
+  disableKubernetesBasedPolicy: true
 ---
 
 image: web-artifacts
@@ -15,7 +18,9 @@ git:
     - config/
     - content
     - i18n/
+    - images/
     - layouts/
+    - static/
     - go.*
   stageDependencies:
     setup: ['**/*']

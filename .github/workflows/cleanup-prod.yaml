@@ -1,0 +1,8 @@
+name: Werf prod cleanup
+
+on:
+  workflow_dispatch:
+
+jobs:
+  call-reusable:
+    uses: deckhouse/hugo-web-product-module/.github/workflows/cleanup-prod.yaml@main
