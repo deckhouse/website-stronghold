@@ -1,4 +1,0 @@
-# Fallback translations for shortcodes (used when data/i18n.yaml is not loaded).
-common_coming_soon: "скоро..."
-common_tech_support_stronghold_notice_ce: "Техническая поддержка и Гарантийная техническая поддержка доступны при условии использования Deckhouse Stronghold CE в составе коммерческих редакций Deckhouse Kubernetes Platform, наличии действующего сертификата на Техническую поддержку Deckhouse Kubernetes Platform и выполнения Условий, опубликованных на legal.flant.ru"
-common_tech_support_stronghold_notice_commercial: "Приобретается отдельно"
