@@ -1540,29 +1540,37 @@ Revert a single logger to use log level provided in config.
 
 ### GET /sys/managed-keys/{type}
 
-**Operation ID:** `enterprise-stub-list-managed-keys-type`
+**Operation ID:** `managed-keys-list-keys`
+
+List managed keys of a given type
 
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `type` | string | path | yes |  |
+| `type` | string | path | yes | The type of managed key (pkcs11, yandexcloudkms) |
 | `list` | string (true) | query | yes | Must be set to `true` |
 
 #### Responses
 
 **200**: OK
 
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `keys` | array | no |  |
+
 ### GET /sys/managed-keys/{type}/{name}
 
-**Operation ID:** `enterprise-stub-read-managed-keys-type-name`
+**Operation ID:** `managed-keys-read-key`
+
+Read managed key configuration
 
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `name` | string | path | yes |  |
-| `type` | string | path | yes |  |
+| `name` | string | path | yes | The name of the managed key |
+| `type` | string | path | yes | The type of managed key (pkcs11, yandexcloudkms) |
 
 #### Responses
 
@@ -1570,7 +1578,9 @@ Revert a single logger to use log level provided in config.
 
 ### POST /sys/managed-keys/{type}/{name}
 
-**Operation ID:** `enterprise-stub-write-managed-keys-type-name`
+**Operation ID:** `managed-keys-update`
+
+Update a managed key
 
 **Creation supported:** yes
 
@@ -1578,31 +1588,60 @@ Revert a single logger to use log level provided in config.
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `name` | string | path | yes |  |
-| `type` | string | path | yes |  |
+| `name` | string | path | yes | The name of the managed key |
+| `type` | string | path | yes | The type of managed key (pkcs11, yandexcloudkms) |
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `allow_generate_key` | boolean | no | If true, allows users of the key to trigger key generation. |
+| `allow_replace_key` | boolean | no | If true, allows users of the key to provide key material which may replace keys that were previously present. |
+| `allow_store_key` | boolean | no | If true, allows users of the key to provide key material where none was present. |
+| `any_mount` | boolean | no | If true, this key may be accessed by any mount without the mount's allowed_manage_keys field being set. |
+| `endpoint` | string | no | [yandexcloudkms] Custom Yandex Cloud API endpoint (optional). |
+| `force_rw_session` | boolean (default: False) | no | [pkcs11] If true, forces read/write sessions on the HSM. |
+| `key_bits` | integer | no | [pkcs11] For RSA keys, the desired key length in bits (2048, 3072, or 4096). |
+| `key_id` | string | no | [pkcs11] The id of a PKCS#11 key to use. |
+| `key_label` | string | no | [pkcs11] The label of a PKCS#11 key to use. |
+| `kms_key_id` | string | no | [yandexcloudkms] The ID of the symmetric key in Yandex Cloud KMS. |
+| `library` | string | no | [pkcs11] The name of a kms_library stanza from server configuration. |
+| `max_parallel` | integer | no | [pkcs11] The maximum number of concurrent operations to the HSM. |
+| `mechanism` | string | no | [pkcs11] The mechanism for the given key, specified as a decimal or hexadecimal (prefixed by 0x) string. |
+| `oauth_token` | string | no | [yandexcloudkms] OAuth token for Yandex Cloud authentication. Mutually exclusive with service_account_key_json. |
+| `pin` | string | no | [pkcs11] The access PIN for the slot. |
+| `reverse_signature` | boolean (default: False) | no | [pkcs11] If true, reverses GOST signature bytes from the HSM (CryptoPro compatibility). |
+| `service_account_key_json` | string | no | [yandexcloudkms] JSON of the authorized key for a Yandex Cloud service account. Stored inside Vault, not on the filesystem. Mutually exclusive with oauth_token. |
+| `slot` | string | no | [pkcs11] The slot number to use, specified as a string (e.g. "0"). |
+| `token_label` | string | no | [pkcs11] The slot token label to use. |
+| `usages` | string | no | A comma-delimited list of the allowed usages of this key. Valid values are encrypt, decrypt, sign, verify, wrap, unwrap, mac, and random. |
 
 #### Responses
 
-**200**: OK
+**204**: OK
 
 ### DELETE /sys/managed-keys/{type}/{name}
 
-**Operation ID:** `enterprise-stub-delete-managed-keys-type-name`
+**Operation ID:** `managed-keys-delete-key`
+
+Delete a managed key
 
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `name` | string | path | yes |  |
-| `type` | string | path | yes |  |
+| `name` | string | path | yes | The name of the managed key |
+| `type` | string | path | yes | The type of managed key (pkcs11, yandexcloudkms) |
 
 #### Responses
 
-**204**: empty body
+**204**: OK
 
 ### POST /sys/managed-keys/{type}/{name}/test/sign
 
-**Operation ID:** `enterprise-stub-write-managed-keys-type-name-test-sign`
+**Operation ID:** `managed-keys-test-sign`
+
+Test managed key signing
 
 **Creation supported:** yes
 
@@ -1610,12 +1649,19 @@ Revert a single logger to use log level provided in config.
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `name` | string | path | yes |  |
-| `type` | string | path | yes |  |
+| `name` | string | path | yes | The name of the managed key |
+| `type` | string | path | yes | The type of managed key (pkcs11, yandexcloudkms) |
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `hash_algorithm` | string (default: ) | no | The hashing algorithm to use when signing/verifying the random data. |
+| `use_pss` | boolean (default: False) | no | For RSA backed managed keys attempt to sign with PSS |
 
 #### Responses
 
-**200**: OK
+**204**: OK
 
 ### GET /sys/metrics
 
@@ -1628,6 +1674,230 @@ Export the metrics aggregated for telemetry purpose.
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
 | `format` | string | query | no | Format to export metrics into. Currently accepts only "prometheus". |
+
+#### Responses
+
+**200**: OK
+
+### GET /sys/mfa/method
+
+**Operation ID:** `enterprise-stub-list-mfa-method`
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `list` | string (true) | query | yes | Must be set to `true` |
+
+#### Responses
+
+**200**: OK
+
+### GET /sys/mfa/method/duo/{name}
+
+**Operation ID:** `enterprise-stub-read-mfa-method-duo-name`
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `name` | string | path | yes |  |
+
+#### Responses
+
+**200**: OK
+
+### POST /sys/mfa/method/duo/{name}
+
+**Operation ID:** `enterprise-stub-write-mfa-method-duo-name`
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `name` | string | path | yes |  |
+
+#### Responses
+
+**200**: OK
+
+### DELETE /sys/mfa/method/duo/{name}
+
+**Operation ID:** `enterprise-stub-delete-mfa-method-duo-name`
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `name` | string | path | yes |  |
+
+#### Responses
+
+**204**: empty body
+
+### GET /sys/mfa/method/okta/{name}
+
+**Operation ID:** `enterprise-stub-read-mfa-method-okta-name`
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `name` | string | path | yes |  |
+
+#### Responses
+
+**200**: OK
+
+### POST /sys/mfa/method/okta/{name}
+
+**Operation ID:** `enterprise-stub-write-mfa-method-okta-name`
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `name` | string | path | yes |  |
+
+#### Responses
+
+**200**: OK
+
+### DELETE /sys/mfa/method/okta/{name}
+
+**Operation ID:** `enterprise-stub-delete-mfa-method-okta-name`
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `name` | string | path | yes |  |
+
+#### Responses
+
+**204**: empty body
+
+### GET /sys/mfa/method/pingid/{name}
+
+**Operation ID:** `enterprise-stub-read-mfa-method-pingid-name`
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `name` | string | path | yes |  |
+
+#### Responses
+
+**200**: OK
+
+### POST /sys/mfa/method/pingid/{name}
+
+**Operation ID:** `enterprise-stub-write-mfa-method-pingid-name`
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `name` | string | path | yes |  |
+
+#### Responses
+
+**200**: OK
+
+### DELETE /sys/mfa/method/pingid/{name}
+
+**Operation ID:** `enterprise-stub-delete-mfa-method-pingid-name`
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `name` | string | path | yes |  |
+
+#### Responses
+
+**204**: empty body
+
+### GET /sys/mfa/method/totp/{name}
+
+**Operation ID:** `enterprise-stub-read-mfa-method-totp-name`
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `name` | string | path | yes |  |
+
+#### Responses
+
+**200**: OK
+
+### POST /sys/mfa/method/totp/{name}
+
+**Operation ID:** `enterprise-stub-write-mfa-method-totp-name`
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `name` | string | path | yes |  |
+
+#### Responses
+
+**200**: OK
+
+### DELETE /sys/mfa/method/totp/{name}
+
+**Operation ID:** `enterprise-stub-delete-mfa-method-totp-name`
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `name` | string | path | yes |  |
+
+#### Responses
+
+**204**: empty body
+
+### POST /sys/mfa/method/totp/{name}/admin-destroy
+
+**Operation ID:** `enterprise-stub-write-mfa-method-totp-name-admin-destroy`
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `name` | string | path | yes |  |
+
+#### Responses
+
+**200**: OK
+
+### POST /sys/mfa/method/totp/{name}/admin-generate
+
+**Operation ID:** `enterprise-stub-write-mfa-method-totp-name-admin-generate`
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `name` | string | path | yes |  |
+
+#### Responses
+
+**200**: OK
+
+### GET /sys/mfa/method/totp/{name}/generate
+
+**Operation ID:** `enterprise-stub-read-mfa-method-totp-name-generate`
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `name` | string | path | yes |  |
 
 #### Responses
 
@@ -1786,6 +2056,7 @@ Tune backend configuration parameters for this mount.
 | `options` | object | no | The options to pass into the backend. Should be a json object with string keys and values. |
 | `passthrough_request_headers` | array | no |  |
 | `plugin_version` | string | no | The semantic version of the plugin to use. |
+| `replication_config` | object | no | KV replication configuration. |
 | `token_type` | string | no | The type of token to issue (service or batch). |
 | `user_lockout_counter_reset_duration` | integer | no |  |
 | `user_lockout_disable` | boolean | no |  |
@@ -1812,7 +2083,7 @@ Tune backend configuration parameters for this mount.
 | `allowed_response_headers` | array | no | A list of headers to whitelist and allow a plugin to set on responses. |
 | `audit_non_hmac_request_keys` | array | no | The list of keys in the request data object that will not be HMAC'ed by audit devices. |
 | `audit_non_hmac_response_keys` | array | no | The list of keys in the response data object that will not be HMAC'ed by audit devices. |
-| `cmd_enable_repl` | boolean | no | Enable the replication for this mount |
+| `cmd_enable_repl` | boolean | no | Enable or disable the replication for this mount. |
 | `default_lease_ttl` | string | no | The default lease TTL for this mount. |
 | `description` | string | no | User-friendly description for this credential backend. |
 | `listing_visibility` | string | no | Determines the visibility of the mount in the UI-specific listing endpoint. Accepted value are 'unauth' and 'hidden', with the empty default ('') behaving like 'hidden'. |
@@ -1820,10 +2091,13 @@ Tune backend configuration parameters for this mount.
 | `options` | object | no | The options to pass into the backend. Should be a json object with string keys and values. |
 | `passthrough_request_headers` | array | no | A list of headers to whitelist and pass from the request to the plugin. |
 | `plugin_version` | string | no | The semantic version of the plugin to use. |
-| `src_ca_cert` | string | no |  |
-| `src_secret_path` | array | no |  |
-| `src_token` | string | no |  |
-| `sync_period_min` | integer | no |  |
+| `src_address` | string | no | Address of the source Stronghold cluster for replication. |
+| `src_ca_cert` | string | no | CA certificate for TLS connection to the source cluster. |
+| `src_mount_path` | string | no | Mount path of the KV engine on the source cluster. |
+| `src_secret_path` | array | no | List of secret paths to replicate from the source cluster. |
+| `src_token` | string | no | Token for accessing the API of the remote server. Mutually exclusive with src_wrapping_token. |
+| `src_wrapping_token` | string | no | Wrapping token that will be unwrapped on the remote server to obtain the replication token. Mutually exclusive with src_token. |
+| `sync_period_min` | integer | no | Replication sync period in minutes. |
 | `token_type` | string | no | The type of token to issue (service or batch). |
 | `user_lockout_config` | object | no | The user lockout configuration to pass into the backend. Should be a json object with string keys and values. |
 
@@ -3611,7 +3885,7 @@ Updates the configuration of the automatic snapshot.
 | `aws_access_key_id` | string | no | S3 access key ID. |
 | `aws_s3_bucket` | string | yes | S3 bucket to write snapshots to. |
 | `aws_s3_ca_certificate` | string (default: ) | no | S3 CA certificate PEM. |
-| `aws_s3_disable_tls` | boolean (default: False) | no | Disable TLS for the S3 endpoint. This should only be used for testing purposes, typically in conjunction with `s3_endpoint`. |
+| `aws_s3_disable_tls` | boolean (default: False) | no | Disable TLS for the S3 endpoint. This should only be used for testing purposes, typically in conjunction with `s3_endpoint`. |
 | `aws_s3_endpoint` | string | no | S3 endpoint. |
 | `aws_s3_region` | string (default: ) | no | S3 region bucket is in. |
 | `aws_secret_access_key` | string | no | S3 secret access key. |
@@ -3680,7 +3954,7 @@ Generate a hash sum for input data
 
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
-| `algorithm` | string (default: sha2-256) | no | Algorithm to use (POST body parameter). Valid values are: *sha2-224* sha2-256 *sha2-384* sha2-512 *streebog-256* streebog-512 Defaults to "sha2-256". |
+| `algorithm` | string (default: sha2-256) | no | Algorithm to use (POST body parameter). Valid values are: \* sha2-224 \* sha2-256 \* sha2-384 \* sha2-512 \* streebog-256 \* streebog-512 Defaults to "sha2-256". |
 | `format` | string (default: hex) | no | Encoding format to use. Can be "hex" or "base64". Defaults to "hex". |
 | `input` | string | no | The base64-encoded input data |
 | `urlalgorithm` | string | no | Algorithm to use (POST URL parameter) |
@@ -3709,7 +3983,7 @@ Generate a hash sum for input data
 
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
-| `algorithm` | string (default: sha2-256) | no | Algorithm to use (POST body parameter). Valid values are: *sha2-224* sha2-256 *sha2-384* sha2-512 *streebog-256* streebog-512 Defaults to "sha2-256". |
+| `algorithm` | string (default: sha2-256) | no | Algorithm to use (POST body parameter). Valid values are: \* sha2-224 \* sha2-256 \* sha2-384 \* sha2-512 \* streebog-256 \* streebog-512 Defaults to "sha2-256". |
 | `format` | string (default: hex) | no | Encoding format to use. Can be "hex" or "base64". Defaults to "hex". |
 | `input` | string | no | The base64-encoded input data |
 

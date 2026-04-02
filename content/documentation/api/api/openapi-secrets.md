@@ -2250,6 +2250,7 @@ Configuration of ACME Endpoints
 | `dns_resolver` | string (default: ) | no | DNS resolver to use for domain resolution on this mount. Defaults to using the default system resolver. Must be in the format <host>:<port>, with both parts mandatory. |
 | `eab_policy` | string (default: always-required) | no | Specify the policy to use for external account binding behaviour, 'not-required', 'new-account-required' or 'always-required' |
 | `enabled` | boolean (default: False) | no | whether ACME is enabled, defaults to false meaning that clusters will by default not get ACME support |
+| `max_ttl` | integer (default: 7776000) | no | maximum lifetime of ACME-issued certificates. This caps any role, mount, or issuer-derived certificate lifetime for ACME issuance and defaults to 2160h (90 days). |
 
 #### Responses
 
@@ -2398,8 +2399,8 @@ Set cluster-local configuration, including address to this PR cluster.
 
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
-| `aia_path` | string | no | Optional URI to this mount's AIA distribution point; may refer to an external non-Vault responder. This is for resolving AIA URLs and providing the {{cluster_aia_path}} template parameter and will not be used for other purposes. As such, unlike path above, this could safely be an insecure transit mechanism (like HTTP without TLS). For example: <http://cdn.example.com/pr1/pki> |
-| `path` | string | no | Canonical URI to this mount on this performance replication cluster's external address. This is for resolving AIA URLs and providing the {{cluster_path}} template parameter but might be used for other purposes in the future. This should only point back to this particular PR replica and should not ever point to another PR cluster. It may point to any node in the PR replica, including standby nodes, and need not always point to the active node. For example: <https://pr1.vault.example.com:8200/v1/pki> |
+| `aia_path` | string | no | Optional URI to this mount's AIA distribution point; may refer to an external non-Vault responder. This is for resolving AIA URLs and providing the {{cluster_aia_path}} template parameter and will not be used for other purposes. As such, unlike path above, this could safely be an insecure transit mechanism (like HTTP without TLS). For example: http://cdn.example.com/pr1/pki |
+| `path` | string | no | Canonical URI to this mount on this performance replication cluster's external address. This is for resolving AIA URLs and providing the {{cluster_path}} template parameter but might be used for other purposes in the future. This should only point back to this particular PR replica and should not ever point to another PR cluster. It may point to any node in the PR replica, including standby nodes, and need not always point to the active node. For example: https://pr1.vault.example.com:8200/v1/pki |
 
 ### POST /{pki_mount_path}/config/cluster
 
@@ -2417,8 +2418,8 @@ Set cluster-local configuration, including address to this PR cluster.
 
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
-| `aia_path` | string | no | Optional URI to this mount's AIA distribution point; may refer to an external non-Vault responder. This is for resolving AIA URLs and providing the {{cluster_aia_path}} template parameter and will not be used for other purposes. As such, unlike path above, this could safely be an insecure transit mechanism (like HTTP without TLS). For example: <http://cdn.example.com/pr1/pki> |
-| `path` | string | no | Canonical URI to this mount on this performance replication cluster's external address. This is for resolving AIA URLs and providing the {{cluster_path}} template parameter but might be used for other purposes in the future. This should only point back to this particular PR replica and should not ever point to another PR cluster. It may point to any node in the PR replica, including standby nodes, and need not always point to the active node. For example: <https://pr1.vault.example.com:8200/v1/pki> |
+| `aia_path` | string | no | Optional URI to this mount's AIA distribution point; may refer to an external non-Vault responder. This is for resolving AIA URLs and providing the {{cluster_aia_path}} template parameter and will not be used for other purposes. As such, unlike path above, this could safely be an insecure transit mechanism (like HTTP without TLS). For example: http://cdn.example.com/pr1/pki |
+| `path` | string | no | Canonical URI to this mount on this performance replication cluster's external address. This is for resolving AIA URLs and providing the {{cluster_path}} template parameter but might be used for other purposes in the future. This should only point back to this particular PR replica and should not ever point to another PR cluster. It may point to any node in the PR replica, including standby nodes, and need not always point to the active node. For example: https://pr1.vault.example.com:8200/v1/pki |
 
 #### Responses
 
@@ -2426,8 +2427,8 @@ Set cluster-local configuration, including address to this PR cluster.
 
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
-| `aia_path` | string | no | Optional URI to this mount's AIA distribution point; may refer to an external non-Vault responder. This is for resolving AIA URLs and providing the {{cluster_aia_path}} template parameter and will not be used for other purposes. As such, unlike path above, this could safely be an insecure transit mechanism (like HTTP without TLS). For example: <http://cdn.example.com/pr1/pki> |
-| `path` | string | no | Canonical URI to this mount on this performance replication cluster's external address. This is for resolving AIA URLs and providing the {{cluster_path}} template parameter but might be used for other purposes in the future. This should only point back to this particular PR replica and should not ever point to another PR cluster. It may point to any node in the PR replica, including standby nodes, and need not always point to the active node. For example: <https://pr1.vault.example.com:8200/v1/pki> |
+| `aia_path` | string | no | Optional URI to this mount's AIA distribution point; may refer to an external non-Vault responder. This is for resolving AIA URLs and providing the {{cluster_aia_path}} template parameter and will not be used for other purposes. As such, unlike path above, this could safely be an insecure transit mechanism (like HTTP without TLS). For example: http://cdn.example.com/pr1/pki |
+| `path` | string | no | Canonical URI to this mount on this performance replication cluster's external address. This is for resolving AIA URLs and providing the {{cluster_path}} template parameter but might be used for other purposes in the future. This should only point back to this particular PR replica and should not ever point to another PR cluster. It may point to any node in the PR replica, including standby nodes, and need not always point to the active node. For example: https://pr1.vault.example.com:8200/v1/pki |
 
 ### GET /{pki_mount_path}/config/crl
 
@@ -2859,7 +2860,7 @@ Generate a new CSR and private key used for signing.
 | `common_name` | string | no | The requested common name; if you want more than one, specify the alternative names in the alt_names map. If not specified when signing, the common name will be taken from the CSR; other names must still be specified in alt_names or ip_sans. |
 | `country` | array | no | If set, Country will be set to this value. |
 | `exclude_cn_from_sans` | boolean (default: False) | no | If true, the Common Name will not be included in DNS or Email Subject Alternate Names. Defaults to false (CN is included). |
-| `exported` | string (internal, exported, kms) | no | Must be "internal", "exported" or "kms". If set to "exported", the generated private key will be returned. This is your *only* chance to retrieve the private key! |
+| `exported` | string (internal, exported, kms) | no | Must be "internal", "exported" or "kms". If set to "exported", the generated private key will be returned. This is your \*only* chance to retrieve the private key! |
 | `format` | string (pem, der, pem_bundle) (default: pem) | no | Format for returned data. Can be "pem", "der", or "pem_bundle". If "pem_bundle", any private key and issuing cert will be appended to the certificate pem. If "der", the value will be base64 encoded. Defaults to "pem". |
 | `ip_sans` | array | no | The requested IP SANs, if any, in a comma-delimited list |
 | `key_bits` | integer (default: 0) | no | The number of bits to use. Allowed values are 0 (universal default); with rsa key_type: 2048 (default), 3072, or 4096; with ec key_type: 224, 256 (default), 384, or 521; ignored with ed25519. |
@@ -2904,7 +2905,7 @@ Generate a new CSR and private key used for signing.
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `exported` | string (internal, exported, kms) | path | yes | Must be "internal", "exported" or "kms". If set to "exported", the generated private key will be returned. This is your *only* chance to retrieve the private key! |
+| `exported` | string (internal, exported, kms) | path | yes | Must be "internal", "exported" or "kms". If set to "exported", the generated private key will be returned. This is your \*only* chance to retrieve the private key! |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
@@ -4188,7 +4189,7 @@ Issue an intermediate CA certificate based on the provided CSR.
 | `organization` | array | no | If set, O (Organization) will be set to this value. |
 | `other_sans` | array | no | Requested other SANs, in an array with the format <oid>;UTF8:<utf8 string value> for each entry. |
 | `ou` | array | no | If set, OU (OrganizationalUnit) will be set to this value. |
-| `permitted_dns_domains` | array | no | Domains for which this certificate is allowed to sign or issue child certificates. If set, all DNS names (subject and alt) on child certs must be exact matches or subsets of the given domains (see <https://tools.ietf.org/html/rfc5280#section-4.2.1.10>). |
+| `permitted_dns_domains` | array | no | Domains for which this certificate is allowed to sign or issue child certificates. If set, all DNS names (subject and alt) on child certs must be exact matches or subsets of the given domains (see https://tools.ietf.org/html/rfc5280#section-4.2.1.10). |
 | `postal_code` | array | no | If set, Postal Code will be set to this value. |
 | `private_key_format` | string (, der, pem, pkcs8) (default: der) | no | Format for the returned private key. Generally the default will be controlled by the "format" parameter as either base64-encoded DER or PEM-encoded DER. However, this can be set to "pkcs8" to have the returned private key contain base64-encoded pkcs8 or PEM-encoded pkcs8 instead. Defaults to "der". |
 | `province` | array | no | If set, Province will be set to this value. |
@@ -4295,11 +4296,11 @@ Issue a certificate directly based on the provided CSR.
 | `common_name` | string | no | The requested common name; if you want more than one, specify the alternative names in the alt_names map. If email protection is enabled in the role, this may be an email address. |
 | `csr` | string (default: ) | no | PEM-format CSR to be signed. Values will be taken verbatim from the CSR, except for basic constraints. |
 | `exclude_cn_from_sans` | boolean (default: False) | no | If true, the Common Name will not be included in DNS or Email Subject Alternate Names. Defaults to false (CN is included). |
-| `ext_key_usage` | array (default: []) | no | A comma-separated string or list of extended key usages. Valid values can be found at <https://golang.org/pkg/crypto/x509/#ExtKeyUsage> -- simply drop the "ExtKeyUsage" part of the name. To remove all key usages from being set, set this value to an empty list. |
+| `ext_key_usage` | array (default: []) | no | A comma-separated string or list of extended key usages. Valid values can be found at https://golang.org/pkg/crypto/x509/#ExtKeyUsage -- simply drop the "ExtKeyUsage" part of the name. To remove all key usages from being set, set this value to an empty list. |
 | `ext_key_usage_oids` | array | no | A comma-separated string or list of extended key usage oids. |
 | `format` | string (pem, der, pem_bundle) (default: pem) | no | Format for returned data. Can be "pem", "der", or "pem_bundle". If "pem_bundle", any private key and issuing cert will be appended to the certificate pem. If "der", the value will be base64 encoded. Defaults to "pem". |
 | `ip_sans` | array | no | The requested IP SANs, if any, in a comma-delimited list |
-| `key_usage` | array (default: ['DigitalSignature', 'KeyAgreement', 'KeyEncipherment']) | no | A comma-separated string or list of key usages (not extended key usages). Valid values can be found at <https://golang.org/pkg/crypto/x509/#KeyUsage> -- simply drop the "KeyUsage" part of the name. To remove all key usages from being set, set this value to an empty list. |
+| `key_usage` | array (default: ['DigitalSignature', 'KeyAgreement', 'KeyEncipherment']) | no | A comma-separated string or list of key usages (not extended key usages). Valid values can be found at https://golang.org/pkg/crypto/x509/#KeyUsage -- simply drop the "KeyUsage" part of the name. To remove all key usages from being set, set this value to an empty list. |
 | `not_after` | string | no | Set the not after field of the certificate with specified date value. The value format should be given in UTC format YYYY-MM-ddTHH:MM:SSZ |
 | `other_sans` | array | no | Requested other SANs, in an array with the format <oid>;UTF8:<utf8 string value> for each entry. |
 | `private_key_format` | string (, der, pem, pkcs8) (default: der) | no | Format for the returned private key. Generally the default will be controlled by the "format" parameter as either base64-encoded DER or PEM-encoded DER. However, this can be set to "pkcs8" to have the returned private key contain base64-encoded pkcs8 or PEM-encoded pkcs8 instead. Defaults to "der". |
@@ -4348,11 +4349,11 @@ Issue a certificate directly based on the provided CSR.
 | `common_name` | string | no | The requested common name; if you want more than one, specify the alternative names in the alt_names map. If email protection is enabled in the role, this may be an email address. |
 | `csr` | string (default: ) | no | PEM-format CSR to be signed. Values will be taken verbatim from the CSR, except for basic constraints. |
 | `exclude_cn_from_sans` | boolean (default: False) | no | If true, the Common Name will not be included in DNS or Email Subject Alternate Names. Defaults to false (CN is included). |
-| `ext_key_usage` | array (default: []) | no | A comma-separated string or list of extended key usages. Valid values can be found at <https://golang.org/pkg/crypto/x509/#ExtKeyUsage> -- simply drop the "ExtKeyUsage" part of the name. To remove all key usages from being set, set this value to an empty list. |
+| `ext_key_usage` | array (default: []) | no | A comma-separated string or list of extended key usages. Valid values can be found at https://golang.org/pkg/crypto/x509/#ExtKeyUsage -- simply drop the "ExtKeyUsage" part of the name. To remove all key usages from being set, set this value to an empty list. |
 | `ext_key_usage_oids` | array | no | A comma-separated string or list of extended key usage oids. |
 | `format` | string (pem, der, pem_bundle) (default: pem) | no | Format for returned data. Can be "pem", "der", or "pem_bundle". If "pem_bundle", any private key and issuing cert will be appended to the certificate pem. If "der", the value will be base64 encoded. Defaults to "pem". |
 | `ip_sans` | array | no | The requested IP SANs, if any, in a comma-delimited list |
-| `key_usage` | array (default: ['DigitalSignature', 'KeyAgreement', 'KeyEncipherment']) | no | A comma-separated string or list of key usages (not extended key usages). Valid values can be found at <https://golang.org/pkg/crypto/x509/#KeyUsage> -- simply drop the "KeyUsage" part of the name. To remove all key usages from being set, set this value to an empty list. |
+| `key_usage` | array (default: ['DigitalSignature', 'KeyAgreement', 'KeyEncipherment']) | no | A comma-separated string or list of key usages (not extended key usages). Valid values can be found at https://golang.org/pkg/crypto/x509/#KeyUsage -- simply drop the "KeyUsage" part of the name. To remove all key usages from being set, set this value to an empty list. |
 | `not_after` | string | no | Set the not after field of the certificate with specified date value. The value format should be given in UTC format YYYY-MM-ddTHH:MM:SSZ |
 | `other_sans` | array | no | Requested other SANs, in an array with the format <oid>;UTF8:<utf8 string value> for each entry. |
 | `private_key_format` | string (, der, pem, pkcs8) (default: der) | no | Format for the returned private key. Generally the default will be controlled by the "format" parameter as either base64-encoded DER or PEM-encoded DER. However, this can be set to "pkcs8" to have the returned private key contain base64-encoded pkcs8 or PEM-encoded pkcs8 instead. Defaults to "der". |
@@ -4595,7 +4596,7 @@ Generate a new CSR and private key used for signing.
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `exported` | string (internal, exported, kms) | path | yes | Must be "internal", "exported" or "kms". If set to "exported", the generated private key will be returned. This is your *only* chance to retrieve the private key! |
+| `exported` | string (internal, exported, kms) | path | yes | Must be "internal", "exported" or "kms". If set to "exported", the generated private key will be returned. This is your \*only* chance to retrieve the private key! |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
@@ -4651,7 +4652,7 @@ Generate a new CA certificate and private key used for signing.
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `exported` | string (internal, exported, kms) | path | yes | Must be "internal", "exported" or "kms". If set to "exported", the generated private key will be returned. This is your *only* chance to retrieve the private key! |
+| `exported` | string (internal, exported, kms) | path | yes | Must be "internal", "exported" or "kms". If set to "exported", the generated private key will be returned. This is your \*only* chance to retrieve the private key! |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
@@ -4678,7 +4679,7 @@ Generate a new CA certificate and private key used for signing.
 | `organization` | array | no | If set, O (Organization) will be set to this value. |
 | `other_sans` | array | no | Requested other SANs, in an array with the format <oid>;UTF8:<utf8 string value> for each entry. |
 | `ou` | array | no | If set, OU (OrganizationalUnit) will be set to this value. |
-| `permitted_dns_domains` | array | no | Domains for which this certificate is allowed to sign or issue child certificates. If set, all DNS names (subject and alt) on child certs must be exact matches or subsets of the given domains (see <https://tools.ietf.org/html/rfc5280#section-4.2.1.10>). |
+| `permitted_dns_domains` | array | no | Domains for which this certificate is allowed to sign or issue child certificates. If set, all DNS names (subject and alt) on child certs must be exact matches or subsets of the given domains (see https://tools.ietf.org/html/rfc5280#section-4.2.1.10). |
 | `postal_code` | array | no | If set, Postal Code will be set to this value. |
 | `private_key_format` | string (, der, pem, pkcs8) (default: der) | no | Format for the returned private key. Generally the default will be controlled by the "format" parameter as either base64-encoded DER or PEM-encoded DER. However, this can be set to "pkcs8" to have the returned private key contain base64-encoded pkcs8 or PEM-encoded pkcs8 instead. Defaults to "der". |
 | `province` | array | no | If set, Province will be set to this value. |
@@ -5137,7 +5138,7 @@ Manage the roles that can be created with this backend.
 | `allowed_serial_numbers` | array | no | If set, an array of allowed serial numbers to put in Subject. These values support globbing. |
 | `allowed_uri_sans` | array | no | If set, an array of allowed URIs for URI Subject Alternative Names. Any valid URI is accepted, these values support globbing. |
 | `allowed_uri_sans_template` | boolean | no | If set, Allowed URI SANs can be specified using identity template policies. Non-templated URI SANs are also permitted. |
-| `allowed_user_ids` | array | no | If set, an array of allowed user-ids to put in user system login name specified here: <https://www.rfc-editor.org/rfc/rfc1274#section-9.3.1> |
+| `allowed_user_ids` | array | no | If set, an array of allowed user-ids to put in user system login name specified here: https://www.rfc-editor.org/rfc/rfc1274#section-9.3.1 |
 | `basic_constraints_valid_for_non_ca` | boolean | no | Mark Basic Constraints valid when issuing non-CA certificates. |
 | `client_flag` | boolean | no | If set, certificates are flagged for client auth use. Defaults to true. See also RFC 5280 Section 4.2.1.12. |
 | `cn_validations` | array | no | List of allowed validations to run against the Common Name field. Values can include 'email' to validate the CN is a email address, 'hostname' to validate the CN is a valid hostname (potentially including wildcards). When multiple validations are specified, these take OR semantics (either email OR hostname are allowed). The special value 'disabled' allows disabling all CN name validations, allowing for arbitrary non-Hostname, non-Email address CNs. |
@@ -5145,13 +5146,13 @@ Manage the roles that can be created with this backend.
 | `country` | array | no | If set, Country will be set to this value in certificates issued by this role. |
 | `email_protection_flag` | boolean | no | If set, certificates are flagged for email protection use. Defaults to false. See also RFC 5280 Section 4.2.1.12. |
 | `enforce_hostnames` | boolean | no | If set, only valid host names are allowed for CN and DNS SANs, and the host part of email addresses. Defaults to true. |
-| `ext_key_usage` | array | no | A comma-separated string or list of extended key usages. Valid values can be found at <https://golang.org/pkg/crypto/x509/#ExtKeyUsage> -- simply drop the "ExtKeyUsage" part of the name. To remove all key usages from being set, set this value to an empty list. See also RFC 5280 Section 4.2.1.12. |
+| `ext_key_usage` | array | no | A comma-separated string or list of extended key usages. Valid values can be found at https://golang.org/pkg/crypto/x509/#ExtKeyUsage -- simply drop the "ExtKeyUsage" part of the name. To remove all key usages from being set, set this value to an empty list. See also RFC 5280 Section 4.2.1.12. |
 | `ext_key_usage_oids` | array | no | A comma-separated string or list of extended key usage oids. |
 | `generate_lease` | boolean | no | If set, certificates issued/signed against this role will have Vault leases attached to them. Defaults to "false". Certificates can be added to the CRL by "vault revoke <lease_id>" when certificates are associated with leases. It can also be done using the "pki/revoke" endpoint. However, when lease generation is disabled, invoking "pki/revoke" would be the only way to add the certificates to the CRL. When large number of certificates are generated with long lifetimes, it is recommended that lease generation be disabled, as large amount of leases adversely affect the startup time of Vault. |
 | `issuer_ref` | string | no | Reference to the issuer used to sign requests serviced by this role. |
 | `key_bits` | integer | no | The number of bits to use. Allowed values are 0 (universal default); with rsa key_type: 2048 (default), 3072, or 4096; with ec key_type: 224, 256 (default), 384, or 521; ignored with ed25519. |
 | `key_type` | string | no | The type of key to use; defaults to RSA. "rsa" "ec", "ed25519", "gost3410-256-paramset-a", "gost3410-256-paramset-b", "gost3410-256-paramset-c", "gost3410-256-paramset-d", "gost3410-512-paramset-a", "gost3410-512-paramset-b", "gost3410-512-paramset-c" and "any" are the only valid values. |
-| `key_usage` | array | no | A comma-separated string or list of key usages (not extended key usages). Valid values can be found at <https://golang.org/pkg/crypto/x509/#KeyUsage> -- simply drop the "KeyUsage" part of the name. To remove all key usages from being set, set this value to an empty list. See also RFC 5280 Section 4.2.1.3. |
+| `key_usage` | array | no | A comma-separated string or list of key usages (not extended key usages). Valid values can be found at https://golang.org/pkg/crypto/x509/#KeyUsage -- simply drop the "KeyUsage" part of the name. To remove all key usages from being set, set this value to an empty list. See also RFC 5280 Section 4.2.1.3. |
 | `locality` | array | no | If set, Locality will be set to this value in certificates issued by this role. |
 | `max_ttl` | integer | no | The maximum allowed lease duration. If not set, defaults to the system maximum lease TTL. |
 | `no_store` | boolean | no | If set, certificates issued/signed against this role will not be stored in the storage backend. This can improve performance when issuing large numbers of certificates. However, certificates issued in this way cannot be enumerated or revoked, so this option is recommended only for certificates that are non-sensitive, or extremely short-lived. This option implies a value of "false" for "generate_lease". |
@@ -5165,10 +5166,11 @@ Manage the roles that can be created with this backend.
 | `require_cn` | boolean | no | If set to false, makes the 'common_name' field optional while generating a certificate. |
 | `server_flag` | boolean (default: True) | no | If set, certificates are flagged for server auth use. Defaults to true. See also RFC 5280 Section 4.2.1.12. |
 | `signature_bits` | integer | no | The number of bits to use in the signature algorithm; accepts 256 for SHA-2-256, 384 for SHA-2-384, and 512 for SHA-2-512. Defaults to 0 to automatically detect based on key length (SHA-2-256 for RSA keys, and matching the curve size for NIST P-Curves). |
+| `single_valued_rdns` | boolean (default: False) | no | If set to true, each subject attribute value (Country, Organization, OU, etc.) is encoded as its own separate single-valued RDN in the certificate. This matches the common practice of most CAs (OpenSSL, Microsoft CA). When false, all values of the same attribute type are grouped into a single multi-valued RDN. |
 | `street_address` | array | no | If set, Street Address will be set to this value in certificates issued by this role. |
 | `ttl` | integer | no | The lease duration (validity period of the certificate) if no specific lease duration is requested. The lease duration controls the expiration of certificates issued by this backend. Defaults to the system default value or the value of max_ttl, whichever is shorter. |
-| `use_csr_common_name` | boolean | no | If set, when used with a signing profile, the common name in the CSR will be used. This does *not* include any requested Subject Alternative Names; use use_csr_sans for that. Defaults to true. |
-| `use_csr_sans` | boolean | no | If set, when used with a signing profile, the SANs in the CSR will be used. This does *not* include the Common Name (cn); use use_csr_common_name for that. Defaults to true. |
+| `use_csr_common_name` | boolean | no | If set, when used with a signing profile, the common name in the CSR will be used. This does \*not* include any requested Subject Alternative Names; use use_csr_sans for that. Defaults to true. |
+| `use_csr_sans` | boolean | no | If set, when used with a signing profile, the SANs in the CSR will be used. This does \*not* include the Common Name (cn); use use_csr_common_name for that. Defaults to true. |
 | `use_pss` | boolean | no | Whether or not to use PSS signatures when using a RSA key-type issuer. Defaults to false. |
 
 ### POST /{pki_mount_path}/roles/{name}
@@ -5201,7 +5203,7 @@ Manage the roles that can be created with this backend.
 | `allowed_serial_numbers` | array | no | If set, an array of allowed serial numbers to put in Subject. These values support globbing. |
 | `allowed_uri_sans` | array | no | If set, an array of allowed URIs for URI Subject Alternative Names. Any valid URI is accepted, these values support globbing. |
 | `allowed_uri_sans_template` | boolean (default: False) | no | If set, Allowed URI SANs can be specified using identity template policies. Non-templated URI SANs are also permitted. |
-| `allowed_user_ids` | array | no | If set, an array of allowed user-ids to put in user system login name specified here: <https://www.rfc-editor.org/rfc/rfc1274#section-9.3.1> |
+| `allowed_user_ids` | array | no | If set, an array of allowed user-ids to put in user system login name specified here: https://www.rfc-editor.org/rfc/rfc1274#section-9.3.1 |
 | `backend` | string | no | Backend Type |
 | `basic_constraints_valid_for_non_ca` | boolean | no | Mark Basic Constraints valid when issuing non-CA certificates. |
 | `client_flag` | boolean (default: True) | no | If set, certificates are flagged for client auth use. Defaults to true. See also RFC 5280 Section 4.2.1.12. |
@@ -5210,13 +5212,13 @@ Manage the roles that can be created with this backend.
 | `country` | array | no | If set, Country will be set to this value in certificates issued by this role. |
 | `email_protection_flag` | boolean | no | If set, certificates are flagged for email protection use. Defaults to false. See also RFC 5280 Section 4.2.1.12. |
 | `enforce_hostnames` | boolean (default: True) | no | If set, only valid host names are allowed for CN and DNS SANs, and the host part of email addresses. Defaults to true. |
-| `ext_key_usage` | array (default: []) | no | A comma-separated string or list of extended key usages. Valid values can be found at <https://golang.org/pkg/crypto/x509/#ExtKeyUsage> -- simply drop the "ExtKeyUsage" part of the name. To remove all key usages from being set, set this value to an empty list. See also RFC 5280 Section 4.2.1.12. |
+| `ext_key_usage` | array (default: []) | no | A comma-separated string or list of extended key usages. Valid values can be found at https://golang.org/pkg/crypto/x509/#ExtKeyUsage -- simply drop the "ExtKeyUsage" part of the name. To remove all key usages from being set, set this value to an empty list. See also RFC 5280 Section 4.2.1.12. |
 | `ext_key_usage_oids` | array | no | A comma-separated string or list of extended key usage oids. |
 | `generate_lease` | boolean | no | If set, certificates issued/signed against this role will have Vault leases attached to them. Defaults to "false". Certificates can be added to the CRL by "vault revoke <lease_id>" when certificates are associated with leases. It can also be done using the "pki/revoke" endpoint. However, when lease generation is disabled, invoking "pki/revoke" would be the only way to add the certificates to the CRL. When large number of certificates are generated with long lifetimes, it is recommended that lease generation be disabled, as large amount of leases adversely affect the startup time of Vault. |
 | `issuer_ref` | string (default: default) | no | Reference to the issuer used to sign requests serviced by this role. |
 | `key_bits` | integer (default: 0) | no | The number of bits to use. Allowed values are 0 (universal default); with rsa key_type: 2048 (default), 3072, or 4096; with ec key_type: 224, 256 (default), 384, or 521; ignored with ed25519. |
 | `key_type` | string (rsa, ec, ed25519, gost3410-256-paramset-a, gost3410-256-paramset-b, gost3410-256-paramset-c, gost3410-256-paramset-d, gost3410-512-paramset-a, gost3410-512-paramset-b, gost3410-512-paramset-c, any) (default: rsa) | no | The type of key to use; defaults to RSA. "rsa" "ec", "ed25519", "gost3410-256-paramset-a", "gost3410-256-paramset-b", "gost3410-256-paramset-c", "gost3410-256-paramset-d", "gost3410-512-paramset-a", "gost3410-512-paramset-b", "gost3410-512-paramset-c" and "any" are the only valid values. |
-| `key_usage` | array (default: ['DigitalSignature', 'KeyAgreement', 'KeyEncipherment']) | no | A comma-separated string or list of key usages (not extended key usages). Valid values can be found at <https://golang.org/pkg/crypto/x509/#KeyUsage> -- simply drop the "KeyUsage" part of the name. To remove all key usages from being set, set this value to an empty list. See also RFC 5280 Section 4.2.1.3. |
+| `key_usage` | array (default: ['DigitalSignature', 'KeyAgreement', 'KeyEncipherment']) | no | A comma-separated string or list of key usages (not extended key usages). Valid values can be found at https://golang.org/pkg/crypto/x509/#KeyUsage -- simply drop the "KeyUsage" part of the name. To remove all key usages from being set, set this value to an empty list. See also RFC 5280 Section 4.2.1.3. |
 | `locality` | array | no | If set, Locality will be set to this value in certificates issued by this role. |
 | `max_ttl` | integer | no | The maximum allowed lease duration. If not set, defaults to the system maximum lease TTL. |
 | `no_store` | boolean | no | If set, certificates issued/signed against this role will not be stored in the storage backend. This can improve performance when issuing large numbers of certificates. However, certificates issued in this way cannot be enumerated or revoked, so this option is recommended only for certificates that are non-sensitive, or extremely short-lived. This option implies a value of "false" for "generate_lease". |
@@ -5230,10 +5232,11 @@ Manage the roles that can be created with this backend.
 | `require_cn` | boolean (default: True) | no | If set to false, makes the 'common_name' field optional while generating a certificate. |
 | `server_flag` | boolean (default: True) | no | If set, certificates are flagged for server auth use. Defaults to true. See also RFC 5280 Section 4.2.1.12. |
 | `signature_bits` | integer (default: 0) | no | The number of bits to use in the signature algorithm; accepts 256 for SHA-2-256, 384 for SHA-2-384, and 512 for SHA-2-512. Defaults to 0 to automatically detect based on key length (SHA-2-256 for RSA keys, and matching the curve size for NIST P-Curves). |
+| `single_valued_rdns` | boolean (default: False) | no | If set to true, each subject attribute value (Country, Organization, OU, etc.) is encoded as its own separate single-valued RDN in the certificate. This matches the common practice of most CAs (OpenSSL, Microsoft CA). When false, all values of the same attribute type are grouped into a single multi-valued RDN. |
 | `street_address` | array | no | If set, Street Address will be set to this value in certificates issued by this role. |
 | `ttl` | integer | no | The lease duration (validity period of the certificate) if no specific lease duration is requested. The lease duration controls the expiration of certificates issued by this backend. Defaults to the system default value or the value of max_ttl, whichever is shorter. |
-| `use_csr_common_name` | boolean (default: True) | no | If set, when used with a signing profile, the common name in the CSR will be used. This does *not* include any requested Subject Alternative Names; use use_csr_sans for that. Defaults to true. |
-| `use_csr_sans` | boolean (default: True) | no | If set, when used with a signing profile, the SANs in the CSR will be used. This does *not* include the Common Name (cn); use use_csr_common_name for that. Defaults to true. |
+| `use_csr_common_name` | boolean (default: True) | no | If set, when used with a signing profile, the common name in the CSR will be used. This does \*not* include any requested Subject Alternative Names; use use_csr_sans for that. Defaults to true. |
+| `use_csr_sans` | boolean (default: True) | no | If set, when used with a signing profile, the SANs in the CSR will be used. This does \*not* include the Common Name (cn); use use_csr_common_name for that. Defaults to true. |
 | `use_pss` | boolean (default: False) | no | Whether or not to use PSS signatures when using a RSA key-type issuer. Defaults to false. |
 
 #### Responses
@@ -5256,7 +5259,7 @@ Manage the roles that can be created with this backend.
 | `allowed_serial_numbers` | array | no | If set, an array of allowed serial numbers to put in Subject. These values support globbing. |
 | `allowed_uri_sans` | array | no | If set, an array of allowed URIs for URI Subject Alternative Names. Any valid URI is accepted, these values support globbing. |
 | `allowed_uri_sans_template` | boolean | no | If set, Allowed URI SANs can be specified using identity template policies. Non-templated URI SANs are also permitted. |
-| `allowed_user_ids` | array | no | If set, an array of allowed user-ids to put in user system login name specified here: <https://www.rfc-editor.org/rfc/rfc1274#section-9.3.1> |
+| `allowed_user_ids` | array | no | If set, an array of allowed user-ids to put in user system login name specified here: https://www.rfc-editor.org/rfc/rfc1274#section-9.3.1 |
 | `basic_constraints_valid_for_non_ca` | boolean | no | Mark Basic Constraints valid when issuing non-CA certificates. |
 | `client_flag` | boolean | no | If set, certificates are flagged for client auth use. Defaults to true. See also RFC 5280 Section 4.2.1.12. |
 | `cn_validations` | array | no | List of allowed validations to run against the Common Name field. Values can include 'email' to validate the CN is a email address, 'hostname' to validate the CN is a valid hostname (potentially including wildcards). When multiple validations are specified, these take OR semantics (either email OR hostname are allowed). The special value 'disabled' allows disabling all CN name validations, allowing for arbitrary non-Hostname, non-Email address CNs. |
@@ -5264,13 +5267,13 @@ Manage the roles that can be created with this backend.
 | `country` | array | no | If set, Country will be set to this value in certificates issued by this role. |
 | `email_protection_flag` | boolean | no | If set, certificates are flagged for email protection use. Defaults to false. See also RFC 5280 Section 4.2.1.12. |
 | `enforce_hostnames` | boolean | no | If set, only valid host names are allowed for CN and DNS SANs, and the host part of email addresses. Defaults to true. |
-| `ext_key_usage` | array | no | A comma-separated string or list of extended key usages. Valid values can be found at <https://golang.org/pkg/crypto/x509/#ExtKeyUsage> -- simply drop the "ExtKeyUsage" part of the name. To remove all key usages from being set, set this value to an empty list. See also RFC 5280 Section 4.2.1.12. |
+| `ext_key_usage` | array | no | A comma-separated string or list of extended key usages. Valid values can be found at https://golang.org/pkg/crypto/x509/#ExtKeyUsage -- simply drop the "ExtKeyUsage" part of the name. To remove all key usages from being set, set this value to an empty list. See also RFC 5280 Section 4.2.1.12. |
 | `ext_key_usage_oids` | array | no | A comma-separated string or list of extended key usage oids. |
 | `generate_lease` | boolean | no | If set, certificates issued/signed against this role will have Vault leases attached to them. Defaults to "false". Certificates can be added to the CRL by "vault revoke <lease_id>" when certificates are associated with leases. It can also be done using the "pki/revoke" endpoint. However, when lease generation is disabled, invoking "pki/revoke" would be the only way to add the certificates to the CRL. When large number of certificates are generated with long lifetimes, it is recommended that lease generation be disabled, as large amount of leases adversely affect the startup time of Vault. |
 | `issuer_ref` | string | no | Reference to the issuer used to sign requests serviced by this role. |
 | `key_bits` | integer | no | The number of bits to use. Allowed values are 0 (universal default); with rsa key_type: 2048 (default), 3072, or 4096; with ec key_type: 224, 256 (default), 384, or 521; ignored with ed25519. |
 | `key_type` | string | no | The type of key to use; defaults to RSA. "rsa" "ec", "ed25519", "gost3410-256-paramset-a", "gost3410-256-paramset-b", "gost3410-256-paramset-c", "gost3410-256-paramset-d", "gost3410-512-paramset-a", "gost3410-512-paramset-b", "gost3410-512-paramset-c" and "any" are the only valid values. |
-| `key_usage` | array | no | A comma-separated string or list of key usages (not extended key usages). Valid values can be found at <https://golang.org/pkg/crypto/x509/#KeyUsage> -- simply drop the "KeyUsage" part of the name. To remove all key usages from being set, set this value to an empty list. See also RFC 5280 Section 4.2.1.3. |
+| `key_usage` | array | no | A comma-separated string or list of key usages (not extended key usages). Valid values can be found at https://golang.org/pkg/crypto/x509/#KeyUsage -- simply drop the "KeyUsage" part of the name. To remove all key usages from being set, set this value to an empty list. See also RFC 5280 Section 4.2.1.3. |
 | `locality` | array | no | If set, Locality will be set to this value in certificates issued by this role. |
 | `max_ttl` | integer | no | The maximum allowed lease duration. If not set, defaults to the system maximum lease TTL. |
 | `no_store` | boolean | no | If set, certificates issued/signed against this role will not be stored in the storage backend. This can improve performance when issuing large numbers of certificates. However, certificates issued in this way cannot be enumerated or revoked, so this option is recommended only for certificates that are non-sensitive, or extremely short-lived. This option implies a value of "false" for "generate_lease". |
@@ -5284,10 +5287,11 @@ Manage the roles that can be created with this backend.
 | `require_cn` | boolean | no | If set to false, makes the 'common_name' field optional while generating a certificate. |
 | `server_flag` | boolean (default: True) | no | If set, certificates are flagged for server auth use. Defaults to true. See also RFC 5280 Section 4.2.1.12. |
 | `signature_bits` | integer | no | The number of bits to use in the signature algorithm; accepts 256 for SHA-2-256, 384 for SHA-2-384, and 512 for SHA-2-512. Defaults to 0 to automatically detect based on key length (SHA-2-256 for RSA keys, and matching the curve size for NIST P-Curves). |
+| `single_valued_rdns` | boolean (default: False) | no | If set to true, each subject attribute value (Country, Organization, OU, etc.) is encoded as its own separate single-valued RDN in the certificate. This matches the common practice of most CAs (OpenSSL, Microsoft CA). When false, all values of the same attribute type are grouped into a single multi-valued RDN. |
 | `street_address` | array | no | If set, Street Address will be set to this value in certificates issued by this role. |
 | `ttl` | integer | no | The lease duration (validity period of the certificate) if no specific lease duration is requested. The lease duration controls the expiration of certificates issued by this backend. Defaults to the system default value or the value of max_ttl, whichever is shorter. |
-| `use_csr_common_name` | boolean | no | If set, when used with a signing profile, the common name in the CSR will be used. This does *not* include any requested Subject Alternative Names; use use_csr_sans for that. Defaults to true. |
-| `use_csr_sans` | boolean | no | If set, when used with a signing profile, the SANs in the CSR will be used. This does *not* include the Common Name (cn); use use_csr_common_name for that. Defaults to true. |
+| `use_csr_common_name` | boolean | no | If set, when used with a signing profile, the common name in the CSR will be used. This does \*not* include any requested Subject Alternative Names; use use_csr_sans for that. Defaults to true. |
+| `use_csr_sans` | boolean | no | If set, when used with a signing profile, the SANs in the CSR will be used. This does \*not* include the Common Name (cn); use use_csr_common_name for that. Defaults to true. |
 | `use_pss` | boolean | no | Whether or not to use PSS signatures when using a RSA key-type issuer. Defaults to false. |
 
 ### DELETE /{pki_mount_path}/roles/{name}
@@ -5675,7 +5679,7 @@ Generate a new CA certificate and private key used for signing.
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `exported` | string (internal, exported, kms) | path | yes | Must be "internal", "exported" or "kms". If set to "exported", the generated private key will be returned. This is your *only* chance to retrieve the private key! |
+| `exported` | string (internal, exported, kms) | path | yes | Must be "internal", "exported" or "kms". If set to "exported", the generated private key will be returned. This is your \*only* chance to retrieve the private key! |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
@@ -5702,7 +5706,7 @@ Generate a new CA certificate and private key used for signing.
 | `organization` | array | no | If set, O (Organization) will be set to this value. |
 | `other_sans` | array | no | Requested other SANs, in an array with the format <oid>;UTF8:<utf8 string value> for each entry. |
 | `ou` | array | no | If set, OU (OrganizationalUnit) will be set to this value. |
-| `permitted_dns_domains` | array | no | Domains for which this certificate is allowed to sign or issue child certificates. If set, all DNS names (subject and alt) on child certs must be exact matches or subsets of the given domains (see <https://tools.ietf.org/html/rfc5280#section-4.2.1.10>). |
+| `permitted_dns_domains` | array | no | Domains for which this certificate is allowed to sign or issue child certificates. If set, all DNS names (subject and alt) on child certs must be exact matches or subsets of the given domains (see https://tools.ietf.org/html/rfc5280#section-4.2.1.10). |
 | `postal_code` | array | no | If set, Postal Code will be set to this value. |
 | `private_key_format` | string (, der, pem, pkcs8) (default: der) | no | Format for the returned private key. Generally the default will be controlled by the "format" parameter as either base64-encoded DER or PEM-encoded DER. However, this can be set to "pkcs8" to have the returned private key contain base64-encoded pkcs8 or PEM-encoded pkcs8 instead. Defaults to "der". |
 | `province` | array | no | If set, Province will be set to this value. |
@@ -5766,7 +5770,7 @@ Generate a new CA certificate and private key used for signing.
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `exported` | string (internal, exported, kms) | path | yes | Must be "internal", "exported" or "kms". If set to "exported", the generated private key will be returned. This is your *only* chance to retrieve the private key! |
+| `exported` | string (internal, exported, kms) | path | yes | Must be "internal", "exported" or "kms". If set to "exported", the generated private key will be returned. This is your \*only* chance to retrieve the private key! |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
@@ -5793,7 +5797,7 @@ Generate a new CA certificate and private key used for signing.
 | `organization` | array | no | If set, O (Organization) will be set to this value. |
 | `other_sans` | array | no | Requested other SANs, in an array with the format <oid>;UTF8:<utf8 string value> for each entry. |
 | `ou` | array | no | If set, OU (OrganizationalUnit) will be set to this value. |
-| `permitted_dns_domains` | array | no | Domains for which this certificate is allowed to sign or issue child certificates. If set, all DNS names (subject and alt) on child certs must be exact matches or subsets of the given domains (see <https://tools.ietf.org/html/rfc5280#section-4.2.1.10>). |
+| `permitted_dns_domains` | array | no | Domains for which this certificate is allowed to sign or issue child certificates. If set, all DNS names (subject and alt) on child certs must be exact matches or subsets of the given domains (see https://tools.ietf.org/html/rfc5280#section-4.2.1.10). |
 | `postal_code` | array | no | If set, Postal Code will be set to this value. |
 | `private_key_format` | string (, der, pem, pkcs8) (default: der) | no | Format for the returned private key. Generally the default will be controlled by the "format" parameter as either base64-encoded DER or PEM-encoded DER. However, this can be set to "pkcs8" to have the returned private key contain base64-encoded pkcs8 or PEM-encoded pkcs8 instead. Defaults to "der". |
 | `province` | array | no | If set, Province will be set to this value. |
@@ -5852,7 +5856,7 @@ Issue an intermediate CA certificate based on the provided CSR.
 | `organization` | array | no | If set, O (Organization) will be set to this value. |
 | `other_sans` | array | no | Requested other SANs, in an array with the format <oid>;UTF8:<utf8 string value> for each entry. |
 | `ou` | array | no | If set, OU (OrganizationalUnit) will be set to this value. |
-| `permitted_dns_domains` | array | no | Domains for which this certificate is allowed to sign or issue child certificates. If set, all DNS names (subject and alt) on child certs must be exact matches or subsets of the given domains (see <https://tools.ietf.org/html/rfc5280#section-4.2.1.10>). |
+| `permitted_dns_domains` | array | no | Domains for which this certificate is allowed to sign or issue child certificates. If set, all DNS names (subject and alt) on child certs must be exact matches or subsets of the given domains (see https://tools.ietf.org/html/rfc5280#section-4.2.1.10). |
 | `postal_code` | array | no | If set, Postal Code will be set to this value. |
 | `private_key_format` | string (, der, pem, pkcs8) (default: der) | no | Format for the returned private key. Generally the default will be controlled by the "format" parameter as either base64-encoded DER or PEM-encoded DER. However, this can be set to "pkcs8" to have the returned private key contain base64-encoded pkcs8 or PEM-encoded pkcs8 instead. Defaults to "der". |
 | `province` | array | no | If set, Province will be set to this value. |
@@ -5928,12 +5932,12 @@ Issue a certificate directly based on the provided CSR.
 | `common_name` | string | no | The requested common name; if you want more than one, specify the alternative names in the alt_names map. If email protection is enabled in the role, this may be an email address. |
 | `csr` | string (default: ) | no | PEM-format CSR to be signed. Values will be taken verbatim from the CSR, except for basic constraints. |
 | `exclude_cn_from_sans` | boolean (default: False) | no | If true, the Common Name will not be included in DNS or Email Subject Alternate Names. Defaults to false (CN is included). |
-| `ext_key_usage` | array (default: []) | no | A comma-separated string or list of extended key usages. Valid values can be found at <https://golang.org/pkg/crypto/x509/#ExtKeyUsage> -- simply drop the "ExtKeyUsage" part of the name. To remove all key usages from being set, set this value to an empty list. |
+| `ext_key_usage` | array (default: []) | no | A comma-separated string or list of extended key usages. Valid values can be found at https://golang.org/pkg/crypto/x509/#ExtKeyUsage -- simply drop the "ExtKeyUsage" part of the name. To remove all key usages from being set, set this value to an empty list. |
 | `ext_key_usage_oids` | array | no | A comma-separated string or list of extended key usage oids. |
 | `format` | string (pem, der, pem_bundle) (default: pem) | no | Format for returned data. Can be "pem", "der", or "pem_bundle". If "pem_bundle", any private key and issuing cert will be appended to the certificate pem. If "der", the value will be base64 encoded. Defaults to "pem". |
 | `ip_sans` | array | no | The requested IP SANs, if any, in a comma-delimited list |
 | `issuer_ref` | string (default: default) | no | Reference to a existing issuer; either "default" for the configured default issuer, an identifier or the name assigned to the issuer. |
-| `key_usage` | array (default: ['DigitalSignature', 'KeyAgreement', 'KeyEncipherment']) | no | A comma-separated string or list of key usages (not extended key usages). Valid values can be found at <https://golang.org/pkg/crypto/x509/#KeyUsage> -- simply drop the "KeyUsage" part of the name. To remove all key usages from being set, set this value to an empty list. |
+| `key_usage` | array (default: ['DigitalSignature', 'KeyAgreement', 'KeyEncipherment']) | no | A comma-separated string or list of key usages (not extended key usages). Valid values can be found at https://golang.org/pkg/crypto/x509/#KeyUsage -- simply drop the "KeyUsage" part of the name. To remove all key usages from being set, set this value to an empty list. |
 | `not_after` | string | no | Set the not after field of the certificate with specified date value. The value format should be given in UTC format YYYY-MM-ddTHH:MM:SSZ |
 | `other_sans` | array | no | Requested other SANs, in an array with the format <oid>;UTF8:<utf8 string value> for each entry. |
 | `private_key_format` | string (, der, pem, pkcs8) (default: der) | no | Format for the returned private key. Generally the default will be controlled by the "format" parameter as either base64-encoded DER or PEM-encoded DER. However, this can be set to "pkcs8" to have the returned private key contain base64-encoded pkcs8 or PEM-encoded pkcs8 instead. Defaults to "der". |
@@ -5981,12 +5985,12 @@ Issue a certificate directly based on the provided CSR.
 | `common_name` | string | no | The requested common name; if you want more than one, specify the alternative names in the alt_names map. If email protection is enabled in the role, this may be an email address. |
 | `csr` | string (default: ) | no | PEM-format CSR to be signed. Values will be taken verbatim from the CSR, except for basic constraints. |
 | `exclude_cn_from_sans` | boolean (default: False) | no | If true, the Common Name will not be included in DNS or Email Subject Alternate Names. Defaults to false (CN is included). |
-| `ext_key_usage` | array (default: []) | no | A comma-separated string or list of extended key usages. Valid values can be found at <https://golang.org/pkg/crypto/x509/#ExtKeyUsage> -- simply drop the "ExtKeyUsage" part of the name. To remove all key usages from being set, set this value to an empty list. |
+| `ext_key_usage` | array (default: []) | no | A comma-separated string or list of extended key usages. Valid values can be found at https://golang.org/pkg/crypto/x509/#ExtKeyUsage -- simply drop the "ExtKeyUsage" part of the name. To remove all key usages from being set, set this value to an empty list. |
 | `ext_key_usage_oids` | array | no | A comma-separated string or list of extended key usage oids. |
 | `format` | string (pem, der, pem_bundle) (default: pem) | no | Format for returned data. Can be "pem", "der", or "pem_bundle". If "pem_bundle", any private key and issuing cert will be appended to the certificate pem. If "der", the value will be base64 encoded. Defaults to "pem". |
 | `ip_sans` | array | no | The requested IP SANs, if any, in a comma-delimited list |
 | `issuer_ref` | string (default: default) | no | Reference to a existing issuer; either "default" for the configured default issuer, an identifier or the name assigned to the issuer. |
-| `key_usage` | array (default: ['DigitalSignature', 'KeyAgreement', 'KeyEncipherment']) | no | A comma-separated string or list of key usages (not extended key usages). Valid values can be found at <https://golang.org/pkg/crypto/x509/#KeyUsage> -- simply drop the "KeyUsage" part of the name. To remove all key usages from being set, set this value to an empty list. |
+| `key_usage` | array (default: ['DigitalSignature', 'KeyAgreement', 'KeyEncipherment']) | no | A comma-separated string or list of key usages (not extended key usages). Valid values can be found at https://golang.org/pkg/crypto/x509/#KeyUsage -- simply drop the "KeyUsage" part of the name. To remove all key usages from being set, set this value to an empty list. |
 | `not_after` | string | no | Set the not after field of the certificate with specified date value. The value format should be given in UTC format YYYY-MM-ddTHH:MM:SSZ |
 | `other_sans` | array | no | Requested other SANs, in an array with the format <oid>;UTF8:<utf8 string value> for each entry. |
 | `private_key_format` | string (, der, pem, pkcs8) (default: der) | no | Format for the returned private key. Generally the default will be controlled by the "format" parameter as either base64-encoded DER or PEM-encoded DER. However, this can be set to "pkcs8" to have the returned private key contain base64-encoded pkcs8 or PEM-encoded pkcs8 instead. Defaults to "der". |
@@ -6494,9 +6498,11 @@ Set the SSH private key used for signing certificates.
 
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
-| `generate_signing_key` | boolean (default: True) | no | Generate SSH key pair internally rather than use the private_key and public_key fields. |
+| `generate_signing_key` | boolean (default: True) | no | Generate SSH key pair internally rather than use the private_key and public_key fields. If managed key config is provided, this field is ignored. |
 | `key_bits` | integer (default: 0) | no | Specifies the desired key bits when generating variable-length keys (such as when key_type="ssh-rsa") or which NIST P-curve to use when key_type="ec" (256, 384, or 521). |
 | `key_type` | string (default: ssh-rsa) | no | Specifies the desired key type when generating; could be a OpenSSH key type identifier (ssh-rsa, ecdsa-sha2-nistp256, ecdsa-sha2-nistp384, ecdsa-sha2-nistp521, or ssh-ed25519) or an algorithm (rsa, ec, ed25519). |
+| `managed_key_id` | string | no | The id of the managed key to use. When using a managed key, this field or managed_key_name is required. |
+| `managed_key_name` | string | no | The name of the managed key to use. When using a managed key, this field or managed_key_id is required. |
 | `private_key` | string | no | Private half of the SSH key that will be used to sign certificates. |
 | `public_key` | string | no | Public half of the SSH key that will be used to sign certificates. |
 
@@ -6721,7 +6727,7 @@ Manage the 'roles' that can be created with this backend.
 |----------|-----|--------------|----------|
 | `algorithm_signer` | string (, default, ssh-rsa, rsa-sha2-256, rsa-sha2-512) | no | [Not applicable for OTP type] [Optional for CA type] When supplied, this value specifies a signing algorithm for the key. Possible values: ssh-rsa, rsa-sha2-256, rsa-sha2-512, default, or the empty string. |
 | `allow_bare_domains` | boolean | no | [Not applicable for OTP type] [Optional for CA type] If set, host certificates that are requested are allowed to use the base domains listed in "allowed_domains", e.g. "example.com". This is a separate option as in some cases this can be considered a security threat. |
-| `allow_empty_principals` | boolean | no | [Optional for CA type] If true, host and user certificates can be issued without any valid principals. For host certificates, this means that any domain a host claims to be will be trusted by the connecting client. For user certificates, when a CA certificate is placed in a user's AuthorizedKeys file, any principal on that certificate will be allowed to connect. When allowed_users or allowed_domains is set to * (corresponding to the role/certificate type), allow_empty_principals=false still permits issuance. It is recommend to leave this disabled. |
+| `allow_empty_principals` | boolean | no | [Optional for CA type] If true, host and user certificates can be issued without any valid principals. For host certificates, this means that any domain a host claims to be will be trusted by the connecting client. For user certificates, when a CA certificate is placed in a user's AuthorizedKeys file, any principal on that certificate will be allowed to connect. When allowed_users or allowed_domains is set to \* (corresponding to the role/certificate type), allow_empty_principals=false still permits issuance. It is recommend to leave this disabled. |
 | `allow_host_certificates` | boolean (default: False) | no | [Not applicable for OTP type] [Optional for CA type] If set, certificates are allowed to be signed for use as a 'host'. |
 | `allow_subdomains` | boolean | no | [Not applicable for OTP type] [Optional for CA type] If set, host certificates that are requested are allowed to use subdomains of those listed in "allowed_domains". |
 | `allow_user_certificates` | boolean (default: False) | no | [Not applicable for OTP type] [Optional for CA type] If set, certificates are allowed to be signed for use as a 'user'. |
@@ -7173,9 +7179,9 @@ blocks using a named key
 | `associated_data` | string | no | When using an AEAD cipher mode, such as AES-GCM, this parameter allows passing associated data (AD/AAD) into the encryption function; this data must be passed on subsequent decryption requests but can be transited in plaintext. On successful decryption, both the ciphertext and the associated data are attested not to have been tampered with. |
 | `batch_input` | array | no | Specifies a list of items to be encrypted in a single batch. When this parameter is set, if the parameters 'plaintext', 'context' and 'nonce' are also set, they will be ignored. Any batch output will preserve the order of the batch input. |
 | `context` | string | no | Base64 encoded context for key derivation. Required if key derivation is enabled |
-| `convergent_encryption` | boolean | no | This parameter will only be used when a key is expected to be created. Whether to support convergent encryption. This is only supported when using a key with key derivation enabled and will require all requests to carry both a context and 96-bit (12-byte) nonce. The given nonce will be used in place of a randomly generated nonce. As a result, when the same context and nonce are supplied, the same ciphertext is generated. It is *very important* when using this mode that you ensure that all nonces are unique for a given context. Failing to do so will severely impact the ciphertext's security. |
+| `convergent_encryption` | boolean | no | This parameter will only be used when a key is expected to be created. Whether to support convergent encryption. This is only supported when using a key with key derivation enabled and will require all requests to carry both a context and 96-bit (12-byte) nonce. The given nonce will be used in place of a randomly generated nonce. As a result, when the same context and nonce are supplied, the same ciphertext is generated. It is \*very important* when using this mode that you ensure that all nonces are unique for a given context. Failing to do so will severely impact the ciphertext's security. |
 | `key_version` | integer | no | The version of the key to use for encryption. Must be 0 (for latest) or a value greater than or equal to the min_encryption_version configured on the key. |
-| `nonce` | string | no | Base64 encoded nonce value. Must be provided if convergent encryption is enabled for this key and the key was generated with Vault 0.6.1. Not required for keys created in 0.6.2+. The value must be exactly 96 bits (12 bytes) long and the user must ensure that for any given context (and thus, any given encryption key) this nonce value is **never reused**. |
+| `nonce` | string | no | Base64 encoded nonce value. Must be provided if convergent encryption is enabled for this key and the key was generated with Vault 0.6.1. Not required for keys created in 0.6.2+. The value must be exactly 96 bits (12 bytes) long and the user must ensure that for any given context (and thus, any given encryption key) this nonce value is \**never reused**. |
 | `partial_failure_response_code` | integer | no | Ordinarily, if a batch item fails to encrypt due to a bad input, but other batch items succeed, the HTTP response code is 400 (Bad Request). Some applications may want to treat partial failures differently. Providing the parameter returns the given response code integer instead of a 400 in this case. If all values fail HTTP 400 is still returned. |
 | `plaintext` | string | no | Base64 encoded plaintext value to be encrypted |
 | `type` | string (default: aes256-gcm96) | no | This parameter is required when encryption key is expected to be created. When performing an upsert operation, the type of key to create. Currently, "aes128-gcm96" (symmetric) and "aes256-gcm96" (symmetric) are the only types supported. Defaults to "aes256-gcm96". |
@@ -7237,7 +7243,7 @@ Generate a hash sum for input data
 
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
-| `algorithm` | string (default: sha2-256) | no | Algorithm to use (POST body parameter). Valid values are: *sha2-224* sha2-256 *sha2-384* sha2-512 *sha3-224* sha3-256 *sha3-384* sha3-512 *streebog-256* streebog-512 Defaults to "sha2-256". |
+| `algorithm` | string (default: sha2-256) | no | Algorithm to use (POST body parameter). Valid values are: \* sha2-224 \* sha2-256 \* sha2-384 \* sha2-512 \* sha3-224 \* sha3-256 \* sha3-384 \* sha3-512 \* streebog-256 \* streebog-512 Defaults to "sha2-256". |
 | `format` | string (default: hex) | no | Encoding format to use. Can be "hex" or "base64". Defaults to "hex". |
 | `input` | string | no | The base64-encoded input data |
 | `urlalgorithm` | string | no | Algorithm to use (POST URL parameter) |
@@ -7263,7 +7269,7 @@ Generate a hash sum for input data
 
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
-| `algorithm` | string (default: sha2-256) | no | Algorithm to use (POST body parameter). Valid values are: *sha2-224* sha2-256 *sha2-384* sha2-512 *sha3-224* sha3-256 *sha3-384* sha3-512 *streebog-256* streebog-512 Defaults to "sha2-256". |
+| `algorithm` | string (default: sha2-256) | no | Algorithm to use (POST body parameter). Valid values are: \* sha2-224 \* sha2-256 \* sha2-384 \* sha2-512 \* sha3-224 \* sha3-256 \* sha3-384 \* sha3-512 \* streebog-256 \* streebog-512 Defaults to "sha2-256". |
 | `format` | string (default: hex) | no | Encoding format to use. Can be "hex" or "base64". Defaults to "hex". |
 | `input` | string | no | The base64-encoded input data |
 
@@ -7288,7 +7294,7 @@ Generate an HMAC for input data using the named key
 
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
-| `algorithm` | string (default: sha2-256) | no | Algorithm to use (POST body parameter). Valid values are: *sha2-224* sha2-256 *sha2-384* sha2-512 *sha3-224* sha3-256 *sha3-384* sha3-512 *streebog-256* streebog-512 Defaults to "sha2-256". |
+| `algorithm` | string (default: sha2-256) | no | Algorithm to use (POST body parameter). Valid values are: \* sha2-224 \* sha2-256 \* sha2-384 \* sha2-512 \* sha3-224 \* sha3-256 \* sha3-384 \* sha3-512 \* streebog-256 \* streebog-512 Defaults to "sha2-256". |
 | `batch_input` | array | no | Specifies a list of items to be processed in a single batch. When this parameter is set, if the parameter 'input' is also set, it will be ignored. Any batch output will preserve the order of the batch input. |
 | `input` | string | no | The base64-encoded input data |
 | `key_version` | integer | no | The version of the key to use for generating the HMAC. Must be 0 (for latest) or a value greater than or equal to the min_encryption_version configured on the key. |
@@ -7316,7 +7322,7 @@ Generate an HMAC for input data using the named key
 
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
-| `algorithm` | string (default: sha2-256) | no | Algorithm to use (POST body parameter). Valid values are: *sha2-224* sha2-256 *sha2-384* sha2-512 *sha3-224* sha3-256 *sha3-384* sha3-512 *streebog-256* streebog-512 Defaults to "sha2-256". |
+| `algorithm` | string (default: sha2-256) | no | Algorithm to use (POST body parameter). Valid values are: \* sha2-224 \* sha2-256 \* sha2-384 \* sha2-512 \* sha3-224 \* sha3-256 \* sha3-384 \* sha3-512 \* streebog-256 \* streebog-512 Defaults to "sha2-256". |
 | `batch_input` | array | no | Specifies a list of items to be processed in a single batch. When this parameter is set, if the parameter 'input' is also set, it will be ignored. Any batch output will preserve the order of the batch input. |
 | `input` | string | no | The base64-encoded input data |
 | `key_version` | integer | no | The version of the key to use for generating the HMAC. Must be 0 (for latest) or a value greater than or equal to the min_encryption_version configured on the key. |
@@ -7379,7 +7385,7 @@ Managed named encryption keys
 | `allow_plaintext_backup` | boolean | no | Enables taking a backup of the named key in plaintext format. Once set, this cannot be disabled. |
 | `auto_rotate_period` | integer (default: 0) | no | Amount of time the key should live before being automatically rotated. A value of 0 (default) disables automatic rotation for the key. |
 | `context` | string | no | Base64 encoded context for key derivation. When reading a key with key derivation enabled, if the key type supports public keys, this will return the public key for the given context. |
-| `convergent_encryption` | boolean | no | Whether to support convergent encryption. This is only supported when using a key with key derivation enabled and will require all requests to carry both a context and 96-bit (12-byte) nonce. The given nonce will be used in place of a randomly generated nonce. As a result, when the same context and nonce are supplied, the same ciphertext is generated. It is *very important* when using this mode that you ensure that all nonces are unique for a given context. Failing to do so will severely impact the ciphertext's security. |
+| `convergent_encryption` | boolean | no | Whether to support convergent encryption. This is only supported when using a key with key derivation enabled and will require all requests to carry both a context and 96-bit (12-byte) nonce. The given nonce will be used in place of a randomly generated nonce. As a result, when the same context and nonce are supplied, the same ciphertext is generated. It is \*very important* when using this mode that you ensure that all nonces are unique for a given context. Failing to do so will severely impact the ciphertext's security. |
 | `derived` | boolean | no | Enables key derivation mode. This allows for per-transaction unique keys for encryption operations. |
 | `exportable` | boolean | no | Enables keys to be exportable. This allows for all the valid keys in the key ring to be exported. |
 | `key_size` | integer (default: 0) | no | The key size in bytes for the algorithm. Only applies to HMAC and must be no fewer than 32 bytes and no more than 512 |
@@ -7736,7 +7742,7 @@ Generate a signature for input data using the named key
 | `algorithm` | string (default: sha2-256) | no | Deprecated: use "hash_algorithm" instead. |
 | `batch_input` | array | no | Specifies a list of items for processing. When this parameter is set, any supplied 'input' or 'context' parameters will be ignored. Responses are returned in the 'batch_results' array component of the 'data' element of the response. Any batch output will preserve the order of the batch input |
 | `context` | string | no | Base64 encoded context for key derivation. Required if key derivation is enabled; currently only available with ed25519 keys. |
-| `hash_algorithm` | string (default: sha2-256) | no | Hash algorithm to use (POST body parameter). Valid values are: *sha1* sha2-224 *sha2-256* sha2-384 *sha2-512* sha3-224 *sha3-256* sha3-384 *sha3-512* none Defaults to "sha2-256". Not valid for all key types, including ed25519. Using none requires setting prehashed=true and signature_algorithm=pkcs1v15, yielding a PKCSv1_5_NoOID instead of the usual PKCSv1_5_DERnull signature. |
+| `hash_algorithm` | string (default: sha2-256) | no | Hash algorithm to use (POST body parameter). Valid values are: \* sha1 \* sha2-224 \* sha2-256 \* sha2-384 \* sha2-512 \* sha3-224 \* sha3-256 \* sha3-384 \* sha3-512 \* none Defaults to "sha2-256". Not valid for all key types, including ed25519. Using none requires setting prehashed=true and signature_algorithm=pkcs1v15, yielding a PKCSv1_5_NoOID instead of the usual PKCSv1_5_DERnull signature. |
 | `input` | string | no | The base64-encoded input data |
 | `key_version` | integer | no | The version of the key to use for signing. Must be 0 (for latest) or a value greater than or equal to the min_encryption_version configured on the key. |
 | `marshaling_algorithm` | string (default: asn1) | no | The method by which to marshal the signature. The default is 'asn1' which is used by openssl and X.509. It can also be set to 'jws' which is used for JWT signatures; setting it to this will also cause the encoding of the signature to be url-safe base64 instead of using standard base64 encoding. Currently only valid for ECDSA P-256 key types". |
@@ -7770,7 +7776,7 @@ Generate a signature for input data using the named key
 | `algorithm` | string (default: sha2-256) | no | Deprecated: use "hash_algorithm" instead. |
 | `batch_input` | array | no | Specifies a list of items for processing. When this parameter is set, any supplied 'input' or 'context' parameters will be ignored. Responses are returned in the 'batch_results' array component of the 'data' element of the response. Any batch output will preserve the order of the batch input |
 | `context` | string | no | Base64 encoded context for key derivation. Required if key derivation is enabled; currently only available with ed25519 keys. |
-| `hash_algorithm` | string (default: sha2-256) | no | Hash algorithm to use (POST body parameter). Valid values are: *sha1* sha2-224 *sha2-256* sha2-384 *sha2-512* sha3-224 *sha3-256* sha3-384 *sha3-512* none Defaults to "sha2-256". Not valid for all key types, including ed25519. Using none requires setting prehashed=true and signature_algorithm=pkcs1v15, yielding a PKCSv1_5_NoOID instead of the usual PKCSv1_5_DERnull signature. |
+| `hash_algorithm` | string (default: sha2-256) | no | Hash algorithm to use (POST body parameter). Valid values are: \* sha1 \* sha2-224 \* sha2-256 \* sha2-384 \* sha2-512 \* sha3-224 \* sha3-256 \* sha3-384 \* sha3-512 \* none Defaults to "sha2-256". Not valid for all key types, including ed25519. Using none requires setting prehashed=true and signature_algorithm=pkcs1v15, yielding a PKCSv1_5_NoOID instead of the usual PKCSv1_5_DERnull signature. |
 | `input` | string | no | The base64-encoded input data |
 | `key_version` | integer | no | The version of the key to use for signing. Must be 0 (for latest) or a value greater than or equal to the min_encryption_version configured on the key. |
 | `marshaling_algorithm` | string (default: asn1) | no | The method by which to marshal the signature. The default is 'asn1' which is used by openssl and X.509. It can also be set to 'jws' which is used for JWT signatures; setting it to this will also cause the encoding of the signature to be url-safe base64 instead of using standard base64 encoding. Currently only valid for ECDSA P-256 key types". |
@@ -7802,7 +7808,7 @@ Verify a signature or HMAC for input data created using the named key
 | `algorithm` | string (default: sha2-256) | no | Deprecated: use "hash_algorithm" instead. |
 | `batch_input` | array | no | Specifies a list of items for processing. When this parameter is set, any supplied 'input', 'hmac' or 'signature' parameters will be ignored. Responses are returned in the 'batch_results' array component of the 'data' element of the response. Any batch output will preserve the order of the batch input |
 | `context` | string | no | Base64 encoded context for key derivation. Required if key derivation is enabled; currently only available with ed25519 keys. |
-| `hash_algorithm` | string (default: sha2-256) | no | Hash algorithm to use (POST body parameter). Valid values are: *sha1* sha2-224 *sha2-256* sha2-384 *sha2-512* sha3-224 *sha3-256* sha3-384 *sha3-512* none Defaults to "sha2-256". Not valid for all key types. See note about none on signing path. |
+| `hash_algorithm` | string (default: sha2-256) | no | Hash algorithm to use (POST body parameter). Valid values are: \* sha1 \* sha2-224 \* sha2-256 \* sha2-384 \* sha2-512 \* sha3-224 \* sha3-256 \* sha3-384 \* sha3-512 \* none Defaults to "sha2-256". Not valid for all key types. See note about none on signing path. |
 | `hmac` | string | no | The HMAC, including vault header/key version |
 | `input` | string | no | The base64-encoded input data to verify |
 | `marshaling_algorithm` | string (default: asn1) | no | The method by which to unmarshal the signature when verifying. The default is 'asn1' which is used by openssl and X.509; can also be set to 'jws' which is used for JWT signatures in which case the signature is also expected to be url-safe base64 encoding instead of standard base64 encoding. Currently only valid for ECDSA P-256 key types". |
@@ -7837,7 +7843,7 @@ Verify a signature or HMAC for input data created using the named key
 | `algorithm` | string (default: sha2-256) | no | Deprecated: use "hash_algorithm" instead. |
 | `batch_input` | array | no | Specifies a list of items for processing. When this parameter is set, any supplied 'input', 'hmac' or 'signature' parameters will be ignored. Responses are returned in the 'batch_results' array component of the 'data' element of the response. Any batch output will preserve the order of the batch input |
 | `context` | string | no | Base64 encoded context for key derivation. Required if key derivation is enabled; currently only available with ed25519 keys. |
-| `hash_algorithm` | string (default: sha2-256) | no | Hash algorithm to use (POST body parameter). Valid values are: *sha1* sha2-224 *sha2-256* sha2-384 *sha2-512* sha3-224 *sha3-256* sha3-384 *sha3-512* none Defaults to "sha2-256". Not valid for all key types. See note about none on signing path. |
+| `hash_algorithm` | string (default: sha2-256) | no | Hash algorithm to use (POST body parameter). Valid values are: \* sha1 \* sha2-224 \* sha2-256 \* sha2-384 \* sha2-512 \* sha3-224 \* sha3-256 \* sha3-384 \* sha3-512 \* none Defaults to "sha2-256". Not valid for all key types. See note about none on signing path. |
 | `hmac` | string | no | The HMAC, including vault header/key version |
 | `input` | string | no | The base64-encoded input data to verify |
 | `marshaling_algorithm` | string (default: asn1) | no | The method by which to unmarshal the signature when verifying. The default is 'asn1' which is used by openssl and X.509; can also be set to 'jws' which is used for JWT signatures in which case the signature is also expected to be url-safe base64 encoding instead of standard base64 encoding. Currently only valid for ECDSA P-256 key types". |

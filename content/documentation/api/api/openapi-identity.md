@@ -789,6 +789,28 @@ List MFA method configurations for the given MFA method
 
 **200**: OK
 
+### POST /identity/mfa/method/duo
+
+**Operation ID:** `mfa-create-duo-method`
+
+Create the given MFA method
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `api_hostname` | string | no | API host name for Duo. |
+| `integration_key` | string | no | Integration key for Duo. |
+| `method_name` | string | no | The unique name identifier for this MFA method. |
+| `push_info` | string | no | Push information for Duo. |
+| `secret_key` | string | no | Secret key for Duo. |
+| `use_passcode` | boolean | no | If true, the user is reminded to use the passcode upon MFA validation. This option does not enforce using the passcode. Defaults to false. |
+| `username_format` | string | no | A template string for mapping Identity names to MFA method names. Values to subtitute should be placed in {{}}. For example, "{{alias.name}}@example.com". Currently-supported mappings: alias.name: The name returned by the mount configured via the mount_accessor parameter If blank, the Alias's name field will be used as-is. |
+
+#### Responses
+
+**200**: OK
+
 ### GET /identity/mfa/method/duo/{method_id}
 
 **Operation ID:** `mfa-read-duo-method-configuration`
@@ -809,7 +831,7 @@ Read the current configuration for the given MFA method
 
 **Operation ID:** `mfa-configure-duo-method`
 
-Update or create a configuration for the given MFA method
+Update the configuration for the given MFA method
 
 #### Parameters
 
@@ -865,6 +887,28 @@ List MFA method configurations for the given MFA method
 
 **200**: OK
 
+### POST /identity/mfa/method/okta
+
+**Operation ID:** `mfa-create-okta-method`
+
+Create the given MFA method
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `api_token` | string | no | Okta API key. |
+| `base_url` | string | no | The base domain to use for the Okta API. When not specified in the configuration, "okta.com" is used. |
+| `method_name` | string | no | The unique name identifier for this MFA method. |
+| `org_name` | string | no | Name of the organization to be used in the Okta API. |
+| `primary_email` | boolean | no | If true, the username will only match the primary email for the account. Defaults to false. |
+| `production` | boolean | no | (DEPRECATED) Use base_url instead. |
+| `username_format` | string | no | A template string for mapping Identity names to MFA method names. Values to substitute should be placed in {{}}. For example, "{{entity.name}}@example.com". If blank, the Entity's name field will be used as-is. |
+
+#### Responses
+
+**200**: OK
+
 ### GET /identity/mfa/method/okta/{method_id}
 
 **Operation ID:** `mfa-read-okta-method-configuration`
@@ -885,7 +929,7 @@ Read the current configuration for the given MFA method
 
 **Operation ID:** `mfa-configure-okta-method`
 
-Update or create a configuration for the given MFA method
+Update the configuration for the given MFA method
 
 #### Parameters
 
@@ -941,6 +985,24 @@ List MFA method configurations for the given MFA method
 
 **200**: OK
 
+### POST /identity/mfa/method/pingid
+
+**Operation ID:** `mfa-create-ping-id-method`
+
+Create the given MFA method
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `method_name` | string | no | The unique name identifier for this MFA method. |
+| `settings_file_base64` | string | no | The settings file provided by Ping, Base64-encoded. This must be a settings file suitable for third-party clients, not the PingID SDK or PingFederate. |
+| `username_format` | string | no | A template string for mapping Identity names to MFA method names. Values to subtitute should be placed in {{}}. For example, "{{alias.name}}@example.com". Currently-supported mappings: alias.name: The name returned by the mount configured via the mount_accessor parameter If blank, the Alias's name field will be used as-is. |
+
+#### Responses
+
+**200**: OK
+
 ### GET /identity/mfa/method/pingid/{method_id}
 
 **Operation ID:** `mfa-read-ping-id-method-configuration`
@@ -961,7 +1023,7 @@ Read the current configuration for the given MFA method
 
 **Operation ID:** `mfa-configure-ping-id-method`
 
-Update or create a configuration for the given MFA method
+Update the configuration for the given MFA method
 
 #### Parameters
 
@@ -1008,6 +1070,30 @@ List MFA method configurations for the given MFA method
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
 | `list` | string (true) | query | yes | Must be set to `true` |
+
+#### Responses
+
+**200**: OK
+
+### POST /identity/mfa/method/totp
+
+**Operation ID:** `mfa-create-totp-method`
+
+Create the given MFA method
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `algorithm` | string (default: SHA1) | no | The hashing algorithm used to generate the TOTP token. Options include SHA1, SHA256 and SHA512. |
+| `digits` | integer (default: 6) | no | The number of digits in the generated TOTP token. This value can either be 6 or 8. |
+| `issuer` | string | no | The name of the key's issuing organization. |
+| `key_size` | integer (default: 20) | no | Determines the size in bytes of the generated key. |
+| `max_validation_attempts` | integer | no | Max number of allowed validation attempts. |
+| `method_name` | string | no | The unique name identifier for this MFA method. |
+| `period` | integer (default: 30) | no | The length of time used to generate a counter for the TOTP token calculation. |
+| `qr_size` | integer (default: 200) | no | The pixel size of the generated square QR code. |
+| `skew` | integer (default: 1) | no | The number of delay periods that are allowed when validating a TOTP token. This value can either be 0 or 1. |
 
 #### Responses
 
@@ -1083,7 +1169,7 @@ Read the current configuration for the given MFA method
 
 **Operation ID:** `mfa-configure-totp-method`
 
-Update or create a configuration for the given MFA method
+Update the configuration for the given MFA method
 
 #### Parameters
 

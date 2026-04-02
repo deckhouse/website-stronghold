@@ -2196,6 +2196,220 @@ Manage users allowed to authenticate.
 
 **204**: empty body
 
+### POST /auth/{saml_mount_path}/callback
+
+**Operation ID:** `saml-write-callback`
+
+Provides the Assertion Consumer Service to handle the Identity Provider binding.
+
+**Available without authentication:** yes
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `saml_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `RelayState` | string | yes | The SAML RelayState that has round tripped through the Identity Provider. |
+| `SAMLResponse` | string | yes | The SAML response from the Identity Provider. |
+
+#### Responses
+
+**200**: OK
+
+### GET /auth/{saml_mount_path}/config
+
+**Operation ID:** `saml-read-config`
+
+Read the configuration of the auth method.
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `saml_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Responses
+
+**200**: OK
+
+### POST /auth/{saml_mount_path}/config
+
+**Operation ID:** `saml-write-config`
+
+Update the configuration of the auth method.
+
+**Creation supported:** yes
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `saml_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `acs_urls` | array | yes | The Assertion Consumer Service URLs to which the responses from the Identity Provider will be sent. Must be well-formatted URLs. A warning will be provided if any of the given URLs are not TLS protected. |
+| `default_role` | string | no | The role to use if no role is provided during login. If not set, a role is required during login. |
+| `entity_id` | string | yes | The entity ID of this authentication method as a SAML Service Provider |
+| `idp_cert` | string | no | The PEM-encoded certificate of the Identity Provider used to verify response and assertion signatures. Mutually exclusive with 'idp_metadata_url'. |
+| `idp_entity_id` | string | no | The entity ID of the Identity Provider. Mutually exclusive with 'idp_metadata_url'. |
+| `idp_metadata_url` | string | no | The metadata URL of the Identity Provider. Mutually exclusive with 'idp_sso_url', 'idp_issuer' and 'idp_cert'. Must be a well-formatted URL. |
+| `idp_sso_url` | string | no | The SSO URL of the Identity Provider. Mutually exclusive with 'idp_metadata_url'. Must be a well-formatted URL. |
+| `validate_assertion_signature` | boolean | no | Enables validation of signature for at least assertion in the SAML response. If IDP allows signing both response and assertion, then recommendation is to opt for validating signatures of both by enabling individual options |
+| `validate_response_signature` | boolean | no | Enables validation of signature for at least response in the SAML response. If IDP allows signing both response and assertion, then recommendation is to opt for validating signatures of both by enabling individual options |
+| `verbose_logging` | boolean | no | Log additional information during the SAML exchange. The user data will be logged when debug-level logging is active and the full SAML response will be logged when trace-level logging is active |
+
+#### Responses
+
+**200**: OK
+
+### GET /auth/{saml_mount_path}/role
+
+**Operation ID:** `saml-list-role`
+
+List all roles.
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `saml_mount_path` | string | path | yes | Path that the backend was mounted at |
+| `list` | string (true) | query | yes | Must be set to `true` |
+
+#### Responses
+
+**200**: OK
+
+### GET /auth/{saml_mount_path}/role/{name}
+
+**Operation ID:** `saml-read-role-name`
+
+Read a role's configuration.
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `name` | string | path | yes | The name of the role. |
+| `saml_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Responses
+
+**200**: OK
+
+### POST /auth/{saml_mount_path}/role/{name}
+
+**Operation ID:** `saml-write-role-name`
+
+Update a role's configuration.
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `name` | string | path | yes | The name of the role. |
+| `saml_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `alias_metadata` | object | no | The metadata to be tied to generated entity alias. This should be a list or map containing the metadata in key value pairs |
+| `bound_attributes` | object | no | Mapping of attribute names to values to assert exist in the SAML Response's Assertion. |
+| `bound_attributes_type` | string (string, glob) | no | The type of matching assertion to perform on bound_attributes key-value pairs. If 'string', requires a direct string match in values. If 'glob', allows for wildcard matching using the '*' character in values. |
+| `bound_subjects` | array | no | The subject to assert is in the SAML Response. The subject in theSAML Response needs to match one of the values configured. |
+| `bound_subjects_type` | string (string, glob) | no | The type of matching assertion to perform on bound_subject. If 'string', requires a direct string match. If 'glob', allows for wildcardmatching using the '*' character. |
+| `groups_attribute` | string | no | The attribute to use for Vault Identity group alias names. |
+| `token_bound_cidrs` | array | no | Comma separated string or JSON list of CIDR blocks. If set, specifies the blocks of IP addresses which are allowed to use the generated token. |
+| `token_explicit_max_ttl` | integer | no | If set, tokens created via this role carry an explicit maximum TTL. During renewal, the current maximum TTL values of the role and the mount are not checked for changes, and any updates to these values will have no effect on the token being renewed. |
+| `token_max_ttl` | integer | no | The maximum lifetime of the generated token |
+| `token_no_default_policy` | boolean | no | If true, the 'default' policy will not automatically be added to generated tokens |
+| `token_num_uses` | integer | no | The maximum number of times a token may be used, a value of zero means unlimited |
+| `token_period` | integer | no | If set, tokens created via this role will have no max lifetime; instead, their renewal period will be fixed to this value. This takes an integer number of seconds, or a string duration (e.g. "24h"). |
+| `token_policies` | array | no | Comma-separated list of policies |
+| `token_ttl` | integer | no | The initial ttl of the token to generate |
+| `token_type` | string (default: default-service) | no | The type of token to generate, service or batch |
+
+#### Responses
+
+**200**: OK
+
+### DELETE /auth/{saml_mount_path}/role/{name}
+
+**Operation ID:** `saml-delete-role-name`
+
+Delete a role.
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `name` | string | path | yes | The name of the role. |
+| `saml_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Responses
+
+**204**: empty body
+
+### POST /auth/{saml_mount_path}/sso_service_url
+
+**Operation ID:** `saml-write-sso_service_url`
+
+Obtain an SSO Service URL to start a SAML authentication flow.
+
+**Available without authentication:** yes
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `saml_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `acs_url` | string | no | The Assertion Consumer Service URL to use for this auth request. It must be one of the allowed URLs in the config. |
+| `client_challenge` | string | yes | The client challenge. Must be the output of a base64-encoded, sha256 digest of the 'client_verifier' eventually provided to the token API. |
+| `client_type` | string (default: cli) | no | The type of the requesting client. The response from the Assertion Consumer Service callback API will differ based on the provided type. |
+| `role` | string | no | The role to issue an SSO Service URL for. |
+
+#### Responses
+
+**200**: OK
+
+### POST /auth/{saml_mount_path}/token
+
+**Operation ID:** `saml-write-token`
+
+Obtain a Vault token to complete the authentication flow.
+
+**Available without authentication:** yes
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `saml_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `client_verifier` | string | yes | The value which produced the 'client_challenge' provided to the SSO Service URL API at the start of the authentication flow. Its base64-encoded, sha256 digest must match the 'client_challenge' value. |
+| `token_poll_id` | string | yes | The 'token_poll_id' value returned from the SSO Service URL API at the start of the authentication flow. |
+
+#### Responses
+
+**200**: OK
+
 ### POST /auth/{userpass_mount_path}/login/{username}
 
 **Operation ID:** `userpass-login`
@@ -2407,7 +2621,7 @@ Configure WebAuthn backend
 | `auto_registration` | boolean | no | If true (default), new users can self-register. If false, only pre-created users (via user/ path) can register. |
 | `rp_display_name` | string | no | Human-readable name for the Relying Party. |
 | `rp_id` | string | no | Relying Party ID (e.g. localhost or your domain). Must match the origin's host. |
-| `rp_origins` | array | no | Allowed origins for WebAuthn (e.g. <https://vault.example.com>, <http://localhost:8200>). |
+| `rp_origins` | array | no | Allowed origins for WebAuthn (e.g. https://vault.example.com, http://localhost:8200). |
 
 #### Responses
 
