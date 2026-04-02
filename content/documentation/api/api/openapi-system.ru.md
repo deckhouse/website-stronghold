@@ -1548,7 +1548,7 @@ weight: 50
 
 | Параметр | Тип | Расположение | Обязательный | Описание |
 |----------|-----|--------------|--------------|----------|
-| `type` | string | path | да | Тип управляемого ключа (pkcs11, yandexcloudkms) |
+| `type` | string | path | да | Тип управляемого ключа (pkcs11, yandexcloudkms). |
 | `list` | string (true) | query | да | Должно быть установлено значение `true`. |
 
 #### Ответы
@@ -1570,7 +1570,7 @@ weight: 50
 | Параметр | Тип | Расположение | Обязательный | Описание |
 |----------|-----|--------------|--------------|----------|
 | `name` | string | path | да | Имя управляемого ключа |
-| `type` | string | path | да | Тип управляемого ключа (pkcs11, yandexcloudkms) |
+| `type` | string | path | да | Тип управляемого ключа (pkcs11, yandexcloudkms). |
 
 #### Ответы
 
@@ -1589,7 +1589,7 @@ weight: 50
 | Параметр | Тип | Расположение | Обязательный | Описание |
 |----------|-----|--------------|--------------|----------|
 | `name` | string | path | да | Имя управляемого ключа |
-| `type` | string | path | да | Тип управляемого ключа (pkcs11, yandexcloudkms) |
+| `type` | string | path | да | Тип управляемого ключа (pkcs11, yandexcloudkms). |
 
 #### Параметры тела запроса
 
@@ -1599,7 +1599,7 @@ weight: 50
 | `allow_replace_key` | boolean | нет | Если true, разрешает пользователям ключа предоставлять материал ключа, который может заменить ранее существовавшие ключи. |
 | `allow_store_key` | boolean | нет | Если true, разрешает пользователям ключа предоставлять материал ключа, если он ранее отсутствовал. |
 | `any_mount` | boolean | нет | Если true, к этому ключу можно обращаться из любой точки монтирования без указания поля allowed_manage_keys для этой точки монтирования. |
-| `endpoint` | string | нет | [yandexcloudkms] Пользовательский endpoint API Yandex Cloud (необязательно). |
+| `endpoint` | string | нет | [yandexcloudkms] Пользовательская конечная точка API Yandex Cloud (необязательно). |
 | `force_rw_session` | boolean (default: False) | нет | [pkcs11] Если true, принудительно использует на HSM сессии чтения/записи. |
 | `key_bits` | integer | нет | [pkcs11] Желаемая длина RSA-ключа в битах (2048, 3072 или 4096). |
 | `key_id` | string | нет | [pkcs11] Идентификатор PKCS#11-ключа для использования. |
@@ -1608,10 +1608,10 @@ weight: 50
 | `library` | string | нет | [pkcs11] Имя секции kms_library из конфигурации сервера. |
 | `max_parallel` | integer | нет | [pkcs11] Максимальное количество одновременных операций с HSM. |
 | `mechanism` | string | нет | [pkcs11] Механизм для указанного ключа в виде строки с десятичным или шестнадцатеричным значением (с префиксом 0x). |
-| `oauth_token` | string | нет | [yandexcloudkms] OAuth-токен для аутентификации в Yandex Cloud. Взаимоисключает service_account_key_json. |
+| `oauth_token` | string | нет | [yandexcloudkms] OAuth-токен для аутентификации в Yandex Cloud. Взаимоисключающий с service_account_key_json. |
 | `pin` | string | нет | [pkcs11] PIN доступа к слоту. |
 | `reverse_signature` | boolean (default: False) | нет | [pkcs11] Если true, меняет порядок байтов подписи ГОСТ, полученной от HSM (совместимость с CryptoPro). |
-| `service_account_key_json` | string | нет | [yandexcloudkms] JSON авторизованного ключа для сервисного аккаунта Yandex Cloud. Хранится внутри Vault, а не в файловой системе. Взаимоисключает oauth_token. |
+| `service_account_key_json` | string | нет | [yandexcloudkms] JSON авторизованного ключа сервисного аккаунта Yandex Cloud. Хранится в Vault, не в файловой системе. Взаимоисключающий с oauth_token. |
 | `slot` | string | нет | [pkcs11] Номер слота для использования, указывается строкой (например, "0"). |
 | `token_label` | string | нет | [pkcs11] Метка токена слота для использования. |
 | `usages` | string | нет | Список разрешенных назначений этого ключа, разделенный запятыми. Допустимые значения: encrypt, decrypt, sign, verify, wrap, unwrap, mac и random. |
@@ -1631,7 +1631,7 @@ weight: 50
 | Параметр | Тип | Расположение | Обязательный | Описание |
 |----------|-----|--------------|--------------|----------|
 | `name` | string | path | да | Имя управляемого ключа |
-| `type` | string | path | да | Тип управляемого ключа (pkcs11, yandexcloudkms) |
+| `type` | string | path | да | Тип управляемого ключа (pkcs11, yandexcloudkms). |
 
 #### Ответы
 
@@ -1650,7 +1650,7 @@ weight: 50
 | Параметр | Тип | Расположение | Обязательный | Описание |
 |----------|-----|--------------|--------------|----------|
 | `name` | string | path | да | Имя управляемого ключа |
-| `type` | string | path | да | Тип управляемого ключа (pkcs11, yandexcloudkms) |
+| `type` | string | path | да | Тип управляемого ключа (pkcs11, yandexcloudkms). |
 
 #### Параметры тела запроса
 
@@ -3885,7 +3885,7 @@ weight: 50
 | `aws_access_key_id` | string | нет | Идентификатор ключа доступа S3. |
 | `aws_s3_bucket` | string | да | Контейнер S3 для записи снимков. |
 | `aws_s3_ca_certificate` | string (default: ) | нет | Сертификат CA S3 в формате PEM. |
-| `aws_s3_disable_tls` | boolean (default: False) | нет | Отключить TLS для конечной точки S3. Следует использовать только в целях тестирования, обычно в сочетании с `s3_endpoint`. |
+| `aws_s3_disable_tls` | boolean (default: False) | нет | Отключить TLS для конечной точки S3. Используйте только для тестирования, обычно вместе с `s3_endpoint`. |
 | `aws_s3_endpoint` | string | нет | Конечная точка S3. |
 | `aws_s3_region` | string (default: ) | нет | Регион S3, в котором находится контейнер. |
 | `aws_secret_access_key` | string | нет | Секретный ключ доступа S3. |

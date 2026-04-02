@@ -3885,7 +3885,7 @@ Updates the configuration of the automatic snapshot.
 | `aws_access_key_id` | string | no | S3 access key ID. |
 | `aws_s3_bucket` | string | yes | S3 bucket to write snapshots to. |
 | `aws_s3_ca_certificate` | string (default: ) | no | S3 CA certificate PEM. |
-| `aws_s3_disable_tls` | boolean (default: False) | no | Disable TLS for the S3 endpoint. This should only be used for testing purposes, typically in conjunction with `s3_endpoint`. |
+| `aws_s3_disable_tls` | boolean (default: False) | no | Disable TLS for the S3 endpoint. This should only be used for testing purposes, typically in conjunction with `s3_endpoint`. |
 | `aws_s3_endpoint` | string | no | S3 endpoint. |
 | `aws_s3_region` | string (default: ) | no | S3 region bucket is in. |
 | `aws_secret_access_key` | string | no | S3 secret access key. |
