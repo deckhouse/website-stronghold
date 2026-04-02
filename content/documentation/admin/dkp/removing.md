@@ -1,7 +1,6 @@
 ---
 title: "Removing the platform"
 weight: 55
-url: /documentation/admin/removing/removing/
 ---
 
 To delete a cluster, several steps need to be followed:
