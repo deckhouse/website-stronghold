@@ -5,8 +5,6 @@ services:
       - ".werf/nginx-local.conf:/etc/nginx/nginx.conf:ro"
     ports:
       - "80:80"
-    dns:
-      - 8.8.8.8
     depends_on:
       hugo:
         condition: service_healthy    
