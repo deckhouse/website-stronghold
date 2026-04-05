@@ -143,7 +143,7 @@ you wish to enable issuer validation in Stronghold.
 
 ### Discovering the service account `issuer`
 
-To find your cluster's service account issuer (e.g. for `disable_iss_validation`), see the [Kubernetes service account issuer documentation](https://kubernetes.io/docs/reference/access-authn-authz/service-accounts/#service-account-issuer).
+To find your cluster's service account issuer (e.g. for `disable_iss_validation`), see the [Kubernetes service account issuer documentation](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#service-account-tokens).
 
 [k8s-1.21-changelog]: https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.21.md#api-change-2
 [short-lived-tokens]: #how-to-work-with-short-lived-kubernetes-tokens
