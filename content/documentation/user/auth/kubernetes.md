@@ -266,3 +266,4 @@ subjects:
   - kind: ServiceAccount
     name: myapp-auth
     namespace: default
+```
