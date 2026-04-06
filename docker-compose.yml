@@ -1,6 +1,29 @@
 services:
   frontend:
     image: nginx:latest
+    command:
+      - /bin/sh
+      - -ec
+      - |
+          until getent ahostsv4 hugo >/dev/null 2>&1 \
+            && getent ahostsv4 deckhouse.io >/dev/null 2>&1 \
+            && getent ahostsv4 deckhouse.ru >/dev/null 2>&1; do
+            echo "Waiting for Docker DNS..."
+            sleep 1
+          done
+
+          (
+            for url in \
+              https://deckhouse.io/includes/footer.html \
+              https://deckhouse.ru/includes/footer.html; do
+              until curl -k -fsS --max-time 10 -o /dev/null "$$url" >/dev/null; do
+                echo "Warming external upstream $$url..."
+                sleep 1
+              done
+            done
+          ) &
+
+          exec nginx -g 'daemon off;'
     volumes:
       - ".werf/nginx-local.conf:/etc/nginx/nginx.conf:ro"
     ports:
