@@ -17,4 +17,4 @@ Deckhouse Stronghold components can update either automatically or upon manual c
 
 For information about the versions available in release channels, visit [releases.deckhouse.io](https://releases.deckhouse.io/).
 
-For details on configuring release channels, refer to [Platform update](../admin/update/update/).
+For details on configuring release channels, refer to [Platform update](../../update/update/).

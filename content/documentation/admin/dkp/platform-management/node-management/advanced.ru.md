@@ -342,7 +342,7 @@ Done
 
 ## Как добавить несколько статических узлов в кластер вручную?
 
-Используйте существующий или создайте новый custom resource [NodeGroup](/modules/node-manager/cr.html#nodegroup) ([пример](examples.html#пример-описания-статической-nodegroup) NodeGroup с именем `worker`).
+Используйте существующий или создайте новый custom resource [NodeGroup](/modules/node-manager/cr.html#nodegroup) ([пример](/modules/node-manager/cr.html#nodegroup_v1) NodeGroup с именем `worker`).
 
 Автоматизировать процесс добавления узлов можно с помощью любой платформы автоматизации. Далее приведен пример для Ansible.
 
