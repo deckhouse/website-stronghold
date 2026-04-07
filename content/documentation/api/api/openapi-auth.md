@@ -21,7 +21,7 @@ requires 'sudo' capability in addition to
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `list` | string (true) | query | yes | Must be set to `true` |
 
 #### Responses
@@ -37,7 +37,7 @@ The token create path is used to create new tokens.
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `display_name` | string | no | Name to associate with this token |
 | `entity_alias` | string | no | Name of the entity alias to associate with this token |
 | `explicit_max_ttl` | string | no | Explicit Max TTL of this token |
@@ -66,7 +66,7 @@ The token create path is used to create new orphan tokens.
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `display_name` | string | no | Name to associate with this token |
 | `entity_alias` | string | no | Name of the entity alias to associate with this token |
 | `explicit_max_ttl` | string | no | Explicit Max TTL of this token |
@@ -95,13 +95,13 @@ This token create path is used to create new tokens adhering to the given role.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `display_name` | string | no | Name to associate with this token |
 | `entity_alias` | string | no | Name of the entity alias to associate with this token |
 | `explicit_max_ttl` | string | no | Explicit Max TTL of this token |
@@ -140,7 +140,7 @@ This endpoint will lookup a token and its properties.
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `token` | string | no | Token to lookup (POST request body) |
 
 #### Responses
@@ -156,7 +156,7 @@ This endpoint will lookup a token associated with the given accessor and its pro
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `accessor` | string | no | Accessor of the token to look up (request body) |
 
 #### Responses
@@ -182,7 +182,7 @@ This endpoint will lookup a token and its properties.
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `token` | string | no | Token to look up (unused, does not need to be set) |
 
 #### Responses
@@ -198,7 +198,7 @@ This endpoint will renew the given token and prevent expiration.
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `increment` | integer (default: 0) | no | The desired increment in seconds to the token expiration |
 | `token` | string | no | Token to renew (request body) |
 
@@ -215,7 +215,7 @@ This endpoint will renew a token associated with the given accessor and its prop
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `accessor` | string | no | Accessor of the token to renew (request body) |
 | `increment` | integer (default: 0) | no | The desired increment in seconds to the token expiration |
 
@@ -232,7 +232,7 @@ This endpoint will renew the token used to call it and prevent expiration.
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `increment` | integer (default: 0) | no | The desired increment in seconds to the token expiration |
 | `token` | string | no | Token to renew (unused, does not need to be set) |
 
@@ -249,7 +249,7 @@ This endpoint will delete the given token and all of its child tokens.
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `token` | string | no | Token to revoke (request body) |
 
 #### Responses
@@ -265,7 +265,7 @@ This endpoint will delete the token associated with the accessor and all of its 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `accessor` | string | no | Accessor of the token (request body) |
 
 #### Responses
@@ -281,7 +281,7 @@ This endpoint will delete the token and orphan its child tokens.
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `token` | string | no | Token to revoke (request body) |
 
 #### Responses
@@ -307,7 +307,7 @@ This endpoint lists configured roles.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `list` | string (true) | query | yes | Must be set to `true` |
 
 #### Responses
@@ -321,7 +321,7 @@ This endpoint lists configured roles.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role |
 
 #### Responses
@@ -337,13 +337,13 @@ This endpoint lists configured roles.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `allowed_entity_aliases` | array | no | String or JSON list of allowed entity aliases. If set, specifies the entity aliases which are allowed to be used during token generation. This field supports globbing. |
 | `allowed_policies` | array | no | If set, tokens can be created with any subset of the policies in this list, rather than the normal semantics of tokens being a subset of the calling token's policies. The parameter is a comma-delimited string of policy names. |
 | `allowed_policies_glob` | array | no | If set, tokens can be created with any subset of glob matched policies in this list, rather than the normal semantics of tokens being a subset of the calling token's policies. The parameter is a comma-delimited string of policy name globs. |
@@ -373,7 +373,7 @@ This endpoint lists configured roles.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role |
 
 #### Responses
@@ -402,13 +402,13 @@ Issue a token based on the credentials supplied
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `approle_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `role_id` | string | no | Unique identifier of the Role. Required to be supplied when the 'bind_secret_id' constraint is set. |
 | `secret_id` | string (default: ) | no | SecretID belong to the App role |
 
@@ -425,7 +425,7 @@ Lists all the roles registered with the backend.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `approle_mount_path` | string | path | yes | Path that the backend was mounted at |
 | `list` | string (true) | query | yes | Must be set to `true` |
 
@@ -434,8 +434,8 @@ Lists all the roles registered with the backend.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
-| `keys` | array | no |  |
+| ---------- | ----- | -------------- | ---------- |
+| `keys` | array | no | |
 
 ### GET /auth/{approle_mount_path}/role/{role_name}
 
@@ -446,7 +446,7 @@ Register an role with the backend.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role. Must be less than 4096 bytes. |
 | `approle_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -455,7 +455,7 @@ Register an role with the backend.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `bind_secret_id` | boolean | no | Impose secret ID to be presented when logging in using this role. |
 | `local_secret_ids` | boolean | no | If true, the secret identifiers generated using this role will be cluster local. This can only be set during role creation and once set, it can't be reset later |
 | `period` | integer | no | ⚠️ Deprecated. Use "token_period" instead. If this and "token_period" are both specified, only "token_period" will be used. |
@@ -484,14 +484,14 @@ Register an role with the backend.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role. Must be less than 4096 bytes. |
 | `approle_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `bind_secret_id` | boolean (default: True) | no | Impose secret_id to be presented when logging in using this role. Defaults to 'true'. |
 | `bound_cidr_list` | array | no | ⚠️ Deprecated. Use "secret_id_bound_cidrs" instead. |
 | `local_secret_ids` | boolean | no | If set, the secret IDs generated using this role will be cluster local. This can only be set during role creation and once set, it can't be reset later. |
@@ -524,7 +524,7 @@ Register an role with the backend.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role. Must be less than 4096 bytes. |
 | `approle_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -541,7 +541,7 @@ Impose secret_id to be presented during login using this role.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role. Must be less than 4096 bytes. |
 | `approle_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -550,7 +550,7 @@ Impose secret_id to be presented during login using this role.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `bind_secret_id` | boolean | no | Impose secret_id to be presented when logging in using this role. Defaults to 'true'. |
 
 ### POST /auth/{approle_mount_path}/role/{role_name}/bind-secret-id
@@ -562,14 +562,14 @@ Impose secret_id to be presented during login using this role.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role. Must be less than 4096 bytes. |
 | `approle_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `bind_secret_id` | boolean (default: True) | no | Impose secret_id to be presented when logging in using this role. |
 
 #### Responses
@@ -585,7 +585,7 @@ Impose secret_id to be presented during login using this role.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role. Must be less than 4096 bytes. |
 | `approle_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -602,7 +602,7 @@ Deprecated: Comma separated list of CIDR blocks, if set, specifies blocks of IP 
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role. Must be less than 4096 bytes. |
 | `approle_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -611,7 +611,7 @@ Deprecated: Comma separated list of CIDR blocks, if set, specifies blocks of IP 
 **200**: OK
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `bound_cidr_list` | array | no | ⚠️ Deprecated. Deprecated: Please use "secret_id_bound_cidrs" instead. Comma separated string or list of CIDR blocks. If set, specifies the blocks of IP addresses which can perform the login operation. |
 
 ### POST /auth/{approle_mount_path}/role/{role_name}/bound-cidr-list
@@ -623,14 +623,14 @@ Deprecated: Comma separated list of CIDR blocks, if set, specifies blocks of IP 
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role. Must be less than 4096 bytes. |
 | `approle_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `bound_cidr_list` | array | no | Deprecated: Please use "secret_id_bound_cidrs" instead. Comma separated string or list of CIDR blocks. If set, specifies the blocks of IP addresses which can perform the login operation. |
 
 #### Responses
@@ -646,7 +646,7 @@ Deprecated: Comma separated list of CIDR blocks, if set, specifies blocks of IP 
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role. Must be less than 4096 bytes. |
 | `approle_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -663,14 +663,14 @@ Assign a SecretID of choice against the role.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role. Must be less than 4096 bytes. |
 | `approle_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `cidr_list` | array | no | Comma separated string or list of CIDR blocks enforcing secret IDs to be used from specific set of IP addresses. If 'bound_cidr_list' is set on the role, then the list of CIDR blocks listed here should be a subset of the CIDR blocks listed on the role. |
 | `metadata` | string | no | Metadata to be tied to the SecretID. This should be a JSON formatted string containing metadata in key value pairs. |
 | `num_uses` | integer | no | Number of times this SecretID can be used, after which the SecretID expires. Overrides secret_id_num_uses role option when supplied. May not be higher than role's secret_id_num_uses. |
@@ -683,7 +683,7 @@ Assign a SecretID of choice against the role.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `secret_id` | string | no | Secret ID attached to the role. |
 | `secret_id_accessor` | string | no | Accessor of the secret ID |
 | `secret_id_num_uses` | integer | no | Number of times a secret ID can access the role, after which the secret ID will expire. |
@@ -698,7 +698,7 @@ Enables cluster local secret IDs
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role. Must be less than 4096 bytes. |
 | `approle_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -707,7 +707,7 @@ Enables cluster local secret IDs
 **200**: OK
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `local_secret_ids` | boolean | no | If true, the secret identifiers generated using this role will be cluster local. This can only be set during role creation and once set, it can't be reset later |
 
 ### GET /auth/{approle_mount_path}/role/{role_name}/period
@@ -719,7 +719,7 @@ Updates the value of 'period' on the role
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role. Must be less than 4096 bytes. |
 | `approle_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -728,7 +728,7 @@ Updates the value of 'period' on the role
 **200**: OK
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `period` | integer | no | ⚠️ Deprecated. Use "token_period" instead. If this and "token_period" are both specified, only "token_period" will be used. |
 | `token_period` | integer | no | If set, tokens created via this role will have no max lifetime; instead, their renewal period will be fixed to this value. This takes an integer number of seconds, or a string duration (e.g. "24h"). |
 
@@ -741,14 +741,14 @@ Updates the value of 'period' on the role
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role. Must be less than 4096 bytes. |
 | `approle_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `period` | integer | no | ⚠️ Deprecated. Use "token_period" instead. If this and "token_period" are both specified, only "token_period" will be used. |
 | `token_period` | integer | no | If set, tokens created via this role will have no max lifetime; instead, their renewal period will be fixed to this value. This takes an integer number of seconds, or a string duration (e.g. "24h"). |
 
@@ -765,7 +765,7 @@ Updates the value of 'period' on the role
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role. Must be less than 4096 bytes. |
 | `approle_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -782,7 +782,7 @@ Policies of the role.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role. Must be less than 4096 bytes. |
 | `approle_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -791,7 +791,7 @@ Policies of the role.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `policies` | array | no | ⚠️ Deprecated. Use "token_policies" instead. If this and "token_policies" are both specified, only "token_policies" will be used. |
 | `token_policies` | array | no | Comma-separated list of policies |
 
@@ -804,14 +804,14 @@ Policies of the role.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role. Must be less than 4096 bytes. |
 | `approle_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `policies` | array | no | ⚠️ Deprecated. Use "token_policies" instead. If this and "token_policies" are both specified, only "token_policies" will be used. |
 | `token_policies` | array | no | Comma-separated list of policies |
 
@@ -828,7 +828,7 @@ Policies of the role.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role. Must be less than 4096 bytes. |
 | `approle_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -845,7 +845,7 @@ Returns the 'role_id' of the role.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role. Must be less than 4096 bytes. |
 | `approle_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -854,7 +854,7 @@ Returns the 'role_id' of the role.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `role_id` | string | no | Identifier of the role. Defaults to a UUID. |
 
 ### POST /auth/{approle_mount_path}/role/{role_name}/role-id
@@ -866,14 +866,14 @@ Returns the 'role_id' of the role.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role. Must be less than 4096 bytes. |
 | `approle_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `role_id` | string | no | Identifier of the role. Defaults to a UUID. |
 
 #### Responses
@@ -889,7 +889,7 @@ Generate a SecretID against this role.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role. Must be less than 4096 bytes. |
 | `approle_mount_path` | string | path | yes | Path that the backend was mounted at |
 | `list` | string (true) | query | yes | Must be set to `true` |
@@ -899,8 +899,8 @@ Generate a SecretID against this role.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
-| `keys` | array | no |  |
+| ---------- | ----- | -------------- | ---------- |
+| `keys` | array | no | |
 
 ### POST /auth/{approle_mount_path}/role/{role_name}/secret-id
 
@@ -911,14 +911,14 @@ Generate a SecretID against this role.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role. Must be less than 4096 bytes. |
 | `approle_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `cidr_list` | array | no | Comma separated string or list of CIDR blocks enforcing secret IDs to be used from specific set of IP addresses. If 'bound_cidr_list' is set on the role, then the list of CIDR blocks listed here should be a subset of the CIDR blocks listed on the role. |
 | `metadata` | string | no | Metadata to be tied to the SecretID. This should be a JSON formatted string containing the metadata in key value pairs. |
 | `num_uses` | integer | no | Number of times this SecretID can be used, after which the SecretID expires. Overrides secret_id_num_uses role option when supplied. May not be higher than role's secret_id_num_uses. |
@@ -930,7 +930,7 @@ Generate a SecretID against this role.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `secret_id` | string | no | Secret ID attached to the role. |
 | `secret_id_accessor` | string | no | Accessor of the secret ID |
 | `secret_id_num_uses` | integer | no | Number of times a secret ID can access the role, after which the secret ID will expire. |
@@ -943,14 +943,14 @@ Generate a SecretID against this role.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role. Must be less than 4096 bytes. |
 | `approle_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `secret_id_accessor` | string | no | Accessor of the SecretID |
 
 #### Responses
@@ -964,7 +964,7 @@ Generate a SecretID against this role.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role. Must be less than 4096 bytes. |
 | `approle_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -979,14 +979,14 @@ Generate a SecretID against this role.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role. Must be less than 4096 bytes. |
 | `approle_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `secret_id_accessor` | string | no | Accessor of the SecretID |
 
 #### Responses
@@ -994,12 +994,12 @@ Generate a SecretID against this role.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `cidr_list` | array | no | List of CIDR blocks enforcing secret IDs to be used from specific set of IP addresses. If 'bound_cidr_list' is set on the role, then the list of CIDR blocks listed here should be a subset of the CIDR blocks listed on the role. |
-| `creation_time` | string | no |  |
-| `expiration_time` | string | no |  |
-| `last_updated_time` | string | no |  |
-| `metadata` | object | no |  |
+| `creation_time` | string | no | |
+| `expiration_time` | string | no | |
+| `last_updated_time` | string | no | |
+| `metadata` | object | no | |
 | `secret_id_accessor` | string | no | Accessor of the secret ID |
 | `secret_id_num_uses` | integer | no | Number of times a secret ID can access the role, after which the secret ID will expire. |
 | `secret_id_ttl` | integer | no | Duration in seconds after which the issued secret ID expires. |
@@ -1014,7 +1014,7 @@ Comma separated list of CIDR blocks, if set, specifies blocks of IP addresses wh
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role. Must be less than 4096 bytes. |
 | `approle_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -1023,7 +1023,7 @@ Comma separated list of CIDR blocks, if set, specifies blocks of IP addresses wh
 **200**: OK
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `secret_id_bound_cidrs` | array | no | Comma separated string or list of CIDR blocks. If set, specifies the blocks of IP addresses which can perform the login operation. |
 
 ### POST /auth/{approle_mount_path}/role/{role_name}/secret-id-bound-cidrs
@@ -1035,14 +1035,14 @@ Comma separated list of CIDR blocks, if set, specifies blocks of IP addresses wh
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role. Must be less than 4096 bytes. |
 | `approle_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `secret_id_bound_cidrs` | array | no | Comma separated string or list of CIDR blocks. If set, specifies the blocks of IP addresses which can perform the login operation. |
 
 #### Responses
@@ -1058,7 +1058,7 @@ Comma separated list of CIDR blocks, if set, specifies blocks of IP addresses wh
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role. Must be less than 4096 bytes. |
 | `approle_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -1075,7 +1075,7 @@ Use limit of the SecretID generated against the role.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role. Must be less than 4096 bytes. |
 | `approle_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -1084,7 +1084,7 @@ Use limit of the SecretID generated against the role.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `secret_id_num_uses` | integer | no | Number of times a secret ID can access the role, after which the SecretID will expire. Defaults to 0 meaning that the secret ID is of unlimited use. |
 
 ### POST /auth/{approle_mount_path}/role/{role_name}/secret-id-num-uses
@@ -1096,14 +1096,14 @@ Use limit of the SecretID generated against the role.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role. Must be less than 4096 bytes. |
 | `approle_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `secret_id_num_uses` | integer | no | Number of times a SecretID can access the role, after which the SecretID will expire. |
 
 #### Responses
@@ -1119,7 +1119,7 @@ Use limit of the SecretID generated against the role.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role. Must be less than 4096 bytes. |
 | `approle_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -1136,7 +1136,7 @@ Duration in seconds of the SecretID generated against the role.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role. Must be less than 4096 bytes. |
 | `approle_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -1145,7 +1145,7 @@ Duration in seconds of the SecretID generated against the role.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `secret_id_ttl` | integer | no | Duration in seconds after which the issued secret ID should expire. Defaults to 0, meaning no expiration. |
 
 ### POST /auth/{approle_mount_path}/role/{role_name}/secret-id-ttl
@@ -1157,14 +1157,14 @@ Duration in seconds of the SecretID generated against the role.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role. Must be less than 4096 bytes. |
 | `approle_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `secret_id_ttl` | integer | no | Duration in seconds after which the issued SecretID should expire. Defaults to 0, meaning no expiration. |
 
 #### Responses
@@ -1180,7 +1180,7 @@ Duration in seconds of the SecretID generated against the role.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role. Must be less than 4096 bytes. |
 | `approle_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -1197,14 +1197,14 @@ Invalidate an issued secret_id
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role. Must be less than 4096 bytes. |
 | `approle_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `secret_id` | string | no | SecretID attached to the role. |
 
 #### Responses
@@ -1220,7 +1220,7 @@ Invalidate an issued secret_id
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role. Must be less than 4096 bytes. |
 | `approle_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -1237,14 +1237,14 @@ Read the properties of an issued secret_id
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role. Must be less than 4096 bytes. |
 | `approle_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `secret_id` | string | no | SecretID attached to the role. |
 
 #### Responses
@@ -1252,12 +1252,12 @@ Read the properties of an issued secret_id
 **200**: OK
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `cidr_list` | array | no | List of CIDR blocks enforcing secret IDs to be used from specific set of IP addresses. If 'bound_cidr_list' is set on the role, then the list of CIDR blocks listed here should be a subset of the CIDR blocks listed on the role. |
-| `creation_time` | string | no |  |
-| `expiration_time` | string | no |  |
-| `last_updated_time` | string | no |  |
-| `metadata` | object | no |  |
+| `creation_time` | string | no | |
+| `expiration_time` | string | no | |
+| `last_updated_time` | string | no | |
+| `metadata` | object | no | |
 | `secret_id_accessor` | string | no | Accessor of the secret ID |
 | `secret_id_num_uses` | integer | no | Number of times a secret ID can access the role, after which the secret ID will expire. |
 | `secret_id_ttl` | integer | no | Duration in seconds after which the issued secret ID expires. |
@@ -1272,7 +1272,7 @@ Comma separated string or list of CIDR blocks. If set, specifies the blocks of I
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role. Must be less than 4096 bytes. |
 | `approle_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -1281,7 +1281,7 @@ Comma separated string or list of CIDR blocks. If set, specifies the blocks of I
 **200**: OK
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `token_bound_cidrs` | array | no | Comma separated string or list of CIDR blocks. If set, specifies the blocks of IP addresses which can use the returned token. Should be a subset of the token CIDR blocks listed on the role, if any. |
 
 ### POST /auth/{approle_mount_path}/role/{role_name}/token-bound-cidrs
@@ -1293,14 +1293,14 @@ Comma separated string or list of CIDR blocks. If set, specifies the blocks of I
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role. Must be less than 4096 bytes. |
 | `approle_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `token_bound_cidrs` | array | no | Comma separated string or JSON list of CIDR blocks. If set, specifies the blocks of IP addresses which are allowed to use the generated token. |
 
 #### Responses
@@ -1316,7 +1316,7 @@ Comma separated string or list of CIDR blocks. If set, specifies the blocks of I
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role. Must be less than 4096 bytes. |
 | `approle_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -1333,7 +1333,7 @@ Duration in seconds, the maximum lifetime of the tokens issued by using the Secr
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role. Must be less than 4096 bytes. |
 | `approle_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -1342,7 +1342,7 @@ Duration in seconds, the maximum lifetime of the tokens issued by using the Secr
 **200**: OK
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `token_max_ttl` | integer | no | The maximum lifetime of the generated token |
 
 ### POST /auth/{approle_mount_path}/role/{role_name}/token-max-ttl
@@ -1354,14 +1354,14 @@ Duration in seconds, the maximum lifetime of the tokens issued by using the Secr
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role. Must be less than 4096 bytes. |
 | `approle_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `token_max_ttl` | integer | no | The maximum lifetime of the generated token |
 
 #### Responses
@@ -1377,7 +1377,7 @@ Duration in seconds, the maximum lifetime of the tokens issued by using the Secr
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role. Must be less than 4096 bytes. |
 | `approle_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -1394,7 +1394,7 @@ Number of times issued tokens can be used
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role. Must be less than 4096 bytes. |
 | `approle_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -1403,7 +1403,7 @@ Number of times issued tokens can be used
 **200**: OK
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `token_num_uses` | integer | no | The maximum number of times a token may be used, a value of zero means unlimited |
 
 ### POST /auth/{approle_mount_path}/role/{role_name}/token-num-uses
@@ -1415,14 +1415,14 @@ Number of times issued tokens can be used
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role. Must be less than 4096 bytes. |
 | `approle_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `token_num_uses` | integer | no | The maximum number of times a token may be used, a value of zero means unlimited |
 
 #### Responses
@@ -1438,7 +1438,7 @@ Number of times issued tokens can be used
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role. Must be less than 4096 bytes. |
 | `approle_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -1455,7 +1455,7 @@ Duration in seconds, the lifetime of the token issued by using the SecretID that
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role. Must be less than 4096 bytes. |
 | `approle_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -1464,7 +1464,7 @@ Duration in seconds, the lifetime of the token issued by using the SecretID that
 **200**: OK
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `token_ttl` | integer | no | The initial ttl of the token to generate |
 
 ### POST /auth/{approle_mount_path}/role/{role_name}/token-ttl
@@ -1476,14 +1476,14 @@ Duration in seconds, the lifetime of the token issued by using the SecretID that
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role. Must be less than 4096 bytes. |
 | `approle_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `token_ttl` | integer | no | The initial ttl of the token to generate |
 
 #### Responses
@@ -1499,7 +1499,7 @@ Duration in seconds, the lifetime of the token issued by using the SecretID that
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `role_name` | string | path | yes | Name of the role. Must be less than 4096 bytes. |
 | `approle_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -1516,7 +1516,7 @@ Trigger the clean-up of expired SecretID entries.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `approle_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -1532,7 +1532,7 @@ Read the current JWT authentication backend configuration.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `jwt_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -1548,13 +1548,13 @@ Configure the JWT authentication backend.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `jwt_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `bound_issuer` | string | no | The value against which to match the 'iss' claim in a JWT. Optional. |
 | `default_role` | string | no | The default role to use if none is provided during login. If not set, a role is required during login. |
 | `jwks_ca_pem` | string | no | The CA certificate or chain of certificates, in PEM format, to use to validate connections to the JWKS URL. If not set, system certificates are used. |
@@ -1587,13 +1587,13 @@ Authenticates to Vault using a JWT (or OIDC) token.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `jwt_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `distributed_claim_access_token` | string | no | An optional token used to fetch group memberships specified by the distributed claim source in the jwt. This is supported only on Azure/Entra ID |
 | `jwt` | string | no | The signed JWT to validate. |
 | `role` | string | no | The role to log in against. |
@@ -1613,13 +1613,13 @@ Request an authorization URL to start an OIDC login flow.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `jwt_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `client_nonce` | string | no | Optional client-provided nonce that must match during callback, if present. |
 | `redirect_uri` | string | no | The OAuth redirect_uri to use in the authorization URL. |
 | `role` | string | no | The role to issue an OIDC authorization URL against. |
@@ -1639,10 +1639,10 @@ Callback endpoint to complete an OIDC login.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
-| `client_nonce` | string | query | no |  |
-| `code` | string | query | no |  |
-| `state` | string | query | no |  |
+| ---------- | ----- | -------------- | -------------- | ---------- |
+| `client_nonce` | string | query | no | |
+| `code` | string | query | no | |
+| `state` | string | query | no | |
 | `jwt_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -1660,17 +1660,17 @@ Callback endpoint to handle form_posts.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
-| `client_nonce` | string | query | no |  |
-| `code` | string | query | no |  |
-| `state` | string | query | no |  |
+| ---------- | ----- | -------------- | -------------- | ---------- |
+| `client_nonce` | string | query | no | |
+| `code` | string | query | no | |
+| `state` | string | query | no | |
 | `jwt_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
-| `id_token` | string | no |  |
+| ---------- | ----- | -------------- | ---------- |
+| `id_token` | string | no | |
 
 #### Responses
 
@@ -1685,7 +1685,7 @@ Lists all the roles registered with the backend.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `jwt_mount_path` | string | path | yes | Path that the backend was mounted at |
 | `list` | string (true) | query | yes | Must be set to `true` |
 
@@ -1702,7 +1702,7 @@ Read an existing role.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `name` | string | path | yes | Name of the role. |
 | `jwt_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -1721,14 +1721,14 @@ Register an role with the backend.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `name` | string | path | yes | Name of the role. |
 | `jwt_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `allowed_redirect_uris` | array | no | Comma-separated list of allowed values for redirect_uri |
 | `bound_audiences` | array | no | Comma-separated list of 'aud' claims that are valid for login; any match is sufficient |
 | `bound_cidrs` | array | no | ⚠️ Deprecated. Use "token_bound_cidrs" instead. If this and "token_bound_cidrs" are both specified, only "token_bound_cidrs" will be used. |
@@ -1774,7 +1774,7 @@ Delete an existing role.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `name` | string | path | yes | Name of the role. |
 | `jwt_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -1791,7 +1791,7 @@ Configures the JWT Public Key and Kubernetes API information.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `kubernetes_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -1807,13 +1807,13 @@ Configures the JWT Public Key and Kubernetes API information.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `kubernetes_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `disable_iss_validation` | boolean (default: True) | no | ⚠️ Deprecated. Disable JWT issuer validation (Deprecated, will be removed in a future release) |
 | `disable_local_ca_jwt` | boolean (default: False) | no | Disable defaulting to the local CA cert and service account JWT when running in a Kubernetes pod |
 | `issuer` | string | no | ⚠️ Deprecated. Optional JWT issuer. If no issuer is specified, then this plugin will use kubernetes.io/serviceaccount as the default issuer. (Deprecated, will be removed in a future release) |
@@ -1838,13 +1838,13 @@ Authenticates Kubernetes service accounts with Vault.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `kubernetes_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `jwt` | string | no | A signed JWT for authenticating a service account. This field is required. |
 | `role` | string | no | Name of the role against which the login is being attempted. This field is required |
 
@@ -1861,7 +1861,7 @@ Lists all the roles registered with the backend.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `kubernetes_mount_path` | string | path | yes | Path that the backend was mounted at |
 | `list` | string (true) | query | yes | Must be set to `true` |
 
@@ -1878,7 +1878,7 @@ Register an role with the backend.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `name` | string | path | yes | Name of the role. |
 | `kubernetes_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -1897,14 +1897,14 @@ Register an role with the backend.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `name` | string | path | yes | Name of the role. |
 | `kubernetes_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `alias_name_source` | string (default: serviceaccount_uid) | no | Source to use when deriving the Alias name. valid choices: "serviceaccount_uid" : <token.uid> e.g. 474b11b5-0f20-4f9d-8ca5-65715ab325e0 (most secure choice) "serviceaccount_name" : <namespace>/<serviceaccount> e.g. vault/vault-agent default: "serviceaccount_uid" |
 | `audience` | string | no | Optional Audience claim to verify in the jwt. |
 | `bound_cidrs` | array | no | ⚠️ Deprecated. Use "token_bound_cidrs" instead. If this and "token_bound_cidrs" are both specified, only "token_bound_cidrs" will be used. |
@@ -1939,7 +1939,7 @@ Register an role with the backend.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `name` | string | path | yes | Name of the role. |
 | `kubernetes_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -1956,7 +1956,7 @@ Configure the LDAP server to connect to, along with its options.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `ldap_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -1972,13 +1972,13 @@ Configure the LDAP server to connect to, along with its options.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `ldap_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `anonymous_group_search` | boolean (default: False) | no | Use anonymous binds when performing LDAP group searches (if true the initial credentials will still be used for the initial connection test). |
 | `binddn` | string | no | LDAP DN for searching for the user DN (optional) |
 | `bindpass` | string | no | LDAP password for searching for the user DN (optional) |
@@ -2031,7 +2031,7 @@ Manage additional groups for users allowed to authenticate.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `ldap_mount_path` | string | path | yes | Path that the backend was mounted at |
 | `list` | string (true) | query | yes | Must be set to `true` |
 
@@ -2048,7 +2048,7 @@ Manage additional groups for users allowed to authenticate.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `name` | string | path | yes | Name of the LDAP group. |
 | `ldap_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -2065,14 +2065,14 @@ Manage additional groups for users allowed to authenticate.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `name` | string | path | yes | Name of the LDAP group. |
 | `ldap_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `policies` | array | no | Comma-separated list of policies associated to the group. |
 
 #### Responses
@@ -2088,7 +2088,7 @@ Manage additional groups for users allowed to authenticate.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `name` | string | path | yes | Name of the LDAP group. |
 | `ldap_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -2107,14 +2107,14 @@ Log in with a username and password.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `username` | string | path | yes | DN (distinguished name) to be used for login. |
 | `ldap_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `password` | string | no | Password for this user. |
 
 #### Responses
@@ -2130,7 +2130,7 @@ Manage users allowed to authenticate.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `ldap_mount_path` | string | path | yes | Path that the backend was mounted at |
 | `list` | string (true) | query | yes | Must be set to `true` |
 
@@ -2147,7 +2147,7 @@ Manage users allowed to authenticate.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `name` | string | path | yes | Name of the LDAP user. |
 | `ldap_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -2164,14 +2164,14 @@ Manage users allowed to authenticate.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `name` | string | path | yes | Name of the LDAP user. |
 | `ldap_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `groups` | array | no | Comma-separated list of additional groups associated with the user. |
 | `policies` | array | no | Comma-separated list of policies associated with the user. |
 
@@ -2188,7 +2188,7 @@ Manage users allowed to authenticate.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `name` | string | path | yes | Name of the LDAP user. |
 | `ldap_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -2207,13 +2207,13 @@ Provides the Assertion Consumer Service to handle the Identity Provider binding.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `saml_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `RelayState` | string | yes | The SAML RelayState that has round tripped through the Identity Provider. |
 | `SAMLResponse` | string | yes | The SAML response from the Identity Provider. |
 
@@ -2230,7 +2230,7 @@ Read the configuration of the auth method.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `saml_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -2248,13 +2248,13 @@ Update the configuration of the auth method.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `saml_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `acs_urls` | array | yes | The Assertion Consumer Service URLs to which the responses from the Identity Provider will be sent. Must be well-formatted URLs. A warning will be provided if any of the given URLs are not TLS protected. |
 | `default_role` | string | no | The role to use if no role is provided during login. If not set, a role is required during login. |
 | `entity_id` | string | yes | The entity ID of this authentication method as a SAML Service Provider |
@@ -2279,7 +2279,7 @@ List all roles.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `saml_mount_path` | string | path | yes | Path that the backend was mounted at |
 | `list` | string (true) | query | yes | Must be set to `true` |
 
@@ -2296,7 +2296,7 @@ Read a role's configuration.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `name` | string | path | yes | The name of the role. |
 | `saml_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -2313,14 +2313,14 @@ Update a role's configuration.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `name` | string | path | yes | The name of the role. |
 | `saml_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `alias_metadata` | object | no | The metadata to be tied to generated entity alias. This should be a list or map containing the metadata in key value pairs |
 | `bound_attributes` | object | no | Mapping of attribute names to values to assert exist in the SAML Response's Assertion. |
 | `bound_attributes_type` | string (string, glob) | no | The type of matching assertion to perform on bound_attributes key-value pairs. If 'string', requires a direct string match in values. If 'glob', allows for wildcard matching using the '*' character in values. |
@@ -2350,7 +2350,7 @@ Delete a role.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `name` | string | path | yes | The name of the role. |
 | `saml_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -2369,13 +2369,13 @@ Obtain an SSO Service URL to start a SAML authentication flow.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `saml_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `acs_url` | string | no | The Assertion Consumer Service URL to use for this auth request. It must be one of the allowed URLs in the config. |
 | `client_challenge` | string | yes | The client challenge. Must be the output of a base64-encoded, sha256 digest of the 'client_verifier' eventually provided to the token API. |
 | `client_type` | string (default: cli) | no | The type of the requesting client. The response from the Assertion Consumer Service callback API will differ based on the provided type. |
@@ -2396,13 +2396,13 @@ Obtain a Vault token to complete the authentication flow.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `saml_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `client_verifier` | string | yes | The value which produced the 'client_challenge' provided to the SSO Service URL API at the start of the authentication flow. Its base64-encoded, sha256 digest must match the 'client_challenge' value. |
 | `token_poll_id` | string | yes | The 'token_poll_id' value returned from the SSO Service URL API at the start of the authentication flow. |
 
@@ -2421,14 +2421,14 @@ Log in with a username and password.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `username` | string | path | yes | Username of the user. |
 | `userpass_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `password` | string | no | Password for this user. |
 
 #### Responses
@@ -2442,7 +2442,7 @@ Log in with a username and password.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `policy_name` | string | path | yes | Policy password name for userpass. |
 | `userpass_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -2459,7 +2459,7 @@ Manage users allowed to authenticate.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `userpass_mount_path` | string | path | yes | Path that the backend was mounted at |
 | `list` | string (true) | query | yes | Must be set to `true` |
 
@@ -2476,7 +2476,7 @@ Manage users allowed to authenticate.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `username` | string | path | yes | Username for this user. |
 | `userpass_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -2495,14 +2495,14 @@ Manage users allowed to authenticate.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `username` | string | path | yes | Username for this user. |
 | `userpass_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `bound_cidrs` | array | no | ⚠️ Deprecated. Use "token_bound_cidrs" instead. If this and "token_bound_cidrs" are both specified, only "token_bound_cidrs" will be used. |
 | `max_ttl` | integer | no | ⚠️ Deprecated. Use "token_max_ttl" instead. If this and "token_max_ttl" are both specified, only "token_max_ttl" will be used. |
 | `password` | string | no | Password for this user. |
@@ -2531,7 +2531,7 @@ Manage users allowed to authenticate.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `username` | string | path | yes | Username for this user. |
 | `userpass_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -2548,14 +2548,14 @@ Reset user's password.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `username` | string | path | yes | Username for this user. |
 | `userpass_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `password` | string | no | Password for this user. |
 
 #### Responses
@@ -2571,14 +2571,14 @@ Update the policies associated with the username.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `username` | string | path | yes | Username for this user. |
 | `userpass_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `policies` | array | no | ⚠️ Deprecated. Use "token_policies" instead. If this and "token_policies" are both specified, only "token_policies" will be used. |
 | `token_policies` | array | no | Comma-separated list of policies |
 
@@ -2595,7 +2595,7 @@ Read WebAuthn configuration
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `webauthn_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -2611,17 +2611,17 @@ Configure WebAuthn backend
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `webauthn_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `auto_registration` | boolean | no | If true (default), new users can self-register. If false, only pre-created users (via user/ path) can register. |
 | `rp_display_name` | string | no | Human-readable name for the Relying Party. |
 | `rp_id` | string | no | Relying Party ID (e.g. localhost or your domain). Must match the origin's host. |
-| `rp_origins` | array | no | Allowed origins for WebAuthn (e.g. https://vault.example.com, http://localhost:8200). |
+| `rp_origins` | array | no | Allowed origins for WebAuthn (e.g. <https://vault.example.com>, <http://localhost:8200>). |
 
 #### Responses
 
@@ -2638,13 +2638,13 @@ Start WebAuthn login
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `webauthn_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `username` | string | no | Username to authenticate (omit for discoverable/passkey flow: browser will show passkey picker) |
 
 #### Responses
@@ -2662,13 +2662,13 @@ Finish WebAuthn login
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `webauthn_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `credential` | object | no | Assertion response from the authenticator (PublicKeyCredential with response) |
 | `username` | string | no | Username (omit if using discoverable flow; user is identified from assertion userHandle) |
 
@@ -2687,13 +2687,13 @@ Start WebAuthn registration
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `webauthn_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `username` | string | no | Username to register for WebAuthn |
 
 #### Responses
@@ -2711,13 +2711,13 @@ Finish WebAuthn registration
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `webauthn_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `credential` | object | no | Credential creation response from the authenticator (PublicKeyCredential with response) |
 | `username` | string | no | Username being registered |
 
@@ -2734,7 +2734,7 @@ List registered users
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `webauthn_mount_path` | string | path | yes | Path that the backend was mounted at |
 | `list` | string (true) | query | yes | Must be set to `true` |
 
@@ -2751,7 +2751,7 @@ Read a registered user
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `name` | string | path | yes | Username |
 | `webauthn_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -2770,14 +2770,14 @@ Update a user
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `name` | string | path | yes | Username |
 | `webauthn_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `display_name` | string | no | Display name for the user (defaults to username) |
 | `token_bound_cidrs` | array | no | Comma separated string or JSON list of CIDR blocks. If set, specifies the blocks of IP addresses which are allowed to use the generated token. |
 | `token_max_ttl` | integer | no | The maximum lifetime of the generated token |
@@ -2799,7 +2799,7 @@ Delete a registered user
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `name` | string | path | yes | Username |
 | `webauthn_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -2816,7 +2816,7 @@ Remove a credential from a user
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `credential_id` | string | path | yes | Credential ID (base64url encoded) |
 | `name` | string | path | yes | Username |
 | `webauthn_mount_path` | string | path | yes | Path that the backend was mounted at |
@@ -2834,14 +2834,14 @@ Update user token policies
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
+| ---------- | ----- | -------------- | -------------- | ---------- |
 | `name` | string | path | yes | Username |
 | `webauthn_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
+| ---------- | ----- | -------------- | ---------- |
 | `token_policies` | array | no | Comma-separated list of policies for the generated token |
 
 #### Responses

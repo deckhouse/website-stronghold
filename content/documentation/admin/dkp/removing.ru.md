@@ -1,7 +1,6 @@
 ---
 title: "Удаление платформы"
 weight: 55
-url: /documentation/admin/removing/removing/
 ---
 
 Для удаления платформы нужно выполнить несколько шагов:

@@ -149,13 +149,13 @@ d8 stronghold secrets enable -path test-kv mykv
 ## Отключение и удаление плагина
 
 1. Отключите все `secret` и `auth` методы, использующие плагин.
-2. Снимите плагин с регистрации:
+1. Снимите плагин с регистрации:
 
 ```bash
 d8 stronghold plugin deregister secret my-custom-plugin
 ```
 
-3. Удалите плагин из конфигурации `ModuleConfig`.
+1. Удалите плагин из конфигурации `ModuleConfig`.
 
 ## Практические рекомендации
 

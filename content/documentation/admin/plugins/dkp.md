@@ -149,13 +149,13 @@ d8 stronghold secrets enable -path test-kv mykv
 ## Disable and remove a plugin
 
 1. Disable all `secret` and `auth` methods that use the plugin.
-2. Deregister the plugin:
+1. Deregister the plugin:
 
 ```bash
 d8 stronghold plugin deregister secret my-custom-plugin
 ```
 
-3. Remove the plugin from `ModuleConfig`.
+1. Remove the plugin from `ModuleConfig`.
 
 ## Practical recommendations
 
