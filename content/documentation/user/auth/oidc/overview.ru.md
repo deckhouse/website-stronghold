@@ -180,7 +180,7 @@ Stronghold успешно работает с рядом OIDC-провайдер
 
 Дальше можно перейти к разделу:
 
-- [Провайдеры OIDC](./odic-providers/overview/)
+- [Провайдеры OIDC](./oidc-providers/overview/)
 
 ## Что дальше
 

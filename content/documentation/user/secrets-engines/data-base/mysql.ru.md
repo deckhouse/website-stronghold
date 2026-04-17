@@ -1,4 +1,4 @@
 ---
-title: ODIC
+title: MySQL
 weight: 20
 ---
