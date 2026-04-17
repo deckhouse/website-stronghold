@@ -1,11 +1,9 @@
 ---
-title: "Редакции"
+title: "Редакции Deckhouse Stronghold"
 linkTitle: "Редакции"
 description: "Редакции Deckhouse Stronghold и сравнение их возможностей"
 weight: 40
 ---
-
-## Редакции Deckhouse Stronghold
 
 **Deckhouse Stronghold** поставляется в трёх редакциях:
 

@@ -5,8 +5,6 @@ weight: 20
 description: "Настройка GitLab как OIDC-провайдера для Deckhouse Stronghold."
 ---
 
-## GitLab
-
 GitLab может использоваться как OIDC-провайдер для аутентификации пользователей в **Deckhouse Stronghold**.
 
 Перед началом убедитесь, что метод `OIDC` уже включён и настроен в Stronghold, а также определён корректный `redirect URI`, который должен совпадать в Stronghold и в GitLab.

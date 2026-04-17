@@ -4,8 +4,6 @@ linkTitle: "Переключение с EE на CSE"
 weight: 10
 ---
 
-## Переключение с EE на CSE
-
 **Deckhouse Stronghold Enterprise Edition (EE)** можно переключить на **Deckhouse Stronghold Certified Security Edition (CSE)** одним из следующих способов:
 
 - [в исполнении Standalone](/products/stronghold/documentation/Руководство по развертыванию/Развертывание в Standalone/Переключение редакций/Переключение с EE на CSE/);
@@ -459,4 +457,4 @@ d8 k -n d8-stronghold get po
 
 После успешного выполнения шагов модуль Stronghold в составе DKP будет переключён с **Enterprise Edition** на **Certified Security Edition**.
 
-Для дополнительной проверки состояния после переключения используйте раздел [Проверка работоспособности](/products/stronghold/documentation/deployment/functionality_check/).
+Для дополнительной проверки состояния после переключения используйте раздел [Проверка работоспособности](/products/stronghold/documentation/deployment/functionality-check/).

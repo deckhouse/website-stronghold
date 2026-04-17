@@ -4,15 +4,14 @@ linkTitle: "Переключение с EE на CSE"
 weight: 10
 ---
 
-## Переключение с EE на CSE
-
 **Deckhouse Stronghold Enterprise Edition (EE)** можно переключить на **Deckhouse Stronghold Certified Security Edition (CSE)** одним из следующих способов:
 
 - в исполнении **Standalone**;
 - [в исполнении DKP](/products/stronghold/documentation/Руководство по развертыванию/Развертывание в DKP/Переключение редакций/Переключение с EE на CSE/).
 
 > Предупреждение  
-> Поддерживается обновление с **Stronghold EE 1.15.x** до **Stronghold CSE 1.16.0**. Если используется версия Stronghold EE ниже `1.15.x`, сначала [обновитесь до последней версии ветки](/products/stronghold/documentation/Руководство администратора/Обновление/Обновление Standalone/).
+> Поддерживается обновление с **Stronghold EE 1.15.x** до **Stronghold CSE 1.16.0**. Если используется версия Stronghold EE ниже `1.15.x`, сначала [обновитесь до последней версии ветки](/products/stronghold/documentation/admin/update/stanalone-update/).
+
 > Предупреждение  
 > При переключении на Stronghold CSE возможна временная недоступность сервиса.
 
@@ -207,4 +206,4 @@ weight: 10
 
 После успешного выполнения шагов Stronghold в исполнении Standalone будет переключён с **Enterprise Edition** на **Certified Security Edition**.
 
-Если требуется дополнительная проверка состояния сервиса после переключения, перейдите в раздел [Проверка работоспособности](/products/stronghold/documentation/Руководство по развертыванию/Проверка работоспособности/).
+Если требуется дополнительная проверка состояния сервиса после переключения, перейдите в раздел [Проверка работоспособности](../../../deployment/functionality-check/).

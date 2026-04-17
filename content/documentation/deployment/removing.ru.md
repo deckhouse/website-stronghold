@@ -5,8 +5,6 @@ description: "Удаление Deckhouse Stronghold в Standalone и в Deckhous
 weight: 50
 ---
 
-## Удаление
-
 В этом разделе описано удаление **Deckhouse Stronghold** для двух вариантов развёртывания:
 
 - **Standalone**;
@@ -236,4 +234,4 @@ sudo rm -rf /var/lib/deckhouse/stronghold
 Если требуется повторное развёртывание продукта, используйте разделы:
 
 - [Развертывание в Standalone](../standalone/preparation/)
-- [Развертывание в DKP](../deployment/dkp/requirements/)
+- [Развертывание в DKP](../deployment/dkp/environment-requirements/)

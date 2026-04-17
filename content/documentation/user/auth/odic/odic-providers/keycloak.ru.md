@@ -5,8 +5,6 @@ weight: 30
 description: "Настройка Keycloak как OIDC-провайдера для Deckhouse Stronghold."
 ---
 
-## Keycloak
-
 Keycloak может использоваться как OIDC-провайдер для аутентификации пользователей в **Deckhouse Stronghold**.
 
 Перед началом убедитесь, что метод `OIDC` уже настроен в Stronghold и что вы знаете корректный `redirect URI`, который должен быть разрешён и в Stronghold, и в Keycloak.

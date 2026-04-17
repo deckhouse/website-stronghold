@@ -5,8 +5,6 @@ weight: 40
 description: "Использование Kubernetes как OIDC-провайдера для JWT/OIDC-аутентификации в Deckhouse Stronghold."
 ---
 
-## Kubernetes
-
 Kubernetes может выступать в качестве OIDC-провайдера, чтобы Stronghold мог проверять токены `ServiceAccount` с помощью `JWT/OIDC auth` [5].
 
 > Предупреждение  

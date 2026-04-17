@@ -5,12 +5,10 @@ description: "Требования к окружению для установк
 weight: 10
 ---
 
-## Требования к окружению
-
 Этот раздел описывает требования к окружению для установки **Deckhouse Stronghold** в **существующий кластер Deckhouse Kubernetes Platform**.
 
 > Примечание  
-> В этом разделе не рассматривается установка самой **Deckhouse Kubernetes Platform**. Если кластер DKP ещё не развернут, используйте [документация Deckhouse Kubernetes Platform](https://deckhouse.ru/products/kubernetes-platform/documentation/).
+> В этом разделе не рассматривается установка самой **Deckhouse Kubernetes Platform**. Если кластер DKP ещё не развернут, используйте [документация Deckhouse Kubernetes Platform](/products/kubernetes-platform/documentation/) или воспользуйтесь [быстрым стартом](/products/kubernetes-platform/gs/).
 
 ## Общие требования
 
