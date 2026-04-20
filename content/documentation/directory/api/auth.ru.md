@@ -1,4 +1,4 @@
 ---
-title: PostgreSQL
+title: Auth
 weight: 10
 ---

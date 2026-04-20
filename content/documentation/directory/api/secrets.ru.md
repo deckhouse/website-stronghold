@@ -1,4 +1,4 @@
 ---
-title: MySQL
+title: Secrets
 weight: 20
 ---
