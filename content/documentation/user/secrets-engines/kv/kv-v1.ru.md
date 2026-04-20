@@ -1,142 +1,172 @@
 ---
-title: "KV/v1"
+title: "KV v1"
+linkTitle: "KV v1"
 weight: 20
+description: "Работа с механизмом секретов KV v1 в Deckhouse Stronghold."
 ---
 
-Механизм секретов `kv` используется для хранения произвольных секретов в пределах хранилища Stronghold.
+Механизм секретов `KV` версии 1 используется для хранения произвольных секретов в пределах хранилища **Deckhouse Stronghold**. При записи ключа в `KV v1` старое значение заменяется новым.
 
-При записи ключа в `kv` старое значение заменяется.
+Этот вариант подходит, если:
 
-Имена ключей всегда должны быть строками. Если вы записываете нестроковые значения напрямую через CLI, они будут преобразованы в строки. Однако вы можете сохранить нестроковые значения, записав пары ключ/значение из JSON-файла или используя HTTP API.
+- вам не нужна версионность;
+- достаточно хранить только актуальное значение секрета;
+- важна простота и минимальные накладные расходы на хранение.
 
-Этот механизм секретов учитывает различие между операциями `create` и `update` в ACL-политиках.
+## Что важно знать
 
-{{< alert >}}Пути и имена ключей _не_ обфусцируются и не шифруются; шифруются только значения для ключей. Поэтому следует хранить конфиденциальную информацию как часть пути секрета.
-{{< /alert >}}
+- Имена ключей всегда должны быть строками.
+- Если вы записываете нестроковые значения напрямую через CLI, они будут преобразованы в строки.
+- Пути и имена ключей **не шифруются** — шифруются только значения. Поэтому не следует хранить конфиденциальную информацию как часть пути секрета.
+- `KV v1` не хранит историю изменений и не поддерживает версионирование.
 
-## Как включить
+## Как включить KV v1
 
-Чтобы включить хранилище kv версии 1 выполните команду:
+Чтобы включить хранилище `KV v1`, выполните:
 
-```shell-session
+```bash
 d8 stronghold secrets enable -version=1 kv
 ```
 
-## Использование
+По умолчанию механизм монтируется по стандартному пути, но при необходимости можно использовать другой `mount path`.
 
-Механизм секретов `kv` позволяет записывать ключи с произвольными значениями. Для этого потребуется токен с соответствующими правами
+## Базовые операции
 
-1. Запись произвольных данных:
+### Запись секрета
 
-   ```shell-session
-   $ d8 stronghold kv put kv/my-secret my-value=s3cr3t
-   Success! Data written to: kv/my-secret
-   ```
+```bash
+d8 stronghold kv put kv/my-secret my-value=s3cr3t
+```
 
-1. Чтение произвольных данных:
+Ожидаемый результат:
 
-   ```shell-session
-   $ d8 stronghold kv get kv/my-secret
-   Key                 Value
-   ---                 -----
-   my-value            s3cr3t
-   ```
-
-1. Получить список ключей:
-
-   ```shell-session
-   $ d8 stronghold kv list kv/
-   Keys
-   ----
-   my-secret
-   ```
-
-1. Удалить ключ:
-
-   ```shell-session
-   $ d8 stronghold kv delete kv/my-secret
-   Success! Data deleted (if it existed) at: kv/my-secret
-   ```
-
-   Вы также можете использовать механизм password policy для генерации произвольных значений.
-
-1. Создать политику для паролей:
-
-   ```shell-session
-   $ d8 stronghold write sys/policies/password/example policy=-<<EOF
-   
-     length=20
-   
-     rule "charset" {
-       charset = "abcdefghij0123456789"
-       min-chars = 1
-     }
-   
-     rule "charset" {
-       charset = "!@#$%^&*STUVWXYZ"
-       min-chars = 1
-     }
-   
-   EOF
-   ```
-
-1. Сгенерировать пароль используя политику `example`:
-
-   ```shell-session
-   $ d8 stronghold kv put kv/my-generated-secret \
-       password=$(d8 stronghold read -field password sys/policies/password/example/generate)
-   ```
-
-1. Прочитать сгенерированное значение секрета:
-
-   ```shell-session
-   $ d8 stronghold kv get kv/my-generated-secret
-   ====== Data ======
-   Key         Value
-   ---         -----
-   password    ^dajd609Xf8Zhac$dW24
-   ```
-
-## Время жизни ключей (TTL)
-
-В отличие от других механизмов секретов, механизм секретов KV не применяет TTL для истечения срока действия. Вместо этого `lease_duration` является информацией для пользователя, как часто нужно проверять новое значение.
-
-Если ключ имеет значение `ttl`, механизм секретов KV будет использовать это значение
-в качестве продолжительности аренды:
-
-Если ключ имеет значение `ttl`, движок будет использовать это значение в качестве продолжительности аренды:
-
-```shell-session
-$ d8 stronghold kv put kv/my-secret ttl=5s my-value=s3cr3t
+```text
 Success! Data written to: kv/my-secret
 ```
 
-Даже при установленном `ttl` движок secrets _никогда_ не удаляет данные самостоятельно. Ключ `ttl` носит лишь рекомендательный характер.
+### Чтение секрета
 
-При чтении значения с `ttl`, как ключ `ttl`, так и интервал обновления будут отражать это значение:
+```bash
+d8 stronghold kv get kv/my-secret
+```
 
-```shell-session
-$ d8 stronghold kv get kv/my-secret
+Пример вывода:
+
+```text
+Key                 Value
+---                 -----
+my-value            s3cr3t
+```
+
+### Получение списка ключей
+
+```bash
+d8 stronghold kv list kv/
+```
+
+Пример вывода:
+
+```text
+Keys
+----
+my-secret
+```
+
+### Удаление секрета
+
+```bash
+d8 stronghold kv delete kv/my-secret
+```
+
+Пример вывода:
+
+```text
+Success! Data deleted (if it existed) at: kv/my-secret
+```
+
+## Генерация значения через password policy
+
+В `KV v1` можно хранить и сгенерированные значения, например пароль, созданный с помощью password policy.
+
+### Создание password policy
+
+```bash
+d8 stronghold write sys/policies/password/example policy=-<<EOF
+length=20
+
+rule "charset" {
+  charset = "abcdefghij0123456789"
+  min-chars = 1
+}
+
+rule "charset" {
+  charset = "!@#$%^&*STUVWXYZ"
+  min-chars = 1
+}
+EOF
+```
+
+### Запись секрета с сгенерированным паролем
+
+```bash
+d8 stronghold kv put kv/my-generated-secret \
+    password=$(d8 stronghold read -field password sys/policies/password/example/generate)
+```
+
+### Чтение сгенерированного секрета
+
+```bash
+d8 stronghold kv get kv/my-generated-secret
+```
+
+Пример вывода:
+
+```text
+====== Data ======
+Key         Value
+---         -----
+password    ^dajd609Xf8Zhac$dW24
+```
+
+## TTL в KV v1
+
+В отличие от динамических механизмов секретов, `KV v1` не использует TTL для автоматического истечения срока действия данных.
+
+Если при записи указать поле `ttl`, механизм будет возвращать его как информационное значение, но **не будет автоматически удалять данные**.
+
+Пример записи:
+
+```bash
+d8 stronghold kv put kv/my-secret ttl=5s my-value=s3cr3t
+```
+
+Пример чтения:
+
+```bash
+d8 stronghold kv get kv/my-secret
+```
+
+Пример вывода:
+
+```text
 Key                 Value
 ---                 -----
 my-value            s3cr3t
 ttl                 5s
-
-curl -X 'GET' \
-  'https://stronghold.example.com/v1/kv/my-secret' \
-  -H 'X-Vault-Token: ***'
-
-{
-  "request_id": "3879d849-cb78-725a-c2eb-3ba9dfe8a1d3",
-  "lease_id": "",
-  "renewable": false,
-  "lease_duration": 5,
-  "data": {
-    "my-value": "s3cr3t",
-    "ttl": "5s"
-  },
-  "wrap_info": null,
-  "warnings": null,
-  "auth": null
-}
 ```
+
+Это означает, что `ttl` в `KV v1` носит рекомендательный характер и не заменяет механизм аренды динамических секретов.
+
+## Когда использовать KV v1
+
+`KV v1` обычно выбирают, если:
+
+- нужен максимально простой механизм хранения секретов;
+- не требуется история версий;
+- важны минимальные накладные расходы;
+- достаточно операций `put`, `get`, `list` и `delete`.
+
+## Что дальше
+
+Если вам нужна версионность, мягкое удаление и работа с метаданными, используйте раздел [KV v2](./kv-v2/).  
+Если нужно общее введение по механизму `KV`, используйте раздел [Обзор](../kv/).

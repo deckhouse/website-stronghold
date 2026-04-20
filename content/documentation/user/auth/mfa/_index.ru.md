@@ -1,4 +1,4 @@
 ---
-title: "2FA / MFA"
+title: MFA
 weight: 90
 ---
