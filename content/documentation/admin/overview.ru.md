@@ -13,7 +13,7 @@ weight: 10
 
 > Примечание  
 > Если вам требуется установить продукт с нуля, используйте раздел [Руководство по развертыванию](/products/stronghold/documentation/deployment/overview/) или воспользуйтесь [быстрым стартом](/products/stronghold/gs/).  
-> Если требуется работа с секретами, токенами, политиками и методами аутентификации, используйте [Руководство пользователя](/products/stronghold/documentation/user/overview).
+> Если требуется работа с секретами, токенами, политиками и методами аутентификации, используйте [Руководство пользователя](../user/overview/).
 
 ## Для кого предназначено руководство
 
@@ -71,9 +71,9 @@ weight: 10
 
 Раздел посвящён подключению и использованию плагинов:
 
-- [Плагины](../integration/owerview/) — обзор встроенных и внешних плагинов.
-- [Плагины в Standalone](../integration/standalone-plagins/) — подключение и сопровождение плагинов в Standalone-развёртывании.
-- [Плагины в DKP](../integration/dkp-plugins/) — работа с плагинами в составе Deckhouse Kubernetes Platform.
+- [Плагины](./integration/owerview/) — обзор встроенных и внешних плагинов.
+- [Плагины в Standalone](./integration/standalone-plugins/) — подключение и сопровождение плагинов в Standalone-развёртывании.
+- [Плагины в DKP](./integration/dkp-plugins/) — работа с плагинами в составе Deckhouse Kubernetes Platform.
 
 ### Обновление
 

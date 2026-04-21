@@ -325,5 +325,5 @@ d8 k -n d8-stronghold logs <имя-пода>
 После завершения первичной настройки вы можете:
 
 - перейти к разделу [Переключение редакций](../switching-editions/switch-ee-to-cse/), если это требуется;
-- выполнить общую [Проверку работоспособности](/products/stronghold/documentation/deployment/functionality_check/);
-- продолжить настройку и эксплуатацию Stronghold в разделе [Руководство администратора](/products/stronghold/documentation/admin/overview/).
+- выполнить общую [Проверку работоспособности](../functionality-check/);
+- продолжить настройку и эксплуатацию Stronghold в разделе [Руководство администратора](../../admin/overview/).

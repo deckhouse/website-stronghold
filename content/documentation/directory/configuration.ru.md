@@ -34,7 +34,7 @@ weight: 30
 - `listener` — listener для API Proxy;
 - параметры логирования и отладки.
 
-Подробности смотрите на странице [Настройка](../user/stronghold-agent/configuration/).
+Подробности смотрите на странице [Настройка](../user/stronghold-agent/settings/).
 
 ## Механизмы секретов
 
@@ -168,7 +168,7 @@ weight: 30
 - `issuer`.
 
 Подробности:
-- [OIDC identity provider](../user/secrets-engines/identity/oidc-provider/)
+- [OIDC identity provider](../user/secrets-engines/identity/oidc-identity-provider/)
 
 ### OIDC identity tokens
 
@@ -184,7 +184,7 @@ weight: 30
 - `issuer`.
 
 Подробности:
-- [OIDC identity tokens](../user/secrets-engines/identity/oidc-tokens/)
+- [OIDC identity tokens](../user/secrets-engines/identity/oidc-identity-tokens/)
 
 ## Роли и TTL
 
@@ -205,13 +205,13 @@ weight: 30
 
 Если вы не знаете, где описан параметр, используйте такой порядок:
 
-- если параметр относится к `agent.hcl`, откройте [Настройка](../user/stronghold-agent/configuration/);
+- если параметр относится к `agent.hcl`, откройте [Настройка](../user/stronghold-agent/settings/);
 - если параметр связан с секретами, откройте страницу соответствующего механизма секретов;
 - если параметр связан с `client_id`, `issuer`, ключами подписи или claims, откройте страницы identity и OIDC;
 - если параметр связан с TTL, ролями или генерацией временных учётных данных, проверьте страницу нужного secrets engine.
 
 ## Что дальше
 
-- Для конфигурации Stronghold Agent откройте [Настройка](../user/stronghold-agent/configuration/).
+- Для конфигурации Stronghold Agent откройте [Настройка](../user/stronghold-agent/settings/).
 - Для параметров механизмов секретов откройте нужную страницу в разделе «Механизмы секретов».
 - Для identity и OIDC используйте раздел `Identity`.

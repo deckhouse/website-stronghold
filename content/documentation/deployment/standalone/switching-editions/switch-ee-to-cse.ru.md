@@ -11,7 +11,7 @@ weight: 10
 
 > Предупреждение  
 > Поддерживается обновление с **Stronghold EE 1.15.x** до **Stronghold CSE 1.16.0**. Если используется версия Stronghold EE ниже `1.15.x`, сначала [обновитесь до последней версии ветки](/products/stronghold/documentation/admin/update/stanalone-update/).
-
+>
 > Предупреждение  
 > При переключении на Stronghold CSE возможна временная недоступность сервиса.
 
