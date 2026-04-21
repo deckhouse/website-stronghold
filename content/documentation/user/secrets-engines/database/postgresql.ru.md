@@ -140,3 +140,4 @@ Stronghold вернёт:
 
 - Если вам нужен обзор всего раздела, откройте [Обзор](./overview/).
 - Если вы работаете с MySQL, откройте [MySQL](./mysql/).
+- Если вы работаете с ClickHouse, откройте [ClickHouse](./clickhouse/).

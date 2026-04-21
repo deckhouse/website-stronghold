@@ -211,3 +211,4 @@ $ d8 stronghold write database/config/my-mysql-database \
 
 - Если вам нужен обзор всего раздела, откройте [Обзор](./overview/).
 - Если вы работаете с PostgreSQL, откройте [PostgreSQL](./postgresql/).
+- Если вы работаете с ClickHouse, откройте [ClickHouse](./clickhouse/).
