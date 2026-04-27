@@ -6,7 +6,7 @@ cleanup:
 ---
 
 image: web-artifacts
-fromImage: hugomods/hugo:debian-ci-0.150.1
+fromImage: ghcr.io/gohugoio/hugo:v0.159.2
 final: false
 shell:
   setup:
