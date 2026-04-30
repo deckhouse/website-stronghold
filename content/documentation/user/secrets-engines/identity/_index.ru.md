@@ -1,4 +1,4 @@
 ---
-title: "Механизм секретов Identity"
-weight: 90
+title: Identity
+weight: 100
 ---
