@@ -2,7 +2,7 @@
 title: "FAQ"
 linkTitle: "FAQ"
 description: "Часто задаваемые вопросы о Deckhouse Stronghold"
-weight: 50
+weight: 90
 ---
 
 На этой странице собраны короткие ответы на частые вопросы о Deckhouse Stronghold и его основных возможностях.

@@ -49,9 +49,6 @@ weight: 40
 | Поддержка российских ОС ([подробнее...](/products/kubernetes-platform/documentation/v1/supported_versions.html)) | РЕД ОС, ALT Linux, Astra Linux Special Edition, **РОСА Сервер** | РЕД ОС, ALT Linux, Astra Linux Special Edition, **РОСА Сервер** | РЕД ОС, ALT Linux, Astra Linux Special Edition |
 | Сертификат соответствия требованиям приказа ФСТЭК России № 76 по 4-му уровню доверия | {{< icon-edition type="not_supported" >}} | {{< icon-edition type="not_supported" >}} | {{< icon-edition type="supported" >}} |
 | Возможность запуска в DKP CE | {{< icon-edition type="supported" >}} | {{< icon-edition type="not_supported" >}} | {{< icon-edition type="not_supported" >}} |
-| [Гарантийная техническая поддержка](https://deckhouse.ru/tech-support/) | {{< icon-edition type="techsupport_ce" >}} | {{< icon-edition type="techsupport_commercial" >}} | {{< icon-edition type="techsupport_commercial" >}} |
-| [Техподдержка «Стандарт»](https://deckhouse.ru/tech-support/) | {{< icon-edition type="techsupport_ce" >}} | {{< icon-edition type="techsupport_commercial" >}} | {{< icon-edition type="techsupport_commercial" >}} |
-| [Техподдержка «Стандарт +»](https://deckhouse.ru/tech-support/) | {{< icon-edition type="techsupport_ce" >}} | {{< icon-edition type="techsupport_commercial" >}} | {{< icon-edition type="techsupport_commercial" >}} |
 
 ## Как выбрать редакцию
 

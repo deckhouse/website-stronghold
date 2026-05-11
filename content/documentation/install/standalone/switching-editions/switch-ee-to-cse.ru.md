@@ -6,11 +6,11 @@ weight: 10
 
 **Deckhouse Stronghold Enterprise Edition (EE)** можно переключить на **Deckhouse Stronghold Certified Security Edition (CSE)** одним из следующих способов:
 
-- в исполнении **Standalone**;
-- [в исполнении DKP](/products/stronghold/documentation/Руководство по развертыванию/Развертывание в DKP/Переключение редакций/Переключение с EE на CSE/).
+- [в исполнении **Standalone**](#переключение-в-standalone);
+- [в исполнении DKP](../../dkp/switching-editions/switch-ee-to-cse/).
 
 > Предупреждение  
-> Поддерживается обновление с **Stronghold EE 1.15.x** до **Stronghold CSE 1.16.0**. Если используется версия Stronghold EE ниже `1.15.x`, сначала [обновитесь до последней версии ветки](/products/stronghold/documentation/admin/update/stanalone-update/).
+> Поддерживается обновление с **Stronghold EE 1.15.x** до **Stronghold CSE 1.16.0**. Если используется версия Stronghold EE ниже `1.15.x`, сначала [обновитесь до последней версии ветки](../../../admin/update/stanalone-update/).
 >
 > Предупреждение  
 > При переключении на Stronghold CSE возможна временная недоступность сервиса.
@@ -98,7 +98,7 @@ weight: 10
    - ошибки запуска отсутствуют;
    - версия соответствует `1.16.0` (`CSE`).
 
-1. При необходимости [распечатайте Stronghold](/products/stronghold/documentation/Руководство администратора/Надёжность и восстановление/Восстановление после потери кворума/).
+1. При необходимости [распечатайте Stronghold](../../../admin/reliability-and-recovery/lost_quorum_recovery/).
 
 ## Переключение кластера с несколькими узлами
 
@@ -144,7 +144,7 @@ weight: 10
      sudo systemctl status stronghold --no-pager
      ```
 
-   - При необходимости [распечатайте узел Stronghold](/products/stronghold/documentation/Руководство администратора/Надёжность и восстановление/Восстановление после потери кворума/).
+   - При необходимости [распечатайте узел Stronghold](../../../admin/reliability-and-recovery/lost_quorum_recovery/).
 
    - Проверьте состояние узла:
 
@@ -188,7 +188,7 @@ weight: 10
    - ошибки запуска отсутствуют;
    - версия соответствует `1.16.0` (`CSE`).
 
-1. При необходимости [распечатайте последний узел Stronghold](/products/stronghold/documentation/Руководство администратора/Надёжность и восстановление/Восстановление после потери кворума/).
+1. При необходимости [распечатайте последний узел Stronghold](../../../admin/reliability-and-recovery/lost_quorum_recovery/).
 
 1. Выполните финальную проверку кластера:
 
