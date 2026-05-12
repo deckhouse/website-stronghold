@@ -13,8 +13,8 @@ weight: 50
 
 Используйте эти разделы, если требуется установить DKP, обновить платформу или проверить требования к целевой версии:
 
-- [Установка](/products/kubernetes-platform/documentation/v1/installing/)
-- [Обновление](/products/kubernetes-platform/documentation/v1/admin/configuration/update/)
+- [Установка](/products/kubernetes-platform/documentation/v1/installing)
+- [Обновление](/products/kubernetes-platform/documentation/v1/admin/configuration/update)
 
 ## Управление доступом
 
@@ -30,7 +30,7 @@ weight: 50
 Эти материалы полезны, если требуется настроить DNS-разрешение, доступ к Stronghold по доменному имени или сетевую инфраструктуру для работы веб-интерфейса и Ingress:
 
 - [Управление DNS в кластере Kubernetes](/products/kubernetes-platform/documentation/v1/admin/configuration/network/other/dns.html)
-- [Модуль ingress-nginx](/modules/ingress-nginx/)
+- [Модуль ingress-nginx](/modules/ingress-nginx)
 
 > Примечание  
 > Документация по `ingress-nginx` пригодится, если Stronghold публикуется через Ingress и требуется проверить маршрутизацию, точки входа или параметры публикации сервиса.
@@ -45,7 +45,7 @@ weight: 50
 
 Если Stronghold используется в расширенных платформенных сценариях, связанных с модульной архитектурой DKP, обратитесь к разделу:
 
-- [Разработка модуля Deckhouse Kubernetes Platform](/products/kubernetes-platform/documentation/v1/architecture/module-development/)
+- [Разработка модуля Deckhouse Kubernetes Platform](/products/kubernetes-platform/documentation/v1/architecture/module-development)
 
 ## Резервное копирование и восстановление
 
@@ -65,4 +65,4 @@ weight: 50
 
 ## Что дальше
 
-Вернитесь к следующему разделу руководства по развёртыванию или перейдите к разделу [Проверка работоспособности](../functionality-check/).
+Вернитесь к следующему разделу руководства по развёртыванию или перейдите к разделу [Проверка работоспособности](../functionality-check).

@@ -54,11 +54,11 @@ Deckhouse Stronghold — это система для хранения секр�
 
 Если вы уже знаете, какой механизм секретов вам нужен, переходите сразу в соответствующий раздел документации:
 
-- [KV](../user/secrets-engines/kv/)
-- [PKI](../user/secrets-engines/pki/)
-- [SSH](../user/secrets-engines/ssh/)
-- [Transit](../user/secrets-engines/transit/)
-- [TOTP](../user/secrets-engines/totp/)
-- [LDAP](../user/secrets-engines/ldap/)
-- [Kubernetes](../user/secrets-engines/kubernetes/)
-- [Базы данных](../user/secrets-engines/database/)
+- [KV](../user/secrets-engines/kv)
+- [PKI](../user/secrets-engines/pki)
+- [SSH](../user/secrets-engines/ssh)
+- [Transit](../user/secrets-engines/transit)
+- [TOTP](../user/secrets-engines/totp)
+- [LDAP](../user/secrets-engines/ldap)
+- [Kubernetes](../user/secrets-engines/kubernetes)
+- [Базы данных](../user/secrets-engines/database)

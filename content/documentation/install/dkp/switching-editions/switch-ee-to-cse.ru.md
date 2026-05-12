@@ -6,11 +6,11 @@ weight: 10
 
 **Deckhouse Stronghold Enterprise Edition (EE)** можно переключить на **Deckhouse Stronghold Certified Security Edition (CSE)** одним из следующих способов:
 
-- [в исполнении **Standalone**](../../standalone/switching-editions/switch-ee-to-cse/);
+- [в исполнении **Standalone**](../../standalone/switching-editions/switch-ee-to-cse);
 - [в исполнении **DKP**](#переключение-в-dkp).
 
 > Предупреждение  
-> Поддерживается обновление с **Stronghold EE 1.15.x** до **Stronghold CSE 1.16.0**. Если используется версия Stronghold EE ниже `1.15.x`, сначала [обновитесь до последней версии ветки](../../../admin/update/dkp-update/).
+> Поддерживается обновление с **Stronghold EE 1.15.x** до **Stronghold CSE 1.16.0**. Если используется версия Stronghold EE ниже `1.15.x`, сначала [обновитесь до последней версии ветки](../../../admin/update/dkp-update).
 > Предупреждение  
 > При обновлении до Stronghold CSE возможна временная недоступность сервиса.
 
@@ -457,4 +457,4 @@ d8 k -n d8-stronghold get po
 
 После успешного выполнения шагов модуль Stronghold в составе DKP будет переключён с **Enterprise Edition** на **Certified Security Edition**.
 
-Для дополнительной проверки состояния после переключения используйте раздел [Проверка работоспособности](/products/stronghold/documentation/deployment/functionality-check/).
+Для дополнительной проверки состояния после переключения используйте раздел [Проверка работоспособности](/products/stronghold/documentation/deployment/functionality-check).

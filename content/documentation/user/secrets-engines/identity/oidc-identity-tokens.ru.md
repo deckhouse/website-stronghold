@@ -212,5 +212,5 @@ https://stronghold.example.com:8200/v1/identity/oidc
 
 ## Что дальше
 
-- Если вы хотите использовать Stronghold как OIDC identity provider для клиентских приложений, откройте [OIDC identity provider](./oidc-identity-provider/).
-- Если вам нужна аутентификация через внешний OIDC-провайдер, используйте [OIDC](../../auth/oidc/).
+- Если вы хотите использовать Stronghold как OIDC identity provider для клиентских приложений, откройте [OIDC identity provider](./oidc-identity-provider).
+- Если вам нужна аутентификация через внешний OIDC-провайдер, используйте [OIDC](../../auth/oidc).

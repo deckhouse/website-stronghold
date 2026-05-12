@@ -26,7 +26,7 @@ weight: 10
 
 ### Шаг 1. Установите утилиту d8
 
-Установите [утилиту `d8`](/products/kubernetes-platform/documentation/v1/cli/d8/).
+Установите [утилиту `d8`](/products/kubernetes-platform/documentation/v1/cli/d8).
 
 > Примечание  
 > Утилита `d8` используется для работы с Stronghold через CLI в сценариях, где Stronghold интегрирован с экосистемой Deckhouse.
@@ -94,4 +94,4 @@ d8 stronghold status
 
 ## Что дальше
 
-После получения доступа перейдите к разделу [Первый вход](../first-login/).
+После получения доступа перейдите к разделу [Первый вход](../first-login).

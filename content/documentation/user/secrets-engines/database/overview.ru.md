@@ -37,9 +37,9 @@ weight: 10
 
 Сейчас в документации есть страницы для таких СУБД:
 
-- [PostgreSQL](./postgresql/) — настройка `postgresql-database-plugin`, выпуск временных учётных данных и работа со статическими ролями.
-- [MySQL](./mysql/) — настройка MySQL-плагинов, выпуск учётных данных и дополнительные сценарии, включая x509 Client-side Certificate Authentication.
-- [ClickHouse](./clickhouse/) — настройка `clickhouse-database-plugin`, выдача временных учётных данных и работа с ролями ClickHouse.
+- [PostgreSQL](./postgresql) — настройка `postgresql-database-plugin`, выпуск временных учётных данных и работа со статическими ролями.
+- [MySQL](./mysql) — настройка MySQL-плагинов, выпуск учётных данных и дополнительные сценарии, включая x509 Client-side Certificate Authentication.
+- [ClickHouse](./clickhouse) — настройка `clickhouse-database-plugin`, выдача временных учётных данных и работа с ролями ClickHouse.
 
 ## Поддерживаемые возможности
 
@@ -75,6 +75,6 @@ weight: 10
 
 ## Что дальше
 
-- Для настройки PostgreSQL откройте [PostgreSQL](./postgresql/).
-- Для настройки MySQL откройте [MySQL](./mysql/).
-- Для настройки ClickHouse откройте [ClickHouse](./clickhouse/).
+- Для настройки PostgreSQL откройте [PostgreSQL](./postgresql).
+- Для настройки MySQL откройте [MySQL](./mysql).
+- Для настройки ClickHouse откройте [ClickHouse](./clickhouse).

@@ -15,4 +15,4 @@ weight: 20
 > Ссылка ниже ведёт в другую документацию — в раздел CLI Deckhouse Kubernetes Platform.
 
 Перейти в документацию:
-- [d8 (Deckhouse CLI) ↗](/products/kubernetes-platform/documentation/v1/cli/d8/)
+- [d8 (Deckhouse CLI) ↗](/products/kubernetes-platform/documentation/v1/cli/d8)

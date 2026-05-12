@@ -281,5 +281,5 @@ d8 stronghold kv delete secret/check
 
 Если проверка прошла успешно, можно переходить к эксплуатации продукта:
 
-- для настройки и сопровождения используйте [Руководство администратора](/products/stronghold/documentation/admin/overview/);
-- для повседневной работы с секретами, токенами и методами аутентификации используйте [Руководство пользователя](/products/stronghold/documentation/user/overview/).
+- для настройки и сопровождения используйте [Руководство администратора](/products/stronghold/documentation/admin/overview);
+- для повседневной работы с секретами, токенами и методами аутентификации используйте [Руководство пользователя](/products/stronghold/documentation/user/overview).

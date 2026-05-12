@@ -56,6 +56,6 @@ description: "Краткий обзор механизма секретов KV �
 
 Выберите нужный раздел:
 
-- [KV v1](./kv-v1/)
-- [KV v2](kv-v2/)
-- [Репликация KV](./kv-replication/)
+- [KV v1](./kv-v1)
+- [KV v2](kv-v2)
+- [Репликация KV](./kv-replication)

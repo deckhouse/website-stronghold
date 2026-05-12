@@ -43,7 +43,7 @@ Stronghold может выполнять двухфакторную аутент
 
 ### Шаг 2. Установите MULTIFACTOR Ldap Adapter
 
-Загрузите и установите [MULTIFACTOR Ldap Adapter](https://multifactor.ru/docs/ldap-adapter/ldap-adapter/).
+Загрузите и установите [MULTIFACTOR Ldap Adapter](https://multifactor.ru/docs/ldap-adapter/ldap-adapter).
 
 ## Запуск LDAP Adapter в Kubernetes
 

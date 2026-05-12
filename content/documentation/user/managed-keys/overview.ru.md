@@ -118,7 +118,7 @@ Managed key привязан к конкретному пространству 
 
 ## Связанные разделы
 
-- [Основные операции](./basic-operations/)
-- [PKI](../secrets-engines/pki/)
-- [Transit](../secrets-engines/transit/)
-- [SSH](../secrets-engines/ssh/)
+- [Основные операции](./basic-operations)
+- [PKI](../secrets-engines/pki)
+- [Transit](../secrets-engines/transit)
+- [SSH](../secrets-engines/ssh)

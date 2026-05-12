@@ -8,7 +8,7 @@ weight: 10
 Этот раздел описывает требования к окружению для установки **Deckhouse Stronghold** в **существующий кластер Deckhouse Kubernetes Platform**.
 
 > Примечание  
-> В этом разделе не рассматривается установка самой **Deckhouse Kubernetes Platform**. Если кластер DKP ещё не развернут, используйте [документация Deckhouse Kubernetes Platform](/products/kubernetes-platform/documentation/) или воспользуйтесь [быстрым стартом](/products/kubernetes-platform/gs/).
+> В этом разделе не рассматривается установка самой **Deckhouse Kubernetes Platform**. Если кластер DKP ещё не развернут, используйте [документация Deckhouse Kubernetes Platform](/products/kubernetes-platform/documentation) или воспользуйтесь [быстрым стартом](/products/kubernetes-platform/gs).
 
 ## Общие требования
 
@@ -120,14 +120,14 @@ registry.deckhouse.ru
 - необходимость высокой доступности;
 - сопутствующую нагрузку от других модулей DKP.
 
-Для общей оценки требований к ресурсам и поддерживаемым операционным системам ориентируйтесь на раздел [Требования](../../about/system-requirements/).
+Для общей оценки требований к ресурсам и поддерживаемым операционным системам ориентируйтесь на раздел [Требования](../../about/system-requirements).
 
 ## Редакции и совместимость
 
 Перед установкой Stronghold в DKP убедитесь, что используемая редакция продукта совместима с редакцией вашей **Deckhouse Kubernetes Platform**.
 
 > Важно  
-> Возможность использования конкретной редакции Deckhouse Stronghold в составе DKP зависит от редакции Stronghold и редакции DKP. Подробности приведены в разделе [Редакции](../../about/editions/).
+> Возможность использования конкретной редакции Deckhouse Stronghold в составе DKP зависит от редакции Stronghold и редакции DKP. Подробности приведены в разделе [Редакции](../../about/editions).
 
 ## Что рекомендуется проверить перед установкой
 
@@ -145,4 +145,4 @@ registry.deckhouse.ru
 
 ## Что дальше
 
-После проверки окружения перейдите к разделу [Установка Stronghold в DKP](../installation/).
+После проверки окружения перейдите к разделу [Установка Stronghold в DKP](../installation).

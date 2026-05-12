@@ -12,8 +12,8 @@ weight: 10
 Руководство администратора следует использовать после завершения установки и первичной настройки продукта. В нём описаны задачи, связанные с повседневной эксплуатацией Stronghold, поддержанием его доступности, безопасной настройкой и диагностикой проблем.
 
 > Примечание  
-> Если вам требуется установить продукт с нуля, используйте раздел [Руководство по развертыванию](/products/stronghold/documentation/deployment/overview/) или воспользуйтесь [быстрым стартом](/products/stronghold/gs/).  
-> Если требуется работа с секретами, токенами, политиками и методами аутентификации, используйте [Руководство пользователя](../user/overview/).
+> Если вам требуется установить продукт с нуля, используйте раздел [Руководство по развертыванию](/products/stronghold/documentation/deployment/overview) или воспользуйтесь [быстрым стартом](/products/stronghold/gs).  
+> Если требуется работа с секретами, токенами, политиками и методами аутентификации, используйте [Руководство пользователя](../user/overview).
 
 ## Для кого предназначено руководство
 
@@ -44,51 +44,51 @@ weight: 10
 
 Раздел содержит материалы по базовой настройке и сопровождению Stronghold:
 
-- [Конфигурация](/products/stronghold/documentation/admin/basic-exploitation/configuration/) — параметры конфигурации и базовые рекомендации по эксплуатации.
-- [Управление доступом](/products/stronghold/documentation/admin/basic-exploitation/access-control/) — управление доступом пользователей, сервисов и административных ролей.
-- [Пространства имён](/products/stronghold/documentation/admin/basic-exploitation/namespaces/) — изоляция конфигурации и секретов между пространствами имён.
-- [Аудит](/products/stronghold/documentation/admin/basic-exploitation/audit/) — настройка и использование аудита операций.
+- [Конфигурация](/products/stronghold/documentation/admin/basic-exploitation/configuration) — параметры конфигурации и базовые рекомендации по эксплуатации.
+- [Управление доступом](/products/stronghold/documentation/admin/basic-exploitation/access-control) — управление доступом пользователей, сервисов и административных ролей.
+- [Пространства имён](/products/stronghold/documentation/admin/basic-exploitation/namespaces) — изоляция конфигурации и секретов между пространствами имён.
+- [Аудит](/products/stronghold/documentation/admin/basic-exploitation/audit) — настройка и использование аудита операций.
 
 ### Надёжность и восстановление
 
 Раздел посвящён защите данных и восстановлению работоспособности:
 
-- [Резервное копирование](../reliability-and-recovery/backups/) — создание резервных копий и снимков.
-- [Восстановление из резервной копии](../reliability-and-recovery/recovery/) — восстановление данных Stronghold.
-- [Автоматические снимки](../reliability-and-recovery/automated-snapshots/) — настройка автоматического создания снимков.
-- [Восстановление после потери кворума](../reliability-and-recovery/lost_quorum_recovery/) — действия при нарушении кворума в кластере.
-- [Репликация KV](../reliability-and-recovery/kv-replication/) — сценарии репликации данных между кластерами.
+- [Резервное копирование](../reliability-and-recovery/backups) — создание резервных копий и снимков.
+- [Восстановление из резервной копии](../reliability-and-recovery/recovery) — восстановление данных Stronghold.
+- [Автоматические снимки](../reliability-and-recovery/automated-snapshots) — настройка автоматического создания снимков.
+- [Восстановление после потери кворума](../reliability-and-recovery/lost_quorum_recovery) — действия при нарушении кворума в кластере.
+- [Репликация KV](../reliability-and-recovery/kv-replication) — сценарии репликации данных между кластерами.
 
 ### Безопасность
 
 Раздел описывает механизмы защиты и криптографические возможности продукта:
 
-- [KMS и HSM](../security/kms-and-hsm/) — работа с внешними системами управления ключами и аппаратными модулями безопасности.
-- [Криптоалгоритмы](../security/cryptography/) — обзор поддерживаемых криптографических механизмов.
-- [Двойное шифрование](../security/sealwrap/) — дополнительная защита критически важных данных.
+- [KMS и HSM](../security/kms-and-hsm) — работа с внешними системами управления ключами и аппаратными модулями безопасности.
+- [Криптоалгоритмы](../security/cryptography) — обзор поддерживаемых криптографических механизмов.
+- [Двойное шифрование](../security/sealwrap) — дополнительная защита критически важных данных.
 
 ### Расширение и интеграции
 
 Раздел посвящён подключению и использованию плагинов:
 
-- [Плагины](./integration/owerview/) — обзор встроенных и внешних плагинов.
-- [Плагины в Standalone](./integration/standalone-plugins/) — подключение и сопровождение плагинов в Standalone-развёртывании.
-- [Плагины в DKP](./integration/dkp-plugins/) — работа с плагинами в составе Deckhouse Kubernetes Platform.
+- [Плагины](./integration/owerview) — обзор встроенных и внешних плагинов.
+- [Плагины в Standalone](./integration/standalone-plugins) — подключение и сопровождение плагинов в Standalone-развёртывании.
+- [Плагины в DKP](./integration/dkp-plugins) — работа с плагинами в составе Deckhouse Kubernetes Platform.
 
 ### Обновление
 
 Раздел содержит инструкции по обновлению продукта:
 
-- [Обновление Standalone](../update/stanalone-update/) — обновление Standalone-инсталляций.
-- [Обновление в DKP](../update/dkp-update/) — обновление Stronghold в составе Deckhouse Kubernetes Platform.
+- [Обновление Standalone](../update/stanalone-update) — обновление Standalone-инсталляций.
+- [Обновление в DKP](../update/dkp-update) — обновление Stronghold в составе Deckhouse Kubernetes Platform.
 
 ### Диагностика
 
 Раздел помогает проверять состояние системы и устранять проблемы:
 
-- [Журналы](../diag/journal/) — работа с журналами Stronghold.
-- [Типовые проблемы](../diag/problems/) — частые ошибки и способы их устранения.
-- [Проверка состояния](../diag/status-check/) — проверка доступности и работоспособности сервиса.
+- [Журналы](../diag/journal) — работа с журналами Stronghold.
+- [Типовые проблемы](../diag/problems) — частые ошибки и способы их устранения.
+- [Проверка состояния](../diag/status-check) — проверка доступности и работоспособности сервиса.
 
 ## Что важно учитывать
 

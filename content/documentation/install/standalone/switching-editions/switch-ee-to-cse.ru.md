@@ -7,10 +7,10 @@ weight: 10
 **Deckhouse Stronghold Enterprise Edition (EE)** можно переключить на **Deckhouse Stronghold Certified Security Edition (CSE)** одним из следующих способов:
 
 - [в исполнении **Standalone**](#переключение-в-standalone);
-- [в исполнении DKP](../../dkp/switching-editions/switch-ee-to-cse/).
+- [в исполнении DKP](../../dkp/switching-editions/switch-ee-to-cse).
 
 > Предупреждение  
-> Поддерживается обновление с **Stronghold EE 1.15.x** до **Stronghold CSE 1.16.0**. Если используется версия Stronghold EE ниже `1.15.x`, сначала [обновитесь до последней версии ветки](../../../admin/update/stanalone-update/).
+> Поддерживается обновление с **Stronghold EE 1.15.x** до **Stronghold CSE 1.16.0**. Если используется версия Stronghold EE ниже `1.15.x`, сначала [обновитесь до последней версии ветки](../../../admin/update/stanalone-update).
 >
 > Предупреждение  
 > При переключении на Stronghold CSE возможна временная недоступность сервиса.
@@ -98,7 +98,7 @@ weight: 10
    - ошибки запуска отсутствуют;
    - версия соответствует `1.16.0` (`CSE`).
 
-1. При необходимости [распечатайте Stronghold](../../../admin/reliability-and-recovery/lost_quorum_recovery/).
+1. При необходимости [распечатайте Stronghold](../../../admin/reliability-and-recovery/lost_quorum_recovery).
 
 ## Переключение кластера с несколькими узлами
 
@@ -144,7 +144,7 @@ weight: 10
      sudo systemctl status stronghold --no-pager
      ```
 
-   - При необходимости [распечатайте узел Stronghold](../../../admin/reliability-and-recovery/lost_quorum_recovery/).
+   - При необходимости [распечатайте узел Stronghold](../../../admin/reliability-and-recovery/lost_quorum_recovery).
 
    - Проверьте состояние узла:
 
@@ -188,7 +188,7 @@ weight: 10
    - ошибки запуска отсутствуют;
    - версия соответствует `1.16.0` (`CSE`).
 
-1. При необходимости [распечатайте последний узел Stronghold](../../../admin/reliability-and-recovery/lost_quorum_recovery/).
+1. При необходимости [распечатайте последний узел Stronghold](../../../admin/reliability-and-recovery/lost_quorum_recovery).
 
 1. Выполните финальную проверку кластера:
 
@@ -206,4 +206,4 @@ weight: 10
 
 После успешного выполнения шагов Stronghold в исполнении Standalone будет переключён с **Enterprise Edition** на **Certified Security Edition**.
 
-Если требуется дополнительная проверка состояния сервиса после переключения, перейдите в раздел [Проверка работоспособности](../../../deployment/functionality-check/).
+Если требуется дополнительная проверка состояния сервиса после переключения, перейдите в раздел [Проверка работоспособности](../../../deployment/functionality-check).

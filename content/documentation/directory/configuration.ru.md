@@ -34,7 +34,7 @@ weight: 30
 - `listener` — listener для API Proxy;
 - параметры логирования и отладки.
 
-Подробности смотрите на странице [Настройка](../user/stronghold-agent/settings/).
+Подробности смотрите на странице [Настройка](../user/stronghold-agent/settings).
 
 ## Механизмы секретов
 
@@ -50,8 +50,8 @@ weight: 30
 - операции `put`, `get`, `patch`, `delete`, `undelete`, `destroy`.
 
 Подробности:
-- [KV v1](../user/secrets-engines/kv/kv-v1/)
-- [KV v2](../user/secrets-engines/kv/kv-v2/)
+- [KV v1](../user/secrets-engines/kv/kv-v1)
+- [KV v2](../user/secrets-engines/kv/kv-v2)
 
 ### SSH
 
@@ -64,7 +64,7 @@ weight: 30
 - параметры `default_user`, `valid_principals`, `allowed_extensions`, `default_extensions`.
 
 Подробности:
-- [SSH](../user/secrets-engines/ssh/)
+- [SSH](../user/secrets-engines/ssh)
 
 ### Transit
 
@@ -78,7 +78,7 @@ weight: 30
 - импорт собственного ключа (BYOK).
 
 Подробности:
-- [Transit](../user/secrets-engines/transit/)
+- [Transit](../user/secrets-engines/transit)
 
 ### TOTP
 
@@ -89,7 +89,7 @@ weight: 30
 - параметры `url`, `generate`, `issuer`, `account_name`.
 
 Подробности:
-- [TOTP](../user/secrets-engines/totp/)
+- [TOTP](../user/secrets-engines/totp)
 
 ### PKI
 
@@ -103,7 +103,7 @@ weight: 30
 - параметры `allowed_domains`, `allow_subdomains`, `max_ttl`.
 
 Подробности:
-- [PKI](../user/secrets-engines/pki/)
+- [PKI](../user/secrets-engines/pki)
 
 ### LDAP
 
@@ -117,7 +117,7 @@ weight: 30
 - параметры для ротации паролей набора учётных записей.
 
 Подробности:
-- [LDAP](../user/secrets-engines/ldap/)
+- [LDAP](../user/secrets-engines/ldap)
 
 ### Kubernetes
 
@@ -133,7 +133,7 @@ weight: 30
 - `generated_role_rules`.
 
 Подробности:
-- [Kubernetes](../user/secrets-engines/kubernetes/)
+- [Kubernetes](../user/secrets-engines/kubernetes)
 
 ### Базы данных
 
@@ -148,9 +148,9 @@ weight: 30
 
 Эти параметры описаны отдельно для каждой поддерживаемой СУБД:
 
-- [PostgreSQL](../user/secrets-engines/database/postgresql/)
-- [MySQL](../user/secrets-engines/database/mysql/)
-- [ClickHouse](../user/secrets-engines/database/clickhouse/)
+- [PostgreSQL](../user/secrets-engines/database/postgresql)
+- [MySQL](../user/secrets-engines/database/mysql)
+- [ClickHouse](../user/secrets-engines/database/clickhouse)
 
 ## Identity и OIDC
 
@@ -168,7 +168,7 @@ weight: 30
 - `issuer`.
 
 Подробности:
-- [OIDC identity provider](../user/secrets-engines/identity/oidc-identity-provider/)
+- [OIDC identity provider](../user/secrets-engines/identity/oidc-identity-provider)
 
 ### OIDC identity tokens
 
@@ -184,7 +184,7 @@ weight: 30
 - `issuer`.
 
 Подробности:
-- [OIDC identity tokens](../user/secrets-engines/identity/oidc-identity-tokens/)
+- [OIDC identity tokens](../user/secrets-engines/identity/oidc-identity-tokens)
 
 ## Роли и TTL
 
@@ -205,13 +205,13 @@ weight: 30
 
 Если вы не знаете, где описан параметр, используйте такой порядок:
 
-- если параметр относится к `agent.hcl`, откройте [Настройка](../user/stronghold-agent/settings/);
+- если параметр относится к `agent.hcl`, откройте [Настройка](../user/stronghold-agent/settings);
 - если параметр связан с секретами, откройте страницу соответствующего механизма секретов;
 - если параметр связан с `client_id`, `issuer`, ключами подписи или claims, откройте страницы identity и OIDC;
 - если параметр связан с TTL, ролями или генерацией временных учётных данных, проверьте страницу нужного secrets engine.
 
 ## Что дальше
 
-- Для конфигурации Stronghold Agent откройте [Настройка](../user/stronghold-agent/settings/).
+- Для конфигурации Stronghold Agent откройте [Настройка](../user/stronghold-agent/settings).
 - Для параметров механизмов секретов откройте нужную страницу в разделе «Механизмы секретов».
 - Для identity и OIDC используйте раздел `Identity`.

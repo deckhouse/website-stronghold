@@ -156,6 +156,6 @@ stronghold secrets tune -allowed-managed-keys=my-hsm-key pki/
 
 После регистрации и проверки managed key вы можете перейти к его использованию в конкретных механизмах секретов:
 
-- [PKI](../secrets-engines/pki/)
-- [Transit](../secrets-engines/transit/)
-- [SSH](../secrets-engines/ssh/)
+- [PKI](../secrets-engines/pki)
+- [Transit](../secrets-engines/transit)
+- [SSH](../secrets-engines/ssh)

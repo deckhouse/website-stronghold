@@ -161,5 +161,5 @@ $ curl -s http://127.0.0.1:8200/v1/identity/oidc/provider/default/.well-known/op
 
 ## Что дальше
 
-- Если вам нужно выпускать OIDC-совместимые токены с данными идентичности, используйте [OIDC identity tokens](./oidc-identity-tokens/).
-- Если вам нужна аутентификация пользователей через внешний OIDC-провайдер, используйте [OIDC](../../auth/oidc/overview/).
+- Если вам нужно выпускать OIDC-совместимые токены с данными идентичности, используйте [OIDC identity tokens](./oidc-identity-tokens).
+- Если вам нужна аутентификация пользователей через внешний OIDC-провайдер, используйте [OIDC](../../auth/oidc/overview).

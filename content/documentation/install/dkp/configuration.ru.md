@@ -273,7 +273,7 @@ d8 k -n d8-stronghold get secret stronghold-keys
 
 ## Шаг 6. Определите, нужен ли secrets-store-integration
 
-Если Stronghold в DKP используется только как хранилище секретов, API или административный сервис, модуль [`secrets-store-integration`](/modules/secrets-store-integration/stable/) не является строго обязательным.
+Если Stronghold в DKP используется только как хранилище секретов, API или административный сервис, модуль [`secrets-store-integration`](/modules/secrets-store-integration/stable) не является строго обязательным.
 
 Однако если ваша цель — безопасная и автоматизированная доставка секретов в приложения Kubernetes, этот модуль необходим.
 
@@ -324,6 +324,6 @@ d8 k -n d8-stronghold logs <имя-пода>
 
 После завершения первичной настройки вы можете:
 
-- перейти к разделу [Переключение редакций](../switching-editions/switch-ee-to-cse/), если это требуется;
-- выполнить общую [Проверку работоспособности](../functionality-check/);
-- продолжить настройку и эксплуатацию Stronghold в разделе [Руководство администратора](../../admin/overview/).
+- перейти к разделу [Переключение редакций](../switching-editions/switch-ee-to-cse), если это требуется;
+- выполнить общую [Проверку работоспособности](../functionality-check);
+- продолжить настройку и эксплуатацию Stronghold в разделе [Руководство администратора](../../admin/overview).

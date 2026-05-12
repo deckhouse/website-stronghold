@@ -124,7 +124,7 @@ systemctl status stronghold
 - сохранить секрет `stronghold-keys`;
 - создать резервную копию или снимок данных Stronghold;
 - убедиться, что данные больше не используются приложениями и пользователями;
-- проверить, используется ли [`secrets-store-integration`](/modules/secrets-store-integration/stable/) для доставки секретов в приложения.
+- проверить, используется ли [`secrets-store-integration`](/modules/secrets-store-integration/stable) для доставки секретов в приложения.
 
 Сохраните секрет `stronghold-keys`:
 
@@ -233,5 +233,5 @@ sudo rm -rf /var/lib/deckhouse/stronghold
 
 Если требуется повторное развёртывание продукта, используйте разделы:
 
-- [Развертывание в Standalone](../standalone/preparation/)
-- [Развертывание в DKP](../deployment/dkp/environment-requirements/)
+- [Развертывание в Standalone](../standalone/preparation)
+- [Развертывание в DKP](../deployment/dkp/environment-requirements)

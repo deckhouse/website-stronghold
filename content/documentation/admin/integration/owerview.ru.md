@@ -138,5 +138,5 @@ description: "Обзор системы плагинов Stronghold и разл�
 
 ## Страницы раздела
 
-- [Плагины в Standalone](./standalone-plugins/) — настройка `plugin_directory`, регистрация и включение внешних плагинов на Linux-сервере.
-- [Плагины в DKP](./dkp-plugins/) — загрузка плагинов через `ModuleConfig` и дальнейшая регистрация в Stronghold.
+- [Плагины в Standalone](./standalone-plugins) — настройка `plugin_directory`, регистрация и включение внешних плагинов на Linux-сервере.
+- [Плагины в DKP](./dkp-plugins) — загрузка плагинов через `ModuleConfig` и дальнейшая регистрация в Stronghold.
