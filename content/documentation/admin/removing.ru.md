@@ -2,7 +2,7 @@
 title: "Удаление"
 linkTitle: "Удаление"
 description: "Удаление Deckhouse Stronghold в Standalone и в Deckhouse Kubernetes Platform"
-weight: 50
+weight: 80
 ---
 
 В этом разделе описано удаление **Deckhouse Stronghold** для двух вариантов развёртывания:
