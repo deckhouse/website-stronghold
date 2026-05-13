@@ -33,7 +33,7 @@ services:
         condition: service_healthy
 
   hugo:
-    image: ghcr.io/gohugoio/hugo:v0.159.2
+    image: ghcr.io/gohugoio/hugo:v0.161.1
     user: "${UID:-1000}:${GID:-1000}"
     working_dir: /src
     environment:
