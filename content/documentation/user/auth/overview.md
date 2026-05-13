@@ -1,9 +1,35 @@
 ---
-title: "Auth methods"
+title: "Authentication methods"
+linkTitle: "Overview"
 description: Auth methods are mountable methods that perform authentication for Stronghold.
-weight: 40
+weight: 5
 ---
 
+Auth methods are the components in Stronghold that perform authentication and are
+responsible for assigning identity and a set of policies to a user. In all cases,
+Stronghold will enforce authentication as part of the request processing. In most cases,
+Stronghold will delegate the authentication administration and decision to the relevant configured
+external auth method (e.g., Kubernetes).
+
+Stronghold also supports `WebAuthn` for passwordless authentication with `FIDO2` authenticators and `passkeys`.
+
+Stronghold also supports `SAML` for browser-based Web SSO through an external `SAML 2.0` identity provider.
+
+Having multiple auth methods enables you to use an auth method that makes the
+most sense for your use case of Stronghold and your organization.
+
+For example, on developer machines, the [Userpass](/docs/auth/userpass)
+is easiest to use. But for servers the [AppRole](/docs/auth/approle)
+method is the recommended choice.
+
+To learn more about authentication, see the
+[authentication concepts page](/docs/concepts/auth).
+
+## Enabling/Disabling auth methods
+
+Auth methods can be enabled/disabled using the CLI or the API.
+
+```shell-session
 d8 stronghold auth enable userpass
 ```
 
