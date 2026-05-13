@@ -1,5 +1,5 @@
 ---
 title: "Administrator guide"
-weight: 60
+weight: 50
 ---
 
