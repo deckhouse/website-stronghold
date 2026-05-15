@@ -114,7 +114,7 @@ path "secret/metadata/dev/team-1/*" {
 }
 ```
 
-Поля `allowed_parameters`, `denied_parameters` и `required_parameters` не поддерживаются для политик, используемых с хранилищем kv версии 2. Описание этих параметров см. в разделе [Политики](../../concepts/policy/).
+Поля `allowed_parameters`, `denied_parameters` и `required_parameters` не поддерживаются для политик, используемых с хранилищем kv версии 2. Описание этих параметров см. в разделе [Политики](../../../concepts/policy/).
 
 ## Использование
 

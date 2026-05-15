@@ -7,7 +7,7 @@ In many deployment scenarios of Deckhouse Stronghold, clients interact directly 
 
 The more intermediaries involved in secret transmission, the higher the risk of accidental disclosure, especially if the secret is transmitted in plaintext. For example, you may need to deliver a private TLS key to a machine where, due to security policy, the decryption key can't be stored in persistent storage. In this case, encrypting the key before transfer is not possible.
 
-To address such scenarios, Stronghold provides the _response wrapping_ feature. Instead of returning the response directly to the HTTP client, Stronghold stores it in the [`cubbyhole`](../secrets-engines/cubbyhole/). Access to the stored content is granted only through a one-time token that Stronghold returns to the client.
+To address such scenarios, Stronghold provides the _response wrapping_ feature. Instead of returning the response directly to the HTTP client, Stronghold stores it in the [`cubbyhole`](../user/secrets-engines/cubbyhole/). Access to the stored content is granted only through a one-time token that Stronghold returns to the client.
 
 From a logical perspective, the response is wrapped in a token that must be unwrapped to access the data. From a functional perspective, the token authorizes access to Stronghold's "key holder" and allows the data to be decrypted.
 
@@ -62,7 +62,7 @@ Wrapping process:
 5. The new response is returned to the client.
 
 {{< alert level="info" >}}
-The minimum and maximum TTL of wrapping tokens is controlled by [policies](../policy/).
+The minimum and maximum TTL of wrapping tokens is controlled by [policies](./policy/).
 {{< /alert >}}
 
 ## Verifying a wrapping token

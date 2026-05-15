@@ -53,7 +53,7 @@ The features in the following sections all apply to service tokens, and their ap
 ## Token store
 
 Often in documentation or in help channels, the "token store" is referenced.
-This is the same as the [Token authentication backend](../auth/token/).
+This is the same as the [Token authentication backend](../user/auth/token/).
 This is a special backend in that it is responsible for creating and storing tokens, and cannot be disabled.
 It is also the only auth method that has no login capability -- all actions require existing authenticated tokens.
 

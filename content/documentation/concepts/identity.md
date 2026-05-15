@@ -6,7 +6,7 @@ weight: 50
 This page contains information about _identity_ along with an overview of the associated terms and concepts.
 The idea of identity is to maintain the clients accessing Stronghold.
 As such, Stronghold provides an identity management solution through the Identity secrets engine.
-For details about the Identity secrets engine, refer to the [corresponding documentation section](../secrets-engines/identity/).
+For details about the Identity secrets engine, refer to the [corresponding documentation section](../user/secrets-engines/identity/).
 
 ## Terms
 
@@ -103,17 +103,17 @@ If no entities are explicitly created or merged,
 then one [entity will be implicitly created](#implicit-entities) for each object on the right-hand side of the table,
 when it is used to authenticate on a particular auth mount point.
 
-| Auth method         | Name reported by auth method                                                                        |
-| ------------------- | --------------------------------------------------------------------------------------------------- |
-| AppRole             | Role ID                                                                                             |
-| JWT/OIDC            | Configurable via `user_claim` to one of the presented claims (no default value)                     |
-| Kerberos            | Username                                                                                            |
-| Kubernetes          | Configurable via `alias_name_source` to one of: Service account UID (default), Service account name |
-| LDAP                | Username                                                                                            |
-| RADIUS              | Username                                                                                            |
-| TLS Certificate     | Subject CommonName                                                                                  |
-| Token               | `entity_alias`, if provided                                                                         |
-| Username (userpass) | Username                                                                                            |
+| Auth method | Name reported by auth method |
+| --- | --- |
+| AppRole | Role ID |
+| JWT/OIDC | Configurable via `user_claim` to one of the presented claims (no default value) |
+| Kerberos | Username |
+| Kubernetes | Configurable via `alias_name_source` to one of: Service account UID (default), Service account name |
+| LDAP | Username |
+| RADIUS | Username |
+| TLS Certificate | Subject CommonName |
+| Token | `entity_alias`, if provided |
+| Username (userpass) | Username |
 
 ## Implicit entities
 
@@ -166,4 +166,4 @@ This works only if the group in Stronghold is an external group and has an alias
 If the user is removed from the group in LDAP,
 that change gets reflected in Stronghold only upon the subsequent login or renewal operation.
 
-For details about the Identity secrets engine, refer to the [corresponding documentation section](../secrets-engines/identity/).
+For details about the Identity secrets engine, refer to the [corresponding documentation section](../user/secrets-engines/identity/).

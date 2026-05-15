@@ -59,7 +59,7 @@ OIDC-совместимые ID-токены генерируются на осн
 Кроме того, оператор может настроить шаблоны для каждой роли, которые позволяют добавлять различные
 другую информацию о сущности, которая может быть добавлена к токену. Шаблоны
 структурированы как JSON с заменяемыми параметрами. Синтаксис параметров такой же
-что и для [ACL Path Templating](../../concepts/policy/).
+что и для [ACL Path Templating](../../../concepts/policy/).
 
 Например:
 
@@ -118,22 +118,22 @@ OIDC-совместимые ID-токены генерируются на осн
 Полный список параметров шаблона приведен ниже:
 
 | Имя | Описание |
-| :------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------- |
-| `identity.entity.id`                                                             | Идентификатор сущности |
-| `identity.entity.name`                                                           | Имя сущности |
-| `identity.entity.groups.ids`                                                     | Идентификаторы групп, членом которых является сущность |
-| `identity.entity.groups.names`                                                   | Имена групп, в которых состоит сущность |
-| `identity.entity.metadata`                                                       | Метаданные, связанные с сущностью |
-| `identity.entity.metadata.<metadata key>`                                        | Метаданные, связанные с сущностью для данного ключа |
-| `identity.entity.aliases.<mount accessor>.id`                                    | ID псевдонима сущности для данного монтирования |
-| `identity.entity.aliases.<mount accessor>.name`                                  | Имя псевдонима сущности для данного крепления |
-| `identity.entity.aliases.<mount accessor>.metadata`                              | Метаданные, связанные с псевдонимом для данного крепления |
-| `identity.entity.aliases.<mount accessor>.metadata.<metadata key>`               | Метаданные, связанные с псевдонимом для данного крепления и ключом метаданных |
-| `identity.entity.aliases.<mount accessor>.custom_metadata`                       | Пользовательские метаданные, связанные с псевдонимом для данного монтирования |
+| :--- | :--- |
+| `identity.entity.id` | Идентификатор сущности |
+| `identity.entity.name` | Имя сущности |
+| `identity.entity.groups.ids` | Идентификаторы групп, членом которых является сущность |
+| `identity.entity.groups.names` | Имена групп, в которых состоит сущность |
+| `identity.entity.metadata` | Метаданные, связанные с сущностью |
+| `identity.entity.metadata.<metadata key>` | Метаданные, связанные с сущностью для данного ключа |
+| `identity.entity.aliases.<mount accessor>.id` | ID псевдонима сущности для данного монтирования |
+| `identity.entity.aliases.<mount accessor>.name` | Имя псевдонима сущности для данного крепления |
+| `identity.entity.aliases.<mount accessor>.metadata` | Метаданные, связанные с псевдонимом для данного крепления |
+| `identity.entity.aliases.<mount accessor>.metadata.<metadata key>` | Метаданные, связанные с псевдонимом для данного крепления и ключом метаданных |
+| `identity.entity.aliases.<mount accessor>.custom_metadata` | Пользовательские метаданные, связанные с псевдонимом для данного монтирования |
 | `identity.entity.aliases.<mount accessor>.custom_metadata.<custom_metadata key>` | Пользовательские метаданные, связанные с псевдонимом для данного монтирования и ключом пользовательских метаданных |
-| `time.now` | Текущее время в интегральных секундах от эпохи                      |
-| `time.now.plus.<duration>`                                                       | Текущее время плюс `длительность` |
-| `time.now.minus.<duration>`                                                      | Текущее время минус `длительность` |
+| `time.now` | Текущее время в интегральных секундах от эпохи |
+| `time.now.plus.<duration>` | Текущее время плюс `длительность` |
+| `time.now.minus.<duration>` | Текущее время минус `длительность` |
 
 ## Генерация токенов
 

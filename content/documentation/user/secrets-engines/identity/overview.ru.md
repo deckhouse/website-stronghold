@@ -3,7 +3,7 @@ title: "Обзор"
 weight: 10
 ---
 
-### Механизм секретов Identity
+## Механизм секретов Identity
 
 Механизм секретов `Identity` представляет собой решение для управления идентификацией в Deckhouse Stronghold. В системе хранятся клиенты, которые распознаются Deckhouse Stronghold и называются сущностями. Каждая сущность может иметь несколько псевдонимов (aliases).
 
@@ -18,5 +18,5 @@ weight: 10
 Механизм секретов Stronghold Identity поддерживает несколько различных функций. Каждая
 каждая из них документирована на своей странице.
 
-- [Identity tokens](token/)
-- [OIDC Identity Provider](oidc-provider/)
+- [Identity tokens](./token/)
+- [OIDC Identity Provider](./oidc-provider/)

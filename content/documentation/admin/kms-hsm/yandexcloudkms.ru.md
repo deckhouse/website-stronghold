@@ -43,7 +43,7 @@ seal "yandexcloudkms" {
 ## Параметры `seal "yandexcloudkms"`
 
 | Параметр | Обязательный | Описание |
-|----------|--------------|----------|
+| --- | --- | --- |
 | `kms_key_id` | да | Идентификатор симметричного ключа в Yandex Cloud KMS. |
 | `oauth_token` | нет | OAuth token для аутентификации в Yandex Cloud. |
 | `service_account_key_file` | нет | Путь к JSON-файлу авторизованного ключа сервисного аккаунта. |
@@ -99,4 +99,4 @@ seal "yandexcloudkms" {
 
 - [Поддержка HSM](./hsm/)
 - [Двойное шифрование](./sealwrap/)
-- [Настройка Standalone](../standalone/configuration/)
+- [Настройка Standalone](../../install/standalone/configuration/)

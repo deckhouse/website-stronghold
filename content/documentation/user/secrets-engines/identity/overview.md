@@ -28,12 +28,12 @@ controlling the access of tokens that are already issued.
 
 **NOTE:** This secrets engine will be mounted by default. This secrets engine
 cannot be disabled or moved. For more conceptual overview on identity, refer to
-the [Identity](../../../concepts/identity/) documentation.
+the [Identity](../../../../concepts/identity/) documentation.
 
 {{< /alert >}}
 
 The Stronghold Identity secrets engine supports several different features. Each
 one is individually documented on its own page.
 
-- [Identity tokens](token/)
-- [OIDC Identity Provider](oidc-provider/)
+- [Identity tokens](./token/)
+- [OIDC Identity Provider](./oidc-provider/)
