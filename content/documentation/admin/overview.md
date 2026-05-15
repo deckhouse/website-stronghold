@@ -13,9 +13,9 @@ The platform’s Administrator Guide includes the following sections:
   - [Configuration](../install/standalone/configuration/) – a guide to the Standalone execution configuration parameters.
 - Running on Deckhouse Kubernetes Platform
   - [Platform Installation](../install/steps/prepare/) - environment preparation, installation, and initial access setup.
-  - [Platform Configuration](../platform-management/node-management/node_settings/node_group/) – cluster node management, networking, storage systems, virtualization, and access control.
-  - [Platform Update](../update/update/) – configuring update modes and windows, and manual approval of updates.
-  - [Platform Removal](../dkp/removing/) – the process of removing the platform.
+  - [Platform Configuration](../install/dkp/platform-management/node-management/node_settings/node_group/) – cluster node management, networking, storage systems, virtualization, and access control.
+  - [Platform Update](../install/dkp/update/update/) – configuring update modes and windows, and manual approval of updates.
+  - [Platform Removal](../install/dkp/removing/) – the process of removing the platform.
 - Audit
   - [Introduction](./audit/overview/) - what Stronghold audit logs contain, which backends are supported, and how to configure auditing safely.
   - [Audit log record schema](./audit/log_format/) - audit record structure, key objects, and protection of sensitive data.

@@ -176,7 +176,7 @@ issuer URL, so it must be network reachable. Furthermore, the returned set of
 keys will include an issuer that must match the request.
 
 By default Stronghold will set the issuer to the Stronghold instance's
-[`api_addr`](../../../../admin/standalone/configuration/#high-availability-parameters). This means that tokens
+[`api_addr`](../../../../install/standalone/configuration/#high-availability-parameters). This means that tokens
 issued in a given cluster should be validated within that same cluster.
 Alternatively, the `issuer` parameter
 may be configured explicitly. This address must point to the identity/oidc path
