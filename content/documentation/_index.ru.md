@@ -21,10 +21,10 @@ Deckhouse Stronghold обеспечивает безопасное хранен�
 В документации представлены следующие разделы:
 
 - [Быстрый старт](/products/stronghold/gs/) - пошаговая инструкция по установке типовой конфигурации Deckhouse Stronghold.
-- [О платформе](/products/stronghold/documentation/about/editions/) — сведения о редакциях, каналах обновлений и технических требованиях.
-- [Установка](/products/stronghold/documentation/admin/install/steps/prepare/) — порядок установки Deckhouse Stronghold.
-- [Настройка](/products/stronghold/documentation/admin/platform-management/node-management/node_settings/node_group/) — настройка доступа, резервное копирование ключей, установка сертификатов, настройка аутентификации.
-- [Работа с политиками](/products/stronghold/documentation/user/concepts/policy/) — управление доступом к секретам и операции над ними.
+- [О платформе](./about/editions/) — сведения о редакциях, каналах обновлений и технических требованиях.
+- [Установка](./install/dkp/install/steps/prepare/) — порядок установки Deckhouse Stronghold.
+- [Настройка](./admin/platform-management/node-management/node_settings/node_group/) — настройка доступа, резервное копирование ключей, установка сертификатов, настройка аутентификации.
+- [Работа с политиками](./concepts/policy/) — управление доступом к секретам и операции над ними.
 - [Работа с токенами доступа](/products/stronghold/documentation/user/auth/token/) — методы аутентификации пользователей и управление токенами доступа.
 - [Работа с секретами](/products/stronghold/documentation/user/secrets-engines/kv/overview/) — механизмы секретов и способы их доставки в приложения.
 - [Справка](/products/kubernetes-platform/documentation/v1/cli/d8/) — справочная информация о ресурсах, модулях и их конфигурациях.

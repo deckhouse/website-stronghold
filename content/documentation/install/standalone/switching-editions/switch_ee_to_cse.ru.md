@@ -100,7 +100,7 @@ Stronghold Enterprise Edition (EE) можно обновить до Stronghold C
    - ошибки запуска отсутствуют;
    - версия соответствует 1.16.0 (CSE).
 
-1. При необходимости [распечатайте Stronghold](/products/stronghold/documentation/admin/standalone/raft_lost_quorum_recovery/#распечатывание-stronghold).
+1. При необходимости [распечатайте Stronghold](../raft_lost_quorum_recovery/#распечатывание-stronghold).
 
 ### Обновление кластера с несколькими узлами
 
@@ -145,7 +145,7 @@ Stronghold Enterprise Edition (EE) можно обновить до Stronghold C
      sudo systemctl status stronghold --no-pager
      ```
 
-   - При необходимости [распечатайте узел Stronghold](/products/stronghold/documentation/admin/standalone/raft_lost_quorum_recovery/#распечатывание-stronghold).
+   - При необходимости [распечатайте узел Stronghold](../raft_lost_quorum_recovery/#распечатывание-stronghold).
 
    - Проверьте состояние узла:
 
@@ -192,7 +192,7 @@ Stronghold Enterprise Edition (EE) можно обновить до Stronghold C
    - ошибки запуска отсутствуют;
    - версия соответствует 1.16.0 (CSE).
 
-1. При необходимости [распечатайте последний узел Stronghold](/products/stronghold/documentation/admin/standalone/raft_lost_quorum_recovery/#распечатывание-stronghold).
+1. При необходимости [распечатайте последний узел Stronghold](../raft_lost_quorum_recovery/#распечатывание-stronghold).
 
 1. Выполните финальную проверку кластера:
 

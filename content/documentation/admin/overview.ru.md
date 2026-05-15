@@ -13,7 +13,7 @@ weight: 10
   - [Настройка](../install/standalone/configuration/) - руководство по параметрам конфигурации Standalone исполнения.
 - Запуск в Deckhouse Kubernetes Platform
   - [Установка платформы](../install/dkp/install/steps/prepare/) - подготовка окружения, установка и первичная настройка доступа.
-  - [Настройка платформы](../install/dkp/platform-management/node-management/node_settings/node_group/) - управление узлами кластера, сетью, системами хранения, виртуализацией и разграничением доступов.
+  - [Настройка платформы](/products/stronghold/documentation/admin/platform-management/node-management/node_settings/node_group/) - управление узлами кластера, сетью, системами хранения, виртуализацией и разграничением доступов.
   - [Обновление платформы](../install/dkp/update/update/) - настройка режима и окон обновления платформы, ручное подтверждение обновлений.
   - [Удаление платформы](../install/dkp/removing/) - процесс удаления платформы.
 - Аудит
