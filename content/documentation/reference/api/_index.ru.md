@@ -1,4 +1,4 @@
 ---
-title: "Справка"
-weight: 80
+title: "API"
+weight: 10
 ---
