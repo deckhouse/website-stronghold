@@ -19,9 +19,9 @@ The Deckhouse Stronghold is designed for launching, managing, and orchestrating 
 The documentation includes the following sections:
 
 - [Getting started](/products/stronghold/gs/) — step-by-step instructions for installing the standard configuration of the platform.
-- [Platform overview](/products/stronghold/documentation/about/editions/) — information about the platform editions, release channels, and technical requirements.
-- [Administration guide](/products/stronghold/documentation/admin/overview/) — information on the requirements, installation procedures, and configuration of the platform subsystems, as well as information for creating user projects and organizing access.
-- [User guide](/products/stronghold/documentation/user/overview/) — information on managing user resources for projects (virtual machines, disks, images, etc.).
+- [Platform overview](./about/editions/) — information about the platform editions, release channels, and technical requirements.
+- [Administration guide](./admin/overview) — information on the requirements, installation procedures, and configuration of the platform subsystems, as well as information for creating user projects and organizing access.
+- [User guide](./user/overview/) — information on managing user resources for projects (virtual machines, disks, images, etc.).
 - [Reference](/products/kubernetes-platform/documentation/v1/cli/d8/) - reference information about command line utilities and resources provided by the platform for use.
 
 If you have any questions, feel free to contact us via [our Telegram channel](https://t.me/deckhouse).
