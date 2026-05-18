@@ -5,11 +5,11 @@ weight: 20
 
 Stronghold Enterprise Edition (EE) можно обновить до Stronghold Certified Security Edition (CSE) одним из следующих способов:
 
-- [в исполнении Standalone](/products/stronghold/documentation/admin/standalone/switching-editions/switch-ee-to-cse/);
+- [в исполнении Standalone](../../../standalone/switching-editions/switch_ee_to_cse/);
 - в исполнении DKP.
 
 {{< alert level="warning" >}}
-Поддерживается обновление с Stronghold EE 1.15.x до Stronghold CSE 1.16.0. Если используется версия Stronghold EE ниже 1.15.x, сначала [обновитесь до последней версии ветки](/products/stronghold/documentation/admin/update/update/).
+Поддерживается обновление с Stronghold EE 1.15.x до Stronghold CSE 1.16.0. Если используется версия Stronghold EE ниже 1.15.x, сначала [обновитесь до последней версии ветки](../../update/update/).
 {{< /alert >}}
 
 {{< alert level="warning" >}}
@@ -53,7 +53,9 @@ Stronghold Enterprise Edition (EE) можно обновить до Stronghold C
    ls -lh ./stronghold-*.snap
    ```
 
-   > Полученные файлы храните за пределами кластера DKP.
+   {{< alert level="info" >}}
+   Полученные файлы храните за пределами кластера DKP.
+   {{< /alert >}}
 
 1. Подготовьте пакет или бинарный файл Stronghold CSE 1.16.0 на каждом узле.
 
@@ -142,7 +144,9 @@ Stronghold Enterprise Edition (EE) можно обновить до Stronghold C
    stronghold-update-policy
    ```
 
-   > Если используется DKP CSE 1.67 и ниже, либо если модуль ещё ни разу не запускался, вывод команды будет пустым. Дополнительные действия в таком случае не требуются.
+   {{ < alert level="info" >}}
+   Если используется DKP CSE 1.67 и ниже, либо если модуль ещё ни разу не запускался, вывод команды будет пустым. Дополнительные действия в таком случае не требуются.
+   {{ < /alert > }}
 
 ### Проверки перед началом обновления
 
@@ -154,10 +158,11 @@ Stronghold Enterprise Edition (EE) можно обновить до Stronghold C
 
    Также проверить версию DKP можно в веб-интерфейсе Deckhouse на главной странице панели управления кластером (`https://console.<CLUSTER_DOMAIN>`).
 
-   > Если понадобится обновить или переключить редакцию DKP, воспользуйтесь инструкциями:
-   >
-   > - [инструкция по обновлению DKP](/products/kubernetes-platform/documentation/v1/admin/configuration/update/configuration.html);
-   > - [инструкция по переключению DKP EE на DKP CSE](/products/kubernetes-platform/documentation/v1/admin/configuration/registry/switching-editions.html).
+   {{< alert level="info" >}}
+   Если понадобится обновить или переключить редакцию DKP, воспользуйтесь инструкциями:
+    - [инструкция по обновлению DKP](/products/kubernetes-platform/documentation/v1/admin/configuration/update/configuration.html);
+    - [инструкция по переключению DKP EE на DKP CSE](/products/kubernetes-platform/documentation/v1/admin/configuration/registry/switching-editions.html).
+    {{< /alert >}}
 
 1. Убедитесь, что DKP работает штатно, leader-узел определён, очередь пуста:
 

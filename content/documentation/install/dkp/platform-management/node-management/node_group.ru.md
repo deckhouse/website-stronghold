@@ -45,7 +45,7 @@ weight: 15
 - группа узлов с виртуальными машинами (vm-worker-узлы);
 - группа узлов с контейнерными приложениями (worker-узлы) и т.п.
 
-Разбиение узлов по группам и распределение компонентов по группам узлов зависит от задач кластера. Примеры конфигураций кластера платформы виртуализации можно посмотреть в разделе [Установка платформы](../../../../install/steps/install/).
+Разбиение узлов по группам и распределение компонентов по группам узлов зависит от задач кластера. Примеры конфигураций кластера платформы виртуализации можно посмотреть в разделе [Установка платформы](../../../../install/dkp/install/steps/install/).
 
 Узлы в группе обладают общими метаданными и параметрами, что позволяет настроить их автоматически в соответствии с конфигурацией группы. Deckhouse также отслеживает количество узлов в группе и выполняет обновления программного обеспечения на них.
 
@@ -105,7 +105,9 @@ Cluster API Provider Static (CAPS) подключается к серверу (�
 
 ### Автоматическое управление существующим узлом
 
-> Поддерживается в версиях Deckhouse 1.63 и выше.
+{{< alert level="info" >}}
+Поддерживается в версиях Deckhouse 1.63 и выше.
+{{< /alert >}}
 
 Для передачи существующего узла кластера под управление CAPS, необходимо подготовить для этого узла ресурсы [StaticInstance](/modules/node-manager/cr.html#staticinstance) и [SSHCredentials](/modules/node-manager/cr.html#sshcredentials), как при автоматическом управлении в пункте выше, однако ресурс [StaticInstance](/modules/node-manager/cr.html#staticinstance) должен дополнительно быть помечен аннотацией `static.node.deckhouse.io/skip-bootstrap-phase: ""`.
 
@@ -126,7 +128,7 @@ CAPS использует следующие ресурсы (CustomResource) п�
 - **[SSHCredentials](/modules/node-manager/cr.html#sshcredentials)**. Содержит данные SSH, необходимые для подключения к хосту (`SSHCredentials` указывается в параметре [`credentialsRef`](/modules/node-manager/cr.html#staticinstance-v1alpha2-spec-credentialsref) ресурса `StaticInstance`).
 - **[NodeGroup](/modules/node-manager/cr.html#nodegroup)**. Секция параметров [`staticInstances`](/modules/node-manager/cr.html#nodegroup-v1-spec-staticinstances) определяет необходимое количество узлов в группе и фильтр множества ресурсов `StaticInstance` которые могут использоваться в группе.
 
-CAPS включается автоматически, если в NodeGroup заполнена секция параметров [`staticInstances`](/modules/node-manager/cr.html#nodegroup-v1-spec-staticinstances). Если в `NodeGroup` секция параметров `staticInstances` не заполнена, то настройка и очистка узлов для работы в этой группе выполняется вручную (см. примеры [добавления статического узла в кластер](../../adding_node/#добавление-статического-узла-вручную) и [очистки узла](../../adding_node/#как-зачистить-узел-для-последующего-ввода-в-кластер)), а не с помощью CAPS.
+CAPS включается автоматически, если в NodeGroup заполнена секция параметров [`staticInstances`](/modules/node-manager/cr.html#nodegroup-v1-spec-staticinstances). Если в `NodeGroup` секция параметров `staticInstances` не заполнена, то настройка и очистка узлов для работы в этой группе выполняется вручную (см. примеры [добавления статического узла в кластер](../adding_node/#добавление-статического-узла-вручную) и [очистки узла](../adding_node/#как-зачистить-узел-для-последующего-ввода-в-кластер)), а не с помощью CAPS.
 
 Схема работы со статическими узлами при использовании CAPS:
 
@@ -296,8 +298,10 @@ status:
 1. Установка меток в NodeGroup `spec.nodeTemplate.labels` для последующего использования их в [spec.nodeSelector](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/) или [spec.affinity.nodeAffinity](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#node-affinity). Указывает, какие именно узлы будут выбраны планировщиком для запуска целевого приложения.
 1. Установка ограничений в NodeGroup `spec.nodeTemplate.taints` с дальнейшим снятием их в [spec.tolerations](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/). Запрещает исполнение не разрешенных явно приложений на этих узлах.
 
-> Deckhouse по умолчанию допускает использование taint с ключом `dedicated`. Поэтому рекомендуется применять именно этот ключ с любым значением для taint на выделенных узлах.
-> Если необходимо использовать нестандартные ключи taint (например, dedicated.client.com), нужно добавить их в массив [`.spec.settings.modules.placement.customTolerationKeys`](/products/kubernetes-platform/documentation/v1/reference/api/global.html#parameters-modules-placement-customtolerationkeys). Это позволит системным компонентам, таким как `cni-flannel`, работать на этих узлах.
+{{< alert level="info">}}
+Deckhouse по умолчанию допускает использование taint с ключом `dedicated`. Поэтому рекомендуется применять именно этот ключ с любым значением для taint на выделенных узлах.
+Если необходимо использовать нестандартные ключи taint (например, dedicated.client.com), нужно добавить их в массив [`.spec.settings.modules.placement.customTolerationKeys`](/products/kubernetes-platform/documentation/v1/reference/api/global.html#parameters-modules-placement-customtolerationkeys). Это позволит системным компонентам, таким как `cni-flannel`, работать на этих узлах.
+{{< /alert >}}
 
 Подробнее [в статье на Habr](https://habr.com/ru/company/flant/blog/432748/).
 
