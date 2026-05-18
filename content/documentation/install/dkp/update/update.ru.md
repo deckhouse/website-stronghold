@@ -1,7 +1,6 @@
 ---
 title: "Обновление платформы"
 weight: 10
-url: /documentation/admin/update/update/
 ---
 
 Обновление платформы конфигурируется в ресурсе ModuleConfig [`deckhouse`](/modules/deckhouse/configuration.html).

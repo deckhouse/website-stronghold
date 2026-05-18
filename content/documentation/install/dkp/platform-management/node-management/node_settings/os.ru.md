@@ -1,7 +1,6 @@
 ---
 title: "Настройка ОС"
 weight: 20
-url: /documentation/admin/platform-management/node-management/node_settings/os/
 ---
 
 ## Установка плагина cert-manager для kubectl на master-узлах

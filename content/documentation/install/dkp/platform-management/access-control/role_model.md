@@ -1,7 +1,6 @@
 ---
 title: "Role model"
 weight: 10
-url: /documentation/admin/platform-management/access-control/role_model/
 ---
 
 ## Description

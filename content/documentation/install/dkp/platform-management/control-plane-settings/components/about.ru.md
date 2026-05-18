@@ -1,7 +1,6 @@
 ---
 title: "Описание"
 weight: 5
-url: /documentation/admin/platform-management/control-plane-settings/about/
 ---
 
 Управление компонентами control plane кластера осуществляется с помощью модуля `control-plane-manager`, который запускается на всех master-узлах кластера (узлы с меткой `node-role.kubernetes.io/control-plane: ""`).

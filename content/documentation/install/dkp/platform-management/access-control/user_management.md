@@ -1,7 +1,6 @@
 ---
 title: "User management"
 weight: 20
-url: /documentation/admin/platform-management/access-control/user_management/
 ---
 
 ## Description

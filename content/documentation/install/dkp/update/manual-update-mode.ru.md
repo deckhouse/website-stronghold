@@ -1,7 +1,6 @@
 ---
 title: "Ручной режим обновления"
 weight: 20
-url: /documentation/admin/update/manual-update-mode/
 ---
 
 Для ручного подтверждения обновлений установите этот режим в конфигурации:

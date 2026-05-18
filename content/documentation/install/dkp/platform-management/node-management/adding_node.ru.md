@@ -1,7 +1,6 @@
 ---
 title: "Добавление узла"
 weight: 20
-url: /documentation/admin/platform-management/node-management/adding_node/
 ---
 
 ## Добавление статического узла в кластер

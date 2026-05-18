@@ -1,7 +1,6 @@
 ---
 title: "NTP management"
 weight: 50
-url: /documentation/admin/platform-management/network/ntp/
 ---
 
 ## Configuring node time synchronization

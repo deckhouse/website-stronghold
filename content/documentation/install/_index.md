@@ -1,4 +1,4 @@
 ---
 title: "Install"
-weight: 50
+weight: 40
 ---

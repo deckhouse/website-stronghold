@@ -1,7 +1,6 @@
 ---
 title: "Работа с etcd"
 weight: 20
-url: /documentation/admin/platform-management/control-plane-settings/etcd/
 ---
 
 ## Резервное копирование etcd

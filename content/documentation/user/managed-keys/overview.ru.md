@@ -1,6 +1,6 @@
 ---
 title: "Управляемые ключи (Managed Keys) в Stronghold"
-linkTitle: "Введение"
+linkTitle: "Обзор"
 weight: 10
 description: "Обзор Managed Keys в Stronghold: поддерживаемые backend-ы и механизмы секретов, которые умеют их использовать."
 ---

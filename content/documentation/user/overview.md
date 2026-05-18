@@ -1,6 +1,6 @@
 ---
 title: "Deckhouse Stronghold user guide"
-linkTitle: "Introduction"
+linkTitle: "Overview"
 weight: 10
 ---
 

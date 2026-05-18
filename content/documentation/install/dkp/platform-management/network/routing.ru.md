@@ -1,7 +1,6 @@
 ---
 title: "Настройка маршрутизации"
 weight: 30
-url: /documentation/admin/platform-management/network/routing/
 ---
 
 {{< alert level="warning" >}}

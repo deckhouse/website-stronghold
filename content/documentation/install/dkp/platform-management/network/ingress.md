@@ -1,7 +1,6 @@
 ---
 title: "Incoming traffic management"
 weight: 10
-url: /documentation/admin/platform-management/network/ingress/
 ---
 
 To provide external access to virtual machines, for example, for service publishing or remote administration, you can use `Ingress`resources, which are managed by the ingress-nginx module.

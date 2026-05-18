@@ -1,7 +1,6 @@
 ---
 title: "Platform update"
 weight: 10
-url: /documentation/admin/update/update/
 ---
 
 ## Automatic Update

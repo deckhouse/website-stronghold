@@ -1,7 +1,6 @@
 ---
 title: "Настройка containerd"
 weight: 30
-url: /documentation/admin/platform-management/node-management/node_settings/containerd/
 ---
 
 ## Общие сведения

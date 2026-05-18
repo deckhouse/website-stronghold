@@ -1,7 +1,6 @@
 ---
 title: "Группы узлов"
 weight: 15
-url: /documentation/admin/platform-management/node-management/node_settings/node_group/
 ---
 
 ## Управление узлами кластера

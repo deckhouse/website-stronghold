@@ -1,7 +1,6 @@
 ---
 title: "Initial access configuration"
 weight: 30
-url: /documentation/admin/install/steps/access/
 ---
 
 After the installation is complete, you can connect to the platform in the following ways:

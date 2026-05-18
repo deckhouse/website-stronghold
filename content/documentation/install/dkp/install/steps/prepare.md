@@ -1,7 +1,6 @@
 ---
 title: "Prepare the environment"
 weight: 10
-url: /documentation/admin/install/steps/prepare/
 ---
 
 Before installing the platform, please complete the following steps to prepare the infrastructure:

@@ -1,7 +1,6 @@
 ---
 title: "Переключение Stronghold с EE на CSE"
 weight: 20
-url: /documentation/admin/standalone/switching-editions/switch-ee-to-cse/
 ---
 
 Stronghold Enterprise Edition (EE) можно обновить до Stronghold Certified Security Edition (CSE) одним из следующих способов:

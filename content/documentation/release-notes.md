@@ -1,5 +1,5 @@
 ---
-title: "Version History"
+title: "Release notes"
 weight: 90
 ---
 

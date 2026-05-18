@@ -1,7 +1,6 @@
 ---
 title: "Планировщик"
 weight: 30
-url: /documentation/admin/platform-management/control-plane-settings/scheduler/
 ---
 
 ## Описание алгоритма планировщика

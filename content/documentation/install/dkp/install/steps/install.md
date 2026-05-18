@@ -1,7 +1,6 @@
 ---
 title: "Platform installation"
 weight: 20
-url: /documentation/admin/install/steps/install/
 ---
 
 ## Configuration Preparation

@@ -1,7 +1,6 @@
 ---
 title: "Outgoing traffic management"
 weight: 20
-url: /documentation/admin/platform-management/network/egress/
 ---
 
 {{< alert level="warning" >}}

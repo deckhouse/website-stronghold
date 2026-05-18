@@ -1,7 +1,6 @@
 ---
 title: "Настройка DNS"
 weight: 40
-url: /documentation/admin/platform-management/network/dns/
 ---
 
 Для установки компонентов CoreDNS и управления DNS можно воспользоваться функциональностью модуля kube-dns.

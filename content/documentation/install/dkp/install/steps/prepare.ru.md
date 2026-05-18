@@ -1,7 +1,6 @@
 ---
 title: "Подготовка окружения"
 weight: 10
-url: /documentation/admin/install/steps/prepare/
 ---
 
 Перед установкой платформы выполните следующие действия:

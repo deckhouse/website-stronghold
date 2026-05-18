@@ -1,7 +1,6 @@
 ---
 title: "Ролевая модель"
 weight: 10
-url: /documentation/admin/platform-management/access-control/role_model/
 ---
 
 ## Описание

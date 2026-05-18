@@ -1,7 +1,6 @@
 ---
 title: "Projects"
 weight: 30
-url: /documentation/admin/platform-management/access-control/projects/
 ---
 
 ## Description

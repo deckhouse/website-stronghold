@@ -1,7 +1,6 @@
 ---
 title: "DNS management"
 weight: 40
-url: /documentation/admin/platform-management/network/dns/
 ---
 
 To install CoreDNS components for DNS management, use the kube-dns module.

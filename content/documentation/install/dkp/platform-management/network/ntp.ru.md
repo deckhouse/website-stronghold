@@ -1,7 +1,6 @@
 ---
 title: "Настройка NTP"
 weight: 50
-url: /documentation/admin/platform-management/network/ntp/
 ---
 
 ## Настройка синхронизации времени на узлах

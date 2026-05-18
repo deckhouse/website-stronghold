@@ -1,7 +1,6 @@
 ---
 title: "Установка платформы"
 weight: 20
-url: /documentation/admin/install/steps/install/
 ---
 
 ## Подготовка конфигурации

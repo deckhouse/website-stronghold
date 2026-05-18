@@ -1,7 +1,6 @@
 ---
 title: "Расширенные настройки"
 weight: 60
-url: /documentation/admin/platform-management/node-management/advanced/
 ---
 
 ## Восстановление master-узла, если kubelet не может загрузить компоненты control plane
