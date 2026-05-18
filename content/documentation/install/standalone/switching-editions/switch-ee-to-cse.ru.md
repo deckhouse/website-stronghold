@@ -9,7 +9,7 @@ Stronghold Enterprise Edition (EE) можно обновить до Stronghold C
 - [в исполнении DKP](../../../dkp/platform-management/switching-editions/switch-ee-to-cse/).
 
 {{< alert level="warning" >}}
-Поддерживается обновление с Stronghold EE 1.15.x до Stronghold CSE 1.16.0. Если используется версия Stronghold EE ниже 1.15.x, сначала [обновитесь до последней версии ветки](../../dkp/update/update/).
+Поддерживается обновление с Stronghold EE 1.15.x до Stronghold CSE 1.16.0. Если используется версия Stronghold EE ниже 1.15.x, сначала [обновитесь до последней версии ветки](../../../dkp/update/update/).
 {{< /alert >}}
 
 {{< alert level="warning" >}}
