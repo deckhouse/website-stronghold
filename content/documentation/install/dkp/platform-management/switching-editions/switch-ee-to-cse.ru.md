@@ -5,7 +5,7 @@ weight: 20
 
 Stronghold Enterprise Edition (EE) можно обновить до Stronghold Certified Security Edition (CSE) одним из следующих способов:
 
-- [в исполнении Standalone](../../../standalone/switching-editions/switch_ee_to_cse/);
+- [в исполнении Standalone](../../../standalone/switching-editions/switch-ee-to-cse/);
 - в исполнении DKP.
 
 {{< alert level="warning" >}}

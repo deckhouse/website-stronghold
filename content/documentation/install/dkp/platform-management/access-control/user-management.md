@@ -21,7 +21,7 @@ Users can access DVP web interfaces, such as Grafana and Console,
 and use command-line utilities like `d8` or `kubectl` to interact with the DVP APIs,
 considering the granted access permissions.
 
-For details on granting permissions to users and groups, refer to [Role Model](./role_model/).
+For details on granting permissions to users and groups, refer to [Role Model](./role-model/).
 
 ## Create a user
 

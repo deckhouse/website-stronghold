@@ -1,5 +1,5 @@
 ---
-title: "Control plane components"
+title: "Overview"
 weight: 10
 ---
 

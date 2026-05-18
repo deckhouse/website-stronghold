@@ -23,7 +23,7 @@ Deckhouse Stronghold обеспечивает безопасное хранен�
 - [Быстрый старт](/products/stronghold/gs/) - пошаговая инструкция по установке типовой конфигурации Deckhouse Stronghold.
 - [О платформе](./about/editions/) — сведения о редакциях, каналах обновлений и технических требованиях.
 - [Установка](./install/dkp/install/steps/prepare/) — порядок установки Deckhouse Stronghold.
-- [Настройка](./admin/platform-management/node-management/node_settings/node_group/) — настройка доступа, резервное копирование ключей, установка сертификатов, настройка аутентификации.
+- [Настройка](./admin/platform-management/node-management/node-settings/node-group/) — настройка доступа, резервное копирование ключей, установка сертификатов, настройка аутентификации.
 - [Работа с политиками](./concepts/policy/) — управление доступом к секретам и операции над ними.
 - [Работа с токенами доступа](/products/stronghold/documentation/user/auth/token/) — методы аутентификации пользователей и управление токенами доступа.
 - [Работа с секретами](/products/stronghold/documentation/user/secrets-engines/kv/overview/) — механизмы секретов и способы их доставки в приложения.

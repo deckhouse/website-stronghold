@@ -65,7 +65,7 @@ Keep in mind:
 - once an audit device is disabled, its hashing salt is lost, so comparing old values through that device is no longer possible;
 - raw logging of sensitive data should only be used deliberately and under tight control.
 
-For a more detailed explanation of audit record contents and storage format, see [Audit log record schema](./log_format/).
+For a more detailed explanation of audit record contents and storage format, see [Audit log record schema](./log-format/).
 
 ## Why multiple audit devices are recommended
 
@@ -159,9 +159,9 @@ stronghold audit disable file/
 
 Stronghold also supports advanced ways to fine-tune audit logs:
 
-- [Audit log record schema](./log_format/) explains the audit record structure, the `auth`, `request`, and `response` objects, and protection of sensitive values;
-- [Audit log filtering](./audit_filtering/) lets you send only selected records to a specific device;
-- [Audit field exclusion](./audit_exclusion/) lets you remove selected fields from records before they are written.
+- [Audit log record schema](./log-format/) explains the audit record structure, the `auth`, `request`, and `response` objects, and protection of sensitive values;
+- [Audit log filtering](./audit-filtering/) lets you send only selected records to a specific device;
+- [Audit field exclusion](./audit-exclusion/) lets you remove selected fields from records before they are written.
 
 These capabilities are useful for separating audit streams, reducing log volume, and limiting retention of selected sensitive fields, but they should be used carefully.
 
