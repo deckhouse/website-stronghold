@@ -173,5 +173,5 @@ Keep in mind that hashing primarily applies to string values received in JSON or
 ## Related pages
 
 - [Audit in Stronghold](./overview/)
-- [Audit log filtering](./audit-filtering/)
-- [Audit field exclusion](./audit-exclusion/)
+- [Audit log filtering](./filtering/)
+- [Audit field exclusion](./exclusion/)

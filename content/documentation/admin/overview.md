@@ -19,8 +19,8 @@ The platform’s Administrator Guide includes the following sections:
 - Audit
   - [Introduction](./audit/overview/) - what Stronghold audit logs contain, which backends are supported, and how to configure auditing safely.
   - [Audit log record schema](./audit/log-format/) - audit record structure, key objects, and protection of sensitive data.
-  - [Audit log filtering](./audit/audit-filtering/) - select audit records by condition and configure a fallback device.
-  - [Audit field exclusion](./audit/audit-exclusion/) - remove selected fields from audit records before they are stored.
+  - [Audit log filtering](./audit/filtering/) - select audit records by condition and configure a fallback device.
+  - [Audit field exclusion](./audit/exclusion/) - remove selected fields from audit records before they are stored.
 - Backups
   - [Introduction](./backups/overview/) - overview of manual and automated backups for Stronghold integrated storage.
   - [Save a storage snapshot](./backups/save/) - create a snapshot manually through CLI or API.

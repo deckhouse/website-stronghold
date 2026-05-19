@@ -160,8 +160,8 @@ stronghold audit disable file/
 Stronghold also supports advanced ways to fine-tune audit logs:
 
 - [Audit log record schema](./log-format/) explains the audit record structure, the `auth`, `request`, and `response` objects, and protection of sensitive values;
-- [Audit log filtering](./audit-filtering/) lets you send only selected records to a specific device;
-- [Audit field exclusion](./audit-exclusion/) lets you remove selected fields from records before they are written.
+- [Audit log filtering](./filtering/) lets you send only selected records to a specific device;
+- [Audit field exclusion](./exclusion/) lets you remove selected fields from records before they are written.
 
 These capabilities are useful for separating audit streams, reducing log volume, and limiting retention of selected sensitive fields, but they should be used carefully.
 
