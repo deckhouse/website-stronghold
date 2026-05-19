@@ -3,9 +3,9 @@ title: "Kubernetes Secrets engine"
 weight: 70
 ---
 
-The Kubernetes Secrets Engine for Stronghold generates Kubernetes service account tokens (not to be confused with [Stronghold tokens](../concepts/tokens/)), and
+The Kubernetes Secrets Engine for Stronghold generates Kubernetes service account tokens (not to be confused with [Stronghold tokens](../../concepts/tokens/)), and
 optionally service accounts, role bindings, and roles. The created service account tokens have
-a configurable [TTL](#ttl) and any objects created are automatically deleted when the Stronghold [lease](../concepts/lease/) expires.
+a configurable [TTL](#ttl) and any objects created are automatically deleted when the Stronghold [lease](../../concepts/lease/) expires.
 
 For each lease, Stronghold will create a service account token attached to the
 defined service account. The service account token is returned to the caller.

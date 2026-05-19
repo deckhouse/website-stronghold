@@ -18,12 +18,12 @@ Stronghold also supports `SAML` for browser-based Web SSO through an external `S
 Having multiple auth methods enables you to use an auth method that makes the
 most sense for your use case of Stronghold and your organization.
 
-For example, on developer machines, the [Userpass](/docs/auth/userpass)
-is easiest to use. But for servers the [AppRole](/docs/auth/approle)
+For example, on developer machines, the [Userpass](./userpass/)
+is easiest to use. But for servers the [AppRole](./approle/)
 method is the recommended choice.
 
 To learn more about authentication, see the
-[authentication concepts page](/docs/concepts/auth).
+[authentication concepts page](../../concepts/auth/).
 
 ## Enabling/Disabling auth methods
 
@@ -33,7 +33,7 @@ Auth methods can be enabled/disabled using the CLI or the API.
 d8 stronghold auth enable userpass
 ```
 
-When enabled, auth methods are similar to [secrets engines](/docs/secrets):
+When enabled, auth methods are similar to [secrets engines](../secrets-engines/):
 they are mounted within the Stronghold mount table and can be accessed
 and configured using the standard read/write API. All auth methods are mounted underneath the `auth/` prefix.
 
@@ -57,5 +57,5 @@ of an entity changes in the external system (e.g., an account expires or is
 disabled), Stronghold denies requests to **renew** tokens associated with the entity.
 However, any existing token remain valid for the original grant period unless
 they are explicitly revoked within Stronghold. Operators should set appropriate
-[token TTLs](/docs/concepts/tokens#the-general-case) when using external
+[token TTLs](../../concepts/tokens#general-case) when using external
 authN methods.

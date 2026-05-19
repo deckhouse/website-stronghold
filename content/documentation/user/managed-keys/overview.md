@@ -1,6 +1,6 @@
 ---
 title: "Managed Keys in Stronghold"
-linkTitle: "Introduction"
+linkTitle: "Overview"
 weight: 10
 description: "Overview of Managed Keys in Stronghold: supported backends and the secrets engines that can use them."
 ---

@@ -51,7 +51,7 @@ description: "Механизм seal wrap: дополнительный уров�
 disable_sealwrap = true
 ```
 
-Этот параметр описан в [настройке Standalone-конфигурации](../standalone/configuration/).
+Этот параметр описан в [настройке Standalone-конфигурации](../../install/standalone/configuration/).
 
 Важно учитывать:
 
@@ -72,7 +72,7 @@ disable_sealwrap = true
 Для работы с процессом rewrap в API Stronghold доступны endpoint-ы:
 
 | Метод | Путь |
-|-------|------|
+| --- | --- |
 | `GET` | `/sys/sealwrap/rewrap` |
 | `POST` | `/sys/sealwrap/rewrap` |
 
@@ -121,4 +121,4 @@ curl \
 ## См. также
 
 - [Поддержка HSM](./hsm/)
-- [Настройка Standalone](../standalone/configuration/)
+- [Настройка Standalone](../../install/standalone/configuration/)

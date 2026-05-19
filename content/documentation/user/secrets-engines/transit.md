@@ -104,7 +104,7 @@ The returned ciphertext starts with `vault:v1:`. The first prefix (`stronghold`)
 Note that Stronghold _does not store_ any of this data. The caller is responsible for storing the encrypted ciphertext. When the caller wants the plaintext, it must provide the ciphertext back to Stronghold to decrypt the value.
 
 {{< alert level="warning" >}}
-Stronghold HTTP API imposes a maximum request size of 32MB to prevent a DoS attack. This can be adjusted in the `listener` block in the [Stronghold configuration](../../../admin/standalone/configuration/#listener).
+Stronghold HTTP API imposes a maximum request size of 32MB to prevent a DoS attack. This can be adjusted in the `listener` block in the [Stronghold configuration](../../../install/standalone/configuration/#listener).
 {{< /alert >}}
 
 Decrypt a piece of data using the `/decrypt` endpoint with a named key:

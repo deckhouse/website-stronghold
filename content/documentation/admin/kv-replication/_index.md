@@ -1,4 +1,4 @@
 ---
-title: "KV replication"
+title: "High reliability and availability"
 weight: 45
 ---

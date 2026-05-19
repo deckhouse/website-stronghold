@@ -52,7 +52,7 @@ For supporting `seal` mechanisms, Vault enables `seal wrap` by default. In Stron
 disable_sealwrap = true
 ```
 
-This parameter is described in the [Standalone configuration](../standalone/configuration/).
+This parameter is described in the [Standalone configuration](../../install/standalone/configuration/).
 
 Important details:
 
@@ -73,8 +73,8 @@ When the `seal` configuration changes, Stronghold must wrap all seal-wrapped val
 Stronghold exposes the following API endpoints for rewrap management:
 
 | Method | Path |
-|--------|------|
-| `GET`  | `/sys/sealwrap/rewrap` |
+| --- | --- |
+| `GET` | `/sys/sealwrap/rewrap` |
 | `POST` | `/sys/sealwrap/rewrap` |
 
 - `GET /sys/sealwrap/rewrap` returns the current process status and counters for processed entries;
@@ -122,4 +122,4 @@ Rewrap duration depends on the number of seal-wrapped values and the performance
 ## See also
 
 - [HSM support](./hsm/)
-- [Standalone configuration](../standalone/configuration/)
+- [Standalone configuration](../../install/standalone/configuration/)

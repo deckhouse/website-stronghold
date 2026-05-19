@@ -152,7 +152,7 @@ path "secret/metadata/dev/team-1/*" {
 ```
 
 The `allowed_parameters`, `denied_parameters`, and `required_parameters` fields are
-not supported for policies used with the version 2 kv store. See the [Policies Concepts](../../concepts/policy/)
+not supported for policies used with the version 2 kv store. See the [Policies Concepts](../../../concepts/policy/)
 for a description of these parameters.
 
 ## Usage
