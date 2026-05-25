@@ -7,12 +7,12 @@
   {{ $icon = "not_supported_v2.svg" }}
 {{ else if eq $type "coming_soon" }}
   {{ $icon = "note.svg" }}
-  {{ with .Page.Site.Data.i18n.common.coming_soon }}{{ $title = index . .Page.Lang }}{{ else }}{{ $title = i18n "common_coming_soon" }}{{ end }}
+  {{ with hugo.Data.i18n.common.coming_soon }}{{ $title = index . .Page.Lang }}{{ else }}{{ $title = i18n "common_coming_soon" }}{{ end }}
 {{ else if eq $type "techsupport_ce" }}
   {{ $icon = "intermediate_v2.svg" }}
-  {{ with .Page.Site.Data.i18n.common.tech_support_stronghold_notice_ce }}{{ $title = index . .Page.Lang }}{{ else }}{{ $title = i18n "common_tech_support_stronghold_notice_ce" }}{{ end }}
+  {{ with hugo.Data.i18n.common.tech_support_stronghold_notice_ce }}{{ $title = index . .Page.Lang }}{{ else }}{{ $title = i18n "common_tech_support_stronghold_notice_ce" }}{{ end }}
 {{ else if eq $type "techsupport_commercial" }}
   {{ $icon = "intermediate_v2.svg" }}
-  {{ with .Page.Site.Data.i18n.common.tech_support_stronghold_notice_commercial }}{{ $title = index . .Page.Lang }}{{ else }}{{ $title = i18n "common_tech_support_stronghold_notice_commercial" }}{{ end }}
+  {{ with hugo.Data.i18n.common.tech_support_stronghold_notice_commercial }}{{ $title = index . .Page.Lang }}{{ else }}{{ $title = i18n "common_tech_support_stronghold_notice_commercial" }}{{ end }}
 {{ end }}
 <img src="/images/icons/{{ $icon }}" alt="{{ with $title }}{{ . }}{{ else }}{{ $type }}{{ end }}"{{ with $title }} title="{{ . }}"{{ end }} aria-expanded="false">
