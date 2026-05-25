@@ -2,6 +2,8 @@
 title: "SAML method"
 linkTitle: "SAML"
 weight: 75
+params:
+  edition: ee
 ---
 
 ## SAML auth method
