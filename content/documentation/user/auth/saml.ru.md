@@ -2,6 +2,8 @@
 title: "Метод SAML"
 linkTitle: "SAML"
 weight: 75
+params:
+  edition: ee
 ---
 
 ## Метод аутентификации SAML

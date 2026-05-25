@@ -1,6 +1,8 @@
 ---
 title: "HSM support"
 weight: 10
+params:
+  edition: ee
 ---
 
 Stronghold supports Root key encryption using hardware security modules (HSM) such as TPM2, Rutoken ECP 3.0, JaCarta, and other devices that support the PKCS11 standard.

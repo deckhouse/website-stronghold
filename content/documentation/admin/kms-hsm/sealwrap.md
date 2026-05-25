@@ -2,6 +2,8 @@
 title: "Double encryption"
 weight: 20
 description: "Seal wrap: an extra layer of encryption for sensitive Stronghold data."
+params:
+  edition: ee
 ---
 
 `Seal wrap` is a mechanism that adds an extra encryption layer on top of the normal storage cryptographic barrier. In Stronghold documentation, it can be treated as **double encryption**: data is protected by Stronghold's built-in barrier and then additionally wrapped through the configured `seal` mechanism.
