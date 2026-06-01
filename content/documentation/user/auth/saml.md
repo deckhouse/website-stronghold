@@ -1,35 +1,43 @@
 ---
-title: "SAML method"
+title: "SAML"
 linkTitle: "SAML"
 weight: 75
+description: "Authenticate to Deckhouse Stronghold through an external SAML 2.0 Identity Provider."
 ---
 
-## SAML auth method
+The `saml` authentication method lets you authenticate users in Deckhouse Stronghold through an external SAML 2.0 Identity Provider using the Web SSO profile.
 
-The `saml` auth method lets users authenticate to Deckhouse Stronghold through an external `SAML 2.0` Identity Provider using the `Web SSO` profile.
+In this flow, Stronghold acts as a SAML Service Provider. It validates the response from the Identity Provider and then issues a Stronghold token according to the selected role.
 
-This method is suitable for browser-based sign-in through the Stronghold UI and for custom integrations that start the SAML login flow through the HTTP API. Stronghold acts as a SAML Service Provider, validates the response from the Identity Provider, and then issues a Stronghold token according to the matched role.
+Use this method in the following cases:
+
+- to sign in to the Stronghold web interface through a browser.
+- to integrate external applications that start a SAML flow through the HTTP API.
 
 ## How it works
 
-The login flow has three stages:
+The sign-in flow consists of three stages:
 
-1. A client requests `auth/<mount>/sso_service_url` and receives an IdP redirect URL plus a temporary `token_poll_id`.
-1. The user completes authentication at the Identity Provider, which sends a signed SAML response to `auth/<mount>/callback`.
-1. The client exchanges `token_poll_id` and `client_verifier` at `auth/<mount>/token` and receives a Stronghold token.
+1. The client calls `auth/<mount>/sso_service_url` and receives a URL to redirect the user to the Identity Provider, along with a temporary `token_poll_id`.
+1. The user authenticates with the Identity Provider. The provider then sends a signed SAML response to `auth/<mount>/callback`.
+1. The client exchanges `token_poll_id` and `client_verifier` for a token through `auth/<mount>/token`.
 
 Stronghold supports two client modes:
 
-- `browser` for UI-style login flows;
-- `cli` for external tools that open the IdP page in a browser and then poll for the token.
+- `browser` — for web interface scenarios.
+- `cli` — for external tools that open the IdP page in a browser and then poll the token issuance endpoint.
 
 ## Enable the method
+
+Enable the SAML authentication method:
 
 ```shell
 d8 stronghold auth enable saml
 ```
 
-By default the method is mounted at `auth/saml`. You can mount it at a custom path if needed:
+By default, the method is mounted at `auth/saml`.
+
+If needed, use a different mount path:
 
 ```shell
 d8 stronghold auth enable -path=corp-saml saml
@@ -37,19 +45,19 @@ d8 stronghold auth enable -path=corp-saml saml
 
 ## Configuration
 
-Before users can log in, configure Stronghold as a SAML Service Provider.
+Before you begin, configure Stronghold as a SAML Service Provider.
 
-Main configuration parameters:
+The main configuration parameters are:
 
-- `entity_id` is the Service Provider entity ID that must match the application settings in the Identity Provider.
-- `acs_urls` is the list of allowed Assertion Consumer Service callback URLs.
-- `default_role` is optional. If set, users can start login without explicitly passing a role.
-- `idp_metadata_url` lets Stronghold fetch IdP settings from metadata.
-- `idp_sso_url`, `idp_entity_id`, and `idp_cert` can be used instead of `idp_metadata_url` for manual configuration.
-- `validate_response_signature` and `validate_assertion_signature` control signature validation. In production, enable both when the Identity Provider supports signing both objects.
-- `verbose_logging` adds SAML exchange details to logs and should only be used for troubleshooting.
+- `entity_id` — the Service Provider identifier. It must match the application settings on the Identity Provider side.
+- `acs_urls` — the list of allowed callback URLs for Assertion Consumer Service.
+- `default_role` — the optional default role. If it is set, you do not need to pass the role explicitly when starting the sign-in flow.
+- `idp_metadata_url` — the URL of the Identity Provider metadata.
+- `idp_sso_url`, `idp_entity_id`, and `idp_cert` — a manual alternative to `idp_metadata_url`.
+- `validate_response_signature` and `validate_assertion_signature` — signature validation parameters. In a production environment, enable both if the IdP can sign both the response and the assertion.
+- `verbose_logging` — extended logging for the SAML exchange. Use it only for troubleshooting.
 
-### Configure via IdP metadata
+### Configure with IdP metadata
 
 ```shell
 d8 stronghold write auth/saml/config \
@@ -63,7 +71,7 @@ d8 stronghold write auth/saml/config \
 
 ### Configure manually
 
-Use manual configuration when metadata is unavailable:
+If IdP metadata is unavailable, set the parameters manually:
 
 ```shell
 d8 stronghold write auth/saml/config \
@@ -76,19 +84,19 @@ d8 stronghold write auth/saml/config \
   validate_assertion_signature=true
 ```
 
-If multiple `acs_urls` are configured, the client must explicitly choose which one to use when starting the login flow.
+If `acs_urls` contains multiple addresses, the client must explicitly pass the required `acs_url` when starting the sign-in flow.
 
-### Assertion consumer service URLs
+## Assertion Consumer Service URLs
 
-The `acs_urls` parameter defines where the Identity Provider is allowed to send the SAML response after the user completes authentication.
+The `acs_urls` parameter defines which addresses the Identity Provider can use to return the SAML response after successful user authentication.
 
-When configuring `acs_urls`, make sure that each value:
+When you configure `acs_urls`, make sure each address:
 
-- matches one of the callback URLs configured for the SAML application on the Identity Provider side;
-- points to the Stronghold SAML callback endpoint `.../v1/auth/<mount>/callback` for the chosen mount path;
-- uses `https://` in production environments.
+- matches one of the callback URLs allowed in the SAML application on the Identity Provider side.
+- points to a Stronghold callback endpoint in the form `.../v1/auth/<mount>/callback` for the selected mount path.
+- uses `https://` in the production environment.
 
-If Stronghold is exposed through multiple public addresses, you can configure several ACS URLs:
+If Stronghold is available through multiple public addresses, you can specify multiple ACS URLs:
 
 ```shell
 d8 stronghold write auth/saml/config \
@@ -97,21 +105,21 @@ d8 stronghold write auth/saml/config \
   idp_metadata_url="https://idp.example.com/app/stronghold/sso/saml/metadata"
 ```
 
-If you use namespaces, include the namespace path in the API URL or pass the `X-Vault-Namespace` header so that the resulting callback URL matches the real auth mount location.
+If you use `namespaces`, include the namespace path in the API URL or pass the `X-Vault-Namespace` header so that the callback URL matches the actual location of the auth mount.
 
 ## Roles
 
-SAML roles define which SAML subjects and attributes are allowed to authenticate and which token settings are applied after login.
+SAML roles define which subjects and attributes from the SAML assertion are allowed to authenticate, and which token parameters apply after sign-in.
 
-Main role parameters:
+The main role parameters are:
 
-- `bound_subjects` restricts allowed SAML subjects.
-- `bound_subjects_type` defines matching mode: `string` or `glob`.
-- `bound_attributes` requires specific assertion attributes and values.
-- `bound_attributes_type` defines matching mode for attribute values: `string` or `glob`.
-- `groups_attribute` maps a SAML attribute to Stronghold Identity group aliases.
-- `alias_metadata` copies static metadata into the generated entity alias.
-- token parameters such as `token_policies`, `token_ttl`, `token_max_ttl`, `token_period`, and `token_bound_cidrs` work the same way as in other auth methods.
+- `bound_subjects` — restricts allowed SAML subject values.
+- `bound_subjects_type` — the matching type: `string` or `glob`.
+- `bound_attributes` — the list of required assertion attributes and expected values.
+- `bound_attributes_type` — the attribute value matching type: `string` or `glob`.
+- `groups_attribute` — the attribute from which Stronghold creates Identity group aliases.
+- `alias_metadata` — static metadata that will be written to the entity alias.
+- token parameters such as `token_policies`, `token_ttl`, `token_max_ttl`, `token_period`, and `token_bound_cidrs`.
 
 Example role:
 
@@ -125,16 +133,18 @@ d8 stronghold write auth/saml/role/employees \
   token_ttl="1h"
 ```
 
-If your IdP sends multi-value attributes, `bound_attributes` can match any of the expected values. Matching is case-insensitive for attribute names.
+If the IdP returns multivalue attributes, `bound_attributes` can match any of the expected values. Attribute names are matched case-insensitively.
 
-### Bound attributes
+### Attribute constraints
 
-After the user is authenticated by the Identity Provider, Stronghold checks the role restrictions against the SAML assertion:
+After the Identity Provider authenticates the user, Stronghold checks the role constraints against the contents of the SAML assertion:
 
-- `bound_subjects` matches the SAML subject;
-- `bound_attributes` matches required assertion attributes and allowed values.
+- `bound_subjects` is matched against the SAML subject.
+- `bound_attributes` is matched against the required assertion attributes and allowed values.
 
-This lets you allow access only to selected users or groups from the Identity Provider. For example:
+This makes it possible to grant access only to selected users or groups from the Identity Provider.
+
+For example:
 
 ```shell
 d8 stronghold write auth/saml/role/support \
@@ -144,19 +154,19 @@ d8 stronghold write auth/saml/role/support \
   token_policies="support-ro"
 ```
 
-The role above authorizes users whose subject ends with `@example.com` and whose `groups` attribute contains either `support` or `engineering`.
+This role allows sign-in only for users whose subject ends with `@example.com` and whose `groups` attribute contains `support` or `engineering`.
 
-For Microsoft identity platforms, group membership is often sent in the attribute `http://schemas.microsoft.com/ws/2008/06/identity/claims/groups`. In that case, use that attribute name in `bound_attributes` and, if needed, in `groups_attribute`.
+On Microsoft platforms, group membership often appears in the `http://schemas.microsoft.com/ws/2008/06/identity/claims/groups` attribute. In this case, use that exact attribute name in `bound_attributes` and, if needed, in `groups_attribute`.
 
-### Link SAML groups to Stronghold Identity groups
+### Map SAML groups to Identity
 
-If you want SAML group membership to grant Stronghold policies through Identity, use `groups_attribute` in the role and create matching external Identity groups and aliases.
+If you want SAML group membership to grant Stronghold policies through Identity, set `groups_attribute` in the role and create the corresponding external Identity groups and aliases.
 
-Example flow:
+The general flow looks like this:
 
 1. Create an external Identity group with the required policies.
-1. Read the auth mount accessor for the SAML auth method.
-1. Create a group alias whose name matches the value coming from the SAML assertion.
+1. Get the `mount accessor` for the SAML auth method.
+1. Create a `group alias` whose name matches the value received in the SAML attribute.
 
 Example commands:
 
@@ -178,34 +188,34 @@ d8 stronghold write identity/group-alias \
   canonical_id="<identity-group-id>"
 ```
 
-With this setup, a SAML login that returns `engineering` in the attribute referenced by `groups_attribute` will be linked to the external Identity group.
+With this configuration, a SAML sign-in that returns the value `engineering` in the attribute specified by `groups_attribute` is linked to the external Identity group.
 
-## Sign in through the UI
+## Sign in through the web interface
 
-The Stronghold UI supports SAML login directly.
+The Stronghold web interface supports authentication through SAML.
 
-Typical flow:
+The typical flow is as follows:
 
-1. Select the `SAML` auth method in the login form.
-1. Enter the role name if your mount does not use `default_role`.
+1. Select the SAML sign-in method on the sign-in form.
+1. Enter the role name if `default_role` is not set for the mount path.
 1. Click `Sign In`.
-1. Complete authentication at the external Identity Provider.
-1. After the callback completes, Stronghold issues the token and signs the user in.
+1. Authenticate with the external Identity Provider.
+1. After a successful callback, Stronghold issues a token and signs you in.
 
-## Start login through the API
+## Start the sign-in flow through the API
 
-The API is useful for custom portals, wrappers, and external CLI tools.
+This flow is useful for custom portals, wrappers, and external CLI tools.
 
-### 1. Generate a verifier and challenge
+### Generate the verifier and challenge
 
-`client_challenge` must be a base64-encoded SHA-256 digest of `client_verifier`.
+The `client_challenge` parameter must be a Base64-encoded SHA-256 hash of `client_verifier`.
 
 ```shell
 verifier="$(uuidgen)"
 challenge="$(printf '%s' "$verifier" | openssl dgst -sha256 -binary | base64)"
 ```
 
-### 2. Request the SSO URL
+### Request the SSO URL
 
 ```shell
 curl \
@@ -214,16 +224,16 @@ curl \
   https://stronghold.example.com/v1/auth/saml/sso_service_url
 ```
 
-The response contains:
+Stronghold returns the following fields in the response:
 
-- `sso_service_url` for redirecting the user to the Identity Provider;
-- `token_poll_id` for the final token exchange.
+- `sso_service_url` — the URL to redirect the user to the Identity Provider.
+- `token_poll_id` — the identifier for the final token exchange.
 
-If several ACS URLs are configured, include `acs_url` in this request.
+If multiple ACS URLs are configured, add the `acs_url` parameter to the request.
 
-### 3. Exchange the temporary flow state for a token
+### Exchange the temporary state for a token
 
-After the IdP sends the user back and Stronghold accepts the SAML response, exchange the poll ID for a token:
+After the IdP redirects the user back and Stronghold accepts the SAML response, exchange `token_poll_id` for a token:
 
 ```shell
 curl \
@@ -236,9 +246,11 @@ The token is returned in `auth.client_token`.
 
 ## Practical notes
 
-- Use `https://` ACS URLs in production.
-- If your IdP can sign both the SAML response and the assertion, enable both signature validation options.
-- Do not leave `verbose_logging=true` enabled in production, because logs may contain sensitive SAML data.
-- If a role has `token_bound_cidrs`, the final token exchange must come from an allowed client address.
-- A SAML role must define at least one bound condition: `bound_subjects` or `bound_attributes`.
-- If you configure multiple `acs_urls`, make sure the client sends the correct `acs_url` when starting the login flow.
+Keep the following recommendations in mind:
+
+- Use only `https://` in ACS URLs in the production environment.
+- if the IdP can sign both the response and the assertion, enable both signature checks.
+- do not leave `verbose_logging=true` enabled in the production environment, because logs may contain sensitive SAML data.
+- if the role has `token_bound_cidrs` configured, the final request to `token` must come from an allowed client address.
+- a SAML role must define at least one admission condition: `bound_subjects` or `bound_attributes`.
+- if multiple `acs_urls` are configured, the client must pass the correct `acs_url` when starting the sign-in flow.

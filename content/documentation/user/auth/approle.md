@@ -1,56 +1,133 @@
 ---
-title: "AppRole method"
-linkTitle: "Approle"
+title: "AppRole"
+linkTitle: "AppRole"
 weight: 40
+description: "Application and service authentication in Deckhouse Stronghold using AppRole."
 ---
 
-The `approle` auth method allows machines or _apps_ to authenticate with
-Stronghold-defined _roles_. The open design of `AppRole` enables a varied set of
-workflows and configurations to handle large numbers of apps. This auth method
-is oriented to automated workflows (machines and services), and is less useful
-for human operators.
+The AppRole auth method is designed to authenticate machines and applications in Deckhouse Stronghold. It is especially useful in automated scenarios where access to Stronghold is required by a service rather than a user.
 
-An "AppRole" represents a set of Stronghold policies and login constraints that must
-be met to receive a token with those policies. The scope can be as narrow or
-broad as desired. An AppRole can be created for a particular machine, or even
-a particular user on that machine, or a service spread across machines. The
-credentials required for successful login depend upon the constraints set on
-the AppRole associated with the credentials.
+AppRole is a set of policies and authentication constraints that must be satisfied to obtain a Stronghold token. Its scope can be either narrow or broad: a role can be configured for a single machine, a specific service, or a service running on multiple machines.
 
-## Authentication
+The credentials required for successful authentication depend on the AppRole constraints associated with the role.
 
-**Via the CLI**:
+{% alert level="info" %}
+For AppRole, it is recommended to use `batch` tokens unless your scenario requires child token creation or other advanced `service` token capabilities.
+{% endalert %}
 
-The default path is `/approle`. If this auth method was enabled at a different
-path, specify `auth/my-path/login` instead.
+## How AppRole works
 
-```shell-session
-$ d8 stronghold write auth/approle/login \
-    role_id=db02de05-fa39-4855-059b-67221c5c2f63 \
-    secret_id=6a174c20-f6de-a53c-74d2-6018fcceff64
+In a typical login flow, two values are used to log in with AppRole:
 
+- `role_id`.
+- `secret_id`.
+
+The client passes them to Stronghold, after which Stronghold:
+
+1. Checks that the role exists.
+1. Verifies the role constraints.
+1. If the checks succeed, issues a Stronghold token with the policies attached to the role.
+
+## When to use AppRole
+
+AppRole is typically chosen if:
+
+- you need to authenticate an application or service.
+- access to Stronghold must be granted to a workload rather than a user.
+- you need flexible control over token TTL, number of uses, and other constraints.
+- you need to deliver the role identifier and role secret through separate channels.
+
+## Enable the method
+
+Auth methods can be enabled and disabled through the Deckhouse web UI, CLI, or API. When enabled, an auth method is mounted into the Stronghold mount table and becomes available through the standard read and write API. By default, auth methods are mounted under the `auth/` directory and receive a path in the `auth/<type>` form.
+
+For AppRole, the basic way to enable it through the CLI is as follows:
+
+```shell
+d8 stronghold auth enable approle
+```
+
+By default, the method is mounted at the following path:
+
+```text
+auth/approle
+```
+
+If needed, you can enable it at a different path:
+
+```shell
+d8 stronghold auth enable -path=my-login approle
+```
+
+This is useful if you need to use multiple independent AppRole instances with different settings in a single installation.
+
+### Enable and disable through the Deckhouse web UI
+
+To enable the auth method through the Deckhouse web UI, follow these steps:
+
+1. Open the auth methods management page.
+1. Select AppRole from the list of available methods.
+1. Configure the mount settings and confirm that you want to enable the method.
+
+![Enabling the auth method](/images/stronghold/admin-guide-image1.png)
+![Selecting the auth method](/images/stronghold/admin-guide-image2.png)
+![Configuring and confirming the auth method](/images/stronghold/admin-guide-image3.png)
+
+To disable the auth method through the Deckhouse web UI, follow these steps:
+
+1. Select the previously enabled auth method.
+1. Confirm its removal.
+
+![Selecting the auth method](/images/stronghold/admin-guide-image4.png)
+![Confirming auth method removal](/images/stronghold/admin-guide-image5.png)
+
+## Authenticate through the CLI
+
+By default, the `auth/approle/login` path is used. If the auth method is enabled at a different path, specify that path instead of the default one.
+
+Authentication example:
+
+```shell
+d8 stronghold write auth/approle/login \
+  role_id=db02de05-fa49-4055-059b-67221c5c2f63 \
+  secret_id=6a174c20-f6de-a63c-74d2-6018fcceff64
+```
+
+Example result:
+
+```text
 Key                Value
 ---                -----
-token              65b74ffd-842c-fd43-1386-f7d7006e520a
-token_accessor     3c29bc22-5c72-11a6-f778-2bc8f48cea0e
+token              75b74ffd-842c-fd43-1386-f7d7006e520a
+token_accessor     4c29bc22-5c72-11a6-f778-2bc8f48cea0e
 token_duration     20m0s
 token_renewable    true
 token_policies     [default]
 ```
 
-**Via the API**:
+After that, the client receives a Stronghold token and can use it for subsequent requests.
 
-The default endpoint is `auth/approle/login`. If this auth method was enabled
-at a different path, use that value instead of `approle`.
+## Authenticate through the API
 
-```shell-session
-$ curl \
-    --request POST \
-    --data '{"role_id":"988a9df-...","secret_id":"37b74931..."}' \
-    http://127.0.0.1:8200/v1/auth/approle/login
+By default, the following path is used:
+
+```text
+auth/approle/login
 ```
 
-The response will contain the token at `auth.client_token`:
+If the method is enabled at a different path, use that path instead of the standard one.
+
+Request example:
+
+```shell
+curl \
+  --header "X-Vault-Token: ${STRONGHOLD_TOKEN}" \
+  --request POST \
+  --data '{"role_id":"988a9df-...","secret_id":"37b74931..."}' \
+  ${STRONGHOLD_ADDR}/v1/auth/approle/login
+```
+
+Response example:
 
 ```json
 {
@@ -65,165 +142,186 @@ The response will contain the token at `auth.client_token`:
 }
 ```
 
-## Configuration
+The Stronghold token is returned in the `auth.client_token` field.
 
-Auth methods must be configured in advance before users or machines can
-authenticate. These steps are usually completed by an operator or configuration
-management tool.
+## Configure AppRole
 
-**Via the CLI**:
+Before an application can authenticate, the AppRole method must be configured in advance. This is typically done by an administrator or a configuration management tool.
 
-1. Enable the AppRole auth method:
+### Step 1. Enable the method
 
-   ```shell-session
-   d8 stronghold auth enable approle
-   ```
+```shell
+d8 stronghold auth enable approle
+```
 
-1. Create a named role:
+### Step 2. Create a role
 
-   ```shell-session
-   $ d8 stronghold write auth/approle/role/my-role \
-       secret_id_ttl=10m \
-       token_num_uses=10 \
-       token_ttl=20m \
-       token_max_ttl=30m \
-       secret_id_num_uses=40
-   ```
+Role creation example:
 
-{{< alert level="warning" >}}
+```shell
+d8 stronghold write auth/approle/role/my-role \
+  token_type=batch \
+  secret_id_ttl=10m \
+  token_num_uses=10 \
+  token_ttl=20m \
+  token_max_ttl=30m \
+  secret_id_num_uses=40
+```
 
-**Note:** If the token issued by your approle needs the ability to create child tokens, you will need to set token_num_uses to 0.
+{% alert level="warning" %}
+If the token issued by the AppRole role must be able to create child tokens, set the `token_num_uses` parameter to `0`.
+{% endalert %}
 
-{{< /alert >}}
-For the complete list of configuration options, please see the API
-documentation.
+### Step 3. Get the RoleID
 
-1. Fetch the RoleID of the AppRole:
+```shell
+d8 stronghold read auth/approle/role/my-role/role-id
+```
 
-   ```shell-session
-   $ d8 stronghold read auth/approle/role/my-role/role-id
-   role_id     db02de05-fa39-4855-059b-67221c5c2f63
-   ```
+Example result:
 
-1. Get a SecretID issued against the AppRole:
+```text
+role_id     db02de05-fa49-4055-059b-67221c5c2f63
+```
 
-   ```shell-session
-   $ d8 stronghold write -f auth/approle/role/my-role/secret-id
-   secret_id               6a174c20-f6de-a53c-74d2-6018fcceff64
-   secret_id_accessor      c454f7e5-996e-7230-6074-6ef26b7bcf86
-   secret_id_ttl           10m
-   secret_id_num_uses      40
-   ```
+### Step 4. Get the SecretID
 
-**Via the API**:
+```shell
+d8 stronghold write -f auth/approle/role/my-role/secret-id
+```
 
-1. Enable the AppRole auth method:
+Example result:
 
-   ```shell-session
-   $ curl \
-       --header "X-Vault-Token: ..." \
-       --request POST \
-       --data '{"type": "approle"}' \
-       http://127.0.0.1:8200/v1/sys/auth/approle
-   ```
+```text
+secret_id               6a174c20-f6de-a63c-74d2-6018fcceff64
+secret_id_accessor      c454f7e5-996e-7230-6074-6ef26b7bcf86
+secret_id_ttl           10m
+secret_id_num_uses      40
+```
 
-1. Create an AppRole with desired set of policies:
+## Configure through the API
 
-   ```shell-session
-   $ curl \
-       --header "X-Vault-Token: ..." \
-       --request POST \
-       --data '{"policies": "dev-policy,test-policy"}' \
-       http://127.0.0.1:8200/v1/auth/approle/role/my-role
-   ```
+### Enable the method
 
-1. Fetch the identifier of the role:
+```shell
+curl \
+  --header "X-Vault-Token: ${STRONGHOLD_TOKEN}" \
+  --request POST \
+  --data '{"type":"approle"}' \
+  ${STRONGHOLD_ADDR}/v1/sys/auth/approle
+```
 
-   ```shell-session
-   $ curl \
-       --header "X-Vault-Token: ..." \
-       http://127.0.0.1:8200/v1/auth/approle/role/my-role/role-id
-   ```
+### Create a role
 
-   The response will look like:
+```shell
+curl \
+  --header "X-Vault-Token: ${STRONGHOLD_TOKEN}" \
+  --data '{"policies":"dev-policy,test-policy","token_type":"batch"}' \
+  ${STRONGHOLD_ADDR}/v1/auth/approle/role/my-role
+```
 
-   ```json
-   {
-     "data": {
-       "role_id": "988a9dfd-ea69-4a53-6cb6-9d6b86474bba"
-     }
-   }
-   ```
+### Get the RoleID
 
-1. Create a new secret identifier under the role:
+```shell
+curl \
+  --header "X-Vault-Token: ${STRONGHOLD_TOKEN}" \
+  ${STRONGHOLD_ADDR}/v1/auth/approle/role/my-role/role-id
+```
 
-   ```shell-session
-   $ curl \
-       --header "X-Vault-Token: ..." \
-       --request POST \
-        http://127.0.0.1:8200/v1/auth/approle/role/my-role/secret-id
-   ```
+Response example:
 
-   The response will look like:
+```json
+{
+  "data": {
+    "role_id": "888a9dfd-ea69-4a53-6cb6-9d6b86474bba"
+  }
+}
+```
 
-   ```json
-   {
-     "data": {
-       "secret_id_accessor": "45946873-1d96-a9d4-678c-9229f74386a5",
-       "secret_id": "37b74931-c4cd-d49a-9246-ccc62d682a25",
-       "secret_id_ttl": 600,
-       "secret_id_num_uses": 40
-     }
-   }
-   ```
+### Create a SecretID
 
-## Credentials/Constraints
+```shell
+curl \
+  --header "X-Vault-Token: ${STRONGHOLD_TOKEN}" \
+  --request POST \
+  ${STRONGHOLD_ADDR}/v1/auth/approle/role/my-role/secret-id
+```
+
+Response example:
+
+```json
+{
+  "data": {
+    "secret_id_accessor": "65946873-1d96-a9d4-678c-9229f74386a5",
+    "secret_id": "37b24931-c4cd-d49a-9246-ccc62d682a25",
+    "secret_id_ttl": 600,
+    "secret_id_num_uses": 40
+  }
+}
+```
+
+## Credentials and constraints
 
 ### RoleID
 
-RoleID is an identifier that selects the AppRole against which the other
-credentials are evaluated. When authenticating against this auth method's login
-endpoint, the RoleID is a required argument (via `role_id`) at all times. By
-default, RoleIDs are unique UUIDs, which allow them to serve as secondary
-secrets to the other credential information. However, they can be set to
-particular values to match introspected information by the client (for
-instance, the client's domain name).
+RoleID is the identifier assigned to an AppRole role and used as a required login parameter. By default, it is a UUID, but it can be replaced with a custom value if your scenario requires it.
 
 ### SecretID
 
-SecretID is a credential that is required by default for any login (via
-`secret_id`) and is intended to always be secret. (For advanced usage,
-requiring a SecretID can be disabled via an AppRole's `bind_secret_id`
-parameter, allowing machines with only knowledge of the RoleID, or matching
-other set constraints, to fetch a token). SecretIDs can be created against an
-AppRole either via generation of a 128-bit purely random UUID by the role
-itself (`Pull` mode) or via specific, custom values (`Push` mode). Similarly to
-tokens, SecretIDs have properties like usage-limit, TTLs and expirations.
+SecretID is a secret credential that is also required for login by default. It must remain confidential.
 
-#### Pull and push SecretID modes
+For advanced scenarios, you can disable the `secret_id` requirement using the `bind_secret_id` parameter. In this case, tokens can be obtained by clients that only know the `role_id` or satisfy other constraints configured for the role.
 
-If the SecretID used for login is fetched from an AppRole, this is operating in
-Pull mode. If a "custom" SecretID is set against an AppRole by the client, it
-is referred to as a Push mode. Push mode mimics the behavior of the deprecated
-App-ID auth method; however, in most cases Pull mode is the better approach. The
-reason is that Push mode requires some other system to have knowledge of the
-full set of client credentials (RoleID and SecretID) in order to create the
-entry, even if these are then distributed via different paths. However, in Pull
-mode, even though the RoleID must be known in order to distribute it to the
-client, the SecretID can be kept confidential from all parties except for the
-final authenticating client by using [response wrapping](../../concepts/response-wrapping/).
+A SecretID can be created for AppRole in two ways:
 
-Push mode is available for App-ID workflow compatibility, which in some
-specific cases is preferable, but in most cases Pull mode is more secure and
-should be preferred.
+- automatically by the role itself in Pull mode.
+- by setting a custom value in Push mode.
 
-### Further constraints
+A SecretID can have its own parameters:
 
-`role_id` is a required credential at the login endpoint. AppRole pointed to by
-the `role_id` will have constraints set on it. This dictates other `required`
-credentials for login. The `bind_secret_id` constraint requires `secret_id` to
-be presented at the login endpoint. Going forward, this auth method can support
-more constraint parameters to support varied set of Apps. Some constraints will
-not require a credential, but still enforce constraints for login. For
-example, `secret_id_bound_cidrs` will only allow logins coming from IP addresses
-belonging to configured CIDR blocks on the AppRole.
+- TTL.
+- number of uses.
+- expiration period.
+- constraints related to the issuance scenario.
+
+## Pull and Push modes
+
+For SecretID, Stronghold supports two approaches.
+
+### Pull
+
+In Pull mode, the SecretID is retrieved from AppRole by the client itself or by a trusted party. This is the primary and preferred scenario.
+
+### Push
+
+In Push mode, a custom SecretID is assigned to the client manually. This mode can be used for compatibility or specific scenarios, including compatibility with the App-ID workflow, but in most cases it is considered less preferable.
+
+The reason is that in Push mode, the full set of credentials must be delivered to an external system, whereas in Pull mode, RoleID and SecretID can be distributed more securely through separate channels.
+
+{% alert level="info" %}
+To deliver SecretID in Pull mode, it is often convenient to use [response wrapping](../../concepts/response-wrapping/) so that the secret is not transmitted in plain text.
+{% endalert %}
+
+## Additional constraints
+
+In addition to `role_id` and `secret_id`, an AppRole role can have extra constraints.
+
+For example:
+
+- `bind_secret_id` requires `secret_id` to be provided at login.
+- `secret_id_bound_cidrs` allows login only from IP addresses that belong to the specified CIDR blocks.
+
+Some constraints do not require additional credentials, but they still impose restrictions on the login process.
+
+This makes it possible to use AppRole not just as a pair of identifiers, but as a managed machine authentication model with additional admission rules.
+
+## Best practices
+
+Use the following recommendations:
+
+- Use AppRole for applications and services rather than for interactive user login.
+- Prefer Pull mode for SecretID whenever possible.
+- Deliver RoleID and SecretID through separate channels.
+- Use `batch` tokens unless your scenario requires advanced `service` token capabilities.
+- Plan TTL, number of uses, and possible role constraints in advance.
+- If SecretID must be transmitted through an untrusted environment, use [response wrapping](../../concepts/response-wrapping/).

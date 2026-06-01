@@ -1,109 +1,113 @@
 ---
-title: "Userpass method"
+title: "Userpass Method"
 linkTitle: "Userpass"
 weight: 50
+description: "Authentication in Deckhouse Stronghold using a username and password."
 ---
 
-## Userpass auth method
+The `userpass` authentication method allows users to authenticate to Deckhouse Stronghold using a username and password.
+This method is suitable when you need a simple local sign-in mechanism, do not use an external identity provider, and want to grant access quickly.
 
-The `userpass` auth method allows users to authenticate with Stronghold using
-a username and password combination.
+## How the Userpass method works
 
-The username/password combinations are configured directly to the auth
-method using the `users/` path. This method cannot read usernames and
-passwords from an external source.
+The `userpass` method stores username and password combinations directly in Stronghold.
+It does not read users or passwords from an external source.
 
-The method lowercases all submitted usernames, e.g. `Mary` and `mary` are the
-same entry.
+This means that:
 
-## Authentication
+- user accounts are created and managed inside Stronghold .
+- access permissions are defined through policies assigned to the user .
+- the method does not depend on an external directory such as `LDAP`, `OIDC`, or `SAML`.
 
-### Via the CLI
+All entered usernames are stored in lowercase.
+For example, `Mary` and `mary` are treated as the same account.
 
-```shell-session
-$ d8 stronghold login -method=userpass \
-    username=mitchellh \
-    password=foo
+## When to use the Userpass method
+
+Use `userpass` in the following cases:
+
+- you need a simple username-and-password login .
+- you do not need to connect an external authentication system .
+- an administrator wants to manage the user list manually .
+- you need a basic sign-in method for a local environment, pilot stand, or demo environment.
+
+If your organization already uses a corporate identity system, an external authentication method is usually a better choice.
+
+## Method configuration
+
+Before users can authenticate, enable the method and create users.
+
+### Enable at the default path
+
+Run the following command:
+
+```shell
+d8 stronghold auth enable userpass
 ```
 
-### Via the API
+After that, the method becomes available at the `auth/userpass` path.
 
-```shell-session
-$ curl \
-    --request POST \
-    --data '{"password": "foo"}' \
-    http://127.0.0.1:8200/v1/auth/userpass/login/mitchellh
+### Enable at a custom path
+
+If you need to mount the method at a different path, use the `-path` parameter:
+
+```shell
+d8 stronghold auth enable -path=<path> userpass
 ```
 
-The response will contain the token at `auth.client_token`:
+This can be useful if a single installation needs several independent sign-in entry points with different settings.
 
-```json
-{
-  "lease_id": "",
-  "renewable": false,
-  "lease_duration": 0,
-  "data": null,
-  "auth": {
-    "client_token": "c4f280f6-fdb2-18eb-89d3-589e2e834cdb",
-    "policies": ["admins"],
-    "metadata": {
-      "username": "mitchellh"
-    },
-    "lease_duration": 0,
-    "renewable": false
-  }
-}
+## Create a user
+
+After enabling the method, create a user that is allowed to sign in.
+
+```shell
+d8 stronghold write auth/<userpass:path>/users/mitchellh \
+  password=foo \
+  policies=admins
 ```
 
-## Configuration
+As a result, a user named `mitchellh` is created with the password `foo` and the `admins` policy assigned.
 
-Auth methods must be configured in advance before users or machines can
-authenticate. These steps are usually completed by an operator or configuration
-management tool.
+{% alert level="info" %}
+The `<userpass:path>` value must match the actual mount path of the method.
+If the method is enabled at the default path, use `userpass`, and the full write path will be `auth/userpass/users/<username>`.
+{% endalert %}
 
-1. Enable the userpass auth method:
+## What the user receives after sign-in
 
-   ```shell-session
-   d8 stronghold auth enable userpass
-   ```
-
-   This enables the userpass auth method at `auth/userpass`. To enable it at a different path, use the `-path` flag:
-
-   ```shell-session
-   d8 stronghold auth enable -path=<path> userpass
-   ```
-
-1. Configure it with users that are allowed to authenticate:
-
-   ```shell-session
-   $ d8 stronghold write auth/<userpass:path>/users/mitchellh \
-       password=foo \
-       policies=admins
-   ```
-
-   This creates a new user "mitchellh" with the password "foo" that will be
-   associated with the "admins" policy. This is the only configuration
-   necessary.
+After successful authentication, Stronghold issues a token with the user's policies attached.
+This token is used for all subsequent requests to Stronghold.
+The available actions are determined by the assigned policies.
 
 ## User lockout
 
-If a user provides bad credentials several times in quick succession,
-Stronghold will stop trying to validate their credentials for a while, instead returning immediately
-with a permission denied error. We call this behavior "user lockout". The time for which
-a user will be locked out is called “lockout duration”. The user will be able to login after the lockout
-duration has passed. The number of failed login attempts after which the user is locked out is called
-“lockout threshold”. The lockout threshold counter is reset to zero after a few minutes without login attempts,
-or upon a successful login attempt. The duration after which the counter will be reset to zero
-after no login attempts is called "lockout counter reset". This can defeat both automated and targeted requests
-i.e, user-based password guessing attacks as well as automated attacks.
+The `userpass` method supports the `user_lockout` mechanism, which protects against password guessing.
+If a user enters invalid credentials several times in a row, Stronghold temporarily stops verifying the credentials and immediately returns an access denied response.
 
-The user lockout feature is enabled by default. The default values for "lockout threshold" is 5 attempts,
-"lockout duration" is 15 minutes, "lockout counter reset" is 15 minutes.
+The following parameters control user lockout behavior:
 
-The user lockout feature can be disabled using "auth tune" by setting `disable_lockout` to `true`.
+- `lockout_threshold` — Number of failed sign-in attempts after which the user is locked out. The default value is `5`.
+- `lockout_duration` — Amount of time the user remains locked out. The default value is `15 minutes`.
+- `lockout_counter_reset` — Amount of time after which the failed attempt counter is reset if there are no new attempts. The default value is `15 minutes`.
 
-{{< alert level="warning" >}}
+The user lockout feature is enabled by default.
+The failed attempt counter is also reset after a successful sign-in.
 
-**NOTE**: This feature is only supported by the userpass, ldap, and approle auth methods.
+### Disable lockout
 
-{{< /alert >}}
+You can disable user lockout with the `auth tune` command by setting `disable_lockout=true`.
+
+{% alert level="warning" %}
+The `user_lockout` mechanism is supported only by the `userpass`, `ldap`, and `approle` methods.
+{% endalert %}
+
+## Best practices
+
+Keep the following recommendations in mind:
+
+- use `userpass` when you need simple local sign-in without an external identity provider .
+- do not use weak passwords .
+- assign only the required policies to users .
+- consider the risks of local account storage if the method is used in a production environment .
+- if you have many users, consider switching to an external authentication method.

@@ -66,7 +66,7 @@ d8 stronghold write -f ldap/rotate-root
 
 Для поддержки RACF генерируемые пароли должны состоять из 8 символов или меньше. Длина пароля может быть настроена с помощью политики паролей:
 
-```bash
+```shell
 d8 stronghold write ldap/config \
  binddn=$USERNAME \
  bindpass=$PASSWORD \
@@ -79,7 +79,7 @@ d8 stronghold write ldap/config \
 
 Для управления паролями в Active Directory механизм секретов должен быть настроен на использование схемы `ad`.
 
-```bash
+```shell
 d8 stronghold write ldap/config \
  binddn=$USERNAME \
  bindpass=$PASSWORD \
@@ -134,7 +134,7 @@ d8 stronghold read ldap/static-cred/lf-edge
 
 Динамическую роль можно настроить с помощью вызова `/role/:role_name`:
 
-```bash
+```shell
 d8 stronghold write ldap/role/dynamic-role \
   creation_ldif=@/path/to/creation.ldif \
   deletion_ldif=@/path/to/deletion.ldif \
@@ -149,7 +149,7 @@ d8 stronghold write ldap/role/dynamic-role \
 
 Чтобы сгенерировать учетные данные, выполните:
 
-```bash
+```shell
 d8 stronghold read ldap/creds/dynamic-role
 ```
 

@@ -73,7 +73,7 @@ engine must be configured to use the schema `racf`.
 Generated passwords must be 8 characters or less to support RACF. The length of the
 password can be configured using a password policy:
 
-```bash
+```shell
 $ d8 stronghold write ldap/config \
  binddn=$USERNAME \
  bindpass=$PASSWORD \
@@ -87,7 +87,7 @@ $ d8 stronghold write ldap/config \
 For managing Active Directory instances, the secret engine must be configured to use the
 schema `ad`.
 
-```bash
+```shell
 $ d8 stronghold write ldap/config \
  binddn=$USERNAME \
  bindpass=$PASSWORD \
@@ -148,7 +148,7 @@ rotated prior to deleting the role or revoking access to the static role.
 
 Dynamic credentials can be configured by calling the `/role/:role_name` endpoint:
 
-```bash
+```shell
 $ d8 stronghold write ldap/role/dynamic-role \
   creation_ldif=@/path/to/creation.ldif \
   deletion_ldif=@/path/to/deletion.ldif \
@@ -163,7 +163,7 @@ executed if the creation fails for any reason. This ensures any entities are rem
 {{< /alert >}}
 To generate credentials:
 
-```bash
+```shell
 $ d8 stronghold read ldap/creds/dynamic-role
 Key                    Value
 ---                    -----

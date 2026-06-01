@@ -1,53 +1,69 @@
 ---
-title: "JWT method"
+title: "JWT authentication"
 linkTitle: "JWT"
 weight: 30
+description: "JWT authentication in Deckhouse Stronghold."
 ---
 
-## JWT authentication
+JWT authentication is suitable for scenarios where a client already receives a JSON Web Token (JWT) from a trusted token provider and passes it to Deckhouse Stronghold for validation. In this scenario, Deckhouse Stronghold does not initiate an interactive browser-based login and only validates an already issued token.
 
-The authentication flow for roles of type "jwt" is simpler than OIDC since Stronghold
-only needs to validate the provided JWT.
+{% alert level="info" %}
+If you need an interactive browser-based login with an OIDC provider, use the OIDC authentication overview.
+{% endalert %}
 
-### JWT verification
+## How JWT authentication works
 
-JWT signatures will be verified against public keys from the issuer. This process can be done in
-three different ways, though only one method may be configured for a single backend:
+When using the `jwt` method, the client passes a JWT and a role name to Deckhouse Stronghold. Deckhouse Stronghold then performs the following checks:
 
-- **Static Keys**. A set of public keys is stored directly in the backend configuration.
+- Validates the JWT signature.
+- Validates the token expiration time.
+- Validates the role-related parameters.
+- Issues a Deckhouse Stronghold token if validation succeeds.
 
-- **JWKS**. A JSON Web Key Set ([JWKS](https://tools.ietf.org/html/rfc7517)) URL (and optional
-  certificate chain) is configured. Keys will be fetched from this endpoint during authentication.
+As a result, the user or application receives a regular Deckhouse Stronghold token that can be used for further operations.
 
-- **OIDC Discovery**. An OIDC Discovery URL (and optional certificate chain) is configured. Keys
-  will be fetched from this URL during authentication. When OIDC Discovery is used, OIDC validation
-  criteria (e.g. `iss`, `aud`, etc.) will be applied.
+## JWT validation
 
-If multiple methods are needed, another instance of the backend can be mounted and configured
-at a different path.
+JWT signatures are validated using the public keys of the token issuer. For a single backend, you can choose one of the following validation methods:
 
-### Via the CLI
+- **Static keys** — a set of public keys is stored in the backend configuration.
+- **JWKS** — a JSON Web Key Set URL is used, and the keys are retrieved during authentication.
+- **OIDC Discovery** — an OIDC Discovery URL is used, the keys are retrieved from it, and additional OIDC checks such as `iss` and `aud` are applied.
 
-The default path is `/jwt`. If this auth method was enabled at a
-different path, specify `-path=/my-path` in the CLI.
+If you need to use multiple validation methods, create multiple JWT authentication backends.
 
-```shell-session
+## Authentication via CLI
+
+To authenticate via CLI, use the following command:
+
+```shell
+d8 stronghold write auth/<path-to-jwt-backend>/login role=demo jwt=...
+```
+
+The default path for the JWT authentication backend is `/jwt`. If you use the default backend, the command looks like this:
+
+```shell
 d8 stronghold write auth/jwt/login role=demo jwt=...
 ```
 
-### Via the API
+If the JWT backend is mounted at a different path, use that path instead of `jwt`.
 
-The default endpoint is `auth/jwt/login`. If this auth method was enabled
-at a different path, use that value instead of `jwt`.
+## Authentication via API
 
-```shell-session
-$ curl \
-    --request POST \
-    --data '{"jwt": "your_jwt", "role": "demo"}' \
-    http://127.0.0.1:8200/v1/auth/jwt/login
+By default, the `auth/jwt/login` endpoint is used. If the authentication method is enabled at a different path, replace `jwt` with the required value.
+
+Request example:
+
+```shell
+curl \
+  --request POST \
+  --data '{"jwt": "your_jwt", "role": "demo"}' \
+  http://127.0.0.1:8200/v1/auth/jwt/login
 ```
 
-The response will contain a token at `auth.client_token`:
+Deckhouse Stronghold returns the token in the `auth.client_token` field.
+
+Response example:
 
 ```json
 {
@@ -64,70 +80,90 @@ The response will contain a token at `auth.client_token`:
 }
 ```
 
-## Configuration
+## Enabling the method
 
-Auth methods must be configured in advance before users or machines can
-authenticate. These steps are usually completed by an operator or configuration
-management tool.
+Before authentication, enable and configure the JWT authentication backend. This is usually done by an administrator or a configuration management tool.
 
-1. Enable the JWT auth method. Either the "jwt" or "oidc" name may be used. The
-   backend will be mounted at the chosen name.
+To enable the authentication method, run the following command:
 
-   ```text
-   $ d8 stronghold auth enable jwt
-     or
-   $ d8 stronghold auth enable oidc
-   ```
+```shell
+d8 stronghold auth enable jwt
+```
 
-1. Use the `/config` endpoint to configure Stronghold. To support JWT roles, either local keys, a JWKS URL, or an OIDC
-   Discovery URL must be present. For OIDC roles, OIDC Discovery URL, OIDC Client ID and OIDC Client Secret are required.
+You can also mount the same method at a different path. For example, at the `oidc` path:
 
-   ```text
-   $ d8 stronghold write auth/jwt/config \
-       oidc_discovery_url="https://myco.auth0.com/" \
-       oidc_client_id="m5i8bj3iofytj" \
-       oidc_client_secret="f4ubv72nfiu23hnsj" \
-       default_role="demo"
-   ```
+```shell
+d8 stronghold auth enable -path=oidc jwt
+```
 
-   If you need to perform JWT verification with JWT token validation, then leave the `oidc_client_id` and `oidc_client_secret` blank.
+The backend will be mounted at the selected path.
 
-   ```text
-   $ d8 stronghold write auth/jwt/config \
-      oidc_discovery_url="https://MYDOMAIN.eu.auth0.com/" \
-      oidc_client_id="" \
-      oidc_client_secret="" \
-   ```
+## Configuring the backend
 
-1. Create a named role:
+Deckhouse Stronghold uses the `/config` endpoint for configuration. To support `jwt` roles, specify one of the following key sources:
 
-   ```text
-   d8 stronghold write auth/jwt/role/demo \
-       allowed_redirect_uris="http://localhost:8250/oidc/callback" \
-       bound_subject="r3qX9DljwFIWhsiqwFiu38209F10atW6@clients" \
-       bound_audiences="https://vault.plugin.auth.jwt.test" \
-       user_claim="https://vault/user" \
-       groups_claim="https://vault/groups" \
-       policies=webapps \
-       ttl=1h
-   ```
+- local keys.
+- a JWKS URL.
+- an OIDC Discovery URL.
 
-   This role authorizes JWTs with the given subject and audience claims, gives
-   it the `webapps` policy, and uses the given user/groups claims to set up
-   Identity aliases.
+For `oidc` roles, the `oidc_client_id` and `oidc_client_secret` parameters are also required. For the `jwt` scenario, these parameters can be left empty.
 
-   For the complete list of configuration options, please see the API
-   documentation.
+### Example configuration via OIDC Discovery
 
-### Bound claims
+```shell
+d8 stronghold write auth/jwt/config \
+  oidc_discovery_url="https://myco.auth0.com/" \
+  oidc_client_id="m5i8bj3iofytj" \
+  oidc_client_secret="f4ubv72nfiu23hnsj" \
+  default_role="demo"
+```
 
-Once a JWT has been validated as being properly signed and not expired, the
-authorization flow will validate that any configured "bound" parameters match.
-In some cases there are dedicated parameters, for example `bound_subject`,
-which must match the JWT's `sub` parameter. A role may also be configured to
-check arbitrary claims through the `bound_claims` map. The map contains a set
-of claims and their required values. For example, assume `bound_claims` is set
-to:
+### Example configuration for JWT validation only
+
+If Deckhouse Stronghold should only validate JWTs, leave `oidc_client_id` and `oidc_client_secret` empty:
+
+```shell
+d8 stronghold write auth/jwt/config \
+  oidc_discovery_url="https://MYDOMAIN.eu.auth0.com/" \
+  oidc_client_id="" \
+  oidc_client_secret=""
+```
+
+## Creating a role
+
+After configuring the backend, create a named role:
+
+```shell
+d8 stronghold write auth/jwt/role/demo \
+  bound_subject="r3qX9DljwFIWhsiqwFiu38209F10atW6@clients" \
+  bound_audiences="https://vault.plugin.auth.jwt.test" \
+  user_claim="https://vault/user" \
+  groups_claim="https://vault/groups" \
+  policies=webapps \
+  ttl=1h
+```
+
+This role:
+
+- Allows authentication with a JWT that has the specified `sub` and `aud` values.
+- Assigns the `webapps` policy.
+- Uses the specified user and group claims
+  to configure identity aliases.
+
+## Related role parameters
+
+After a JWT successfully passes signature and expiration validation, Deckhouse Stronghold checks all role-related parameters.
+
+### `bound_subject`
+
+The `bound_subject` parameter must match the `sub` value in the JWT.
+
+### `bound_claims`
+
+The `bound_claims` parameter lets you define arbitrary claim-based constraints.
+This is a JSON file in the form of a key-value map.
+
+Example:
 
 ```json
 {
@@ -136,10 +172,11 @@ to:
 }
 ```
 
-Only JWTs containing both the "division" and "department" claims, and
-respective matching values of "Europe" and "Engineering", would be authorized.
-If the expected value is a list, the claim must match one of the items in the list.
-To limit authorization to a set of email addresses:
+Only JWTs that contain the `division` and `department` claims with the `Europe` and `Engineering` values are authorized.
+
+If a value is a list, the claim must match one of the list items.
+
+For example:
 
 ```json
 {
@@ -147,13 +184,11 @@ To limit authorization to a set of email addresses:
 }
 ```
 
-Bound claims can optionally be configured with globs.
+## Claims as metadata
 
-### Claims as metadata
+Claim data can be copied to the metadata of the authentication token and aliases using the `claim_mappings` parameter.
 
-Data from claims can be copied into the resulting auth token and alias metadata by configuring `claim_mappings`. This role
-parameter is a map of items to copy. The map elements are of the form: `"<JWT claim>":"<metadata key>"`. Assume
-`claim_mappings` is set to:
+Example:
 
 ```json
 {
@@ -162,20 +197,22 @@ parameter is a map of items to copy. The map elements are of the form: `"<JWT cl
 }
 ```
 
-This specifies that the value in the JWT claim "division" should be copied to the metadata key "organization". The JWT
-"department" claim value will also be copied into metadata but will retain the key name. If a claim is configured in `claim_mappings`,
-it must existing in the JWT or else the authentication will fail.
+This means the following:
 
-Note: the metadata key name "role" is reserved and may not be used for claim mappings.
+- The `division` claim value is copied to the `organization` metadata key.
+- The `department` claim value is copied to the `department` metadata key.
 
-### Claim specifications and JSON pointer
+{% alert level="info" %}
+The `role` metadata key name is reserved and cannot be used for claim mapping.
+{% endalert %}
 
-Some parameters (e.g. `bound_claims`, `groups_claim`, `claim_mappings`, `user_claim`) are
-used to point to data within the JWT. If the desired key is at the top of level of the JWT,
-the name can be provided directly. If it is nested at a lower level, a JSON Pointer may be
-used.
+## Claims and JSON Pointer
 
-Assume the following JSON data to be referenced:
+The `bound_claims`, `groups_claim`, `claim_mappings`, and `user_claim` parameters can reference both top-level claims and nested data inside the JWT.
+
+If the required claim is located at the top level of the JWT, specify its name directly. If the claim is nested deeper, use JSON Pointer.
+
+JWT example:
 
 ```json
 {
@@ -187,7 +224,17 @@ Assume the following JSON data to be referenced:
 }
 ```
 
-A parameter of `"division"` will reference "North America", as this is a top level key. A parameter
-`"/groups/primary"` uses JSON Pointer syntax to reference "Engineering" at a lower level. Any valid
-JSON Pointer can be used as a selector. Refer to the
-[JSON Pointer RFC](https://tools.ietf.org/html/rfc6901) for a full description of the syntax.
+In this case:
+
+- `division` points to `North America`.
+- `/groups/primary` points to `Engineering`.
+
+## Practical recommendations
+
+Use the following recommendations:
+
+- Use JWT authentication if the client already receives a JWT from a trusted token provider.
+- Choose only one signature validation method for a single backend.
+- For complex scenarios, create multiple backends instead of overloading one.
+- First make sure the basic authentication flow works, and then add claim-based constraints.
+- Before enabling strict `bound_claims` and `bound_subject` constraints, verify the actual claim values received from the token issuer.

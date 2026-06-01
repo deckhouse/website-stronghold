@@ -1,65 +1,43 @@
 ---
 title: "LDAP"
+linkTitle: "LDAP"
 weight: 70
+description: "LDAP authentication in Deckhouse Stronghold."
 ---
 
-## LDAP auth method
+The `ldap` authentication method lets you authenticate users against an existing LDAP server by using their corporate credentials. This simplifies integrating Deckhouse Stronghold into environments where LDAP or Active Directory is already in use. Mapping LDAP users and LDAP groups to Stronghold policies is configured through the `users/` and `groups/` paths. The page follows an overview-style structure: it explains the purpose of the method, its place in the system, the main operating principles, and practical configuration details.
 
-The `ldap` auth method allows authentication using an existing LDAP
-server and user/password credentials. This allows Stronghold to be integrated
-into environments using LDAP without duplicating the user/pass configuration
-in multiple places. Stronghold supports integration with various LDAP directory
-services, including the Russian directory service [ALD Pro](https://www.aldpro.ru/).
+## When to use LDAP
 
-The mapping of groups and users in LDAP to Stronghold policies is managed by using
-the `users/` and `groups/` paths.
+The `ldap` method is suitable in the following cases:
 
-## A note on escaping
-
-**It is up to the administrator** to provide properly escaped DNs. This
-includes the user DN, bind DN for search, and so on.
-
-The only DN escaping performed by this method is on usernames given at login
-time when they are inserted into the final bind DN, and uses escaping rules
-defined in RFC 4514.
-
-Additionally, Active Directory has escaping rules that differ slightly from the
-RFC; in particular it requires escaping of '#' regardless of position in the DN
-(the RFC only requires it to be escaped when it is the first character), and
-'=', which the RFC indicates can be escaped with a backslash, but does not
-contain in its set of required escapes. If you are using Active Directory and
-these appear in your usernames, please ensure that they are escaped, in
-addition to being properly escaped in your configured DNs.
-
-For reference, see [RFC 4514](https://www.ietf.org/rfc/rfc4514.txt) and this
-[TechNet post on characters to escape in Active
-Directory](http://social.technet.microsoft.com/wiki/contents/articles/5312.active-directory-characters-to-escape.aspx).
+- LDAP or Active Directory is already used in the organization.
+- users must authenticate with corporate credentials.
+- LDAP groups must be mapped to Stronghold policies.
+- Stronghold must be integrated into an existing LDAP infrastructure.
 
 ## Authentication
 
-### Via the CLI
+### Via CLI
 
-```shell-session
-$ d8 stronghold login -method=ldap username=mitchellh
-Password (will be hidden):
-Successfully authenticated! The policies that are associated
-with this token are listed below:
-
-admins
+```bash
+d8 stronghold login -method=ldap username=mitchellh
 ```
 
-### Via the API
+After you run the command, Stronghold prompts for the password. If authentication succeeds, the service returns a token with the assigned policies.
 
-```shell-session
-$ curl \
-    --request POST \
-    --data '{"password": "foo"}' \
-    http://127.0.0.1:8200/v1/auth/ldap/login/mitchellh
+### Via API
+
+```bash
+curl \
+  --request POST \
+  --data '{"password":"foo"}' \
+  http://127.0.0.1:8200/v1/auth/ldap/login/mitchellh
 ```
 
-The response will be in JSON. For example:
+Example response:
 
-```javascript
+```json
 {
   "lease_id": "",
   "renewable": false,
@@ -79,215 +57,223 @@ The response will be in JSON. For example:
 }
 ```
 
+## Enable the method
+
+Before users can authenticate, enable the method:
+
+```bash
+d8 stronghold auth enable ldap
+```
+
 ## Configuration
 
-Auth methods must be configured in advance before users or machines can
-authenticate. These steps are usually completed by an operator or configuration
-management tool.
-
-1. Enable the ldap auth method:
-
-   ```text
-   d8 stronghold auth enable ldap
-   ```
-
-1. Configure connection details for your LDAP server, information on how to
-   authenticate users, and instructions on how to query for group membership. The
-   configuration options are categorized and detailed below.
+After enabling the method, configure the LDAP server connection, user lookup settings, and the way group membership is determined.
 
 ### Connection parameters
 
-- `url` (string, required) - The LDAP server to connect to. Examples: `ldap://ldap.myorg.com`, `ldaps://ldap.myorg.com:636`. This can also be a comma-delineated list of URLs, e.g. `ldap://ldap.myorg.com,ldaps://ldap.myorg.com:636`, in which case the servers will be tried in-order if there are errors during the connection process.
-- `starttls` (bool, optional) - If true, issues a `StartTLS` command after establishing an unencrypted connection.
-- `insecure_tls` - (bool, optional) - If true, skips LDAP server SSL certificate verification - insecure, use with caution!
-- `certificate` - (string, optional) - CA certificate to use when verifying LDAP server certificate, must be x509 PEM encoded.
-- `client_tls_cert` - (string, optional) - Client certificate to provide to the LDAP server, must be x509 PEM encoded.
-- `client_tls_key` - (string, optional) - Client certificate key to provide to the LDAP server, must be x509 PEM encoded.
+Use the following main parameters:
 
-### Binding parameters
+- `url` — LDAP server address. You can specify a single URL, for example `ldap://ldap.example.com` or `ldaps://ldap.example.com:636`, or a comma-separated list of URLs.
+- `starttls` — enables `StartTLS` after an unencrypted connection is established.
+- `insecure_tls` — disables LDAP server certificate verification.
+- `certificate` — CA certificate used to verify the LDAP server certificate in x509 PEM format.
+- `client_tls_cert` — client certificate in x509 PEM format.
+- `client_tls_key` — client certificate key in x509 PEM format.
 
-There are two alternate methods of resolving the user object used to authenticate the end user: _Search_ or _User Principal Name_. When using _Search_, the bind can be either anonymous or authenticated. User Principal Name is a method of specifying users supported by Active Directory. More information on UPN can be found in the [Microsoft User Principal Name documentation](<https://msdn.microsoft.com/en-us/library/ms677605(v=vs.85).aspx#userPrincipalName>).
+### User lookup
 
-#### Binding - authenticated search
+Stronghold supports two ways to identify the LDAP user object:
 
-- `binddn` (string, optional) - Distinguished name of object to bind when performing user and group search. Example: `cn=stronghold,ou=Users,dc=example,dc=com`
-- `bindpass` (string, optional) - Password to use along with `binddn` when performing user search.
-- `userdn` (string, optional) - Base DN under which to perform user search. Example: `ou=Users,dc=example,dc=com`
-- `userattr` (string, optional) - Attribute on user attribute object matching the username passed when authenticating. Examples: `sAMAccountName`, `cn`, `uid`
-- `userfilter` (string, optional) - Go template used to construct a ldap user search filter. The template can access the following context variables: \[`UserAttr`, `Username`\]. The default userfilter is `({{.UserAttr}}={{.Username}})` or `(userPrincipalName={{.Username}}@UPNDomain)` if the `upndomain` parameter is set. The user search filter can be used to restrict what user can attempt to log in. For example, to limit login to users that are not contractors, you could write `(&(objectClass=user)({{.UserAttr}}={{.Username}})(!(employeeType=Contractor)))`.
+- searching for the user in the directory.
+- using a UPN (User Principal Name).
 
-{{< alert level="warning" >}}
-When specifying a `userfilter`, either the templated value `{{.UserAttr}}` or
-the literal value that matches `userattr` should be present in the filter to
-ensure that the search returns a unique result that takes `userattr` into
-consideration for entity alias mapping purposes and avoid possible collisions on login.
-{{< /alert >}}
+#### Authenticated search
 
-#### Binding - anonymous search
+For authenticated search, use the following parameters:
 
-- `discoverdn` (bool, optional) - If true, use anonymous bind to discover the bind DN of a user
-- `userdn` (string, optional) - Base DN under which to perform user search. Example: `ou=Users,dc=example,dc=com`
-- `userattr` (string, optional) - Attribute on user attribute object matching the username passed when authenticating. Examples: `sAMAccountName`, `cn`, `uid`
-- `userfilter` (string, optional) - Go template used to construct a ldap user search filter. The template can access the following context variables: \[`UserAttr`, `Username`\]. The default userfilter is `({{.UserAttr}}={{.Username}})` or `(userPrincipalName={{.Username}}@UPNDomain)` if the `upndomain` parameter is set. The user search filter can be used to restrict what user can attempt to log in. For example, to limit login to users that are not contractors, you could write `(&(objectClass=user)({{.UserAttr}}={{.Username}})(!(employeeType=Contractor)))`.
-- `deny_null_bind` (bool, optional) - This option prevents users from bypassing authentication when providing an empty password. The default is `true`.
-- `anonymous_group_search` (bool, optional) - Use anonymous binds when performing LDAP group searches. Defaults to `false`.
+- `binddn` — object name used for binding when searching for users and groups.
+- `bindpass` — password for `binddn`.
+- `userdn` — base DN for user lookup.
+- `userattr` — LDAP user attribute that corresponds to the username.
+- `userfilter` — Go template used to build the user lookup filter.
 
-{{< alert level="warning" >}}
-When specifying a `userfilter`, either the templated value `{{.UserAttr}}` or
-the literal value that matches `userattr` should be present in the filter to
-ensure that the search returns a unique result that takes `userattr` into
-consideration for entity alias mapping purposes and avoid possible collisions on login.
-{{< /alert >}}
+By default, the filter is `({{.UserAttr}}={{.Username}})`. If `upndomain` is set, the default filter becomes `(userPrincipalName={{.Username}}@UPNDomain)`.
 
-#### Alias dereferencing
+{% alert level="warning" %}
+If you specify `userfilter`, include either the templated value `{{.UserAttr}}` or a literal value that matches `userattr`. This ensures the lookup returns a unique result and prevents collisions during login.
+{% endalert %}
 
-- `dereference_aliases` (string, optional) - Control how aliases are dereferenced when performing the search. Possible values are: `never`, `finding`, `searching`, and `always`. `finding` will only dereference aliases during name resolution of the base. `searching` will dereference aliases after name resolution.
+#### Anonymous search
 
-#### Binding - user principal name (AD)
+For anonymous search, use the following parameters:
 
-- `upndomain` (string, optional) - userPrincipalDomain used to construct the UPN string for the authenticating user. The constructed UPN will appear as `[username]@UPNDomain`. Example: `example.com`, which will cause Stronghold to bind as `username@example.com`.
+- `discoverdn` — enables anonymous connection to determine the user's bind DN.
+- `userdn` — base DN for user lookup.
+- `userattr` — LDAP user attribute that corresponds to the username.
+- `userfilter` — Go template used to build the user lookup filter.
+- `deny_null_bind` — prevents authentication bypass with an empty password. The default value is `true`.
+- `anonymous_group_search` — enables anonymous connections for group lookup. The default value is `false`.
 
-### Group membership resolution
+{% alert level="warning" %}
+If you specify `userfilter`, include either the templated value `{{.UserAttr}}` or a literal value that matches `userattr`. This ensures the lookup returns a unique result and prevents collisions during login.
+{% endalert %}
 
-Once a user has been authenticated, the LDAP auth method must know how to resolve which groups the user is a member of. The configuration for this can vary depending on your LDAP server and your directory schema. There are two main strategies when resolving group membership - the first is searching for the authenticated user object and following an attribute to groups it is a member of. The second is to search for group objects of which the authenticated user is a member of. Both methods are supported.
+#### Using UPN in Active Directory
 
-- `groupfilter` (string, optional) - Go template used when constructing the group membership query. The template can access the following context variables: \[`UserDN`, `Username`\]. The default is `(|(memberUid={{.Username}})(member={{.UserDN}})(uniqueMember={{.UserDN}}))`, which is compatible with several common directory schemas. To support nested group resolution for Active Directory, instead use the following query: `(&(objectClass=group)(member:1.2.840.113556.1.4.1941:={{.UserDN}}))`.
-- `groupdn` (string, required) - LDAP search base to use for group membership search. This can be the root containing either groups or users. Example: `ou=Groups,dc=example,dc=com`
-- `groupattr` (string, optional) - LDAP attribute to follow on objects returned by `groupfilter` in order to enumerate user group membership. Examples: for groupfilter queries returning _group_ objects, use: `cn`. For queries returning _user_ objects, use: `memberOf`. The default is `cn`.
+The `upndomain` parameter sets the domain used to build a UPN in the `[username]@UPNDomain` format. This is especially useful when working with Active Directory.
 
-_Note_: When using _Authenticated Search_ for binding parameters (see above) the distinguished name defined for `binddn` is used for the group search. Otherwise, the authenticating user is used to perform the group search.
+### Determine group membership
 
-### Other
+After the user is authenticated, Stronghold must determine which LDAP groups the user belongs to.
 
-- `username_as_alias` (bool, optional) - If set to true, forces the auth method to use the username passed by the user as the alias name.
-- `max_page_size` (int, optional) - If set to a value greater than 0, the LDAP backend will use the LDAP server's paged search control to request pages of up to the given size. This can be used to avoid hitting the LDAP server's maximum result size limit. Otherwise, the LDAP backend will not use the paged search control.
+Two approaches are supported:
 
-## Examples
+- searching for groups that include the user.
+- searching for the user object and reading the attribute
+  that contains the list of groups.
 
-### Scenario 1
+Use the following parameters:
 
-- LDAP server running on `ldap.example.com`, port 389.
-- Server supports `STARTTLS` command to initiate encryption on the standard port.
-- CA Certificate stored in file named `ldap_ca_cert.pem`
-- Server is Active Directory supporting the userPrincipalName attribute. Users are identified as `username@example.com`.
-- Groups are nested, we will use `LDAP_MATCHING_RULE_IN_CHAIN` to walk the ancestry graph.
-- Group search will start under `ou=Groups,dc=example,dc=com`. For all group objects under that path, the `member` attribute will be checked for a match against the authenticated user.
-- Group names are identified using their `cn` attribute.
+- `groupfilter` — Go template used to build the group membership query.
+- `groupdn` — base DN for group lookup.
+- `groupattr` — LDAP attribute used to determine group names.
 
-```shell-session
-$ d8 stronghold write auth/ldap/config \
-    url="ldap://ldap.example.com" \
-    userdn="ou=Users,dc=example,dc=com" \
-    groupdn="ou=Groups,dc=example,dc=com" \
-    groupfilter="(&(objectClass=group)(member:1.2.840.113556.1.4.1941:={{.UserDN}}))" \
-    groupattr="cn" \
-    upndomain="example.com" \
-    certificate=@ldap_ca_cert.pem \
-    insecure_tls=false \
-    starttls=true
-...
+By default, `groupfilter` is compatible with several common directory schemas:
+
+`(|(memberUid={{.Username}})(member={{.UserDN}})(uniqueMember={{.UserDN}}))`.
+
+To support nested groups in Active Directory, use the following filter:
+
+`(&(objectClass=group)(member:1.2.840.113556.1.4.1941:={{.UserDN}}))`
+
+### Additional parameters
+
+The following additional parameters are also supported:
+
+- `dereference_aliases` — controls how alias objects are dereferenced during search. Supported values are `never`, `finding`, `searching`, and `always`.
+- `username_as_alias` — if set to `true`, uses the username passed during login as the alias name.
+- `max_page_size` — if the value is greater than `0`, Stronghold uses paged search on the LDAP server.
+- `upndomain` — sets the UPN domain used for authentication.
+- `discoverdn` — enables automatic detection of the user's bind DN.
+
+Terminology on this page uses canonical forms from the glossary. For example, `alias` is used as the canonical term [1].
+
+## Configuration examples
+
+### Active Directory with StartTLS and nested groups
+
+```bash
+d8 stronghold write auth/ldap/config \
+  url="ldap://ldap.example.com" \
+  userdn="ou=Users,dc=example,dc=com" \
+  groupdn="ou=Groups,dc=example,dc=com" \
+  groupfilter="(&(objectClass=group)(member:1.2.840.113556.1.4.1941:={{.UserDN}}))" \
+  groupattr="cn" \
+  upndomain="example.com" \
+  certificate=@ldap_ca_cert.pem \
+  insecure_tls=false \
+  starttls=true
 ```
 
-### Scenario 2
+### Authenticated search with a service account
 
-- LDAP server running on `ldap.example.com`, port 389.
-- Server supports `STARTTLS` command to initiate encryption on the standard port.
-- CA Certificate stored in file named `ldap_ca_cert.pem`
-- Server does not allow anonymous binds for performing user search.
-- Bind account used for searching is `cn=stronghold,ou=users,dc=example,dc=com` with password `My$ecrt3tP4ss`.
-- User objects are under the `ou=Users,dc=example,dc=com` organizational unit.
-- Username passed to stronghold when authenticating maps to the `sAMAccountName` attribute.
-- Group membership will be resolved via the `memberOf` attribute of _user_ objects. That search will begin under `ou=Users,dc=example,dc=com`.
-
-```shell-session
-$ d8 stronghold write auth/ldap/config \
-    url="ldap://ldap.example.com" \
-    userattr=sAMAccountName \
-    userdn="ou=Users,dc=example,dc=com" \
-    groupdn="ou=Users,dc=example,dc=com" \
-    groupfilter="(&(objectClass=person)(uid={{.Username}}))" \
-    groupattr="memberOf" \
-    binddn="cn=stronghold,ou=users,dc=example,dc=com" \
-    bindpass='My$ecrt3tP4ss' \
-    certificate=@ldap_ca_cert.pem \
-    insecure_tls=false \
-    starttls=true
-...
+```bash
+d8 stronghold write auth/ldap/config \
+  url="ldap://ldap.example.com" \
+  userattr="sAMAccountName" \
+  userdn="ou=Users,dc=example,dc=com" \
+  groupdn="ou=Users,dc=example,dc=com" \
+  groupfilter="(&(objectClass=person)(uid={{.Username}}))" \
+  groupattr="memberOf" \
+  binddn="cn=stronghold,ou=users,dc=example,dc=com" \
+  bindpass='My$ecrt3tP4ss' \
+  certificate=@ldap_ca_cert.pem \
+  insecure_tls=false \
+  starttls=true
 ```
 
-### Scenario 3
+### Anonymous search with automatic bind DN discovery
 
-- LDAP server running on `ldap.example.com`, port 636 (LDAPS)
-- CA Certificate stored in file named `ldap_ca_cert.pem`
-- User objects are under the `ou=Users,dc=example,dc=com` organizational unit.
-- Username passed to Stronghold when authenticating maps to the `uid` attribute.
-- User bind DN will be auto-discovered using anonymous binding.
-- Group membership will be resolved via any one of `memberUid`, `member`, or `uniqueMember` attributes. That search will begin under `ou=Groups,dc=example,dc=com`.
-- Group names are identified using the `cn` attribute.
-
-```shell-session
-$ d8 stronghold write auth/ldap/config \
-    url="ldaps://ldap.example.com" \
-    userattr="uid" \
-    userdn="ou=Users,dc=example,dc=com" \
-    discoverdn=true \
-    groupdn="ou=Groups,dc=example,dc=com" \
-    certificate=@ldap_ca_cert.pem \
-    insecure_tls=false \
-    starttls=true
-...
+```bash
+d8 stronghold write auth/ldap/config \
+  url="ldaps://ldap.example.com" \
+  userattr="uid" \
+  userdn="ou=Users,dc=example,dc=com" \
+  discoverdn=true \
+  groupdn="ou=Groups,dc=example,dc=com" \
+  certificate=@ldap_ca_cert.pem \
+  insecure_tls=false \
+  starttls=true
 ```
 
-## LDAP group -> policy mapping
+## Map LDAP groups to Stronghold policies
 
-Next we want to create a mapping from an LDAP group to an Stronghold policy:
+After you configure the connection, map LDAP groups to Stronghold policies.
 
-```shell-session
+Example:
+
+```bash
 d8 stronghold write auth/ldap/groups/scientists policies=foo,bar
 ```
 
-This maps the LDAP group "scientists" to the "foo" and "bar" Stronghold policies.
-We can also add specific LDAP users to additional (potentially non-LDAP) groups. Note that policies can also be specified on LDAP users as well.
+This command maps the `scientists` LDAP group to the `foo` and `bar` Stronghold policies.
 
-```shell-session
+You can also add a specific LDAP user to an additional Stronghold group and assign separate policies to that user:
+
+```bash
 d8 stronghold write auth/ldap/groups/engineers policies=foobar
 d8 stronghold write auth/ldap/users/tesla groups=engineers policies=zoobar
 ```
 
-This adds the LDAP user "tesla" to the "engineers" group, which maps to the "foobar" Stronghold policy. User "tesla" itself is associated with "zoobar" policy.
+## Verify the result
 
-Finally, we can test this by authenticating:
+After configuration, verify that the user can log in:
 
-```shell-session
-$ d8 stronghold login -method=ldap username=tesla
-Password (will be hidden):
-Successfully authenticated! The policies that are associated
-with this token are listed below:
-
-default, foobar, zoobar
+```bash
+d8 stronghold login -method=ldap username=tesla
 ```
 
-## Note on policy mapping
+If everything is configured correctly, the user receives a token with policies assigned through LDAP groups and additional mappings.
 
-It should be noted that user -> policy mapping happens at token creation time. And changes in group membership on the LDAP server will not affect tokens that have already been provisioned. To see these changes, old tokens should be revoked and the user should be asked to reauthenticate.
+## How policy application works
+
+The `user → policies` mapping is evaluated when the token is created. If the user's LDAP group membership changes later, this does not affect tokens that have already been issued.
+
+To apply the changes, do the following:
+
+- revoke the old tokens.
+- authenticate again.
 
 ## User lockout
 
-If a user provides bad credentials several times in quick succession,
-Stronghold will stop trying to validate their credentials for a while, instead returning immediately
-with a permission denied error. We call this behavior "user lockout". The time for which
-a user will be locked out is called “lockout duration”. The user will be able to login after the lockout
-duration has passed. The number of failed login attempts after which the user is locked out is called
-“lockout threshold”. The lockout threshold counter is reset to zero after a few minutes without login attempts,
-or upon a successful login attempt. The duration after which the counter will be reset to zero
-after no login attempts is called "lockout counter reset". This can defeat both automated and targeted requests
-i.e, user-based password guessing attacks as well as automated attacks.
+The `ldap` method supports the `user_lockout` mechanism. If a user enters invalid credentials several times in a row, Stronghold temporarily stops checking the password and immediately denies access. This helps reduce the risk of password guessing. User lockout is enabled by default.
 
-The user lockout feature is enabled by default. The default values for "lockout threshold" is 5 attempts,
-"lockout duration" is 15 minutes, "lockout counter reset" is 15 minutes.
+Default values:
 
-The user lockout feature can be disabled using "auth tune" by setting `disable_lockout` to `true`.
+- `lockout_threshold` — 5 attempts.
+- `lockout_duration` — 15 minutes.
+- `lockout_counter_reset` — 15 minutes.
 
-{{< alert level="warning" >}}
-This feature is only supported by the userpass, ldap, and approle auth methods.
-{{< /alert >}}
+You can disable this feature with `auth tune` by passing `disable_lockout=true`.
+
+{% alert level="warning" %}
+This mechanism is supported only by the `userpass`, `ldap`, and `approle` methods.
+{% endalert %}
+
+## DN escaping
+
+It is important to correctly escape the user DN, search DNs, and other DN values. The `ldap` method automatically escapes the username passed during login when substituting it into the bind DN according to RFC 4514.
+
+When using Active Directory, take additional escaping rules into account. For example, the `#` character may need to be escaped regardless of its position in the DN. If the username or configured DNs contain special characters, verify that escaping is correct.
+
+For more information, see [RFC 4514](https://www.ietf.org/rfc/rfc4514.txt) and [Microsoft recommendations for escaping characters in Active Directory](http://social.technet.microsoft.com/wiki/contents/articles/5312.active-directory-characters-to-escape.aspx).
+
+## Practical recommendations
+
+Use the following recommendations:
+
+- For a production environment, use `ldaps` or `StartTLS`.
+- do not enable `insecure_tls` unless absolutely necessary.
+- before using complex `userfilter` and `groupfilter` values, make sure the lookup returns a unique and expected result.
+- if you use Active Directory, account for DN escaping specifics.
+- after configuration, always verify which policies the user actually receives at login.
