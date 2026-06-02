@@ -1,6 +1,6 @@
 {{ $type := .Get "type" }}
 {{ $icon := "" }}
-{{ $title := "" }}
+{{ $title := .Get "title" | default "" }}
 {{ if eq $type "supported" }}
   {{ $icon = "supported_v2.svg" }}
 {{ else if eq $type "not_supported" }}
@@ -8,6 +8,8 @@
 {{ else if eq $type "coming_soon" }}
   {{ $icon = "note.svg" }}
   {{ with hugo.Data.i18n.common.coming_soon }}{{ $title = index . .Page.Lang }}{{ else }}{{ $title = i18n "common_coming_soon" }}{{ end }}
+{{ else if eq $type "clock" }}
+  {{ $icon = "clock.svg" }}
 {{ else if eq $type "techsupport_ce" }}
   {{ $icon = "intermediate_v2.svg" }}
   {{ with hugo.Data.i18n.common.tech_support_stronghold_notice_ce }}{{ $title = index . .Page.Lang }}{{ else }}{{ $title = i18n "common_tech_support_stronghold_notice_ce" }}{{ end }}

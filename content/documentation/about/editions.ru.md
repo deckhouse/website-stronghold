@@ -11,7 +11,7 @@ Deckhouse Stronghold EE и Deckhouse Stronghold CSE лицензируются �
 
 Краткое сравнение ключевых возможностей и особенностей редакций Deckhouse Stronghold:
 
-| Возможности | Stronghold CE | Stronghold EE | Stronghold CSE |
+| Возможности | CE | EE | CSE |
 | --- | --- | --- | --- |
 | **Механизмы секретов** | | | |
 | KV | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} |
@@ -66,7 +66,7 @@ Deckhouse Stronghold EE и Deckhouse Stronghold CSE лицензируются �
 | Двойное шифрование данных с помощью внешнего аппаратного модуля безопасности (HSM) | {{< icon-edition type="not_supported" >}} | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} |
 | Шифрование на базе российских криптографических алгоритмов (ГОСТ) для Seal Wrap, TLS, PKI, Transit secret engine | {{< icon-edition type="not_supported" >}} | {{< icon-edition type="supported" >}} | {{< icon-edition type="not_supported" >}} |
 | **Управление доступом** | | | |
-| Пространства имен (namespaces) | В процессе реализации | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} |
+| Пространства имен (namespaces) | {{< icon-edition type="clock" title="В процессе реализации" >}} | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} |
 | Настраиваемые политики контроля доступа | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} |
 | Идентификация по выданным токенам доступа | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} |
 | Управление доступом через локальные группы доступа | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} |

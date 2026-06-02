@@ -11,7 +11,7 @@ Deckhouse Stronghold EE is licensed separately and available for use in any **co
 
 The table below provides a brief comparison of the Deckhouse Stronghold editions, listing their main features and details:
 
-| Features | Stronghold CE | Stronghold EE | Stronghold CSE |
+| Features | CE | EE | CSE |
 | --- | --- | --- | --- |
 | **Secret Engines** | | | |
 | KV | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} |
@@ -66,7 +66,7 @@ The table below provides a brief comparison of the Deckhouse Stronghold editions
 | Double data encryption via external hardware security module (HSM) | {{< icon-edition type="not_supported" >}} | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} |
 | Russian cryptographic algorithms (GOST) support for Seal Wrap, TLS, PKI, Transit secret engine | {{< icon-edition type="not_supported" >}} | {{< icon-edition type="supported" >}} | {{< icon-edition type="not_supported" >}} |
 | **Access Control** | | | |
-| Namespaces | In progress | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} |
+| Namespaces | {{< icon-edition type="clock" title="In progress" >}} | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} |
 | Configurable access control policies | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} |
 | Identification via issued access tokens | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} |
 | Access management via local access groups | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} |
