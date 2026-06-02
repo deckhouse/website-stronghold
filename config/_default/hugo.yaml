@@ -100,8 +100,6 @@ module:
 languages:
   en:
     disabled: false
-    languageDirection: ""
-    languageName: ""
     title: Deckhouse Stronghold
     weight: 0
     baseURL: https://deckhouse.io/products/stronghold/
@@ -110,8 +108,6 @@ languages:
       description: ""
   ru:
     disabled: false
-    languageDirection: ""
-    languageName: ""
     weight: 1
     title: Deckhouse Stronghold
     baseURL: https://deckhouse.io/products/stronghold/

@@ -2,7 +2,8 @@
 title: "SAML"
 linkTitle: "SAML"
 weight: 75
-description: "Аутентификация в Deckhouse Stronghold через внешний SAML 2.0 Identity Provider."
+params:
+  edition: ee
 ---
 
 Метод `saml` позволяет аутентифицировать пользователей в Deckhouse Stronghold через внешний SAML 2.0 Identity Provider по профилю Web SSO.

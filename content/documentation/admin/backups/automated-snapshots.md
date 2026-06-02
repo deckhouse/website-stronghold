@@ -2,6 +2,8 @@
 title: "Automated snapshots"
 weight: 40
 description: "Configure automated backups for Stronghold integrated storage."
+params:
+  edition: ee
 ---
 
 Automated snapshots let Stronghold create scheduled backups of integrated Raft storage and write them either to local disk or to S3-compatible object storage.

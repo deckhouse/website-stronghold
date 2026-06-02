@@ -2,7 +2,8 @@
 title: "SAML"
 linkTitle: "SAML"
 weight: 75
-description: "Authenticate to Deckhouse Stronghold through an external SAML 2.0 Identity Provider."
+params:
+  edition: ee
 ---
 
 The `saml` authentication method lets you authenticate users in Deckhouse Stronghold through an external SAML 2.0 Identity Provider using the Web SSO profile.
