@@ -1,131 +1,147 @@
 ---
-title: "KV/v2"
+title: "KV v2"
 weight: 30
 ---
 
-Механизм секретов `kv` используется для хранения произвольных секретов в пределах хранилища Stronghold.
+Механизм секретов `kv` версии 2 предназначен для хранения произвольных секретов в хранилище Stronghold.
+В отличие от `kv` версии 1, он поддерживает версионность данных и частичное обновление секретов.
 
-Имена ключей всегда должны быть строками. Если вы записываете нестроковые значения напрямую через CLI, они будут преобразованы в строки. Однако вы можете сохранить нестроковые значения, записав пары ключ/значение из JSON-файла или используя HTTP API.
+Имена ключей должны быть строками.
+Если записывать нестроковые значения напрямую через CLI, Stronghold преобразует их в строки.
+Чтобы сохранить нестроковые значения, передавайте пары «ключ–значение» из JSON-файла или используйте HTTP API.
 
-Этот механизм секретов учитывает различие между операциями `create` и `update` в ACL-политиках. Также поддерживается функция `patch`, которая используется для выполнения частичных обновлений, в то время во время операции `update` выполняется полная перезапись.
+Механизм секретов `kv` учитывает различие между операциями `create` и `update` в ACL-политиках.
+Также поддерживается операция `patch` для частичного обновления секрета.
+Операция `update`, напротив, полностью перезаписывает значение.
 
-## Настройка
+## Как включить
 
-Большинство механизмов секретов должны быть предварительно настроены. Настройка обычно выполняются оператором или с помощью инструментов управления конфигурацией, таких как Terraform.
+Большинство механизмов секретов нужно предварительно настроить.
+Обычно это делает оператор или система управления конфигурацией, например Terraform.
 
-Механизм секретов v2 `kv` может быть включен с помощью команды:
+Чтобы включить хранилище `kv` версии 2, выполните одну из команд:
 
-```shell-session
+```shell
 d8 stronghold secrets enable -version=2 kv
 ```
 
-Или вы можете передать `kv-v2` в качестве типа механизма секретов:
-
-```shell-session
+```shell
 d8 stronghold secrets enable kv-v2
 ```
 
-## Обновление с версии 1 на версию 2
+## Обновление с версии 1 до версии 2
 
-Существующее хранилище kv версии 1 можно обновить до хранилища kv версии 2 с помощью CLI или API. Во время процесса миграции хранилище будет недоступно. Это может занять много времени, поэтому планируйте обновление заранее.
+Существующее хранилище `kv` версии 1 можно обновить до `kv` версии 2 с помощью CLI или API.
+Во время миграции хранилище будет недоступно.
+Обновление может занять продолжительное время, поэтому запланируйте его заранее.
 
-После обновления до версии 2 прежние пути, по которым можно было получить доступ к данным, больше не будут доступны. Вам нужно будет по новому настроить политики пользователей, чтобы восстановить доступ, как это описано в разделе [Правила ACL](#правила-acl). Аналогично, пользователям/приложениям необходимо будет обновить пути, по которым они взаимодействуют с данными kv после их обновления до версии 2.
+После обновления до версии 2 прежние пути доступа к данным перестанут работать.
+Обновите ACL-политики, чтобы восстановить доступ.
+Также обновите пути в приложениях и пользовательских сценариях, которые работают с данными `kv`.
 
-Существующее хранилище kv версии 1 можно обновить до хранилища kv версии 2 с помощью команды CLI:
+Чтобы включить версионность для существующего хранилища, выполните команду:
 
-```shell-session
+```console
 $ d8 stronghold kv enable-versioning secret/
 Success! Tuned the secrets engine at: secret/
 ```
 
 ## Правила ACL
 
-Хранилище kv версии 2 использует API с префиксом, который отличается от API версии 1. Перед обновлением с версии 1 kv необходимо изменить правила ACL. Кроме того, различные пути в API версии 2 могут быть по-разному защищены ACL.
+Хранилище `kv` версии 2 использует API с префиксами, которые отличаются от API версии 1.
+Перед обновлением с `kv` версии 1 измените ACL-политики.
+Разные пути API версии 2 можно защищать разными ACL-правилами.
 
-Пути для операций чтения и записи имеют префикс `data/`. Например, следующую политику для kv-v1:
+Пути для чтения и записи используют префикс `data/`.
+Например, такую политику для `kv` версии 1:
 
-```plaintext
+```text
 path "secret/dev/team-1/*" {
   capabilities = ["create", "update", "read"]
 }
 ```
 
-Нужно заменить на:
+замените на политику для `kv` версии 2:
 
-```plaintext
+```text
 path "secret/data/dev/team-1/*" {
   capabilities = ["create", "update", "read"]
 }
 ```
 
-Для kv-v2 существуют различные уровни удаления данных. Чтобы предоставить права на удаление последней версии ключа создайте такую политику:
+Для `kv` версии 2 доступны разные уровни удаления данных.
 
-```plaintext
+Чтобы разрешить удаление последней версии ключа, используйте такую политику:
+
+```text
 path "secret/data/dev/team-1/*" {
   capabilities = ["delete"]
 }
 ```
 
-Чтобы разрешить удалять любую версию ключа:
+Чтобы разрешить удаление произвольной версии ключа, используйте такую политику:
 
-```plaintext
+```text
 path "secret/delete/dev/team-1/*" {
   capabilities = ["update"]
 }
 ```
 
-Чтобы разрешить восстанавливать удаленные версии:
+Чтобы разрешить восстановление удалённых версий, используйте такую политику:
 
-```plaintext
+```text
 path "secret/undelete/dev/team-1/*" {
   capabilities = ["update"]
 }
 ```
 
-Чтобы разрешить уничтожить значения ключей (без возможности восстановления):
+Чтобы разрешить окончательное уничтожение значений без возможности восстановления, используйте такую политику:
 
-```plaintext
+```text
 path "secret/destroy/dev/team-1/*" {
   capabilities = ["update"]
 }
 ```
 
-Это политика, позволяющая получить список ключей:
+Чтобы разрешить получение списка ключей, используйте такую политику:
 
-```plaintext
+```text
 path "secret/metadata/dev/team-1/*" {
   capabilities = ["list"]
 }
 ```
 
-Политика, позволяющая просматривать метаданные ключей:
+Чтобы разрешить просмотр метаданных ключей, используйте такую политику:
 
-```plaintext
+```text
 path "secret/metadata/dev/team-1/*" {
   capabilities = ["read"]
 }
 ```
 
-Разрешить навсегда удалить все версии и метаданные ключа:
+Чтобы разрешить полное удаление всех версий и метаданных ключа, используйте такую политику:
 
-```plaintext
+```text
 path "secret/metadata/dev/team-1/*" {
   capabilities = ["delete"]
 }
 ```
 
-Поля `allowed_parameters`, `denied_parameters` и `required_parameters` не поддерживаются для политик, используемых с хранилищем kv версии 2. Описание этих параметров см. в разделе [Политики](../../../concepts/policy/).
+Поля `allowed_parameters`, `denied_parameters` и `required_parameters` не поддерживаются в политиках для хранилища `kv` версии 2.
 
 ## Использование
 
-После того как механизм секретов включен и у пользователя/машины есть токен Stronghold с соответствующими правами, он может взаимодействовать с секретами.
-Синтаксис KV-v1, похожий на путь для ссылки на секрет (`secret/foo`), по-прежнему можно использовать в KV-v2, но мы рекомендуем использовать синтаксис с флагом `-mount=secret`, чтобы не перепутать его с реальным путем к секрету (реальный путь - `secret/data/foo`).
+После включения механизма секретов и получения токена Stronghold с нужными правами можно работать с секретами.
 
-### Запись/чтение произвольных данных
+Для `kv` версии 2 по-прежнему можно использовать синтаксис в стиле `kv` версии 1, например путь `secret/foo`.
+Однако предпочтительнее использовать флаг `-mount=secret`, чтобы не путать логический путь секрета с фактическим API-путём.
+Фактический путь в этом случае — `secret/data/foo`.
 
- Запись ключей:
+### Запись и чтение произвольных данных
 
-```shell-session
+Запишите секрет:
+
+```console
 $ d8 stronghold kv put -mount=secret my-secret foo=a bar=b
 Key              Value
 ---              -----
@@ -136,9 +152,9 @@ destroyed        false
 version          1
 ```
 
- Чтение ключей:
+Прочитайте секрет:
 
-```shell-session
+```console
 $ d8 stronghold kv get -mount=secret my-secret
 ====== Metadata ======
 Key              Value
@@ -148,17 +164,16 @@ custom_metadata  <nil>
 deletion_time    n/a
 destroyed        false
 version          1
-
 ====== Data ======
 Key         Value
 ---         -----
 foo         a
 bar         b
-   ```
+```
 
-- Запишите другую версию, при этом предыдущая версия будет по-прежнему доступна. Опционально может быть передан флаг `-cas` (`check-and-set)` для выполнения проверки, что ключ существует . Если флаг не установлен, запись будет разрешена. Если же флаг `cas` установлен, то для того чтобы запись была успешной, его значение должно соответствовать текущей версию секрета. Если установлено значение 0, запись будет разрешена только в том случае, если ключ не существует, так как неустановленные ключи не имеют информации о версии. Также помните, что удаление "версии" не удаляет из хранилища информацию о версиях. Таким образом, для записи в секрет, у которого были удаленные версии, параметр cas должен соответствовать текущей версии секрета.
+Запишите новую версию секрета:
 
-```shell-session
+```console
 $ d8 stronghold kv put -mount=secret -cas=1 my-secret foo=aa bar=bb
 Key              Value
 ---              -----
@@ -169,9 +184,17 @@ destroyed        false
 version          2
 ```
 
- Чтение вернет самую свежую версию данных:
+Флаг `-cas` включает проверку Check-and-Set.
+Если флаг не указан, запись выполняется без проверки.
+Если флаг указан, его значение должно совпадать с текущей версией секрета.
+Значение `0` разрешает запись только в том случае, если ключ ещё не существует.
 
-```shell-session
+Учтите, что удаление версии не удаляет информацию о версиях из хранилища.
+Поэтому при записи в секрет, у которого есть удалённые версии, значение `cas` должно соответствовать текущей версии секрета.
+
+По умолчанию чтение возвращает последнюю версию:
+
+```console
 $ d8 stronghold kv get -mount=secret my-secret
 ====== Metadata ======
 Key              Value
@@ -181,7 +204,6 @@ custom_metadata  <nil>
 deletion_time    n/a
 destroyed        false
 version          2
-
 ====== Data ======
 Key         Value
 ---         -----
@@ -189,10 +211,9 @@ foo         aa
 bar         bb
 ```
 
-С помощью команды `d8 stronghold kv patch`  может быть выполнено частичное обновление секрета. Команда первоначально попытается выполнить HTTP-запрос `PATCH`, который требует наличия ACL-возможности `patch`. Запрос `PATCH` будет неудачным, если используемый токен связан с политикой, которая не содержит возможности `patch`. В этом случае команда выполнит чтение, локальное обновление и последующую запись, для которых требуются возможности ACL `read` и `update`.
-Опционально может быть передан флаг `-cas`  для выполнения проверки, что ключ существует. Он будет использоваться только в случае начального запроса `PATCH`. Вариант с последовательными чтением и записью будет использовать значение `version` из секрета, возвращенного при чтении, для выполнения проверки `cas` при последующей записи.
+Для частичного обновления секрета используйте команду `d8 stronghold kv patch`:
 
-```shell-session
+```console
 $ d8 stronghold kv patch -mount=secret -cas=2 my-secret bar=bbb
 Key              Value
 ---              -----
@@ -201,14 +222,23 @@ custom_metadata  <nil>
 deletion_time    n/a
 destroyed        false
 version          3
+```
 
-  ```
+Команда сначала пытается выполнить HTTP-запрос `PATCH`.
+Для этого токен должен иметь ACL-возможность `patch`.
+Если такой возможности нет, команда выполняет чтение, локальное обновление и последующую запись.
+В этом случае нужны ACL-возможности `read` и `update`.
 
-Команда `d8 stronghold kv patch` также поддерживает флаг `-method`, который можно использовать чтобы указать, какой метод использовать, `patch` или `rw`.
+Флаг `-cas` можно использовать и здесь.
+Для прямого `PATCH` он применяется сразу.
+Для сценария с чтением и повторной записью команда использует значение `version`, полученное при чтении, чтобы выполнить проверку `cas` при записи.
 
-Выполнить обновление секрета используя `patch`:
+Команда `d8 stronghold kv patch` также поддерживает флаг `-method`.
+Он определяет способ обновления: `patch` или `rw`.
 
-```shell-session
+Обновите секрет через `patch`:
+
+```console
 $ d8 stronghold kv patch -mount=secret -method=patch -cas=2 my-secret bar=bbb
 Key              Value
 ---              -----
@@ -219,9 +249,9 @@ destroyed        false
 version          3
 ```
 
-Выполнить обновление, используя `rw`, то есть сначала прочитать значение, а потом записать новую измененную версию:
+Обновите секрет через `rw`, то есть через чтение и повторную запись:
 
-```shell-session
+```console
 $ d8 stronghold kv patch -mount=secret -method=rw my-secret bar=bbb
 Key              Value
 ---              -----
@@ -232,9 +262,9 @@ destroyed        false
 version          3
 ```
 
-Чтение вернет самую новую версию, в которой были обновлены только заданные значения:
+Прочитайте обновлённый секрет:
 
-```shell-session
+```console
 $ d8 stronghold kv get -mount=secret my-secret
 ====== Metadata ======
 Key              Value
@@ -244,7 +274,6 @@ custom_metadata  <nil>
 deletion_time    n/a
 destroyed        false
 version          3
-
 ====== Data ======
 Key         Value
 ---         -----
@@ -252,9 +281,9 @@ foo         aa
 bar         bbb
 ```
 
-Предыдущие версии секретов можно получить используя флаг `-version`:
+Чтобы прочитать предыдущую версию, используйте флаг `-version`:
 
-```shell-session
+```console
 $ d8 stronghold kv get -mount=secret -version=1 my-secret
 ====== Metadata ======
 Key              Value
@@ -264,7 +293,6 @@ custom_metadata  <nil>
 deletion_time    n/a
 destroyed        false
 version          1
-
 ====== Data ======
 Key         Value
 ---         -----
@@ -272,39 +300,34 @@ foo         a
 bar         b
 ```
 
-Также вы можете использовать политику генерации паролей, чтобы создавать секреты.
+Также можно использовать password policy для генерации значений.
 
-Создать политику:
+Создайте policy:
 
-```shell-session
+```console
 $ d8 stronghold write sys/policies/password/example policy=-<<EOF
-
   length=20
-
   rule "charset" {
     charset = "abcdefghij0123456789"
     min-chars = 1
   }
-
   rule "charset" {
     charset = "!@#$%^&*STUVWXYZ"
     min-chars = 1
   }
-
 EOF
-   ```
+```
 
-Создать секрет, используя политику `example`:
+Создайте секрет с использованием policy `example`:
 
-```shell-session
+```console
 $ d8 stronghold kv put -mount=secret my-generated-secret \
     password=$(d8 stronghold read -field password sys/policies/password/example/generate)
 ```
 
-```plaintext
+```text
 ========= Secret Path =========
 secret/data/my-generated-secret
-
 ======= Metadata =======
 Key                Value
 ---                -----
@@ -315,13 +338,12 @@ destroyed          false
 version            1
 ```
 
-Прочитать созданный секрет:
+Прочитайте созданный секрет:
 
-```shell-session
+```console
 $ d8 stronghold kv get -mount=secret my-generated-secret
 ========= Secret Path =========
 secret/data/my-generated-secret
-
 ======= Metadata =======
 Key                Value
 ---                -----
@@ -330,66 +352,71 @@ custom_metadata    <nil>
 deletion_time      n/a
 destroyed          false
 version            1
-
 ====== Data ======
 Key         Value
 ---         -----
 password    !hh&be1e4j16dVc0ggae
 ```
 
-### Удаление (delete) и уничтожение (destroy) секретов
+### Удаление и уничтожение секретов
 
-При удалении команда `d8 stronghold kv delete` будет выполнять «мягкое» удаление. Она пометит версию как удаленную и заполнит значение `deletion_time` в метаданных секрета. Мягкое удаление не удаляет данные версии из хранилища, и секрет можно восстановить с помощью команды `d8 stronghold kv undelete`.
+Команда `d8 stronghold kv delete` выполняет мягкое удаление.
+Она помечает версию как удалённую и заполняет значение `deletion_time` в метаданных секрета.
+При мягком удалении данные версии не удаляются из хранилища.
+Такую версию можно восстановить с помощью команды `d8 stronghold kv undelete`.
 
-Версия секрета удаляется навсегда только в том случае, если секрета имеет больше версий, чем разрешено настройкой max-versions, или при использовании команды `d8 stronghold kv destroy`. При использовании команды destroy данные версии будут удалены, а метаданные будут помечены как уничтоженные. Если версия очищена из-за превышения количества версий, метаданные версии также будут удалены.
+Версия секрета удаляется окончательно в двух случаях:
+- если число версий превышает значение `max-versions`;
+- если используется команда `d8 stronghold kv destroy`.
 
-Примеры:
+Команда `destroy` удаляет данные версии без возможности восстановления.
+При этом метаданные версии помечаются как уничтоженные.
+Если версия удаляется из-за превышения числа версий, её метаданные тоже удаляются.
 
-Последняя версия ключа может быть удалена с помощью команды delete, которая также   принимает флаг `-versions` для удаления предыдущих версий:
+Последнюю версию ключа можно удалить с помощью команды `delete`.
+Команда также поддерживает флаг `-versions` для удаления предыдущих версий:
 
-```shell-session
- $ d8 stronghold kv delete -mount=secret my-secret
- Success! Data deleted (if it existed) at: secret/data/my-secret
+```console
+$ d8 stronghold kv delete -mount=secret my-secret
+Success! Data deleted (if it existed) at: secret/data/my-secret
 ```
 
-Версии могут быть восстановлены:
+Удалённые версии можно восстановить:
 
-```shell-session
- $ d8 stronghold kv undelete -mount=secret -versions=2 my-secret
- Success! Data written to: secret/undelete/my-secret
+```console
+$ d8 stronghold kv undelete -mount=secret -versions=2 my-secret
+Success! Data written to: secret/undelete/my-secret
 
- $ d8 stronghold kv get -mount=secret my-secret
- ====== Metadata ======
- Key              Value
- ---              -----
- created_time     2024-06-19T17:23:21.834403Z
- custom_metadata  <nil>
- deletion_time    n/a
- destroyed        false
- version          2
-
- ====== Data ======
- Key         Value
- ---         -----
- my-value    short-lived-s3cr3t
+$ d8 stronghold kv get -mount=secret my-secret
+====== Metadata ======
+Key              Value
+---              -----
+created_time     2024-06-19T17:23:21.834403Z
+custom_metadata  <nil>
+deletion_time    n/a
+destroyed        false
+version          2
+====== Data ======
+Key         Value
+---         -----
+my-value    short-lived-s3cr3t
 ```
 
-Уничтожение версии полностью удаляет все данные:
+Чтобы уничтожить версию окончательно, выполните команду:
 
-```shell-session
+```console
 $ d8 stronghold kv destroy -mount=secret -versions=2 my-secret
 Success! Data written to: secret/destroy/my-secret
 ```
 
 ### Метаданные
 
-Все версии и метаданные ключа можно посмотреть с помощью команды metadata или с помощью API. Удаление ключа metadata приведет к тому, что все метаданные и версии для этого ключа будут удалены навсегда.
+Все версии и метаданные ключа можно просмотреть с помощью команды `metadata` или через API.
+Если удалить ключ через `metadata delete`, все метаданные и версии этого ключа будут удалены без возможности восстановления.
 
-Примеры:
+Просмотрите метаданные и версии ключа:
 
-Можно просмотреть все метаданные и версии для ключа:
-
-```shell-session
+```console
 $ d8 stronghold kv metadata get -mount=secret my-secret
 ========== Metadata ==========
 Key                     Value
@@ -402,14 +429,12 @@ delete_version_after    0s
 max_versions            0
 oldest_version          0
 updated_time            2024-06-19T17:22:23.369372Z
-
 ====== Version 1 ======
 Key              Value
 ---              -----
 created_time     2024-06-19T17:20:22.985303Z
 deletion_time    n/a
 destroyed        false
-
 ====== Version 2 ======
 Key              Value
 ---              -----
@@ -418,16 +443,17 @@ deletion_time    n/a
 destroyed        true
 ```
 
-Можно настроить параметры:
+Настройте параметры хранения версий:
 
-```shell-session
-$ d8 stronghold kv metadata put -mount=secret -max-versions 2 -delete-version-after="3h25m19s" my-secret
+```console
+$ d8 stronghold kv metadata put -mount=secret -max-versions=2 -delete-version-after=3h25m19s my-secret
 Success! Data written to: secret/metadata/my-secret
 ```
 
-   Настройка `delete-version-after` будет применяться только к новым версиям, параметр `max-versions` будет применен при следующей операции записи.
+Параметр `delete-version-after` применяется только к новым версиям.
+Параметр `max-versions` применяется при следующей операции записи.
 
-```shell-session
+```console
 $ d8 stronghold kv put -mount=secret my-secret my-value=newer-s3cr3t
 Key              Value
 ---              -----
@@ -438,9 +464,9 @@ destroyed        false
 version          4
 ```
 
-   Если у ключа больше версий, чем `max-versions`б самые старые версии уничтожаются:
+Если число версий превышает `max-versions`, самые старые версии уничтожаются:
 
-```shell-session
+```console
 $ d8 stronghold kv metadata get -mount=secret my-secret
 ========== Metadata ==========
 Key                     Value
@@ -453,14 +479,12 @@ delete_version_after    3h25m19s
 max_versions            2
 oldest_version          3
 updated_time            2024-06-19T17:31:16.662563Z
-
 ====== Version 3 ======
 Key              Value
 ---              -----
 created_time     2024-06-19T17:23:21.834403Z
 deletion_time    n/a
 destroyed        true
-
 ====== Version 4 ======
 Key              Value
 ---              -----
@@ -469,11 +493,12 @@ deletion_time    2024-06-19T20:56:35.662563Z
 destroyed        false
 ```
 
-   Метаданные ключа секрета могут содержать пользовательские метаданные, используемые для описания секрета, в виде пар ключ-значение. Флаг `-custom-metadata` можно указать несколько раз, чтобы добавить несколько пар ключ-значение.
+Метаданные секрета могут включать пользовательские метаданные в виде пар «ключ–значение».
+Флаг `-custom-metadata` можно указывать несколько раз.
 
-   Команда `d8 stronghold kv metadata put` может быть использована для полной перезаписи значения `custom_metadata`:
+Команда `d8 stronghold kv metadata put` полностью перезаписывает значение `custom_metadata`:
 
-```shell-session
+```console
 $ d8 stronghold kv metadata put -mount=secret -custom-metadata=foo=abc -custom-metadata=bar=123 my-secret
 Success! Data written to: secret/metadata/my-secret
 
@@ -486,7 +511,6 @@ custom_metadata  map[bar:123 foo:abc]
 deletion_time    n/a
 destroyed        false
 version          2
-
 ====== Data ======
 Key         Value
 ---         -----
@@ -494,14 +518,15 @@ foo         aa
 bar         bb
 ```
 
-   Команда `d8 stronghold kv metadata patch` может быть использована для частичной перезаписи значения `custom_metadata`. Следующий вызов обновит поле `custom_metadata` `foo`, но оставит `bar` нетронутым:
+Команда `d8 stronghold kv metadata patch` частично обновляет значение `custom_metadata`.
+Например, следующая команда обновит поле `foo`, но оставит поле `bar` без изменений:
 
-```shell-session
+```console
 $ d8 stronghold kv metadata patch -mount=secret -custom-metadata=foo=def my-secret
 Success! Data written to: secret/metadata/my-secret
 ```
 
-```shell-session
+```console
 $ d8 stronghold kv get -mount=secret my-secret
 ====== Metadata ======
 Key              Value
@@ -511,7 +536,6 @@ custom_metadata  map[bar:123 foo:def]
 deletion_time    n/a
 destroyed        false
 version          2
-
 ====== Data ======
 Key         Value
 ---         -----
@@ -519,9 +543,9 @@ foo         aa
 bar         bb
 ```
 
-Полное уничтожение всех метаданных и версий для ключа:
+Чтобы удалить все метаданные и все версии ключа, выполните команду:
 
-```shell-session
+```console
 $ d8 stronghold kv metadata delete -mount=secret my-secret
 Success! Data deleted (if it existed) at: secret/metadata/my-secret
 ```

@@ -89,9 +89,9 @@ You can configure the following parameters in this section:
 - `tls_server_name` — server name for SNI;
 - `retry` — retry policy.
 
-{% alert level="warning" %}
+{{< alert level="warning" >}}
 Do not disable `tls_skip_verify` in a production environment.
-{% endalert %}
+{{< /alert >}}
 
 ## auto_auth section
 

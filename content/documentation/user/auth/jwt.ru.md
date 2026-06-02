@@ -7,9 +7,9 @@ description: "JWT-аутентификация в Deckhouse Stronghold."
 
 JWT-аутентификация подходит для сценариев, в которых клиент уже получает JSON Web Token (JWT) от доверенного поставщика токенов и передаёт его в Deckhouse Stronghold для проверки. В этом сценарии Deckhouse Stronghold не запускает интерактивный вход через браузер, а только проверяет уже выданный токен.
 
-{% alert level="info" %}
+{{< alert level="info" >}}
 Если нужен интерактивный вход через браузер и OIDC-провайдер, используйте обзор OIDC-аутентификации.
-{% endalert %}
+{{< /alert >}}
 
 ## Как работает JWT-аутентификация
 
@@ -204,9 +204,9 @@ d8 stronghold write auth/jwt/role/demo \
 - значение claim `division` копируется в ключ метаданных `organization`;
 - значение claim `department` копируется в ключ метаданных `department`.
 
-{% alert level="info" %}
+{{< alert level="info" >}}
 Имя ключа метаданных `role` зарезервировано и не может использоваться для сопоставления claims.
-{% endalert %}
+{{< /alert >}}
 
 ## Claims и JSON Pointer
 

@@ -3,68 +3,70 @@ title: "OIDC identity provider"
 weight: 20
 ---
 
-Stronghold is an OpenID Connect ([OIDC](https://openid.net/specs/openid-connect-core-1_0.html))
-identity provider. This enables client applications that speak the OIDC protocol to leverage
-Stronghold's source of [identity](../../../concepts/identity/) and wide range of [authentication methods](../../../concepts/auth/)
-when authenticating end-users. Client applications can configure their authentication logic
-to talk to Stronghold. Once enabled, Stronghold will act as the bridge to other identity providers via
-its existing authentication methods. Client applications can also obtain identity information
-for their end-users by leveraging custom templating of Stronghold identity information.
+## Overview
+
+Stronghold can act as an OpenID Connect (OIDC) identity provider for client applications that use this protocol.
+This allows applications to use Stronghold as a source of [identity](../../../concepts/identity/) and to apply the available [authentication methods](../../../concepts/auth/) to authenticate end users.
+
+After this capability is enabled, Stronghold can act as an intermediary between a client application and external identity providers through already configured authentication methods.
+In addition, client applications can retrieve end-user identity data from Stronghold.
+
+The OIDC provider system in Stronghold is built on the identity secrets engine.
+This engine is enabled by default and cannot be disabled or moved.
+
+In each Stronghold namespace, an OIDC provider and key are available by default.
+This built-in configuration lets you start using Stronghold as an identity provider with minimal initial setup.
+
+To allow a client application to use Stronghold as an OIDC provider, you usually need to do the following:
+
+- Enable an authentication method.
+- Create a user.
+- Create a client application.
+- Retrieve the `client_id` and `client_secret`.
+- Retrieve the `issuer` value from the OIDC discovery configuration.
 
 ## Setup
 
-The Stronghold OIDC provider system is built on top of the identity secrets engine.
-This secrets engine is mounted by default and cannot be disabled or moved.
+Below is a minimal configuration example that allows a client application to use Stronghold as an OIDC provider.
 
-Each Stronghold namespace has a default OIDC provider
-and a key. This built-in configuration enables client
-applications to begin using Stronghold as a source of identity with minimal configuration.
+1. Enable the `userpass` authentication method.
 
-The following steps show a minimal configuration that allows a client application to use
-Stronghold as an OIDC provider.
-
-1. Enable an Stronghold auth method:
-
-   ```text
+   ```console
    $ d8 stronghold auth enable userpass
    Success! Enabled userpass auth method at: userpass/
    ```
 
-   Any Stronghold auth method may be used within the OIDC flow. For simplicity, enable the
-   `userpass` auth method.
+   In OIDC mode, you can use any Stronghold authentication method.
+   For simplicity, this example uses the `userpass` method.
 
-2. Create a user:
+1. Create a user.
 
-   ```text
+   ```console
    $ d8 stronghold write auth/userpass/users/end-user password="securepassword"
    Success! Data written to: auth/userpass/users/end-user
    ```
 
-   This user will authenticate to Stronghold through a client application, otherwise known as
-   an OIDC [relying party](https://openid.net/specs/openid-connect-core-1_0.html#Terminology).
+   This user will authenticate in Stronghold through the client application, that is, through the OIDC relying party.
 
-3. Create a client application:
+1. Create a client application.
 
-   ```text
+   ```console
    $ d8 stronghold write identity/oidc/client/my-webapp \
      redirect_uris="https://localhost:9702/auth/oidc-callback" \
      assignments="allow_all"
    Success! Data written to: identity/oidc/client/my-webapp
    ```
 
-   This operation creates a client application which can be used to configure an OIDC
-   relying party.
+   This command creates a client application that you can use when configuring the OIDC relying party.
 
-   The `assignments` parameter limits the Stronghold entities and groups that are allowed to
-   authenticate through the client application. By default, no Stronghold entities are allowed.
-   To allow all Stronghold entities to authenticate, the built-in `allow_all`
-   assignment is provided.
+   The `assignments` parameter limits which Stronghold entities and groups are allowed to authenticate through this client application.
+   By default, authentication is not allowed for any entity.
+   To allow authentication for all Stronghold entities, use the built-in `allow_all` assignment.
 
-4. Read client credentials:
+1. Read the client credentials.
 
-   ```text
+   ```console
    $ d8 stronghold read identity/oidc/client/my-webapp
-
    Key                 Value
    ---                 -----
    access_token_ttl    24h
@@ -77,12 +79,12 @@ Stronghold as an OIDC provider.
    redirect_uris       [https://localhost:9702/auth/oidc-callback]
    ```
 
-   The `client_id` and `client_secret` are the client application's credentials. These
-   values are typically required when configuring an OIDC relying party.
+   The `client_id` and `client_secret` parameters are the client application credentials.
+   They are usually required when configuring the OIDC relying party.
 
-5. Read OIDC discovery configuration:
+1. Read the OIDC discovery configuration.
 
-   ```text
+   ```console
    $ curl -s http://127.0.0.1:8200/v1/identity/oidc/provider/default/.well-known/openid-configuration
    {
      "issuer": "http://127.0.0.1:8200/v1/identity/oidc/provider/default",
@@ -121,22 +123,22 @@ Stronghold as an OIDC provider.
    }
    ```
 
-   Each Stronghold OIDC provider publishes [discovery metadata](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata).
-   The `issuer` value is typically required when configuring an OIDC relying party.
+   Every Stronghold OIDC provider publishes discovery metadata.
+   The `issuer` value is usually required when configuring the OIDC relying party.
 
 ## Usage
 
-After configuring an Stronghold auth method and client application, the following details can
-be used to configure an OIDC relying party to delegate end-user authentication to Stronghold.
+After you configure the Stronghold authentication method and the client application, use the following values to configure the OIDC relying party:
 
-- `client_id` - The ID of the client application
-- `client_secret` - The secret of the client application
-- `issuer` - The issuer of the Stronghold OIDC provider
+- `client_id` — the client application identifier;
+- `client_secret` — the client application secret;
+- `issuer` — the issuer of the Stronghold OIDC provider.
 
-Otherwise, refer to the documentation of the specific OIDC relying party for usage details.
+Further configuration depends on the specific client application.
+For details, refer to the documentation for the corresponding OIDC relying party.
 
 ## Supported flows
 
-The Stronghold OIDC provider feature currently supports the following authentication flow:
+The OIDC provider feature in Stronghold currently supports the following authentication flow:
 
 - [Authorization Code Flow](https://openid.net/specs/openid-connect-core-1_0.html#CodeFlowAuth).

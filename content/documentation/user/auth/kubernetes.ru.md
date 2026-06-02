@@ -80,11 +80,11 @@ curl \
      kubernetes_ca_cert=@ca.crt
    ```
 
-   {% alert level="warning" %}
+   {{< alert level="warning" >}}
    Шаблон, используемый Deckhouse Stronghold для аутентификации подов, зависит от передачи JWT-токена по сети. С учётом модели безопасности Deckhouse Stronghold это допустимо, поскольку Deckhouse Stronghold является частью доверенной вычислительной системы.
 
    В общем случае приложения Kubernetes не должны передавать этот JWT другим приложениям, поскольку он позволяет выполнять вызовы API Kubernetes от имени подов. Это может привести к непреднамеренному предоставлению доступа третьим лицам.
-   {% endalert %}
+   {{< /alert >}}
 
 1. Создайте именованную роль.
 
@@ -117,11 +117,11 @@ curl \
 | Использовать долгоживущий токен в качестве `reviewer JWT` | Нет | Да | — |
 | Использовать `JWT auth` вместо `Kubernetes auth` | Да | Нет | — |
 
-{% alert level="info" %}
+{{< alert level="info" >}}
 По умолчанию Kubernetes продлевает срок жизни токенов `ServiceAccount` до одного года, чтобы упростить переход на короткоживущие токены.
 
 Если вы хотите отключить это поведение, задайте параметр [`--service-account-extend-token-expiration=false`](https://kubernetes.io/docs/reference/command-line-tools-reference/kube-apiserver/#options) для `kube-apiserver` или определите собственную конфигурацию тома `serviceAccountToken`.
-{% endalert %}
+{{< /alert >}}
 
 #### Использование токена Deckhouse Stronghold в качестве reviewer JWT
 
@@ -172,9 +172,9 @@ EOF
 
 Этот вариант позволяет использовать короткоживущие токены для всех клиентов и устраняет необходимость использовать `reviewer JWT`.
 
-{% alert level="info" %}
+{{< alert level="info" >}}
 Клиентские токены нельзя отозвать до истечения их TTL. Поэтому рекомендуется использовать короткий срок жизни токена.
-{% endalert %}
+{{< /alert >}}
 
 ## Требования к TokenReview API
 

@@ -15,9 +15,9 @@ description: "Основные операции с managed key в Deckhouse Stro
 - удаление managed key;
 - разрешение использования ключа в механизмах секретов.
 
-{% alert level="info" %}
+{{< alert level="info" >}}
 Перед выполнением операций убедитесь, что соответствующий backend уже подготовлен. Например, для `pkcs11` должна быть настроена `kms_library "pkcs11"` в конфигурации сервера Stronghold.
-{% endalert %}
+{{< /alert >}}
 
 ## Регистрация managed key типа `pkcs11`
 

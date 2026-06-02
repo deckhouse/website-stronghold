@@ -9,9 +9,9 @@ Kubernetes может выступать как OIDC-провайдер для D
 
 Этот вариант подходит, если приложения уже используют токены `ServiceAccount` и их нужно аутентифицировать в Stronghold без метода `Kubernetes auth`. Проверка выполняется либо через OIDC Discovery URL, либо через публичные ключи подписи JWT.
 
-{% alert level="warning" %}
+{{< alert level="warning" >}}
 Метод `JWT`-аутентификации не использует API Kubernetes `TokenReview`. Вместо этого Stronghold проверяет JWT с помощью криптографии с открытым ключом. Из-за этого изменения состояния токена или связанного `ServiceAccount` могут не учитываться до окончания срока действия токена. Чтобы снизить риск, используйте короткий TTL токенов `ServiceAccount` или настройте отдельный метод `Kubernetes auth`, который использует API Kubernetes `TokenReview`.
-{% endalert %}
+{{< /alert >}}
 
 ## Когда использовать
 

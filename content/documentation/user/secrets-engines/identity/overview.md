@@ -2,38 +2,46 @@
 title: "Overview"
 weight: 10
 ---
+## Identity secrets engine
 
-The Identity secrets engine is the identity management solution for Stronghold. It
-internally maintains the clients who are recognized by Stronghold. Each client is
-internally termed as an `Entity`. An entity can have multiple `Aliases`. For
-example, a single user who has accounts in both GitLab and LDAP, can be mapped
-to a single entity in Stronghold that has 2 aliases, one of type GitLab and one of
-type LDAP. When a client authenticates via any of the credential backends
-(except the Token backend), Stronghold creates a new entity and attaches a new
-alias to it, if a corresponding entity doesn't already exist. The entity identifier will
-be tied to the authenticated token. When such tokens are put to use, their
-entity identifiers are audit logged, marking a trail of actions performed by
-specific users.
+The `Identity` secrets engine is used to manage identity in Deckhouse Stronghold.
+It links authenticated clients to entities and allows you to use those entities
+for access management.
 
-Identity store allows operators to **manage** the entities in Stronghold. Entities
-can be created and aliases can be tied to entities, via the ACL'd API. There
-can be policies set on the entities which adds capabilities to the tokens that
-are tied to entity identifiers. The capabilities granted to tokens via the
-entities are **an addition** to the existing capabilities of the token and
-**not** a replacement. The capabilities of the token that get inherited from
-entities are computed dynamically at request time. This provides flexibility in
-controlling the access of tokens that are already issued.
+In Deckhouse Stronghold, clients are represented as entities.
+Each entity can have multiple aliases [1].
+
+For example, a single user can sign in through GitHub and LDAP.
+In this case, both accounts can be linked to one entity
+that has two aliases: GitHub and LDAP.
+
+After a successful authentication through a supported backend,
+except for the Token backend, Deckhouse Stronghold creates a new entity
+and adds an alias to it if no suitable entity already exists.
+
+The entity ID is then associated with the authenticated token.
+When such tokens are used, entity IDs are written to the audit log.
+This makes it possible to track user actions.
+
+The identity store allows you to manage entities in Deckhouse Stronghold.
+You can create entities and their aliases and link them through the ACL API.
+You can also assign policies to entities to extend the capabilities of tokens
+associated with entity IDs.
+
+These capabilities complement the existing token capabilities rather than replace them.
+The capabilities inherited by a token from an entity are determined dynamically
+at request time.
+This allows you to manage access flexibly for already issued tokens.
 
 {{< alert level="warning" >}}
-
-**NOTE:** This secrets engine will be mounted by default. This secrets engine
-cannot be disabled or moved. For more conceptual overview on identity, refer to
-the [Identity](../../../../concepts/identity/) documentation.
-
+The `Identity` secrets engine is installed by default.
+It cannot be disabled or moved.
+For a detailed description of the concept, see [Identity](../../../../concepts/identity/).
 {{< /alert >}}
 
-The Stronghold Identity secrets engine supports several different features. Each
-one is individually documented on its own page.
+## What the engine supports
 
-- [Identity tokens](./token/)
-- [OIDC Identity Provider](./oidc-provider/)
+The `Identity` secrets engine supports the following features:
+
+- [OIDC identity tokens](./oidc-token/);
+- [OIDC identity provider](./oidc-provider/).

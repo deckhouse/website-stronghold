@@ -3,35 +3,35 @@ title: "Механизм секретов Kubernetes"
 weight: 70
 ---
 
-Kubernetes Secrets Engine для Stronghold генерирует токены для учетной записи сервиса Kubernetes
-(не путать с [токенами Stronghold](../../concepts/tokens/)), а также, по желанию, сами объекты учетной записи сервиса `ServiceAccount`,
-роли `Role` и привязку роли к учетной записи сервиса `RoleBinding`. Созданные токены имеют настраиваемый [срок жизни (TTL)](#token-ttl), а все созданные объекты автоматически удаляются по истечении срока [аренды (lease)](../../concepts/lease/) Stronghold.
+Kubernetes Secrets Engine для Stronghold генерирует токены для ServiceAccount Kubernetes.
+При необходимости он также создаёт объекты ServiceAccount, Role и RoleBinding.
+Созданные токены имеют настраиваемое время жизни (TTL), а все созданные объекты автоматически удаляются после истечения срока [аренды](../../concepts/lease/) Stronghold.
 
-На каждую аренду Stronghold создает токен под конкретную учетную запись сервиса. Токен возвращается вызывающей стороне.
-
-Для большей информации о ресурсах Kubernetes ознакомьтесь с официальной документацией [Kubernetes service account](https://kubernetes.io/docs/concepts/security/service-accounts/)
-и [Kubernetes RBAC](https://kubernetes.io/docs/reference/access-authn-authz/rbac/).
+Для каждой аренды Stronghold создаёт токен для конкретной ServiceAccount и возвращает его вызывающей стороне.
+Дополнительную информацию см. в документации [Kubernetes service accounts](https://kubernetes.io/docs/concepts/security/service-accounts/) и [Kubernetes RBAC](https://kubernetes.io/docs/reference/access-authn-authz/rbac/).
 
 {{< alert level="warning" >}}
-Мы не рекомендуем использовать токены, созданные механизмом секретов Kubernetes, для аутентификации с помощью [Kubernetes Auth Method](../../auth/kubernetes/). Это приведет к созданию множества уникальных идентификаторов в Stronghold, которыми будет сложно управлять.
+Не используйте токены, созданные механизмом секретов Kubernetes, для аутентификации через [Kubernetes Auth Method](../../auth/kubernetes/).
+Это приведёт к созданию множества уникальных идентификаторов в Stronghold, которыми будет сложно управлять.
 {{< /alert >}}
 
 ## Настройка
 
-Перед использованием механизма секретов Kubernetes, необходимо предварительно его настроить.
-Эти шаги обычно выполняются администратором Stronghold или инструментом автоматического управления конфигурацией.
+Перед использованием механизма секретов Kubernetes предварительно настройте его.
+Обычно эти действия выполняет администратор Stronghold или система автоматического управления конфигурацией.
 
-По умолчанию Stronghold подключается к Kubernetes, используя собственную учетную запись сервиса.
-При использовании [Helm chart](https://github.com/hashicorp/vault-helm) эта учетная запись сервиса
-создается автоматически по умолчанию и называется по имени релиза Helm (по умолчанию `stronghold`,
-но это можно настроить через значение Helm `server.serviceAccount.name`).
+По умолчанию Stronghold подключается к Kubernetes с помощью собственной ServiceAccount.
+При использовании [Helm chart](https://github.com/hashicorp/vault-helm) эта ServiceAccount создаётся автоматически и получает имя Helm-релиза.
+По умолчанию используется имя `stronghold`, но его можно изменить через параметр `server.serviceAccount.name`.
 
-Необходимо убедиться, что учетная запись сервиса, которую использует Stronghold, будет иметь
-права на управление токенами учетных записей сервиса, а также при использовании функционала и на управление учетными записями сервиса,
-ролями и привязками ролей. Этими правами можно управлять с помощью тех же ролей Kubernetes.
-Роль привязывается к учетной записи сервиса Stronghold с помощью привязки роли или привязки кластерной роли.
+Убедитесь, что ServiceAccount, которую использует Stronghold, имеет права:
+- на управление токенами ServiceAccount;
+- на управление ServiceAccount, Role и RoleBinding, если используется автоматическое создание этих объектов.
 
-Например, роль кластера только для создания токенов учетных записей сервиса:
+Этими правами можно управлять с помощью ролей Kubernetes.
+Роль привязывается к ServiceAccount Stronghold через ClusterRoleBinding или RoleBinding.
+
+Ниже приведён пример ClusterRole только для создания токенов ServiceAccount:
 
 ```yaml
 apiVersion: rbac.authorization.k8s.io/v1
@@ -39,13 +39,13 @@ kind: ClusterRole
 metadata:
   name: k8s-minimal-secrets-abilities
 rules:
-- apiGroups: [""]
-  resources: ["serviceaccounts/token"]
-  verbs: ["create"]
+  - apiGroups: [""]
+    resources: ["serviceaccounts/token"]
+    verbs: ["create"]
 ```
 
-Аналогичным образом можно создать кластерную роль с бóльшими правами. В данном случае
-установлены права на управление токенами, учетными записями сервиса, привязками ролей к учетным записям сервиса и ролями.
+Ниже приведён пример ClusterRole с расширенными правами.
+Она позволяет управлять токенами, ServiceAccount, RoleBinding и Role:
 
 ```yaml
 apiVersion: rbac.authorization.k8s.io/v1
@@ -53,21 +53,21 @@ kind: ClusterRole
 metadata:
   name: k8s-full-secrets-abilities
 rules:
-- apiGroups: [""]
-  resources: ["serviceaccounts", "serviceaccounts/token"]
-  verbs: ["create", "update", "delete"]
-- apiGroups: ["rbac.authorization.k8s.io"]
-  resources: ["rolebindings", "clusterrolebindings"]
-  verbs: ["create", "update", "delete"]
-- apiGroups: ["rbac.authorization.k8s.io"]
-  resources: ["roles", "clusterroles"]
-  verbs: ["bind", "escalate", "create", "update", "delete"]
+  - apiGroups: [""]
+    resources: ["serviceaccounts", "serviceaccounts/token"]
+    verbs: ["create", "update", "delete"]
+  - apiGroups: ["rbac.authorization.k8s.io"]
+    resources: ["rolebindings", "clusterrolebindings"]
+    verbs: ["create", "update", "delete"]
+  - apiGroups: ["rbac.authorization.k8s.io"]
+    resources: ["roles", "clusterroles"]
+    verbs: ["bind", "escalate", "create", "update", "delete"]
 ```
 
-Создайте эту роль в Kubernetes (например, с помощью `d8 k apply -f`).
+Создайте эту роль в Kubernetes.
+Например, с помощью команды `d8 k apply -f`.
 
-Более того, если вы хотите использовать ограничение выбор меток (label) для возможности выборки пространств имен,
-в которых может действовать роль, вам нужно будет предоставить разрешение Stronghold на чтение пространств имен.
+Если вы хотите ограничивать выбор неймспейсов по лейблам, предоставьте Stronghold разрешение на чтение неймспейсов:
 
 ```yaml
 apiVersion: rbac.authorization.k8s.io/v1
@@ -75,153 +75,161 @@ kind: ClusterRole
 metadata:
   name: k8s-full-secrets-abilities-with-labels
 rules:
-- apiGroups: [""]
-  resources: ["namespaces"]
-  verbs: ["get"]
-- apiGroups: [""]
-  resources: ["serviceaccounts", "serviceaccounts/token"]
-  verbs: ["create", "update", "delete"]
-- apiGroups: ["rbac.authorization.k8s.io"]
-  resources: ["rolebindings", "clusterrolebindings"]
-  verbs: ["create", "update", "delete"]
-- apiGroups: ["rbac.authorization.k8s.io"]
-  resources: ["roles", "clusterroles"]
-  verbs: ["bind", "escalate", "create", "update", "delete"]
+  - apiGroups: [""]
+    resources: ["namespaces"]
+    verbs: ["get"]
+  - apiGroups: [""]
+    resources: ["serviceaccounts", "serviceaccounts/token"]
+    verbs: ["create", "update", "delete"]
+  - apiGroups: ["rbac.authorization.k8s.io"]
+    resources: ["rolebindings", "clusterrolebindings"]
+    verbs: ["create", "update", "delete"]
+  - apiGroups: ["rbac.authorization.k8s.io"]
+    resources: ["roles", "clusterroles"]
+    verbs: ["bind", "escalate", "create", "update", "delete"]
 ```
 
 {{< alert level="warning" >}}
-Получение правильных разрешений для Stronghold, скорее всего, потребует проб и ошибок, поскольку Kubernetes имеет строгую защиту от повышения привилегий.
-Подробнее об этом можно прочитать в документации [Kubernetes RBAC](https://kubernetes.io/docs/reference/access-authn-authz/rbac/#privilege-escalation-prevention-and-bootstrapping)
+Подбор корректных разрешений для Stronghold может потребовать нескольких попыток.
+Kubernetes строго предотвращает повышение привилегий.
+Дополнительную информацию см. в документации [Kubernetes RBAC](https://kubernetes.io/docs/reference/access-authn-authz/rbac/#privilege-escalation-prevention-and-bootstrapping).
 {{< /alert >}}
 
 {{< alert level="warning" >}}
-Защитите учетную запись сервиса Stronghold, особенно если вы используете для нее широкие права, поскольку она по сути является учетной записью администратора кластера.
+Защитите ServiceAccount Stronghold, особенно если она имеет широкие права.
+По сути, такая учётная запись получает административный доступ к кластеру.
 {{< /alert >}}
 
-Создайте привязку роли, чтобы связать ее с учетной записью сервиса Stronghold и предоставить Stronghold разрешение на управление токенами.
+Создайте привязку роли, чтобы связать её с ServiceAccount Stronghold и выдать разрешение на управление токенами:
 
 ```yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
- name: stronghold-token-creator-binding
+  name: stronghold-token-creator-binding
 roleRef:
- apiGroup: rbac.authorization.k8s.io
- kind: ClusterRole
- name: k8s-minimal-secrets-abilities
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: k8s-minimal-secrets-abilities
 subjects:
-- kind: ServiceAccount
- name: stronghold
- namespace: stronghold
+  - kind: ServiceAccount
+    name: stronghold
+    namespace: stronghold
 ```
 
-Для получения дополнительной информации о ролях Kubernetes, учетных записях сервиса, привязках и токенах посетите раздел документации
-[Kubernetes RBAC](https://kubernetes.io/docs/reference/access-authn-authz/rbac/).
+Дополнительную информацию о ролях Kubernetes, ServiceAccount, привязках и токенах см. в разделе [Kubernetes RBAC](https://kubernetes.io/docs/reference/access-authn-authz/rbac/).
 
-Если Stronghold не будет автоматически управлять ролями или учетными записями сервиса
-(см. раздел [Автоматическое управление ролями и учетными записями сервиса](#roles-and-sa)), то вам
-необходимо настроить учетную запись сервиса, для которой Stronghold будет выпускать токены.
+Если Stronghold не будет автоматически управлять ролями или ServiceAccount, см. раздел [Автоматическое управление ролями и учётными записями сервиса](#roles-and-sa).
+В этом случае заранее настройте ServiceAccount, для которой Stronghold будет выпускать токены.
 
-{{< alert level="warning" >}} Настоятельно рекомендуется, чтобы учетная запись сервиса, для которой Stronghold выпускает токены, **НЕ** совпадала с учетной записью сервиса, которую использует сам Stronghold.
+{{< alert level="warning" >}}
+Рекомендуется использовать разные ServiceAccount для Stronghold и для выпуска токенов.
+Не используйте одну и ту же ServiceAccount в обоих случаях.
 {{< /alert >}}
 
-Примеры, которые мы будем использовать, будут находиться в пространстве
-имен `test`, которое вы можете создать, если оно еще не существует.
+В примерах ниже используется неймспейс `test`.
+Создайте его, если он ещё не существует:
 
-```shell-session
-$ d8 k create namespace test
-namespace/test created
+```shell
+d8 k create namespace test
 ```
 
-Здесь представлена простая настройка учетной записи сервиса, роли и
-привязки роли в пространстве имен Kubernetes `test` с базовыми разрешениями,
-которые мы будем использовать:
+Ниже приведён пример простой настройки ServiceAccount, Role и RoleBinding в неймспейсе `test` с базовыми разрешениями:
 
 ```yaml
 apiVersion: v1
 kind: ServiceAccount
 metadata:
- name: test-service-account-with-generated-token
- namespace: test
+  name: test-service-account-with-generated-token
+  namespace: test
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
- name: test-role-list-pods
- namespace: test
+  name: test-role-list-pods
+  namespace: test
 rules:
-- apiGroups: [""]
- resources: ["pods"]
- verbs: ["list"]
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["list"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
- name: test-role-abilities
- namespace: test
+  name: test-role-abilities
+  namespace: test
 roleRef:
- apiGroup: rbac.authorization.k8s.io
- kind: Role
- name: test-role-list-pods
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: test-role-list-pods
 subjects:
-- kind: ServiceAccount
- name: test-service-account-with-generated-token
- namespace: test
+  - kind: ServiceAccount
+    name: test-service-account-with-generated-token
+    namespace: test
 ```
 
-Вы можете создать эти объекты с помощью команды `d8 k apply -f`.
+Создайте эти объекты с помощью команды `d8 k apply -f`.
 
 Включите механизм секретов Kubernetes:
 
-```shell-session
-$ stronghold secrets enable kubernetes
-Success! Enabled the kubernetes Secrets Engine at: kubernetes/
+```shell
+stronghold secrets enable kubernetes
 ```
 
-По умолчанию движок секретов будет монтироваться по тому же имени, что и его название,
-т.е. `kubernetes/`. Это можно изменить, передав аргумент `-path` при включении.
+По умолчанию движок секретов монтируется по пути `kubernetes/`.
+Это поведение можно изменить с помощью аргумента `-path` при включении.
 
-Настройте точку монтирования. Допускается пустая конфигурация.
+Настройте точку монтирования.
+Допускается пустая конфигурация:
 
-```shell-session
+```shell
 stronghold write -f kubernetes/config
 ```
 
-1. Теперь можно настроить роль Stronghold в механизме секретов Kubernetes
-(**не** то же самое, что роль Kubernetes), которая сможет генерировать токены Kubernetes для установленной нами учетной записи сервиса:
+Теперь настройте роль Stronghold в механизме секретов Kubernetes.
+Это не роль Kubernetes.
+Она будет использоваться для генерации токенов Kubernetes для созданной ServiceAccount:
 
-```shell-session
-$ stronghold write kubernetes/roles/my-role \
-   allowed_kubernetes_namespaces="*" \
-   service_account_name="test-service-account-with-generated-token" \
-   token_default_ttl="10m"
+```shell
+stronghold write kubernetes/roles/my-role \
+  allowed_kubernetes_namespaces="*" \
+  service_account_name="test-service-account-with-generated-token" \
+  token_default_ttl="10m"
 ```
 
-## Создание учетных данных
+## Создание учётных данных
 
-После того как пользователь прошел аутентификацию в Stronghold и получил достаточные права,
-запись в конечную точку `creds` для роли Stronghold сгенерирует и вернет новый токен учетной записи сервиса.
+После того как пользователь пройдёт аутентификацию в Stronghold и получит необходимые права, запись в эндпоинт `creds` для роли Stronghold сгенерирует и вернёт новый токен ServiceAccount:
 
-```shell-session
-$ stronghold write kubernetes/creds/my-role \
-    kubernetes_namespace=test
+```shell
+stronghold write kubernetes/creds/my-role \
+  kubernetes_namespace=test
+```
 
+Пример вывода:
+
+```console
 Key                        Value
-–--                        -----
+---                        -----
 lease_id                   kubernetes/creds/my-role/31d771a6-...
 lease_duration             10m0s
-lease_renwable             false
+lease_renewable            false
 service_account_name       test-service-account-with-generated-token
 service_account_namespace  test
 service_account_token      eyJHbGci0iJSUzI1NiIsImtpZCI6ImlrUEE...
 ```
 
-Вы можете использовать указанный выше токен учетной записи сервиса (`eyJHbG...`) для любого
-авторизованного запроса к Kubernetes API. Авторизацией управляют привязки ролей к учетной записи сервиса.
+Используйте полученный токен ServiceAccount для авторизованных запросов к API Kubernetes.
+Права доступа при этом определяются привязками ролей к ServiceAccount:
 
-```shell-session
-$ curl -sk $(d8 k config view --minify -o 'jsonpath={.clusters[].cluster.server}')/api/v1/namespaces/test/pods \
-    --header "Authorization: Bearer eyJHbGci0iJSUzI1Ni..."
+```shell
+curl -sk "$(d8 k config view --minify -o 'jsonpath={.clusters[].cluster.server}')/api/v1/namespaces/test/pods" \
+  --header "Authorization: Bearer eyJHbGci0iJSUzI1Ni..."
+```
+
+Пример ответа:
+
+```console
 {
   "kind": "PodList",
   "apiVersion": "v1",
@@ -232,11 +240,16 @@ $ curl -sk $(d8 k config view --minify -o 'jsonpath={.clusters[].cluster.server}
 }
 ```
 
-После истечения срока [аренды](../../concepts/lease/), можно удостовериться, что токен был отозван и больше не может быть использован для запросов к Kubernetes API.
+После истечения срока [аренды](../../concepts/lease/) проверьте, что токен был отозван и больше не может использоваться для запросов к API Kubernetes:
 
-```shell-session
-$ curl -sk $(d8 k config view --minify -o 'jsonpath={.clusters[].cluster.server}')/api/v1/namespaces/test/pods \
-    --header "Authorization: Bearer eyJHbGci0iJSUzI1Ni..."
+```shell
+curl -sk "$(d8 k config view --minify -o 'jsonpath={.clusters[].cluster.server}')/api/v1/namespaces/test/pods" \
+  --header "Authorization: Bearer eyJHbGci0iJSUzI1Ni..."
+```
+
+Пример ответа:
+
+```console
 {
   "kind": "Status",
   "apiVersion": "v1",
@@ -248,117 +261,138 @@ $ curl -sk $(d8 k config view --minify -o 'jsonpath={.clusters[].cluster.server}
 }
 ```
 
-## Время жизни токена (TTL) {#token-ttl}
+## Время жизни токена
 
-Токены учетной записи сервиса Kubernetes имеют время жизни (TTL). Когда срок
-действия токена истекает, токен автоматически отзывается.
+Токены ServiceAccount Kubernetes имеют время жизни.
+Когда срок действия токена истекает, токен автоматически отзывается.
 
-Можно установить стандартное (`token_default_ttl`) и максимальное время
-жизни (`token_max_ttl`) при создании или настройке роли Stronghold.
+При создании или настройке роли Stronghold можно указать стандартное время жизни `token_default_ttl` и максимальное время жизни `token_max_ttl`:
 
-```shell-session
-$ stronghold write kubernetes/roles/my-role \
-    allowed_kubernetes_namespaces="*" \
-    service_account_name="new-service-account-with-generated-token" \
-    token_default_ttl="10m" \
-    token_max_ttl="2h"
+```shell
+stronghold write kubernetes/roles/my-role \
+  allowed_kubernetes_namespaces="*" \
+  service_account_name="new-service-account-with-generated-token" \
+  token_default_ttl="10m" \
+  token_max_ttl="2h"
 ```
 
-Вы также можете задать время жизни (`ttl`) при генерации токена из конечной точки `creds`.
-Если время жизни токена не указан, он будет использоваться по умолчанию (и не может превышать максимальный срок (`token_max_ttl`) роли, если он есть).
+Также можно задать время жизни `ttl` при генерации токена через эндпоинт `creds`.
+Если значение `ttl` не указано, используется значение по умолчанию.
+Оно не может превышать `token_max_ttl`, если этот параметр задан:
 
-```shell-session
-$ stronghold write kubernetes/creds/my-role \
-    kubernetes_namespace=test \
-    ttl=20m
+```shell
+stronghold write kubernetes/creds/my-role \
+  kubernetes_namespace=test \
+  ttl=20m
+```
 
+Пример вывода:
+
+```console
 Key                        Value
-–--                        -----
+---                        -----
 lease_id                   kubernetes/creds/my-role/31d771a6-...
 lease_duration             20m0s
-lease_renwable             false
+lease_renewable            false
 service_account_name       new-service-account-with-generated-token
 service_account_namespace  test
 service_account_token      eyJHbGci0iJSUzI1NiIsImtpZCI6ImlrUEE...
 ```
 
-Можно проверить время жизни токена JWT-токена. Для этого декодируем токен и конвертируем
-поля `iat` (issued at) и `exp` (expiration time) из формата timestamp в удобночитаемый.
+Проверить время жизни JWT-токена можно, декодировав его и преобразовав поля `iat` и `exp` из формата timestamp в читаемый вид:
 
-```shell-session
-$ echo 'eyJhbGc...' | cut -d'.' -f2 | base64 -d  | jq -r '.iat,.exp|todate'
+```shell
+echo 'eyJhbGc...' | cut -d'.' -f2 | base64 -d | jq -r '.iat,.exp|todate'
+```
+
+Пример вывода:
+
+```console
 2022-05-20T17:14:50Z
 2022-05-20T17:34:50Z
 ```
 
-## Аудитория (aud)
+## API audience
 
-Токены в Kubernetes имеют формат JWT, а значит, используют механизм "утверждений" (claims).
-Одним из таких является утверждение `aud` (аудитория) - это строка или массив строк, которые
-идентифицируют получателей, для которых предназначен JWT. Для более подробной информации ознакомьтесь со спецификацией [JWT audience claim](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1.3)
+Токены Kubernetes имеют формат JWT и содержат набор утверждений.
+Одно из них — `aud`.
+Это строка или массив строк, которые определяют получателей токена.
+Дополнительную информацию см. в спецификации [JWT audience claim](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1.3).
 
-Вы можете задать аудитории по умолчанию (`token_default_audiences`) при создании или настройке роли Stronghold.
-Если явно не задано, по умолчанию кластер Kubernetes будет использовать свои значения аудитории для токенов учетной записи сервиса.
+При создании или настройке роли Stronghold можно задать аудитории по умолчанию через параметр `token_default_audiences`.
+Если параметр не указан, кластер Kubernetes использует собственные значения аудитории для токенов ServiceAccount:
 
-```shell-session
-$ stronghold write kubernetes/roles/my-role \
-    allowed_kubernetes_namespaces="*" \
-    service_account_name="new-service-account-with-generated-token" \
-    token_default_audiences="custom-audience"
+```shell
+stronghold write kubernetes/roles/my-role \
+  allowed_kubernetes_namespaces="*" \
+  service_account_name="new-service-account-with-generated-token" \
+  token_default_audiences="custom-audience"
 ```
 
-Вы также можете задать аудитории (`audiences`) при генерации токена из конечной точки `creds`.
-Если аудитории токена не заданы, то они будут заданы по умолчанию из значения поля `token_default_audiences`, которое мы указывали ранее.
+Также можно указать аудитории через параметр `audiences` при генерации токена через эндпоинт `creds`.
+Если значение не задано, используется `token_default_audiences`:
 
-```shell-session
-$ stronghold write kubernetes/creds/my-role \
-    kubernetes_namespace=test \
-    audiences="another-custom-audience"
+```shell
+stronghold write kubernetes/creds/my-role \
+  kubernetes_namespace=test \
+  audiences="another-custom-audience"
+```
 
+Пример вывода:
+
+```console
 Key                        Value
-–--                        -----
+---                        -----
 lease_id                   kubernetes/creds/my-role/SriWQf0bPZ...
 lease_duration             768h
-lease_renwable             false
+lease_renewable            false
 service_account_name       new-service-account-with-generated-token
 service_account_namespace  test
 service_account_token      eyJHbGci0iJSUzI1NiIsImtpZCI6ImlrUEE...
 ```
 
-Аудиторию токена можно проверить, расшифровав JWT.
+Проверить аудиторию токена можно, расшифровав JWT:
 
-```shell-session
-$ echo 'eyJhbGc...' | cut -d'.' -f2 | base64 -d
+```shell
+echo 'eyJhbGc...' | cut -d'.' -f2 | base64 -d
+```
+
+Пример вывода:
+
+```console
 {"aud":["another-custom-audience"]...
 ```
 
-## Автоматическое управление ролями и учетными записями сервиса {#roles-and-sa}
+## Автоматическое управление ролями и учётными записями сервиса {#roles-and-sa}
 
-При настройке роли Stronghold вы можете передать параметры, чтобы указать, что
-вы хотите автоматически генерировать учетные записи сервиса и привязку
-роли, а также, по желанию, генерировать саму роль Kubernetes.
+При настройке роли Stronghold можно передать параметры, которые включают автоматическое создание ServiceAccount и RoleBinding.
+При необходимости Stronghold может автоматически создавать и саму роль Kubernetes.
 
-Если вы хотите настроить роль Stronghold на использование уже существующей роли
-Kubernetes, но при этом автоматически создать учетную запись сервиса и привязку
-роли, вы можете задать параметр `kubernetes_role_name`.
+Если нужно использовать существующую роль Kubernetes, но при этом автоматически создавать ServiceAccount и RoleBinding, задайте параметр `kubernetes_role_name`:
 
-```shell-session
-$ stronghold write kubernetes/roles/auto-managed-sa-role \
-    allowed_kubernetes_namespaces="test" \
-    kubernetes_role_name="test-role-list-pods"
+```shell
+stronghold write kubernetes/roles/auto-managed-sa-role \
+  allowed_kubernetes_namespaces="test" \
+  kubernetes_role_name="test-role-list-pods"
 ```
 
-{{< alert >}}
-Учетной записи сервиса Stronghold также потребуется доступ к ресурсам, к которым она предоставляет доступ.
-Это можно сделать для приведенных выше примеров с помощью команды `d8 k -n test create rolebinding --role test-role-list-pods --serviceaccount=stronghold:stronghold stronghold stronghold-test-role-abilities`.
-Так Kubernetes предотвращает эскалацию привилегий. Более подробную информацию вы можете прочитать в документации к [Kubernetes RBAC](https://kubernetes.io/docs/reference/access-authn-authz/rbac/#privilege-escalation-prevention-and-bootstrapping).
+{{< alert level="warning" >}}
+ServiceAccount Stronghold также потребуется доступ к ресурсам, доступ к которым она выдаёт.
+Для примера выше можно выполнить команду `d8 k -n test create rolebinding --role test-role-list-pods --serviceaccount=stronghold:stronghold stronghold stronghold-test-role-abilities`.
+Так Kubernetes предотвращает эскалацию привилегий.
+Дополнительную информацию см. в документации [Kubernetes RBAC](https://kubernetes.io/docs/reference/access-authn-authz/rbac/#privilege-escalation-prevention-and-bootstrapping).
 {{< /alert >}}
 
-После чего вы можете получить учетные данные с помощью автоматически созданной учетной записи сервиса.
+После этого можно получить учётные данные с помощью автоматически созданной ServiceAccount:
 
-```shell-session
-$ stronghold write kubernetes/creds/auto-managed-sa-role \
-    kubernetes_namespace=test
+```shell
+stronghold write kubernetes/creds/auto-managed-sa-role \
+  kubernetes_namespace=test
+```
+
+Пример вывода:
+
+```console
 Key                          Value
 ---                          -----
 lease_id                     kubernetes/creds/auto-managed-sa-role/cujRLYjKZUMQk6dkHBGGWm67
@@ -369,21 +403,25 @@ service_account_namespace    test
 service_account_token        eyJHbGci0iJSUzI1Ni...
 ```
 
-Кроме того, Stronghold может автоматически создать роль в дополнение к учетной записи сервиса и
-привязке роли, указав параметр `generated_role_rules`, в который передается набор правил
-JSON или YAML для создаваемой роли.
+Stronghold также может автоматически создать роль вместе с ServiceAccount и RoleBinding.
+Для этого укажите параметр `generated_role_rules`, в который передаётся набор правил JSON или YAML для создаваемой роли:
 
-```shell-session
-$ stronghold write kubernetes/roles/auto-managed-sa-and-role \
-    allowed_kubernetes_namespaces="test" \
-    generated_role_rules='{"rules":[{"apiGroups":[""],"resources":["pods"],"verbs":["list"]}]}'
+```shell
+stronghold write kubernetes/roles/auto-managed-sa-and-role \
+  allowed_kubernetes_namespaces="test" \
+  generated_role_rules='{"rules":[{"apiGroups":[""],"resources":["pods"],"verbs":["list"]}]}'
 ```
 
-После этого можно получить учетные данные тем же способом, что и раньше.
+После этого получите учётные данные тем же способом:
 
-```shell-session
-$ stronghold write kubernetes/creds/auto-managed-sa-and-role \
-    kubernetes_namespace=test
+```shell
+stronghold write kubernetes/creds/auto-managed-sa-and-role \
+  kubernetes_namespace=test
+```
+
+Пример вывода:
+
+```console
 Key                          Value
 ---                          -----
 lease_id                     kubernetes/creds/auto-managed-sa-and-role/pehLtegoTP8vCkcaQozUqOHf

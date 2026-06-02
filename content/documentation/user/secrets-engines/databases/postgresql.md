@@ -3,71 +3,55 @@ title: "PostgreSQL"
 weight: 20
 ---
 
-## PostgreSQL database secrets engine
+PostgreSQL is one of the supported plugins for the database secrets engine.
+The plugin dynamically generates database credentials based on configured PostgreSQL roles.
+Static roles are also supported.
 
-PostgreSQL is one of the supported plugins for the database secrets engine. This
-plugin generates database credentials dynamically based on configured roles for
-the PostgreSQL database, and also supports Static
-Roles.
+## Features
 
-## Capabilities
+The following features are supported:
 
-| Plugin Name                  | Root Credential Rotation | Dynamic Roles | Static Roles | Username Customization |
-| ---------------------------- | ------------------------ | ------------- | ------------ | ---------------------- |
-| `postgresql-database-plugin` | Yes                      | Yes           | Yes          | Yes (1.7+)             |
+| Plugin name | Root credential rotation | Dynamic roles | Static roles | Username customization |
+| --- | --- | --- | --- | --- |
+| `postgresql-database-plugin` | Yes | Yes | Yes | Yes |
 
-## Setup
+## Connection setup
 
-1. Enable the database secrets engine if it is not already enabled:
+To configure the PostgreSQL plugin, complete the following steps:
 
-    ```shell-session
-    $ d8 stronghold secrets enable database
-    Success! Enabled the database secrets engine at: database/
-    ```
+1. Enable the database secrets engine if it is not already enabled.
 
-    By default, the secrets engine will enable at the name of the engine. To
-    enable the secrets engine at a different path, use the `-path` argument.
+   ```shell
+   d8 stronghold secrets enable database
+   ```
 
-1. Configure Stronghold with the proper plugin and connection information:
+1. Configure the PostgreSQL connection.
 
-    ```shell-session
-    $ d8 stronghold write database/config/my-postgresql-database \
-        plugin_name="postgresql-database-plugin" \
-        allowed_roles="my-role" \
-        connection_url="postgresql://{{username}}:{{password}}@localhost:5432/database-name" \
-        username="strongholduser" \
-        password="strongholdpass" \
-        password_authentication="scram-sha-256"
-    ```
+   ```shell
+   d8 stronghold write database/config/my-postgresql-database \
+     plugin_name="postgresql-database-plugin" \
+     allowed_roles="my-role" \
+     connection_url="postgresql://{{username}}:{{password}}@localhost:5432/database-name" \
+     username="strongholduser" \
+     password="strongholdpass" \
+     password_authentication="scram-sha-256"
+   ```
 
-1. Configure a role that maps a name in Stronghold to an SQL statement to execute to
-    create the database credential:
+1. Create a Stronghold role that maps the role name to SQL statements for creating an account in PostgreSQL.
 
-    ```shell-session
-    $ d8 stronghold write database/roles/my-role \
-        db_name="my-postgresql-database" \
-        creation_statements="CREATE ROLE \"{{name}}\" WITH LOGIN PASSWORD '{{password}}' VALID UNTIL '{{expiration}}'; \
-            GRANT SELECT ON ALL TABLES IN SCHEMA public TO \"{{name}}\";" \
-        default_ttl="1h" \
-        max_ttl="24h"
-    Success! Data written to: database/roles/my-role
-    ```
+   ```shell
+   d8 stronghold write database/roles/my-role \
+     db_name="my-postgresql-database" \
+     creation_statements="CREATE ROLE \"{{name}}\" WITH LOGIN PASSWORD '{{password}}' VALID UNTIL '{{expiration}}'; \
+       GRANT SELECT ON ALL TABLES IN SCHEMA public TO \"{{name}}\";" \
+     default_ttl="1h" \
+     max_ttl="24h"
+   ```
 
-## Usage
+## Getting credentials
 
-After the secrets engine is configured and a user/machine has an Stronghold token with
-the proper permission, it can generate credentials.
+To generate a new account, run the following command:
 
-1. Generate a new credential by reading from the `/creds` endpoint with the name
-    of the role:
-
-    ```shell-session
-    $ d8 stronghold read database/creds/my-role
-    Key                Value
-    ---                -----
-    lease_id           database/creds/my-role/2f6a614c-4aa2-7b19-24b9-ad944a8d4de6
-    lease_duration     1h
-    lease_renewable    true
-    password           SsnoaA-8Tv4t34f41baD
-    username           v-strongholduse-my-role-x
-    ```
+```shell
+d8 stronghold read database/creds/my-role
+```

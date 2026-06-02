@@ -99,9 +99,9 @@ For authenticated search, use the following parameters:
 
 By default, the filter is `({{.UserAttr}}={{.Username}})`. If `upndomain` is set, the default filter becomes `(userPrincipalName={{.Username}}@UPNDomain)`.
 
-{% alert level="warning" %}
+{{< alert level="warning" >}}
 If you specify `userfilter`, include either the templated value `{{.UserAttr}}` or a literal value that matches `userattr`. This ensures the lookup returns a unique result and prevents collisions during login.
-{% endalert %}
+{{< /alert >}}
 
 #### Anonymous search
 
@@ -114,9 +114,9 @@ For anonymous search, use the following parameters:
 - `deny_null_bind` — prevents authentication bypass with an empty password. The default value is `true`.
 - `anonymous_group_search` — enables anonymous connections for group lookup. The default value is `false`.
 
-{% alert level="warning" %}
+{{< alert level="warning" >}}
 If you specify `userfilter`, include either the templated value `{{.UserAttr}}` or a literal value that matches `userattr`. This ensures the lookup returns a unique result and prevents collisions during login.
-{% endalert %}
+{{< /alert >}}
 
 #### Using UPN in Active Directory
 
@@ -156,7 +156,7 @@ The following additional parameters are also supported:
 - `upndomain` — sets the UPN domain used for authentication.
 - `discoverdn` — enables automatic detection of the user's bind DN.
 
-Terminology on this page uses canonical forms from the glossary. For example, `alias` is used as the canonical term [1].
+Terminology on this page uses canonical forms from the glossary. For example, `alias` is used as the canonical term.
 
 ## Configuration examples
 
@@ -256,9 +256,9 @@ Default values:
 
 You can disable this feature with `auth tune` by passing `disable_lockout=true`.
 
-{% alert level="warning" %}
+{{< alert level="warning" >}}
 This mechanism is supported only by the `userpass`, `ldap`, and `approle` methods.
-{% endalert %}
+{{< /alert >}}
 
 ## DN escaping
 

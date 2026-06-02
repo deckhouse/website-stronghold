@@ -8,9 +8,9 @@ weight: 30
 After you sign in to Deckhouse Stronghold successfully, you can proceed to the first practical operation — writing and reading a secret.
 This example uses the `KV` secrets engine.
 
-{% alert level="info" %}
+{{< alert level="info" >}}
 The `KV` secrets engine can operate in two modes: `KV v1` — without versioning, and `KV v2` — with versioning and additional features. This section uses a basic scenario. For detailed information about the differences between `KV v1` and `KV v2`, refer to the dedicated documentation section [KV secrets engines](../secrets-engines/kv/overview/).
-{% endalert %}
+{{< /alert >}}
 
 ## Prerequisites
 
@@ -84,9 +84,9 @@ If you have not signed in to Stronghold yet, complete the steps in the [First si
     d8 stronghold kv delete secret/my-first-secret
     ```
 
-{% alert level="info" %}
+{{< alert level="info" >}}
 Deletion behavior depends on the mode in use: `KV v1` or `KV v2`. In `KV v2`, deletion can be soft and use versioning. For details, refer to the dedicated sections about `KV`.
-{% endalert %}
+{{< /alert >}}
 
 ## What happens when you work with a secret
 

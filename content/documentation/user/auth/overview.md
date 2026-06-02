@@ -16,9 +16,9 @@ When choosing an authentication method, consider not only the sign-in mechanism 
 - an application in Kubernetes.
 - an external tool or integration.
 
-{% alert level="info" %}
+{{< alert level="info" >}}
 A specific authentication method must be enabled and configured by an administrator in advance. If the required method is unavailable in your installation, contact your Deckhouse Stronghold administrator.
-{% endalert %}
+{{< /alert >}}
 
 ## Choosing an authentication method
 
@@ -168,8 +168,8 @@ In many scenarios, Deckhouse Stronghold delegates authentication to an external 
 
 When an external authentication method is used, Deckhouse Stronghold calls the external service during sign-in and during subsequent token renewal operations. If the entity status changes in the external system, for example if the account is disabled or expires, Deckhouse Stronghold rejects token renewal requests associated with that entity. At the same time, already issued tokens remain valid until their original expiration time unless they are explicitly revoked in Deckhouse Stronghold.
 
-{% alert level="warning" %}
+{{< alert level="warning" >}}
 When you use external authentication methods, set an appropriate token TTL. This helps limit the lifetime of already issued tokens if access in the external system is changed or revoked.
-{% endalert %}
+{{< /alert >}}
 
 If an authentication method is disabled, all users and applications that used this method lose the ability to sign in again.

@@ -1,212 +1,137 @@
 ---
-title: "PKI Secrets engine"
+title: "PKI secrets engine"
 weight: 20
 ---
 
-This document provides a brief overview of setting up an Stronghold PKI Secrets
-Engine with a Root CA certificate.
+The PKI secrets engine allows Stronghold to work as a certificate authority (CA).
+It can generate dynamic root and intermediate certificates and sign certificates on request.
 
-## Mount the backend
+The Public Key Infrastructure (PKI) secrets engine generates dynamic X.509 certificates.
+With this secrets engine, services can obtain certificates without manually creating a private key and certificate signing request (CSR), submitting a request to the CA, and waiting for verification and signing.
+The built-in authentication and authorization mechanisms in Stronghold provide the required verification.
 
-The first step to using the PKI backend is to mount it. Unlike the `kv`
-backend, the `pki` backend is not mounted by default.
+If you use a short TTL, certificate revocation is needed less often.
+This helps keep the certificate revocation list (CRL) short and reduces the load on the secrets engine.
+As a result, each application instance can use its own certificate instead of sharing one with other instances, which simplifies rotation and revocation.
 
-```shell-session
-$ d8 stronghold secrets enable pki
-Successfully mounted 'pki' at 'pki'!
-```
+The PKI secrets engine also supports ephemeral certificates.
+Applications can retrieve and store them in memory at startup and delete them on shutdown without writing them to disk.
 
-## Configure a CA certificate
+## Configuration
 
-Next, Stronghold must be configured with a CA certificate and associated private
-key. We'll take advantage of the backend's self-signed root generation support,
-but Stronghold also supports generating an intermediate CA (with a CSR for signing)
-or setting a PEM-encoded certificate and private key bundle directly into the
-backend.
+Most secrets engines must be configured in advance before they can perform their functions.
+These steps are usually performed by an operator or a configuration management system.
 
-Generally you'll want a root certificate to only be used to sign CA
-intermediate certificates, but for this example we'll proceed as if you will
-issue certificates directly from the root. As it's a root, we'll want to set a
-long maximum life time for the certificate; since it honors the maximum mount
-TTL, first we adjust that:
+1. Enable the PKI secrets engine:
 
-```shell-session
-$ d8 stronghold secrets tune -max-lease-ttl=87600h pki
-Successfully tuned mount 'pki'!
-```
+   ```shell
+   d8 stronghold secrets enable pki
+   ```
 
-That sets the maximum TTL for secrets issued from the mount to 10 years. (Note
-that roles can further restrict the maximum TTL.)
+   Example output:
 
-Now, we generate our root certificate:
+   ```console
+   Success! Enabled the pki secrets engine at: pki/
+   ```
 
-```shell-session
-$ d8 stronghold write pki/root/generate/internal common_name=myopenbao.com ttl=87600h
-Key             Value
----             -----
-certificate     -----BEGIN CERTIFICATE-----
-MIIDNTCCAh2gAwIBAgIUJqrw/9EDZbp4DExaLjh0vSAHyBgwDQYJKoZIhvcNAQEL
-BQAwFjEUMBIGA1UEAxMLbXl2YXVsdC5jb20wHhcNMTcxMjA4MTkyMzIwWhcNMjcx
-MjA2MTkyMzQ5WjAWMRQwEgYDVQQDEwtteXZhdWx0LmNvbTCCASIwDQYJKoZIhvcN
-AQEBBQADggEPADCCAQoCggEBAKY/vJ6sRFym+yFYUneoVtDmOCaDKAQiGzQw0IXL
-wgMBBb82iKpYj5aQjXZGIl+VkVnCi+M2AQ/iYXWZf1kTAdle4A6OC4+VefSIa2b4
-eB7R8aiGTce62jB95+s5/YgrfIqk6igfpCSXYLE8ubNDA2/+cqvjhku1UzlvKBX2
-hIlgWkKlrsnybHN+B/3Usw9Km/87rzoDR3OMxLV55YPHiq6+olIfSSwKAPjH8LZm
-uM1ITLG3WQUl8ARF17Dj+wOKqbUG38PduVwKL5+qPksrvNwlmCP7Kmjncc6xnYp6
-5lfr7V4DC/UezrJYCIb0g/SvtxoN1OuqmmvSTKiEE7hVOAcCAwEAAaN7MHkwDgYD
-VR0PAQH/BAQDAgEGMA8GA1UdEwEB/wQFMAMBAf8wHQYDVR0OBBYEFECKdYM4gDbM
-kxRZA2wR4f/yNhQUMB8GA1UdIwQYMBaAFECKdYM4gDbMkxRZA2wR4f/yNhQUMBYG
-A1UdEQQPMA2CC215dmF1bHQuY29tMA0GCSqGSIb3DQEBCwUAA4IBAQCCJKZPcjjn
-7mvD2+sr6lx4DW/vJwVSW8eTuLtOLNu6/aFhcgTY/OOB8q4n6iHuLrEt8/RV7RJI
-obRx74SfK9BcOLt4+DHGnFXqu2FNVnhDMOKarj41yGyXlJaQRUPYf6WJJLF+ZphN
-nNsZqHJHBfZtpJpE5Vywx3pah08B5yZHk1ItRPEz7EY3uwBI/CJoBb+P5Ahk6krc
-LZ62kFwstkVuFp43o3K7cRNexCIsZGx2tsyZ0nyqDUFsBr66xwUfn3C+/1CDc9YL
-zjq+8nI2ooIrj4ZKZCOm2fKd1KeGN/CZD7Ob6uNhXrd0Tjwv00a7nffvYQkl/1V5
-BT55jevSPVVu
------END CERTIFICATE-----
-expiration      1828121029
-issuing_ca      -----BEGIN CERTIFICATE-----
-MIIDNTCCAh2gAwIBAgIUJqrw/9EDZbp4DExaLjh0vSAHyBgwDQYJKoZIhvcNAQEL
-BQAwFjEUMBIGA1UEAxMLbXl2YXVsdC5jb20wHhcNMTcxMjA4MTkyMzIwWhcNMjcx
-MjA2MTkyMzQ5WjAWMRQwEgYDVQQDEwtteXZhdWx0LmNvbTCCASIwDQYJKoZIhvcN
-AQEBBQADggEPADCCAQoCggEBAKY/vJ6sRFym+yFYUneoVtDmOCaDKAQiGzQw0IXL
-wgMBBb82iKpYj5aQjXZGIl+VkVnCi+M2AQ/iYXWZf1kTAdle4A6OC4+VefSIa2b4
-eB7R8aiGTce62jB95+s5/YgrfIqk6igfpCSXYLE8ubNDA2/+cqvjhku1UzlvKBX2
-hIlgWkKlrsnybHN+B/3Usw9Km/87rzoDR3OMxLV55YPHiq6+olIfSSwKAPjH8LZm
-uM1ITLG3WQUl8ARF17Dj+wOKqbUG38PduVwKL5+qPksrvNwlmCP7Kmjncc6xnYp6
-5lfr7V4DC/UezrJYCIb0g/SvtxoN1OuqmmvSTKiEE7hVOAcCAwEAAaN7MHkwDgYD
-VR0PAQH/BAQDAgEGMA8GA1UdEwEB/wQFMAMBAf8wHQYDVR0OBBYEFECKdYM4gDbM
-kxRZA2wR4f/yNhQUMB8GA1UdIwQYMBaAFECKdYM4gDbMkxRZA2wR4f/yNhQUMBYG
-A1UdEQQPMA2CC215dmF1bHQuY29tMA0GCSqGSIb3DQEBCwUAA4IBAQCCJKZPcjjn
-7mvD2+sr6lx4DW/vJwVSW8eTuLtOLNu6/aFhcgTY/OOB8q4n6iHuLrEt8/RV7RJI
-obRx74SfK9BcOLt4+DHGnFXqu2FNVnhDMOKarj41yGyXlJaQRUPYf6WJJLF+ZphN
-nNsZqHJHBfZtpJpE5Vywx3pah08B5yZHk1ItRPEz7EY3uwBI/CJoBb+P5Ahk6krc
-LZ62kFwstkVuFp43o3K7cRNexCIsZGx2tsyZ0nyqDUFsBr66xwUfn3C+/1CDc9YL
-zjq+8nI2ooIrj4ZKZCOm2fKd1KeGN/CZD7Ob6uNhXrd0Tjwv00a7nffvYQkl/1V5
-BT55jevSPVVu
------END CERTIFICATE-----
-serial_number   26:aa:f0:ff:d1:03:65:ba:78:0c:4c:5a:2e:38:74:bd:20:07:c8:18
-```
+   By default, the secrets engine is mounted at the engine name.
+   To enable it at a different path, use the `-path` argument.
 
-The returned certificate is purely informational; it and its private key are
-safely stored in the backend mount.
+1. Increase the TTL for the secrets engine.
+   The default value of 30 days may be too short.
+   For example, you can increase it to one year:
 
-## Set URL configuration
+   ```shell
+   d8 stronghold secrets tune -max-lease-ttl=8760h pki
+   ```
 
-Generated certificates can have the CRL location and the location of the
-issuing certificate encoded. These values must be set manually and typically to FQDN associated to the Stronghold server, but can be changed at any time.
+   Example output:
 
-```shell-session
-$ d8 stronghold write pki/config/urls issuing_certificates="http://openbao.example.com:8200/v1/pki/ca" crl_distribution_points="http://openbao.example.com:8200/v1/pki/crl"
-Success! Data written to: pki/ca/urls
-```
+   ```console
+   Success! Tuned the secrets engine at: pki/
+   ```
 
-## Configure a role
+   Individual roles can still limit this value for specific certificates.
+   This parameter only sets the global maximum TTL for the secrets engine.
 
-The next step is to configure a role. A role is a logical name that maps to a
-policy used to generate those credentials. For example, let's create an
-"example-dot-com" role:
+1. Configure the CA certificate and private key.
+   Stronghold can use an existing key pair or generate its own self-signed root certificate.
+   In most cases, it is recommended to keep the root CA outside Stronghold and provide Stronghold with a signed intermediate CA.
 
-```shell-session
-$ d8 stronghold write pki/roles/example-dot-com \
-    allowed_domains=example.com \
-    allow_subdomains=true max_ttl=72h
-Success! Data written to: pki/roles/example-dot-com
-```
+   ```shell
+   d8 stronghold write pki/root/generate/internal \
+     common_name=my-website.ru \
+     ttl=8760h
+   ```
 
-## Issue certificates
+   Example output:
 
-By writing to the `roles/example-dot-com` path we are defining the
-`example-dot-com` role. To generate a new certificate, we simply write
-to the `issue` endpoint with that role name: Stronghold is now configured to create
-and manage certificates!
+   ```console
+   Key              Value
+   ---              -----
+   certificate      -----BEGIN CERTIFICATE-----...
+   expiration       1756317679
+   issuing_ca       -----BEGIN CERTIFICATE-----...
+   serial_number    fc:f1:fb:2c:6d:4d:99:1e:82:1b:08:0a:81:ed:61:3e:1d:fa:f5:29
+   ```
 
-```shell-session
-$ d8 stronghold write pki/issue/example-dot-com \
-    common_name=blah.example.com
-Key                 Value
----                 -----
-certificate         -----BEGIN CERTIFICATE-----
-MIIDvzCCAqegAwIBAgIUWQuvpMpA2ym36EoiYyf3Os5UeIowDQYJKoZIhvcNAQEL
-BQAwFjEUMBIGA1UEAxMLbXl2YXVsdC5jb20wHhcNMTcxMjA4MTkyNDA1WhcNMTcx
-MjExMTkyNDM1WjAbMRkwFwYDVQQDExBibGFoLmV4YW1wbGUuY29tMIIBIjANBgkq
-hkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1CU93lVgcLXGPxRGTRT3GM5wqytCo7Z6
-gjfoHyKoPCAqjRdjsYgp1FMvumNQKjUat5KTtr2fypbOnAURDCh4bN/omcj7eAqt
-ldJ8mf8CtKUaaJ1kp3R6RRFY/u96BnmKUG8G7oDeEDsKlXuEuRcNbGlGF8DaM/O1
-HFa57cM/8yFB26Nj5wBoG5Om6ee5+W+14Qee8AB6OJbsf883Z+zvhJTaB0QM4ZUq
-uAMoMVEutWhdI5EFm5OjtMeMu2U+iJl2XqqgQ/JmLRjRdMn1qd9TzTaVSnjoZ97s
-jHK444Px1m45einLqKUJ+Ia2ljXYkkItJj9Ut6ZSAP9fHlAtX84W3QIDAQABo4H/
-MIH8MA4GA1UdDwEB/wQEAwIDqDAdBgNVHSUEFjAUBggrBgEFBQcDAQYIKwYBBQUH
-AwIwHQYDVR0OBBYEFH/YdObW6T94U0zuU5hBfTfU5pt1MB8GA1UdIwQYMBaAFECK
-dYM4gDbMkxRZA2wR4f/yNhQUMDsGCCsGAQUFBwEBBC8wLTArBggrBgEFBQcwAoYf
-aHR0cDovLzEyNy4wLjAuMTo4MjAwL3YxL3BraS9jYTAbBgNVHREEFDASghBibGFo
-LmV4YW1wbGUuY29tMDEGA1UdHwQqMCgwJqAkoCKGIGh0dHA6Ly8xMjcuMC4wLjE6
-ODIwMC92MS9wa2kvY3JsMA0GCSqGSIb3DQEBCwUAA4IBAQCDXbHV68VayweB2tkb
-KDdCaveaTULjCeJUnm9UT/6C0YqC/RxTAjdKFrilK49elOA3rAtEL6dmsDP2yH25
-ptqi2iU+y99HhZgu0zkS/p8elYN3+l+0O7pOxayYXBkFf5t0TlEWSTb7cW+Etz/c
-MvSqx6vVvspSjB0PsA3eBq0caZnUJv2u/TEiUe7PPY0UmrZxp/R/P/kE54yI3nWN
-4Cwto6yUwScOPbVR1d3hE2KU2toiVkEoOk17UyXWTokbG8rG0KLj99zu7my+Fyre
-sjV5nWGDSMZODEsGxHOC+JgNAC1z3n14/InFNOsHICnA5AnJzQdSQQjvcZHN2NyW
-+t4f
------END CERTIFICATE-----
-issuing_ca          -----BEGIN CERTIFICATE-----
-MIIDNTCCAh2gAwIBAgIUJqrw/9EDZbp4DExaLjh0vSAHyBgwDQYJKoZIhvcNAQEL
-BQAwFjEUMBIGA1UEAxMLbXl2YXVsdC5jb20wHhcNMTcxMjA4MTkyMzIwWhcNMjcx
-MjA2MTkyMzQ5WjAWMRQwEgYDVQQDEwtteXZhdWx0LmNvbTCCASIwDQYJKoZIhvcN
-AQEBBQADggEPADCCAQoCggEBAKY/vJ6sRFym+yFYUneoVtDmOCaDKAQiGzQw0IXL
-wgMBBb82iKpYj5aQjXZGIl+VkVnCi+M2AQ/iYXWZf1kTAdle4A6OC4+VefSIa2b4
-eB7R8aiGTce62jB95+s5/YgrfIqk6igfpCSXYLE8ubNDA2/+cqvjhku1UzlvKBX2
-hIlgWkKlrsnybHN+B/3Usw9Km/87rzoDR3OMxLV55YPHiq6+olIfSSwKAPjH8LZm
-uM1ITLG3WQUl8ARF17Dj+wOKqbUG38PduVwKL5+qPksrvNwlmCP7Kmjncc6xnYp6
-5lfr7V4DC/UezrJYCIb0g/SvtxoN1OuqmmvSTKiEE7hVOAcCAwEAAaN7MHkwDgYD
-VR0PAQH/BAQDAgEGMA8GA1UdEwEB/wQFMAMBAf8wHQYDVR0OBBYEFECKdYM4gDbM
-kxRZA2wR4f/yNhQUMB8GA1UdIwQYMBaAFECKdYM4gDbMkxRZA2wR4f/yNhQUMBYG
-A1UdEQQPMA2CC215dmF1bHQuY29tMA0GCSqGSIb3DQEBCwUAA4IBAQCCJKZPcjjn
-7mvD2+sr6lx4DW/vJwVSW8eTuLtOLNu6/aFhcgTY/OOB8q4n6iHuLrEt8/RV7RJI
-obRx74SfK9BcOLt4+DHGnFXqu2FNVnhDMOKarj41yGyXlJaQRUPYf6WJJLF+ZphN
-nNsZqHJHBfZtpJpE5Vywx3pah08B5yZHk1ItRPEz7EY3uwBI/CJoBb+P5Ahk6krc
-LZ62kFwstkVuFp43o3K7cRNexCIsZGx2tsyZ0nyqDUFsBr66xwUfn3C+/1CDc9YL
-zjq+8nI2ooIrj4ZKZCOm2fKd1KeGN/CZD7Ob6uNhXrd0Tjwv00a7nffvYQkl/1V5
-BT55jevSPVVu
------END CERTIFICATE-----
-private_key         -----BEGIN RSA PRIVATE KEY-----
-MIIEpAIBAAKCAQEA1CU93lVgcLXGPxRGTRT3GM5wqytCo7Z6gjfoHyKoPCAqjRdj
-sYgp1FMvumNQKjUat5KTtr2fypbOnAURDCh4bN/omcj7eAqtldJ8mf8CtKUaaJ1k
-p3R6RRFY/u96BnmKUG8G7oDeEDsKlXuEuRcNbGlGF8DaM/O1HFa57cM/8yFB26Nj
-5wBoG5Om6ee5+W+14Qee8AB6OJbsf883Z+zvhJTaB0QM4ZUquAMoMVEutWhdI5EF
-m5OjtMeMu2U+iJl2XqqgQ/JmLRjRdMn1qd9TzTaVSnjoZ97sjHK444Px1m45einL
-qKUJ+Ia2ljXYkkItJj9Ut6ZSAP9fHlAtX84W3QIDAQABAoIBAQCf5YIANfF+gkNt
-/+YM6yRi+hZJrU2I/1zPETxPW1vaFZR8y4hEoxCEDD8JCRm+9k+w1TWoorvxgkEv
-r1HuDALYbNtwLd/71nCHYCKyH1b2uQpyl07qOAyASlb9r5oVjz4E6eobkd3N9fJA
-QN0EdK+VarN968mLJsD3Hxb8chGdObBCQ+LO+zdqQLaz+JwhfnK98rm6huQtYK3w
-ccd0OwoVmtZz2eJl11TJkB9fi4WqJyxl4wST7QC80LstB1deR78oDmN5WUKU12+G
-4Mrgc1hRwUSm18HTTgAhaA4A3rjPyirBohb5Sf+jJxusnnay7tvWeMnIiRI9mqCE
-dr3tLrcxAoGBAPL+jHVUF6sxBqm6RTe8Ewg/8RrGmd69oB71QlVUrLYyC96E2s56
-19dcyt5U2z+F0u9wlwR1rMb2BJIXbxlNk+i87IHmpOjCMS38SPZYWLHKj02eGfvA
-MjKKqEjNY/md9eVAVZIWSEy63c4UcBK1qUH3/5PNlyjk53gCOI/4OXX/AoGBAN+A
-Alyd6A/pyHWq8WMyAlV18LnzX8XktJ07xrNmjbPGD5sEHp+Q9V33NitOZpu3bQL+
-gCNmcrodrbr9LBV83bkAOVJrf82SPaBesV+ATY7ZiWpqvHTmcoS7nglM2XTr+uWR
-Y9JGdpCE9U5QwTc6qfcn7Eqj7yNvvHMrT+1SHwsjAoGBALQyQEbhzYuOF7rV/26N
-ci+z+0A39vNO++b5Se+tk0apZlPlgb2NK3LxxR+LHevFed9GRzdvbGk/F7Se3CyP
-cxgswdazC6fwGjhX1mOYsG1oIU0V6X7f0FnaqWETrwf1M9yGEO78xzDfgozIazP0
-s0fQeR9KXsZcuaotO3TIRxRRAoGAMFIDsLRvDKm1rkL0B0czm/hwwDMu/KDyr5/R
-2M2OS1TB4PjmCgeUFOmyq3A63OWuStxtJboribOK8Qd1dXvWj/3NZtVY/z/j1P1E
-Ceq6We0MOZa0Ae4kyi+p/kbAKPgv+VwSoc6cKailRHZPH7quLoJSIt0IgbfRnXC6
-ygtcLNMCgYBwiPw2mTYvXDrAcO17NhK/r7IL7BEdFdx/w8vNJQp+Ub4OO3Iw6ARI
-vXxu6A+Qp50jra3UUtnI+hIirMS+XEeWqJghK1js3ZR6wA/ZkYZw5X1RYuPexb/4
-6befxmnEuGSbsgvGqYYTf5Z0vgsw4tAHfNS7TqSulYH06CjeG1F8DQ==
------END RSA PRIVATE KEY-----
-private_key_type    rsa
-serial_number       59:0b:af:a4:ca:40:db:29:b7:e8:4a:22:63:27:f7:3a:ce:54:78:8a
-```
+   The returned certificate is provided for informational purposes only.
+   The private key is stored securely inside Stronghold.
 
-Stronghold has now generated a new set of credentials using the `example-dot-com`
-role configuration. Here we see the dynamically generated private key and
-certificate.
+1. Update the URLs for the CRL and issuing certificates.
+   You can change these values later if needed:
 
-Using ACLs, it is possible to restrict using the pki backend such that trusted
-operators can manage the role definitions, and both users and applications are
-restricted in the credentials they are allowed to read.
+   ```shell
+   d8 stronghold write pki/config/urls \
+     issuing_certificates="http://127.0.0.1:8200/v1/pki/ca" \
+     crl_distribution_points="http://127.0.0.1:8200/v1/pki/crl"
+   ```
 
-If you get stuck at any time, simply run `d8 stronghold path-help pki` or with a
-subpath for interactive help output.
+   Example output:
+
+   ```console
+   Success! Data written to: pki/config/urls
+   ```
+
+1. Configure a role that maps a Stronghold role name to certificate generation rules.
+   When users or machines request credentials, certificates are issued according to this role:
+
+   ```shell
+   d8 stronghold write pki/roles/example-dot-ru \
+     allowed_domains=my-website.ru \
+     allow_subdomains=true \
+     max_ttl=72h
+   ```
+
+   Example output:
+
+   ```console
+   Success! Data written to: pki/roles/example-dot-ru
+   ```
+
+## Usage
+
+After you configure the secrets engine and obtain a Stronghold token with the required permissions, you can generate credentials.
+
+1. Generate new credentials by writing to the `/issue` path with the role name:
+
+   ```shell
+   d8 stronghold write pki/issue/example-dot-ru \
+     common_name=www.my-website.ru
+   ```
+
+   Example output:
+
+   ```console
+   Key                 Value
+   ---                 -----
+   certificate         -----BEGIN CERTIFICATE-----...
+   issuing_ca          -----BEGIN CERTIFICATE-----...
+   private_key         -----BEGIN RSA PRIVATE KEY-----...
+   private_key_type    rsa
+   serial_number       1d:2e:c6:06:45:18:60:0e:23:d6:c5:17:43:c0:fe:46:ed:d1:50:be
+   ```
+
+   The response includes a dynamically generated private key and certificate.
+   The certificate matches the specified role and expires after 72 hours, as defined in the role configuration.
+   The issuing CA and trust chain are also returned to simplify automation.

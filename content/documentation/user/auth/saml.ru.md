@@ -25,7 +25,7 @@ description: "Аутентификация в Deckhouse Stronghold через в
 Stronghold поддерживает два режима клиента:
 
 - `browser` — для сценариев с веб-интерфейсом;
-- `cli` — для внешних инструментов, которые открывают страницу IdP в браузере, а затем опрашивают эндпоинт выдачи токена [1].
+- `cli` — для внешних инструментов, которые открывают страницу IdP в браузере, а затем опрашивают эндпоинт выдачи токена.
 
 ## Включение метода
 
@@ -54,7 +54,7 @@ d8 stronghold auth enable -path=corp-saml saml
 - `default_role` — необязательная роль по умолчанию. Если она задана, при запуске входа роль можно не передавать явно;
 - `idp_metadata_url` — URL метаданных Identity Provider;
 - `idp_sso_url`, `idp_entity_id` и `idp_cert` — ручная альтернатива `idp_metadata_url`;
-- `validate_response_signature` и `validate_assertion_signature` — параметры проверки подписей. В production-окружении рекомендуется включать оба параметра, если IdP умеет подписывать и response, и assertion [1];
+- `validate_response_signature` и `validate_assertion_signature` — параметры проверки подписей. В production-окружении рекомендуется включать оба параметра, если IdP умеет подписывать и response, и assertion;
 - `verbose_logging` — расширенное логирование SAML-обмена. Используйте только для диагностики.
 
 ### Настройка через метаданные IdP
@@ -93,8 +93,8 @@ d8 stronghold write auth/saml/config \
 При настройке `acs_urls` убедитесь, что каждый адрес:
 
 - совпадает с одним из callback URL, разрешённых в SAML-приложении на стороне Identity Provider;
-- указывает на callback-эндпоинт Stronghold вида `.../v1/auth/<mount>/callback` для выбранного пути монтирования [1];
-- использует `https://` в production-окружении [1].
+- указывает на callback-эндпоинт Stronghold вида `.../v1/auth/<mount>/callback` для выбранного пути монтирования;
+- использует `https://` в production-окружении.
 
 Если Stronghold доступен по нескольким публичным адресам, можно указать несколько ACS URL:
 
@@ -117,7 +117,7 @@ d8 stronghold write auth/saml/config \
 - `bound_subjects_type` — тип сопоставления: `string` или `glob`;
 - `bound_attributes` — список обязательных атрибутов assertion и ожидаемых значений;
 - `bound_attributes_type` — тип сопоставления значений атрибутов: `string` или `glob`;
-- `groups_attribute` — атрибут, из которого Stronghold создаст алиасы групп Identity [1];
+- `groups_attribute` — атрибут, из которого Stronghold создаст алиасы групп Identity;
 - `alias_metadata` — статические метаданные, которые будут записаны в entity alias;
 - параметры токена: `token_policies`, `token_ttl`, `token_max_ttl`, `token_period`, `token_bound_cidrs`.
 
@@ -160,7 +160,7 @@ d8 stronghold write auth/saml/role/support \
 
 ### Привязка SAML-групп к Identity
 
-Если требуется выдавать политики Stronghold через Identity на основе членства в SAML-группах, задайте `groups_attribute` в роли и создайте соответствующие внешние группы Identity и алиасы [1].
+Если требуется выдавать политики Stronghold через Identity на основе членства в SAML-группах, задайте `groups_attribute` в роли и создайте соответствующие внешние группы Identity и алиасы.
 
 Общий сценарий выглядит так:
 
@@ -208,7 +208,7 @@ d8 stronghold write identity/group-alias \
 
 ### Сгенерируйте verifier и challenge
 
-Параметр `client_challenge` должен быть Base64-кодированным SHA-256-хешем от `client_verifier` [1].
+Параметр `client_challenge` должен быть Base64-кодированным SHA-256-хешем от `client_verifier`.
 
 ```shell
 verifier="$(uuidgen)"
@@ -227,7 +227,7 @@ curl \
 В ответе Stronghold вернёт:
 
 - `sso_service_url` — URL для перенаправления пользователя к Identity Provider;
-- `token_poll_id` — идентификатор для финального обмена на токен [1].
+- `token_poll_id` — идентификатор для финального обмена на токен.
 
 Если настроено несколько ACS URL, добавьте в запрос параметр `acs_url`.
 
@@ -248,9 +248,9 @@ curl \
 
 Учитывайте следующие рекомендации:
 
-- В production-окружении используйте только `https://` в ACS URL [1];
+- В production-окружении используйте только `https://` в ACS URL;
 - если IdP умеет подписывать и response, и assertion, включайте обе проверки подписи;
-- не оставляйте `verbose_logging=true` в production-окружении, так как в логах могут оказаться чувствительные SAML-данные [1];
+- не оставляйте `verbose_logging=true` в production-окружении, так как в логах могут оказаться чувствительные SAML-данные;
 - если у роли задан `token_bound_cidrs`, финальный запрос на `token` должен приходить с разрешённого клиентского адреса;
 - в роли SAML должно быть задано хотя бы одно условие допуска: `bound_subjects` или `bound_attributes`;
 - если настроено несколько `acs_urls`, клиент должен передавать корректный `acs_url` при запуске сценария входа.

@@ -54,9 +54,9 @@ To configure TOTP, follow these steps:
 
 After that, open the QR code and scan it in an application that supports TOTP.
 
-{% alert level="info" %}
+{{< alert level="info" >}}
 If a user has access to the `identity/mfa/method/totp/generate` endpoint, they can get the `TOTP MFA` settings themselves through the Stronghold web interface by using the method ID.
-{% endalert %}
+{{< /alert >}}
 
 ## Enable MFA
 

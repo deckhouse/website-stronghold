@@ -7,9 +7,9 @@ description: "JWT authentication in Deckhouse Stronghold."
 
 JWT authentication is suitable for scenarios where a client already receives a JSON Web Token (JWT) from a trusted token provider and passes it to Deckhouse Stronghold for validation. In this scenario, Deckhouse Stronghold does not initiate an interactive browser-based login and only validates an already issued token.
 
-{% alert level="info" %}
+{{< alert level="info" >}}
 If you need an interactive browser-based login with an OIDC provider, use the OIDC authentication overview.
-{% endalert %}
+{{< /alert >}}
 
 ## How JWT authentication works
 
@@ -202,9 +202,9 @@ This means the following:
 - The `division` claim value is copied to the `organization` metadata key.
 - The `department` claim value is copied to the `department` metadata key.
 
-{% alert level="info" %}
+{{< alert level="info" >}}
 The `role` metadata key name is reserved and cannot be used for claim mapping.
-{% endalert %}
+{{< /alert >}}
 
 ## Claims and JSON Pointer
 

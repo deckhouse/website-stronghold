@@ -127,9 +127,9 @@ The following images are available:
 - based on Alpine Linux 3.22:
   `registry.deckhouse.ru/stronghold/multifactor/multifactor-ldap-adapter:3.0.7-alpine`.
 
-{% alert level="info" %}
+{{< alert level="info" >}}
 After you switch Stronghold to `ldap-adapter`, second-factor verification is performed on the MULTIFACTOR side. Make sure users can pass MFA verification before using this setup in a production environment.
-{% endalert %}
+{{< /alert >}}
 
 ## Configure Stronghold
 
@@ -238,7 +238,7 @@ In the [MULTIFACTOR management panel](https://admin.multifactor.ru/account/login
 
 After the second factor is assigned, its confirmation is required each time the user signs in to Stronghold.
 
-{% alert level="info" %}
+{{< alert level="info" >}}
 After configuration and sign-in verification are complete, the user passes standard LDAP authentication in Stronghold, while second-factor confirmation is performed on the MULTIFACTOR side.
 Second-factor confirmation is recorded both in the Stronghold audit logsand on the MULTIFACTOR side.
-{% endalert %}
+{{< /alert >}}

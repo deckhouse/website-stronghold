@@ -15,9 +15,9 @@ This section describes the basic operations for working with `managed key` in De
 - deleting a managed key;
 - allowing a key to be used in secrets engines.
 
-{% alert level="info" %}
+{{< alert level="info" >}}
 Before performing these operations, make sure that the corresponding backend is already prepared. For example, for `pkcs11`, the `kms_library "pkcs11"` setting must be configured in the Stronghold server configuration.
-{% endalert %}
+{{< /alert >}}
 
 ## Registering a `pkcs11` managed key
 
@@ -45,7 +45,7 @@ In this example:
 
 ## Registering a `yandexcloudkms` managed key
 
-The `yandexcloudkms` type is used to work with Yandex Cloud KMS [1].
+The `yandexcloudkms` type is used to work with Yandex Cloud KMS.
 
 Use the following command to register a key with `oauth_token`:
 
@@ -56,7 +56,7 @@ stronghold write sys/managed-keys/yandexcloudkms/my-yc-key \
   usages=sign,verify
 ```
 
-Use the following command to register a key using the virtual machine ServiceAccount [1]:
+Use the following command to register a key using the virtual machine ServiceAccount:
 
 ```shell
 stronghold write sys/managed-keys/yandexcloudkms/my-yc-key \
@@ -64,7 +64,7 @@ stronghold write sys/managed-keys/yandexcloudkms/my-yc-key \
   usages=sign,verify
 ```
 
-If neither `oauth_token` nor `service_account_key_json` is specified, Stronghold tries to use the virtual machine ServiceAccount [1].
+If neither `oauth_token` nor `service_account_key_json` is specified, Stronghold tries to use the virtual machine ServiceAccount.
 
 ## Viewing the list of managed keys
 

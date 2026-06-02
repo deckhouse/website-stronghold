@@ -1,199 +1,307 @@
 ---
-title: "Transit Secrets engine"
+title: "Transit secrets engine"
 weight: 50
 ---
 
-The transit secrets engine handles cryptographic functions on data in-transit. Stronghold doesn't store the data sent to the secrets engine. It can also be viewed as "cryptography as a service" or "encryption as a service". The transit secrets engine can also sign and verify data; generate hashes and HMACs of data; and act as a source of random bytes.
+The Transit secrets engine performs cryptographic operations on data in transit.
+Stronghold does not store the data sent to this engine.
+It can also be viewed as “cryptography as a service” or “encryption as a service”.
 
-The primary use case for transit is to encrypt data from applications while still storing that encrypted data in some primary data store. This relieves the burden of proper encryption/decryption from application developers and pushes the burden onto Stronghold.
+The Transit engine lets you:
 
-Key derivation is supported, which allows the same key to be used for multiple purposes by deriving a new key based on a user-supplied context value. In this mode, convergent encryption can optionally be supported, which allows the same input values to produce the same ciphertext.
+- encrypt and decrypt data;
+- sign data and verify signatures;
+- compute hashes and HMAC values;
+- generate random bytes.
 
-Datakey generation allows processes to request a high-entropy key of a given bit length be returned to them, encrypted with the named key. Normally this will also return the key in plaintext to allow for immediate use, but this can be disabled to accommodate auditing requirements.
+The primary Transit use case is encrypting data in applications and then storing the encrypted data in external storage.
+This removes the burden of implementing encryption and decryption correctly from application developers and shifts it to Stronghold.
+
+Transit supports derived keys.
+This makes it possible to use the same key for different purposes by deriving a new key from user-provided context.
+In this mode, convergent encryption can also be enabled so that identical input values produce identical ciphertext.
+
+Data key generation allows processes to request a high-entropy key of a given length.
+That key is returned encrypted with the specified key.
+Usually, the key is also returned in plain text for immediate use, but this behavior can be disabled to meet audit requirements.
 
 ## Working set management
 
-The Transit engine supports versioning of keys. Key versions that are earlier than a key's specified `min_decryption_version` gets archived, and the rest of the key versions belong to the working set. This is a performance consideration to keep key loading fast, as well as a security consideration: by disallowing decryption of old versions of keys, found ciphertext corresponding to obsolete (but sensitive) data can not be decrypted by most users, but in an emergency the `min_decryption_version` can be moved back to allow for legitimate decryption.
+The Transit engine supports key versioning.
+Key versions older than the value of `min_decryption_version` are archived, while newer versions remain in the working set.
 
-Currently this archive is stored in a single storage entry. With some storage backends, notably those using Raft or Paxos for high-availability (HA) capabilities, frequent rotation may lead to a storage entry size for the archive that is larger than the storage backend can handle. For frequent rotation needs, using named keys that correspond to time bounds (for example, five-minute periods floored to the closest multiple of five) may provide a good alternative, allowing for several keys to be live at once and a deterministic way to decide which key to use at any given time.
+This matters for two reasons:
 
-## NIST rotation guidance
+- performance — keys in the working set load faster;
+- security — decryption with older key versions can be disallowed.
 
-Periodic rotation of the encryption keys is recommended, even in the absence of compromise. For AES-GCM keys, rotation should occur before approximately 2<sup>32</sup> encryptions have been performed by a key version, following the guidelines of NIST publication 800-38D. It is recommended that operators estimate the encryption rate of a key and use that to determine a frequency of rotation that prevents the guidance limits from being reached. For example, if one determines that the estimated rate is 40 million operations per day, then rotating a key every three months is sufficient.
+If older data must be decrypted in an emergency, you can temporarily lower `min_decryption_version`.
+
+At present, the archive is stored in a single storage entry.
+In some backends, especially those that use Raft or Paxos for high availability (HA), frequent key rotation can cause the archive entry to exceed the allowed size.
+
+For scenarios with frequent rotation, a good alternative is to use named keys tied to time intervals.
+For example, you can use 5-minute periods rounded to the nearest multiple of five.
+This makes it possible to use several keys at the same time and deterministically choose the correct key at any given moment.
+
+## NIST recommendations for key rotation
+
+Periodic rotation of encryption keys is recommended even if a compromise has not occurred.
+
+For AES-GCM keys, rotation should happen before approximately 2<sup>32</sup> encryption operations are performed with a single key version, in accordance with NIST 800-38D.
+Operators should estimate the key usage rate and configure the rotation frequency so that this limit is not exceeded.
+
+For example, if a key is used about 40 million times per day, rotating it once every three months is sufficient.
 
 ## Key types
 
-As of now, the transit secrets engine supports the following key types (all key types also generate separate HMAC keys):
+The Transit secrets engine currently supports the following key types.
+All key types also generate separate HMAC keys.
 
-- `aes128-gcm96`: AES-GCM with a 128-bit AES key and a 96-bit nonce; supports encryption, decryption, key derivation, and convergent encryption.
-- `aes256-gcm96`: AES-GCM with a 256-bit AES key and a 96-bit nonce; supports encryption, decryption, key derivation, and convergent encryption (default).
-- `chacha20-poly1305`: ChaCha20-Poly1305 with a 256-bit key; supports encryption, decryption, key derivation, and convergent encryption.
-- `ed25519`: Ed25519; supports signing, signature verification, and key derivation.
-- `ecdsa-p256`: ECDSA using curve P-256; supports signing and signature verification.
-- `ecdsa-p384`: ECDSA using curve P-384; supports signing and signature verification.
-- `ecdsa-p521`: ECDSA using curve P-521; supports signing and signature verification.
-- `rsa-2048`: 2048-bit RSA key; supports encryption, decryption, signing, and signature verification.
-- `rsa-3072`: 3072-bit RSA key; supports encryption, decryption, signing, and signature verification.
-- `rsa-4096`: 4096-bit RSA key; supports encryption, decryption, signing, and signature verification.
-- `hmac`: HMAC; supporting HMAC generation and verification.
+- `aes128-gcm96` — AES-GCM with a 128-bit AES key and a 96-bit `nonce`; supports encryption, decryption, derived keys, and convergent encryption.
+- `aes256-gcm96` — AES-GCM with a 256-bit AES key and a 96-bit `nonce`; supports encryption, decryption, derived keys, and convergent encryption; this is the default.
+- `chacha20-poly1305` — ChaCha20-Poly1305 with a 256-bit key; supports encryption, decryption, derived keys, and convergent encryption.
+- `ed25519` — Ed25519; supports signing, signature verification, and derived keys.
+- `ecdsa-p256` — ECDSA using the P-256 curve; supports signing and signature verification.
+- `ecdsa-p384` — ECDSA using the P-384 curve; supports signing and signature verification.
+- `ecdsa-p521` — ECDSA using the P-521 curve; supports signing and signature verification.
+- `rsa-2048` — a 2048-bit RSA key; supports encryption, decryption, signing, and signature verification.
+- `rsa-3072` — a 3072-bit RSA key; supports encryption, decryption, signing, and signature verification.
+- `rsa-4096` — a 4096-bit RSA key; supports encryption, decryption, signing, and signature verification.
+- `hmac` — HMAC; supports HMAC generation and verification.
 
 {{< alert level="info" >}}
-All key types support HMAC operations through the use of a second randomly generated key created key creation time or rotation. The HMAC key type only supports HMAC, and behaves identically to other algorithms with respect to the HMAC operations but supports key import. By default, the HMAC key type uses a 256-bit key.
+All key types support HMAC operations by using a second randomly generated key created during key initialization or rotation.
+The `hmac` key type supports only HMAC operations and behaves the same as the other algorithms for HMAC operations, but it also supports key import.
+By default, the `hmac` key type uses a 256-bit key.
 {{< /alert >}}
 
 RSA operations use one of the following methods:
 
-- OAEP (encrypt, decrypt), with SHA-256 hash function and MGF
-- PSS (sign, verify), with configurable hash function also used for MGF
-- PKCS#1v1.5: (sign, verify), with configurable hash function
+- OAEP — for encryption and decryption, with the SHA-256 hash function and MGF;
+- PSS — for signing and signature verification, with a configurable hash function that is also used for MGF;
+- PKCS#1 v1.5 — for signing and signature verification, with a configurable hash function.
 
 ## Convergent encryption
 
-Convergent encryption is a mode where the same set of plain text and context always result in the same ciphertext. It does this by deriving a key using a key derivation function but also by deterministically deriving a nonce. Because these properties differ for any combination of plaintext and ciphertext over a keyspace the size of 2^256, the risk of nonce reuse is near zero.
+Convergent encryption is a mode in which the same combination of plain text and context always results in the same ciphertext.
+This is achieved by deriving a key with a key derivation function and deterministically deriving the `nonce`.
 
-This has many practical uses. One common usage mode is to allow values to be stored encrypted in a database, but with limited lookup/query support, so that rows with the same value for a specific field can be returned from a query.
+Because these values differ for any combination of plain text and context in a 2^256 key space, the risk of `nonce` reuse is effectively zero.
 
-To accommodate for any needed upgrades to the algorithm, different versions of convergent encryption have historically been supported:
+This approach has many practical applications.
+One common scenario is storing ciphertext in a database with limited search and query support.
+In this case, rows with the same value for a specific field can be returned by a query.
 
-- Version 1 required the client to provide their own nonce, which is highly flexible but if done incorrectly can be dangerous. Keys using this version cannot be upgraded.
-- Version 2 used an algorithmic approach to deriving the parameters. However, the algorithm used was susceptible to offline plaintext-confirmation attacks, which could allow attackers to brute force decryption if the plaintext size was small. Keys using version 2 can be upgraded by simply performing a rotate operation to a new key version; existing values can then be rewrapped against the new key version and will use the version 3 algorithm.
-- Version 3 uses a different algorithm designed to be resistant to offline plaintext-confirmation attacks. It is similar to AES-SIV in that it uses a PRF to generate the nonce from the plaintext.
+To allow algorithm upgrades when needed, several versions of convergent encryption have been supported over time:
 
-## Setup
+- Version 1 required the client to provide the `nonce`.
+  This offered high flexibility, but it could be dangerous if implemented incorrectly.
+  Keys that use this version cannot be upgraded.
+- Version 2 used an algorithmic approach to compute the parameters.
+  However, that algorithm was vulnerable to offline plain-text confirmation attacks.
+  Because of this, an attacker could brute-force decryption when the plain text was small.
+  Version 2 keys can be upgraded by rotating to a new key version.
+  After that, existing values can be rewrapped with the new key version, and the version 3 algorithm will be used.
+- Version 3 uses a different algorithm designed to resist offline plain-text confirmation attacks.
+  It is similar to AES-SIV in that it uses a pseudorandom function (PRF) to generate the `nonce` from the plain text.
 
-Most secrets engines must be configured in advance before they can perform their functions. These steps are usually completed by an operator or configuration management tool.
+## Configuration
+
+Most secrets engines require initial configuration before use.
+These steps are usually performed by an operator or a configuration management system.
 
 Enable the Transit secrets engine:
 
 ```shell
 stronghold secrets enable transit
+```
+
+Example output:
+
+```console
 Success! Enabled the transit secrets engine at: transit/
 ```
 
-By default, the secrets engine will mount at the name of the engine. To enable the secrets engine at a different path, use the `-path` argument.
+By default, the engine is mounted at its own name.
+To specify a different path, use the `-path` argument.
 
 Create a named encryption key:
 
 ```shell
 stronghold write -f transit/keys/my-key
+```
+
+Example output:
+
+```console
 Success! Data written to: transit/keys/my-key
 ```
 
-Usually each application has its own encryption key.
+Usually, each application uses its own encryption key.
 
 ## Usage
 
-After the secrets engine is configured and a user/machine has a Stronghold token with the proper permission, it can use this secrets engine.
+After the engine is configured and a user or system receives a Stronghold token with the required permissions, cryptographic operations can be performed.
 
-Encrypt some plaintext data using the `/encrypt` endpoint with a named key:
+Encrypt data using the `/encrypt` endpoint and the specified key.
 
 {{< alert level="info" >}}
-All plaintext data **must be base64-encoded**. The reason for this requirement is that Stronghold does not require that the plaintext is "text". It could be a binary file such as a PDF or image. The easiest safe transport mechanism for this data as part of a JSON payload is to base64-encode it.
+All data must be Base64-encoded.
+This is because Stronghold does not require the provided `plaintext` to be text.
+For example, it can be a PDF file, an image, or other binary data.
+The safest way to pass such data in JSON is to use Base64 encoding.
 {{< /alert >}}
 
 ```shell
 stronghold write transit/encrypt/my-key plaintext=$(echo "my secret data" | base64)
+```
 
+Example output:
+
+```console
 Key           Value
 ---           -----
 ciphertext    vault:v1:8SDd3WHDOjf7mq69CyCqYjBXAiQQAVZRkFM13ok481zoCmHnSeDX9vyf7w==
 ```
 
-The returned ciphertext starts with `vault:v1:`. The first prefix (`stronghold`) identifies that it has been wrapped by Stronghold. The `v1` indicates the key version 1 was used to encrypt the plaintext; therefore, when you rotate keys, Stronghold knows which version to use for decryption.
+The returned ciphertext begins with the prefix `vault:v1:`.
+The `vault` prefix indicates that the data was encrypted by Stronghold.
+The `v1` value indicates that the first key version was used.
 
-Note that Stronghold _does not store_ any of this data. The caller is responsible for storing the encrypted ciphertext. When the caller wants the plaintext, it must provide the ciphertext back to Stronghold to decrypt the value.
+This matters during rotation because Stronghold uses the correct key version for decryption.
+
+Stronghold does not store the ciphertext.
+The caller is responsible for storing it.
+To decrypt the data, send the ciphertext to Stronghold again.
 
 {{< alert level="warning" >}}
-Stronghold HTTP API imposes a maximum request size of 32MB to prevent a DoS attack. This can be adjusted in the `listener` block in the [Stronghold configuration](../../../install/standalone/configuration/#listener).
+The Stronghold HTTP API limits the request size to 32 MB to protect against DoS attacks.
+You can change this limit in the `listener` block of the [Stronghold configuration](../../../install/standalone/configuration/#listener).
 {{< /alert >}}
 
-Decrypt a piece of data using the `/decrypt` endpoint with a named key:
+Decrypt data using the `/decrypt` endpoint:
 
 ```shell
 stronghold write transit/decrypt/my-key ciphertext=vault:v1:8SDd3WHDOjf7mq69CyCqYjBXAiQQAVZRkFM13ok481zoCmHnSeDX9vyf7w==
+```
 
+Example output:
+
+```console
 Key          Value
 ---          -----
 plaintext    bXkgc2VjcmV0IGRhdGEK
 ```
 
-The resulting data is base64-encoded. Decode it to get the raw plaintext:
+The result is a Base64 string.
+Decode it to get the original data:
 
 ```shell
 base64 --decode <<< "bXkgc2VjcmV0IGRhdGEK"
+```
+
+Example output:
+
+```console
 my secret data
 ```
 
-Or in one command:
+You can do the same in a single command:
 
 ```shell
 stronghold write -field=plaintext transit/decrypt/my-key ciphertext=... | base64 --decode
+```
+
+Example output:
+
+```console
 my secret data
 ```
 
-Using ACLs, it is possible to restrict using the transit secrets engine such that trusted operators can manage the named keys, and applications can only encrypt or decrypt using the named keys they need access to.
+Using ACL, you can restrict access to the Transit engine.
+For example, trusted operators can be allowed to manage keys, while applications can be limited to encryption and decryption with specific keys.
 
-Rotate the underlying encryption key. This will generate a new encryption key and add it to the keyring for the named key:
+Rotate the base encryption key.
+This generates a new key and adds it to the keyring of the named key:
 
 ```shell
 stronghold write -f transit/keys/my-key/rotate
+```
+
+Example output:
+
+```console
 Success! Data written to: transit/keys/my-key/rotate
 ```
 
-Future encryptions will use this new key. Old data can still be decrypted due to the use of a key ring.
+All subsequent encryption operations use the new key.
+Older data can still be decrypted because Stronghold uses the keyring.
 
-Upgrade already-encrypted data to a new key. Stronghold will decrypt the value using the appropriate key in the keyring and then encrypt the resulting plaintext with the newest key in the keyring.
+Update previously encrypted data to use the new key.
+Stronghold decrypts the value with the appropriate key version and then encrypts the plain text again with the newest key:
 
 ```shell
 stronghold write transit/rewrap/my-key ciphertext=vault:v1:8SDd3WHDOjf7mq69CyCqYjBXAiQQAVZRkFM13ok481zoCmHnSeDX9vyf7w==
+```
 
+Example output:
+
+```console
 Key           Value
 ---           -----
 ciphertext    vault:v2:...
 ```
 
-This process **does not reveal** the plaintext data. As such, a Stronghold policy could grant almost an untrusted process the ability to "rewrap" encrypted data, since the process would not be able to get access to the plaintext data.
+This process does not expose the original data.
+Because of this, a Stronghold policy can allow even untrusted processes to perform `rewrap` without granting access to the data itself.
 
-## Importing custom key (Bring Your Own Key, BYOK)
+## Bring your own key (BYOK)
 
 {{< alert level="warning" >}}
-Key import functionality supports cases in which there is a need to bring in an existing key from an HSM or other outside system. It is more secure to have Transit generate and manage a key within Stronghold.
+Key import is needed when you must migrate a key from an HSM or another system.
+However, it is safer to generate and manage the key inside Stronghold.
 {{< /alert >}}
 
-First, the wrapping key needs to be read from transit:
+First, get the wrapping key from Transit:
 
 ```shell
 stronghold read transit/wrapping_key
 ```
 
-The wrapping key will be a 4096-bit RSA public key.
+This key is a 4096-bit RSA public key.
+Then use it to create the encrypted value for `import`.
 
-Then the wrapping key is used to create the ciphertext input for the `import` endpoint, as described below. In the below, the target key refers to the key being imported.
+Below, target key means the key being imported.
 
 ### HSM
 
-If the key is being imported from an HSM that supports PKCS#11, there are two possible scenarios:
+If the key is imported from an HSM that supports PKCS#11, there are two possible scenarios:
 
-- If the HSM supports the CKM_RSA_AES_KEY_WRAP mechanism, that can be used to wrap the target key using the wrapping key.
+- If the HSM supports the `CKM_RSA_AES_KEY_WRAP` mechanism, use it to wrap the target key with the wrapping key.
+- Otherwise, use two mechanisms.
+  First, generate a 256-bit AES key.
+  Then use it to wrap the target key with the `CKM_AES_KEY_WRAP_KWP` mechanism.
+  After that, wrap the AES key with the wrapping key using the `CKM_RSA_PKCS_OAEP` mechanism with MGF1 and one of the following hash functions: SHA-1, SHA-224, SHA-256, SHA-384, or SHA-512.
 
-- Otherwise, two mechanisms can be combined to wrap the target key. First, a 256-bit AES key should be generated and then used to wrap the target key using the CKM_AES_KEY_WRAP_KWP mechanism. Then the AES key should be wrapped under the wrapping key using the CKM_RSA_PKCS_OAEP mechanism using MGF1 and either SHA-1, SHA-224, SHA-256, SHA-384, or SHA-512.
-
-The ciphertext is constructed by appending the wrapped target key to the wrapped AES key.
-
-The ciphertext bytes should be base64-encoded.
+The ciphertext is created by concatenating the wrapped target key and the wrapped AES key.
+The ciphertext bytes must be Base64-encoded.
 
 ### Manual process
 
-If the target key is not stored in an HSM or KMS, the following steps can be used to construct the ciphertext for the input of the `import` endpoint:
+If the target key is not stored in an HSM or KMS, perform the following steps to create ciphertext for the `import` endpoint:
 
-- Generate an ephemeral 256-bit AES key.
-- Wrap the target key using the ephemeral AES key with AES-KWP.
+1. Generate an ephemeral 256-bit AES key.
+1. Wrap the target key with the ephemeral AES key using AES-KWP.
+1. Wrap the AES key with the Stronghold wrapping key using RSAES-OAEP with MGF1 and one of the following hash functions: SHA-1, SHA-224, SHA-256, SHA-384, or SHA-512.
+1. Delete the ephemeral AES key.
+1. Concatenate the wrapped target key and the wrapped AES key.
+1. Encode the result in Base64.
 
-  > When wrapping a symmetric key (such as an AES or ChaCha20 key), wrap the raw bytes of the key. For instance, with an AES 128-bit key, this'll be a byte array 16 characters in length that will directly be wrapped without base64 or other encodings.
-  >
-  > When wrapping an asymmetric key (such as a RSA or ECDSA key), wrap the PKCS8 encoded format of this key, in raw DER/binary form. Do not apply PEM encoding to this blob prior to encryption and do not base64 encode it.
+{{< alert level="warning" >}}
+When wrapping a symmetric key, such as an AES or ChaCha20 key, wrap the raw key bytes.
+For example, for a 128-bit AES key, this is a 16-byte array that must be wrapped without Base64 or any other encoding.
 
-- Wrap the AES key under the Stronghold wrapping key using RSAES-OAEP with MGF1 and either SHA-1, SHA-224, SHA-256, SHA-384, or SHA-512.
-- Delete the ephemeral AES key.
-- Append the wrapped target key to the wrapped AES key.
-- Base64 encode the result.
+When wrapping an asymmetric key, such as an RSA or ECDSA key, wrap the key in PKCS8 format in raw DER binary form.
+Do not apply PEM encoding before encryption, and do not Base64-encode the key.
+{{< /alert >}}

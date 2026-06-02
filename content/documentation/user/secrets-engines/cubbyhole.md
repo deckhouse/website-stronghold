@@ -1,46 +1,45 @@
 ---
-title: "Cubbyhole Secrets engine"
+title: "Cubbyhole secrets engine"
 weight: 30
 ---
 
-The `cubbyhole` secrets engine is used to store arbitrary secrets within the
-configured physical storage for Stronghold namespaced to a token. In `cubbyhole`,
-paths are scoped per token. No token can access another token's cubbyhole. When
-the token expires, its cubbyhole is destroyed.
+The `cubbyhole` secrets engine is used to store arbitrary secrets in storage bound to a token.
+Paths in `cubbyhole` are scoped to tokens.
+A token cannot access another token’s `cubbyhole`.
+When a token expires, its `cubbyhole` is destroyed.
 
-Also unlike the `kv` secrets engine, because the cubbyhole's lifetime is
-linked to that of an authentication token, there is no concept of a TTL or
-refresh interval for values contained in the token's cubbyhole.
+Unlike the `kv` secrets engine, the lifetime of `cubbyhole` is tied to the lifetime of the authentication token.
+Because of this, values stored in `cubbyhole` do not use TTL or a renewal interval.
 
-Writing to a key in the `cubbyhole` secrets engine will completely replace the
-old value.
+Writing to a key in the `cubbyhole` secrets engine completely replaces the previous value.
 
-## Setup
+## Configuration
 
-Most secrets engines must be configured in advance before they can perform their
-functions. These steps are usually completed by an operator or configuration
-management tool.
+Most secrets engines must be configured before they can perform their functions.
+These actions are usually performed by an operator or a configuration management tool.
 
-The `cubbyhole` secrets engine is enabled by default. It cannot be disabled,
-moved, or enabled multiple times.
+The `cubbyhole` secrets engine is enabled by default.
+It cannot be disabled, moved, or enabled multiple times.
 
 ## Usage
 
-After the secrets engine is configured and a user/machine has an Stronghold token with
-the proper permission, it can generate credentials. The `cubbyhole` secrets
-engine allows for writing keys with arbitrary values.
+After the secrets engine is configured and you have a token with the required permissions, you can write keys with arbitrary values.
 
-1. Write arbitrary data:
+Perform the following steps:
 
-   ```text
+1. Write arbitrary data.
+
+   ```console
    $ d8 stronghold write cubbyhole/my-secret my-value=s3cr3t
+
    Success! Data written to: cubbyhole/my-secret
    ```
 
-2. Read arbitrary data:
+1. Read arbitrary data.
 
-   ```text
+   ```console
    $ d8 stronghold read cubbyhole/my-secret
+
    Key         Value
    ---         -----
    my-value    s3cr3t

@@ -99,9 +99,9 @@ Stronghold поддерживает два способа определения
 
 По умолчанию используется фильтр `({{.UserAttr}}={{.Username}})`. Если задан параметр `upndomain`, по умолчанию используется фильтр `(userPrincipalName={{.Username}}@UPNDomain)`.
 
-{% alert level="warning" %}
+{{< alert level="warning" >}}
 Если указываете `userfilter`, включите в него шаблонизированное значение `{{.UserAttr}}` или литеральное значение, соответствующее `userattr`. Это нужно, чтобы поиск возвращал уникальный результат и не возникали коллизии при входе.
-{% endalert %}
+{{< /alert >}}
 
 #### Анонимный поиск
 
@@ -113,9 +113,9 @@ Stronghold поддерживает два способа определения
 - `deny_null_bind` — запрещает обход аутентификации при пустом пароле. Значение по умолчанию — `true`;
 - `anonymous_group_search` — включает анонимные подключения для поиска групп. Значение по умолчанию — `false`.
 
-{% alert level="warning" %}
+{{< alert level="warning" >}}
 Если указываете `userfilter`, включите в него шаблонизированное значение `{{.UserAttr}}` или литеральное значение, соответствующее `userattr`. Это нужно, чтобы поиск возвращал уникальный результат и не возникали коллизии при входе.
-{% endalert %}
+{{< /alert >}}
 
 #### Использование UPN в Active Directory
 
@@ -249,9 +249,9 @@ d8 stronghold login -method=ldap username=tesla
 
 Функцию можно отключить через `auth tune`, передав `disable_lockout=true`.
 
-{% alert level="warning" %}
+{{< alert level="warning" >}}
 Этот механизм поддерживается только методами `userpass`, `ldap` и `approle`.
-{% endalert %}
+{{< /alert >}}
 
 ## Экранирование DN
 

@@ -69,10 +69,10 @@ d8 stronghold write auth/<userpass:path>/users/mitchellh \
 
 В результате создаётся пользователь `mitchellh` с паролем `foo`, которому назначается политика `admins`.
 
-{% alert level="info" %}
+{{< alert level="info" >}}
 Путь `<userpass:path>` должен соответствовать фактическому пути монтирования метода.
 Если метод включён по умолчанию, используйте путь `userpass`, а полный путь записи будет `auth/userpass/users/<имя_пользователя>`.
-{% endalert %}
+{{< /alert >}}
 
 ## Что получает пользователь после входа
 
@@ -98,9 +98,9 @@ d8 stronghold write auth/<userpass:path>/users/mitchellh \
 
 Функцию блокировки пользователя можно отключить через команду `auth tune`, передав значение `disable_lockout=true`.
 
-{% alert level="warning" %}
+{{< alert level="warning" >}}
 Механизм `user_lockout` поддерживается только методами `userpass`, `ldap` и `approle`.
-{% endalert %}
+{{< /alert >}}
 
 ## Практические рекомендации
 

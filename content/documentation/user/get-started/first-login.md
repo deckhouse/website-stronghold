@@ -46,9 +46,9 @@ Typically, the following happens:
 
 If the browser does not open automatically, copy the URL and open it manually.
 
-{% alert level="info" %}
+{{< alert level="info" >}}
 OIDC-based CLI authentication usually uses a redirect URI on `localhost`, for example, `http://localhost:8250/oidc/callback`. These parameters are defined by the OIDC role configuration and the provider settings.
-{% endalert %}
+{{< /alert >}}
 
 ## First login via the web interface
 
@@ -85,9 +85,9 @@ Keep the following in mind:
 - the set of available operations is determined by the attached policies;
 - in the CLI, the token is automatically used for subsequent commands.
 
-{% alert level="warning" %}
+{{< alert level="warning" >}}
 Do not rely on the internal token structure in automation.Stronghold tokens are opaque values, and their format is not intended to be parsed on the client side.
-{% endalert %}
+{{< /alert >}}
 
 ## If login does not work
 

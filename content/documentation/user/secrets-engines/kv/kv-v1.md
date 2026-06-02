@@ -1,108 +1,98 @@
 ---
-title: "KV/v1"
+title: "KV v1"
 weight: 20
 ---
 
-The `kv` secrets engine is used to store arbitrary secrets within the
-configured physical storage for Stronghold.
+The version 1 `kv` secrets engine is intended for storing arbitrary secrets in the Stronghold storage.
+When writing to a key, the previous value is replaced with the new one.
 
-Writing to a key in the `kv` backend will replace the old value; sub-fields are
-not merged together.
+Key names must be strings.
+If you write non-string values directly via the CLI, Stronghold converts them to strings.
+To store non-string values, pass key-value pairs from a JSON file or use the HTTP API.
 
-Key names must always be strings. If you write non-string values directly via
-the CLI, they will be converted into strings. However, you can preserve
-non-string values by writing the key/value pairs to Stronghold from a JSON file or
-using the HTTP API.
-
-This secrets engine honors the distinction between the `create` and `update`
-capabilities inside ACL policies.
+The `kv` secrets engine distinguishes between `create` and `update` operations in ACL policies.
 
 {{< alert level="warning" >}}
-
-**Note**: Path and key names are _not_ obfuscated or encrypted; only the
-values set on keys are. You should not store sensitive information as part of a
-secret's path.
-
+Paths and key names are not obfuscated or encrypted.
+Only key values are encrypted.
+Do not store sensitive data in the secret path or key name.
 {{< /alert >}}
 
-## Setup
+## Enable
 
-To enable a version 1 kv store:
+To enable version 1 of the `kv` storage, run the following command:
 
-```shell-session
+```shell
 d8 stronghold secrets enable -version=1 kv
 ```
 
 ## Usage
 
-After the secrets engine is configured and a user/machine has an Stronghold token with
-the proper permission, it can generate credentials. The `kv` secrets engine
-allows for writing keys with arbitrary values.
+The `kv` secrets engine lets you write keys with arbitrary values.
+A token with the appropriate permissions is required.
+
+Perform the following steps:
 
 1. Write arbitrary data:
 
-   ```shell-session
+   ```console
    $ d8 stronghold kv put kv/my-secret my-value=s3cr3t
    Success! Data written to: kv/my-secret
    ```
 
-1. Read arbitrary data:
+1. Read the data:
 
-   ```shell-session
+   ```console
    $ d8 stronghold kv get kv/my-secret
    Key                 Value
    ---                 -----
    my-value            s3cr3t
    ```
 
-1. List the keys:
+1. Get the list of keys:
 
-   ```shell-session
+   ```console
    $ d8 stronghold kv list kv/
    Keys
    ----
    my-secret
    ```
 
-1. Delete a key:
+1. Delete the key:
 
-   ```shell-session
+   ```console
    $ d8 stronghold kv delete kv/my-secret
    Success! Data deleted (if it existed) at: kv/my-secret
    ```
 
-You can also use Stronghold's password policy feature to generate arbitrary values.
+You can also use the password policy mechanism to generate values.
 
-1. Write a password policy:
+1. Create a password policy:
 
-   ```shell-session
+   ```console
    $ d8 stronghold write sys/policies/password/example policy=-<<EOF
-
      length=20
-
      rule "charset" {
        charset = "abcdefghij0123456789"
        min-chars = 1
      }
-
      rule "charset" {
        charset = "!@#$%^&*STUVWXYZ"
        min-chars = 1
      }
-
    EOF
    ```
 
-1. Write data using the `example` policy:
+1. Generate a password using the `example` policy:
 
-   ```shell-session
+   ```console
    $ d8 stronghold kv put kv/my-generated-secret \
        password=$(d8 stronghold read -field password sys/policies/password/example/generate)
    ```
 
-1. Read the generated data:
+1. Read the generated secret value:
 
-   ```shell-session
+   ```console
    $ d8 stronghold kv get kv/my-generated-secret
    ====== Data ======
    Key         Value
@@ -110,30 +100,45 @@ You can also use Stronghold's password policy feature to generate arbitrary valu
    password    ^dajd609Xf8Zhac$dW24
    ```
 
-## TTLs
+## Key lifetime
 
-Unlike other secrets engines, the KV secrets engine does not enforce TTLs
-for expiration. Instead, the `lease_duration` is a hint for how often consumers
-should check back for a new value.
+Unlike other secrets engines, `kv` does not apply TTL for automatic data expiration.
+The `lease_duration` value here is informational and shows how often it is recommended to check whether the value needs to be refreshed.
+If the `ttl` parameter is set for a key, the `kv` secrets engine uses it as the lease duration:
 
-If provided a key of `ttl`, the KV secrets engine will utilize this value
-as the lease duration:
-
-```shell-session
-$ d8 stronghold kv put kv/my-secret ttl=30m my-value=s3cr3t
+```console
+$ d8 stronghold kv put kv/my-secret ttl=5s my-value=s3cr3t
 Success! Data written to: kv/my-secret
 ```
 
-Even with a `ttl` set, the secrets engine _never_ removes data on its own. The
-`ttl` key is merely advisory.
+Even if `ttl` is set, the secrets engine never deletes data automatically.
+The `ttl` parameter is advisory only.
 
-When reading a value with a `ttl`, both the `ttl` key _and_ the refresh interval
-will reflect the value:
+When reading a secret with a `ttl` value, both the `ttl` key itself and the refresh interval reflect that value:
 
-```shell-session
+```console
 $ d8 stronghold kv get kv/my-secret
 Key                 Value
 ---                 -----
 my-value            s3cr3t
-ttl                 30m
+ttl                 5s
+```
+
+```console
+$ curl -X 'GET' \
+    'https://stronghold.example.com/v1/kv/my-secret' \
+    -H 'X-Vault-Token: ***'
+{
+  "request_id": "3879d849-cb78-725a-c2eb-3ba9dfe8a1d3",
+  "lease_id": "",
+  "renewable": false,
+  "lease_duration": 5,
+  "data": {
+    "my-value": "s3cr3t",
+    "ttl": "5s"
+  },
+  "wrap_info": null,
+  "warnings": null,
+  "auth": null
+}
 ```

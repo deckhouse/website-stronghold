@@ -63,13 +63,13 @@ To authenticate Stronghold in Yandex Cloud KMS, you can use one of the following
 
 If neither `oauth_token` nor `service_account_key_json` is specified, Stronghold attempts to use the virtual machine service account through the standard instance credentials mechanism.
 
-{% alert level="info" %}
+{{< alert level="info" >}}
 For `yandexcloudkms`, the `oauth_token` and `service_account_key_json` parameters are mutually exclusive.
 If one of them is specified, it is used for authentication in Yandex Cloud.
 The set of supported operations depends on the key itself and its configuration.
 If the managed key is intended for use with `PKI` or `SSH`, it must support signing.
 For `Transit`, the supported operations depend on the selected usage scenario.
-{% endalert %}
+{{< /alert >}}
 
 ## Support in secret engines
 

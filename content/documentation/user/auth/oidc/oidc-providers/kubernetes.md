@@ -9,9 +9,9 @@ Kubernetes can act as an OIDC provider for Deckhouse Stronghold. In this scenari
 
 This option is suitable if applications already use ServiceAccount tokens and need to authenticate to Stronghold without the `Kubernetes auth` method. Validation is performed either through the OIDC Discovery URL or through public keys used to verify JWT signatures.
 
-{% alert level="warning" %}
+{{< alert level="warning" >}}
 The `JWT` authentication method does not use the Kubernetes API `TokenReview`. Instead, Stronghold validates JWTs using public key cryptography. Because of this, changes to the token state or the related ServiceAccount may not be taken into account until the token expires. To reduce this risk, use short-lived ServiceAccount tokens or configure a separate `Kubernetes auth` method that uses the Kubernetes API `TokenReview`.
-{% endalert %}
+{{< /alert >}}
 
 ## When to use
 

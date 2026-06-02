@@ -69,10 +69,10 @@ d8 stronghold write auth/<userpass:path>/users/mitchellh \
 
 As a result, a user named `mitchellh` is created with the password `foo` and the `admins` policy assigned.
 
-{% alert level="info" %}
+{{< alert level="info" >}}
 The `<userpass:path>` value must match the actual mount path of the method.
 If the method is enabled at the default path, use `userpass`, and the full write path will be `auth/userpass/users/<username>`.
-{% endalert %}
+{{< /alert >}}
 
 ## What the user receives after sign-in
 
@@ -98,9 +98,9 @@ The failed attempt counter is also reset after a successful sign-in.
 
 You can disable user lockout with the `auth tune` command by setting `disable_lockout=true`.
 
-{% alert level="warning" %}
+{{< alert level="warning" >}}
 The `user_lockout` mechanism is supported only by the `userpass`, `ldap`, and `approle` methods.
-{% endalert %}
+{{< /alert >}}
 
 ## Best practices
 

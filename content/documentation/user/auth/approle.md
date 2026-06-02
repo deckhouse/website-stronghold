@@ -11,9 +11,9 @@ AppRole is a set of policies and authentication constraints that must be satisfi
 
 The credentials required for successful authentication depend on the AppRole constraints associated with the role.
 
-{% alert level="info" %}
+{{< alert level="info" >}}
 For AppRole, it is recommended to use `batch` tokens unless your scenario requires child token creation or other advanced `service` token capabilities.
-{% endalert %}
+{{< /alert >}}
 
 ## How AppRole works
 
@@ -168,9 +168,9 @@ d8 stronghold write auth/approle/role/my-role \
   secret_id_num_uses=40
 ```
 
-{% alert level="warning" %}
+{{< alert level="warning" >}}
 If the token issued by the AppRole role must be able to create child tokens, set the `token_num_uses` parameter to `0`.
-{% endalert %}
+{{< /alert >}}
 
 ### Step 3. Get the RoleID
 
@@ -298,9 +298,9 @@ In Push mode, a custom SecretID is assigned to the client manually. This mode ca
 
 The reason is that in Push mode, the full set of credentials must be delivered to an external system, whereas in Pull mode, RoleID and SecretID can be distributed more securely through separate channels.
 
-{% alert level="info" %}
+{{< alert level="info" >}}
 To deliver SecretID in Pull mode, it is often convenient to use [response wrapping](../../concepts/response-wrapping/) so that the secret is not transmitted in plain text.
-{% endalert %}
+{{< /alert >}}
 
 ## Additional constraints
 

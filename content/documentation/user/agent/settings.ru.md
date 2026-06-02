@@ -2,22 +2,20 @@
 title: "Основные настройки"
 linkTitle: "Настройка"
 description: "Основные настройки Stronghold Agent"
-weight: 40
+weight: 30
 ---
 
-Конфигурация Stronghold Agent описывается в формате HCL. Через конфигурационный файл вы настраиваете подключение к серверу Stronghold, автоматическую аутентификацию, рендеринг шаблонов, запуск дочерних процессов, API Proxy и параметры логирования [7].
-
+Конфигурация Stronghold Agent описывается в формате HCL. Через конфигурационный YAML-файл вы настраиваете подключение к серверу Stronghold, автоматическую аутентификацию, рендеринг шаблонов, запуск дочерних процессов, API Proxy и параметры логирования.
 Эта страница помогает понять структуру конфигурационного файла и назначение основных секций.
 
 ## Структура конфигурационного файла
 
-Ниже показан пример общей структуры конфигурации Stronghold Agent [7]:
+Ниже показан пример общей структуры конфигурации Stronghold Agent:
 
 ```hcl
 stronghold {
   address = "https://stronghold.example.com:8200"
   ca_cert = "/etc/stronghold-agent/ca.pem"
-
   retry {
     num_retries = 5
   }
@@ -25,11 +23,11 @@ stronghold {
 
 auto_auth {
   method "approle" {
-    # ... конфигурация метода.
+    # ...
   }
 
   sink "file" {
-    # ... конфигурация sink.
+    # ...
   }
 }
 
@@ -67,11 +65,11 @@ log_file = "/var/log/stronghold-agent.log"
 - `template_config` — глобальные параметры шаблонов;
 - `exec` — запуск дочернего процесса;
 - `env_template` — передача секретов через переменные окружения;
-- `pid_file`, `log_level`, `log_file` и другие параметры — управление процессом и логированием [7].
+- `pid_file`, `log_level`, `log_file` и другие параметры — управление процессом и логированием.
 
-## Секция stronghold
+## Секция `stronghold`
 
-Для подключения к серверу Stronghold используется секция `stronghold`. Если нужна интеграция с HashiCorp Vault, вместо `stronghold` используйте `vault` [7].
+Для подключения к серверу Stronghold используется секция `stronghold`. Если нужна интеграция с HashiCorp Vault, вместо `stronghold` используйте `vault`.
 
 Пример конфигурации:
 
@@ -99,15 +97,15 @@ stronghold {
 - `client_cert` и `client_key` — клиентский сертификат и ключ;
 - `tls_skip_verify` — отключение проверки TLS;
 - `tls_server_name` — имя сервера для SNI;
-- `retry` — политику повторных попыток [7].
+- `retry` — политика повторных попыток.
 
-{% alert level="warning" %}
-Не отключайте `tls_skip_verify` в production-окружении [7].
-{% endalert %}
+{{< alert level="warning" >}}
+Не отключайте `tls_skip_verify` в production-окружении.
+{{< /alert >}}
 
-## Секция auto_auth
+## Секция `auto_auth`
 
-Секция `auto_auth` отвечает за автоматическую аутентификацию Stronghold Agent и за сохранение полученного токена [7].
+Секция `auto_auth` отвечает за автоматическую аутентификацию Stronghold Agent и за сохранение полученного токена.
 
 Пример конфигурации:
 
@@ -117,7 +115,7 @@ auto_auth {
     mount_path = "auth/approle"
     namespace  = "myns"
     config = {
-      role_id_file_path = "/etc/stronghold-agent/role-id"
+      role_id_file_path   = "/etc/stronghold-agent/role-id"
       secret_id_file_path = "/etc/stronghold-agent/secret-id"
     }
   }
@@ -130,10 +128,10 @@ auto_auth {
   }
 
   sink "file" {
-    wrap_ttl = "5m"
+    wrap_ttl    = "5m"
     aad_env_var = "VAULT_AAD"
-    dh_type = "curve25519"
-    dh_path = "/etc/stronghold-agent/dh-pub"
+    dh_type     = "curve25519"
+    dh_path     = "/etc/stronghold-agent/dh-pub"
     config = {
       path = "/var/run/stronghold-agent/encrypted-token"
     }
@@ -145,15 +143,15 @@ auto_auth {
 
 - `method` — метод аутентификации;
 - `mount_path` — путь монтирования auth method;
-- `namespace` — namespace, если он используется;
+- `namespace` — неймспейс, если он используется;
 - `config` — параметры конкретного метода;
-- `sink` — место, куда Agent сохраняет токен [7].
+- `sink` — место, куда Agent сохраняет токен.
 
-Sink может быть обычным или с дополнительным шифрованием [7].
+Sink может быть обычным или с дополнительным шифрованием.
 
-## Секция template
+## Секция `template`
 
-Секция `template` используется для рендеринга шаблонов в файлы [7].
+Секция `template` используется для рендеринга шаблонов в файлы.
 
 Пример конфигурации:
 
@@ -167,12 +165,10 @@ template {
   backup = true
   command = "systemctl reload myapp"
   command_timeout = "30s"
-
   wait {
     min = "5s"
     max = "10s"
   }
-
   error_on_missing_key = true
   create_dest_dirs = true
 }
@@ -183,17 +179,17 @@ template {
 - `source` — путь к файлу-шаблону;
 - `destination` — путь к итоговому файлу;
 - `perms` — права доступа;
-- `user` и `group` — владельца и группу;
+- `user` и `group` — владелец и группа;
 - `backup` — создание резервной копии;
-- `command` — команду после рендеринга;
+- `command` — команда после рендеринга;
 - `command_timeout` — таймаут команды;
-- `wait` — задержку перед рендерингом;
-- `error_on_missing_key` — завершение рендеринга ошибкой при отсутствии ключа;
-- `create_dest_dirs` — создание отсутствующих директорий назначения [7].
+- `wait` — задержка перед рендерингом;
+- `error_on_missing_key` — завершение рендеринга с ошибкой при отсутствии ключа;
+- `create_dest_dirs` — создание отсутствующих директорий назначения.
 
-## Секция template_config
+## Секция `template_config`
 
-Секция `template_config` задаёт глобальные параметры для всех шаблонов [7].
+Секция `template_config` задаёт глобальные параметры для всех шаблонов.
 
 Пример конфигурации:
 
@@ -207,11 +203,11 @@ template_config {
 В этой секции можно настроить следующие параметры:
 
 - `exit_on_retry_failure` — завершение работы после неудачных повторных попыток;
-- `static_secret_render_interval` — интервал периодического рендеринга для статических секретов, например из KV [7].
+- `static_secret_render_interval` — интервал периодического рендеринга для статических секретов, например из KV.
 
-## Секция exec
+## Секция `exec`
 
-Секция `exec` используется в режиме Process Supervisor, когда Stronghold Agent запускает дочерний процесс и передаёт ему секреты через переменные окружения [4] [7].
+Секция `exec` используется в режиме Process Supervisor, когда Stronghold Agent запускает дочерний процесс и передаёт ему секреты через переменные окружения.
 
 Пример конфигурации:
 
@@ -225,13 +221,13 @@ exec {
 
 В этой секции можно настроить следующие параметры:
 
-- `command` — команду запуска приложения;
+- `command` — команда запуска приложения;
 - `restart_on_secret_changes` — перезапуск процесса при изменении секретов;
-- `restart_stop_signal` — сигнал для остановки процесса [4] [7].
+- `restart_stop_signal` — сигнал для остановки процесса.
 
-### Секция env_template
+### Секция `env_template`
 
-Вместе с `exec` обычно используют `env_template` [4] [7]:
+Вместе с `exec` обычно используют `env_template`:
 
 ```hcl
 env_template "DATABASE_URL" {
@@ -245,17 +241,17 @@ env_template "API_KEY" {
 }
 ```
 
-Каждый блок `env_template` формирует значение одной переменной окружения [4] [7].
+Каждый блок `env_template` формирует значение одной переменной окружения.
 
 Учитывайте следующие ограничения:
 
 - блок всегда записывается как `env_template "VAR_NAME" { ... }`;
 - `env_template` не создаёт `.env`-файл;
-- поля `destination`, `perms`, `command`, `wait` и похожие параметры в `env_template` не поддерживаются [4].
+- поля `destination`, `perms`, `command`, `wait` и похожие параметры в `env_template` не поддерживаются.
 
-## Секция listener
+## Секция `listener`
 
-Секция `listener` настраивает HTTP(S)-listener для API Proxy [7].
+Секция `listener` настраивает HTTP(S)-listener для API Proxy.
 
 Пример TCP-listener:
 
@@ -266,7 +262,6 @@ listener "tcp" {
   tls_cert_file = "/etc/stronghold-agent/agent-cert.pem"
   tls_key_file = "/etc/stronghold-agent/agent-key.pem"
   require_request_header = true
-
   agent_api {
     enable_quit = true
   }
@@ -292,11 +287,11 @@ listener "unix" {
 - `tls_cert_file` и `tls_key_file` — TLS-сертификат и ключ;
 - `require_request_header` — обязательный специальный заголовок;
 - `agent_api.enable_quit` — включение эндпоинта `POST /agent/v1/quit`;
-- `socket_mode`, `socket_user`, `socket_group` — параметры Unix socket [7].
+- `socket_mode`, `socket_user`, `socket_group` — параметры Unix socket.
 
 ## Логирование и отладка
 
-Stronghold Agent поддерживает настройку уровня логирования, формата логов и ротации файлов логов [7].
+Stronghold Agent поддерживает настройку уровня логирования, формата логов и ротации файлов логов.
 
 Пример конфигурации:
 
@@ -316,7 +311,7 @@ log_rotate_max_files = 10
 - `log_format` — формат логов: `standard` или `json`;
 - `log_rotate_duration` — период ротации;
 - `log_rotate_bytes` — максимальный размер файла;
-- `log_rotate_max_files` — количество сохраняемых файлов [7].
+- `log_rotate_max_files` — количество сохраняемых файлов.
 
 ## Практические рекомендации
 
@@ -327,4 +322,4 @@ log_rotate_max_files = 10
 - храните конфигурационный файл, токены, `role-id` и `secret-id` с минимально необходимыми правами доступа;
 - сначала проверьте базовое подключение и `auto_auth`, а затем переходите к шаблонам и Process Supervisor;
 - если используете `template`, заранее проверьте права на запись в директорию назначения;
-- если используете `listener`, заранее ограничьте доступ к локальному listener или Unix socket [4] [7].
+- если используете `listener`, заранее ограничьте доступ к локальному listener или Unix socket.

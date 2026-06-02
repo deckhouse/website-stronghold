@@ -23,9 +23,9 @@ Use the `Token` method in the following cases:
 - you use automation or API integration .
 - you need to work with a token directly as the main access method.
 
-{% alert level="info" %}
+{{< alert level="info" >}}
 When any other authentication method completes successfully, Deckhouse Stronghold still creates a token. Because of this, Token auth can be considered the basic built-in access mechanism that is used both on its own and as the result of other authentication methods.
-{% endalert %}
+{{< /alert >}}
 
 ## How Token auth works
 

@@ -108,9 +108,9 @@ In this example:
 - `ProtectSystem=strict` and other parameters strengthen process isolation;
 - `ReadWritePaths` defines the directories that Agent is allowed to write to.
 
-{% alert level="warning" %}
+{{< alert level="warning" >}}
 List all directories that Stronghold Agent will write to in `ReadWritePaths`. These may include the directory from `template.destination`, the sink file, the Unix socket, the directory with logs, and application directories if Agent renders configuration there.
-{% endalert %}
+{{< /alert >}}
 
 The example unit file above is basic. If needed, add your own paths, such as `/etc/myapp` or `/var/lib/myapp`.
 

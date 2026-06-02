@@ -3,135 +3,142 @@ title: "OIDC identity provider"
 weight: 20
 ---
 
-Stronghold является провайдером идентификации OpenID Connect ([OIDC](https://openid.net/specs/openid-connect-core-1_0.html))
-провайдер идентификации. Это позволяет клиентским приложениям, использующим протокол OIDC, использовать
-Stronghold как источник [идентификации](../../../concepts/identity/) и широкий спектр [методов аутентификации](../../../concepts/auth/) при аутентификации конечных пользователей. Клиентские приложения могут настраивать свою логику аутентификации
-для взаимодействия с Stronghold. После включения Stronghold будет действовать как мост к другим провайдерам идентификации через
-существующие методы аутентификации. Клиентские приложения также могут получать информацию об идентификации
-для своих конечных пользователей, используя пользовательскую шаблонизацию идентификационной информации Stronghold.
+## Обзор
 
-## Установка
+Stronghold может выступать как провайдер идентификации OpenID Connect (OIDC) для клиентских приложений, которые используют этот протокол.
+Это позволяет приложениям использовать Stronghold как источник [идентификации](../../../concepts/identity/) и применять доступные [методы аутентификации](../../../concepts/auth/) для аутентификации конечных пользователей.
 
-Система провайдеров Stronghold OIDC построена на основе механизма секретов идентификации.
-Этот механизм секретов установлен по умолчанию и не может быть отключен или перемещен.
+После включения этой возможности Stronghold может выступать посредником между клиентским приложением и внешними провайдерами идентификации через уже настроенные методы аутентификации.
+Кроме того, клиентские приложения могут получать данные об идентификации конечных пользователей из Stronghold.
 
-Каждое пространство имен Stronghold по умолчанию имеет OIDC provider и ключ. Эта встроенная конфигурация позволяет клиентским приложениям начать использовать Stronghold в качестве источника идентификации с минимальными настройками.
+Система OIDC-провайдеров в Stronghold построена на механизме секретов идентификации.
+Этот механизм включён по умолчанию, его нельзя отключить или переместить.
 
-Следующие шаги показывают минимальную конфигурацию, которая позволяет клиентскому приложению использовать
-Stronghold в качестве OIDC-провайдера.
+В каждом неймспейсе Stronghold по умолчанию доступны OIDC-провайдер и ключ.
+Эта встроенная конфигурация позволяет начать использование Stronghold в качестве провайдера идентификации с минимальной начальной настройкой.
 
-1. Включите метод аутентификации Stronghold:
+Чтобы клиентское приложение могло использовать Stronghold как OIDC-провайдер, обычно требуется:
 
-```text
-$ d8 stronghold auth enable userpass
-Success! Enabled userpass auth method at: userpass/
-```
+- Включить метод аутентификации.
+- Создать пользователя.
+- Создать клиентское приложение.
+- Получить `client_id` и `client_secret`.
+- Получить значение `issuer` из OIDC discovery-конфигурации.
 
-   В режиме OIDC можно использовать любой метод аутентификации Stronghold. Для простоты включите
-   метод аутентификации `userpass`.
+## Настройка
 
-1. Создайте пользователя:
+Ниже приведён минимальный пример настройки, который позволяет клиентскому приложению использовать Stronghold в качестве OIDC-провайдера.
 
-```text
-$ d8 stronghold write auth/userpass/users/end-user password="securepassword"
-Success! Data written to: auth/userpass/users/end-user
-```
+1. Включите метод аутентификации `userpass`.
 
-Этот пользователь аутентифицируется в Stronghold через клиентское приложение, иначе известное как
-OIDC [relying party](https://openid.net/specs/openid-connect-core-1_0.html#Terminology).
+   ```console
+   $ d8 stronghold auth enable userpass
+   Success! Enabled userpass auth method at: userpass/
+   ```
 
-1. Создайте клиентское приложение:
+   В режиме OIDC можно использовать любой метод аутентификации Stronghold.
+   В этом примере для простоты используется метод `userpass`.
 
-```text
-$ d8 stronghold write identity/oidc/client/my-webapp \
-  redirect_uris="https://localhost:9702/auth/oidc-callback" \
-  assignments="allow_all"
-Success! Data written to: identity/oidc/client/my-webapp
-```
+1. Создайте пользователя.
 
-   Эта операция создает клиентское приложение, которое может быть использовано для настройки OIDC доверяющей стороны.
+   ```console
+   $ d8 stronghold write auth/userpass/users/end-user password="securepassword"
+   Success! Data written to: auth/userpass/users/end-user
+   ```
 
-   Параметр `assignments` ограничивает сущности и группы Stronghold, которым разрешена
-   аутентификация через клиентское приложение. По умолчанию ни одной сущности Stronghold это не разрешено.
-   Чтобы разрешить аутентификацию всем сущностям Stronghold, используется встроенное назначение `allow_all`.
+   Этот пользователь будет проходить аутентификацию в Stronghold через клиентское приложение, то есть через OIDC relying party.
 
-1. Считывание учетных данных клиента:
+1. Создайте клиентское приложение.
 
-```text
-$ d8 stronghold read identity/oidc/client/my-webapp
+   ```console
+   $ d8 stronghold write identity/oidc/client/my-webapp \
+     redirect_uris="https://localhost:9702/auth/oidc-callback" \
+     assignments="allow_all"
+   Success! Data written to: identity/oidc/client/my-webapp
+   ```
 
-Key                 Value
----                 -----
-access_token_ttl    24h
-assignments         [allow_all]
-client_id           GSDTnn3KaOrLpNlVGlYLS9TVsZgOTweO
-client_secret       hvo_secret_gBKHcTP58C4aq7FqPWsuqKgpiiegd7ahpifGae9WGkHRCwFEJTZA9KGdNVpzE0r8
-client_type         confidential
-id_token_ttl        24h
-key                 default
-redirect_uris       [https://localhost:9702/auth/oidc-callback]
-```
+   Эта команда создаёт клиентское приложение, которое можно использовать при настройке OIDC relying party.
 
-Параметры `client_id` и `client_secret` - это учетные данные клиентского приложения. Эти
-значения обычно требуются при настройке доверяющей стороны OIDC.
+   Параметр `assignments` ограничивает сущности и группы Stronghold, которым разрешена аутентификация через это клиентское приложение.
+   По умолчанию аутентификация не разрешена ни одной сущности.
+   Чтобы разрешить её всем сущностям Stronghold, используйте встроенное назначение `allow_all`.
 
-1. Прочитайте конфигурацию обнаружения OIDC:
+1. Прочитайте учётные данные клиента.
 
-```text
-$ curl -s http://127.0.0.1:8200/v1/identity/oidc/provider/default/.well-known/openid-configuration
-{
-  "issuer": "http://127.0.0.1:8200/v1/identity/oidc/provider/default",
-  "jwks_uri": "http://127.0.0.1:8200/v1/identity/oidc/provider/default/.well-known/keys",
-  "authorization_endpoint": "http://127.0.0.1:8200/ui/vault/identity/oidc/provider/default/authorize",
-  "token_endpoint": "http://127.0.0.1:8200/v1/identity/oidc/provider/default/token",
-  "userinfo_endpoint": "http://127.0.0.1:8200/v1/identity/oidc/provider/default/userinfo",
-  "request_parameter_supported": false,
-  "request_uri_parameter_supported": false,
-  "id_token_signing_alg_values_supported": [
-    "RS256",
-    "RS384",
-    "RS512",
-    "ES256",
-    "ES384",
-    "ES512",
-    "EdDSA"
-  ],
-  "response_types_supported": [
-    "code"
-  ],
-  "scopes_supported": [
-    "openid"
-  ],
-  "subject_types_supported": [
-    "public"
-  ],
-  "grant_types_supported": [
-    "authorization_code"
-  ],
-  "token_endpoint_auth_methods_supported": [
-    "none",
-    "client_secret_basic",
-    "client_secret_post"
-  ]
-}
-```
+   ```console
+   $ d8 stronghold read identity/oidc/client/my-webapp
+   Key                 Value
+   ---                 -----
+   access_token_ttl    24h
+   assignments         [allow_all]
+   client_id           GSDTnn3KaOrLpNlVGlYLS9TVsZgOTweO
+   client_secret       hvo_secret_gBKHcTP58C4aq7FqPWsuqKgpiiegd7ahpifGae9WGkHRCwFEJTZA9KGdNVpzE0r8
+   client_type         confidential
+   id_token_ttl        24h
+   key                 default
+   redirect_uris       [https://localhost:9702/auth/oidc-callback]
+   ```
 
-Каждый провайдер Stronghold OIDC публикует [метаданные обнаружения](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata).
-Значение `issuer` обычно требуется при настройке доверяющей стороны OIDC.
+   Параметры `client_id` и `client_secret` — это учётные данные клиентского приложения.
+   Обычно они требуются при настройке OIDC relying party.
+
+1. Прочитайте OIDC discovery-конфигурацию.
+
+   ```console
+   $ curl -s http://127.0.0.1:8200/v1/identity/oidc/provider/default/.well-known/openid-configuration
+   {
+     "issuer": "http://127.0.0.1:8200/v1/identity/oidc/provider/default",
+     "jwks_uri": "http://127.0.0.1:8200/v1/identity/oidc/provider/default/.well-known/keys",
+     "authorization_endpoint": "http://127.0.0.1:8200/ui/vault/identity/oidc/provider/default/authorize",
+     "token_endpoint": "http://127.0.0.1:8200/v1/identity/oidc/provider/default/token",
+     "userinfo_endpoint": "http://127.0.0.1:8200/v1/identity/oidc/provider/default/userinfo",
+     "request_parameter_supported": false,
+     "request_uri_parameter_supported": false,
+     "id_token_signing_alg_values_supported": [
+       "RS256",
+       "RS384",
+       "RS512",
+       "ES256",
+       "ES384",
+       "ES512",
+       "EdDSA"
+     ],
+     "response_types_supported": [
+       "code"
+     ],
+     "scopes_supported": [
+       "openid"
+     ],
+     "subject_types_supported": [
+       "public"
+     ],
+     "grant_types_supported": [
+       "authorization_code"
+     ],
+     "token_endpoint_auth_methods_supported": [
+       "none",
+       "client_secret_basic",
+       "client_secret_post"
+     ]
+   }
+   ```
+
+   Каждый Stronghold OIDC-провайдер публикует discovery-метаданные.
+   Значение `issuer` обычно требуется при настройке OIDC relying party.
 
 ## Использование
 
-После настройки метода аутентификации Stronghold и клиентского приложения следующие сведения можно
-могут быть использованы для настройки OIDC доверяющей стороны для делегирования аутентификации конечного пользователя Stronghold.
+После настройки метода аутентификации Stronghold и клиентского приложения используйте следующие значения для настройки OIDC relying party:
 
-- `client_id` - Идентификатор клиентского приложения
-- `client_secret` - Секрет клиентского приложения
-- `issuer` - Эмитент OIDC-провайдера Stronghold.
+- `client_id` — идентификатор клиентского приложения;
+- `client_secret` — секрет клиентского приложения;
+- `issuer` — эмитент OIDC-провайдера Stronghold.
 
-В противном случае подробности использования см. в документации конкретной доверяющей стороны OIDC.
+Дальнейшая настройка зависит от конкретного клиентского приложения.
+Подробности смотрите в документации соответствующей OIDC relying party.
 
 ## Поддерживаемые процессы
 
-Функция провайдера Stronghold OIDC в настоящее время поддерживает следующий процесс аутентификации:
+Функция OIDC-провайдера в Stronghold в настоящее время поддерживает следующий процесс аутентификации:
 
 - [Authorization Code Flow](https://openid.net/specs/openid-connect-core-1_0.html#CodeFlowAuth).

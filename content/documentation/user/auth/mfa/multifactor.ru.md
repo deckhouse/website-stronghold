@@ -127,9 +127,9 @@ data:
 - на базе Ubuntu 24.04: `registry.deckhouse.ru/stronghold/multifactor/multifactor-ldap-adapter:3.0.7`;
 - на базе Alpine Linux 3.22: `registry.deckhouse.ru/stronghold/multifactor/multifactor-ldap-adapter:3.0.7-alpine`.
 
-{% alert level="info" %}
+{{< alert level="info" >}}
 После переключения Stronghold на `ldap-adapter` проверка второго фактора будет происходить на стороне MULTIFACTOR. Убедитесь, что пользователи могут пройти MFA-проверку до использования этой схемы в production-окружении.
-{% endalert %}
+{{< /alert >}}
 
 ## Настройка Stronghold
 
@@ -239,7 +239,7 @@ spec:
 
 После назначения второго фактора его подтверждение будет требоваться при каждом входе в Stronghold.
 
-{% alert level="info" %}
+{{< alert level="info" >}}
 После настройки и проверки входа пользователь будет проходить обычную LDAP-аутентификацию в Stronghold, а подтверждение второго фактора — на стороне MULTIFACTOR.
 Подтверждение второго фактора фиксируется как в аудит-логах Stronghold, так и на стороне MULTIFACTOR.
-{% endalert %}
+{{< /alert >}}
