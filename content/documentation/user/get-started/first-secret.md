@@ -20,7 +20,7 @@ Before running the examples, make sure that:
 - you have read and write permissions for the selected path.
 - the administrator has granted access to the `KV` storage.
 
-If you have not signed in to Stronghold yet, complete the steps in the [First sign-in](../first-login) section first.
+If you have not signed in to Stronghold yet, complete the steps in the [First sign-in](../first-login/) section first.
 
 1. Select a path for the secret
 
