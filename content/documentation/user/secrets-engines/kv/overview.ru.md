@@ -1,5 +1,6 @@
 ---
 title: "Обзор"
+description: "Сведения о разделе \"Обзор\" в Deckhouse Stronghold."
 weight: 10
 ---
 

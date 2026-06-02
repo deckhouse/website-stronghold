@@ -140,7 +140,7 @@ By default, the examples below use a ServiceAccount token mounted into a pod. If
 
 Select the value from the `aud` field that is used in the ServiceAccount token. Two ways to get the `aud` value are shown below.
 
-The example that retrieves `aud` by creating a token requires `kubectl` version 1.24.0 or later:
+The example that retrieves `aud` by creating a token requires Kubernetes 1.24.0 or later and a compatible `d8 k create token` command:
 
 ```shell
 d8 k create token default | cut -f2 -d. | base64 --decode

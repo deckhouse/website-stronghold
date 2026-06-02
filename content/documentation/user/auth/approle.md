@@ -299,7 +299,7 @@ In Push mode, a custom SecretID is assigned to the client manually. This mode ca
 The reason is that in Push mode, the full set of credentials must be delivered to an external system, whereas in Pull mode, RoleID and SecretID can be distributed more securely through separate channels.
 
 {{< alert level="info" >}}
-To deliver SecretID in Pull mode, it is often convenient to use [response wrapping](../../concepts/response-wrapping/) so that the secret is not transmitted in plain text.
+To deliver SecretID in Pull mode, it is often convenient to use [response wrapping](../../../concepts/response-wrapping/) so that the secret is not transmitted in plain text.
 {{< /alert >}}
 
 ## Additional constraints
@@ -324,4 +324,4 @@ Use the following recommendations:
 - Deliver RoleID and SecretID through separate channels.
 - Use `batch` tokens unless your scenario requires advanced `service` token capabilities.
 - Plan TTL, number of uses, and possible role constraints in advance.
-- If SecretID must be transmitted through an untrusted environment, use [response wrapping](../../concepts/response-wrapping/).
+- If SecretID must be transmitted through an untrusted environment, use [response wrapping](../../../concepts/response-wrapping/).

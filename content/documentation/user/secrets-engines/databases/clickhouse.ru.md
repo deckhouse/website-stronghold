@@ -1,5 +1,6 @@
 ---
 title: "ClickHouse"
+description: "Сведения о разделе \"ClickHouse\" в Deckhouse Stronghold."
 hidden: true
 weight: 40
 ---

@@ -1,12 +1,13 @@
 ---
 title: "OIDC identity provider"
+description: "Information about OIDC identity provider in Deckhouse Stronghold."
 weight: 20
 ---
 
 ## Overview
 
 Stronghold can act as an OpenID Connect (OIDC) identity provider for client applications that use this protocol.
-This allows applications to use Stronghold as a source of [identity](../../../concepts/identity/) and to apply the available [authentication methods](../../../concepts/auth/) to authenticate end users.
+This allows applications to use Stronghold as a source of [identity](../../../../concepts/identity/) and to apply the available [authentication methods](../../../../concepts/auth/) to authenticate end users.
 
 After this capability is enabled, Stronghold can act as an intermediary between a client application and external identity providers through already configured authentication methods.
 In addition, client applications can retrieve end-user identity data from Stronghold.

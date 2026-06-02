@@ -1,6 +1,7 @@
 ---
 title: "Secret engines"
 linkTitle: "Overview"
+description: "Information about Secret engines in Deckhouse Stronghold."
 weight: 5
 ---
 

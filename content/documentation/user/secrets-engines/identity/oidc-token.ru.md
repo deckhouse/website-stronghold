@@ -1,5 +1,6 @@
 ---
 title: "OIDC identity tokens"
+description: "Сведения о разделе \"OIDC identity tokens\" в Deckhouse Stronghold."
 weight: 30
 ---
 
@@ -59,7 +60,7 @@ OIDC-совместимые ID-токены генерируются на осн
 Кроме того, оператор может настроить шаблоны для каждой роли, которые позволяют добавлять различные
 другую информацию о сущности, которая может быть добавлена к токену. Шаблоны
 структурированы как JSON с заменяемыми параметрами. Синтаксис параметров такой же
-что и для [ACL Path Templating](../../../concepts/policy/).
+что и для [ACL Path Templating](../../../../concepts/policy/).
 
 Например:
 
@@ -126,9 +127,9 @@ OIDC-совместимые ID-токены генерируются на осн
 | `identity.entity.metadata` | Метаданные, связанные с сущностью |
 | `identity.entity.metadata.<metadata key>` | Метаданные, связанные с сущностью для данного ключа |
 | `identity.entity.aliases.<mount accessor>.id` | ID псевдонима сущности для данного монтирования |
-| `identity.entity.aliases.<mount accessor>.name` | Имя псевдонима сущности для данного крепления |
-| `identity.entity.aliases.<mount accessor>.metadata` | Метаданные, связанные с псевдонимом для данного крепления |
-| `identity.entity.aliases.<mount accessor>.metadata.<metadata key>` | Метаданные, связанные с псевдонимом для данного крепления и ключом метаданных |
+| `identity.entity.aliases.<mount accessor>.name` | Имя псевдонима сущности для данного монтирования |
+| `identity.entity.aliases.<mount accessor>.metadata` | Метаданные, связанные с псевдонимом для данного монтирования |
+| `identity.entity.aliases.<mount accessor>.metadata.<metadata key>` | Метаданные, связанные с псевдонимом для данного монтирования и ключом метаданных |
 | `identity.entity.aliases.<mount accessor>.custom_metadata` | Пользовательские метаданные, связанные с псевдонимом для данного монтирования |
 | `identity.entity.aliases.<mount accessor>.custom_metadata.<custom_metadata key>` | Пользовательские метаданные, связанные с псевдонимом для данного монтирования и ключом пользовательских метаданных |
 | `time.now` | Текущее время в интегральных секундах от эпохи |
@@ -177,5 +178,5 @@ URL эмитента, поэтому он должен быть доступен
 выпущенные в данном кластере, должны быть подтверждены в пределах этого кластера.
 В качестве альтернативы, параметр `issuer` может быть задан явно.
 Этот адрес должен указывать на путь к идентификатору/oidc для экземпляра Stronghold
-(например. `https://stronghold.example.com:8200/v1/identity/oidc`) и должен быть
+(например, `https://stronghold.example.com:8200/v1/identity/oidc`) и должен быть
 доступным для любого клиента, пытающегося подтвердить идентификационные токены.

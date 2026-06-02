@@ -1,5 +1,6 @@
 ---
 title: "Механизм секретов PKI"
+description: "Сведения о разделе \"Механизм секретов PKI\" в Deckhouse Stronghold."
 weight: 20
 ---
 

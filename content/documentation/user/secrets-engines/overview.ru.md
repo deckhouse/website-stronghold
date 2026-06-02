@@ -1,6 +1,7 @@
 ---
 title: "Механизмы секретов"
 linkTitle: "Обзор"
+description: "Сведения о разделе \"Механизмы секретов\" в Deckhouse Stronghold."
 weight: 5
 ---
 

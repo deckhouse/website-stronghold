@@ -1,11 +1,12 @@
 ---
 title: "Overview"
+description: "Information about Overview in Deckhouse Stronghold."
 weight: 10
 ---
 
 The database secrets engine generates dynamic credentials based on configured roles.
 It works with different databases through plugins.
-This allows services to avoid storing credentials in plain text and instead request them from Stronghold and use the [lease mechanism](../../../concepts/lease/).
+This allows services to avoid storing credentials in plain text and instead request them from Stronghold and use the [lease mechanism](../../../../concepts/lease/).
 
 This approach simplifies auditing access to data.
 Each service uses unique credentials, so suspicious activity can be associated with a specific service instance by its SQL username.
@@ -48,9 +49,9 @@ All listed databases support dynamic roles, static roles, and root credential ro
 
 | Database | Root user rotation | Dynamic roles | Static roles | Username customization | Credential type |
 | --- | --- | --- | --- | --- | --- |
-| [MySQL/MariaDB](./mysql-maria/) | Yes | Yes | Yes | Yes | password |
-| [PostgreSQL](./postgresql/) | Yes | Yes | Yes | Yes | password |
-| [ClickHouse](./clickhouse/) | Yes | Yes | Yes | Yes | password |
+| [MySQL/MariaDB](../mysql-maria/) | Yes | Yes | Yes | Yes | password |
+| [PostgreSQL](../postgresql/) | Yes | Yes | Yes | Yes | password |
+| [ClickHouse](../clickhouse/) | Yes | Yes | Yes | Yes | password |
 
 ## Credential types
 

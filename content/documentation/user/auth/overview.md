@@ -30,15 +30,15 @@ In general, authentication methods can be divided into three groups:
 
 If you are not sure which option to use, follow these general recommendations:
 
-- if you sign in as a user through a browser or a corporate account, [`OIDC`](./oidc/overview), [`SAML`](./saml), [`LDAP`](./ldap), [`Userpass`](./userpass), or [`WebAuthn`](./web-auth-n) is usually appropriate.
-- if access is required for an application or a service, [`AppRole`](./approle), [`Kubernetes`](./kubernetes), [`JWT`](./jwt), or [`Token`](./token) is more commonly used.
-- if sign-in requires an additional confirmation step, use [`MFA`](./mfa).
+- if you sign in as a user through a browser or a corporate account, [`OIDC`](../oidc/overview/), [`SAML`](../saml/), [`LDAP`](../ldap/), [`Userpass`](../userpass/), or [`WebAuthn`](../web-auth-n/) is usually appropriate.
+- if access is required for an application or a service, [`AppRole`](../approle/), [`Kubernetes`](../kubernetes/), [`JWT`](../jwt/), or [`Token`](../token/) is more commonly used.
+- if sign-in requires an additional confirmation step, use [`MFA`](../mfa/).
 
 ## Methods for users
 
 ### OIDC
 
-[OpenID Connect (OIDC)](./oidc/overview) is one of the main sign-in methods for users. It allows users to authenticate through an external OIDC provider by using a browser and supports both UI and CLI scenarios.
+[OpenID Connect (OIDC)](../oidc/overview/) is one of the main sign-in methods for users. It allows users to authenticate through an external OIDC provider by using a browser and supports both UI and CLI scenarios.
 
 This method is typically chosen in the following cases:
 
@@ -46,11 +46,11 @@ This method is typically chosen in the following cases:
 - you need single sign-on with a corporate account.
 - you need a convenient user flow for both browser and CLI access.
 
-If you need to understand how Deckhouse Stronghold works with specific OIDC providers, see [OIDC providers](./oidc/oidc-providers/overview).
+If you need to understand how Deckhouse Stronghold works with specific OIDC providers, see [OIDC providers](../oidc/oidc-providers/overview/).
 
 ### SAML
 
-[Security Assertion Markup Language (SAML)](./saml) allows users to authenticate through an external `SAML 2.0` identity provider by using the `Web SSO` profile.
+[Security Assertion Markup Language (SAML)](../saml/) allows users to authenticate through an external `SAML 2.0` identity provider by using the `Web SSO` profile.
 
 This method is suitable in the following cases:
 
@@ -60,7 +60,7 @@ This method is suitable in the following cases:
 
 ### LDAP
 
-[Lightweight Directory Access Protocol (LDAP)](./ldap) is used for authentication through an existing LDAP directory or Active Directory.
+[Lightweight Directory Access Protocol (LDAP)](../ldap/) is used for authentication through an existing LDAP directory or Active Directory.
 
 This method is suitable in the following cases:
 
@@ -70,7 +70,7 @@ This method is suitable in the following cases:
 
 ### Userpass
 
-[`Userpass`](./userpass) is a built-in authentication method based on a username and password.
+[`Userpass`](../userpass/) is a built-in authentication method based on a username and password.
 
 It is suitable in the following cases:
 
@@ -80,7 +80,7 @@ It is suitable in the following cases:
 
 ### WebAuthn
 
-[`WebAuthn`](./web-auth-n) allows users to authenticate with `FIDO2`-compatible authenticators and `passkeys`.
+[`WebAuthn`](../web-auth-n/) allows users to authenticate with `FIDO2`-compatible authenticators and `passkeys`.
 
 This method is especially useful in the following cases:
 
@@ -90,7 +90,7 @@ This method is especially useful in the following cases:
 
 ### Token
 
-[`Token`](./token) is a built-in token-based authentication method. It is available in Deckhouse Stronghold by default and can be used both by users and automation tools.
+[`Token`](../token/) is a built-in token-based authentication method. It is available in Deckhouse Stronghold by default and can be used both by users and automation tools.
 
 This method is commonly used in the following cases:
 
@@ -102,7 +102,7 @@ This method is commonly used in the following cases:
 
 ### AppRole
 
-[`AppRole`](./approle) is designed for authentication of applications and services. It is especially well suited for machine scenarios where an application must receive access based on a role and additional restrictions.
+[`AppRole`](../approle/) is designed for authentication of applications and services. It is especially well suited for machine scenarios where an application must receive access based on a role and additional restrictions.
 
 This method is typically chosen in the following cases:
 
@@ -113,7 +113,7 @@ This method is typically chosen in the following cases:
 
 ### JWT
 
-[JSON Web Token (JWT)](./jwt) is used when a client can already provide a JWT that Deckhouse Stronghold must validate.
+[JSON Web Token (JWT)](../jwt/) is used when a client can already provide a JWT that Deckhouse Stronghold must validate.
 
 This method is suitable in the following cases:
 
@@ -123,7 +123,7 @@ This method is suitable in the following cases:
 
 ### Kubernetes
 
-[`Kubernetes`](./kubernetes) is designed for authentication of applications in Kubernetes by using a `ServiceAccount` token.
+[`Kubernetes`](../kubernetes/) is designed for authentication of applications in Kubernetes by using a `ServiceAccount` token.
 
 This method is especially useful in the following cases:
 
@@ -135,12 +135,12 @@ This method is especially useful in the following cases:
 
 ### MFA
 
-[Multi-Factor Authentication (MFA)](./mfa) is not a separate primary sign-in method. It is an additional verification factor that strengthens an already configured authentication method.
+[Multi-Factor Authentication (MFA)](../mfa/) is not a separate primary sign-in method. It is an additional verification factor that strengthens an already configured authentication method.
 
 Deckhouse Stronghold supports different MFA scenarios, including the following:
 
-- [`MULTIFACTOR Ldap Adapter`](./mfa/mfla) — for two-factor protection of users in LDAP-based scenarios.
-- [`Time-Based One-Time Password (TOTP)`](./mfa/totp) — for validating one-time codes.
+- [`MULTIFACTOR Ldap Adapter`](../mfa/multifactor/) — for two-factor protection of users in LDAP-based scenarios.
+- [`Time-Based One-Time Password (TOTP)`](../mfa/totp/) — for validating one-time codes.
 
 MFA should be used in the following cases:
 
@@ -152,15 +152,15 @@ MFA should be used in the following cases:
 
 The following simplified recommendations can help you choose a method:
 
-- For user sign-in with a corporate account, [`OIDC`](./oidc/overview) or [`SAML`](./saml) is usually appropriate.
-- For user sign-in through LDAP or Active Directory, use [`LDAP`](./ldap).
-- For a simple local username-and-password sign-in flow, use [`Userpass`](./userpass).
-- For passwordless sign-in, use [`WebAuthn`](./web-auth-n).
-- For application or service authentication, use [`AppRole`](./approle).
-- For application authentication in Kubernetes, use [`Kubernetes`](./kubernetes).
-- For authentication with an already issued JWT, use [`JWT`](./jwt).
-- For work with an existing Deckhouse Stronghold token, use [`Token`](./token).
-- To strengthen an existing sign-in flow, use [`MFA`](./mfa).
+- For user sign-in with a corporate account, [`OIDC`](../oidc/overview/) or [`SAML`](../saml/) is usually appropriate.
+- For user sign-in through LDAP or Active Directory, use [`LDAP`](../ldap/).
+- For a simple local username-and-password sign-in flow, use [`Userpass`](../userpass/).
+- For passwordless sign-in, use [`WebAuthn`](../web-auth-n/).
+- For application or service authentication, use [`AppRole`](../approle/).
+- For application authentication in Kubernetes, use [`Kubernetes`](../kubernetes/).
+- For authentication with an already issued JWT, use [`JWT`](../jwt/).
+- For work with an existing Deckhouse Stronghold token, use [`Token`](../token/).
+- To strengthen an existing sign-in flow, use [`MFA`](../mfa/).
 
 ## External authentication methods
 

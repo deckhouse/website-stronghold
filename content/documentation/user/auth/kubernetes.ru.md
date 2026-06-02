@@ -9,7 +9,7 @@ description: "Аутентификация в Deckhouse Stronghold с помощ
 
 Токен `ServiceAccount` Kubernetes также можно использовать для входа через `JWT auth`. Подробнее см. в разделе [Использование JWT auth вместо Kubernetes auth](#использование-jwt-auth-вместо-kubernetes-auth).
 
-Этот метод подходит для сценариев, в которых приложение работает внутри Kubernetes и должно получать токены Deckhouse Stronghold на основе identity Kubernetes. Концептуально `Kubernetes auth` использует `TokenReview API`, а `JWT auth` проверяет токен криптографически по открытому ключу.
+Этот метод подходит для сценариев, в которых приложение работает внутри Kubernetes и должно получать токены Deckhouse Stronghold на основе идентификационных данных Kubernetes. Концептуально `Kubernetes auth` использует `TokenReview API`, а `JWT auth` проверяет токен криптографически по открытому ключу.
 
 ## Аутентификация
 

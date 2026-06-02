@@ -1,5 +1,6 @@
 ---
 title: "Cubbyhole secrets engine"
+description: "Information about Cubbyhole secrets engine in Deckhouse Stronghold."
 weight: 30
 ---
 

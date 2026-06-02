@@ -9,7 +9,7 @@ After you sign in to Deckhouse Stronghold successfully, you can proceed to the f
 This example uses the `KV` secrets engine.
 
 {{< alert level="info" >}}
-The `KV` secrets engine can operate in two modes: `KV v1` — without versioning, and `KV v2` — with versioning and additional features. This section uses a basic scenario. For detailed information about the differences between `KV v1` and `KV v2`, refer to the dedicated documentation section [KV secrets engines](../secrets-engines/kv/overview/).
+The `KV` secrets engine can operate in two modes: `KV v1` — without versioning, and `KV v2` — with versioning and additional features. This section uses a basic scenario. For detailed information about the differences between `KV v1` and `KV v2`, refer to the dedicated documentation section [KV secrets engines](../../secrets-engines/kv/overview/).
 {{< /alert >}}
 
 ## Prerequisites

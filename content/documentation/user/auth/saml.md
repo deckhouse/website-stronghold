@@ -1,6 +1,7 @@
 ---
 title: "SAML"
 linkTitle: "SAML"
+description: "Information about SAML in Deckhouse Stronghold."
 weight: 75
 params:
   edition: ee

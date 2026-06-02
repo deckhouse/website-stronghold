@@ -1,11 +1,12 @@
 ---
 title: "Механизм секретов Kubernetes"
+description: "Сведения о разделе \"Механизм секретов Kubernetes\" в Deckhouse Stronghold."
 weight: 70
 ---
 
 Kubernetes Secrets Engine для Stronghold генерирует токены для ServiceAccount Kubernetes.
 При необходимости он также создаёт объекты ServiceAccount, Role и RoleBinding.
-Созданные токены имеют настраиваемое время жизни (TTL), а все созданные объекты автоматически удаляются после истечения срока [аренды](../../concepts/lease/) Stronghold.
+Созданные токены имеют настраиваемое время жизни (TTL), а все созданные объекты автоматически удаляются после истечения срока [аренды](../../../concepts/lease/) Stronghold.
 
 Для каждой аренды Stronghold создаёт токен для конкретной ServiceAccount и возвращает его вызывающей стороне.
 Дополнительную информацию см. в документации [Kubernetes service accounts](https://kubernetes.io/docs/concepts/security/service-accounts/) и [Kubernetes RBAC](https://kubernetes.io/docs/reference/access-authn-authz/rbac/).
@@ -240,7 +241,7 @@ curl -sk "$(d8 k config view --minify -o 'jsonpath={.clusters[].cluster.server}'
 }
 ```
 
-После истечения срока [аренды](../../concepts/lease/) проверьте, что токен был отозван и больше не может использоваться для запросов к API Kubernetes:
+После истечения срока [аренды](../../../concepts/lease/) проверьте, что токен был отозван и больше не может использоваться для запросов к API Kubernetes:
 
 ```shell
 curl -sk "$(d8 k config view --minify -o 'jsonpath={.clusters[].cluster.server}')/api/v1/namespaces/test/pods" \

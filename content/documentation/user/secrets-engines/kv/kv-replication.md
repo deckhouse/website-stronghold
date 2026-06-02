@@ -1,5 +1,6 @@
 ---
 title: "KV1/KV2 replication"
+description: "Information about KV1/KV2 replication in Deckhouse Stronghold."
 weight: 40
 ---
 

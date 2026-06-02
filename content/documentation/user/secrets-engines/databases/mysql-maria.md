@@ -1,5 +1,6 @@
 ---
 title: "MySQL"
+description: "Information about MySQL in Deckhouse Stronghold."
 weight: 30
 ---
 

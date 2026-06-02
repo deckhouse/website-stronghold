@@ -1,5 +1,6 @@
 ---
 title: "KV v2"
+description: "Сведения о разделе \"KV v2\" в Deckhouse Stronghold."
 weight: 30
 ---
 

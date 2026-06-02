@@ -1,5 +1,6 @@
 ---
 title: "Механизм секретов LDAP"
+description: "Сведения о разделе \"Механизм секретов LDAP\" в Deckhouse Stronghold."
 weight: 80
 ---
 
@@ -250,7 +251,7 @@ AD не позволяет напрямую изменять атрибут `mem
 Параметры `*_ldif` представляют собой шаблоны, использующие язык [Go template](https://golang.org/pkg/text/template/).
 Ниже приведён пример LDIF для создания учётной записи пользователя в Active Directory:
 
-```ldif
+```text
 dn: CN={{.Username}},OU=Stronghold,DC=adtesting,DC=lab
 changetype: add
 objectClass: top

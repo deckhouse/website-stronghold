@@ -1,5 +1,6 @@
 ---
 title: "Overview"
+description: "Information about Overview in Deckhouse Stronghold."
 weight: 10
 ---
 ## Identity secrets engine
@@ -43,5 +44,5 @@ For a detailed description of the concept, see [Identity](../../../../concepts/i
 
 The `Identity` secrets engine supports the following features:
 
-- [OIDC identity tokens](./oidc-token/);
-- [OIDC identity provider](./oidc-provider/).
+- [OIDC identity tokens](../oidc-token/);
+- [OIDC identity provider](../oidc-provider/).

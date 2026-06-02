@@ -12,7 +12,7 @@ The `jwt auth` method can be used for authentication in Stronghold in two ways:
 This section covers the OIDC scenario, in which a user authenticates through an external OIDC provider using the web interface or CLI. The specific scenario depends on the role configuration.
 
 {{< alert level="info" >}}
-If you need a scenario in which the client directly provides a JWT without browser-based login, use the [JWT](../jwt) section. In the JWT scenario, Stronghold cryptographically validates the provided token using locally configured keys or keys obtained through OIDC Discovery.
+If you need a scenario in which the client directly provides a JWT without browser-based login, use the [JWT](../../jwt/) section. In the JWT scenario, Stronghold cryptographically validates the provided token using locally configured keys or keys obtained through OIDC Discovery.
 {{< /alert >}}
 
 ## How OIDC works in Stronghold
@@ -184,4 +184,4 @@ Do not use `verbose_oidc_logging` in a production environment. Claims can contai
 
 Stronghold works with a number of OIDC providers. Detailed setup steps for specific providers are documented in a separate section.
 
-Continue to the [OIDC providers](./oidc-providers/overview) section.
+Continue to the [OIDC providers](../oidc-providers/overview/) section.

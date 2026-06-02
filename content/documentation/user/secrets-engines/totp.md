@@ -1,5 +1,6 @@
 ---
 title: "TOTP secrets engine"
+description: "Information about TOTP secrets engine in Deckhouse Stronghold."
 weight: 60
 ---
 

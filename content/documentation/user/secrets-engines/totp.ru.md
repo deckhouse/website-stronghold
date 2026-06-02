@@ -1,5 +1,6 @@
 ---
 title: "Механизм секретов TOTP"
+description: "Сведения о разделе \"Механизм секретов TOTP\" в Deckhouse Stronghold."
 weight: 60
 ---
 

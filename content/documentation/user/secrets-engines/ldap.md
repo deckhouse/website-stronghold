@@ -1,5 +1,6 @@
 ---
 title: "LDAP secrets engine"
+description: "Information about LDAP secrets engine in Deckhouse Stronghold."
 weight: 80
 ---
 
@@ -250,7 +251,7 @@ To add a newly created dynamic user to a group, send a `modify` request to the t
 The `*_ldif` parameters are templates that use the [Go template language](https://golang.org/pkg/text/template/).
 The following example shows an LDIF template for creating an Active Directory user account:
 
-```ldif
+```text
 dn: CN={{.Username}},OU=Stronghold,DC=adtesting,DC=lab
 changetype: add
 objectClass: top

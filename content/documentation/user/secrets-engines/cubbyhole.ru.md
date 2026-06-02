@@ -1,5 +1,6 @@
 ---
 title: "Механизм секретов Cubbyhole"
+description: "Сведения о разделе \"Механизм секретов Cubbyhole\" в Deckhouse Stronghold."
 weight: 30
 ---
 

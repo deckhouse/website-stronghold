@@ -1,5 +1,6 @@
 ---
 title: "Обзор"
+description: "Сведения о разделе \"Обзор\" в Deckhouse Stronghold."
 weight: 10
 ---
 
@@ -42,5 +43,5 @@ weight: 10
 
 Механизм секретов `Identity` поддерживает следующие функции:
 
-- [OIDC identity tokens](./oidc-token/);
-- [OIDC identity provider](./oidc-provider/).
+- [OIDC identity tokens](../oidc-token/);
+- [OIDC identity provider](../oidc-provider/).

@@ -1,5 +1,6 @@
 ---
 title: "Репликация KV1/KV2"
+description: "Сведения о разделе \"Репликация KV1/KV2\" в Deckhouse Stronghold."
 weight: 40
 ---
 

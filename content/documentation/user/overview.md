@@ -19,7 +19,7 @@ The user guide helps you solve everyday tasks:
 - integrate applications with Stronghold Agent and other product capabilities.
 
 {{< alert level="info" >}}
-If you need to install, upgrade, or administer Stronghold, use the [administrator guide](../admin/overview) and the [installation guide](../install/overview).
+If you need to install, upgrade, or administer Stronghold, use the [administrator guide](../../admin/overview/) and the [installation guide](../../install/overview/).
 {{< /alert >}}
 
 ## Who this guide is for
@@ -37,25 +37,25 @@ This guide is intended for:
 
 This section helps you take your first steps in Stronghold:
 
-- [Access to the project](../get-started/access) — getting access to Stronghold and preparing your working environment.
-- [First login](../get-started/first-login) — signing in to Stronghold by using supported mechanisms.
-- [First secret](../get-started/first-secret) — a basic scenario for writing and reading a secret.
+- [Access to the project](../get-started/access/) — getting access to Stronghold and preparing your working environment.
+- [First login](../get-started/first-login/) — signing in to Stronghold by using supported mechanisms.
+- [First secret](../get-started/first-secret/) — a basic scenario for writing and reading a secret.
 
 ### Authentication methods
 
-The [Authentication methods](./auth/overview) section describes how users, applications, and services sign in to Stronghold, from OIDC and LDAP to AppRole, Kubernetes, SAML, and MFA.
+The [Authentication methods](../auth/overview/) section describes how users, applications, and services sign in to Stronghold, from OIDC and LDAP to AppRole, Kubernetes, SAML, and MFA.
 
 ### Managed keys
 
-The [Managed keys](./managed-keys/overview) section describes how to use external key management systems and perform basic operations with managed keys.
+The [Managed keys](../managed-keys/overview/) section describes how to use external key management systems and perform basic operations with managed keys.
 
 ### Secrets engines
 
-The [Secrets engines](./secrets-engines/overview) section describes how to work with the main Stronghold secrets engines: `KV`, `PKI`, `Transit`, `SSH`, `TOTP`, `Identity`, `Kubernetes`, `LDAP`, and databases.
+The [Secrets engines](../secrets-engines/overview/) section describes how to work with the main Stronghold secrets engines: `KV`, `PKI`, `Transit`, `SSH`, `TOTP`, `Identity`, `Kubernetes`, `LDAP`, and databases.
 
 ### Stronghold Agent
 
-The [Stronghold Agent](./stronghold-agent/overview) section describes automatic authentication, secret delivery, and agent usage scenarios in applications and infrastructure.
+The [Stronghold Agent](../agent/overview/) section describes automatic authentication, secret delivery, and agent usage scenarios in applications and infrastructure.
 
 ## Important considerations
 

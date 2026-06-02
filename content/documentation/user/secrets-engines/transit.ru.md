@@ -1,5 +1,6 @@
 ---
 title: "Механизм секретов Transit"
+description: "Сведения о разделе \"Механизм секретов Transit\" в Deckhouse Stronghold."
 weight: 50
 ---
 

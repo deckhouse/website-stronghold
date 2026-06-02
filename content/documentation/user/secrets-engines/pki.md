@@ -1,5 +1,6 @@
 ---
 title: "PKI secrets engine"
+description: "Information about PKI secrets engine in Deckhouse Stronghold."
 weight: 20
 ---
 

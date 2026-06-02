@@ -61,7 +61,7 @@ Stronghold хранит конфигурацию доступа к внешне�
 - `service_account_key_json`;
 - сервисный аккаунт виртуальной машины в Yandex Cloud.
 
-Если параметры `oauth_token` и `service_account_key_json` не заданы, Stronghold пытается использовать сервисный аккаунт виртуальной машины через стандартный механизм получения instance credentials.
+Если параметры `oauth_token` и `service_account_key_json` не заданы, Stronghold пытается использовать сервисный аккаунт виртуальной машины через стандартный механизм получения учётные данные инстанса.
 
 {{< alert level="info" >}}
 Для `yandexcloudkms` параметры `oauth_token` и `service_account_key_json` взаимоисключающие.

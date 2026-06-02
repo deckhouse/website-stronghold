@@ -2,7 +2,7 @@
 title: "Метод WebAuthn"
 linkTitle: "WebAuthn"
 weight: 85
-description: "Безпарольная аутентификация в Deckhouse Stronghold с помощью WebAuthn."
+description: "Беспарольная аутентификация в Deckhouse Stronghold с помощью WebAuthn."
 ---
 
 Метод аутентификации `webauthn` позволяет аутентифицироваться в Deckhouse Stronghold с помощью `FIDO2`-совместимых аутентификаторов и passkey.
@@ -125,7 +125,7 @@ curl \
   https://stronghold.example.com/v1/auth/webauthn/register/begin
 ```
 
-1. Передайте полученные `publicKey`-параметры в `navigator.credentials.create(...)` в браузере.
+1. Передайте полученные `publicKey`-параметры в `navigator.учётные данные.create(...)` в браузере.
 1. Завершите регистрацию, отправив результат обратно в Stronghold:
 
 ```json
@@ -158,7 +158,7 @@ curl \
 
 Для входа через passkey picker можно не передавать `username`.
 
-1. Передайте полученные параметры в `navigator.credentials.get(...)`.
+1. Передайте полученные параметры в `navigator.учётные данные.get(...)`.
 1. Завершите вход, отправив ответ аутентификатора на `POST /v1/auth/webauthn/login/finish`:
 
 ```json

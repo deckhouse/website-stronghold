@@ -1,5 +1,6 @@
 ---
 title: "Transit secrets engine"
+description: "Information about Transit secrets engine in Deckhouse Stronghold."
 weight: 50
 ---
 

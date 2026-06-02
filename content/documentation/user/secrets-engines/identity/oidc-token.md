@@ -1,5 +1,6 @@
 ---
 title: "OIDC identity tokens"
+description: "Information about OIDC identity tokens in Deckhouse Stronghold."
 weight: 30
 ---
 
@@ -59,7 +60,7 @@ Identity tokens always contain, at a minimum, the required OIDC claims:
 In addition, the operator can configure templates for each role to add
 various entity information to the token. Templates are structured as JSON
 with replaceable parameters. The parameter syntax is the same as that used
-for [ACL Path Templating](../../../concepts/policy/).
+for [ACL Path Templating](../../../../concepts/policy/).
 
 For example:
 

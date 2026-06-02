@@ -91,10 +91,10 @@ For example, Stronghold Agent can be used to:
 
 If you are just getting started with Stronghold Agent, use the following order:
 
-1. Open [Use cases](./use-cases) to understand whether Stronghold Agent fits your scenario.
-1. Go to [Core capabilities](./capabilities) to choose an appropriate secret delivery method.
-1. Then review [Basic settings](./settings) and prepare the configuration file.
-1. After that, use [Launch and management](./launch-and-control) to validate the configuration and start the Agent.
+1. Open [Use cases](../use-cases/) to understand whether Stronghold Agent fits your scenario.
+1. Go to [Core capabilities](../capabilities/) to choose an appropriate secret delivery method.
+1. Then review [Basic settings](../settings/) and prepare the configuration file.
+1. After that, use [Launch and management](../launch-and-control/) to validate the configuration and start the Agent.
 
 ## Practical recommendations
 

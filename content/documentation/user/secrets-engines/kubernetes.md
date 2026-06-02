@@ -1,11 +1,12 @@
 ---
 title: "Kubernetes secrets engine"
+description: "Information about Kubernetes secrets engine in Deckhouse Stronghold."
 weight: 70
 ---
 
 The Kubernetes Secrets Engine for Stronghold generates tokens for Kubernetes ServiceAccounts.
 If needed, it can also create ServiceAccount, Role, and RoleBinding objects.
-Generated tokens have a configurable time to live (TTL), and all created objects are automatically deleted when the Stronghold [lease](../../concepts/lease/) expires.
+Generated tokens have a configurable time to live (TTL), and all created objects are automatically deleted when the Stronghold [lease](../../../concepts/lease/) expires.
 
 For each lease, Stronghold creates a token for a specific ServiceAccount and returns it to the caller.
 For more information, see the official Kubernetes documentation on [service accounts](https://kubernetes.io/docs/concepts/security/service-accounts/) and [RBAC](https://kubernetes.io/docs/reference/access-authn-authz/rbac/).
@@ -240,7 +241,7 @@ Example response:
 }
 ```
 
-After the [lease](../../concepts/lease/) expires, verify that the token has been revoked and can no longer be used for requests to the Kubernetes API:
+After the [lease](../../../concepts/lease/) expires, verify that the token has been revoked and can no longer be used for requests to the Kubernetes API:
 
 ```shell
 curl -sk "$(d8 k config view --minify -o 'jsonpath={.clusters[].cluster.server}')/api/v1/namespaces/test/pods" \

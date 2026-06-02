@@ -1,5 +1,6 @@
 ---
 title: "Overview"
+description: "Information about Overview in Deckhouse Stronghold."
 weight: 10
 ---
 

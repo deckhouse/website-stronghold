@@ -1,5 +1,6 @@
 ---
 title: "PostgreSQL"
+description: "Information about PostgreSQL in Deckhouse Stronghold."
 weight: 20
 ---
 

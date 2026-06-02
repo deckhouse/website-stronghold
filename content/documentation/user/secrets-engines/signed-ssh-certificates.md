@@ -1,5 +1,6 @@
 ---
 title: "SSH secrets engine"
+description: "Information about SSH secrets engine in Deckhouse Stronghold."
 weight: 40
 ---
 

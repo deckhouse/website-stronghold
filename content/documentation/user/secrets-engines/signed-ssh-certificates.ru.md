@@ -1,5 +1,6 @@
 ---
 title: "Механизм секретов SSH"
+description: "Сведения о разделе \"Механизм секретов SSH\" в Deckhouse Stronghold."
 weight: 40
 ---
 
