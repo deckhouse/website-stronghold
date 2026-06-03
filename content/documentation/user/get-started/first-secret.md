@@ -1,26 +1,22 @@
 ---
 title: "Your first secret"
 linkTitle: "Your first secret"
-description: "The first practical scenario for working with a secret in Deckhouse Stronghold"
+description: "Creating your first secret in Deckhouse Stronghold"
 weight: 30
 ---
 
-After you sign in to Deckhouse Stronghold successfully, you can proceed to the first practical operation — writing and reading a secret.
-This example uses the `KV` secrets engine.
+After you sign in to Deckhouse Stronghold successfully, you can create your first test secret, verify its contents, and change its value if needed.
 
-{{< alert level="info" >}}
-The `KV` secrets engine can operate in two modes: `KV v1` — without versioning, and `KV v2` — with versioning and additional features. This section uses a basic scenario. For detailed information about the differences between `KV v1` and `KV v2`, refer to the dedicated documentation section [KV secrets engines](../../secrets-engines/kv/overview/).
+This example uses the `KV` secrets engine. Before running the commands, make sure you have read and write permissions for the selected path and that the administrator has granted access to the `KV` storage.
+If you have not signed in to Stronghold yet, complete the steps in the [Configuring project access](../access/) section first.
+
+{{< alert level="warning" >}}
+Use only test values in this example. Do not store real passwords, tokens, or keys in test secrets.
 {{< /alert >}}
 
-## Prerequisites
+## Create a secret
 
-Before running the examples, make sure that:
-
-- you are already signed in to Stronghold.
-- you have read and write permissions for the selected path.
-- the administrator has granted access to the `KV` storage.
-
-If you have not signed in to Stronghold yet, complete the steps in the [First sign-in](../first-login/) section first.
+The examples below use the test path `secret/my-first-secret` and the test keys `username` and `password`. If your installation uses a different mount path, replace `secret` with the path provided by the administrator.
 
 1. Select a path for the secret
 
@@ -31,11 +27,11 @@ If you have not signed in to Stronghold yet, complete the steps in the [First si
     secret/my-first-secret
     ```
 
-    If your installation uses a different mount path, use the value agreed on with the administrator.
+    Stronghold stores a set of keys and values at this path.
 
-1. Write the secret
+1. Create the secret
 
-    Save a test secret by using the following command:
+    Write test values to the selected path:
 
     ```shell
     d8 stronghold kv put secret/my-first-secret username=demo password=secret123
@@ -43,9 +39,9 @@ If you have not signed in to Stronghold yet, complete the steps in the [First si
 
     If the operation completes successfully, Stronghold confirms that the secret has been written.
 
-1. Read the secret
+1. Verify the secret
 
-    Read the saved secret:
+    Read the saved values:
 
     ```shell
     d8 stronghold kv get secret/my-first-secret
@@ -64,49 +60,20 @@ If you have not signed in to Stronghold yet, complete the steps in the [First si
 
 1. Update the secret
 
-    If you need to change the secret value, write it again to the same path:
+    To change a value, write the secret to the same path again:
 
     ```shell
     d8 stronghold kv put secret/my-first-secret username=demo password=new-secret
     ```
 
-    Then read the secret again:
+    Then read the secret again and make sure the value has changed:
 
     ```shell
     d8 stronghold kv get secret/my-first-secret
     ```
 
-1. Delete the test secret
-
-    After you finish verification, delete the test secret:
-
-    ```shell
-    d8 stronghold kv delete secret/my-first-secret
-    ```
-
 {{< alert level="info" >}}
-Deletion behavior depends on the mode in use: `KV v1` or `KV v2`. In `KV v2`, deletion can be soft and use versioning. For details, refer to the dedicated sections about `KV`.
+After verification, replace the test path and values with the parameters used in your project. Additional `KV` engine capabilities, including versioning behavior, are described in the [KV secrets engines](../../secrets-engines/kv/overview/) section.
+
+If a command returns an access or path error, check the mount path and read/write permissions. Resolve login errors by following the [Configuring project access](../access/) guide.
 {{< /alert >}}
-
-## What happens when you work with a secret
-
-In the basic scenario, Stronghold lets you:
-
-- write values to the selected path.
-- read saved data.
-- update values.
-- delete the secret.
-
-This is usually how practical work with the `KV` secrets engine begins.
-
-## If the command does not work
-
-If an error occurs when writing or reading a secret, check the following:
-
-- whether you signed in successfully.
-- whether the token is valid.
-- whether you have permissions for the selected path.
-- whether the mount path is specified correctly.
-- whether the corresponding secrets engine is enabled.
-
-If the problem persists, contact the Stronghold administrator.

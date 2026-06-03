@@ -1,11 +1,11 @@
 ---
-title: "Configuring project access"
+title: "Configuring access and first login"
 linkTitle: "Configuring project access"
-description: "Getting access to Deckhouse Stronghold for working via the CLI"
+description: "Getting access to Deckhouse Stronghold and logging in for the first time via the CLI or web interface"
 weight: 10
 ---
 
-To work with Deckhouse Stronghold from the command line (CLI), you need to obtain the access parameters from the administrator, configure the working environment, and authenticate via OIDC using the `d8` utility.
+To work with Deckhouse Stronghold, you need to obtain the access parameters from the administrator and log in for the first time. Users typically log in from the command line with the `d8` utility or through the web interface if it is available in the installation.
 
 ## What to get from the administrator
 
@@ -13,14 +13,15 @@ Before you begin, make sure the administrator has provided the following:
 
 - the Stronghold server address;
 - the authentication method;
-- confirmation that your account has the required permissions;
+- the authentication path, if it differs from the default one;
+- the web interface address, if you log in through a browser;
 - additional connection parameters, if they are required in your installation.
 
 If your organization uses a corporate identity provider, it is usually enough to get access to the required group or role.
 
-## Prepare CLI access
+## Log in via the CLI
 
-To configure access to your project from the command line, follow these steps:
+To configure access to your project from the command line and log in to Stronghold, follow these steps.
 
 1. Install the `d8` utility.
 
@@ -36,47 +37,57 @@ To configure access to your project from the command line, follow these steps:
 
    Replace `https://stronghold.domain.my` with the address you received from the administrator.
 
-1. Log in.
+1. Log in through OIDC.
 
-   Log in to Stronghold using the following command:
+   In a typical OIDC scenario, log in to Stronghold using the following command:
 
    ```shell
    d8 stronghold login -path=oidc_deckhouse -method=oidc -no-print
    ```
 
-   This example uses the `oidc` authentication method and the `oidc_deckhouse` path. If your installation uses different parameters, specify the values provided by the administrator.
+   This example uses [OIDC authentication](../auth/oidc/overview/) with the `oidc` method and the `oidc_deckhouse` path. If your installation uses different parameters, specify the values provided by the administrator.
 
-1. Use `d8 stronghold` commands.
+   After you run the command, the CLI usually opens a browser to complete login through the configured OIDC provider. If the browser does not open automatically, copy the URL from the command output and open it manually.
 
-   After logging in, use commands in the following format:
+1. Verify access.
+
+   Run a command that does not modify data:
 
    ```shell
-   d8 stronghold <command>
+   d8 stronghold status
    ```
 
-   The next step is described in the [First login](../first-login/) section.
+   If the command runs successfully, the Stronghold address is specified correctly, authentication has completed, and CLI access works.
 
-## How to verify that access is configured correctly
-
-After logging in, run a simple command that does not modify data:
+After a successful login, use commands in the following format:
 
 ```shell
-d8 stronghold status
+d8 stronghold <command>
 ```
 
-If the command runs successfully, it means that:
+## Log in through the web interface
 
-- the Stronghold address is specified correctly;
-- authentication completed successfully;
-- CLI access works.
+If the Stronghold web interface is available in your installation, log in through a browser:
 
-## If login fails
+1. Open the Stronghold web interface address provided by the administrator.
+1. Select a login method, for example OIDC.
+1. If required, specify the role name or another parameter provided by the administrator.
+1. Continue to the external authentication provider and complete login.
 
-If you cannot access Stronghold, check the following:
+After a successful login, Stronghold opens the user interface with the permissions that correspond to your account and assigned policies.
 
-- whether `STRONGHOLD_ADDR` is specified correctly;
-- whether the Stronghold address is reachable from your network;
-- whether you are using the correct authentication method and path;
-- whether your account has the required permissions.
+After logging in, proceed to creating your first secret in the [Your first secret](../first-secret/) section.
+
+## Troubleshoot login issues
+
+If you cannot log in to Stronghold, follow these steps:
+
+- Check the `STRONGHOLD_ADDR` environment variable.
+- Make sure the Stronghold address is reachable from your network.
+- Compare the authentication method and path with the values provided by the administrator.
+- Check whether the external OIDC provider is reachable.
+- Make sure the browser does not block the redirect URI from opening.
+- Check the web interface address, if you log in through a browser.
+- Ask the administrator to confirm that your account has access permissions.
 
 If the problem persists, contact your Stronghold administrator.

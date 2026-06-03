@@ -37,9 +37,8 @@ This guide is intended for:
 
 This section helps you take your first steps in Stronghold:
 
-- [Access to the project](../get-started/access/) — getting access to Stronghold and preparing your working environment.
-- [First login](../get-started/first-login/) — signing in to Stronghold by using supported mechanisms.
-- [First secret](../get-started/first-secret/) — a basic scenario for writing and reading a secret.
+- [Configuring project access](../get-started/access/) — getting access to Stronghold, preparing your working environment, and logging in for the first time.
+- [First secret](../get-started/first-secret/) — creating your first secret in the `KV` storage.
 
 ### Authentication methods
 
