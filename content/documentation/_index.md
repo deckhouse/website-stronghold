@@ -16,6 +16,8 @@ Welcome to the home page of the Deckhouse Stronghold documentation!
 
 The Deckhouse Stronghold is designed for launching, managing, and orchestrating virtual machines and associated resources.
 
+For a hands-on introduction, see the free course [Installing and overviewing Deckhouse Stronghold](https://education.flant.ru/course/ustanovka-i-obzor-deckhouse-stronghold/) in [Deckhouse Academy](https://deckhouse.io/course-catalog/).
+
 The documentation includes the following sections:
 
 - [Getting started](/products/stronghold/gs/) — step-by-step instructions for installing the standard configuration of the platform.

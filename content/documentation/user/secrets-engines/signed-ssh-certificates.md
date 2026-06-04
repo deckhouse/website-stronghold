@@ -12,7 +12,7 @@ In this section, the term "**client**" refers to the person or machine
 performing the SSH operation. The "**host**" refers to the target machine. If
 this is confusing, substitute "client" with "user".
 
-This page will show a quick start for this secrets engine. For detailed documentation
+This page will show a quick start for this secrets engine. For a hands-on introduction to SSH in Stronghold, see the free course [Installing and overviewing Deckhouse Stronghold](https://education.flant.ru/course/ustanovka-i-obzor-deckhouse-stronghold/) in [Deckhouse Academy](https://deckhouse.io/course-catalog/). For detailed documentation
 on every path, use `bao path-help` after mounting the secrets engine.
 
 ## Client key signing

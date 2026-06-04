@@ -52,7 +52,7 @@ API.
 
 Once a secrets engine is enabled, you can interact with it directly at its path
 according to its own API. Use `d8 stronghold path-help` to determine the paths it
-responds to.
+responds to. Managing secrets in the web interface and CLI is covered in the free course [Installing and overviewing Deckhouse Stronghold](https://education.flant.ru/course/ustanovka-i-obzor-deckhouse-stronghold/).
 
 Note that mount points cannot conflict with each other in Stronghold. There are
 two broad implications of this fact. The first is that you cannot have
