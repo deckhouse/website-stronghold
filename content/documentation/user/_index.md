@@ -1,5 +1,5 @@
 ---
-title: User guide
-weight: 70
+title: Usage
+weight: 60
 ---
 

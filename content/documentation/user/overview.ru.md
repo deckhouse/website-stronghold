@@ -1,6 +1,6 @@
 ---
 title: "Руководство пользователя Deckhouse Stronghold"
-linkTitle: "Введение"
+linkTitle: "Обзор"
 weight: 10
 ---
 
@@ -8,8 +8,8 @@ weight: 10
 
 В руководстве пользователя представлены следующие разделы:
 
-- [Получение доступа к проекту](./access/) - процесс подключения доступа.
-- [Основные понятия](./concepts/auth/) - базовые сущности Stronghold: аутентификация, токены, политики, identity, lease и response wrapping.
+- [Получение доступа к проекту](./get-started/access/) - процесс подключения доступа.
+- [Основные понятия](../concepts/auth/) - базовые сущности Stronghold: аутентификация, токены, политики, identity, lease и response wrapping.
 - [Методы аутентификации](./auth/index/) - способы входа в Stronghold и настройка аутентификации пользователей и сервисов.
 - [Управляемые ключи](./managed-keys/overview/) - использование внешних криптографических ключей через `pkcs11` и `yandexcloudkms` в `ssh`, `pki` и `transit`.
 - [Механизмы секретов](./secrets-engines/index/) - работа с KV, PKI, Transit, LDAP, Kubernetes, базами данных и другими механизмами секретов.

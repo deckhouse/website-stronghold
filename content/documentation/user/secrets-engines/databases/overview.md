@@ -10,7 +10,7 @@ configured roles. It works with a number of different databases through a plugin
 interface. There are a number of built-in database types, and an exposed framework
 for running custom database types for extendability. This means that services
 that need to access a database no longer need to hardcode credentials: they can
-request them from Stronghold, and use Stronghold's [leasing mechanism](../../concepts/lease/)
+request them from Stronghold, and use Stronghold's [leasing mechanism](../../../concepts/lease/)
 to more easily roll keys. These are referred to as "dynamic roles" or "dynamic
 secrets".
 

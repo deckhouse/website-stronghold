@@ -61,7 +61,7 @@ Identity tokens will always contain, at a minimum, the claims required by OIDC:
 In addition, the operator may configure per-role templates that allow a variety
 of other entity information to be added to the token. The templates are
 structured as JSON with replaceable parameters. The parameter syntax is the same
-as that used for [ACL Path Templating](../../concepts/policy/).
+as that used for [ACL Path Templating](../../../concepts/policy/).
 
 For example:
 
@@ -119,23 +119,23 @@ Templates are configured on the role and may be optionally encoded as base64.
 
 The full list of template parameters is shown below:
 
-| Name                                                                             | Description                                                                             |
-| :------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------- |
-| `identity.entity.id`                                                             | The entity's ID                                                                         |
-| `identity.entity.name`                                                           | The entity's name                                                                       |
-| `identity.entity.groups.ids`                                                     | The IDs of the groups the entity is a member of                                         |
-| `identity.entity.groups.names`                                                   | The names of the groups the entity is a member of                                       |
-| `identity.entity.metadata`                                                       | Metadata associated with the entity                                                     |
-| `identity.entity.metadata.<metadata key>`                                        | Metadata associated with the entity for the given key                                   |
-| `identity.entity.aliases.<mount accessor>.id`                                    | Entity alias ID for the given mount                                                     |
-| `identity.entity.aliases.<mount accessor>.name`                                  | Entity alias name for the given mount                                                   |
-| `identity.entity.aliases.<mount accessor>.metadata`                              | Metadata associated with the alias for the given mount                                  |
-| `identity.entity.aliases.<mount accessor>.metadata.<metadata key>`               | Metadata associated with the alias for the given mount and metadata key                 |
-| `identity.entity.aliases.<mount accessor>.custom_metadata`                       | Custom metadata associated with the alias for the given mount                           |
-| `identity.entity.aliases.<mount accessor>.custom_metadata.<custom_metadata key>` | Custom metadata associated with the alias for the given mount and custom metadata key   |
-| `time.now`                                                                       | Current time as integral seconds since the Epoch                                        |
-| `time.now.plus.<duration>`                                                       | Current time plus a duration format string                 |
-| `time.now.minus.<duration>`                                                      | Current time minus a duration format string                |
+| Name | Description |
+| :--- | :--- |
+| `identity.entity.id` | The entity's ID |
+| `identity.entity.name` | The entity's name |
+| `identity.entity.groups.ids` | The IDs of the groups the entity is a member of |
+| `identity.entity.groups.names` | The names of the groups the entity is a member of |
+| `identity.entity.metadata` | Metadata associated with the entity |
+| `identity.entity.metadata.<metadata key>` | Metadata associated with the entity for the given key |
+| `identity.entity.aliases.<mount accessor>.id` | Entity alias ID for the given mount |
+| `identity.entity.aliases.<mount accessor>.name` | Entity alias name for the given mount |
+| `identity.entity.aliases.<mount accessor>.metadata` | Metadata associated with the alias for the given mount |
+| `identity.entity.aliases.<mount accessor>.metadata.<metadata key>` | Metadata associated with the alias for the given mount and metadata key |
+| `identity.entity.aliases.<mount accessor>.custom_metadata` | Custom metadata associated with the alias for the given mount |
+| `identity.entity.aliases.<mount accessor>.custom_metadata.<custom_metadata key>` | Custom metadata associated with the alias for the given mount and custom metadata key |
+| `time.now` | Current time as integral seconds since the Epoch |
+| `time.now.plus.<duration>` | Current time plus a duration format string |
+| `time.now.minus.<duration>` | Current time minus a duration format string |
 
 ## Token generation
 
@@ -176,7 +176,7 @@ issuer URL, so it must be network reachable. Furthermore, the returned set of
 keys will include an issuer that must match the request.
 
 By default Stronghold will set the issuer to the Stronghold instance's
-[`api_addr`](../../../../admin/standalone/configuration/#high-availability-parameters). This means that tokens
+[`api_addr`](../../../../install/standalone/configuration/#high-availability-parameters). This means that tokens
 issued in a given cluster should be validated within that same cluster.
 Alternatively, the `issuer` parameter
 may be configured explicitly. This address must point to the identity/oidc path

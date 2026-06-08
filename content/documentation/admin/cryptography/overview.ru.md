@@ -34,7 +34,7 @@ Stronghold поддерживает сценарии, где требуется 
 
 ## TLS: версии, наборы шифров и проверка сертификатов
 
-TLS для API Stronghold настраивается в секции `listener "tcp"` через параметры [Standalone-конфигурации](../standalone/configuration/#listener).
+TLS для API Stronghold настраивается в секции `listener "tcp"` через параметры [Standalone-конфигурации](../../install/standalone/configuration/#listener).
 
 ### Поддерживаемые версии TLS
 

@@ -30,11 +30,12 @@ services:
       - "80:80"
     depends_on:
       hugo:
-        condition: service_healthy    
+        condition: service_healthy
 
   hugo:
-    image: hugomods/hugo:debian-ci-0.150.1
+    image: ghcr.io/gohugoio/hugo:v0.162.1
     user: "${UID:-1000}:${GID:-1000}"
+    working_dir: /src
     environment:
       - HUGO_ENABLEGITINFO=false
     command: server --renderToMemory --printPathWarnings --printI18nWarnings --bind=0.0.0.0 -p 1313 --liveReloadPort 80 --noBuildLock --enableGitInfo=false
@@ -45,7 +46,7 @@ services:
       - "./:/src"
       - "../hugo-web-product-module/:/hugo-web-product-module:ro"
     healthcheck:
-      test: ["CMD-SHELL", "curl -s http://localhost:1313 > /dev/null || exit 1"]
+      test: ["CMD", "sh", "-c", "netstat -tnl | grep -q ':1313'"]
       interval: 5s
       timeout: 2s
       retries: 10

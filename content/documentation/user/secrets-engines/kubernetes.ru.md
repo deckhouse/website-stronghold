@@ -4,8 +4,8 @@ weight: 70
 ---
 
 Kubernetes Secrets Engine для Stronghold генерирует токены для учетной записи сервиса Kubernetes
-(не путать с [токенами Stronghold](../concepts/tokens/)), а также, по желанию, сами объекты учетной записи сервиса `ServiceAccount`,
-роли `Role` и привязку роли к учетной записи сервиса `RoleBinding`. Созданные токены имеют настраиваемый [срок жизни (TTL)](#token-ttl), а все созданные объекты автоматически удаляются по истечении срока [аренды (lease)](../concepts/lease/) Stronghold.
+(не путать с [токенами Stronghold](../../concepts/tokens/)), а также, по желанию, сами объекты учетной записи сервиса `ServiceAccount`,
+роли `Role` и привязку роли к учетной записи сервиса `RoleBinding`. Созданные токены имеют настраиваемый [срок жизни (TTL)](#token-ttl), а все созданные объекты автоматически удаляются по истечении срока [аренды (lease)](../../concepts/lease/) Stronghold.
 
 На каждую аренду Stronghold создает токен под конкретную учетную запись сервиса. Токен возвращается вызывающей стороне.
 
@@ -232,7 +232,7 @@ $ curl -sk $(d8 k config view --minify -o 'jsonpath={.clusters[].cluster.server}
 }
 ```
 
-После истечения срока [аренды](../concepts/lease/), можно удостовериться, что токен был отозван и больше не может быть использован для запросов к Kubernetes API.
+После истечения срока [аренды](../../concepts/lease/), можно удостовериться, что токен был отозван и больше не может быть использован для запросов к Kubernetes API.
 
 ```shell-session
 $ curl -sk $(d8 k config view --minify -o 'jsonpath={.clusters[].cluster.server}')/api/v1/namespaces/test/pods \

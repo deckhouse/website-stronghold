@@ -1,4 +1,4 @@
 ---
-title: "Plugins"
+title: "Extensions and Integrations"
 weight: 50
 ---
