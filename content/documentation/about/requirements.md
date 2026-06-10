@@ -1,5 +1,6 @@
 ---
 title: "Requirements"
+description: "System requirements and supported operating systems for Deckhouse Stronghold"
 weight: 30
 ---
 
@@ -16,8 +17,8 @@ Below are the two main cluster types considered depending on their purpose:
 | :--- | :--- | :--- |
 | CPU | 4–8 cores | 8–16 cores |
 | Memory | 8–16 GB | 16–32 GB |
-| Disk input/output | 3000+ IOPS | 3000+ IOPS |
-| Disk input/output | 70+ MB/s | 200+ MB/s |
+| Disk I/O operations | 3000+ IOPS | 3000+ IOPS |
+| Disk throughput | 70+ MB/s | 200+ MB/s |
 
 Depending on the expected number and type of operations, consider the following requirements:
 
@@ -31,6 +32,10 @@ Depending on the expected number and type of operations, consider the following 
 
 | Linux distribution          | Supported versions              |
 | --------------------------- | ------------------------------- |
+| RED OS                      | 7.3, 8.0                        |
+| ROSA Server                 | 7.9, 12.4, 12.5.1               |
+| ALT Linux                   | p10, 10.0, 10.1, 10.2, 11       |
+| Astra Linux Special Edition | 1.7.2, 1.7.3, 1.7.4, 1.7.5, 1.8 |
 | CentOS                      | 7, 8, 9                         |
 | Debian                      | 10, 11, 12                      |
 | Ubuntu                      | 18.04, 20.04, 22.04, 24.04      |
