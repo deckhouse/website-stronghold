@@ -1,5 +1,5 @@
 ---
 title: Get started
-description: "Information about Get started in Deckhouse Stronghold."
+description: "Information about getting started with Deckhouse Stronghold."
 weight: 20
 ---

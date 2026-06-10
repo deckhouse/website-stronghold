@@ -117,7 +117,7 @@ d8 stronghold write auth/kubernetes/role/demo \
 {{< alert >}}
 По умолчанию Kubernetes продлевает срок службы токенов сервис аккаунтов до года, чтобы помочь сгладить переход к короткоживущим токенам.
 Если вы хотите отключить эту функцию, задайте [--service-account-extend-token-expiration=false](https://kubernetes.io/docs/reference/command-line-tools-reference/kube-apiserver/#options) для `kube-apiserver` или определите собственную конфигурацию тома `serviceAccountToken`.
-Подробный пример можно найти [в документации](../oidc/kubernetes/#specifying-ttl-and-audience).
+Подробный пример можно найти в разделе [Указание TTL и целевых групп](../oidc/kubernetes/#specifying-ttl-and-audience).
 {{< /alert >}}
 
 #### Использование токена Stronghold в качестве рецензента JWT

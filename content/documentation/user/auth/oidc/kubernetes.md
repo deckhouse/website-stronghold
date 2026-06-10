@@ -1,45 +1,36 @@
 ---
-title: "Kubernetes as OIDC provider"
+title: "Kubernetes as an OIDC provider"
 linkTitle: "Kubernetes"
 weight: 40
 ---
 
-## Kubernetes
+Kubernetes can act as an OIDC provider so that Stronghold can validate service account tokens using JWT auth or OIDC auth.
 
-Kubernetes can function as an OIDC provider such that Stronghold can validate its
-service account tokens using JWT/OIDC auth.
-
-{{< alert level="info" >}}
-
-**Note:** The JWT auth engine does **not** use Kubernetes' `TokenReview` API
-during authentication, and instead uses public key cryptography to verify the
-contents of JWTs. This means tokens that have been revoked by Kubernetes will
-still be considered valid by Stronghold until their expiry time. To mitigate this
-risk, use short TTLs for service account tokens or use
-[Kubernetes auth](../kubernetes/) which _does_ use the `TokenReview` API.
-
+{{< alert >}}
+The JWT auth mechanism does **not** use the Kubernetes API `TokenReview` for authentication.
+Instead, it uses public-key cryptography to verify the JWT contents.
+This means that tokens revoked by Kubernetes remain valid until they expire.
+To reduce this risk, use short TTLs for service account tokens or use [Kubernetes auth](../kubernetes/), which uses the `TokenReview` API.
 {{< /alert >}}
 
-### Using service account issuer discovery
+### Using the discovery URL
 
-When using service account issuer discovery, you only need to provide the JWT
-auth mount with an OIDC discovery URL, and sometimes a TLS certificate authority
-to trust. This makes it the most straightforward method to configure if your
-Kubernetes cluster meets the requirements.
+When using discovery, you only need to specify the OIDC discovery URL.
+If the OIDC URL uses a custom certificate, you also need a trusted CA.
+This is the simplest configuration mode if the Kubernetes cluster meets the requirements.
 
-Kubernetes cluster requirements:
+The Kubernetes cluster must meet the following requirements:
 
-* [`ServiceAccountIssuerDiscovery`][k8s-sa-issuer-discovery] feature enabled.
-  * Present from 1.18, defaults to enabled from 1.20.
-* kube-apiserver's `--service-account-issuer` flag is set to a URL that is
-  reachable from Stronghold. Public by default for most managed Kubernetes solutions.
-* Must use short-lived service account tokens when logging in.
-  * Tokens mounted into pods default to short-lived from 1.21.
+- The `ServiceAccountIssuerDiscovery` feature gate must be enabled.
+  - It is available starting from version 1.18 and enabled by default starting from version 1.20.
+- The URL specified in the `--service-account-issuer` parameter of the `kube-apiserver` component must contain an address accessible from Stronghold.
+  For most managed Kubernetes services, this address is public.
+- Short-lived Kubernetes service account tokens must be used.
+  - This behavior is enabled by default for tokens mounted into pods starting from Kubernetes 1.21.
 
-Configuration steps:
+To configure this mode, follow these steps:
 
-1. Ensure OIDC discovery URLs do not require authentication, as detailed in the
-   [Kubernetes service account issuer discovery documentation][k8s-sa-issuer-discovery]:
+1. Make sure the OIDC discovery URL does not require authentication, as described in the [Kubernetes documentation][k8s-sa-issuer-discovery].
 
    ```bash
    d8 k create clusterrolebinding oidc-reviewer  \
@@ -47,7 +38,7 @@ Configuration steps:
       --group=system:unauthenticated
    ```
 
-1. Find the issuer URL of the cluster.
+1. Determine the issuer URL for your cluster.
 
    ```bash
    ISSUER="$(d8 k get --raw /.well-known/openid-configuration | jq -r '.issuer')"
@@ -55,58 +46,41 @@ Configuration steps:
 
 1. Enable and configure JWT auth in Stronghold.
 
-1. If Stronghold is running in Kubernetes:
-
-     ```bash
-     d8 stronghold auth enable jwt
-     d8 stronghold write auth/jwt/config \
-        oidc_discovery_url=https://kubernetes.default.svc.cluster.local \
-        oidc_discovery_ca_pem=@/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-     ```
-
-1. Alternatively, if Stronghold is _not_ running in Kubernetes:
-
-   > **Note:** When Stronghold is outside the cluster, the `$ISSUER` endpoint below may or may not be reachable. If not, you can configure JWT auth using [`jwt_validation_pubkeys`](#using-jwt-validation-public-keys) instead.
-
    ```bash
    d8 stronghold auth enable jwt
    d8 stronghold write auth/jwt/config oidc_discovery_url="${ISSUER}"
    ```
 
-1. Configure a role and log in as detailed [below](#creating-a-role-and-logging-in).
+1. Configure the required roles as described [below](#creating-roles-and-authenticating).
 
-   [k8s-sa-issuer-discovery]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#service-account-issuer-discovery
+[k8s-sa-issuer-discovery]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#service-account-issuer-discovery
 
-### Using JWT validation public keys
+### Using public keys to validate JWTs
 
-This method can be useful if Kubernetes' API is not reachable from Stronghold or if
-you would like a single JWT auth mount to service multiple Kubernetes clusters
-by chaining their public signing keys.
+This method can be useful if the Kubernetes API is not accessible from Stronghold or if you want a single JWT auth endpoint to serve multiple Kubernetes clusters using a public key chain.
 
-Kubernetes cluster requirements:
+The Kubernetes cluster must meet the following requirements:
 
-* [`ServiceAccountIssuerDiscovery`][k8s-sa-issuer-discovery] feature enabled.
-  * Present from 1.18, defaults to enabled from 1.20.
-  * This requirement can be avoided if you can access the Kubernetes master
-    nodes to read the public signing key directly from disk at
-    `/etc/kubernetes/pki/sa.pub`. In this case, you can skip the steps to
-    retrieve and then convert the key as it will already be in PEM format.
-* Must use short-lived service account tokens when logging in.
-  * Tokens mounted into pods default to short-lived from 1.21.
+- The `ServiceAccountIssuerDiscovery` feature gate must be enabled.
+  - It is available starting from version 1.18 and enabled by default starting from version 1.20.
+  - This requirement is optional if you have access to the `/etc/kubernetes/pki/sa.pub` file on the cluster master node.
+    In this case, you can skip the steps for retrieving the key and converting it to PEM format because the key is already stored in the required format.
+- Short-lived Kubernetes service account tokens must be used.
+  - This behavior is enabled by default for tokens mounted into pods starting from Kubernetes 1.21.
 
-Configuration steps:
+To configure this mode, follow these steps:
 
-1. Fetch the service account signing public key from your cluster's JWKS URI.
+1. Retrieve the public key used to sign service account tokens from your cluster's JWKS URI.
 
    ```bash
-   # Query the jwks_uri specified in /.well-known/openid-configuration
+   # The jwks_uri is available in /.well-known/openid-configuration.
    d8 k get --raw "$(d8 k get --raw /.well-known/openid-configuration | jq -r '.jwks_uri' | sed -r 's/.*\.[^/]+(.*)/\1/')"
    ```
 
-1. Convert the keys from JWK format to PEM. You can use a CLI tool or an online
-   converter such as [this one][jwk-to-pem].
+1. Convert the keys from JWK format to PEM format.
+   You can use a CLI utility or an [online JWK-to-PEM converter][jwk-to-pem].
 
-1. Configure the JWT auth mount with those public keys.
+1. Configure the JWT auth endpoint to use the retrieved keys.
 
    ```bash
    d8 stronghold write auth/jwt/config \
@@ -117,74 +91,66 @@ Configuration steps:
    -----END PUBLIC KEY-----"
    ```
 
-1. Configure a role and log in as detailed [below](#creating-a-role-and-logging-in).
+1. Configure the required roles as described [below](#creating-roles-and-authenticating).
 
 [jwk-to-pem]: https://8gwifi.org/jwkconvertfunctions.jsp
 
-### Creating a role and logging in
+### Creating roles and authenticating
 
-Once your JWT auth mount is configured, you're ready to configure a role and
-log in. The following assumes you use the projected service account token
-available in all pods by default. See [Specifying TTL and audience](#specifying-ttl-and-audience)
-below if you'd like to control the audience or TTL.
+After the JWT auth endpoint is configured, you can configure a role and authenticate.
+The examples below assume that you use the service account token available by default in all pods.
+If you need to control the API audience or TTL, see [Specifying TTL and API audience](#specifying-ttl-and-api-audience).
 
-1. Choose any value from the array of default audiences. In these examples,
-   there is only one audience in the `aud` array,
-   `https://kubernetes.default.svc.cluster.local`.
+Choose any value from the default API audiences.
+In these examples, the `aud` array contains only one API audience, `https://kubernetes.default.svc.cluster.local`.
 
-   To find the default audiences, either create a fresh token (requires
-   `kubectl` v1.24.0+):
+To find the default API audience, create a new token.
+This requires `d8 k` v1.24.0 or later:
 
-   ```shell-session
-   $ d8 k create token default | cut -f2 -d. | base64 --decode
-   {"aud":["https://kubernetes.default.svc.cluster.local"], ... "sub":"system:serviceaccount:default:default"}
-   ```
+```shell-session
+$ d8 k create token default | cut -f2 -d. | base64 --decode
+{"aud":["https://kubernetes.default.svc.cluster.local"], ... "sub":"system:serviceaccount:default:default"}
+```
 
-   Or read a token from a running pod's filesystem:
+Or read the token from a running pod:
 
-   ```shell-session
-   $ d8 k exec my-pod -- cat /var/run/secrets/kubernetes.io/serviceaccount/token | cut -f2 -d. | base64 --decode
-   {"aud":["https://kubernetes.default.svc.cluster.local"], ... "sub":"system:serviceaccount:default:default"}
-   ```
+```shell-session
+$ d8 k exec my-pod -- cat /var/run/secrets/kubernetes.io/serviceaccount/token | cut -f2 -d. | base64 --decode
+{"aud":["https://kubernetes.default.svc.cluster.local"], ... "sub":"system:serviceaccount:default:default"}
+```
 
-1. Create a role for JWT auth that the `default` service account from the
-   `default` namespace can use.
+Create a role for JWT auth that the `default` service account in the `default` namespace can use.
 
-   ```bash
-   d8 stronghold write auth/jwt/role/my-role \
-      role_type="jwt" \
-      bound_audiences="<AUDIENCE-FROM-PREVIOUS-STEP>" \
-      user_claim="sub" \
-      bound_subject="system:serviceaccount:default:default" \
-      policies="default" \
-      ttl="1h"
-   ```
+```bash
+d8 stronghold write auth/jwt/role/my-role \
+   role_type="jwt" \
+   bound_audiences="<AUDIENCE-FROM-PREVIOUS-STEP>" \
+   user_claim="sub" \
+   bound_subject="system:serviceaccount:default:default" \
+   policies="default" \
+   ttl="1h"
+```
 
-1. Pods or other clients with access to a service account JWT can then log in.
+Pods or clients that have access to the service account JWT can now authenticate with this token.
 
-   ```bash
-   d8 stronghold write auth/jwt/login \
-      role=my-role \
-      jwt=@/var/run/secrets/kubernetes.io/serviceaccount/token
-   # OR equivalent to:
-   curl \
-      --fail \
-      --request POST \
-      --header "X-Vault-Request: true" \
-      --data '{"jwt":"<JWT-TOKEN-HERE>","role":"my-role"}' \
-      "${VAULT_ADDR}/v1/auth/jwt/login"
-   ```
+```bash
+d8 stronghold write auth/jwt/login \
+   role=my-role \
+   jwt=@/var/run/secrets/kubernetes.io/serviceaccount/token
+# OR equivalent to:
+curl \
+   --fail \
+   --request POST \
+   --data '{"jwt":"<JWT-TOKEN-HERE>","role":"my-role"}' \
+   "${STRONGHOLD_ADDR}/v1/auth/jwt/login"
+```
 
-### Specifying TTL and audience
+### Specifying TTL and API audience {#specifying-ttl-and-api-audience}
 
-If you would like to specify a custom TTL or audience for service account tokens,
-the following pod spec illustrates a volume mount that overrides the default
-admission injected token. This is especially relevant if you are unable to
-disable the [--service-account-extend-token-expiration][k8s-extended-tokens]
-flag for `kube-apiserver` and want to use short TTLs.
+If you need to specify a custom TTL or API audience for service account tokens, the following pod manifest shows a volume mount that overrides the default injected token.
+This is especially relevant if you cannot disable the [`--service-account-extend-token-expiration`][k8s-extended-tokens] flag for `kube-apiserver` and want to use short TTLs.
 
-When using the resulting token, you will need to set `bound_audiences=stronghold`
-when creating roles in Stronghold's JWT auth mount.
+When using the resulting token, set `bound_audiences=stronghold` when creating roles in JWT auth.
 
 ```yaml
 apiVersion: v1
@@ -192,10 +158,10 @@ kind: Pod
 metadata:
   name: nginx
 spec:
-  # automountServiceAccountToken is redundant in this example because the
-  # mountPath used overlaps with the default path. The overlap stops the default
-  # admission injected token from being created. You can use this option to
-  # ensure only a single token is mounted if you choose a different mount path.
+  # The automountServiceAccountToken parameter is redundant in this example because the
+  # selected mountPath matches the default path. This override prevents creation of the
+  # default token. However, you can use this parameter to ensure that only one token is
+  # mounted if you choose a different mount path.
   automountServiceAccountToken: false
   containers:
     - name: nginx
@@ -210,10 +176,10 @@ spec:
       sources:
       - serviceAccountToken:
           path: token
-          expirationSeconds: 600 # 10 minutes is the minimum TTL
-          audience: stronghold   # Must match your JWT role's `bound_audiences`
-      # The remaining sources are included to mimic the rest of the default
-      # admission injected volume.
+          expirationSeconds: 600 # Minimum TTL is 10 minutes.
+          audience: stronghold   # Must match your role's `bound_audiences` parameter.
+      # The remaining parameters are added to mimic the standard token creation behavior.
+      # They create the objects normally created when automountServiceAccountToken is enabled.
       - configMap:
           name: kube-root-ca.crt
           items:

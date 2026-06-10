@@ -164,7 +164,7 @@ table summarizes the options, each of which is explained in more detail below.
 {{< alert level="info" >}}
 
 **Note:** By default, Kubernetes currently extends the lifetime of admission
-injected service account tokens to a year to help smooth the transition to short-lived tokens. If you would like to disable this, set [--service-account-extend-token-expiration=false](https://kubernetes.io/docs/reference/command-line-tools-reference/kube-apiserver/#options) for `kube-apiserver` or specify your own `serviceAccountToken` volume mount. See [this section](../oidc/kubernetes/#specifying-ttl-and-audience) for an example.
+injected service account tokens to a year to help smooth the transition to short-lived tokens. If you would like to disable this, set [--service-account-extend-token-expiration=false](https://kubernetes.io/docs/reference/command-line-tools-reference/kube-apiserver/#options) for `kube-apiserver` or specify your own `serviceAccountToken` volume mount. See the [Specifying TTL and audience section](../oidc/kubernetes/#specifying-ttl-and-audience) for an example.
 
 {{< /alert >}}
 
