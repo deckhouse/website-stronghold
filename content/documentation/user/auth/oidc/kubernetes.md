@@ -145,7 +145,7 @@ curl \
    "${STRONGHOLD_ADDR}/v1/auth/jwt/login"
 ```
 
-### Specifying TTL and API audience {#specifying-ttl-and-api-audience}
+### Specifying TTL and API audience
 
 If you need to specify a custom TTL or API audience for service account tokens, the following pod manifest shows a volume mount that overrides the default injected token.
 This is especially relevant if you cannot disable the [`--service-account-extend-token-expiration`][k8s-extended-tokens] flag for `kube-apiserver` and want to use short TTLs.
