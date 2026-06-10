@@ -1,7 +1,7 @@
 ---
 title: "Password policy"
 description: "Configuring password generation policies in Stronghold."
-weight: 10
+weight: 45
 ---
 
 A password policy is a set of rules that defines how Stronghold generates a password.
