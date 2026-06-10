@@ -14,11 +14,11 @@ These entities have similar names but different purposes.
 
 Stronghold uses a password policy configuration model compatible with Vault `1.5+`.
 
-{% alert level="danger" %}
+{{< alert level="danger" >}}
 Password policies are an advanced Stronghold feature.
 They are used when generating credentials for external systems, such as databases or LDAP.
 Use them with caution.
-{% endalert %}
+{{< /alert >}}
 
 ## How It Works
 
@@ -199,9 +199,9 @@ This rule does two things:
 If several `charset` rules are specified in a policy, Stronghold combines all character sets and removes duplicates before generation starts.
 Each `charset` rule is still checked separately.
 
-{% alert level="warning" %}
+{{< alert level="warning" >}}
 After combining and deduplicating character sets, the final `charset` used to generate candidate passwords must not contain more than `256` characters.
-{% endalert %}
+{{< /alert >}}
 
 #### charset Rule Parameters
 
