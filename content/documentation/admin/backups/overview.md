@@ -25,8 +25,7 @@ Snapshots are useful for:
 
 - Snapshots apply to Stronghold integrated Raft storage.
 - Snapshots work only for clusters that use integrated Raft storage as the primary storage backend.
-- If Stronghold uses `etcd`, `postgresql`, or another external storage backend, use the native backup procedures of that backend instead of `stronghold operator raft snapshot` commands.
-- Backup data remains encrypted inside the snapshot.
+- If Stronghold uses `etcd`, `postgresql`, or another external system as a backend, it is necessary to use the native backup mechanisms of those systems, rather than the built-in Stronghold commands for Raft snapshots — `stronghold operator raft snapshot`.
 - To regain access after restore, you need the correct unseal or recovery keys according to your cluster configuration.
 - Automated snapshots are an administrative feature and require a deliberate retention and storage policy.
 
