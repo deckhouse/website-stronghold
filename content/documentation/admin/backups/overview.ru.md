@@ -1,6 +1,6 @@
 ---
-title: "Резервные копии Stronghold"
-linkTitle: "Введение"
+title: "Обзор"
+linkTitle: "Обзор"
 weight: 10
 description: "Обзор ручных и автоматических снимков хранилища Stronghold."
 ---
