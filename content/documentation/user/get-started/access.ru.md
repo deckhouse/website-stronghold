@@ -25,5 +25,5 @@ weight: 20
    ```
 
 {{< alert level="info" >}}
-Работа с Stronghold через консоль подробно разбирается в [курсе «Установка и обзор Deckhouse Stronghold»](https://education.flant.ru/course/ustanovka-i-obzor-deckhouse-stronghold/).
+Работа с Stronghold через консоль подробно разбирается [в курсе «Установка и обзор Deckhouse Stronghold»](https://education.flant.ru/course/ustanovka-i-obzor-deckhouse-stronghold/).
 {{< /alert >}}
