@@ -35,7 +35,7 @@ If you need to use another user, replace `stronghold` with the appropriate name.
    ```console
    [Unit]
    Description=Stronghold service
-   Documentation=https://deckhouse.ru/products/stronghold/
+   Documentation=https://deckhouse.io/products/stronghold/
    After=network.target
 
    [Service]

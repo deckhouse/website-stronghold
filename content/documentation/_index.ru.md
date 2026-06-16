@@ -18,6 +18,10 @@ cascade:
 Deckhouse Stronghold обеспечивает безопасное хранение и управление жизненным циклом конфиденциальных данных (секретов).
 Хранилище секретной информации реализовано в формате key-value и совместимо с Hashicorp Vault API.
 
+{{< alert level="info" >}}
+Бесплатный практический курс [«Установка и обзор Deckhouse Stronghold»](https://education.flant.ru/course/ustanovka-i-obzor-deckhouse-stronghold/) в [Академии Deckhouse](https://deckhouse.ru/course-catalog/) поможет быстро познакомиться с продуктом.
+{{< /alert >}}
+
 В документации представлены следующие разделы:
 
 - [Быстрый старт](/products/stronghold/gs/) - пошаговая инструкция по установке типовой конфигурации Deckhouse Stronghold.
