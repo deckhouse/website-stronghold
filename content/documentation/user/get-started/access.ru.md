@@ -64,3 +64,8 @@ d8 stronghold <command>
 После успешного входа Stronghold откроет пользовательский интерфейс с сответствующими правами доступа.
 
 После входа рекомендуется создать первый секрет. Информация о том, как это сделать — в разделе [«Первый секрет»](../first-secret/).
+
+{{< alert level="info" >}}
+Работа с Stronghold через консоль подробно разбирается [в курсе «Установка и обзор Deckhouse Stronghold»](https://education.flant.ru/course/ustanovka-i-obzor-deckhouse-stronghold/).
+{{< /alert >}}
+
