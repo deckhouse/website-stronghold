@@ -4,46 +4,364 @@ description: "Configuring password generation policies in Stronghold."
 weight: 45
 ---
 
-A password policy is a set of rules that defines how Stronghold generates a password.
-These policies are used only by some secrets engines.
-They let you configure password generation requirements for a specific engine.
-Support for password policies depends on the secrets engine, so check its documentation before configuring a policy.
+The password policy (hereinafter referred to as the policy) defines a set of requirements for generated passwords.
+Stronghold allows you to configure custom policies and use them instead of the [default policy](#default-password-policy).
 
-Password policies are unrelated to access policies.
-These entities have similar names but different purposes.
+Password policies are not related to [access policies](./policy/).
+They have similar names but serve different purposes.
 
 Stronghold uses a password policy configuration model compatible with Vault `1.5+`.
 
-{{< alert level="danger" >}}
-Password policies are an advanced Stronghold feature.
-They are used when generating credentials for external systems, such as databases or LDAP.
-Use them with caution.
+## Using password policies in Stronghold
+
+In Stronghold, password policies are used for the following purposes:
+
+- [Generating passwords via the API](#password-generation-via-api) that comply with a specific policy.
+- Configuring [automatic password generation](#principles-and-features-of-password-generation) using secret engines. Not all secret engines support password policies. Before configuring a policy for a secret engine, check its [documentation](../user/secrets-engines/overview/).
+- Validate a password created by a user using the [`userpass`](../user/auth/userpass/) authentication method.
+
+## Policy structure and syntax
+
+Password policies are defined in HCL or JSON.
+
+The policy describes:
+
+- The password length (specified in the [`length`](#the-length-parameter) parameter).
+- One or more rules that the password must satisfy. Each rule is described in the `rule` field. Stronghold allows the use of [`charset`](#the-charset-rule) rules in policies.
+  
+  {{< alert level="warning" >}}
+  A policy must contain at least one `charset` rule. A policy without a `charset` rule will be rejected.
+  {{< /alert >}}
+
+Example of a policy:
+
+```hcl
+length = 20
+
+rule "charset" {
+  charset = "abcdefghijklmnopqrstuvwxyz"
+}
+```
+
+This policy generates a 20-character password using only lowercase Latin letters.
+
+### The length parameter
+
+The `length` parameter sets the generated password length.
+
+Characteristics:
+
+- type: `int`;
+- required;
+- value must be at least `4`.
+
+### The charset rule
+
+The `charset` rule defines a character set and, if needed, the minimum number of characters (`min-chars`) from this set that must be present in the password.
+
+If several `charset` rules are specified in a policy, Stronghold combines all character sets and removes duplicates before generation starts (for example, if the sets `abcde` and `cdefg` are specified, the resulting set `abcdefg` will be used for generation).
+Each `charset` rule is still checked separately.
+
+{{< alert level="warning" >}}
+After combining and deduplicating character sets, the final `charset` used to generate candidate passwords must not contain more than `256` characters.
 {{< /alert >}}
 
-## How It Works
+#### charset rule parameters
 
-A password policy consists of two parts:
+The following parameters are available in the `charset` rule:
 
-- the `length` parameter, which sets the password length;
-- a set of rules the password must satisfy.
+| Parameter name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| `charset` | `string` | - | String representation of the character set. UTF-8 strings are supported. All characters must be printable |
+| `min-chars` | `int` | `0` | Minimum number of characters from `charset` that must be present in the password |
 
-Stronghold first generates a candidate password from the combined character set built from all `charset` rules.
+If `min-chars` is not specified or is set to `0`, the character set is used for generation but does not add a required constraint to the resulting password.
+
+Example of using the `charset` rule in a policy:
+
+```hcl
+length = 20
+
+rule "charset" {
+  charset = "abcde"
+  min-chars = 1
+}
+
+rule "charset" {
+  charset = "01234"
+  min-chars = 1
+}
+```
+
+This policy generates a password from the combined `abcde01234` character set.
+The password must contain at least one character from `abcde` and at least one character from `01234`.
+
+## Policy examples
+
+Password 20 characters, only character sets, with no minimum requirement
+
+```hcl
+length = 20
+
+rule "charset" {
+  charset = "abcdefghijklmnopqrstuvwxyz"
+}
+
+rule "charset" {
+  charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+}
+
+rule "charset" {
+  charset = "0123456789"
+}
+
+rule "charset" {
+  charset = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"
+}
+```
+
+The password must be 20 characters long and include at least one uppercase letter, one lowercase letter, and one number
+
+```hcl
+length = 20
+
+rule "charset" {
+  charset = "abcdefghijklmnopqrstuvwxyz"
+  min-chars = 1
+}
+
+rule "charset" {
+  charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+  min-chars = 1
+}
+
+rule "charset" {
+  charset = "0123456789"
+  min-chars = 1
+}
+
+rule "charset" {
+  charset = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"
+}
+```
+
+The password must be 20 characters long and include at least one uppercase letter, one lowercase letter, one digit, and one character from the full ASCII set of special characters
+
+```hcl
+length = 20
+
+rule "charset" {
+  charset = "abcdefghijklmnopqrstuvwxyz"
+  min-chars = 1
+}
+
+rule "charset" {
+  charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+  min-chars = 1
+}
+
+rule "charset" {
+  charset = "0123456789"
+  min-chars = 1
+}
+
+rule "charset" {
+  charset = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"
+  min-chars = 1
+}
+```
+
+The password must be 20 characters long and include at least one uppercase letter, one lowercase letter, one number, and one character from the set !@#$
+
+```hcl
+length = 20
+
+rule "charset" {
+  charset = "abcdefghijklmnopqrstuvwxyz"
+  min-chars = 1
+}
+
+rule "charset" {
+  charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+  min-chars = 1
+}
+
+rule "charset" {
+  charset = "0123456789"
+  min-chars = 1
+}
+
+rule "charset" {
+  charset = "!@#$"
+  min-chars = 1
+}
+
+```
+
+## Default password policy
+
+Stronghold uses the default password policy for passwords generated without an explicitly specified policy.
+
+This policy requires:
+
+- `20` password characters;
+- at least one uppercase letter;
+- at least one lowercase letter;
+- at least one digit;
+- at least one dash character (`-`).
+
+Default policy example:
+
+```hcl
+length = 20
+
+rule "charset" {
+  charset = "abcdefghijklmnopqrstuvwxyz"
+  min-chars = 1
+}
+
+rule "charset" {
+  charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+  min-chars = 1
+}
+
+rule "charset" {
+  charset = "0123456789"
+  min-chars = 1
+}
+
+rule "charset" {
+  charset = "-"
+  min-chars = 1
+}
+```
+
+## Policy management
+
+### Creating and editing a policy
+
+To create or edit a password policy, use the POST method on `/sys/policies/password/:name`.
+
+Example of creating a policy from an HCL file:
+
+```shell
+d8 stronghold write sys/policies/password/my-policy policy=@my-policy.hcl
+```
+
+Example of passing a policy directly when creating it:
+
+```shell
+d8 stronghold write sys/policies/password/my-policy policy=- <<EOF
+length = 20
+rule “charset” {
+  charset = “abcdefghijklmnopqrstuvwxyz0123456789”
+}
+EOF
+```
+
+To verify that the policy has been created, use the following command:
+
+```bash
+d8 stronghold read sys/policies/password/my-policy
+```
+
+Example of creating a policy via the API:
+
+```bash
+curl \
+  --request POST \
+  --header “X-Vault-Token: ...” \
+  --data my-policy.json \
+  https://stronghold.example.com/v1/sys/policies/password/my-policy
+```
+
+### Getting a list of policies
+
+To get a list of created policies, use the GET method on `/sys/policies/password`.
+
+Example:
+
+```bash
+d8 stronghold read sys/policies/password
+```
+
+Example of getting a list of policies via the API:
+
+```bash
+curl \
+  --header “X-Vault-Token: ...” \
+  --request LIST \
+  https://stronghold.example.com/v1/sys/policies/password
+```
+
+### Retrieving policy information
+
+To get information about a specific policy, use the GET method on `/sys/policies/password/:name`.
+
+Example:
+
+```bash
+d8 stronghold read sys/policies/password/my-policy
+```
+
+Example of getting information about a specific policy via the API:
+
+```bash
+curl \
+  --header “X-Vault-Token: ...” \
+  https://stronghold.example.com/v1/sys/policies/password/my-policy
+```
+
+### Deleting a policy
+
+To delete a password policy, use the DELETE method on `/sys/policies/password/:name`.
+
+Example:
+
+```bash
+d8 stronghold delete sys/policies/password/my-policy
+```
+
+Example of deleting a policy via the API:
+
+```bash
+curl \
+  --header “X-Vault-Token: ...” \
+  --request DELETE \
+  https://stronghold.example.com/v1/sys/policies/password/my-policy
+```
+
+## Generating passwords via the API
+
+You can manually generate passwords that comply with a specific policy.
+To do this, use the `/sys/policies/password/:name/generate` method, replacing `:name` with the name of the policy the password must comply with.
+
+Example:
+
+```shell
+d8 stronghold read sys/policies/password/my-policy/generate
+```
+
+Example of generating a password via the API:
+
+```bash
+curl \
+  --header “X-Vault-Token: ...” \
+  https://stronghold.example.com/v1/sys/policies/password/my-policy/generate
+```
+
+## Principles and features of password generation
+
+Stronghold first generates a candidate password from the combined character set built from all [`charset`](#the-charset-rule) rules.
 Duplicate characters from different sets are removed.
 Stronghold then checks the candidate password against all rules.
 
-A rule is an assertion about what the password must look like.
-For example, a `charset` rule can require at least one lowercase letter in the password.
-If the password does not contain any lowercase letters, it is rejected.
-
-You can specify several rules in one policy.
-This lets you define more complex requirements, such as at least one lowercase letter, one uppercase letter, and one digit.
-
-## Candidate Password Generation
+## Candidate password generation
 
 The candidate password generation method affects security.
-A password must be generated in a way that prevents prediction and avoids generation properties that could be exploited in an attack.
+The password is generated in such a way that the result cannot be predicted, and the generation process cannot be exploited to launch an attack.
 
-Candidate password generation requires the following data:
+The following are used to generate a candidate password:
 
 1. A cryptographically secure random number generator.
 1. A `charset` from which characters are selected.
@@ -73,7 +391,7 @@ These values correspond to indexes in `charset`:
 
 The resulting candidate password is `dcaihdfb`.
 
-### Preventing Bias
+### Preventing bias
 
 Restricting a random value to the size of the `charset` array with the modulo operation can introduce bias.
 This causes some characters to be selected more often than others.
@@ -93,10 +411,11 @@ In this case:
 As a result, the `abcdef` characters are selected more often than `ghij`.
 
 To avoid this behavior, Stronghold calculates the maximum allowed value that can be safely used to index `charset`.
+For this example, the maximum allowed value will be `19`. In this case, all values from `0` to `19`, inclusive, result in exactly 2 matches for each symbol.
 If a random number exceeds this value, it is discarded and generation continues.
 This keeps the final password length unchanged and preserves a correct character distribution.
 
-## Performance Characteristics
+### Performance Characteristics
 
 Password generation speed depends on the policy configuration.
 In general, stricter constraints require more time for generation.
@@ -104,7 +423,7 @@ In general, stricter constraints require more time for generation.
 A general estimate can be represented as:
 
 ```text
-(time to generate one candidate password) * (number of generated candidate passwords)
+password generation speed = (time to generate one candidate password) * (number of generated candidate passwords)
 ```
 
 The number of attempts depends on how likely it is that the next candidate password will fail validation against all rules.
@@ -117,284 +436,4 @@ In practice, this means the following:
 
 A noticeable performance drop occurs when one rule requires at least one character from a very small set, such as `!@#$`, while the overall `charset` is much larger.
 
-To estimate performance for a specific policy, test it through the password generation API in your Stronghold environment.
-
-## Password Policy Syntax
-
-Password policies are defined in HCL or JSON.
-They describe the password length and the set of rules the password must satisfy.
-
-A minimal policy looks like this:
-
-```hcl
-length = 20
-
-rule "charset" {
-  charset = "abcdefghijklmnopqrstuvwxyz"
-}
-```
-
-This policy generates `20`-character passwords using only lowercase Latin letters.
-
-You can specify several rules of the same type in one policy.
-For example, the following policy generates a `20`-character password that contains at least one lowercase letter, one uppercase letter, one digit, and one special character from the `!@#$%^&*` set:
-
-```hcl
-length = 20
-
-rule "charset" {
-  charset = "abcdefghijklmnopqrstuvwxyz"
-  min-chars = 1
-}
-
-rule "charset" {
-  charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-  min-chars = 1
-}
-
-rule "charset" {
-  charset = "0123456789"
-  min-chars = 1
-}
-
-rule "charset" {
-  charset = "!@#$%^&*"
-  min-chars = 1
-}
-```
-
-A valid policy must include at least one `charset` rule.
-A policy without `charset` is invalid because Stronghold cannot determine the character set to use for generation.
-
-The following policy is rejected:
-
-```hcl
-length = 20
-```
-
-## Parameters and Available Rules
-
-### The length Parameter
-
-The `length` parameter sets the generated password length.
-
-Main characteristics:
-
-- type: `int`;
-- required;
-- value must be at least `4`.
-
-`length` is not a rule.
-It is a separate part of the configuration that determines the password length before rule validation.
-
-### The charset Rule
-
-The `charset` rule defines a character set and, if needed, the minimum number of characters from this set that must be present in the password.
-
-This rule does two things:
-
-- contributes to the combined character set used for generation;
-- defines a constraint on the resulting password content.
-
-If several `charset` rules are specified in a policy, Stronghold combines all character sets and removes duplicates before generation starts.
-Each `charset` rule is still checked separately.
-
-{{< alert level="warning" >}}
-After combining and deduplicating character sets, the final `charset` used to generate candidate passwords must not contain more than `256` characters.
-{{< /alert >}}
-
-#### charset Rule Parameters
-
-The following parameters are available in the `charset` rule:
-
-| Parameter name | Type | Default value | Description |
-| --- | --- | --- | --- |
-| `charset` | `string` | - | String representation of the character set. UTF-8 strings are supported. All characters must be printable |
-| `min-chars` | `int` | `0` | Minimum number of characters from `charset` that must be present in the password |
-
-If `min-chars` is not specified or is set to `0`, the character set is used for generation but does not add a required constraint to the resulting password.
-
-#### charset Rule Example
-
-```hcl
-length = 20
-
-rule "charset" {
-  charset = "abcde"
-  min-chars = 1
-}
-
-rule "charset" {
-  charset = "01234"
-  min-chars = 1
-}
-```
-
-This policy generates a password from the combined `abcde01234` character set.
-The password must contain at least one character from `abcde` and at least one character from `01234`.
-
-If character sets in different rules overlap, Stronghold removes duplicates before generation.
-For example, if the `abcde` and `cdefg` sets are specified, `abcdefg` is used for generation.
-The password must still satisfy both rules.
-
-Another example:
-
-```hcl
-length = 8
-
-rule "charset" {
-  charset = "abcde"
-}
-
-rule "charset" {
-  charset = "01234"
-  min-chars = 1
-}
-```
-
-This policy generates an `8`-character password from the `abcde01234` set.
-The password must contain at least one character from `01234`, but does not have to contain characters from `abcde`.
-Therefore, `04031945` is a valid value for this policy.
-
-## Policy Examples
-
-### Character Sets Only, With No Required Minimum
-
-```hcl
-length = 20
-
-rule "charset" {
-  charset = "abcdefghijklmnopqrstuvwxyz"
-}
-
-rule "charset" {
-  charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-}
-
-rule "charset" {
-  charset = "0123456789"
-}
-
-rule "charset" {
-  charset = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"
-}
-```
-
-### One Uppercase Letter, One Lowercase Letter, And One Digit
-
-```hcl
-length = 20
-
-rule "charset" {
-  charset = "abcdefghijklmnopqrstuvwxyz"
-  min-chars = 1
-}
-
-rule "charset" {
-  charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-  min-chars = 1
-}
-
-rule "charset" {
-  charset = "0123456789"
-  min-chars = 1
-}
-
-rule "charset" {
-  charset = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"
-}
-```
-
-### One Uppercase Letter, One Lowercase Letter, One Digit, And One Character From The Full ASCII Special Character Set
-
-```hcl
-length = 20
-
-rule "charset" {
-  charset = "abcdefghijklmnopqrstuvwxyz"
-  min-chars = 1
-}
-
-rule "charset" {
-  charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-  min-chars = 1
-}
-
-rule "charset" {
-  charset = "0123456789"
-  min-chars = 1
-}
-
-rule "charset" {
-  charset = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"
-  min-chars = 1
-}
-```
-
-### One Uppercase Letter, One Lowercase Letter, One Digit, and One Character From !@#$
-
-```hcl
-length = 20
-
-rule "charset" {
-  charset = "abcdefghijklmnopqrstuvwxyz"
-  min-chars = 1
-}
-
-rule "charset" {
-  charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-  min-chars = 1
-}
-
-rule "charset" {
-  charset = "0123456789"
-  min-chars = 1
-}
-
-rule "charset" {
-  charset = "!@#$"
-  min-chars = 1
-}
-
-rule "charset" {
-  charset = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"
-}
-```
-
-## Default Password Policy
-
-Stronghold uses the default password policy for passwords generated without an explicitly specified policy.
-
-This policy requires:
-
-- `20` password characters;
-- one uppercase letter;
-- one lowercase letter;
-- one digit;
-- one dash character (`-`).
-
-Default policy example:
-
-```hcl
-length = 20
-
-rule "charset" {
-  charset = "abcdefghijklmnopqrstuvwxyz"
-  min-chars = 1
-}
-
-rule "charset" {
-  charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-  min-chars = 1
-}
-
-rule "charset" {
-  charset = "0123456789"
-  min-chars = 1
-}
-
-rule "charset" {
-  charset = "-"
-  min-chars = 1
-}
-```
+To estimate performance for a specific policy, test it through the [password generation API](#generating-passwords-via-the-api) in your Stronghold environment.
