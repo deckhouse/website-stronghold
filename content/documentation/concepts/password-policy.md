@@ -16,7 +16,7 @@ Stronghold uses a password policy configuration model compatible with Vault `1.5
 
 In Stronghold, password policies are used for the following purposes:
 
-- [Generating passwords via the API](#password-generation-via-api) that comply with a specific policy.
+- [Generating passwords via the API](#generating-passwords-via-the-api) that comply with a specific policy.
 - Configuring [automatic password generation](#principles-and-features-of-password-generation) using secret engines. Not all secret engines support password policies. Before configuring a policy for a secret engine, check its [documentation](../user/secrets-engines/overview/).
 - Validate a password created by a user using the [`userpass`](../user/auth/userpass/) authentication method.
 
