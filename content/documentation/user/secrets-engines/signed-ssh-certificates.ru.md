@@ -12,7 +12,7 @@ SSH-сертификаты с подписью - самый простой и м
 На этой странице представлен быстрый старт по использованию этого механизма секретов.
 
 {{< alert level="info" >}}
-Возможности работы с SSH также рассмотрены в [курсе «Установка и обзор Deckhouse Stronghold»](https://education.flant.ru/course/ustanovka-i-obzor-deckhouse-stronghold/).
+Возможности работы с SSH также рассмотрены [в курсе «Установка и обзор Deckhouse Stronghold»](https://education.flant.ru/course/ustanovka-i-obzor-deckhouse-stronghold/).
 {{< /alert >}}
 
 ## Подпись ключей клиентов

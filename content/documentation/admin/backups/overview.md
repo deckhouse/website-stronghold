@@ -1,11 +1,11 @@
 ---
-title: "Stronghold backups"
-linkTitle: "Introduction"
+title: "Overview"
+linkTitle: "Overview"
 weight: 10
 description: "Overview of manual and automated backups for Stronghold storage."
 ---
 
-Stronghold backups are based on snapshots of integrated Raft storage. A snapshot lets you save cluster state and later use it to restore data after a failure or during planned administrative operations.
+Stronghold backups are based on snapshots of integrated Raft storage. A snapshot lets you save cluster state and later use it to restore data after a failure or during planned maintenance operations.
 
 Stronghold supports two main scenarios:
 
@@ -19,21 +19,21 @@ Snapshots are useful for:
 - protection against data corruption or operator mistakes;
 - preparation for upgrades and other risky operations;
 - disaster recovery;
-- storing backups outside the cluster or the physical environment that the cluster protects.
+- storing backups outside the cluster or hosting site.
 
 ## Important considerations
 
 - Snapshots apply to Stronghold integrated Raft storage.
 - Snapshots work only for clusters that use integrated Raft storage as the primary storage backend.
-- If Stronghold uses `etcd`, `postgresql`, or another external storage backend, use the native backup procedures of that backend instead of `stronghold operator raft snapshot` commands.
-- Backup data remains encrypted inside the snapshot.
+- If Stronghold uses `etcd`, `postgresql`, or another external system as a backend, it is necessary to use the native backup mechanisms of those systems, rather than the built-in Stronghold commands for Raft snapshots — `stronghold operator raft snapshot`.
+- Data remains encrypted in the backup.
 - To regain access after restore, you need the correct unseal or recovery keys according to your cluster configuration.
-- Automated snapshots are an administrative feature and require a deliberate retention and storage policy.
+- Automated snapshots are an administrative feature and require a deliberate retention policy.
 
 ## Available pages
 
 - [Save a storage snapshot](./save/) for manual snapshot creation through CLI and API.
-- [Inspect a snapshot](./inspect/) for local snapshot validation and content analysis without restoring it.
+- [Inspect a snapshot](./inspect/) for local validation of snapshot contents and basic consistency without restoring it to a cluster.
 - [Restore from a snapshot](./restore/) for cluster restoration from an existing snapshot.
 - [Automated snapshots](./automated-snapshots/) for schedule, storage, and status management of automated backups.
 
