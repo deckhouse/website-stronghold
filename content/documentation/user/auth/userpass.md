@@ -38,12 +38,12 @@ To configure authentication using the `userpass` method, follow these steps:
 1. Create a user who is allowed to authenticate:
 
    ```shell
-   d8 stronghold write auth/<userpass_mount_path>/users/mitchellh \
-     password=foo \
+   d8 stronghold write auth/<userpass_mount_path>/users/alice \
+     password=Pass-123! \
      token_policies=admins
    ```
 
-This creates user `mitchellh` with password `foo` and the `admins` [policy](../../concepts/policy/).
+This creates user `alice` with password `Pass-123!` and the `admins` [policy](../../concepts/policy/).
 
 ### User authentication using the userpass method
 
@@ -234,11 +234,8 @@ The default policy for the `userpass` method requires:
 - at least one digit;
 - at least one hyphen (`-`).
 
-### Checking whether you can change your password
-
-To check whether the current user can change their password, run the `userpass_self_password_verify.sh` script (if it is available in your environment):
+To use a custom policy instead of the default password policy for the `userpass` method, run the following command (replace `policy_name` with the name of the desired policy):
 
 ```shell
-VAULT_ADDR=http://127.0.0.1:8200 VAULT_TOKEN=<root-token> \
-  ./userpass_self_password_verify.sh
+d8 stronghold write auth/userpass/password-policy/{policy_name}
 ```

@@ -38,12 +38,12 @@ weight: 50
 1. Создайте пользователя (если необходимо), которому разрешена аутентификация:
 
    ```shell
-   d8 stronghold write auth/<userpass_mount_path>/users/mitchellh \
-     password=foo \
+   d8 stronghold write auth/<userpass_mount_path>/users/alice \
+     password=Pass-123! \
      token_policies=admins
    ```
 
-В результате будет создан пользователь `mitchellh` с паролем `foo` и [политикой](../../concepts/policy/) `admins`.
+В результате будет создан пользователь `alice` с паролем `Pass-123!` и [политикой](../../concepts/policy/) `admins`.
 
 ### Аутентификация пользователя с помощью метода userpass
 
@@ -234,11 +234,8 @@ d8 stronghold write auth/userpass/users/alice/password password="NewPass-456!"
 - минимум одну цифру;
 - минимум один символ тире (`-`).
 
-### Проверка возможности смены своего пароля
-
-Чтобы проверить возможность смены своего пароля для текущего пользователя, выполните скрипт `userpass_self_password_verify.sh` (если он доступен в вашем окружении):
+Чтобы для метода `userpass` вместо политики паролей по умолчанию использовать пользовательскую политику, выполните команду (вместо `policy_name` укажите название нужной политики):
 
 ```shell
-VAULT_ADDR=http://127.0.0.1:8200 VAULT_TOKEN=<root-token> \
-  ./userpass_self_password_verify.sh
+d8 stronghold write auth/userpass/password-policy/{policy_name}
 ```
