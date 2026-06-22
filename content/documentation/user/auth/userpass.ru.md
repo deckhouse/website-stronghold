@@ -1,25 +1,25 @@
 ---
-title: "Метод Userpass"
-linkTitle: "Userpass"
+title: "Метод аутентификации по имени пользователя и паролю"
+linkTitle: "userpass"
 weight: 50
 ---
 
-## Метод аутентификации по имени пользователя и паролю
+Метод аутентификации по имени пользователя и паролю `userpass` позволяет пользователям проходить аутентификацию в Deckhouse Stronghold с помощью имени пользователя и пароля.
 
-Метод аутентификации `userpass` позволяет пользователям проходить аутентификацию в Deckhouse Stronghold с помощью имени пользователя и пароля.
+## Особенности метода
 
-Имена пользователей и пароли задаются непосредственно в методе аутентификации через путь `users/`.
-Метод `userpass` не может считывать имена пользователей и пароли из внешнего источника.
+При использовании метода `userpass` учитывайте следующие особенности:
 
-Все введённые имена пользователей сохраняются в нижнем регистре.
-Например, `Mary` и `mary` относятся к одной записи.
+- Имена пользователей и пароли задаются непосредственно в методе аутентификации по пути `auth/userpass/users/`.
+- Метод `userpass` не может считывать имена пользователей и пароли из внешнего источника.
+- Введённые имена пользователей приводятся в нижний регистр. Например, `Mary` и `mary` — это равноценные записи.
 
 ## Настройка
 
-Перед аутентификацией пользователей настройте метод `userpass`.
+Чтобы пользователи могли проходить аутентификацию, настройте метод `userpass`.
 Обычно эти действия выполняет оператор или система управления конфигурацией.
 
-Выполните следующие шаги:
+Для настройки аутентификации с помощью метода `userpass` выполните следующие шаги:
 
 1. Включите метод аутентификации `userpass`:
 
@@ -32,88 +32,28 @@ weight: 50
    Чтобы включить метод по другому пути, используйте флаг `-path`:
 
    ```shell
-   d8 stronghold auth enable -path=<path> userpass
+   d8 stronghold auth enable -path=<userpass_mount_path> userpass
    ```
 
-1. Создайте пользователя, которому разрешена аутентификация:
+1. Создайте пользователя (если необходимо), которому разрешена аутентификация:
 
    ```shell
-   d8 stronghold write auth/<userpass:path>/users/mitchellh \
+   d8 stronghold write auth/<userpass_mount_path>/users/mitchellh \
      password=foo \
-     policies=admins
+     token_policies=admins
    ```
 
-В результате будет создан пользователь `mitchellh` с паролем `foo` и политикой `admins`.
-Это единственная обязательная настройка.
+В результате будет создан пользователь `mitchellh` с паролем `foo` и [политикой](../../concepts/policy/) `admins`.
 
-## Смена собственного пароля
+### Аутентификация пользователя с помощью метода userpass
 
-Пользователю можно разрешить менять только собственный пароль в методе `userpass`.
-Для этого создайте политику, в которой путь к паролю пользователя формируется через алиас сущности.
-
-### Политика
-
-Используйте шаблон политики:
-
-```hcl
-path "auth/userpass/users/{{identity.entity.aliases.<accessor>.name}}/password" {
-  capabilities = ["update"]
-}
-```
-
-Значение `<accessor>` получите с помощью команды:
+Пример команды для аутентификации пользователя с помощью метода `userpass`:
 
 ```shell
-d8 stronghold read -field=accessor sys/auth/userpass
+d8 stronghold login -method=userpass username=alice password="Pass-123!"
 ```
 
-### Настройка администратором
-
-Включите метод `userpass`, создайте политику и назначьте её пользователю:
-
-```shell
-d8 stronghold auth enable userpass
-ACCESSOR=$(d8 stronghold read -field=accessor sys/auth/userpass)
-
-d8 stronghold policy write self-change-password - <<EOF
-path "auth/userpass/users/{{identity.entity.aliases.${ACCESSOR}.name}}/password" {
-  capabilities = ["update"]
-}
-EOF
-
-d8 stronghold write auth/userpass/users/alice \
-  password="OldPass-123!" \
-  token_policies="self-change-password"
-```
-
-### Смена пароля пользователем
-
-После входа пользователь может изменить свой пароль:
-
-```shell
-d8 stronghold login -method=userpass username=alice password="OldPass-123!"
-d8 stronghold write auth/userpass/users/alice/password password="NewPass-456!"
-```
-
-Если пользователь попытается изменить чужой пароль, Stronghold вернёт ошибку `permission denied`.
-
-### Принцип работы
-
-Шаблон `{{identity.entity.aliases.<accessor>.name}}` автоматически подставляет имя аутентифицированного пользователя.
-Поэтому путь всегда указывает только на пароль текущего пользователя.
-
-Шаблон работает после входа через метод `userpass`.
-
-### Проверка
-
-Для проверки настройки выполните скрипт `userpass_self_password_verify.sh`, если он доступен в вашем окружении:
-
-```shell
-VAULT_ADDR=http://127.0.0.1:8200 VAULT_TOKEN=<root-token> \
-  ./userpass_self_password_verify.sh
-```
-
-## Блокировка пользователя
+### Блокировка пользователя
 
 Если пользователь несколько раз подряд укажет неверные учётные данные, Stronghold на некоторое время прекратит проверять их и сразу вернёт ошибку с отказом в доступе.
 Такое поведение называется блокировкой пользователя (`user_lockout`).
@@ -139,3 +79,166 @@ VAULT_ADDR=http://127.0.0.1:8200 VAULT_TOKEN=<root-token> \
 {{< alert level="warning" >}}
 Функция блокировки пользователя поддерживается только методами аутентификации `userpass`, `ldap` и `approle`.
 {{< /alert >}}
+
+## Смена собственного пароля пользователя
+
+Пользователю можно разрешить менять с помощью метода `userpass` только собственный пароль.
+Для этого создайте политику, в которой путь к паролю текущего пользователя формируется через алиас сущности.
+
+### Создание политики
+
+Используйте шаблон политики:
+
+```hcl
+path "auth/userpass/users/{{identity.entity.aliases.<accessor>.name}}/password" {
+  capabilities = ["update"]
+}
+```
+
+Значение `<accessor>` получите с помощью команды:
+
+```shell
+d8 stronghold read -field=accessor sys/auth/userpass
+```
+
+Шаблон `{{identity.entity.aliases.<accessor>.name}}` автоматически подставляет имя аутентифицированного пользователя.
+Поэтому путь всегда указывает только на пароль текущего пользователя.
+
+Шаблон работает после аутентификации пользователя через метод `userpass`.
+
+### Разрешение смены собственного пароля для пользователя
+
+Чтобы разрешить пользователю менять собственный пароль с помощью метода `userpass`, выполните следующие шаги:
+
+{{< tabs >}}
+{{% tab "Если метод userpass уже включен" %}}
+
+1. Получите уникальный идентификатор метода:
+
+   ```shell
+   ACCESSOR=$(d8 stronghold read -field=accessor sys/auth/userpass)
+   ```
+
+1. Создайте политику, позволяющую пользователю, аутентифицированному через `userpass` менять свой пароль:
+
+   ```shell
+   d8 stronghold policy write self-change-password - <<EOF
+   path "auth/userpass/users/{{identity.entity.aliases.${ACCESSOR}.name}}/password" {
+     capabilities = ["update"]
+   }
+   EOF
+   ```
+
+1. Привяжите политику к нужному пользователю, которому нужно разрешить менять свой пароль:
+
+{{< tabs >}}
+{{% tab "Если пользователь существует" %}}
+
+```shell
+d8 stronghold write auth/userpass/users/alice/policies \
+  token_policies="self-change-password"
+```
+
+Этот пример привяжет политику `self-change-password` к существующему пользователю `alice`
+
+{{% /tab %}}
+{{% tab "Если пользователя не существует" %}}
+
+```shell
+d8 stronghold write auth/userpass/users/alice \
+  password="OldPass-123!" \
+  token_policies="self-change-password"
+```
+
+Этот пример создаст пользователя `alice`, разрешит ему аутентификацию через `userpass` и привяжет к нему политику `self-change-password`.
+
+{{% /tab %}}
+{{< /tabs >}}
+
+{{% /tab %}}
+{{% tab "Если метод userpass не включен" %}}
+
+1. Включите метод `userpass`:
+
+   ```shell
+   d8 stronghold auth enable userpass
+   ```
+
+1. Получите уникальный идентификатор метода:
+
+   ```shell
+   ACCESSOR=$(d8 stronghold read -field=accessor sys/auth/userpass)
+   ```
+
+1. Создайте политику, позволяющую пользователю, аутентифицированному через `userpass` менять свой пароль:
+
+   ```shell
+   d8 stronghold policy write self-change-password - <<EOF
+   path "auth/userpass/users/{{identity.entity.aliases.${ACCESSOR}.name}}/password" {
+     capabilities = ["update"]
+   }
+   EOF
+   ```
+
+1. Привяжите политику к нужному пользователю, которому нужно разрешить менять свой пароль:
+
+{{< tabs >}}
+{{% tab "Если пользователь существует" %}}
+
+```shell
+d8 stronghold write auth/userpass/users/alice/policies \
+  token_policies="self-change-password"
+```
+
+Этот пример привяжет политику `self-change-password` к существующему пользователю `alice`
+
+{{% /tab %}}
+{{% tab "Если пользователя не существует" %}}
+
+```shell
+d8 stronghold write auth/userpass/users/alice \
+  password="OldPass-123!" \
+  token_policies="self-change-password"
+```
+
+Этот пример создаст пользователя `alice`, разрешит ему аутентификацию через `userpass` и привяжет к нему политику `self-change-password`.
+
+{{% /tab %}}
+{{< /tabs >}}
+
+{{% /tab %}}
+{{< /tabs >}}
+
+### Смена пароля пользователем
+
+После [аутентификации](#аутентификация-пользователя-с-помощью-метода-userpass) пользователь может изменить свой пароль, если для него это [разрешено](#разрешение-смены-собственного-пароля-для-пользователя).
+
+Пример команды для смены пользователем своего пароля:
+
+```shell
+d8 stronghold write auth/userpass/users/alice/password password="NewPass-456!"
+```
+
+Если пользователь попытается изменить чужой пароль, Stronghold вернёт ошибку `permission denied`.
+При указании пользователем неверных учетных данных при смене пароля возможна его [блокировка](#блокировка-пользователя).
+
+### Политика паролей по умолчанию
+
+Если для метода `userpass` не назначена пользовательская [политика паролей](../../concepts/password-policy/), при создании пользователя или смене пароля пользователя Stronghold использует политику по умолчанию.
+
+Политика по умолчанию для метода `userpass` требует:
+
+- `8` символов в пароле;
+- минимум одну прописную букву;
+- минимум одну строчную букву;
+- минимум одну цифру;
+- минимум один символ тире (`-`).
+
+### Проверка возможности смены своего пароля
+
+Чтобы проверить возможность смены своего пароля для текущего пользователя, выполните скрипт `userpass_self_password_verify.sh` (если он доступен в вашем окружении):
+
+```shell
+VAULT_ADDR=http://127.0.0.1:8200 VAULT_TOKEN=<root-token> \
+  ./userpass_self_password_verify.sh
+```
