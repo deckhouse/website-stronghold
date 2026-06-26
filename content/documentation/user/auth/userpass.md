@@ -74,7 +74,11 @@ Default values:
 - `lockout_duration`: 15 minutes.
 - `lockout_counter_reset`: 15 minutes.
 
-You can disable user lockout with the `auth tune` command by setting the `disable_lockout` parameter to `true`.
+You can disable user lockout with the `auth tune` command by setting the `disable_lockout` parameter to `true`:
+
+```shell
+d8 stronghold auth tune -user-lockout-disable=true userpass
+```
 
 {{< alert level="warning" >}}
 User lockout is supported only by the `userpass`, `ldap`, and `approle` auth methods.

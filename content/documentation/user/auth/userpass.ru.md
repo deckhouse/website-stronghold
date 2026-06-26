@@ -74,7 +74,11 @@ d8 stronghold login -method=userpass username=alice password="Pass-123!"
 - `lockout_duration` — 15 минут;
 - `lockout_counter_reset` — 15 минут.
 
-Функцию блокировки пользователя можно отключить с помощью команды `auth tune`, передав параметру `disable_lockout` значение `true`.
+Функцию блокировки пользователя можно отключить с помощью команды `auth tune`, передав параметру `disable_lockout` значение `true`:
+
+```shell
+d8 stronghold auth tune -user-lockout-disable=true userpass
+```
 
 {{< alert level="warning" >}}
 Функция блокировки пользователя поддерживается только методами аутентификации `userpass`, `ldap` и `approle`.
