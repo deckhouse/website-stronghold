@@ -7,7 +7,9 @@ weight: 40
 Kubernetes может выступать в качестве провайдера OIDC, чтобы Stronghold мог подтверждать токены учётных записей сервиса с помощью JWT/OIDC auth.
 
 {{< alert >}}
-Механизм JWT-аутентификации **не** использует при аутентификации API Kubernetes `TokenReview`, а вместо этого использует криптографию с открытым ключом для проверки содержимого JWT. Это означает, что токены, которые были отозваны Kubernetes, будут считаться действительными до истечения срока их действия. Чтобы снизить этот риск, используйте короткие TTL для токенов учётных записей сервиса или используйте [Kubernetes auth](../kubernetes/), который использует API `TokenReview`.
+Механизм JWT-аутентификации **не** использует при аутентификации API Kubernetes `TokenReview`, а вместо этого использует криптографию с открытым ключом для проверки содержимого JWT. Это означает, что токены, которые были отозваны Kubernetes, будут считаться действительными до истечения срока их действия.
+
+Чтобы снизить этот риск, используйте короткие TTL для токенов учётных записей сервиса или используйте [Kubernetes auth](../kubernetes/), который использует API `TokenReview`.
 {{< /alert >}}
 
 ### Использование адреса автонастройки
@@ -22,36 +24,36 @@ Kubernetes может выступать в качестве провайдер�
 * Должны использоваться короткоживущие токены для учётных записей сервиса Kubernetes.
   * По умолчанию такое поведение включено для токенов, подключаемых в поды, начиная с Kubernetes 1.21.
 
-Шаги по настройке:
+Чтобы включить автоматическую настройку, выполните следующие шаги:
 
-Убедитесь, что URL-адрес обнаружения OIDC не требует аутентификации, как описано в [документации Kubernetes][k8s-sa-issuer-discovery]:
+1. Убедитесь, что URL-адрес обнаружения OIDC не требует аутентификации, как описано в [документации Kubernetes][k8s-sa-issuer-discovery]:
 
-```bash
-d8 k create clusterrolebinding oidc-reviewer  \
-   --clusterrole=system:service-account-issuer-discovery \
-   --group=system:unauthenticated
-```
+    ```bash
+    d8 k create clusterrolebinding oidc-reviewer  \
+       --clusterrole=system:service-account-issuer-discovery \
+       --group=system:unauthenticated
+    ```
 
-Определите адрес issuer URL для вашего кластера.
+1. Определите адрес issuer URL для вашего кластера.
 
-```bash
-ISSUER="$(d8 k get --raw /.well-known/openid-configuration | jq -r '.issuer')"
-```
+    ```bash
+    ISSUER="$(d8 k get --raw /.well-known/openid-configuration | jq -r '.issuer')"
+    ```
 
-Включите и настройте аутентификацию JWT в Stronghold.
+1. Включите и настройте аутентификацию JWT в Stronghold.
 
-```bash
-d8 stronghold auth enable jwt
-d8 stronghold write auth/jwt/config oidc_discovery_url="${ISSUER}"
-```
+    ```bash
+    d8 stronghold auth enable jwt
+    d8 stronghold write auth/jwt/config oidc_discovery_url="${ISSUER}"
+    ```
 
-Настройте необходимые роли, как описано [ниже](#создание-ролей-и-аутентификация).
+1. Настройте [необходимые роли](#создание-ролей-и-аутентификация).
 
 [k8s-sa-issuer-discovery]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#service-account-issuer-discovery
 
 ### Использование публичных ключей для проверки JWT
 
-Этот метод может быть полезен, если API Kubernetes недоступен из Stronghold или если вы хотите, чтобы один эндпоинт JWT auth обслуживал несколько кластеров Kubernetes, используя цепочку публичных ключей.
+Этот метод применяют, когда API Kubernetes недоступен из Stronghold или когда один эндпоинт JWT-auth должен обслуживать несколько кластеров Kubernetes с использованием цепочки публичных ключей.
 
 Требования к кластеру Kubernetes:
 
@@ -61,29 +63,29 @@ d8 stronghold write auth/jwt/config oidc_discovery_url="${ISSUER}"
 * Должны использоваться короткоживущие токены для учётных записей сервиса Kubernetes.
   * По умолчанию такое поведение включено для токенов, подключаемых в поды, начиная с Kubernetes 1.21.
 
-Шаги по настройке:
+Чтобы настроить JWT auth с использованием публичных ключей Kubernetes, выполните следующие шаги:
 
-Получите открытый ключ подписи токенов учётных записей сервиса из JWKS URI вашего кластера.
+1. Получите открытый ключ подписи токенов учётных записей сервиса из JWKS URI вашего кластера.
 
-```bash
-# jwks_uri доступен в /.well-known/openid-configuration
-d8 k get --raw "$(d8 k get --raw /.well-known/openid-configuration | jq -r '.jwks_uri' | sed -r 's/.*\.[^/]+(.*)/\1/')"
-```
+    ```bash
+    # jwks_uri доступен в /.well-known/openid-configuration
+    d8 k get --raw "$(d8 k get --raw /.well-known/openid-configuration | jq -r '.jwks_uri' | sed -r 's/.*\.[^/]+(.*)/\1/')"
+    ```
 
-Преобразуйте ключи из формата JWK в формат PEM. Это можно сделать с помощью консольной утилиты или [онлайн-конвертера JWK в PEM][jwk-to-pem].
+1. Преобразуйте ключи из формата JWK в формат PEM. Это можно сделать с помощью консольной утилиты или [онлайн-конвертера JWK в PEM][jwk-to-pem].
 
-Настройте эндпоинт JWT auth на использование полученных ключей.
+1. Настройте эндпоинт JWT auth на использование полученных ключей.
 
-```bash
-d8 stronghold write auth/jwt/config \
-   jwt_validation_pubkeys="-----BEGIN PUBLIC KEY-----
-MIIBIjANBgkqhkiG9...
------END PUBLIC KEY-----","-----BEGIN PUBLIC KEY-----
-MIIBIjANBgkqhkiG9...
------END PUBLIC KEY-----"
-```
+    ```bash
+    d8 stronghold write auth/jwt/config \
+       jwt_validation_pubkeys="-----BEGIN PUBLIC KEY-----
+    MIIBIjANBgkqhkiG9...
+    -----END PUBLIC KEY-----","-----BEGIN PUBLIC KEY-----
+    MIIBIjANBgkqhkiG9...
+    -----END PUBLIC KEY-----"
+    ```
 
-Настройте необходимые роли, как описано [ниже](#создание-ролей-и-аутентификация).
+1. Настройте [необходимые роли](#создание-ролей-и-аутентификация).
 
 [jwk-to-pem]: https://8gwifi.org/jwkconvertfunctions.jsp
 
@@ -100,7 +102,7 @@ $ d8 k create token default | cut -f2 -d. | base64 --decode
 {"aud":["https://kubernetes.default.svc.cluster.local"], ... "sub":"system:serviceaccount:default:default"}
 ```
 
-Или прочитать токен из запущенного пода:
+Также можно прочитать токен из запущенного пода:
 
 ```shell-session
 $ d8 k exec my-pod -- cat /var/run/secrets/kubernetes.io/serviceaccount/token | cut -f2 -d. | base64 --decode
@@ -146,7 +148,7 @@ metadata:
   name: nginx
 spec:
   # automountServiceAccountToken является лишним в этом примере, поскольку используемый
-  # используемый mountPath совпадает с путем по умолчанию. Это перекрытие предотвращает
+  # mountPath совпадает с путем по умолчанию. Это перекрытие предотвращает
   # создание токена по умолчанию. Однако вы можете использовать этот параметр, чтобы
   # обеспечить монтирование только одного токена, если вы выберете другой путь монтирования.
   automountServiceAccountToken: false
@@ -166,7 +168,7 @@ spec:
           expirationSeconds: 600 # Минимальный TTL 10 минут
           audience: stronghold   # Должен совпадать с параметром `bound_audiences` вашей роли
       # Остальные параметры добавлены для имитации обычного поведения при создании токена,
-      # и создают объекты, которые создаются при включенном параметре automountServiceAccountToken
+      # и создают объекты при включенном параметре automountServiceAccountToken.
       - configMap:
           name: kube-root-ca.crt
           items:

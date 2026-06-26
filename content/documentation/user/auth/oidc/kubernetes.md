@@ -10,6 +10,7 @@ Kubernetes can act as an OIDC provider so that Stronghold can validate service a
 The JWT auth mechanism does **not** use the Kubernetes API `TokenReview` for authentication.
 Instead, it uses public-key cryptography to verify the JWT contents.
 This means that tokens revoked by Kubernetes remain valid until they expire.
+
 To reduce this risk, use short TTLs for service account tokens or use [Kubernetes auth](../kubernetes/), which uses the `TokenReview` API.
 {{< /alert >}}
 
@@ -51,7 +52,7 @@ To configure this mode, follow these steps:
    d8 stronghold write auth/jwt/config oidc_discovery_url="${ISSUER}"
    ```
 
-1. Configure the required roles as described [below](#creating-roles-and-authenticating).
+1. Configure the [required roles](#creating-roles-and-authenticating).
 
 [k8s-sa-issuer-discovery]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#service-account-issuer-discovery
 
@@ -68,7 +69,7 @@ The Kubernetes cluster must meet the following requirements:
 - Short-lived Kubernetes service account tokens must be used.
   - This behavior is enabled by default for tokens mounted into pods starting from Kubernetes 1.21.
 
-To configure this mode, follow these steps:
+#### Configuring Authentication
 
 1. Retrieve the public key used to sign service account tokens from your cluster's JWKS URI.
 
@@ -91,7 +92,7 @@ To configure this mode, follow these steps:
    -----END PUBLIC KEY-----"
    ```
 
-1. Configure the required roles as described [below](#creating-roles-and-authenticating).
+1. Configure the [required roles](#creating-roles-and-authenticating).
 
 [jwk-to-pem]: https://8gwifi.org/jwkconvertfunctions.jsp
 

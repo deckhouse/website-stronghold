@@ -44,8 +44,6 @@ To configure access to your project from the command line, follow these steps.
    d8 stronghold status
    ```
 
-   If the command runs successfully, the Stronghold address is specified correctly, authentication has completed, and CLI access works.
-
 To work with Deckhouse Stronghold, use commands in the following format:
 
 ```shell

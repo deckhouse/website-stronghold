@@ -7,7 +7,14 @@ weight: 80
 Метод `kubernetes` auth можно использовать для аутентификации в Stronghold с помощью токена учетной записи сервиса Kubernetes. Этот метод аутентификации позволяет легко использовать Stronghold в Kubernetes Pod-ах.
 
 Вы также можете использовать токен учетной записи сервиса Kubernetes для [входа в систему через JWT-аутентификацию][k8s-jwt-auth].
-См. раздел [Как работать с короткоживущими токенами Kubernetes](#short-lived-tokens) где описано, почему вы можете захотеть использовать JWT auth вместо Kubernetes auth.
+Причины, по которым JWT auth может быть использована вместо Kubernetes auth, описаны в разделе [«Как работать с короткоживущими токенами Kubernetes»](#short-lived-tokens).
+
+{{< alert level="info" >}}
+При обновлении до Kubernetes v1.21+, убедитесь, что для параметра конфигурации
+`disable_iss_validation` установлено значение `true`. Если используется путь монтирования по умолчанию,
+проверить это можно с помощью команды `d8 stronghold read -field disable_iss_validation auth/kubernetes/config`.
+Подробнее — в [«Изменения в поведении JWT-токенов в Kubernetes 1.21+»](#изменения-в-поведении-jwt-токенов-в-kubernetes-121) for more details.
+{{< /alert >}}
 
 ## Аутентификация
 
@@ -56,41 +63,40 @@ $ curl \
 Методы аутентификации должны быть настроены заранее, прежде чем пользователи или машины смогут пройти аутентификацию. Эти шаги обычно выполняются оператором или инструментом управления конфигурацией.
 
 В Stronghold по умолчанию включен метод Kubernetes по пути `kubernetes_local`, позволяющий аутентифицировать приложения, запущенные в том же кластере, где запущен Stronghold.
-Вы можете добавить в Stronghold другой кластер kubernetes.
+Вы можете добавить в Stronghold другой кластер Kubernetes.
 
 1. Включите метод аутентификации Kubernetes:
 
-```bash
-d8 stronghold auth enable kubernetes
-```
+   ```bash
+   d8 stronghold auth enable kubernetes
+   ```
 
 1. Используйте эндпоинт `/config`, чтобы настроить Stronghold на взаимодействие с новым кластером Kubernetes. Используйте `d8 k cluster-info` для получения адреса хоста Kubernetes и TCP-порта.
 
-```bash
-d8 stronghold write auth/kubernetes/config \
+   ```bash
+   d8 stronghold write auth/kubernetes/config \
    token_reviewer_jwt="<your reviewer service account JWT>" \
    kubernetes_host=https://192.168.99.100:<your TCP port or blank for 443> \
    kubernetes_ca_cert=@ca.crt
-```
+   ```
 
-{{< alert level="warning" >}}
-Шаблон, используемый Stronghold для аутентификации подов, зависит от обмена JWT-токеном по сети. Учитывая модель безопасности Stronghold, это допустимо, поскольку Stronghold является частью доверенной вычислительной системы. В целом, приложения Kubernetes не должны передавать этот JWT другим приложениям, поскольку он позволяет выполнять вызовы API от имени подов, что может привести к непреднамеренному предоставлению доступа третьим лицам.
-{{< /alert >}}
+    {{< alert level="warning" >}}
+    Шаблон, используемый Stronghold для аутентификации подов, зависит от обмена JWT-токеном по сети. Учитывая модель безопасности Stronghold, это допустимо, поскольку Stronghold является частью доверенной вычислительной системы. В целом, приложения Kubernetes не должны передавать этот JWT другим приложениям, поскольку он позволяет выполнять вызовы API от имени подов, что может привести к непреднамеренному предоставлению доступа третьим лицам.
+    {{< /alert >}}
 
 1. Создайте именованную роль:
 
-```text
-d8 stronghold write auth/kubernetes/role/demo \
-   bound_service_account_names=myapp \
-   bound_service_account_namespaces=default \
-   policies=default \
-   ttl=1h
-```
+    ```text
+    d8 stronghold write auth/kubernetes/role/demo \
+       bound_service_account_names=myapp \
+       bound_service_account_namespaces=default \
+       policies=default \
+       ttl=1h
+    ```
 
-  Эта роль авторизует учетную запись службы `myapp` в неймспейсе
-  `default` и назначает ей политику по умолчанию.
+    Эта роль авторизует учетную запись службы `myapp` в неймспейсе `default` и назначает ей политику по умолчанию.
 
-## Kubernetes 1.21
+## Изменения в поведении JWT-токенов в Kubernetes 1.21+
 
 Начиная с версии [Kubernetes 1.21](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.21.md#api-change-2), функция Kubernetes `BoundServiceAccountTokenVolume` по умолчанию включена. Начиная с этой версии, JWT-токен, добавляемый в контейнеры по умолчанию:
 
@@ -101,7 +107,7 @@ d8 stronghold write auth/kubernetes/role/demo \
 
 По этой причине Kubernetes auth по умолчанию не проверяет эмитента (`iss`). API Kubernetes выполняет ту же проверку при просмотре токенов, поэтому проверку эмитента на стороне Stronghold повторно делать не нужно.
 
-### Как работать с недолговечными токенами kubernetes {#short-lived-tokens}
+### Как работать с недолговечными токенами Kubernetes {#short-lived-tokens}
 
 Существует несколько различных способов настроить аутентификацию для подов Kubernetes,
 когда смонтированные по умолчанию токены подов недолговечны, каждый из которых имеет свои преимущества.
@@ -124,7 +130,7 @@ d8 stronghold write auth/kubernetes/role/demo \
 
 При запуске Stronghold в поде Kubernetes используется сервис аккаунт, позволяющий производить проверку токенов приложений, запущенных в том же кластере Kubernetes, что и Stronghold
 
-#### Используйте JWT клиента в качестве рецензента JWT
+#### Использование JWT клиента в качестве рецензента JWT
 
 При настройке Kubernetes auth вы можете опустить `token_reviewer_jwt`, и Stronghold
 будет использовать JWT клиента Stronghold в качестве своего собственного токена при взаимодействии с
@@ -133,7 +139,7 @@ API Kubernetes `TokenReview`. Вам также необходимо устан�
 Это означает, что Stronghold не хранит никаких JWT и позволяет использовать короткоживущие токены
 везде, но добавляет некоторые операционные накладные расходы на поддержание ролей кластера
 привязки кластерной роли к набору учетных записей служб, которые вы хотите иметь возможность аутентифицировать в
-Stronghold. Каждому клиенту Stronghold потребуется кластерная роль `system:auth-delegator:
+Stronghold. Каждому клиенту Stronghold потребуется кластерная роль `system:auth-delegator`:
 
 ```bash
 d8 k create clusterrolebinding myapp-client-auth-delegator \
@@ -145,9 +151,9 @@ d8 k create clusterrolebinding myapp-client-auth-delegator \
 
 #### Использование долгоживущих токенов
 
-Вы можете создать долгоживущий токен, используя инструкции [здесь][k8s-create-secret]
+Вы можете создать долгоживущий токен, используя инструкции [Kubernetes][k8s-create-secret]
 и использовать его в качестве `token_reviewer_jwt`. В этом примере для службы `myapp`
-потребуется кластерная роль `system:auth-delegator:
+потребуется кластерная роль `system:auth-delegator`:
 
 ```bash
 d8 k apply -f - <<EOF
@@ -179,7 +185,7 @@ JWT-токены, генерируемые Kubernetes, также могут б�
 истечения их TTL, поэтому рекомендуется держать TTL коротким с учетом этого
 ограничение.
 
-## Конфигурирование kubernetes
+## Конфигурирование Kubernetes
 
 Этот метод авторизации обращается к `Kubernetes TokenReview API``, для
 проверки того, что предоставленный JWT все еще действителен.
