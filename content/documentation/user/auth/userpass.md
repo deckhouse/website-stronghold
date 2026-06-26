@@ -35,7 +35,7 @@ To configure authentication using the `userpass` method, follow these steps:
    d8 stronghold auth enable -path=<userpass_mount_path> userpass
    ```
 
-1. Create a user who is allowed to authenticate:
+1. If necessary, create a user who is allowed to authenticate:
 
    ```shell
    d8 stronghold write auth/<userpass_mount_path>/users/alice \
@@ -55,7 +55,7 @@ d8 stronghold login -method=userpass username=alice password="Pass-123!"
 
 ### User lockout
 
-If a user provides incorrect credentials several times in a row, Stronghold stops validating them for a while and immediately returns an access denied error.
+If a user provides incorrect credentials several times in a row, Stronghold stops validating them for a while and returns an access denied error.
 This behavior is called user lockout (`user_lockout`).
 
 The time for which a user is locked out is called lockout duration (`lockout_duration`).
@@ -70,9 +70,9 @@ User lockout helps reduce the risk of password guessing attacks.
 The user lockout feature is enabled by default.
 Default values:
 
-- `lockout_threshold` — 5 attempts;
-- `lockout_duration` — 15 minutes;
-- `lockout_counter_reset` — 15 minutes.
+- `lockout_threshold`: 5 attempts.
+- `lockout_duration`: 15 minutes.
+- `lockout_counter_reset`: 15 minutes.
 
 You can disable user lockout with the `auth tune` command by setting the `disable_lockout` parameter to `true`.
 
@@ -82,8 +82,8 @@ User lockout is supported only by the `userpass`, `ldap`, and `approle` auth met
 
 ## Changing your own password
 
-You can allow a user to change only their own password in the `userpass` method.
-To do this, create a policy where the path to the user's password is formed using an entity alias.
+You can allow a user to change their own password in the `userpass` method.
+To do this, create a policy where the path to the user's password is formed based on the authenticated user's name.
 
 ### Creating a policy
 
@@ -106,7 +106,7 @@ Therefore, the path always points only to the current user's password.
 
 The template works after logging in via the `userpass` method.
 
-### Allow a user to change their own password
+### Allowing a user to change their own password
 
 To allow a user to change their own password using the `userpass` method, follow these steps:
 
@@ -211,7 +211,7 @@ This example will create a user named `alice`, grant them authentication via `us
 
 ### Changing password as a user
 
-After [authentication](#user-authentication-using-the-userpass-method), a user can change their password if they are [allowed](#allow-a-user-to-change-their-own-password) to do so.
+After [authentication](#user-authentication-using-the-userpass-method), a user can change their password if they are [allowed](#allowing-a-user-to-change-their-own-password) to do so.
 
 Example command for a user to change their password:
 
@@ -228,11 +228,11 @@ If no custom [password policy](../../concepts/password-policy/) is assigned to t
 
 The default policy for the `userpass` method requires:
 
-- `8` characters in the password;
-- at least one uppercase letter;
-- at least one lowercase letter;
-- at least one digit;
-- at least one hyphen (`-`).
+- `8` characters in the password
+- At least one uppercase letter
+- At least one lowercase letter
+- At least one digit
+- At least one hyphen (`-`)
 
 To use a custom policy instead of the default password policy for the `userpass` method, run the following command (replace `policy_name` with the name of the desired policy):
 
