@@ -183,7 +183,7 @@ This example will create a user named `alice`, grant them authentication via `us
 1. Assign the policy to the user you want to allow to change their password:
 
 {{< tabs >}}
-{{% tab "Если пользователь существует" %}}
+{{% tab "If the user exists" %}}
 
 ```shell
 d8 stronghold write auth/userpass/users/alice/policies \
@@ -193,7 +193,7 @@ d8 stronghold write auth/userpass/users/alice/policies \
 This example will apply the `self-change-password` policy to the existing user `alice`
 
 {{% /tab %}}
-{{% tab "Если пользователя не существует" %}}
+{{% tab "If the user does not exist" %}}
 
 ```shell
 d8 stronghold write auth/userpass/users/alice \
