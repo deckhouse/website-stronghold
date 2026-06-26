@@ -56,7 +56,7 @@ weight: 30
     ```shell
     d8 stronghold kv get secret/my-first-secret
     ```
-   
+
 {{< alert level="info" >}}
 После проверки замените тестовый путь и значения на параметры, которые используются в вашем проекте.
 {{< /alert >}}

@@ -66,4 +66,3 @@ d8 stronghold <command>
 {{< alert level="info" >}}
 Работа с Stronghold через консоль подробно разбирается [в курсе «Установка и обзор Deckhouse Stronghold»](https://education.flant.ru/course/ustanovka-i-obzor-deckhouse-stronghold/).
 {{< /alert >}}
-
