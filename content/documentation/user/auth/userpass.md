@@ -1,109 +1,245 @@
 ---
-title: "Userpass method"
-linkTitle: "Userpass"
+title: "Username and password authentication method"
+linkTitle: "userpass"
 weight: 50
 ---
 
-## Userpass auth method
+The `userpass` auth method allows users to authenticate in Deckhouse Stronghold using a username and password.
 
-The `userpass` auth method allows users to authenticate with Stronghold using
-a username and password combination.
+## Method features
 
-The username/password combinations are configured directly to the auth
-method using the `users/` path. This method cannot read usernames and
-passwords from an external source.
+When using the `userpass` method, keep the following features in mind:
 
-The method lowercases all submitted usernames, e.g. `Mary` and `mary` are the
-same entry.
-
-## Authentication
-
-### Via the CLI
-
-```shell-session
-$ d8 stronghold login -method=userpass \
-    username=mitchellh \
-    password=foo
-```
-
-### Via the API
-
-```shell-session
-$ curl \
-    --request POST \
-    --data '{"password": "foo"}' \
-    http://127.0.0.1:8200/v1/auth/userpass/login/mitchellh
-```
-
-The response will contain the token at `auth.client_token`:
-
-```json
-{
-  "lease_id": "",
-  "renewable": false,
-  "lease_duration": 0,
-  "data": null,
-  "auth": {
-    "client_token": "c4f280f6-fdb2-18eb-89d3-589e2e834cdb",
-    "policies": ["admins"],
-    "metadata": {
-      "username": "mitchellh"
-    },
-    "lease_duration": 0,
-    "renewable": false
-  }
-}
-```
+- Usernames and passwords are specified directly in the authentication method at the path `auth/userpass/users/`.
+- The `userpass` method cannot read usernames and passwords from an external source.
+- Entered usernames are converted to lowercase. For example, `Mary` and `mary` are equivalent entries.
 
 ## Configuration
 
-Auth methods must be configured in advance before users or machines can
-authenticate. These steps are usually completed by an operator or configuration
-management tool.
+To allow users to authenticate, configure the `userpass` method.
+These steps are usually completed by an operator or configuration management tool.
 
-1. Enable the userpass auth method:
+To configure authentication using the `userpass` method, follow these steps:
 
-   ```shell-session
+1. Enable the `userpass` auth method:
+
+   ```shell
    d8 stronghold auth enable userpass
    ```
 
-   This enables the userpass auth method at `auth/userpass`. To enable it at a different path, use the `-path` flag:
+   The method will be enabled at the `auth/userpass` path.
 
-   ```shell-session
-   d8 stronghold auth enable -path=<path> userpass
+   To enable the method at a different path, use the `-path` flag:
+
+   ```shell
+   d8 stronghold auth enable -path=<userpass_mount_path> userpass
    ```
 
-1. Configure it with users that are allowed to authenticate:
+1. If necessary, create a user who is allowed to authenticate:
 
-   ```shell-session
-   $ d8 stronghold write auth/<userpass:path>/users/mitchellh \
-       password=foo \
-       policies=admins
+   ```shell
+   d8 stronghold write auth/<userpass_mount_path>/users/alice \
+     password=Pass-123! \
+     token_policies=admins
    ```
 
-   This creates a new user "mitchellh" with the password "foo" that will be
-   associated with the "admins" policy. This is the only configuration
-   necessary.
+This creates user `alice` with password `Pass-123!` and the `admins` [policy](../../concepts/policy/).
 
-## User lockout
+### User authentication using the userpass method
 
-If a user provides bad credentials several times in quick succession,
-Stronghold will stop trying to validate their credentials for a while, instead returning immediately
-with a permission denied error. We call this behavior "user lockout". The time for which
-a user will be locked out is called “lockout duration”. The user will be able to login after the lockout
-duration has passed. The number of failed login attempts after which the user is locked out is called
-“lockout threshold”. The lockout threshold counter is reset to zero after a few minutes without login attempts,
-or upon a successful login attempt. The duration after which the counter will be reset to zero
-after no login attempts is called "lockout counter reset". This can defeat both automated and targeted requests
-i.e, user-based password guessing attacks as well as automated attacks.
+Example command for user authentication using the `userpass` method:
 
-The user lockout feature is enabled by default. The default values for "lockout threshold" is 5 attempts,
-"lockout duration" is 15 minutes, "lockout counter reset" is 15 minutes.
+```shell
+d8 stronghold login -method=userpass username=alice password="Pass-123!"
+```
 
-The user lockout feature can be disabled using "auth tune" by setting `disable_lockout` to `true`.
+### User lockout
+
+If a user provides incorrect credentials several times in a row, Stronghold stops validating them for a while and returns an access denied error.
+This behavior is called user lockout (`user_lockout`).
+
+The time for which a user is locked out is called lockout duration (`lockout_duration`).
+After this time expires, the user can log in again.
+
+The number of failed login attempts after which a user is locked out is called lockout threshold (`lockout_threshold`).
+The lockout threshold counter resets after a few minutes without login attempts or after a successful login.
+The interval after which the counter resets when there are no login attempts is called lockout counter reset (`lockout_counter_reset`).
+
+User lockout helps reduce the risk of password guessing attacks.
+
+The user lockout feature is enabled by default.
+Default values:
+
+- `lockout_threshold`: 5 attempts.
+- `lockout_duration`: 15 minutes.
+- `lockout_counter_reset`: 15 minutes.
+
+You can disable user lockout with the `auth tune` command by setting the `disable_lockout` parameter to `true`:
+
+```shell
+d8 stronghold auth tune -user-lockout-disable=true userpass
+```
 
 {{< alert level="warning" >}}
-
-**NOTE**: This feature is only supported by the userpass, ldap, and approle auth methods.
-
+User lockout is supported only by the `userpass`, `ldap`, and `approle` auth methods.
 {{< /alert >}}
+
+## Changing your own password
+
+You can allow a user to change their own password in the `userpass` method.
+To do this, create a policy where the path to the user's password is formed based on the authenticated user's name.
+
+### Creating a policy
+
+Use the following policy template:
+
+```hcl
+path "auth/userpass/users/{{identity.entity.aliases.<accessor>.name}}/password" {
+  capabilities = ["update"]
+}
+```
+
+Get the `<accessor>` value with the command:
+
+```shell
+d8 stronghold read -field=accessor sys/auth/userpass
+```
+
+The `{{identity.entity.aliases.<accessor>.name}}` template automatically substitutes the authenticated user's name.
+Therefore, the path always points only to the current user's password.
+
+The template works after logging in via the `userpass` method.
+
+### Allowing a user to change their own password
+
+To allow a user to change their own password using the `userpass` method, follow these steps:
+
+{{< tabs >}}
+{{% tab "If the userpass method is already enabled" %}}
+
+1. Get the unique method identifier:
+
+   ```shell
+   ACCESSOR=$(d8 stronghold read -field=accessor sys/auth/userpass)
+   ```
+
+1. Create a policy that allows a user authenticated via `userpass` to change their password:
+
+   ```shell
+   d8 stronghold policy write self-change-password - <<EOF
+   path "auth/userpass/users/{{identity.entity.aliases.${ACCESSOR}.name}}/password" {
+     capabilities = ["update"]
+   }
+   EOF
+   ```
+
+1. Assign the policy to the user you want to allow to change their password:
+
+{{< tabs >}}
+{{% tab "If the user exists" %}}
+
+```shell
+d8 stronghold write auth/userpass/users/alice/policies \
+  token_policies="self-change-password"
+```
+
+This example will apply the `self-change-password` policy to the existing user `alice`.
+
+{{% /tab %}}
+{{% tab "If the user does not exist" %}}
+
+```shell
+d8 stronghold write auth/userpass/users/alice \
+  password="OldPass-123!" \
+  token_policies="self-change-password"
+```
+
+This example will create a user named `alice`, grant them authentication via `userpass`, and assign the `self-change-password` policy to them.
+
+{{% /tab %}}
+{{< /tabs >}}
+
+{{% /tab %}}
+{{% tab "If the userpass method is not enabled" %}}
+
+1. Enable the `userpass` method:
+
+   ```shell
+   d8 stronghold auth enable userpass
+   ```
+
+1. Get the unique method identifier:
+
+   ```shell
+   ACCESSOR=$(d8 stronghold read -field=accessor sys/auth/userpass)
+   ```
+
+1. Create a policy that allows a user authenticated via `userpass` to change their password:
+
+   ```shell
+   d8 stronghold policy write self-change-password - <<EOF
+   path "auth/userpass/users/{{identity.entity.aliases.${ACCESSOR}.name}}/password" {
+     capabilities = ["update"]
+   }
+   EOF
+   ```
+
+1. Assign the policy to the user you want to allow to change their password:
+
+{{< tabs >}}
+{{% tab "If the user exists" %}}
+
+```shell
+d8 stronghold write auth/userpass/users/alice/policies \
+  token_policies="self-change-password"
+```
+
+This example will apply the `self-change-password` policy to the existing user `alice`
+
+{{% /tab %}}
+{{% tab "If the user does not exist" %}}
+
+```shell
+d8 stronghold write auth/userpass/users/alice \
+  password="OldPass-123!" \
+  token_policies="self-change-password"
+```
+
+This example will create a user named `alice`, grant them authentication via `userpass`, and assign the `self-change-password` policy to them.
+
+{{% /tab %}}
+{{< /tabs >}}
+
+{{% /tab %}}
+{{< /tabs >}}
+
+### Changing password as a user
+
+After [authentication](#user-authentication-using-the-userpass-method), a user can change their password if they are [allowed](#allowing-a-user-to-change-their-own-password) to do so.
+
+Example command for a user to change their password:
+
+```shell
+d8 stronghold write auth/userpass/users/alice/password password="NewPass-456!"
+```
+
+If the user tries to change someone else's password, Stronghold returns a `permission denied` error.
+If a user enters incorrect login credentials when changing their password, their account may be [locked](#user-lockout).
+
+### Default password policy
+
+If no custom [password policy](../../concepts/password-policy/) is assigned to the `userpass` method, Stronghold uses the default policy when creating a user or changing a user's password.
+
+The default policy for the `userpass` method requires:
+
+- `8` characters in the password
+- At least one uppercase letter
+- At least one lowercase letter
+- At least one digit
+- At least one hyphen (`-`)
+
+To use a custom policy instead of the default password policy for the `userpass` method, run the following command (replace `policy_name` with the name of the desired policy):
+
+```shell
+d8 stronghold write auth/userpass/password-policy/{policy_name}
+```

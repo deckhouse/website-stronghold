@@ -204,7 +204,7 @@ Stronghold uses the default password policy for passwords generated without an e
 
 This policy requires:
 
-- `20` password characters;
+- `20` password characters (for the [`userpass`](../user/auth/userpass/) method — `8` characters);
 - at least one uppercase letter;
 - at least one lowercase letter;
 - at least one digit;
