@@ -9,7 +9,7 @@ weight: 30
 
 В этом примере используются:
 
-- [механизм секретов `KV`](../../secrets-engines/kv/overview/);
+- [механизм секретов `kv`](../../secrets-engines/kv/overview/);
 - тестовый путь `secret/my-first-secret`;
 - тестовые ключи `username` и `password`.
 

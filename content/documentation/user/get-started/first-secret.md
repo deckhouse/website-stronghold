@@ -9,7 +9,7 @@ In Deckhouse Stronghold, you can create a test secret, verify its contents, and 
 
 This example uses:
 
-- the [`KV` secrets engine](../../secrets-engines/kv/overview/);
+- the [`kv` secrets engine](../../secrets-engines/kv/overview/);
 - the `secret/my-first-secret` test path;
 - the `username` and `password` test keys.
 
@@ -58,5 +58,3 @@ Use only test values in this example. Do not store real passwords, tokens, or ke
 {{< alert level="info" >}}
 After verification, replace the test path and values with the parameters used in your project.
 {{< /alert >}}
-
-If a command returns an access or path error, check the mount path and read/write permissions. Resolve login errors by following the [Configuring access](../access/) guide.

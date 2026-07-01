@@ -4,8 +4,6 @@ linkTitle: "Kubernetes"
 weight: 80
 ---
 
-## Kubernetes auth method
-
 The `kubernetes` auth method can be used to authenticate with Stronghold using a
 Kubernetes Service Account Token. This method of authentication makes it easy to
 introduce an Stronghold token into a Kubernetes Pod.

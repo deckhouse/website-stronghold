@@ -7,7 +7,7 @@ weight: 40
 Kubernetes can act as an OIDC provider so that Stronghold can validate service account tokens using JWT auth or OIDC auth.
 
 {{< alert >}}
-The JWT auth mechanism does **not** use the Kubernetes API `TokenReview` for authentication.
+The JWT auth mechanism does **not** use the Kubernetes API `TokenReview` for token validation.
 Instead, it uses public-key cryptography to verify the JWT contents.
 This means that tokens revoked by Kubernetes remain valid until they expire.
 
@@ -29,7 +29,7 @@ The Kubernetes cluster must meet the following requirements:
 - Short-lived Kubernetes service account tokens must be used.
   - This behavior is enabled by default for tokens mounted into pods starting from Kubernetes 1.21.
 
-To configure this mode, follow these steps:
+To enable automatic configuration, follow these steps:
 
 1. Make sure the OIDC discovery URL does not require authentication, as described in the [Kubernetes documentation][k8s-sa-issuer-discovery].
 
@@ -69,7 +69,7 @@ The Kubernetes cluster must meet the following requirements:
 - Short-lived Kubernetes service account tokens must be used.
   - This behavior is enabled by default for tokens mounted into pods starting from Kubernetes 1.21.
 
-#### Configuring Authentication
+To configure JWT auth using Kubernetes public keys, follow these steps:
 
 1. Retrieve the public key used to sign service account tokens from your cluster's JWKS URI.
 
@@ -113,7 +113,7 @@ $ d8 k create token default | cut -f2 -d. | base64 --decode
 {"aud":["https://kubernetes.default.svc.cluster.local"], ... "sub":"system:serviceaccount:default:default"}
 ```
 
-Or read the token from a running pod:
+You can also read the token from a running pod:
 
 ```shell-session
 $ d8 k exec my-pod -- cat /var/run/secrets/kubernetes.io/serviceaccount/token | cut -f2 -d. | base64 --decode
@@ -148,7 +148,7 @@ curl \
 
 ### Specifying TTL and API audience
 
-If you need to specify a custom TTL or API audience for service account tokens, the following pod manifest shows a volume mount that overrides the default injected token.
+If you need to specify a custom TTL or API audience for service account tokens, the following pod manifest shows a volume mount that overrides the automatically mounted default token.
 This is especially relevant if you cannot disable the [`--service-account-extend-token-expiration`][k8s-extended-tokens] flag for `kube-apiserver` and want to use short TTLs.
 
 When using the resulting token, set `bound_audiences=stronghold` when creating roles in JWT auth.
@@ -180,7 +180,7 @@ spec:
           expirationSeconds: 600 # Minimum TTL is 10 minutes.
           audience: stronghold   # Must match your role's `bound_audiences` parameter.
       # The remaining parameters are added to mimic the standard token creation behavior.
-      # They create the objects normally created when automountServiceAccountToken is enabled.
+      # They create the same objects as when automountServiceAccountToken is enabled.
       - configMap:
           name: kube-root-ca.crt
           items:
