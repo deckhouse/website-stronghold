@@ -13,7 +13,9 @@ This example uses:
 - the `secret/my-first-secret` test path;
 - the `username` and `password` test keys.
 
-{{< alert level="info" >}}
+If your installation uses a different mount path, replace `secret` with the path provided by the administrator.
+
+{{< alert level="warning" >}}
 Use only test values in this example. Do not store real passwords, tokens, or keys in test secrets.
 {{< /alert >}}
 

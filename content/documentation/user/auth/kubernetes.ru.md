@@ -20,15 +20,17 @@ weight: 80
 
 ### Через CLI
 
-По умолчанию используется путь `/kubernetes_local`. Если этот метод аутентификации был включен по другому пути, укажите его с помощью параметра `-path` в CLI. Например:
+Имя метода аутентификации зависит от способа его создания. В составе Deckhouse Kubernetes Platform (DKP) автоматически создаётся метод `kubernetes_local`, связанный с кластером, в котором запущен Stronghold. Если метод Kubernetes auth создается вручную, по умолчанию используется имя `kubernetes`, если не указан другой путь.
+
+Если метод аутентификации создан под другим именем, укажите его с помощью параметра `-path` в CLI. Например:
 
 ```shell
-d8 stronghold write -path=ВАШ-ПУТЬ auth/kubernetes/login role=demo jwt=...```
+d8 stronghold write -path=your-path auth/kubernetes/login role=demo jwt=...```
 ```
 
 ### Через API
 
-По умолчанию используется эндпоинт `auth/kubernetes_local/login`. Если метод авторизации включен по другому пути, замените `kubernetes_local` на соответствующее значение.
+Используйте эндпоинт, соответствующий имени метода аутентификации. Если Stronghold развернут в составе Deckhouse Kubernetes Platform (DKP), автоматически созданный метод использует эндпоинт `auth/kubernetes_local/login`. Если метод аутентификации создан под другим именем, используйте соответствующий эндпоинт. В примере ниже используется метод аутентификации с именем `kubernetes`.
 
 ```shell
 $ curl \
@@ -128,7 +130,14 @@ $ curl \
 
 #### Использование токена Stronghold в качестве рецензента JWT
 
-Если Stronghold запущен в поде Kubernetes, он использует JWT-токен своей учётной записи сервиса для проверки токенов приложений, работающих в том же кластере Kubernetes.
+Если Stronghold запущен в поде Kubernetes, рекомендуется использовать JWT-токен локальной учётной записи сервиса. Stronghold периодически перечитывает файл токена, поэтому поддерживаются короткоживущие токены.
+
+Чтобы использовать локальный токен и сертификат центра сертификации, не указывайте параметры `token_reviewer_jwt` и `kubernetes_ca_cert` при настройке метода аутентификации. Stronghold автоматически загрузит их из файлов `token` и `ca.crt`, расположенных в каталоге `/var/run/secrets/kubernetes.io/serviceaccount/`.
+
+```bash
+d8 stronghold write auth/kubernetes/config \
+    kubernetes_host=https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT
+```
 
 #### Использование JWT клиента в качестве рецензента JWT
 
@@ -182,7 +191,7 @@ Kubernetes auth использует API `TokenReview`. Вместе с тем J
 
 ## Конфигурирование Kubernetes
 
-Метод Kubernetes auth использует `Kubernetes TokenReview API`, для
+Метод Kubernetes auth использует `Kubernetes TokenReview API` для
 проверки того, что предоставленный JWT-токен действителен.
 
 Учётная запись сервиса, используемая этим методом аутентификации,
