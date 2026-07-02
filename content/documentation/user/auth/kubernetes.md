@@ -9,7 +9,7 @@ Kubernetes Service Account Token. This method of authentication makes it easy to
 introduce a Stronghold token into a Kubernetes Pod.
 
 You can also use a Kubernetes Service Account Token to [log in via JWT auth][k8s-jwt-auth].
-See the section on [How to work with short-lived Kubernetes tokens][#how-to-work-with-short-lived-kubernetes-tokens]
+See the section on [How to work with short-lived Kubernetes tokens](#how-to-work-with-short-lived-kubernetes-tokens)
 for a summary of why you might want to use JWT auth instead and how it compares to
 Kubernetes auth.
 
@@ -124,7 +124,7 @@ The changes to token lifetime are important when configuring the
 If a short-lived token is used,
 Kubernetes will revoke it as soon as the pod or service account are deleted, or
 if the expiry time passes, and Stronghold will no longer be able to use the
-`TokenReview` API. See [How to work with short-lived Kubernetes tokens][#how-to-work-with-short-lived-kubernetes-tokens]
+`TokenReview` API. See [How to work with short-lived Kubernetes tokens](#how-to-work-with-short-lived-kubernetes-tokens)
 below for details on handling this change.
 
 Kubernetes auth does not validate the `iss` field by default because Kubernetes already validates it when processing `TokenReview` requests.
