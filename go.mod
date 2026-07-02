@@ -4,4 +4,4 @@ module github.com/deckhouse/website-delivery-kit
 
 go 1.24.2
 
-require github.com/deckhouse/hugo-web-product-module v0.1.17 // indirect
+require github.com/deckhouse/hugo-web-product-module v0.1.19 // indirect
