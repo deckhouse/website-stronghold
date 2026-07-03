@@ -5,20 +5,20 @@ description: "Getting access to Deckhouse Stronghold and logging in for the firs
 weight: 10
 ---
 
-To work with Deckhouse Stronghold, get the access parameters from the administrator. Log in from the command line with the `d8` utility or through the web interface if it is available in the installation.
+To work with Deckhouse Stronghold, get the access parameters from the administrator. Log in from the command line with the Deckhouse CLI `d8` utility or through the web interface if it is available in the installation.
 
 Access parameters:
 
-- the Stronghold server address;
-- the authentication method and path;
-- the web interface address, if you log in through a browser;
-- additional connection parameters, if they are required in your installation.
+- Stronghold server address
+- Authentication method and path
+- Web interface address, if you log in through a browser
+- Additional connection parameters, if they are required in your installation
 
 ## Log in via the CLI
 
 To configure access to your project from the command line, follow these steps.
 
-1. Install [the `d8` utility](/products/kubernetes-platform/documentation/v1/cli/d8).
+1. Install the [Deckhouse CLI `d8` utility](/products/kubernetes-platform/documentation/v1/cli/d8/).
 
 1. Set the Stronghold server address in an environment variable:
 

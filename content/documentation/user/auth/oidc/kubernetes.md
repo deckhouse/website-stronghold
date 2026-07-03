@@ -136,6 +136,8 @@ Pods or clients that have access to the service account JWT can now authenticate
 
 Authentication example using the Deckhouse CLI:
 
+Authentication example using the Deckhouse CLI:
+
 
 ## Specifying TTL and API audience
 

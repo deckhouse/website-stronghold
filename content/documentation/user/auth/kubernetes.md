@@ -180,7 +180,7 @@ d8 k create clusterrolebinding myapp-client-auth-delegator \
 
 #### Using long-lived tokens
 
-You can create a long-lived secret using the [Kubernetes][k8s-create-secret] instructions.
+You can create a long-lived token using the [Kubernetes][k8s-create-secret] instructions
 and use that as the `token_reviewer_jwt`. In this example, the `myapp` service
 account would need the `system:auth-delegator` ClusterRole:
 
@@ -203,7 +203,7 @@ security posture of short-lived tokens.
 
 #### Using JWT auth
 
-Kubernetes auth is specialized to use Kubernetes' `TokenReview` API. However, the
+Kubernetes auth uses `TokenReview` API. However, the
 JWT tokens Kubernetes generates can also be verified using Kubernetes as an OIDC
 provider. The JWT auth method documentation has [instructions][k8s-jwt-auth] for
 setting up JWT auth with Kubernetes as the OIDC provider.
@@ -211,15 +211,15 @@ setting up JWT auth with Kubernetes as the OIDC provider.
 [k8s-jwt-auth]: ../oidc/kubernetes/
 
 This solution allows you to use short-lived tokens for all clients and removes
-the need for a reviewer JWT. However, the client tokens cannot be revoked before
+the need for a `token_reviewer_jwt` configuration. However, the client tokens cannot be revoked before
 their TTL expires, so it is recommended to keep the TTL short with that
 limitation in mind.
 
 ## Configuring Kubernetes
 
-This auth method uses the Kubernetes `TokenReview` API to validate the provided JWT.
+This auth method uses the `Kubernetes TokenReview API` to validate the provided JWT.
 
-The Service Account used by this auth method must have permission to access the `TokenReview` API. The `ClusterRoleBinding` example below grants the required permissions:
+The service account used by this auth method must have permission to access the `TokenReview` API. The ClusterRoleBinding example below grants the required permissions:
 
 ```yaml
 apiVersion: rbac.authorization.k8s.io/v1
