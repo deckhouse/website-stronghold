@@ -136,12 +136,6 @@ Pods or clients that have access to the service account JWT can now authenticate
 
 Authentication example using the Deckhouse CLI:
 
-Authentication example using the Deckhouse CLI:
-
-Authentication example using the Deckhouse CLI:
-
-Authentication example using the Deckhouse CLI:
-
 ## Specifying TTL and API audience
 
 If you need to specify a custom TTL or API audience for service account tokens, the following Pod manifest shows a volume mount that overrides the automatically mounted default token.
