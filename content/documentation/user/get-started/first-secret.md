@@ -23,15 +23,9 @@ To create a test secret, follow these steps:
 
 1. Create a secret by writing test values to the selected path:
 
-   
-
 1. Verify the saved values:
 
-   
-
 1. Edit the secret value by rewriting it to the same path:
-
-   
 
 {{< alert level="info" >}}
 After verification, replace the test path and values with the parameters used in your project.

@@ -147,7 +147,6 @@ injected service account tokens to a year to help smooth the transition to short
 
 When running Stronghold in a Kubernetes pod, Stronghold uses its local service account token as the reviewer JWT. Stronghold periodically re-reads the token file, which allows it to work with short-lived tokens.
 
-
 To use the local token and CA certificate, omit
 `token_reviewer_jwt` and `kubernetes_ca_cert` when configuring the auth method.
 Stronghold will attempt to load them from `token` and `ca.crt` respectively inside
