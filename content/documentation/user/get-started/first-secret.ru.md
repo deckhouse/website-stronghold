@@ -27,31 +27,11 @@ weight: 30
 
 1. Проверьте сохранённые значения:
 
-    ```shell
-    d8 stronghold kv get secret/my-first-secret
-    ```
+   
 
-    Пример вывода:
+1. Измените значение секрета, повторно записав его по тому же пути:
 
-    ```text
-    ====== Data ======
-    Key         Value
-    ---         -----
-    password    secret123
-    username    demo
-    ```
-
-1. Запишите секрет по тому же пути с новым значением:
-
-    ```shell
-    d8 stronghold kv put secret/my-first-secret username=demo password=new-secret
-    ```
-
-    Проверьте изменение значений с помощью команды:
-
-    ```shell
-    d8 stronghold kv get secret/my-first-secret
-    ```
+   
 
 {{< alert level="info" >}}
 После проверки замените тестовый путь и значения на параметры, которые используются в вашем проекте.

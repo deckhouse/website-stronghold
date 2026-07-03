@@ -110,6 +110,8 @@ d8 stronghold write auth/jwt/role/my-role \
 
 Пример аутентификации с помощью Deckhouse CLI:
 
+Пример аутентификации с помощью Deckhouse CLI:
+
 
 ## Указание TTL и целевых групп {#specifying-ttl-and-audience}
 

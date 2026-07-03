@@ -138,6 +138,8 @@ Authentication example using the Deckhouse CLI:
 
 Authentication example using the Deckhouse CLI:
 
+Authentication example using the Deckhouse CLI:
+
 
 ## Specifying TTL and API audience
 
