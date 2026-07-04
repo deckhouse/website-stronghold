@@ -38,7 +38,7 @@ services:
     working_dir: /src
     environment:
       - HUGO_ENABLEGITINFO=false
-    command: server --renderToMemory --printPathWarnings --printI18nWarnings --bind=0.0.0.0 -p 1313 --liveReloadPort 80 --noBuildLock --enableGitInfo=false
+    command: server --printPathWarnings --printI18nWarnings --bind=0.0.0.0 -p 1313 --liveReloadPort 80 --noBuildLock --enableGitInfo=false
     ports:
       - "1313:1313"
       - "1314:1314"

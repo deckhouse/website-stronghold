@@ -12,7 +12,12 @@ CURRENT_UID ?= $(shell id -u)
 CURRENT_GID ?= $(shell id -g)
 PORTS_TO_FREE ?= 80 1313 1314
 
-.PHONY: help serve build down lint-markdown lint-markdown-fix mod free-ports
+PLAYWRIGHT_IMAGE ?= mcr.microsoft.com/playwright:v1.55.0-jammy
+HTTP_PORT ?= 8088
+PRODUCT_CODE ?= $(shell awk '/^  productCode:/ {print tolower($$2); exit}' config/_default/hugo.yaml)
+MODULE_DIR ?= $(PWD)/../hugo-web-product-module
+
+.PHONY: help serve build down lint-markdown lint-markdown-fix mod free-ports pdf
 
 help:
 	@echo "Usage: make [target]"
@@ -21,6 +26,7 @@ help:
 	@echo "  up               Start documentation (available at http://localhost and http://ru.localhost)"
 	@echo "  serve            Start Hugo dev server (hugo serve --cleanDestinationDir)"
 	@echo "  build            Build the site to ./public"
+	@echo "  pdf              Build the site and generate PDF+DOCX exports into ./public/{en,ru}/documentation/downloads/print/"
 	@echo "  down             Stop and remove documentation containers"
 	@echo "  lint-markdown    Lint markdown files"
 	@echo "  lint-markdown-fix Fix markdown files automatically"
@@ -67,3 +73,28 @@ lint-markdown-fix:
 mod:
 	@echo "Cleaning up Hugo modules..."
 	$(HUGO) mod tidy
+
+pdf: build
+	@echo "Generating PDF and DOCX ($(PRODUCT_CODE), EN + RU) via Playwright + Pandoc..."
+	@if [ ! -d "$(MODULE_DIR)/.github/scripts" ]; then \
+		echo "ERROR: hugo-web-product-module scripts not found at $(MODULE_DIR)/.github/scripts"; \
+		exit 1; \
+	fi
+	@docker run --rm --network host \
+		-e PRODUCT_CODE="$(PRODUCT_CODE)" \
+		-e NODE_PATH=/deps/node_modules \
+		-v "$(PWD):/workdir" \
+		-v "$(MODULE_DIR)/.github/scripts:/scripts:ro" \
+		-w /workdir \
+		$(PLAYWRIGHT_IMAGE) \
+		bash -c '\
+			set -e; \
+			apt-get update -qq >/dev/null && apt-get install -y -qq pandoc >/dev/null; \
+			mkdir -p /deps && cd /deps && npm init -y >/dev/null && npm install --silent --no-audit --no-fund playwright http-server >/dev/null; \
+			cd /workdir; \
+			(cd public && /deps/node_modules/.bin/http-server -p $(HTTP_PORT) -s >/tmp/http.log 2>&1 &) ; \
+			for i in $$(seq 1 30); do curl -sf http://localhost:$(HTTP_PORT)/ > /dev/null && break; sleep 1; done; \
+			node /scripts/print-export.js en http://localhost:$(HTTP_PORT); \
+			node /scripts/print-export.js ru http://localhost:$(HTTP_PORT) \
+		'
+	@echo "Done. Files: public/{en,ru}/documentation/downloads/print/$(PRODUCT_CODE).{pdf,docx}"

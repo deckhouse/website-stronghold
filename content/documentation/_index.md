@@ -5,6 +5,7 @@ weight: 10
 outputs:
   - HTML
   - search
+  - print
 params:
   no_list: true
 cascade:

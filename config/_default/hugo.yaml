@@ -69,6 +69,9 @@ params:
   # Enable Lunr.js offline search
   offlineSearch: true
 
+  # Enable PDF/DOCX documentation exports (generated in CI, downloadable from sidebar).
+  pdf: true
+
   # Global relevant links.
   links:
 
@@ -106,6 +109,7 @@ languages:
     params:
       publicRootURL: https://deckhouse.io
       description: ""
+      pdfTitle: "Deckhouse Stronghold Documentation"
   ru:
     disabled: false
     weight: 1
@@ -114,3 +118,4 @@ languages:
     params:
       publicRootURL: https://deckhouse.io
       description: ""
+      pdfTitle: "Документация Deckhouse Stronghold"
