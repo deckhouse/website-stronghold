@@ -12,7 +12,8 @@ CURRENT_UID ?= $(shell id -u)
 CURRENT_GID ?= $(shell id -g)
 PORTS_TO_FREE ?= 80 1313 1314
 
-PLAYWRIGHT_IMAGE ?= mcr.microsoft.com/playwright:v1.55.0-jammy
+PLAYWRIGHT_VERSION ?= 1.61.1
+PLAYWRIGHT_IMAGE ?= mcr.microsoft.com/playwright:v$(PLAYWRIGHT_VERSION)-noble
 HTTP_PORT ?= 8088
 PRODUCT_CODE ?= $(shell awk '/^  productCode:/ {print tolower($$2); exit}' config/_default/hugo.yaml)
 MODULE_DIR ?= $(PWD)/../hugo-web-product-module
@@ -89,8 +90,8 @@ pdf: build
 		$(PLAYWRIGHT_IMAGE) \
 		bash -c '\
 			set -e; \
-			apt-get update -qq >/dev/null && apt-get install -y -qq pandoc >/dev/null; \
-			mkdir -p /deps && cd /deps && npm init -y >/dev/null && npm install --silent --no-audit --no-fund playwright http-server >/dev/null; \
+			apt-get update && apt-get install -y pandoc ; \
+			mkdir -p /deps && cd /deps && npm init -y >/dev/null && npm install --silent --no-audit --no-fund playwright@$(PLAYWRIGHT_VERSION) http-server >/dev/null; \
 			cd /workdir; \
 			(cd public && /deps/node_modules/.bin/http-server -p $(HTTP_PORT) -s >/tmp/http.log 2>&1 &) ; \
 			for i in $$(seq 1 30); do curl -sf http://localhost:$(HTTP_PORT)/ > /dev/null && break; sleep 1; done; \

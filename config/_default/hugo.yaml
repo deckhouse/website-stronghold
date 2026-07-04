@@ -109,7 +109,7 @@ languages:
     params:
       publicRootURL: https://deckhouse.io
       description: ""
-      pdfTitle: "Deckhouse Stronghold Documentation"
+      pdfTitle: "Deckhouse Stronghold Documentation"
   ru:
     disabled: false
     weight: 1
@@ -118,4 +118,4 @@ languages:
     params:
       publicRootURL: https://deckhouse.io
       description: ""
-      pdfTitle: "Документация Deckhouse Stronghold"
+      pdfTitle: "Документация Deckhouse Stronghold"
