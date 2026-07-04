@@ -1,0 +1,43 @@
+---
+description: Deckhouse terminology and wording rules
+alwaysApply: true
+---
+
+# Terminology
+
+- The full glossary is normative and published at https://pp.flant.ru/llms.txt (see "Glossary" section).
+  Fetch and apply it before writing or reviewing documentation text.
+- Apply glossary constraints directly:
+  - `K8s` with uppercase `K`;
+  - `cloud provider` -> "облачный провайдер";
+  - `module parameter` -> "параметр модуля";
+  - `RBAC` is not translated;
+  - use "узел", not "нода";
+  - use "веб-интерфейс", not `web-интерфейс` or `Web-интерфейс`;
+  - use `IP-адрес`;
+  - use "файлы cookie", not "cookie-файлы";
+  - avoid "платформа Deckhouse"; use product names explicitly (for example, Deckhouse Kubernetes Platform).
+- For mixed EN/RU or abbreviation+RU compound terms, use a hyphen:
+  - `S3-бакета` (not `S3 бакета`);
+  - `managed-сервис` (not `managed сервис`);
+  - `master-узел` (not `master узел`);
+  - `HTTP-протокол` or `протокол HTTP` (not `HTTP протокол`).
+- Do not replace approved terms with synonyms if glossary defines exact form.
+- Keep product naming consistent with glossary and product wording rules.
+- Deckhouse Module name must be canonical lowercase Kebab Case.
+- Do not humanize or reformat module name in prose:
+  - use `stronghold`, not `Stronghold`;
+  - use `volume-data-manager`, not `Volume Data Manager`.
+- For RU text, avoid jargon variants forbidden by glossary.
+- If a local checklist conflicts with full glossary text, follow https://pp.flant.ru/llms.txt.
+
+# Inline Code Scope
+
+- Do not wrap values inside YAML files in backticks — YAML values are already code context.
+- The same applies to other YAML fields: `enum` values, `default` values, etc.
+
+# Language Consistency
+
+- Use one term form throughout a page.
+- Keep EN technical terms where glossary explicitly requires no translation.
+- Validate key terms in headings, alerts, and examples, not only body text.

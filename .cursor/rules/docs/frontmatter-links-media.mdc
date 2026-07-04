@@ -1,0 +1,24 @@
+---
+description: Front matter, links, and media rules
+globs: content/**/*.md
+alwaysApply: false
+---
+
+# Front Matter
+
+- Use YAML front matter in page header.
+- `title`: required.
+- If `title` is missing, generate it from page purpose and context.
+- `description`: required, concise, unique, and not a copy of `title`.
+- If `description` is missing, generate it automatically from page purpose and key context.
+
+# Related Links
+
+- Use related links as `params.relatedLinks` in front matter.
+- Do not add manual "Related links" or "Related pages" sections in Markdown body.
+- The related links block is rendered automatically from front matter.
+
+# Link Rules
+
+- Links to the project pages must be relative. Other links must be absolute.
+- Links to Deckhouse Kubernetes Platform documentation must be absolute without domain (`/products/kubernetes-platform/documentation/v1/...`).
