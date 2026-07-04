@@ -125,8 +125,3 @@ Required fields: `title`, `description` (concise, unique, not a copy of title).
 - For each change relevant to both languages, update both files.
 - Do not leave EN/RU pairs semantically diverged unless the change is intentionally language-specific.
 - Localized media: `image1.jpg` (EN) / `image1.ru.jpg` (RU).
-
-## Media
-
-Store images, PDFs, and media only in `docs/` or its subdirectories.  
-Use relative links for files within the same module repository.
