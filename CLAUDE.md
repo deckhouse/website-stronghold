@@ -1,6 +1,6 @@
 # CLAUDE.md — website-stronghold
 
-This repository contains Hugo-based documentation for the Deckhouse Stronghold module.
+This repository contains Hugo-based documentation for the Deckhouse Kubernetes Stronghold.
 
 ## Run the docs site locally
 

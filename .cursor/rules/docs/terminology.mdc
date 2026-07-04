@@ -24,7 +24,7 @@ alwaysApply: true
   - `HTTP-протокол` or `протокол HTTP` (not `HTTP протокол`).
 - Do not replace approved terms with synonyms if glossary defines exact form.
 - Keep product naming consistent with glossary and product wording rules.
-- Module name must be used exactly as defined in `module.yaml.name` (canonical lowercase Kebab Case).
+- Deckhouse Module name must be canonical lowercase Kebab Case.
 - Do not humanize or reformat module name in prose:
   - use `stronghold`, not `Stronghold`;
   - use `volume-data-manager`, not `Volume Data Manager`.
@@ -34,7 +34,6 @@ alwaysApply: true
 # Inline Code Scope
 
 - Do not wrap values inside YAML files in backticks — YAML values are already code context.
-  For example, the `name` field in `module.yaml` must contain the plain module name, not `` `module-name` ``.
 - The same applies to other YAML fields: `enum` values, `default` values, etc.
 
 # Language Consistency

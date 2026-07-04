@@ -8,7 +8,7 @@ alwaysApply: false
 
 - Use YAML front matter in page header.
 - `title`: required.
-- If `title` is missing, generate it from page purpose and module context.
+- If `title` is missing, generate it from page purpose and context.
 - `description`: required, concise, unique, and not a copy of `title`.
 - If `description` is missing, generate it automatically from page purpose and key context.
 
