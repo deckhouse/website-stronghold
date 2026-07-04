@@ -90,8 +90,8 @@ pdf: build
 		$(PLAYWRIGHT_IMAGE) \
 		bash -c '\
 			set -e; \
-			apt-get update && apt-get install -y pandoc ; \
-			mkdir -p /deps && cd /deps && npm init -y >/dev/null && npm install --silent --no-audit --no-fund playwright@$(PLAYWRIGHT_VERSION) http-server >/dev/null; \
+			apt-get update && apt-get install -y pandoc fonts-dejavu-core ; \
+			mkdir -p /deps && cd /deps && npm init -y >/dev/null && npm install --silent --no-audit --no-fund playwright@$(PLAYWRIGHT_VERSION) http-server jszip pdf-lib @pdf-lib/fontkit >/dev/null; \
 			cd /workdir; \
 			(cd public && /deps/node_modules/.bin/http-server -p $(HTTP_PORT) -s >/tmp/http.log 2>&1 &) ; \
 			for i in $$(seq 1 30); do curl -sf http://localhost:$(HTTP_PORT)/ > /dev/null && break; sleep 1; done; \
