@@ -13,8 +13,8 @@ description: Runs the documentation website locally via `Makefile` and werf. Use
    ```
 
 3. **Open** in a browser:
-   - for the English version — http://localhost/products/kubernetes-platform/documentation/v1/
-   - for the Russian version — http://ru.localhost/products/kubernetes-platform/documentation/v1/
+   - for the English version — http://localhost/products/stronghold/documentation/
+   - for the Russian version — http://ru.localhost/products/stronghold/documentation/
 
 4. **Stop** when done:
    ```bash

@@ -18,8 +18,6 @@ Apply additional rules when relevant:
 - `.cursor/rules/docs/ru-en-parity.mdc` for EN/RU pairs, `.ru.md` naming, and localized media.
 - `.cursor/rules/docs/hugo-shortcodes.mdc` for `alert`, `tabs`, `details`, and shortcode usage.
 - `.cursor/rules/docs/frontmatter-links-media.mdc` for front matter, related links, and media placement.
-- `.cursor/rules/docs/crd-translation-files.mdc` for `crds/doc-ru-*.yaml` translation files.
-- `.cursor/rules/docs/openapi-x-doc.mdc` for `openapi/**/*.yaml` and `x-doc-*` fields.
 
 Review checklist:
 
