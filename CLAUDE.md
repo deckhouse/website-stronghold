@@ -9,8 +9,8 @@ make up      # start via Docker Compose
 make down    # stop and remove containers
 ```
 
-- EN: http://localhost/products/stronghold/documentation/
-- RU: http://ru.localhost/products/stronghold/documentation/
+- EN: <http://localhost/products/stronghold/documentation/>
+- RU: <http://ru.localhost/products/stronghold/documentation/>
 
 All targets:
 
@@ -26,7 +26,7 @@ All targets:
 
 ## Editorial policy
 
-The normative style guide and glossary are at **https://pp.flant.ru/llms.txt**.  
+The normative style guide and glossary are at **<https://pp.flant.ru/llms.txt>**.  
 Fetch it before writing or reviewing documentation.
 
 ## Documentation style
@@ -90,7 +90,7 @@ Markdown content.
 
 ## Terminology
 
-Full glossary: https://pp.flant.ru/llms.txt (see "Glossary" section).
+Full glossary: <https://pp.flant.ru/llms.txt> (see "Glossary" section).
 
 Key rules:
 - `K8s` (uppercase K)
