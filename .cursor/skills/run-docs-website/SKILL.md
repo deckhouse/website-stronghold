@@ -1,6 +1,6 @@
 ---
 name: run-website
-description: Runs the documentation website locally via `Makefile` and werf. Use when the user wants to run the docs, preview the documentation site, start the docs server, or open the documentation website locally.
+description: Runs the documentation website locally via `Makefile`. Use when the user wants to run the docs, preview the documentation site, start the docs server, or open the documentation website locally.
 ---
 
 # Run Documentation Website
@@ -13,18 +13,22 @@ description: Runs the documentation website locally via `Makefile` and werf. Use
    ```
 
 3. **Open** in a browser:
-   - for the English version — http://localhost/products/stronghold/documentation/
-   - for the Russian version — http://ru.localhost/products/stronghold/documentation/
+   - EN: http://localhost/products/stronghold/documentation/
+   - RU: http://ru.localhost/products/stronghold/documentation/
 
-4. **Stop** when done:
+1. **Stop** when done:
    ```bash
    make down
    ```
 
-## Other targets (from docs/site/)
+## All targets
 
-| Target | Use case                                                                    |
-|--------|-----------------------------------------------------------------------------|
-| `make up` | Start docs in watch mode that rebuilds on commit                            |
-| `make lint-markdown-fix` | Run markdown linter and fix some problems automatically                    |
-| `make down` | Stop containers, remove networks, and stop the local registry               |
+| Target | Use case |
+|--------|---------|
+| `make up` | Start docs via Docker Compose |
+| `make down` | Stop and remove containers (`docker compose down --remove-orphans`) |
+| `make serve` | Start Hugo dev server locally without Docker (`hugo serve`) |
+| `make build` | Build the site to `./public` |
+| `make lint-markdown` | Lint Markdown files |
+| `make lint-markdown-fix` | Lint and auto-fix Markdown files |
+| `make mod` | Clean up Hugo modules (`hugo mod tidy`) |

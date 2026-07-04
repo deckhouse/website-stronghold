@@ -5,18 +5,24 @@ This repository contains Hugo-based documentation for the Deckhouse Stronghold m
 ## Run the docs site locally
 
 ```bash
-make up      # start in watch mode (rebuilds on commit)
-make down    # stop and clean up
+make up      # start via Docker Compose
+make down    # stop and remove containers
 ```
 
-- EN: http://localhost/products/kubernetes-platform/documentation/v1/
-- RU: http://ru.localhost/products/kubernetes-platform/documentation/v1/
+- EN: http://localhost/products/stronghold/documentation/
+- RU: http://ru.localhost/products/stronghold/documentation/
 
-Other useful targets (run from repo root):
+All targets:
 
 | Target | Purpose |
 |--------|---------|
-| `make lint-markdown-fix` | Run Markdown linter and auto-fix issues |
+| `make up` | Start docs via Docker Compose |
+| `make down` | Stop and remove containers |
+| `make serve` | Start Hugo dev server locally without Docker |
+| `make build` | Build the site to `./public` |
+| `make lint-markdown` | Lint Markdown files |
+| `make lint-markdown-fix` | Lint and auto-fix Markdown files |
+| `make mod` | Clean up Hugo modules (`hugo mod tidy`) |
 
 ## Editorial policy
 
@@ -43,8 +49,8 @@ Do not wrap values inside YAML files in backticks — YAML values are already co
 ### Links
 
 - Use meaningful link anchors (avoid "here" or "тут").
-- Same-module links must be relative (`cr.html`, `usage.html`).
-- Other module links must be absolute without domain (`/modules/<module-name>/...`).
+- Links to project pages must be relative.
+- Links to Deckhouse Kubernetes Platform docs must be absolute without domain (`/products/kubernetes-platform/documentation/v1/...`).
 
 ### Code blocks
 
@@ -111,9 +117,7 @@ This applies to all step-by-step instructions, quickstart guides, and procedural
 
 Required fields: `title`, `description` (concise, unique, not a copy of title).
 
-- Do not set top-level `url` in front matter — it is generated automatically.
-- `moduleStatus` is deprecated; do not use it. Use `stage` in `module.yaml` instead.
-- Related links: use `params.relatedLinks` in front matter (Hugo pages); do not add manual "Related links" sections in the Markdown body.
+- Related links: use `params.relatedLinks` in front matter; do not add manual "Related links" sections in the Markdown body.
 
 ## EN/RU parity
 
@@ -126,11 +130,3 @@ Required fields: `title`, `description` (concise, unique, not a copy of title).
 
 Store images, PDFs, and media only in `docs/` or its subdirectories.  
 Use relative links for files within the same module repository.
-
-## OpenAPI (`openapi/**/*.yaml`)
-
-- Use `x-doc-*` fields for documentation rendering only.
-- Do not duplicate `default` value in `description`.
-- Do not duplicate `enum` values as a "Possible values" list in `description` — they are rendered automatically.
-- `openapi/config-values.yaml` must have a paired `openapi/doc-ru-config-values.yaml` translation file.
-- Both files must be valid YAML; every translated path must exist in the source file.

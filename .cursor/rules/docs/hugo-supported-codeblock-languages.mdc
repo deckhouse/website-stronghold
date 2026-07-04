@@ -3,8 +3,6 @@ description: Hugo supported code block language identifiers
 alwaysApply: true
 ---
 
-# Hugo and Jekyll Supported Code Block Languages
-
 The full language identifier list below is part of Cursor rules.
 
 # Supported code block languages
