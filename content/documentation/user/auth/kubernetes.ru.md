@@ -32,7 +32,7 @@ d8 stronghold write -path=your-path auth/kubernetes/login role=demo jwt=...```
 
 Используйте эндпоинт, соответствующий имени метода аутентификации. Если Stronghold развернут в составе DKP, автоматически созданный метод использует эндпоинт `auth/kubernetes_local/login`. Если метод аутентификации создан под другим именем, используйте соответствующий эндпоинт. В примере ниже используется метод аутентификации с именем `kubernetes`.
 
-```shell
+```shell-session
 curl \
   --request POST \
   --data '{"jwt": "<your service account jwt>", "role": "demo"}' \
@@ -86,6 +86,14 @@ curl \
    {{< /alert >}}
 
 1. Создайте именованную роль:
+
+   ```shell
+   d8 stronghold write auth/kubernetes/role/demo \
+      bound_service_account_names=myapp \
+      bound_service_account_namespaces=default \
+      policies=default \
+      ttl=1h
+   ```
 
    Эта роль разрешает учётной записи сервиса `myapp` в неймспейсе `default` проходить аутентификацию и назначает ей политику по умолчанию.
 
@@ -174,7 +182,7 @@ EOF
 #### Использование JWT auth
 
 Kubernetes auth использует API `TokenReview`. Вместе с тем JWT-токены Kubernetes можно проверять, используя Kubernetes в качестве OIDC-провайдера.
-Инструкции по настройке приведены в документации по методу [JWT auth][k8s-jwt-auth]
+Инструкции по настройке приведены в документации по методу [JWT auth][k8s-jwt-auth].
 
 [k8s-jwt-auth]: ../oidc/kubernetes/
 

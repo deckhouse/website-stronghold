@@ -37,7 +37,7 @@ d8 stronghold write -path=your-path auth/kubernetes/login role=demo jwt=...
 Use the endpoint that matches the auth method name. When Stronghold is deployed as part of DKP, the automatically created auth method uses the `auth/kubernetes_local/login` endpoint. If the auth method was created under a different name, use the corresponding endpoint. The example below uses an auth method named `kubernetes`.
 
 ```shell-session
-$ curl \
+curl \
     --request POST \
     --data '{"jwt": "<your service account jwt>", "role": "demo"}' \
 curl \
@@ -111,7 +111,6 @@ To configure authentication for another Kubernetes cluster, enable an additional
 Starting in version [Kubernetes 1.21](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.21.md#api-change-2), the Kubernetes
 feature gate `BoundServiceAccountTokenVolume` is enabled by default. As a result, the JWT tokens automatically mounted into containers have the following features:
 
-* It has an expiry time and is bound to the lifetime of the pod and service account.
 * They have an expiry time.
 * They are bound to the lifetime of a pod and service account.
 * The value of the JWT's `iss` claim depends on the cluster's configuration.
@@ -140,7 +139,7 @@ table summarizes the options, each of which is explained in more detail below.
 
 {{< alert level="info" >}}
 By default, Kubernetes currently extends the lifetime of admission
-injected service account tokens to a year to help smooth the transition to short-lived tokens. If you would like to disable this, set [`--service-account-extend-token-expiration=false`](https://kubernetes.io/docs/reference/command-line-tools-reference/kube-apiserver/#options) for `kube-apiserver` or specify your own `serviceAccountToken` volume mount. See the [Specifying TTL and API audience section](../oidc/kubernetes/#specifying-ttl-and-api-audience) for an example.
+injected service account tokens to a year to help smooth the transition to short-lived tokens. If you would like to disable this, set [`--service-account-extend-token-expiration=false`](https://kubernetes.io/docs/reference/command-line-tools-reference/kube-apiserver/#options) for `kube-apiserver` or specify your own `serviceAccountToken` volume mount. See the ["Specifying TTL and API audience"](../oidc/kubernetes/#specifying-ttl-and-api-audience) section for an example.
 {{< /alert >}}
 
 #### Using the Stronghold token as the reviewer JWT
@@ -154,7 +153,7 @@ the default mount folder `/var/run/secrets/kubernetes.io/serviceaccount/`.
 
 ```bash
 d8 stronghold write auth/kubernetes/config \
-  kubernetes_host=https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT
+kubernetes_host=https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT
 ```
 
 #### Using the Stronghold client's JWT as the reviewer JWT

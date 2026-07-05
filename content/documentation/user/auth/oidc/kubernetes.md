@@ -29,14 +29,14 @@ The Kubernetes cluster must meet the following requirements:
 - Short-lived Kubernetes service account tokens must be used.
   - This behavior is enabled by default for tokens mounted into pods starting from Kubernetes 1.21.
 
-To enable automatic configuration, follow these steps:
+To configure this mode, follow these steps:
 
 1. Make sure the OIDC discovery URL does not require authentication, as described in the [Kubernetes documentation][k8s-sa-issuer-discovery].
 
    ```bash
    d8 k create clusterrolebinding oidc-reviewer  \
-     --clusterrole=system:service-account-issuer-discovery \
-     --group=system:unauthenticated
+   --clusterrole=system:service-account-issuer-discovery \
+   --group=system:unauthenticated
    ```
 
 1. Determine the issuer URL for your cluster.
@@ -124,17 +124,31 @@ Create a role for JWT auth that the `default` service account in the `default` n
 
 ```bash
 d8 stronghold write auth/jwt/role/my-role \
-  role_type="jwt" \
-  bound_audiences="<AUDIENCE-FROM-PREVIOUS-STEP>" \
-  user_claim="sub" \
-  bound_subject="system:serviceaccount:default:default" \
-  policies="default" \
-  ttl="1h"
+role_type="jwt" \
+bound_audiences="<AUDIENCE-FROM-PREVIOUS-STEP>" \
+user_claim="sub" \
+bound_subject="system:serviceaccount:default:default" \
+policies="default" \
+ttl="1h"
 ```
 
 Pods or clients that have access to the service account JWT can now authenticate with this token.
 
-Authentication example using the Deckhouse CLI:
+```bash
+d8 stronghold write auth/jwt/login \
+  role=my-role \
+  jwt=@/var/run/secrets/kubernetes.io/serviceaccount/token
+```
+
+An equivalent HTTP query example:
+
+```bash
+curl \
+  --fail \
+  --request POST \
+  --data '{"jwt":"<JWT-TOKEN-HERE>","role":"my-role"}' \
+  "${STRONGHOLD_ADDR}/v1/auth/jwt/login"
+```
 
 ## Specifying TTL and API audience
 

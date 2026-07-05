@@ -28,9 +28,24 @@ Kubernetes может выступать в качестве OIDC-провайд
 
 1. Убедитесь, что URL-адрес обнаружения OIDC не требует аутентификации, как описано в [документации Kubernetes][k8s-sa-issuer-discovery]:
 
+   ```bash
+   d8 k create clusterrolebinding oidc-reviewer  \
+   --clusterrole=system:service-account-issuer-discovery \
+   --group=system:unauthenticated
+   ```
+
 1. Определите значение issuer URL для вашего кластера.
 
+   ```bash
+   ISSUER="$(d8 k get --raw /.well-known/openid-configuration | jq -r '.issuer')"
+   ```
+
 1. Включите и настройте аутентификацию JWT в Stronghold.
+
+   ```bash
+   d8 stronghold auth enable jwt
+   d8 stronghold write auth/jwt/config oidc_discovery_url="${ISSUER}"
+   ```
 
 1. Настройте [необходимые роли](#создание-ролей-и-аутентификация).
 
@@ -52,9 +67,23 @@ Kubernetes может выступать в качестве OIDC-провайд
 
 1. Получите открытый ключ подписи токенов учётных записей сервиса из JWKS URI вашего кластера.
 
+   ```bash
+   # jwks_uri доступен в /.well-known/openid-configuration
+   d8 k get --raw "$(d8 k get --raw /.well-known/openid-configuration | jq -r '.jwks_uri' | sed -r 's/.*\.[^/]+(.*)/\1/')"
+   ```
+
 1. Преобразуйте ключи из формата JWK в формат PEM. Это можно сделать с помощью консольной утилиты или [онлайн-конвертера JWK в PEM][jwk-to-pem].
 
 1. Настройте эндпоинт JWT auth на использование полученных ключей.
+
+    ```bash
+    d8 stronghold write auth/jwt/config \
+       jwt_validation_pubkeys="-----BEGIN PUBLIC KEY-----
+    MIIBIjANBgkqhkiG9...
+    -----END PUBLIC KEY-----","-----BEGIN PUBLIC KEY-----
+    MIIBIjANBgkqhkiG9...
+    -----END PUBLIC KEY-----"
+    ```
 
 1. Настройте [необходимые роли](#создание-ролей-и-аутентификация).
 
@@ -84,17 +113,31 @@ d8 k exec my-pod -- cat /var/run/secrets/kubernetes.io/serviceaccount/token | cu
 
 ```bash
 d8 stronghold write auth/jwt/role/my-role \
-  role_type="jwt" \
-  bound_audiences="<AUDIENCE-FROM-PREVIOUS-STEP>" \
-  user_claim="sub" \
-  bound_subject="system:serviceaccount:default:default" \
-  policies="default" \
-  ttl="1h"
+role_type="jwt" \
+bound_audiences="<AUDIENCE-FROM-PREVIOUS-STEP>" \
+user_claim="sub" \
+bound_subject="system:serviceaccount:default:default" \
+policies="default" \
+ttl="1h"
 ```
 
 Теперь поды или клиенты, имеющие доступ к JWT учётной записи сервиса, смогут аутентифицироваться с помощью этого токена.
 
-Пример аутентификации с помощью Deckhouse CLI:
+```bash
+d8 stronghold write auth/jwt/login \
+  role=my-role \
+  jwt=@/var/run/secrets/kubernetes.io/serviceaccount/token
+```
+
+Пример эквивалентного HTTP-запроса:
+
+```bash
+curl \
+  --fail \
+  --request POST \
+  --data '{"jwt":"<JWT-TOKEN-HERE>","role":"my-role"}' \
+  "${STRONGHOLD_ADDR}/v1/auth/jwt/login"
+```
 
 ## Указание TTL и целевых групп {#specifying-ttl-and-audience}
 
