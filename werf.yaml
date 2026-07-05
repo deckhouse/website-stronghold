@@ -25,10 +25,75 @@ git:
   stageDependencies:
     setup: ['**/*']
 ---
-image: web
-fromImage: nginx:1.29.3-alpine
+image: print-base
+from: ubuntu:24.04
+final: true
+shell:
+  beforeInstall:
+  - export DEBIAN_FRONTEND=noninteractive DEBCONF_NOWARNINGS=yes
+  - apt-get update -qq
+  - apt-get install -y -qq --no-install-recommends apt-utils
+  - apt-get install -y -qq --no-install-recommends weasyprint pandoc poppler-utils fonts-dejavu-core fonts-liberation ca-certificates curl gnupg git
+  - curl -fsSL https://deb.nodesource.com/setup_24.x 2>/dev/null | bash - >/dev/null 2>&1
+  - apt-get install -y -qq --no-install-recommends nodejs
+  - mkdir -p /deps && cd /deps && npm init -y >/dev/null
+  - cd /deps && npm install --silent --no-audit --no-fund cheerio http-server jszip
+  - apt-get autoclean && apt-get clean
+---
+image: print-artifacts
+fromImage: print-base
+final: false
 import:
 - image: web-artifacts
   add: /out
+  to: /site
+  before: setup
+  stage: setup
+git:
+- add: /
+  to: /src
+  includePaths:
+    - go.mod
+    - config/
+  stageDependencies:
+    setup: ['**/*']
+shell:
+  setup:
+  - |
+    set -e
+    PDF_ENABLED=$(awk '/^  pdf:/ {print tolower($2); exit}' /src/config/_default/hugo.yaml)
+    mkdir -p /out
+    if [ "$PDF_ENABLED" != "true" ]; then
+      echo "params.pdf is not true — skipping PDF/DOCX generation."
+      cp -a /site/. /out/
+      exit 0
+    fi
+    git config --global advice.detachedHead false
+    export NODE_PATH=/deps/node_modules
+    export PUBLIC_DIR=/site
+    HUGO_TEMPLATE_VER=$(awk -v m='github.com/deckhouse/hugo-web-product-module' \
+      '{for(i=1;i<=NF;i++) if($i==m && $(i+1) ~ /^v/) {print $(i+1); exit}}' /src/go.mod)
+    export PRODUCT_CODE=$(awk '/^  productCode:/ {print tolower($2); exit}' /src/config/_default/hugo.yaml)
+    test -n "$HUGO_TEMPLATE_VER" || { echo "ERROR: cannot parse hugo-web-product-module version from go.mod"; exit 1; }
+    test -n "$PRODUCT_CODE"      || { echo "ERROR: cannot parse params.productCode from config/_default/hugo.yaml"; exit 1; }
+    git clone --depth=1 --filter=blob:none --sparse \
+      --branch "$HUGO_TEMPLATE_VER" \
+      https://github.com/deckhouse/hugo-web-product-module.git /tmp/tpl
+    git -C /tmp/tpl sparse-checkout set .github/scripts
+    mv /tmp/tpl/.github/scripts /scripts
+    rm -rf /tmp/tpl
+    (cd /site && /deps/node_modules/.bin/http-server -p 8088 -s >/tmp/http.log 2>&1 &)
+    for i in $(seq 1 30); do curl -sf http://localhost:8088/ >/dev/null && break; sleep 1; done
+    node /scripts/print-export.js en http://localhost:8088
+    node /scripts/print-export.js ru http://localhost:8088
+    cp -a /site/. /out/
+---
+image: web
+fromImage: nginx:1.29.3-alpine
+final: true
+import:
+- image: print-artifacts
+  add: /out
   to: /app
   before: setup
+  stage: setup

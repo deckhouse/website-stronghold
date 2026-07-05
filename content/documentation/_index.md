@@ -13,6 +13,8 @@ cascade:
     simple_list: true
 ---
 
+{{< downloads >}}
+
 Welcome to the home page of the Deckhouse Stronghold documentation!
 
 The Deckhouse Stronghold is designed for launching, managing, and orchestrating virtual machines and associated resources.
