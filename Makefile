@@ -12,8 +12,7 @@ CURRENT_UID ?= $(shell id -u)
 CURRENT_GID ?= $(shell id -g)
 PORTS_TO_FREE ?= 80 1313 1314
 
-PLAYWRIGHT_VERSION ?= 1.61.1
-PLAYWRIGHT_IMAGE ?= mcr.microsoft.com/playwright:v$(PLAYWRIGHT_VERSION)-noble
+PRINT_IMAGE ?= ubuntu:24.04
 HTTP_PORT ?= 8088
 PRODUCT_CODE ?= $(shell awk '/^  productCode:/ {print tolower($$2); exit}' config/_default/hugo.yaml)
 MODULE_DIR ?= $(PWD)/../hugo-web-product-module
@@ -76,7 +75,7 @@ mod:
 	$(HUGO) mod tidy
 
 pdf: build
-	@echo "Generating PDF and DOCX ($(PRODUCT_CODE), EN + RU) via Playwright + Pandoc..."
+	@echo "Generating PDF and DOCX ($(PRODUCT_CODE), EN + RU) via WeasyPrint + Pandoc..."
 	@if [ ! -d "$(MODULE_DIR)/.github/scripts" ]; then \
 		echo "ERROR: hugo-web-product-module scripts not found at $(MODULE_DIR)/.github/scripts"; \
 		exit 1; \
@@ -84,14 +83,21 @@ pdf: build
 	@docker run --rm --network host \
 		-e PRODUCT_CODE="$(PRODUCT_CODE)" \
 		-e NODE_PATH=/deps/node_modules \
+		-e DEBIAN_FRONTEND=noninteractive \
 		-v "$(PWD):/workdir" \
 		-v "$(MODULE_DIR)/.github/scripts:/scripts:ro" \
 		-w /workdir \
-		$(PLAYWRIGHT_IMAGE) \
+		$(PRINT_IMAGE) \
 		bash -c '\
 			set -e; \
-			apt-get update && apt-get install -y pandoc fonts-dejavu-core ; \
-			mkdir -p /deps && cd /deps && npm init -y >/dev/null && npm install --silent --no-audit --no-fund playwright@$(PLAYWRIGHT_VERSION) http-server jszip pdf-lib @pdf-lib/fontkit >/dev/null; \
+			apt-get update -qq && apt-get install -y -qq \
+				weasyprint pandoc poppler-utils \
+				fonts-dejavu-core fonts-liberation \
+				ca-certificates curl gnupg ; \
+			curl -fsSL https://deb.nodesource.com/setup_24.x | bash - >/dev/null 2>&1 ; \
+			apt-get install -y -qq nodejs ; \
+			mkdir -p /deps && cd /deps && npm init -y >/dev/null && \
+			npm install --silent --no-audit --no-fund cheerio http-server jszip >/dev/null; \
 			cd /workdir; \
 			(cd public && /deps/node_modules/.bin/http-server -p $(HTTP_PORT) -s >/tmp/http.log 2>&1 &) ; \
 			for i in $$(seq 1 30); do curl -sf http://localhost:$(HTTP_PORT)/ > /dev/null && break; sleep 1; done; \
