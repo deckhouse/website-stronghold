@@ -76,14 +76,14 @@ Kubernetes может выступать в качестве OIDC-провайд
 
 1. Настройте эндпоинт JWT auth на использование полученных ключей.
 
-    ```bash
-    d8 stronghold write auth/jwt/config \
-       jwt_validation_pubkeys="-----BEGIN PUBLIC KEY-----
-    MIIBIjANBgkqhkiG9...
-    -----END PUBLIC KEY-----","-----BEGIN PUBLIC KEY-----
-    MIIBIjANBgkqhkiG9...
-    -----END PUBLIC KEY-----"
-    ```
+   ```bash
+   d8 stronghold write auth/jwt/config \
+      jwt_validation_pubkeys="-----BEGIN PUBLIC KEY-----
+   MIIBIjANBgkqhkiG9...
+   -----END PUBLIC KEY-----","-----BEGIN PUBLIC KEY-----
+   MIIBIjANBgkqhkiG9...
+   -----END PUBLIC KEY-----"
+   ```
 
 1. Настройте [необходимые роли](#создание-ролей-и-аутентификация).
 

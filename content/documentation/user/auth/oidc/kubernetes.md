@@ -134,6 +134,8 @@ ttl="1h"
 
 Pods or clients that have access to the service account JWT can now authenticate with this token.
 
+Authentication example using the Deckhouse CLI:
+
 ```bash
 d8 stronghold write auth/jwt/login \
   role=my-role \

@@ -23,31 +23,37 @@ To create a test secret, follow these steps:
 
 1. Create a secret by writing test values to the selected path:
 
-    ```shell
-    d8 stronghold kv put secret/my-first-secret username=demo password=secret123
-    ```
+   ```shell
+   d8 stronghold kv put secret/my-first-secret username=demo password=secret123
+   ```
 
 1. Verify the saved values:
 
-    ```shell
-    d8 stronghold kv get secret/my-first-secret
-    ```
+   ```shell
+   d8 stronghold kv get secret/my-first-secret
+   ```
 
-    Example output:
+   Example output:
 
-    ```text
-    ====== Data ======
-    Key         Value
-    ---         -----
-    password    secret123
-    username    demo
-    ```
+   ```text
+   ====== Data ======
+   Key         Value
+   ---         -----
+   password    secret123
+   username    demo
+   ```
 
 1. Edit the secret value by rewriting it to the same path:
 
-    ```shell
-    d8 stronghold kv put secret/my-first-secret username=demo password=new-secret
-    ```
+   ```shell
+   d8 stronghold kv put secret/my-first-secret username=demo password=new-secret
+   ```
+
+1. Make sure the value has been updated:
+
+   ```shell
+   d8 stronghold kv get secret/my-first-secret
+   ```
 
 {{< alert level="info" >}}
 After verification, replace the test path and values with the parameters used in your project.
