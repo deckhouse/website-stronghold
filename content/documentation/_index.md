@@ -5,12 +5,15 @@ weight: 10
 outputs:
   - HTML
   - search
+  - print
 params:
   no_list: true
 cascade:
   params:
     simple_list: true
 ---
+
+{{< downloads >}}
 
 Welcome to the home page of the Deckhouse Stronghold documentation!
 
