@@ -38,12 +38,9 @@ Use the endpoint that matches the auth method name. When Stronghold is deployed 
 
 ```shell-session
 curl \
-    --request POST \
-    --data '{"jwt": "<your service account jwt>", "role": "demo"}' \
-curl \
   --request POST \
   --data '{"jwt": "<your service account jwt>", "role": "demo"}' \
-  http://127.0.0.1:8200/v1/auth/kubernetes/login
+  https://stronghold.example.com/v1/auth/kubernetes/login
 ```
 
 The response will contain a token at `auth.client_token`:
