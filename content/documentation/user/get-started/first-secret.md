@@ -34,6 +34,7 @@ To create a test secret, follow these steps:
     ```
 
     Example output:
+
     ```text
     ====== Data ======
     Key         Value

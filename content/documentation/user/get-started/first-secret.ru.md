@@ -44,7 +44,7 @@ weight: 30
    password    secret123
    username    demo
    ```
-   
+
 1. Измените значение секрета, повторно записав его по тому же пути:
 
    ```shell
