@@ -4,47 +4,43 @@ linkTitle: "Kubernetes"
 weight: 80
 ---
 
-## Kubernetes auth method
-
-The `kubernetes` auth method can be used to authenticate with Stronghold using a
+The Kubernetes auth method can be used to authenticate with Stronghold using a
 Kubernetes Service Account Token. This method of authentication makes it easy to
-introduce an Stronghold token into a Kubernetes Pod.
+introduce a Stronghold token into a Kubernetes Pod.
 
 You can also use a Kubernetes Service Account Token to [log in via JWT auth][k8s-jwt-auth].
-See the section on [How to work with short-lived Kubernetes tokens][short-lived-tokens]
+See the section ["How to work with short-lived Kubernetes tokens"](#how-to-work-with-short-lived-kubernetes-tokens)
 for a summary of why you might want to use JWT auth instead and how it compares to
 Kubernetes auth.
 
 {{< alert level="info" >}}
-
-**Note:** If you are upgrading to Kubernetes v1.21+, ensure the config option
+If you are upgrading to Kubernetes v1.21+, ensure the configuration option
 `disable_iss_validation` is set to true. Assuming the default mount path, you
 can check with `d8 stronghold read -field disable_iss_validation auth/kubernetes/config`.
-See [Kubernetes 1.21](#kubernetes-121) below for more details.
-
+See ["Changes in JWT token behavior in Kubernetes 1.21+"](#changes-in-jwt-token-behavior-in-kubernetes-121) for more details.
 {{< /alert >}}
 
 ## Authentication
 
 ### Via the CLI
 
-The default path is `/kubernetes`. If this auth method was enabled at a
-different path, specify `-path=/my-path` in the CLI.
+The auth method name depends on how it was created. When Stronghold is deployed as part of Deckhouse Kubernetes Platform (DKP), the `kubernetes_local` auth method is created automatically and configured for the Kubernetes cluster where Stronghold is running. If the Kubernetes auth method is created manually, the default name is `kubernetes` unless a different path is specified.
+
+If the auth method was created under a different name, specify it using the `-path` parameter in the CLI. For example:
 
 ```shell-session
-d8 stronghold write auth/kubernetes/login role=demo jwt=...
+d8 stronghold write -path=your-path auth/kubernetes/login role=demo jwt=...
 ```
 
 ### Via the API
 
-The default endpoint is `auth/kubernetes/login`. If this auth method was enabled
-at a different path, use that value instead of `kubernetes`.
+Use the endpoint that matches the auth method name. When Stronghold is deployed as part of DKP, the automatically created auth method uses the `auth/kubernetes_local/login` endpoint. If the auth method was created under a different name, use the corresponding endpoint. The example below uses an auth method named `kubernetes`.
 
 ```shell-session
-$ curl \
-    --request POST \
-    --data '{"jwt": "<your service account jwt>", "role": "demo"}' \
-    http://127.0.0.1:8200/v1/auth/kubernetes/login
+curl \
+  --request POST \
+  --data '{"jwt": "<your service account jwt>", "role": "demo"}' \
+  https://stronghold.example.com/v1/auth/kubernetes/login
 ```
 
 The response will contain a token at `auth.client_token`:
@@ -70,85 +66,62 @@ The response will contain a token at `auth.client_token`:
 
 ## Configuration
 
-Auth methods must be configured in advance before users or machines can
-authenticate. These steps are usually completed by an operator or configuration
-management tool.
+Before users or applications can authenticate, the Kubernetes auth method must be configured. This is typically done by an operator or configuration management tool.
+
+To configure authentication for another Kubernetes cluster, enable an additional instance of the Kubernetes auth method:
 
 1. Enable the Kubernetes auth method:
 
-  ```bash
-  d8 stronghold auth enable kubernetes
-  ```
+   ```bash
+   d8 stronghold auth enable kubernetes
+   ```
 
 1. Use the `/config` endpoint to configure Stronghold to talk to Kubernetes. Use
   `d8 k cluster-info` to validate the Kubernetes host address and TCP port.
 
-  ```bash
-  d8 stronghold write auth/kubernetes/config \
-      token_reviewer_jwt="<your reviewer service account JWT>" \
-      kubernetes_host=https://192.168.99.100:<your TCP port or blank for 443> \
-      kubernetes_ca_cert=@ca.crt
-  ```
+   ```bash
+   d8 stronghold write auth/kubernetes/config \
+   token_reviewer_jwt="<your reviewer service account JWT>" \
+   kubernetes_host=https://192.168.99.100:<your TCP port or blank for 443> \
+   kubernetes_ca_cert=@ca.crt
+   ```
 
-{{< alert level="critical" >}}
-
- **Note:** The pattern Stronghold uses to authenticate Pods depends on sharing
-  the JWT token over the network. Given the security model of
-  Stronghold, this is allowable because Stronghold is
-  part of the trusted compute base. In general, Kubernetes applications should
-  **not** share this JWT with other applications, as it allows API calls to be
-  made on behalf of the Pod and can result in unintended access being granted
-  to 3rd parties.
-
-{{< /alert >}}
+   {{< alert level="warning" >}}
+   Stronghold uses the service account JWT token to authenticate with the Kubernetes API. Do not share this token with other applications or services, as they will be able to make requests to the Kubernetes API with the permissions of the corresponding service account.
+   {{< /alert >}}
 
 1. Create a named role:
 
-  ```text
-  d8 stronghold write auth/kubernetes/role/demo \
-      bound_service_account_names=myapp \
-      bound_service_account_namespaces=default \
-      policies=default \
-      ttl=1h
-  ```
+   ```text
+   d8 stronghold write auth/kubernetes/role/demo \
+     bound_service_account_names=myapp \
+     bound_service_account_namespaces=default \
+     policies=default \
+     ttl=1h
+   ```
 
-  This role authorizes the "myapp" service account in the default
-  namespace and it gives it the default policy.
+   This role authorizes the `myapp` service account in the `default`
+   namespace and assigns it the default policy.
 
-## Kubernetes 1.21
+## Changes in JWT token behavior in Kubernetes 1.21+
 
-Starting in version [1.21][k8s-1.21-changelog], the Kubernetes
-`BoundServiceAccountTokenVolume` feature defaults to enabled. This changes the
-JWT token mounted into containers by default in two ways that are important for
-Kubernetes auth:
+Starting in version [Kubernetes 1.21](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.21.md#api-change-2), the Kubernetes
+feature gate `BoundServiceAccountTokenVolume` is enabled by default. As a result, the JWT tokens automatically mounted into containers have the following features:
 
-* It has an expiry time and is bound to the lifetime of the pod and service account.
-* The value of the JWT's `"iss"` claim depends on the cluster's configuration.
+* They have an expiry time.
+* They are bound to the lifetime of a pod and service account.
+* The value of the JWT's `iss` claim depends on the cluster's configuration.
 
 The changes to token lifetime are important when configuring the
 `token_reviewer_jwt` option.
 If a short-lived token is used,
 Kubernetes will revoke it as soon as the pod or service account are deleted, or
 if the expiry time passes, and Stronghold will no longer be able to use the
-`TokenReview` API. See [How to work with short-lived Kubernetes tokens][short-lived-tokens]
-below for details on handling this change.
+`TokenReview` API. For details on handling this change, see ["How to work with short-lived Kubernetes tokens"](#how-to-work-with-short-lived-kubernetes-tokens).
 
-In response to the issuer changes, Kubernetes auth has been updated to not
-validate the issuer by default. The Kubernetes API does the same validation when
-reviewing tokens, so enabling issuer validation on the Stronghold side is
-duplicated work. Without disabling Stronghold's issuer validation, it is not
-possible for a single Kubernetes auth configuration to work for default mounted
-pod tokens with both Kubernetes 1.20 and 1.21.. See [Discovering the service account `issuer`](#discovering-the-service-account-issuer) below for guidance if
-you wish to enable issuer validation in Stronghold.
+Kubernetes auth does not validate the `iss` field by default because Kubernetes already validates it when processing `TokenReview` requests.
 
-### Discovering the service account `issuer`
-
-To find your cluster's service account issuer (e.g. for `disable_iss_validation`), see the [Kubernetes service account issuer documentation](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#service-account-tokens).
-
-[k8s-1.21-changelog]: https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.21.md#api-change-2
-[short-lived-tokens]: #how-to-work-with-short-lived-kubernetes-tokens
-
-### How to work with short-lived kubernetes tokens
+### How to work with short-lived Kubernetes tokens
 
 There are a few different ways to configure auth for Kubernetes pods when
 default mounted pod tokens are short-lived, each with their own tradeoffs. This
@@ -158,31 +131,29 @@ table summarizes the options, each of which is explained in more detail below.
 |--------------------------------------|----------------------------|-------------------------|-----------------------------------------------------------|
 | Use local token as reviewer JWT      | Yes                        | Yes                     | Requires Stronghold to be deployed on the Kubernetes cluster |
 | Use client JWT as reviewer JWT       | Yes                        | Yes                     | Operational overhead                                      |
-| Use long-lived token as reviewer JWT | No                         | Yes                     |                                                           |
-| Use JWT auth instead                 | Yes                        | No                      |                                                           |
+| Use long-lived token as reviewer JWT | No                         | Yes                     | Simpler to configure                                                          |
+| Use JWT auth instead                 | Yes                        | No                      | Client tokens cannot be revoked until they expire                                                          |
 
 {{< alert level="info" >}}
-
-**Note:** By default, Kubernetes currently extends the lifetime of admission
-injected service account tokens to a year to help smooth the transition to short-lived tokens. If you would like to disable this, set [--service-account-extend-token-expiration=false](https://kubernetes.io/docs/reference/command-line-tools-reference/kube-apiserver/#options) for `kube-apiserver` or specify your own `serviceAccountToken` volume mount. See [this section](../oidc-providers/kubernetes/#specifying-ttl-and-audience) for an example.
-
+By default, Kubernetes currently extends the lifetime of admission
+injected service account tokens to a year to help smooth the transition to short-lived tokens. If you would like to disable this, set [`--service-account-extend-token-expiration=false`](https://kubernetes.io/docs/reference/command-line-tools-reference/kube-apiserver/#options) for `kube-apiserver` or specify your own `serviceAccountToken` volume mount. See the ["Specifying TTL and API audience"](../oidc/kubernetes/#specifying-ttl-and-api-audience) section for an example.
 {{< /alert >}}
 
-#### Use local service account token as the reviewer JWT
+#### Using the Stronghold token as the reviewer JWT
 
-When running Stronghold in a Kubernetes pod the recommended option is to use the pod's local
-service account token. Stronghold will periodically re-read the file to support
-short-lived tokens. To use the local token and CA certificate, omit
+When running Stronghold in a Kubernetes pod, Stronghold uses its local service account token as the reviewer JWT. Stronghold periodically re-reads the token file, which allows it to work with short-lived tokens.
+
+To use the local token and CA certificate, omit
 `token_reviewer_jwt` and `kubernetes_ca_cert` when configuring the auth method.
 Stronghold will attempt to load them from `token` and `ca.crt` respectively inside
 the default mount folder `/var/run/secrets/kubernetes.io/serviceaccount/`.
 
 ```bash
 d8 stronghold write auth/kubernetes/config \
-    kubernetes_host=https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT
+kubernetes_host=https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT
 ```
 
-#### Use the Stronghold client's JWT as the reviewer JWT
+#### Using the Stronghold client's JWT as the reviewer JWT
 
 When configuring Kubernetes auth, you can omit the `token_reviewer_jwt`, and Stronghold
 will use the Stronghold client's JWT as its own auth token when communicating with
@@ -202,9 +173,9 @@ d8 k create clusterrolebinding myapp-client-auth-delegator \
   ...
 ```
 
-#### Continue using long-lived tokens
+#### Using long-lived tokens
 
-You can create a long-lived secret using the [instructions for manually creating a service account token][k8s-create-secret]
+You can create a long-lived token using the [Kubernetes][k8s-create-secret] instructions
 and use that as the `token_reviewer_jwt`. In this example, the `myapp` service
 account would need the `system:auth-delegator` ClusterRole:
 
@@ -225,32 +196,25 @@ security posture of short-lived tokens.
 
 [k8s-create-secret]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#manually-create-a-service-account-api-token
 
-#### Use JWT auth
+#### Using JWT auth
 
-Kubernetes auth is specialized to use Kubernetes' `TokenReview` API. However, the
+Kubernetes auth uses `TokenReview` API. However, the
 JWT tokens Kubernetes generates can also be verified using Kubernetes as an OIDC
 provider. The JWT auth method documentation has [instructions][k8s-jwt-auth] for
 setting up JWT auth with Kubernetes as the OIDC provider.
 
-[k8s-jwt-auth]: ../oidc-providers/kubernetes/
+[k8s-jwt-auth]: ../oidc/kubernetes/
 
 This solution allows you to use short-lived tokens for all clients and removes
-the need for a reviewer JWT. However, the client tokens cannot be revoked before
+the need for a `token_reviewer_jwt` configuration. However, the client tokens cannot be revoked before
 their TTL expires, so it is recommended to keep the TTL short with that
 limitation in mind.
 
-## Configuring kubernetes
+## Configuring Kubernetes
 
-This auth method accesses the Kubernetes TokenReview API to
-validate the provided JWT is still valid. Kubernetes should be running with
-`--service-account-lookup`. This is defaulted to true from Kubernetes 1.7.
-Otherwise deleted tokens in Kubernetes will not be properly revoked and
-will be able to authenticate to this auth method.
+This auth method uses the `Kubernetes TokenReview API` to validate the provided JWT.
 
-Service Accounts used in this auth method will need to have access to the
-TokenReview API. If Kubernetes is configured to use RBAC roles, the Service
-Account should be granted permissions to access this API. The following
-example ClusterRoleBinding could be used to grant these permissions:
+The service account used by this auth method must have permission to access the `TokenReview` API. The ClusterRoleBinding example below grants the required permissions:
 
 ```yaml
 apiVersion: rbac.authorization.k8s.io/v1
