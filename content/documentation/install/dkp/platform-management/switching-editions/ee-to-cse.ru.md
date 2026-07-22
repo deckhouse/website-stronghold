@@ -144,9 +144,9 @@ Stronghold Enterprise Edition (EE) можно обновить до Stronghold C
    stronghold-update-policy
    ```
 
-   {{ < alert level="info" >}}
+   {{< alert level="info" >}}
    Если используется DKP CSE 1.67 и ниже, либо если модуль ещё ни разу не запускался, вывод команды будет пустым. Дополнительные действия в таком случае не требуются.
-   {{ < /alert > }}
+   {{< /alert >}}
 
 ### Проверки перед началом обновления
 
