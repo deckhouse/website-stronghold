@@ -6,7 +6,7 @@ cleanup:
 ---
 
 image: web-artifacts
-fromImage: ghcr.io/gohugoio/hugo:v0.162.0
+fromImage: ghcr.io/gohugoio/hugo:v0.163.3
 final: false
 shell:
   setup:
