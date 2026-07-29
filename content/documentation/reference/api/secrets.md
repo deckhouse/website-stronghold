@@ -8182,3 +8182,548 @@ Returns the public key to use for wrapping imported keys
 #### Responses
 
 **200**: OK
+
+### GET /{trdl_mount_path}/configure
+
+**Operation ID:** `trdl-read-configure`
+
+Configure the plugin
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `trdl_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Responses
+
+**200**: OK
+
+### POST /{trdl_mount_path}/configure
+
+**Operation ID:** `trdl-write-configure`
+
+Configure the plugin
+
+**Creation supported:** yes
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `trdl_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `git_repo_url` | string | yes | URL of the Git repository |
+| `git_trdl_channels_branch` | string | no | A special Git branch to store the trdl channels configuration file |
+| `git_trdl_channels_path` | string | no | A path in the Git repository to the trdl channels configuration file (trdl_channels.yaml is used by default) |
+| `git_trdl_path` | string | no | A path in the Git repository to the release trdl configuration file (trdl.yaml is used by default) |
+| `initial_last_published_git_commit` | string | no | The initial commit for the last successful publication |
+| `required_number_of_verified_signatures_on_commit` | integer | yes | The required number of verified signatures for a commit |
+| `s3_access_key_id` | string | yes | The S3 storage access key id |
+| `s3_bucket_name` | string | yes | The S3 storage bucket name |
+| `s3_endpoint` | string | yes | The S3 storage endpoint |
+| `s3_region` | string | yes | The S3 storage region |
+| `s3_secret_access_key` | string | yes | The S3 storage secret access key |
+
+#### Responses
+
+**200**: OK
+
+### DELETE /{trdl_mount_path}/configure
+
+**Operation ID:** `trdl-delete-configure`
+
+Configure the plugin
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `trdl_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Responses
+
+**204**: empty body
+
+### POST /{trdl_mount_path}/configure/build/mac_signing_identity
+
+**Operation ID:** `trdl-write-configure-build-mac_signing_identity`
+
+Add or update build signing credentials
+
+**Creation supported:** yes
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `trdl_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `data` | string | yes | Certificate data base64 encoded |
+| `notary_issuer` | string | yes | Notary issuer |
+| `notary_key` | string | yes | Notary key base64 encoded |
+| `notary_key_id` | string | yes | Notary key ID |
+| `password` | string | yes | Certificate password |
+
+#### Responses
+
+**200**: OK
+
+### DELETE /{trdl_mount_path}/configure/build/mac_signing_identity
+
+**Operation ID:** `trdl-delete-configure-build-mac_signing_identity`
+
+Add or update build signing credentials
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `trdl_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Responses
+
+**204**: empty body
+
+### POST /{trdl_mount_path}/configure/build/secrets
+
+**Operation ID:** `trdl-write-configure-build-secrets`
+
+Add a build secret
+
+**Creation supported:** yes
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `trdl_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `data` | string | yes | Secret data |
+| `id` | string | yes | Secret Id |
+
+#### Responses
+
+**200**: OK
+
+### DELETE /{trdl_mount_path}/configure/build/secrets/{id}
+
+**Operation ID:** `trdl-delete-configure-build-secrets-id`
+
+Delete a build secret
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `id` | string | path | yes | Secret Id |
+| `trdl_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Responses
+
+**204**: empty body
+
+### POST /{trdl_mount_path}/configure/delivery_kit_elf_signing
+
+**Operation ID:** `trdl-write-configure-delivery_kit_elf_signing`
+
+Configure ELF binary signing via Delivery Kit
+
+**Creation supported:** yes
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `trdl_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `certificate` | string | yes | Certificate data base64 encoded |
+| `intermediates` | string | no | Certificate chain (intermediates and root) base64 encoded, as a single PEM bundle |
+| `key` | string | yes | Private key data base64 encoded or a Vault key reference in the form hashivault://<key>. When a hashivault:// reference is used, configure the vault_* parameters |
+| `password` | string | no | Private key password. Must not be set when key is a hashivault:// reference |
+| `vault_addr` | string | no | Vault server address. Applies only when key is a hashivault:// reference |
+| `vault_auth_path` | string (default: ar) | no | Mount path of Vault auth method. Applies only when key is a hashivault:// reference |
+| `vault_auth_role_id` | string | no | AppRole RoleID used to authenticate to Vault. Applies only when key is a hashivault:// reference |
+| `vault_auth_secret_id` | string | no | AppRole SecretID used to authenticate to Vault. Applies only when key is a hashivault:// reference |
+| `vault_transit_path` | string | no | Mount path of Vault transit engine. Applies only when key is a hashivault:// reference |
+
+#### Responses
+
+**200**: OK
+
+### DELETE /{trdl_mount_path}/configure/delivery_kit_elf_signing
+
+**Operation ID:** `trdl-delete-configure-delivery_kit_elf_signing`
+
+Configure ELF binary signing via Delivery Kit
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `trdl_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Responses
+
+**204**: empty body
+
+### POST /{trdl_mount_path}/configure/git_credential
+
+**Operation ID:** `trdl-write-configure-git_credential`
+
+Configure Git credentials
+
+**Creation supported:** yes
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `trdl_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `password` | string | no | A Git password; Required for CREATE, UPDATE. |
+| `username` | string | no | A Git username; Required for CREATE, UPDATE. |
+
+#### Responses
+
+**200**: OK
+
+### DELETE /{trdl_mount_path}/configure/git_credential
+
+**Operation ID:** `trdl-delete-configure-git_credential`
+
+Configure Git credentials
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `trdl_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Responses
+
+**204**: empty body
+
+### GET /{trdl_mount_path}/configure/last_published_git_commit
+
+**Operation ID:** `trdl-read-configure-last_published_git_commit`
+
+Read or delete the last published Git commit
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `trdl_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Responses
+
+**200**: OK
+
+### DELETE /{trdl_mount_path}/configure/last_published_git_commit
+
+**Operation ID:** `trdl-delete-configure-last_published_git_commit`
+
+Read or delete the last published Git commit
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `trdl_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Responses
+
+**204**: empty body
+
+### GET /{trdl_mount_path}/configure/pgp_signing_key
+
+**Operation ID:** `trdl-read-configure-pgp_signing_key`
+
+Configure a PGP key for signing release artifacts
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `trdl_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Responses
+
+**200**: OK
+
+### DELETE /{trdl_mount_path}/configure/pgp_signing_key
+
+**Operation ID:** `trdl-delete-configure-pgp_signing_key`
+
+Delete the current PGP signing key
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `trdl_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Responses
+
+**204**: empty body
+
+### GET /{trdl_mount_path}/configure/trusted_pgp_public_key
+
+**Operation ID:** `trdl-read-configure-trusted_pgp_public_key`
+
+Configure trusted PGP public keys
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `trdl_mount_path` | string | path | yes | Path that the backend was mounted at |
+| `list` | string | query | no | Return a list if `true` |
+
+#### Responses
+
+**200**: OK
+
+### POST /{trdl_mount_path}/configure/trusted_pgp_public_key
+
+**Operation ID:** `trdl-write-configure-trusted_pgp_public_key`
+
+Configure trusted PGP public keys
+
+**Creation supported:** yes
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `trdl_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `name` | string | yes | Key name |
+| `public_key` | string | yes | Key data |
+
+#### Responses
+
+**200**: OK
+
+### GET /{trdl_mount_path}/configure/trusted_pgp_public_key/{name}
+
+**Operation ID:** `trdl-read-configure-trusted_pgp_public_key-name`
+
+Read or delete the configured trusted PGP public key
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `name` | string | path | yes | Key name |
+| `trdl_mount_path` | string | path | yes | Path that the backend was mounted at |
+| `list` | string | query | no | Return a list if `true` |
+
+#### Responses
+
+**200**: OK
+
+### DELETE /{trdl_mount_path}/configure/trusted_pgp_public_key/{name}
+
+**Operation ID:** `trdl-delete-configure-trusted_pgp_public_key-name`
+
+Read or delete the configured trusted PGP public key
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `name` | string | path | yes | Key name |
+| `trdl_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Responses
+
+**204**: empty body
+
+### POST /{trdl_mount_path}/publish
+
+**Operation ID:** `trdl-write-publish`
+
+Publish release channels
+
+**Creation supported:** yes
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `trdl_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `git_password` | string | no | Git password |
+| `git_username` | string | no | Git username |
+
+#### Responses
+
+**200**: OK
+
+### POST /{trdl_mount_path}/release
+
+**Operation ID:** `trdl-write-release`
+
+Perform a release
+
+**Creation supported:** yes
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `trdl_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `git_password` | string | no | Git password |
+| `git_tag` | string | yes | Git tag |
+| `git_username` | string | no | Git username |
+
+#### Responses
+
+**200**: OK
+
+### GET /{trdl_mount_path}/task
+
+**Operation ID:** `trdl-read-task`
+
+Get tasks
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `trdl_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Responses
+
+**200**: OK
+
+### GET /{trdl_mount_path}/task/configure
+
+**Operation ID:** `trdl-read-task-configure`
+
+Configure the task manager
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `trdl_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Responses
+
+**200**: OK
+
+### POST /{trdl_mount_path}/task/configure
+
+**Operation ID:** `trdl-write-task-configure`
+
+Configure the task manager
+
+**Creation supported:** yes
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `trdl_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `task_history_limit` | integer (default: 10) | no | Task history limit |
+| `task_timeout` | integer (default: 30m) | no | Task timeout |
+
+#### Responses
+
+**200**: OK
+
+### GET /{trdl_mount_path}/task/{uuid}
+
+**Operation ID:** `trdl-read-task-uuid`
+
+Get task status
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `uuid` | string | path | yes | Task UUID |
+| `trdl_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Responses
+
+**200**: OK
+
+### POST /{trdl_mount_path}/task/{uuid}/cancel
+
+**Operation ID:** `trdl-write-task-uuid-cancel`
+
+Cancel the running task
+
+**Creation supported:** yes
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `uuid` | string | path | yes | Task UUID |
+| `trdl_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Responses
+
+**200**: OK
+
+### GET /{trdl_mount_path}/task/{uuid}/log
+
+**Operation ID:** `trdl-read-task-uuid-log`
+
+Get the task log
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `limit` | integer | query | no | Limit of characters |
+| `offset` | integer | query | no | Offset |
+| `uuid` | string | path | yes | Task UUID |
+| `trdl_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Responses
+
+**200**: OK
