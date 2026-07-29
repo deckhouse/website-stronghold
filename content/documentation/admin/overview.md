@@ -9,7 +9,7 @@ This section is intended for administrators of Deckhouse Stronghold.
 The platform’s Administrator Guide includes the following sections:
 
 - Running on Linux OS
-  - [Running on Linux OS](../install/standalone/installation/) – a quick start with an example of configuring a high-availability cluster.
+  - [Running on Linux OS](../install/standalone/installation/) — quick installation and HA cluster deployment.
   - [Configuration](../install/standalone/configuration/) – a guide to the Standalone execution configuration parameters.
 - Running on Deckhouse Kubernetes Platform
   - [Platform Installation](../install/dkp/install/steps/prepare/) - environment preparation, installation, and initial access setup.
