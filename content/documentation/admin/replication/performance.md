@@ -103,6 +103,10 @@ and `connection_state` is `ready`.
 
 ## Step 5. Verify data replication
 
+Run the commands against the secondary with a token from the replicated auth
+method you logged in with in step 3 — the primary's root token is not valid on
+the secondary.
+
 ```shell
 # Write on the primary.
 d8 stronghold kv put -address="${PRIMARY_ADDR}" secret/hello value=world

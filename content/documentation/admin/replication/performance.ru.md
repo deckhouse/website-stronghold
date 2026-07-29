@@ -102,6 +102,10 @@ d8 stronghold read -address="${SECONDARY_ADDR}" sys/replication/performance/stat
 
 ## Шаг 5. Проверьте репликацию данных
 
+Команды к secondary выполняйте с токеном, полученным при входе через
+реплицированный метод аутентификации (шаг 3): root-токен primary на secondary
+недействителен.
+
 ```shell
 # Запись на primary.
 d8 stronghold kv put -address="${PRIMARY_ADDR}" secret/hello value=world
