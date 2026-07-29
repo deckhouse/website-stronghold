@@ -43,6 +43,22 @@ The hash of the given string via the given audit backend
 |----------|-----|--------------|----------|
 | `hash` | string | no |  |
 
+### GET /sys/audit-monitor/{path}
+
+**Operation ID:** `auditing-monitor-device`
+
+**Required sudo:** yes
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `path` | string | path | yes | The name of the backend. Cannot be delimited. Example: "mysql" |
+
+#### Responses
+
+**200**: OK
+
 ### POST /sys/audit/{path}
 
 **Operation ID:** `auditing-enable-device`
@@ -820,6 +836,10 @@ Returns the health status of Stronghold.
 #### Responses
 
 **200**: initialized, unsealed, and active
+
+**423**: isleaderreadyok set but the local node is not yet a ready HA leader (or cannot reach one)
+
+**425**: raftautopilotok set but the local node has not yet been integrated into the cluster by autopilot
 
 **429**: unsealed and standby
 
@@ -3440,6 +3460,414 @@ Renews a lease, requesting to extend the lease.
 #### Responses
 
 **204**: OK
+
+### POST /sys/replication/dr/primary/demote
+
+**Operation ID:** `system-write-replication-dr-primary-demote`
+
+#### Responses
+
+**200**: OK
+
+### POST /sys/replication/dr/primary/disable
+
+**Operation ID:** `system-write-replication-dr-primary-disable`
+
+#### Responses
+
+**200**: OK
+
+### POST /sys/replication/dr/primary/enable
+
+**Operation ID:** `system-write-replication-dr-primary-enable`
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `dr_operation_token` | string | no |  |
+| `id` | string | no |  |
+| `primary_api_addr` | string | no |  |
+| `primary_cluster_addr` | string | no |  |
+
+#### Responses
+
+**200**: OK
+
+### POST /sys/replication/dr/primary/revoke-secondary
+
+**Operation ID:** `system-write-replication-dr-primary-revoke-secondary`
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `id` | string | no |  |
+
+#### Responses
+
+**200**: OK
+
+### POST /sys/replication/dr/primary/secondary-token
+
+**Operation ID:** `system-write-replication-dr-primary-secondary-token`
+
+**Required sudo:** yes
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `id` | string | no |  |
+| `ttl` | integer (default: 24h) | no |  |
+
+#### Responses
+
+**200**: OK
+
+### POST /sys/replication/dr/secondary/disable
+
+**Operation ID:** `system-write-replication-dr-secondary-disable`
+
+**Available without authentication:** yes
+
+#### Responses
+
+**200**: OK
+
+### POST /sys/replication/dr/secondary/enable
+
+**Operation ID:** `system-write-replication-dr-secondary-enable`
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `ca_cert` | string | no |  |
+| `ca_file` | string | no |  |
+| `ca_path` | string | no |  |
+| `client_cert_pem` | string | no |  |
+| `client_key_pem` | string | no |  |
+| `primary_api_addr` | string | no |  |
+| `token` | string | no |  |
+
+#### Responses
+
+**200**: OK
+
+### POST /sys/replication/dr/secondary/operation-token/delete
+
+**Operation ID:** `system-write-replication-dr-secondary-operation-token-delete`
+
+**Available without authentication:** yes
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `data` | string | no |  |
+
+#### Responses
+
+**200**: OK
+
+### POST /sys/replication/dr/secondary/promote
+
+**Operation ID:** `system-write-replication-dr-secondary-promote`
+
+**Available without authentication:** yes
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `dr_operation_token` | string | no |  |
+| `id` | string | no |  |
+| `primary_api_addr` | string | no |  |
+| `primary_cluster_addr` | string | no |  |
+
+#### Responses
+
+**200**: OK
+
+### POST /sys/replication/dr/secondary/update-primary
+
+**Operation ID:** `system-write-replication-dr-secondary-update-primary`
+
+**Available without authentication:** yes
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `ca_cert` | string | no |  |
+| `ca_file` | string | no |  |
+| `ca_path` | string | no |  |
+| `client_cert_pem` | string | no |  |
+| `client_key_pem` | string | no |  |
+| `dr_operation_token` | string | no |  |
+| `primary_api_addr` | string | no |  |
+| `primary_cluster_addr` | string | no |  |
+| `token` | string | no |  |
+
+#### Responses
+
+**200**: OK
+
+### GET /sys/replication/dr/status
+
+**Operation ID:** `system-read-replication-dr-status`
+
+**Available without authentication:** yes
+
+#### Responses
+
+**200**: OK
+
+### GET /sys/replication/merkle-check
+
+**Operation ID:** `system-read-replication-merkle-check`
+
+#### Responses
+
+**200**: OK
+
+### GET /sys/replication/merkle-status
+
+**Operation ID:** `system-read-replication-merkle-status`
+
+**Available without authentication:** yes
+
+#### Responses
+
+**200**: OK
+
+### POST /sys/replication/performance/primary/demote
+
+**Operation ID:** `system-write-replication-performance-primary-demote`
+
+#### Responses
+
+**200**: OK
+
+### POST /sys/replication/performance/primary/disable
+
+**Operation ID:** `system-write-replication-performance-primary-disable`
+
+#### Responses
+
+**200**: OK
+
+### POST /sys/replication/performance/primary/enable
+
+**Operation ID:** `system-write-replication-performance-primary-enable`
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `id` | string | no |  |
+| `primary_api_addr` | string | no |  |
+| `primary_cluster_addr` | string | no |  |
+
+#### Responses
+
+**200**: OK
+
+### GET /sys/replication/performance/primary/paths-filter/{id}
+
+**Operation ID:** `system-read-replication-performance-primary-paths-filter-id`
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `id` | string | path | yes |  |
+
+#### Responses
+
+**200**: OK
+
+### POST /sys/replication/performance/primary/paths-filter/{id}
+
+**Operation ID:** `system-write-replication-performance-primary-paths-filter-id`
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `id` | string | path | yes |  |
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `mode` | string (default: deny) | no |  |
+| `paths` | array | no |  |
+
+#### Responses
+
+**200**: OK
+
+### DELETE /sys/replication/performance/primary/paths-filter/{id}
+
+**Operation ID:** `system-delete-replication-performance-primary-paths-filter-id`
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `id` | string | path | yes |  |
+
+#### Responses
+
+**204**: empty body
+
+### GET /sys/replication/performance/primary/paths-filter/{id}/dynamic
+
+**Operation ID:** `system-read-replication-performance-primary-paths-filter-id-dynamic`
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `id` | string | path | yes |  |
+
+#### Responses
+
+**200**: OK
+
+### POST /sys/replication/performance/primary/revoke-secondary
+
+**Operation ID:** `system-write-replication-performance-primary-revoke-secondary`
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `id` | string | no |  |
+
+#### Responses
+
+**200**: OK
+
+### POST /sys/replication/performance/primary/secondary-token
+
+**Operation ID:** `system-write-replication-performance-primary-secondary-token`
+
+**Required sudo:** yes
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `id` | string | no |  |
+| `ttl` | integer (default: 24h) | no |  |
+
+#### Responses
+
+**200**: OK
+
+### POST /sys/replication/performance/secondary/disable
+
+**Operation ID:** `system-write-replication-performance-secondary-disable`
+
+#### Responses
+
+**200**: OK
+
+### POST /sys/replication/performance/secondary/enable
+
+**Operation ID:** `system-write-replication-performance-secondary-enable`
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `ca_cert` | string | no |  |
+| `ca_file` | string | no |  |
+| `ca_path` | string | no |  |
+| `client_cert_pem` | string | no |  |
+| `client_key_pem` | string | no |  |
+| `primary_api_addr` | string | no |  |
+| `token` | string | no |  |
+
+#### Responses
+
+**200**: OK
+
+### POST /sys/replication/performance/secondary/promote
+
+**Operation ID:** `system-write-replication-performance-secondary-promote`
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `id` | string | no |  |
+| `primary_api_addr` | string | no |  |
+| `primary_cluster_addr` | string | no |  |
+
+#### Responses
+
+**200**: OK
+
+### POST /sys/replication/performance/secondary/update-primary
+
+**Operation ID:** `system-write-replication-performance-secondary-update-primary`
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `ca_cert` | string | no |  |
+| `ca_file` | string | no |  |
+| `ca_path` | string | no |  |
+| `client_cert_pem` | string | no |  |
+| `client_key_pem` | string | no |  |
+| `primary_api_addr` | string | no |  |
+| `primary_cluster_addr` | string | no |  |
+| `token` | string | no |  |
+
+#### Responses
+
+**200**: OK
+
+### GET /sys/replication/performance/status
+
+**Operation ID:** `system-read-replication-performance-status`
+
+**Available without authentication:** yes
+
+#### Responses
+
+**200**: OK
+
+### POST /sys/replication/recover
+
+**Operation ID:** `system-write-replication-recover`
+
+#### Responses
+
+**200**: OK
+
+### POST /sys/replication/reindex
+
+**Operation ID:** `system-write-replication-reindex`
+
+**Required sudo:** yes
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `diagnose_only` | boolean | no |  |
+| `force_reindex` | boolean | no |  |
+| `replay_wals` | boolean | no |  |
+
+#### Responses
+
+**200**: OK
 
 ### GET /sys/replication/status
 
