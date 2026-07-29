@@ -24,7 +24,7 @@ Deckhouse Stronghold EE и Deckhouse Stronghold CSE лицензируются �
 | Поддержка пространств имён (namespaces) | {{< icon-edition type="not_supported" >}} | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} |
 | Встроенное автоматическое распечатывание хранилища (auto unseal) без использования внешних сервисов и KMS | {{< icon-edition type="not_supported" >}} | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} |
 | Поддержка конфигураций с высокой дсотупностью (HA) | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} |
-| Межкластерная репликация данных | {{< icon-edition type="not_supported" >}} | KV1/KV2 | KV1/KV2 |
+| Межкластерная репликация данных | {{< icon-edition type="not_supported" >}} | KV1/KV2, Performance, DR | KV1/KV2, Performance, DR |
 | Автоматическое создание резервных копий по заданному расписанию | {{< icon-edition type="not_supported" >}} | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} |
 | Поддержка аудит-логирования | {{< icon-edition type="not_supported" >}} | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} |
 | Управляемые ключи (Managed Keys) | {{< icon-edition type="not_supported" >}} | {{< icon-edition type="supported" >}} | {{< icon-edition type="not_supported" >}} |
