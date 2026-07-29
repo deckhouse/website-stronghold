@@ -7,12 +7,12 @@ weight: 20
 
 Stronghold servers are configured using a configuration file in either HCL or JSON format.
 
-To enhance control over file access, you can enable file permission checks by setting the `VAULT_ENABLE_FILE_PERMISSIONS_CHECK` environment variable.  
-When this check is enabled, Stronghold verifies that the configuration directory and files are owned by the user running Stronghold.  
+To enhance control over file access, you can enable file permission checks by setting the `VAULT_ENABLE_FILE_PERMISSIONS_CHECK` environment variable.
+When this check is enabled, Stronghold verifies that the configuration directory and files are owned by the user running Stronghold.
 It also ensures that neither the group nor other users have write or execute permissions on these files.
 
-If necessary, the operator can specify the user and file permissions for the plugin directory and executable files.  
-This is done using the `plugin_file_uid` and `plugin_file_permissions` parameters in the configuration.  
+If necessary, the operator can specify the user and file permissions for the plugin directory and executable files.
+This is done using the `plugin_file_uid` and `plugin_file_permissions` parameters in the configuration.
 By default, file permission checks in Stronghold are disabled.
 
 Here is an example configuration:
@@ -40,49 +40,49 @@ telemetry {
 }
 ```
 
-To apply new parameters after modifying the configuration file, you need to restart the Stronghold service:  
+To apply new parameters after modifying the configuration file, you need to restart the Stronghold service:
 `systemctl restart stronghold`.
 
 ### Parameter overview
 
-* `storage` — **required** block. Configures the storage backend where Stronghold data will be stored.  
-  To run Stronghold in High Availability (HA) mode, you must use a backend that supports coordination semantics.  
-  If the selected storage backend supports this, HA parameters can be specified directly within the `storage` block.  
-  Otherwise, you should configure a separate `ha_storage` parameter with a backend that supports HA, along with the corresponding HA parameters.  
+* `storage` — **required** block. Configures the storage backend where Stronghold data will be stored.
+  To run Stronghold in High Availability (HA) mode, you must use a backend that supports coordination semantics.
+  If the selected storage backend supports this, HA parameters can be specified directly within the `storage` block.
+  Otherwise, you should configure a separate `ha_storage` parameter with a backend that supports HA, along with the corresponding HA parameters.
   Details on the storage backend parameters are in the [storage section](#storage).
 
-* `ha_storage` — optional block. Configures the storage backend where Stronghold coordination in High Availability (HA) mode will occur.  
-  The specified backend must support HA. If this parameter is not set, Stronghold will attempt to run HA on the backend specified in the `storage` parameter.  
+* `ha_storage` — optional block. Configures the storage backend where Stronghold coordination in High Availability (HA) mode will occur.
+  The specified backend must support HA. If this parameter is not set, Stronghold will attempt to run HA on the backend specified in the `storage` parameter.
   If the storage backend already supports HA coordination and the specific HA parameters are already specified in the `storage` block, additional `ha_storage` configuration is not required.
 
-* `listener` — **required** block. Configures the parameters for listening to Stronghold API requests.  
+* `listener` — **required** block. Configures the parameters for listening to Stronghold API requests.
   Details are in the [listener section](#listener).
 
-* `user_lockout` — optional block. Configures the behavior for user lockout after failed login attempts.  
+* `user_lockout` — optional block. Configures the behavior for user lockout after failed login attempts.
   Details are in the [user_lockout section](#user_lockout).
 
 * `cluster_name` — optional string. Specifies the identifier for the Stronghold cluster. If no value is provided, Stronghold will generate one.
 
-* `cache_size` — optional string. Defines the size of the read cache used by the physical storage subsystem.  
+* `cache_size` — optional string. Defines the size of the read cache used by the physical storage subsystem.
   The value is specified as the number of stored records, so the total cache size depends on record size. Default is `131072`.
 
-* `disable_cache` — optional boolean. Disables all caches in Stronghold, including the read cache used by the physical storage subsystem.  
+* `disable_cache` — optional boolean. Disables all caches in Stronghold, including the read cache used by the physical storage subsystem.
   This significantly impacts performance. Default is `false`.
 
 * `disable_mlock` — optional boolean. Disables the server’s ability to perform the `mlock` system call, which prevents memory from being paged to disk.
 
-  It is **not recommended** to disable `mlock` unless using the integrated storage.  
+  It is **not recommended** to disable `mlock` unless using the integrated storage.
   When disabling `mlock`, you should follow the additional security measures described below.
 
-  It is **not recommended** to disable `mlock` if the systems running Stronghold either do not use swap or use only encrypted swap.  
-  Memory lock support is available only on UNIX-like systems such as Linux or FreeBSD that support the `mlock()` system call.  
+  It is **not recommended** to disable `mlock` if the systems running Stronghold either do not use swap or use only encrypted swap.
+  Memory lock support is available only on UNIX-like systems such as Linux or FreeBSD that support the `mlock()` system call.
   Systems like Windows, NaCL, and Android do not have mechanisms to prevent the entire process address space from being written to disk, so this feature is automatically disabled for unsupported platforms.
 
-  On the contrary, it is **strongly recommended** to disable `mlock` when using integrated storage.  
+  On the contrary, it is **strongly recommended** to disable `mlock` when using integrated storage.
   This system call works poorly with memory-mapped files, such as those created by BoltDB, which Raft uses for state tracking.
 
-  Using `mlock` with integrated storage can cause memory shortages if Stronghold’s data volume exceeds available RAM.  
-  Memory-mapped files are loaded into resident memory, causing all Stronghold data to be loaded into RAM.  
+  Using `mlock` with integrated storage can cause memory shortages if Stronghold’s data volume exceeds available RAM.
+  Memory-mapped files are loaded into resident memory, causing all Stronghold data to be loaded into RAM.
   In this case, even though BoltDB data remains encrypted at rest, swap should be disabled to prevent other sensitive Stronghold data in memory from being paged to disk.
 
   On Linux, you can allow the Stronghold executable to use the `mlock` system call without running the process as root by executing the following command:
@@ -91,7 +91,7 @@ To apply new parameters after modifying the configuration file, you need to rest
   sudo setcap cap_ipc_lock=+ep $(readlink -f $(which stronghold))
   ```
 
-  Each plugin runs as a separate process, so you need to apply similar settings for each plugin in the `plugins` directory.  
+  Each plugin runs as a separate process, so you need to apply similar settings for each plugin in the `plugins` directory.
   If you are using a Linux distribution with a current version of `systemd`, you can add the following directive to the `[Service]` section of the configuration file:
 
   ```console
@@ -147,6 +147,17 @@ To apply new parameters after modifying the configuration file, you need to rest
 * `imprecise_lease_role_tracking` — optional boolean parameter. Allows skipping the lease count by roles if role-based quotas are not enabled. When set to `true` and new role-based quotas are enabled, the subsequent lease count will start at 0. This parameter affects role-based lease quotas but reduces latency when role quotas are not used.
 
 * `experiments` — optional array of values. A list of experimental features to activate for the node. Do not use experimental features in production environments! Associated APIs may undergo incompatible changes between releases. Additional experimental features can also be specified through the environment variable `VAULT_EXPERIMENTS` as a comma-separated list of values.
+
+* `tls_13_cipher_policy` — optional string parameter. Controls the preference order of TLS 1.3 cipher suites process-wide, allowing GOST cipher suites (Magma / Kuznyechik) to be used together with or instead of AES/ChaCha20. Unlike `tls_cipher_suites` in the `listener` section, which affects only TLSv1.2 and earlier, this parameter affects TLS 1.3. The following values are accepted:
+  * `auto` (default) — if at least one TLS 1.3 listener uses a GOST certificate, behaves like `prefer-gost`; otherwise like `prefer-aes`.
+  * `prefer-gost` — GOST cipher suites first, then AES/ChaCha20.
+  * `prefer-aes` — AES/ChaCha20 cipher suites first, then GOST.
+  * `gost-only` — only GOST cipher suites are allowed.
+  * `aes-only` — only AES/ChaCha20 cipher suites are allowed; GOST is disabled.
+
+  The TLS 1.3 cipher suite order in Go is process-global, so this setting applies to the entire Stronghold process (all of its listeners and its outbound TLS 1.3 connections), not to a single listener in isolation. It does not affect the CLI, agent, or proxy when they run as separate processes — each of those processes has its own `tls_13_cipher_policy` setting. Only listeners with TLS enabled and `tls_max_version` equal to `"tls13"` (or unset) are taken into account when resolving `auto` and validating strict modes. The setting is re-evaluated on `SIGHUP` reload.
+
+  GOST record ciphers (Magma / Kuznechik) are available **only in TLS 1.3**. Do not set `tls_max_version = "tls12"` on listeners that use GOST certificates — that disables GOST TLS on those listeners.
 
 ### High availability parameters
 
