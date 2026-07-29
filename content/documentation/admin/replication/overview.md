@@ -21,6 +21,68 @@ There is also **performance standby** — not a separate cluster, but the
 non-active HA nodes inside a single cluster that serve reads locally. See
 [Performance standby](../performance-standby/).
 
+## What replicates
+
+Both modes work at the cluster storage level but move a different amount of
+data.
+
+**Performance** replicates the shared cluster state — everything that must be
+identical on every secondary:
+
+- **Non-local mounts** and their data: secrets under those mounts are copied to
+  the secondary (you can narrow them with
+  [path filters](../performance/#path-filters)).
+- **Non-local auth methods**: their configuration and data. Auth always
+  replicates and is never subject to filters, so a secret filter cannot lock
+  operators out.
+- **ACL policies** (global).
+- **Namespaces** with all their contents.
+- **Identity**: entities, groups, and aliases. Always replicated, regardless of
+  filters.
+- **System and configuration storage** (`core/`, `sys/`), except node-local
+  sections.
+
+**Performance does not replicate** what is local to each cluster:
+
+- **Local mounts and local auth methods** (created with the `local` flag) and
+  their data — they exist only on the cluster where they were created.
+- **Local policies**.
+- **Tokens**: each cluster runs its own token store. A secondary issues its own
+  service tokens, and the primary's tokens are not valid on it — which is why
+  you log in on a secondary through a replicated auth method.
+- **Leases** and their expiration.
+- **Audit devices**: their configuration is node-local.
+- Node operational state and seal material.
+
+**Disaster Recovery** replicates everything above plus the local data: local
+mounts and auth methods, local policies, tokens, and leases. A DR secondary is
+a full copy of the primary, so after a promote it keeps working with the same
+tokens and leases. Only what is inherently per-node is left out: seal material,
+the change log and replication index, Raft state, and node-discovery caches.
+
+| Entity type | Performance | Disaster Recovery |
+| --- | --- | --- |
+| Non-local mounts and their secrets | Yes (filterable) | Yes |
+| Local mounts (`local`) | No | Yes |
+| Non-local auth methods | Yes | Yes |
+| Local auth methods (`local`) | No | Yes |
+| ACL policies | Yes | Yes |
+| Local policies | No | Yes |
+| Namespaces | Yes | Yes |
+| Identity (entities, groups, aliases) | Yes | Yes |
+| Tokens | No (own token store) | Yes |
+| Leases | No | Yes |
+| Audit devices | No (node-local) | Yes |
+
+{{< alert level="info" >}}
+Regardless of the replication mode, any cluster can additionally use
+[seal wrap](../../kms-hsm/sealwrap/) — a second encryption layer for sensitive
+values on top of the storage barrier. Seal material is never replicated: each
+cluster owns its own seal, and a DR secondary may even run a different seal type
+than the primary. So seal wrap is configured per cluster and does not depend on
+replication.
+{{< /alert >}}
+
 ## Requirements
 
 - **Enterprise Edition.** Native replication is available only in Stronghold EE.
