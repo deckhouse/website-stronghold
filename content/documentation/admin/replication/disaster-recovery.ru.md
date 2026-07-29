@@ -7,16 +7,24 @@ params:
 description: "Настройка репликации Disaster Recovery, повышение DR-secondary при аварийном переключении и церемония выпуска DR operation token."
 ---
 
-Репликация Disaster Recovery (DR) поддерживает горячий резервный кластер, который зеркалирует **весь** non-ignored keyspace primary, включая локальные данные, такие как токены и лизы. DR-secondary не обслуживает клиентские запросы (кроме unseal и небольшого внутреннего набора) — он ожидает promote и берёт нагрузку на себя при отказе primary.
+Репликация Disaster Recovery (DR) держит горячий резервный кластер — полную
+копию хранилища primary вместе с локальными данными (токенами, арендами).
+DR-secondary не обслуживает клиентов (кроме распечатывания и небольшого
+служебного набора) и ждёт promote, чтобы принять нагрузку при отказе primary.
 
 ## Перед началом
 
-- Убедитесь, что оба кластера работают на Stronghold EE с integrated Raft storage и что репликация включена (смотрите [Обзор](../overview/)).
-- Убедитесь, что кластерный порт primary доступен с secondary и что у вас есть CA-сертификат primary для TLS.
+- Убедитесь, что оба кластера работают на Stronghold EE с integrated Raft
+  storage и что репликация включена (смотрите [Обзор](../overview/)).
+- Убедитесь, что кластерный порт primary доступен с secondary и что у вас есть
+  CA-сертификат primary для TLS.
 - Подготовьте токен с правами на `sys/replication/*` на primary.
-- Держите наготове держателей долей unseal- или recovery-ключей — они нужны для церемонии promote.
+- Обеспечьте доступ к долям ключей для церемонии promote: при ручном
+  распечатывании (Shamir) — доли unseal-ключа, при авто-распечатывании — доли
+  recovery-ключа. Понадобится их кворум по порогу, заданному при инициализации.
 
-В примерах ниже `${PRIMARY_ADDR}` и `${SECONDARY_ADDR}` — API-адреса кластеров, а `${VAULT_TOKEN}` — токен с правами на `sys/replication/*`.
+В примерах ниже `${PRIMARY_ADDR}` и `${SECONDARY_ADDR}` — API-адреса кластеров,
+а `${VAULT_TOKEN}` — токен с правами на `sys/replication/*`.
 
 ## Шаг 1. Включите DR primary
 
@@ -27,10 +35,11 @@ d8 stronghold write -force sys/replication/dr/primary/enable
 ## Шаг 2. Создайте activation-токен для DR secondary
 
 ```shell
-d8 stronghold write sys/replication/dr/primary/secondary-token id=dr-1
+d8 stronghold write sys/replication/dr/primary/secondary-token id=dr-1 ttl=24h
 ```
 
-Команда возвращает wrapping-токен в поле `wrap_info.token` — передайте на secondary именно его.
+Параметр `id` обязателен, `ttl` по умолчанию — `24h`. Команда возвращает
+wrapping-токен в поле `wrap_info.token` — его и передайте на secondary.
 
 ## Шаг 3. Включите DR secondary
 
@@ -52,7 +61,9 @@ curl \
 }
 ```
 
-Для окружений с самоподписанными сертификатами параметр `ca_cert` (CA primary в формате PEM) обязателен. DR-secondary реплицирует весь keyspace, включая локальные данные, и не обслуживает клиентские запросы.
+Для окружений с самоподписанными сертификатами параметр `ca_cert` (CA primary в
+формате PEM) обязателен. DR-secondary копирует всё хранилище, включая локальные
+данные, и не обслуживает клиентские запросы.
 
 ## Шаг 4. Проверьте статус
 
@@ -62,7 +73,8 @@ d8 stronghold read -address="${SECONDARY_ADDR}" sys/replication/dr/status
 
 ## Повышение DR-secondary
 
-Повышение DR-secondary требует **DR operation token**, который выпускается через многошаговую церемонию, аналогичную generate-root: она объединяет доли unseal- или recovery-ключей с одноразовым паролем (OTP).
+Повышение требует **DR operation token** — его выпускают через церемонию с
+долями ключей и одноразовым паролем (OTP).
 
 1. Запустите церемонию. В ответе возвращаются `nonce` и `otp`:
 
@@ -82,7 +94,8 @@ d8 stronghold read -address="${SECONDARY_ADDR}" sys/replication/dr/status
      "${SECONDARY_ADDR}/v1/sys/replication/dr/secondary/generate-operation-token/update"
    ```
 
-   Когда `complete` становится `true`, в ответе появляется `encoded_token`. Расшифруйте его с помощью `otp`, чтобы получить DR operation token.
+   Когда `complete` становится `true`, в ответе появляется `encoded_token`.
+   Расшифруйте его с помощью `otp`, чтобы получить DR operation token.
 
 1. Повысьте secondary с помощью DR operation token:
 
@@ -94,7 +107,25 @@ d8 stronghold read -address="${SECONDARY_ADDR}" sys/replication/dr/status
      "${SECONDARY_ADDR}/v1/sys/replication/dr/secondary/promote"
    ```
 
-После успешного promote бывший secondary становится активным DR primary и обслуживает клиентские запросы.
+После promote бывший secondary становится активным DR primary и обслуживает
+клиентов.
+
+## Возврат прежнего primary
+
+После аварийного переключения в кластере уже есть активный primary — повышенный
+secondary. Прежний primary нельзя просто запустить обратно как primary, иначе в
+кластере окажется два primary. Вместо этого подключите его к новому primary как
+DR secondary.
+
+1. На новом primary выпустите activation-токен:
+   `d8 stronghold write sys/replication/dr/primary/secondary-token id=<id>`.
+1. Если прежний primary ещё считает себя primary, понизьте его:
+   `d8 stronghold write -force sys/replication/dr/primary/demote`.
+1. Подключите его к новому primary:
+   `d8 stronghold write sys/replication/dr/secondary/update-primary token=<activation_token>`.
+
+Используйте именно token-метод: у нового primary другая идентичность, и
+`primary_cluster_addr` для него не подойдёт.
 
 ## Операции управления
 
@@ -108,5 +139,8 @@ d8 stronghold read -address="${SECONDARY_ADDR}" sys/replication/dr/status
 
 Примечания:
 
-- `demote` понижает DR primary до отключённого DR secondary, **сохраняя** cluster ID и локальные данные, поэтому он готов к переподключению без обнуления.
-- Для контролируемого переключения выполните `demote` на старом primary и `promote` на резерве; используйте `update-primary`, чтобы переподключить старый primary к только что повышенному.
+- `demote` понижает DR primary до отключённого DR secondary, сохраняя cluster ID
+  и локальные данные, — узел готов переподключиться без обнуления.
+- Плановое переключение: `demote` на текущем primary, `promote` на резерве,
+  затем `update-primary`, чтобы вернуть прежний primary как secondary (смотрите
+  [Возврат прежнего primary](#возврат-прежнего-primary)).

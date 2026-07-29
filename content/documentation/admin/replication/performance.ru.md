@@ -7,15 +7,21 @@ params:
 description: "Настройка репликации Performance между кластерами Stronghold, её проверка и управление фильтрами путей."
 ---
 
-Репликация Performance копирует общий keyspace primary-кластера (хранилища, политики, identity и другое, кроме узел-локальных путей) на один или несколько performance-secondary. Secondary обслуживает чтения локально и форвардит записи на primary, что позволяет масштабировать нагрузку чтения и размещать её ближе к потребителям.
+Репликация Performance копирует хранилище primary-кластера (кроме локальных
+путей) на один или несколько performance-secondary. Secondary обслуживает чтения
+локально, а записи перенаправляет на primary. Так нагрузку чтения можно
+масштабировать и размещать ближе к потребителям.
 
 ## Перед началом
 
-- Убедитесь, что оба кластера работают на Stronghold EE с integrated Raft storage и что репликация включена (смотрите [Обзор](../overview/)).
-- Убедитесь, что кластерный порт primary доступен с secondary и что у вас есть CA-сертификат primary для TLS.
+- Убедитесь, что оба кластера работают на Stronghold EE с integrated Raft
+  storage и что репликация включена (смотрите [Обзор](../overview/)).
+- Убедитесь, что кластерный порт primary доступен с secondary и что у вас есть
+  CA-сертификат primary для TLS.
 - Подготовьте токен с правами на `sys/replication/*` на обоих кластерах.
 
-В примерах ниже `${PRIMARY_ADDR}` и `${SECONDARY_ADDR}` — API-адреса кластеров, а `${VAULT_TOKEN}` — токен с правами на `sys/replication/*`.
+В примерах ниже `${PRIMARY_ADDR}` и `${SECONDARY_ADDR}` — API-адреса кластеров,
+а `${VAULT_TOKEN}` — токен с правами на `sys/replication/*`.
 
 ## Шаг 1. Включите primary
 
@@ -24,22 +30,30 @@ d8 stronghold write -force sys/replication/performance/primary/enable
 ```
 
 {{< alert level="warning" >}}
-Включение primary запускает асинхронную перезагрузку ядра (pre-seal, пересборка кластера, post-unseal). Узел может быть недоступен несколько секунд — дождитесь, пока `sys/mounts` снова начнёт отвечать, прежде чем продолжать.
+Включение primary перезапускает ядро, и на несколько секунд узел становится
+недоступен. Прежде чем продолжать, дождитесь, пока он снова начнёт отвечать и
+`sys/replication/performance/status` покажет `mode: primary`.
 {{< /alert >}}
 
 ## Шаг 2. Создайте activation-токен для secondary
 
-Сгенерируйте wrapping-токен активации для конкретного secondary, заданного через `id`:
+Сгенерируйте wrapping-токен активации для конкретного secondary, заданного через
+`id`:
 
 ```shell
-d8 stronghold write sys/replication/performance/primary/secondary-token id=sec-1 ttl=24h
+d8 stronghold write sys/replication/performance/primary/secondary-token \
+  id=sec-1 ttl=24h
 ```
 
-Параметр `id` обязателен, `ttl` по умолчанию равен `24h`. Команда возвращает одноразовый wrapping-токен в поле `wrap_info.token` — передайте на secondary именно его.
+Параметр `id` обязателен, `ttl` по умолчанию — `24h`. Команда возвращает
+одноразовый wrapping-токен в поле `wrap_info.token` — его и передайте на
+secondary.
 
 ## Шаг 3. Включите secondary
 
-Передайте wrapping-токен из предыдущего шага. Для окружений с самоподписанными сертификатами параметр `ca_cert` (CA primary в формате PEM) обязателен, иначе TLS-соединение с primary не пройдёт проверку.
+Передайте wrapping-токен из предыдущего шага. Для окружений с самоподписанными
+сертификатами параметр `ca_cert` (CA primary в формате PEM) обязателен, иначе
+TLS-соединение с primary не пройдёт проверку.
 
 ```shell
 curl \
@@ -62,13 +76,19 @@ curl \
 Поля `secondary/enable`:
 
 - `token` — обязательный; wrapping-токен из шага 2.
-- `primary_api_addr` — адрес primary для разворачивания токена; обязателен, если в токене нет claim `addr`.
+- `primary_api_addr` — адрес primary для разворачивания токена; обязателен, если
+  в токене нет claim `addr`.
 - `ca_cert` — inline PEM CA primary для TLS при unwrap.
-- `ca_file` / `ca_path` — путь к PEM-файлу или директории PEM-файлов, читается на сервере.
-- `client_cert_pem` / `client_key_pem` — опциональные клиентский сертификат и ключ для TLS-соединения при unwrap.
+- `ca_file` / `ca_path` — путь к PEM-файлу или директории PEM-файлов, читается
+  на сервере.
+- `client_cert_pem` / `client_key_pem` — опциональные клиентский сертификат и
+  ключ для TLS-соединения при unwrap.
 
 {{< alert level="warning" >}}
-После bootstrap secondary обнуляет собственный token store, поэтому исходный root-токен secondary перестаёт работать. Выполняйте вход через **реплицированный** метод аутентификации (например, `userpass`), который был настроен на primary **до** включения репликации.
+После bootstrap secondary обнуляет собственный token store, поэтому исходный
+root-токен secondary перестаёт работать. Выполняйте вход через
+**реплицированный** метод аутентификации (например, `userpass`), который был
+настроен на primary **до** включения репликации.
 {{< /alert >}}
 
 ## Шаг 4. Проверьте статус
@@ -77,24 +97,26 @@ curl \
 d8 stronghold read -address="${SECONDARY_ADDR}" sys/replication/performance/status
 ```
 
-Когда secondary подключён и тянет WAL, поле `state` равно `stream-wals`, а `connection_state` — `ready`.
+Когда secondary подключён и тянет WAL, поле `state` равно `stream-wals`, а
+`connection_state` — `ready`.
 
 ## Шаг 5. Проверьте репликацию данных
 
 ```shell
-# запись на primary
+# Запись на primary.
 d8 stronghold kv put -address="${PRIMARY_ADDR}" secret/hello value=world
 
-# чтение на secondary после схождения
+# Чтение на secondary после схождения.
 d8 stronghold kv get -address="${SECONDARY_ADDR}" secret/hello
 
-# запись на secondary форвардится на primary и возвращается через WAL
+# Запись на secondary перенаправляется на primary и возвращается через WAL.
 d8 stronghold kv put -address="${SECONDARY_ADDR}" secret/fromsec value=1
 ```
 
 ## Фильтры путей
 
-Primary может выборочно не отдавать конкретные хранилища или пространства имён конкретному secondary. Фильтры настраиваются для каждого secondary по `id`:
+Primary может выборочно не отдавать конкретные хранилища или пространства имён
+конкретному secondary. Фильтры настраиваются для каждого secondary по `id`:
 
 - `deny` — реплицировать всё, **кроме** перечисленных путей.
 - `allow` — реплицировать **только** перечисленные пути.
@@ -102,37 +124,43 @@ Primary может выборочно не отдавать конкретные
 Режим по умолчанию — `deny`.
 
 ```shell
-# запретить хранилище blocked/ для sec-1
+# Запретить хранилище blocked/ для sec-1.
 curl \
   --header "X-Vault-Token: ${VAULT_TOKEN}" \
   --request POST \
   --data '{"mode":"deny","paths":["blocked/"]}' \
   "${PRIMARY_ADDR}/v1/sys/replication/performance/primary/paths-filter/sec-1"
 
-# прочитать фильтр
+# Прочитать фильтр.
 curl \
   --header "X-Vault-Token: ${VAULT_TOKEN}" \
   "${PRIMARY_ADDR}/v1/sys/replication/performance/primary/paths-filter/sec-1"
 
-# прочитать развёрнутый фильтр (реальные storage-префиксы, которые будут применены)
+# Прочитать развёрнутый фильтр (реальные storage-префиксы, которые будут применены).
 curl \
   --header "X-Vault-Token: ${VAULT_TOKEN}" \
   "${PRIMARY_ADDR}/v1/sys/replication/performance/primary/paths-filter/sec-1/dynamic"
 
-# снять фильтр
+# Снять фильтр.
 curl \
   --header "X-Vault-Token: ${VAULT_TOKEN}" \
   --request DELETE \
   "${PRIMARY_ADDR}/v1/sys/replication/performance/primary/paths-filter/sec-1"
 ```
 
-Изменение фильтра применяется вживую: при добавлении пути в `deny` (или удалении из `allow`) primary стримит инвалидацию и secondary удаляет ранее разрешённые данные; при обратном изменении данные реплицируются заново.
+Изменение фильтра применяется вживую: при добавлении пути в `deny` (или удалении
+из `allow`) primary стримит инвалидацию и secondary удаляет ранее разрешённые
+данные; при обратном изменении данные реплицируются заново.
 
 {{< alert level="warning" >}}
-Performance-secondary нельзя повысить (promote), пока на нём настроены фильтры путей. Сначала снимите фильтры.
+Performance-secondary нельзя повысить (promote), пока на нём настроены фильтры
+путей. Сначала снимите фильтры.
 {{< /alert >}}
 
-При отмонтировании, перемонтировании или отключении фильтруемого хранилища его storage-префикс автоматически удаляется из всех фильтров, поэтому устаревшая запись не управляет новым хранилищем на том же пути.
+Когда движок секретов или аутентификации отмонтируют, перемонтируют или
+отключают, его storage-префикс автоматически убирается из всех фильтров. Так
+устаревшая запись фильтра не влияет на новый движок, смонтированный по тому же
+пути.
 
 ## Операции управления
 
@@ -148,5 +176,8 @@ Performance-secondary нельзя повысить (promote), пока на н�
 
 Примечания:
 
-- `revoke-secondary` также удаляет фильтр этого secondary, поэтому не оставляет «сирот».
-- Для `update-primary`, когда у нового primary **новая** идентичность (например, это повышенный бывший secondary), используйте token-метод со свежим activation-токеном нового primary. Address-метод (`primary_cluster_addr`) применим только если primary сохранил идентичность.
+- `revoke-secondary` также удаляет фильтр этого secondary.
+- Для `update-primary`, когда у нового primary **новая** идентичность (например,
+  это повышенный бывший secondary), используйте token-метод со свежим
+  activation-токеном нового primary. Address-метод (`primary_cluster_addr`)
+  применим только если primary сохранил идентичность.
