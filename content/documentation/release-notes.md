@@ -3,6 +3,16 @@ title: "Release notes"
 weight: 90
 ---
 
+## v1.19 August 2026
+
+Version `1.19` introduces native cross-cluster replication for enterprise disaster recovery and read scaling.
+
+- Added native `Performance` replication between EE clusters: the shared keyspace is replicated to performance secondaries that serve reads locally and forward writes to the primary.
+- Added `Disaster Recovery` (`DR`) replication with a hot standby cluster and a DR operation token ceremony for promoting a secondary during a failover.
+- Added `performance standby`: non-active HA nodes serve read requests locally within a cluster.
+- Added path filters for performance secondaries with `allow` and `deny` modes for selective replication of mounts and namespaces.
+- Added automatic Merkle index rebuild on the first boot with replication enabled after an upgrade or a period with replication disabled.
+
 ## v1.18 April 2026
 
 Version `1.18` focuses on the development of external key management systems, `PKI`, and new audit capabilities.
