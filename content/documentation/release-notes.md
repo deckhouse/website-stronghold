@@ -3,15 +3,26 @@ title: "Release notes"
 weight: 90
 ---
 
-## v1.19 August 2026
+## v1.19 July 2026
 
-Version `1.19` introduces native cross-cluster replication for enterprise disaster recovery and read scaling.
+Version `1.19` focuses on cross-cluster replication, GitOps, and operational improvements for deployment and security.
 
-- Added native `Performance` replication between EE clusters: the shared keyspace is replicated to performance secondaries that serve reads locally and forward writes to the primary.
-- Added `Disaster Recovery` (`DR`) replication with a hot standby cluster and a DR operation token ceremony for promoting a secondary during a failover.
-- Added `performance standby`: non-active HA nodes serve read requests locally within a cluster.
-- Added path filters for performance secondaries with `allow` and `deny` modes for selective replication of mounts and namespaces.
-- Added automatic Merkle index rebuild on the first boot with replication enabled after an upgrade or a period with replication disabled.
+- Added native `Performance` replication between EE clusters: a shared keyspace is replicated to performance secondaries, which serve reads locally and forward writes to the primary.
+- Added `Disaster Recovery` (`DR`) replication with a hot standby cluster and a DR operation token issuance ceremony for promoting a secondary during failover.
+- Added `performance standby`: inactive HA nodes serve read requests locally within the cluster.
+- Builtin `gitops` plugin for Enterprise Edition, for managing Stronghold configuration through a quorum of git commit signatures.
+- Builtin `trdl` plugin for Enterprise Edition, for managing artifact builds and signing through a quorum of git commit signatures.
+- Bootstrap CLI commands to install Stronghold as a Linux service or deploy it in Kubernetes with Helm in a single command.
+- Support for Kubernetes Gateway API.
+- VEX attestation for Kubernetes images.
+- Added support for admin namespace.
+- WebAuthn passkey registration via registration codes; autoregistration is disabled by default.
+- In `PKI`, ability to set the GOST key format to PKCS#8; in `Transit`, GOST key export and import.
+- Added the `tls_13_cipher_policy` setting to prefer GOST or AES encryption algorithms (by default — autodetection: GOST for GOST certificates, AES otherwise).
+- Web interface: system log viewer, password change for `userpass`, user lockout configuration for `ldap`, `userpass`, and `approle`; redesigned sidebar navigation.
+- Support for `nodeSelector` and `storageClass` configuration; storage migration for HA installations.
+- Deployment in Deckhouse Kubernetes Platform requires DKP >= 1.72.
+- CVEs fixed: CVE-2026-25645, CVE-2025-66418, CVE-2025-66471, CVE-2026-21441, CVE-2026-34986, CVE-2026-39883, CVE-2026-32952, CVE-2026-41506, CVE-2026-41889, CVE-2026-2303, CVE-2026-44973, CVE-2026-44740, CVE-2026-45571, CVE-2026-41579, CVE-2026-46600, CVE-2026-56852, GHSA-hrxh-6v49-42gf
 
 ## v1.18 April 2026
 
