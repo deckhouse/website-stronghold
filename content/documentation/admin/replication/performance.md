@@ -2,8 +2,6 @@
 title: "Performance replication"
 linkTitle: "Performance replication"
 weight: 20
-params:
-  edition: ee
 description: "Configure Performance replication between Stronghold clusters, verify it, and manage path filters."
 ---
 

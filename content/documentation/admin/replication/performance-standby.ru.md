@@ -2,8 +2,6 @@
 title: "Performance standby"
 linkTitle: "Performance standby"
 weight: 40
-params:
-  edition: ee
 description: "Обслуживание запросов на чтение неактивными HA-узлами внутри одного кластера Stronghold."
 ---
 

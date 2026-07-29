@@ -2,8 +2,6 @@
 title: "Disaster recovery"
 linkTitle: "Disaster recovery"
 weight: 30
-params:
-  edition: ee
 description: "Настройка репликации Disaster Recovery, повышение DR-secondary при аварийном переключении и церемония выпуска DR operation token."
 ---
 

@@ -2,8 +2,6 @@
 title: "Обзор"
 linkTitle: "Обзор"
 weight: 10
-params:
-  edition: ee
 description: "Обзор нативной репликации Performance и Disaster Recovery между кластерами Stronghold."
 ---
 

@@ -2,8 +2,6 @@
 title: "Топологии и сценарии"
 linkTitle: "Топологии и сценарии"
 weight: 15
-params:
-  edition: ee
 description: "Различия между вариантами репликации Stronghold, схемы и типовые сценарии."
 ---
 

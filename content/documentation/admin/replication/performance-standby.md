@@ -2,8 +2,6 @@
 title: "Performance standby"
 linkTitle: "Performance standby"
 weight: 40
-params:
-  edition: ee
 description: "Serve read requests from non-active HA nodes within a single Stronghold cluster."
 ---
 

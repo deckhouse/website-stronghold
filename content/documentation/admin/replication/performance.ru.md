@@ -2,8 +2,6 @@
 title: "Репликация Performance"
 linkTitle: "Репликация Performance"
 weight: 20
-params:
-  edition: ee
 description: "Настройка репликации Performance между кластерами Stronghold, её проверка и управление фильтрами путей."
 ---
 

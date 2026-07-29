@@ -2,8 +2,6 @@
 title: "Disaster recovery"
 linkTitle: "Disaster recovery"
 weight: 30
-params:
-  edition: ee
 description: "Configure Disaster Recovery replication, promote a DR secondary during a failover, and manage the DR operation token ceremony."
 ---
 

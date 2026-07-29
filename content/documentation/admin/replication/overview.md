@@ -2,8 +2,6 @@
 title: "Overview"
 linkTitle: "Overview"
 weight: 10
-params:
-  edition: ee
 description: "Overview of native Performance and Disaster Recovery replication between Stronghold clusters."
 ---
 

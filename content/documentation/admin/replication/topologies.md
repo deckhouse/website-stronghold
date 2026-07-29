@@ -2,8 +2,6 @@
 title: "Topologies and scenarios"
 linkTitle: "Topologies and scenarios"
 weight: 15
-params:
-  edition: ee
 description: "Differences between Stronghold replication variants, diagrams, and typical scenarios."
 ---
 
