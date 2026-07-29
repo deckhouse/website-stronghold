@@ -9,6 +9,8 @@ You can install Stronghold in two ways:
 - **quick installation** — a single-node server with `stronghold bootstrap service`, available from `v1.19`;
 - **manual deployment** — a multi-node cluster in high availability (HA) mode with Raft storage.
 
+The `stronghold bootstrap` command group also generates other deployment artifacts: a Helm chart archive and a Docker image tarball. For the full CLI interface, see [Bootstrap](../bootstrap/).
+
 Prerequisites for both scenarios:
 
 - a supported OS is installed on the server (Ubuntu, RedOS, Astra Linux);
@@ -85,12 +87,6 @@ stronghold status
 
 ### Main bootstrap service options
 
-For the full list of options, see the help:
-
-```shell
-stronghold bootstrap service -help
-```
-
 Frequently used options:
 
 | Option | Purpose |
@@ -105,6 +101,8 @@ Frequently used options:
 | `-api-addr` | API address advertised to clients |
 | `-cluster-addr` | Cluster address for Raft |
 | `-node-id` | Raft node identifier (defaults to hostname) |
+
+For the full list of options and other bootstrap subcommands (`helm`, `docker`), see [Bootstrap](../bootstrap/) or run `stronghold bootstrap service -help`.
 
 For further server configuration, see [Configuration](../configuration/).
 
