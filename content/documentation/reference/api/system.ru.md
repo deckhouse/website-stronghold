@@ -43,6 +43,22 @@ weight: 50
 |----------|-----|--------------|----------|
 | `hash` | string | нет |  |
 
+### GET /sys/audit-monitor/{path}
+
+**ID операции:** `auditing-monitor-device`
+
+**Требует sudo:** да
+
+#### Параметры
+
+| Параметр | Тип | Расположение | Обязательный | Описание |
+|----------|-----|--------------|--------------|----------|
+| `path` | string | path | да | Имя бэкенда. Не может быть разделено. Пример: "mysql". |
+
+#### Ответы
+
+**200**: OK
+
 ### POST /sys/audit/{path}
 
 **ID операции:** `auditing-enable-device`
@@ -820,6 +836,10 @@ weight: 50
 #### Ответы
 
 **200**: инициализирован, разблокирован и активен
+
+**423**: установлен isleaderreadyok, но локальный узел ещё не является готовым HA-лидером (или не может его достичь)
+
+**425**: установлен raftautopilotok, но локальный узел ещё не интегрирован в кластер через autopilot
 
 **429**: без печати и в режиме ожидания
 
@@ -3440,6 +3460,414 @@ weight: 50
 #### Ответы
 
 **204**: OK
+
+### POST /sys/replication/dr/primary/demote
+
+**ID операции:** `system-write-replication-dr-primary-demote`
+
+#### Ответы
+
+**200**: OK
+
+### POST /sys/replication/dr/primary/disable
+
+**ID операции:** `system-write-replication-dr-primary-disable`
+
+#### Ответы
+
+**200**: OK
+
+### POST /sys/replication/dr/primary/enable
+
+**ID операции:** `system-write-replication-dr-primary-enable`
+
+#### Параметры тела запроса
+
+| Параметр | Тип | Обязательный | Описание |
+|----------|-----|--------------|----------|
+| `dr_operation_token` | string | нет |  |
+| `id` | string | нет |  |
+| `primary_api_addr` | string | нет |  |
+| `primary_cluster_addr` | string | нет |  |
+
+#### Ответы
+
+**200**: OK
+
+### POST /sys/replication/dr/primary/revoke-secondary
+
+**ID операции:** `system-write-replication-dr-primary-revoke-secondary`
+
+#### Параметры тела запроса
+
+| Параметр | Тип | Обязательный | Описание |
+|----------|-----|--------------|----------|
+| `id` | string | нет |  |
+
+#### Ответы
+
+**200**: OK
+
+### POST /sys/replication/dr/primary/secondary-token
+
+**ID операции:** `system-write-replication-dr-primary-secondary-token`
+
+**Требует sudo:** да
+
+#### Параметры тела запроса
+
+| Параметр | Тип | Обязательный | Описание |
+|----------|-----|--------------|----------|
+| `id` | string | нет |  |
+| `ttl` | integer (default: 24h) | нет |  |
+
+#### Ответы
+
+**200**: OK
+
+### POST /sys/replication/dr/secondary/disable
+
+**ID операции:** `system-write-replication-dr-secondary-disable`
+
+**Доступен без аутентификации:** да
+
+#### Ответы
+
+**200**: OK
+
+### POST /sys/replication/dr/secondary/enable
+
+**ID операции:** `system-write-replication-dr-secondary-enable`
+
+#### Параметры тела запроса
+
+| Параметр | Тип | Обязательный | Описание |
+|----------|-----|--------------|----------|
+| `ca_cert` | string | нет |  |
+| `ca_file` | string | нет |  |
+| `ca_path` | string | нет |  |
+| `client_cert_pem` | string | нет |  |
+| `client_key_pem` | string | нет |  |
+| `primary_api_addr` | string | нет |  |
+| `token` | string | нет |  |
+
+#### Ответы
+
+**200**: OK
+
+### POST /sys/replication/dr/secondary/operation-token/delete
+
+**ID операции:** `system-write-replication-dr-secondary-operation-token-delete`
+
+**Доступен без аутентификации:** да
+
+#### Параметры тела запроса
+
+| Параметр | Тип | Обязательный | Описание |
+|----------|-----|--------------|----------|
+| `data` | string | нет |  |
+
+#### Ответы
+
+**200**: OK
+
+### POST /sys/replication/dr/secondary/promote
+
+**ID операции:** `system-write-replication-dr-secondary-promote`
+
+**Доступен без аутентификации:** да
+
+#### Параметры тела запроса
+
+| Параметр | Тип | Обязательный | Описание |
+|----------|-----|--------------|----------|
+| `dr_operation_token` | string | нет |  |
+| `id` | string | нет |  |
+| `primary_api_addr` | string | нет |  |
+| `primary_cluster_addr` | string | нет |  |
+
+#### Ответы
+
+**200**: OK
+
+### POST /sys/replication/dr/secondary/update-primary
+
+**ID операции:** `system-write-replication-dr-secondary-update-primary`
+
+**Доступен без аутентификации:** да
+
+#### Параметры тела запроса
+
+| Параметр | Тип | Обязательный | Описание |
+|----------|-----|--------------|----------|
+| `ca_cert` | string | нет |  |
+| `ca_file` | string | нет |  |
+| `ca_path` | string | нет |  |
+| `client_cert_pem` | string | нет |  |
+| `client_key_pem` | string | нет |  |
+| `dr_operation_token` | string | нет |  |
+| `primary_api_addr` | string | нет |  |
+| `primary_cluster_addr` | string | нет |  |
+| `token` | string | нет |  |
+
+#### Ответы
+
+**200**: OK
+
+### GET /sys/replication/dr/status
+
+**ID операции:** `system-read-replication-dr-status`
+
+**Доступен без аутентификации:** да
+
+#### Ответы
+
+**200**: OK
+
+### GET /sys/replication/merkle-check
+
+**ID операции:** `system-read-replication-merkle-check`
+
+#### Ответы
+
+**200**: OK
+
+### GET /sys/replication/merkle-status
+
+**ID операции:** `system-read-replication-merkle-status`
+
+**Доступен без аутентификации:** да
+
+#### Ответы
+
+**200**: OK
+
+### POST /sys/replication/performance/primary/demote
+
+**ID операции:** `system-write-replication-performance-primary-demote`
+
+#### Ответы
+
+**200**: OK
+
+### POST /sys/replication/performance/primary/disable
+
+**ID операции:** `system-write-replication-performance-primary-disable`
+
+#### Ответы
+
+**200**: OK
+
+### POST /sys/replication/performance/primary/enable
+
+**ID операции:** `system-write-replication-performance-primary-enable`
+
+#### Параметры тела запроса
+
+| Параметр | Тип | Обязательный | Описание |
+|----------|-----|--------------|----------|
+| `id` | string | нет |  |
+| `primary_api_addr` | string | нет |  |
+| `primary_cluster_addr` | string | нет |  |
+
+#### Ответы
+
+**200**: OK
+
+### GET /sys/replication/performance/primary/paths-filter/{id}
+
+**ID операции:** `system-read-replication-performance-primary-paths-filter-id`
+
+#### Параметры
+
+| Параметр | Тип | Расположение | Обязательный | Описание |
+|----------|-----|--------------|--------------|----------|
+| `id` | string | path | да |  |
+
+#### Ответы
+
+**200**: OK
+
+### POST /sys/replication/performance/primary/paths-filter/{id}
+
+**ID операции:** `system-write-replication-performance-primary-paths-filter-id`
+
+#### Параметры
+
+| Параметр | Тип | Расположение | Обязательный | Описание |
+|----------|-----|--------------|--------------|----------|
+| `id` | string | path | да |  |
+
+#### Параметры тела запроса
+
+| Параметр | Тип | Обязательный | Описание |
+|----------|-----|--------------|----------|
+| `mode` | string (default: deny) | нет |  |
+| `paths` | array | нет |  |
+
+#### Ответы
+
+**200**: OK
+
+### DELETE /sys/replication/performance/primary/paths-filter/{id}
+
+**ID операции:** `system-delete-replication-performance-primary-paths-filter-id`
+
+#### Параметры
+
+| Параметр | Тип | Расположение | Обязательный | Описание |
+|----------|-----|--------------|--------------|----------|
+| `id` | string | path | да |  |
+
+#### Ответы
+
+**204**: пустое тело
+
+### GET /sys/replication/performance/primary/paths-filter/{id}/dynamic
+
+**ID операции:** `system-read-replication-performance-primary-paths-filter-id-dynamic`
+
+#### Параметры
+
+| Параметр | Тип | Расположение | Обязательный | Описание |
+|----------|-----|--------------|--------------|----------|
+| `id` | string | path | да |  |
+
+#### Ответы
+
+**200**: OK
+
+### POST /sys/replication/performance/primary/revoke-secondary
+
+**ID операции:** `system-write-replication-performance-primary-revoke-secondary`
+
+#### Параметры тела запроса
+
+| Параметр | Тип | Обязательный | Описание |
+|----------|-----|--------------|----------|
+| `id` | string | нет |  |
+
+#### Ответы
+
+**200**: OK
+
+### POST /sys/replication/performance/primary/secondary-token
+
+**ID операции:** `system-write-replication-performance-primary-secondary-token`
+
+**Требует sudo:** да
+
+#### Параметры тела запроса
+
+| Параметр | Тип | Обязательный | Описание |
+|----------|-----|--------------|----------|
+| `id` | string | нет |  |
+| `ttl` | integer (default: 24h) | нет |  |
+
+#### Ответы
+
+**200**: OK
+
+### POST /sys/replication/performance/secondary/disable
+
+**ID операции:** `system-write-replication-performance-secondary-disable`
+
+#### Ответы
+
+**200**: OK
+
+### POST /sys/replication/performance/secondary/enable
+
+**ID операции:** `system-write-replication-performance-secondary-enable`
+
+#### Параметры тела запроса
+
+| Параметр | Тип | Обязательный | Описание |
+|----------|-----|--------------|----------|
+| `ca_cert` | string | нет |  |
+| `ca_file` | string | нет |  |
+| `ca_path` | string | нет |  |
+| `client_cert_pem` | string | нет |  |
+| `client_key_pem` | string | нет |  |
+| `primary_api_addr` | string | нет |  |
+| `token` | string | нет |  |
+
+#### Ответы
+
+**200**: OK
+
+### POST /sys/replication/performance/secondary/promote
+
+**ID операции:** `system-write-replication-performance-secondary-promote`
+
+#### Параметры тела запроса
+
+| Параметр | Тип | Обязательный | Описание |
+|----------|-----|--------------|----------|
+| `id` | string | нет |  |
+| `primary_api_addr` | string | нет |  |
+| `primary_cluster_addr` | string | нет |  |
+
+#### Ответы
+
+**200**: OK
+
+### POST /sys/replication/performance/secondary/update-primary
+
+**ID операции:** `system-write-replication-performance-secondary-update-primary`
+
+#### Параметры тела запроса
+
+| Параметр | Тип | Обязательный | Описание |
+|----------|-----|--------------|----------|
+| `ca_cert` | string | нет |  |
+| `ca_file` | string | нет |  |
+| `ca_path` | string | нет |  |
+| `client_cert_pem` | string | нет |  |
+| `client_key_pem` | string | нет |  |
+| `primary_api_addr` | string | нет |  |
+| `primary_cluster_addr` | string | нет |  |
+| `token` | string | нет |  |
+
+#### Ответы
+
+**200**: OK
+
+### GET /sys/replication/performance/status
+
+**ID операции:** `system-read-replication-performance-status`
+
+**Доступен без аутентификации:** да
+
+#### Ответы
+
+**200**: OK
+
+### POST /sys/replication/recover
+
+**ID операции:** `system-write-replication-recover`
+
+#### Ответы
+
+**200**: OK
+
+### POST /sys/replication/reindex
+
+**ID операции:** `system-write-replication-reindex`
+
+**Требует sudo:** да
+
+#### Параметры тела запроса
+
+| Параметр | Тип | Обязательный | Описание |
+|----------|-----|--------------|----------|
+| `diagnose_only` | boolean | нет |  |
+| `force_reindex` | boolean | нет |  |
+| `replay_wals` | boolean | нет |  |
+
+#### Ответы
+
+**200**: OK
 
 ### GET /sys/replication/status
 

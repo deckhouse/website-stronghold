@@ -14,7 +14,7 @@ Retrieve the secret at the specified location.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `path` | string | path | yes | Specifies the path of the secret. |
 | `list` | string | query | no | Return a list if `true` |
 
@@ -33,7 +33,7 @@ Store a secret at the specified location.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `path` | string | path | yes | Specifies the path of the secret. |
 
 #### Responses
@@ -49,7 +49,7 @@ Deletes the secret at the specified location.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `path` | string | path | yes | Specifies the path of the secret. |
 
 #### Responses
@@ -65,7 +65,7 @@ Configure connection details to a database plugin.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `database_mount_path` | string | path | yes | Path that the backend was mounted at |
 | `list` | string (true) | query | yes | Must be set to `true` |
 
@@ -82,7 +82,7 @@ Configure connection details to a database plugin.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of this database connection |
 | `database_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -101,14 +101,14 @@ Configure connection details to a database plugin.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of this database connection |
 | `database_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `allowed_roles` | array | no | Comma separated string or array of the role names allowed to get creds from this database connection. If empty no roles are allowed. If "*" all roles are allowed. |
 | `password_policy` | string | no | Password policy to use when generating passwords. |
 | `plugin_name` | string | no | The name of a builtin or previously registered plugin known to vault. This endpoint will create an instance of that plugin type. |
@@ -129,7 +129,7 @@ Configure connection details to a database plugin.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of this database connection |
 | `database_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -146,7 +146,7 @@ Request database credentials for a certain role.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the role. |
 | `database_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -163,7 +163,7 @@ Resets a database plugin.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of this database connection |
 | `database_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -180,7 +180,7 @@ Manage the roles that can be created with this backend.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `database_mount_path` | string | path | yes | Path that the backend was mounted at |
 | `list` | string (true) | query | yes | Must be set to `true` |
 
@@ -197,7 +197,7 @@ Manage the roles that can be created with this backend.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the role. |
 | `database_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -216,14 +216,14 @@ Manage the roles that can be created with this backend.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the role. |
 | `database_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `creation_statements` | array | no | Specifies the database statements executed to create and configure a user. See the plugin's API page for more information on support and formatting for this parameter. |
 | `credential_config` | object | no | The configuration for the given credential_type. |
 | `credential_type` | string (default: password) | no | The type of credential to manage. Options include: 'password', 'rsa_private_key'. Defaults to 'password'. |
@@ -247,7 +247,7 @@ Manage the roles that can be created with this backend.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the role. |
 | `database_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -264,7 +264,7 @@ Request to rotate the credentials for a static user account.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the static role |
 | `database_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -281,7 +281,7 @@ Request to rotate the root credentials for a certain database connection.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of this database connection |
 | `database_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -299,7 +299,7 @@ rotated periodically.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the static role. |
 | `database_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -316,7 +316,7 @@ Manage the static roles that can be created with this backend.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `database_mount_path` | string | path | yes | Path that the backend was mounted at |
 | `list` | string (true) | query | yes | Must be set to `true` |
 
@@ -333,7 +333,7 @@ Manage the static roles that can be created with this backend.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the role. |
 | `database_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -352,14 +352,14 @@ Manage the static roles that can be created with this backend.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the role. |
 | `database_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `credential_config` | object | no | The configuration for the given credential_type. |
 | `credential_type` | string (default: password) | no | The type of credential to manage. Options include: 'password', 'rsa_private_key'. Defaults to 'password'. |
 | `db_name` | string | no | Name of the database this role acts on. |
@@ -380,13 +380,324 @@ Manage the static roles that can be created with this backend.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the role. |
 | `database_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
 
 **204**: empty body
+
+### POST /{gitops_mount_path}/configure/git_credential
+
+**Operation ID:** `gitops-write-configure-git_credential`
+
+Configure Git credentials
+
+**Creation supported:** yes
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `gitops_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `password` | string | no | A Git password; Required for CREATE, UPDATE. |
+| `username` | string | no | A Git username; Required for CREATE, UPDATE. |
+
+#### Responses
+
+**200**: OK
+
+### DELETE /{gitops_mount_path}/configure/git_credential
+
+**Operation ID:** `gitops-delete-configure-git_credential`
+
+Configure Git credentials
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `gitops_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Responses
+
+**204**: empty body
+
+### GET /{gitops_mount_path}/configure/git_repository
+
+**Operation ID:** `gitops-read-configure-git_repository`
+
+Read the current gitops git_repository configuration.
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `gitops_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Responses
+
+**200**: OK
+
+### POST /{gitops_mount_path}/configure/git_repository
+
+**Operation ID:** `gitops-write-configure-git_repository`
+
+Update the current gitops git_repository configuration.
+
+**Creation supported:** yes
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `gitops_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `git_branch_name` | string (default: main) | no | Git repo branch |
+| `git_ca_certificate` | string | no | Git CA. Default is empty. |
+| `git_poll_period` | integer (default: 5m) | no | Period between polls of Git repo |
+| `git_repo_url` | string | no | Git repo URL. Required for CREATE. |
+| `max_clone_size_bytes` | integer (default: 10485760) | no | Max size (bytes) of in-memory clone; clone fails when exceeded (0 = no limit). Protects against OOM on large or malicious repos. |
+| `required_number_of_verified_signatures_on_commit` | integer (default: 0) | no | Verify that the commit has enough verified signatures |
+
+#### Responses
+
+**200**: OK
+
+### DELETE /{gitops_mount_path}/configure/git_repository
+
+**Operation ID:** `gitops-delete-configure-git_repository`
+
+Delete the current gitops git_repository configuration.
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `gitops_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Responses
+
+**204**: empty body
+
+### GET /{gitops_mount_path}/configure/gitops
+
+**Operation ID:** `gitops-read-configure-gitops`
+
+Read gitops configuration.
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `gitops_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Responses
+
+**200**: OK
+
+### POST /{gitops_mount_path}/configure/gitops
+
+**Operation ID:** `gitops-write-configure-gitops`
+
+Update gitops configuration.
+
+**Creation supported:** yes
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `gitops_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `path` | string (default: ) | no | Path to YAML files in the repository (e.g. 'vault' or empty for root). |
+
+#### Responses
+
+**200**: OK
+
+### DELETE /{gitops_mount_path}/configure/gitops
+
+**Operation ID:** `gitops-delete-configure-gitops`
+
+Delete gitops configuration.
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `gitops_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Responses
+
+**204**: empty body
+
+### GET /{gitops_mount_path}/configure/trusted_pgp_public_key
+
+**Operation ID:** `gitops-list-configure-trusted_pgp_public_key`
+
+List trusted PGP public keys
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `gitops_mount_path` | string | path | yes | Path that the backend was mounted at |
+| `list` | string (true) | query | yes | Must be set to `true` |
+
+#### Responses
+
+**200**: OK
+
+### GET /{gitops_mount_path}/configure/trusted_pgp_public_key/{name}
+
+**Operation ID:** `gitops-read-configure-trusted_pgp_public_key-name`
+
+CRUD operations for trusted PGP public key
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `name` | string | path | yes | Key name |
+| `gitops_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Responses
+
+**200**: OK
+
+### POST /{gitops_mount_path}/configure/trusted_pgp_public_key/{name}
+
+**Operation ID:** `gitops-write-configure-trusted_pgp_public_key-name`
+
+CRUD operations for trusted PGP public key
+
+**Creation supported:** yes
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `name` | string | path | yes | Key name |
+| `gitops_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `public_key` | string | no | Key data (required for CREATE/UPDATE) |
+
+#### Responses
+
+**200**: OK
+
+### DELETE /{gitops_mount_path}/configure/trusted_pgp_public_key/{name}
+
+**Operation ID:** `gitops-delete-configure-trusted_pgp_public_key-name`
+
+CRUD operations for trusted PGP public key
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `name` | string | path | yes | Key name |
+| `gitops_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Responses
+
+**204**: empty body
+
+### GET /{gitops_mount_path}/configure/vault
+
+**Operation ID:** `gitops-read-configure-vault`
+
+Read the current vault client configuration.
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `gitops_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Responses
+
+**200**: OK
+
+### POST /{gitops_mount_path}/configure/vault
+
+**Operation ID:** `gitops-write-configure-vault`
+
+Update the current vault client configuration.
+
+**Creation supported:** yes
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `gitops_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `rotate` | boolean (default: False) | no | Rotate vault token. |
+| `vault_addr` | string | no | Vault API address. |
+| `vault_cacert_bytes` | string | no | PEM-encoded CA certificate for Vault TLS verification. |
+| `vault_namespace` | string | no | Vault namespace for API access. |
+| `vault_token` | string | no | Vault token for API access. |
+| `wrapping_token` | string | no | Wrapping vault token for API access. |
+
+#### Responses
+
+**200**: OK
+
+### DELETE /{gitops_mount_path}/configure/vault
+
+**Operation ID:** `gitops-delete-configure-vault`
+
+Delete the current vault client configuration.
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `gitops_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Responses
+
+**204**: empty body
+
+### GET /{gitops_mount_path}/status
+
+**Operation ID:** `gitops-read-status`
+
+Read the current status
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `gitops_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Responses
+
+**200**: OK
 
 ### GET /{kubernetes_mount_path}/check
 
@@ -397,7 +708,7 @@ Checks the Kubernetes configuration is valid.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `kubernetes_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -413,7 +724,7 @@ Configure the Kubernetes secret engine plugin.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `kubernetes_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -429,16 +740,16 @@ Configure the Kubernetes secret engine plugin.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `kubernetes_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `disable_local_ca_jwt` | boolean (default: False) | no | Disable defaulting to the local CA certificate and service account JWT when running in a Kubernetes pod. |
 | `kubernetes_ca_cert` | string | no | PEM encoded CA certificate to use to verify the Kubernetes API server certificate. Defaults to the local pod's CA if found. |
-| `kubernetes_host` | string | no | Kubernetes API URL to connect to. Defaults to https://$KUBERNETES_SERVICE_HOST:KUBERNETES_SERVICE_PORT if those environment variables are set. |
+| `kubernetes_host` | string | no | Kubernetes API URL to connect to. Defaults to `https://$KUBERNETES_SERVICE_HOST:KUBERNETES_SERVICE_PORT` if those environment variables are set. |
 | `service_account_jwt` | string | no | The JSON web token of the service account used by the secret engine to manage Kubernetes credentials. Defaults to the local pod's JWT if found. |
 
 #### Responses
@@ -454,7 +765,7 @@ Configure the Kubernetes secret engine plugin.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `kubernetes_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -470,14 +781,14 @@ Request Kubernetes service account credentials for a given Vault role.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the Vault role |
 | `kubernetes_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `audiences` | array | no | The intended audiences of the generated credentials |
 | `cluster_role_binding` | boolean | no | If true, generate a ClusterRoleBinding to grant permissions across the whole cluster instead of within a namespace. Requires the Vault role to have kubernetes_role_type set to ClusterRole. |
 | `kubernetes_namespace` | string | yes | The name of the Kubernetes namespace in which to generate the credentials |
@@ -496,7 +807,7 @@ List the existing roles in this secrets engine.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `kubernetes_mount_path` | string | path | yes | Path that the backend was mounted at |
 | `list` | string (true) | query | yes | Must be set to `true` |
 
@@ -513,7 +824,7 @@ Manage the roles that can be created with this secrets engine.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the role |
 | `kubernetes_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -532,14 +843,14 @@ Manage the roles that can be created with this secrets engine.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the role |
 | `kubernetes_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `allowed_kubernetes_namespace_selector` | string | no | A label selector for Kubernetes namespaces in which credentials can be generated. Accepts either a JSON or YAML object. If set with allowed_kubernetes_namespaces, the conditions are conjuncted. |
 | `allowed_kubernetes_namespaces` | array | no | A list of the Kubernetes namespaces in which credentials can be generated. If set to "*" all namespaces are allowed. |
 | `extra_annotations` | object | no | Additional annotations to apply to all generated Kubernetes objects. |
@@ -566,7 +877,7 @@ Manage the roles that can be created with this secrets engine.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the role |
 | `kubernetes_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -583,7 +894,7 @@ Pass-through secret storage to the storage backend, allowing you to read/write a
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `path` | string | path | yes | Location of the secret. |
 | `kv_v1_mount_path` | string | path | yes | Path that the backend was mounted at |
 | `list` | string | query | no | Return a list if `true` |
@@ -603,7 +914,7 @@ Pass-through secret storage to the storage backend, allowing you to read/write a
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `path` | string | path | yes | Location of the secret. |
 | `kv_v1_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -620,7 +931,7 @@ Pass-through secret storage to the storage backend, allowing you to read/write a
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `path` | string | path | yes | Location of the secret. |
 | `kv_v1_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -637,7 +948,7 @@ Read the backend level settings.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `kv_v2_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -645,7 +956,7 @@ Read the backend level settings.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `cas_required` | boolean | no | If true, the backend will require the cas parameter to be set for each write |
 | `delete_version_after` | integer | no | The length of time before a version is deleted. |
 | `max_versions` | integer | no | The number of versions to keep for each key. |
@@ -659,13 +970,13 @@ Configure backend level settings that are applied to every key in the key-value 
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `kv_v2_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `cas_required` | boolean | no | If true, the backend will require the cas parameter to be set for each write |
 | `delete_version_after` | integer | no | If set, the length of time before a version is deleted. A negative duration disables the use of delete_version_after on all keys. A zero duration clears the current setting. Accepts a Go duration format string. |
 | `max_versions` | integer | no | The number of versions to keep for each key. Defaults to 10 |
@@ -683,7 +994,7 @@ Write, Patch, Read, and Delete data in the Key-Value Store.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `path` | string | path | yes | Location of the secret. |
 | `kv_v2_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -692,9 +1003,9 @@ Write, Patch, Read, and Delete data in the Key-Value Store.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
-| `data` | object | no | |
-| `metadata` | object | no | |
+|----------|-----|--------------|----------|
+| `data` | object | no |  |
+| `metadata` | object | no |  |
 
 ### POST /{kv_v2_mount_path}/data/{path}
 
@@ -707,14 +1018,14 @@ Write, Patch, Read, and Delete data in the Key-Value Store.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `path` | string | path | yes | Location of the secret. |
 | `kv_v2_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `data` | object | no | The contents of the data map will be stored and returned on read. |
 | `options` | object | no | Options for writing a KV entry. Set the "cas" value to use a Check-And-Set operation. If not set the write will be allowed. If set to 0 a write will only be allowed if the key doesn’t exist. If the index is non-zero the write will only be allowed if the key’s current version matches the version specified in the cas parameter. |
 | `override_version` | integer | no | Only replication!!!!!!!! |
@@ -725,12 +1036,12 @@ Write, Patch, Read, and Delete data in the Key-Value Store.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
-| `created_time` | string | no | |
-| `custom_metadata` | object | no | |
-| `deletion_time` | string | no | |
-| `destroyed` | boolean | no | |
-| `version` | integer | no | |
+|----------|-----|--------------|----------|
+| `created_time` | string | no |  |
+| `custom_metadata` | object | no |  |
+| `deletion_time` | string | no |  |
+| `destroyed` | boolean | no |  |
+| `version` | integer | no |  |
 
 ### DELETE /{kv_v2_mount_path}/data/{path}
 
@@ -741,7 +1052,7 @@ Write, Patch, Read, and Delete data in the Key-Value Store.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `path` | string | path | yes | Location of the secret. |
 | `kv_v2_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -758,14 +1069,14 @@ Marks one or more versions as deleted in the KV store.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `path` | string | path | yes | Location of the secret. |
 | `kv_v2_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `versions` | array | no | The versions to be archived. The versioned data will not be deleted, but it will no longer be returned in normal get requests. |
 
 #### Responses
@@ -781,14 +1092,14 @@ Permanently removes one or more versions in the KV store
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `path` | string | path | yes | Location of the secret. |
 | `kv_v2_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `versions` | array | no | The versions to destroy. Their data will be permanently deleted. |
 
 #### Responses
@@ -804,7 +1115,7 @@ Configures settings for the KV store
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `path` | string | path | yes | Location of the secret. |
 | `kv_v2_mount_path` | string | path | yes | Path that the backend was mounted at |
 | `list` | string | query | no | Return a list if `true` |
@@ -814,17 +1125,17 @@ Configures settings for the KV store
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
-| `cas_required` | boolean | no | |
-| `created_time` | string | no | |
-| `current_version` | integer | no | |
+|----------|-----|--------------|----------|
+| `cas_required` | boolean | no |  |
+| `created_time` | string | no |  |
+| `current_version` | integer | no |  |
 | `custom_metadata` | object | no | User-provided key-value pairs that are used to describe arbitrary and version-agnostic information about a secret. |
 | `delete_version_after` | integer | no | The length of time before a version is deleted. |
-| `last_sync_time` | string | no | |
+| `last_sync_time` | string | no |  |
 | `max_versions` | integer | no | The number of versions to keep |
-| `oldest_version` | integer | no | |
-| `updated_time` | string | no | |
-| `versions` | object | no | |
+| `oldest_version` | integer | no |  |
+| `updated_time` | string | no |  |
+| `versions` | object | no |  |
 
 ### POST /{kv_v2_mount_path}/metadata/{path}
 
@@ -837,14 +1148,14 @@ Configures settings for the KV store
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `path` | string | path | yes | Location of the secret. |
 | `kv_v2_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `cas_required` | boolean | no | If true the key will require the cas parameter to be set on all write requests. If false, the backend’s configuration will be used. |
 | `custom_metadata` | object | no | User-provided key-value pairs that are used to describe arbitrary and version-agnostic information about a secret. |
 | `delete_version_after` | integer | no | The length of time before a version is deleted. If not set, the backend's configured delete_version_after is used. Cannot be greater than the backend's delete_version_after. A zero duration clears the current setting. A negative duration will cause an error. |
@@ -863,7 +1174,7 @@ Configures settings for the KV store
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `path` | string | path | yes | Location of the secret. |
 | `kv_v2_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -880,7 +1191,7 @@ Read the structure of a secret entry from the Key-Value store with the values re
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `path` | string | path | yes | Location of the secret. |
 | `kv_v2_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -889,9 +1200,9 @@ Read the structure of a secret entry from the Key-Value store with the values re
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
-| `metadata` | object | no | |
-| `subkeys` | object | no | |
+|----------|-----|--------------|----------|
+| `metadata` | object | no |  |
+| `subkeys` | object | no |  |
 
 ### POST /{kv_v2_mount_path}/undelete/{path}
 
@@ -902,14 +1213,14 @@ Undeletes one or more versions from the KV store.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `path` | string | path | yes | Location of the secret. |
 | `kv_v2_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `versions` | array | no | The versions to unarchive. The versions will be restored and their data will be returned on normal get requests. |
 
 #### Responses
@@ -925,7 +1236,7 @@ Configure the LDAP secrets engine plugin.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `ldap_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -943,13 +1254,13 @@ Configure the LDAP secrets engine plugin.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `ldap_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `anonymous_group_search` | boolean (default: False) | no | Use anonymous binds when performing LDAP group searches (if true the initial credentials will still be used for the initial connection test). |
 | `binddn` | string | no | LDAP DN for searching for the user DN (optional) |
 | `bindpass` | string | no | LDAP password for searching for the user DN (optional) |
@@ -1000,7 +1311,7 @@ Configure the LDAP secrets engine plugin.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `ldap_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -1016,7 +1327,7 @@ Request LDAP credentials for a dynamic role. These credentials are created withi
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the dynamic role. |
 | `ldap_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -1033,7 +1344,7 @@ List the name of each set of service accounts currently stored.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `ldap_mount_path` | string | path | yes | Path that the backend was mounted at |
 | `list` | string (true) | query | yes | Must be set to `true` |
 
@@ -1050,14 +1361,14 @@ Check service accounts in to the library.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the set. |
 | `ldap_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `service_account_names` | array | no | The username/logon name for the service accounts to check in. |
 
 #### Responses
@@ -1073,7 +1384,7 @@ Read a library set.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the set. |
 | `ldap_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -1092,14 +1403,14 @@ Update a library set.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the set. |
 | `ldap_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `disable_check_in_enforcement` | boolean (default: False) | no | Disable the default behavior of requiring that check-ins are performed by the entity that checked them out. |
 | `max_ttl` | integer (default: 86400) | no | In seconds, the max amount of time a check-out's renewals should last. Defaults to 24 hours. |
 | `service_account_names` | array | no | The username/logon name for the service accounts with which this set will be associated. |
@@ -1118,7 +1429,7 @@ Delete a library set.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the set. |
 | `ldap_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -1135,14 +1446,14 @@ Check service accounts in to the library.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the set. |
 | `ldap_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `service_account_names` | array | no | The username/logon name for the service accounts to check in. |
 
 #### Responses
@@ -1158,14 +1469,14 @@ Check a service account out from the library.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the set |
 | `ldap_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `ttl` | integer | no | The length of time before the check-out will expire, in seconds. |
 
 #### Responses
@@ -1181,7 +1492,7 @@ Check the status of the service accounts in a library set.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the set. |
 | `ldap_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -1198,7 +1509,7 @@ List the name of each set of service accounts currently stored.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `path` | string | path | yes | Path of sets to list |
 | `ldap_mount_path` | string | path | yes | Path that the backend was mounted at |
 | `list` | string (true) | query | yes | Must be set to `true` |
@@ -1216,7 +1527,7 @@ List the name of each set of service accounts currently stored.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `path` | string | path | yes | Path of sets to list |
 | `ldap_mount_path` | string | path | yes | Path that the backend was mounted at |
 | `list` | string (true) | query | yes | Must be set to `true` |
@@ -1234,7 +1545,7 @@ List all the dynamic roles Vault is currently managing in LDAP.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `ldap_mount_path` | string | path | yes | Path that the backend was mounted at |
 | `list` | string (true) | query | yes | Must be set to `true` |
 
@@ -1251,7 +1562,7 @@ Manage the static roles that can be created with this backend.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the role (lowercase) |
 | `ldap_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -1270,14 +1581,14 @@ Manage the static roles that can be created with this backend.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the role (lowercase) |
 | `ldap_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `creation_ldif` | string | yes | LDIF string used to create new entities within the LDAP system. This LDIF can be templated. |
 | `default_ttl` | integer | no | Default TTL for dynamic credentials |
 | `deletion_ldif` | string | yes | LDIF string used to delete entities created within the LDAP system. This LDIF can be templated. |
@@ -1298,7 +1609,7 @@ Manage the static roles that can be created with this backend.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the role (lowercase) |
 | `ldap_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -1315,7 +1626,7 @@ List all the dynamic roles Vault is currently managing in LDAP.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `path` | string | path | yes | Path of roles to list |
 | `ldap_mount_path` | string | path | yes | Path that the backend was mounted at |
 | `list` | string (true) | query | yes | Must be set to `true` |
@@ -1333,7 +1644,7 @@ List all the dynamic roles Vault is currently managing in LDAP.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `path` | string | path | yes | Path of roles to list |
 | `ldap_mount_path` | string | path | yes | Path that the backend was mounted at |
 | `list` | string (true) | query | yes | Must be set to `true` |
@@ -1351,14 +1662,14 @@ Request to rotate the credentials for a static user account.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the role |
 | `ldap_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `dn` | string | no | The distinguished name of the entry to manage. |
 | `username` | string | no | The username/logon name for the entry with which this role will be associated. |
 
@@ -1375,7 +1686,7 @@ Request to rotate the root credentials Vault uses for the LDAP administrator acc
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `ldap_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -1391,7 +1702,7 @@ Request LDAP credentials for a certain static role. These credentials are rotate
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the static role. |
 | `ldap_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -1408,7 +1719,7 @@ This path lists all the static roles Vault is currently managing within the LDAP
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `ldap_mount_path` | string | path | yes | Path that the backend was mounted at |
 | `list` | string (true) | query | yes | Must be set to `true` |
 
@@ -1425,7 +1736,7 @@ Manage the static roles that can be created with this backend.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the role |
 | `ldap_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -1444,14 +1755,14 @@ Manage the static roles that can be created with this backend.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the role |
 | `ldap_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `dn` | string | no | The distinguished name of the entry to manage. |
 | `rotation_period` | integer | no | Period for automatic credential rotation of the given entry. |
 | `skip_import_rotation` | boolean | no | Skip the initial pasword rotation on import (has no effect on updates) |
@@ -1470,7 +1781,7 @@ Manage the static roles that can be created with this backend.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the role |
 | `ldap_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -1487,7 +1798,7 @@ This path lists all the static roles Vault is currently managing within the LDAP
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `path` | string | path | yes | Path of roles to list |
 | `ldap_mount_path` | string | path | yes | Path that the backend was mounted at |
 | `list` | string (true) | query | yes | Must be set to `true` |
@@ -1505,7 +1816,7 @@ This path lists all the static roles Vault is currently managing within the LDAP
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `path` | string | path | yes | Path of roles to list |
 | `ldap_mount_path` | string | path | yes | Path that the backend was mounted at |
 | `list` | string (true) | query | yes | Must be set to `true` |
@@ -1525,14 +1836,14 @@ An endpoint implementing the standard ACME protocol
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `kid` | string | path | yes | The key identifier provided by the CA |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `payload` | string | no | ACME request 'payload' value |
 | `protected` | string | no | ACME request 'protected' value |
 | `signature` | string | no | ACME request 'signature' value |
@@ -1552,14 +1863,14 @@ An endpoint implementing the standard ACME protocol
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `auth_id` | string | path | yes | ACME authorization identifier value |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `payload` | string | no | ACME request 'payload' value |
 | `protected` | string | no | ACME request 'protected' value |
 | `signature` | string | no | ACME request 'signature' value |
@@ -1579,7 +1890,7 @@ An endpoint implementing the standard ACME protocol
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `auth_id` | string | path | yes | ACME authorization identifier value |
 | `challenge_type` | string | path | yes | ACME challenge type |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
@@ -1587,7 +1898,7 @@ An endpoint implementing the standard ACME protocol
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `payload` | string | no | ACME request 'payload' value |
 | `protected` | string | no | ACME request 'protected' value |
 | `signature` | string | no | ACME request 'signature' value |
@@ -1607,7 +1918,7 @@ An endpoint implementing the standard ACME protocol
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -1625,13 +1936,13 @@ An endpoint implementing the standard ACME protocol
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `payload` | string | no | ACME request 'payload' value |
 | `protected` | string | no | ACME request 'protected' value |
 | `signature` | string | no | ACME request 'signature' value |
@@ -1649,7 +1960,7 @@ Generate external account bindings to be used for ACME
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -1657,7 +1968,7 @@ Generate external account bindings to be used for ACME
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `acme_directory` | string | no | The ACME directory to which the key belongs |
 | `created_on` | string | no | An RFC3339 formatted date time when the EAB token was created |
 | `id` | string | no | The EAB key identifier |
@@ -1675,7 +1986,7 @@ An endpoint implementing the standard ACME protocol
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -1693,13 +2004,13 @@ An endpoint implementing the standard ACME protocol
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `payload` | string | no | ACME request 'payload' value |
 | `protected` | string | no | ACME request 'protected' value |
 | `signature` | string | no | ACME request 'signature' value |
@@ -1719,14 +2030,14 @@ An endpoint implementing the standard ACME protocol
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `order_id` | string | path | yes | The ACME order identifier to fetch |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `payload` | string | no | ACME request 'payload' value |
 | `protected` | string | no | ACME request 'protected' value |
 | `signature` | string | no | ACME request 'signature' value |
@@ -1746,14 +2057,14 @@ An endpoint implementing the standard ACME protocol
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `order_id` | string | path | yes | The ACME order identifier to fetch |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `payload` | string | no | ACME request 'payload' value |
 | `protected` | string | no | ACME request 'protected' value |
 | `signature` | string | no | ACME request 'signature' value |
@@ -1773,14 +2084,14 @@ An endpoint implementing the standard ACME protocol
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `order_id` | string | path | yes | The ACME order identifier to fetch |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `payload` | string | no | ACME request 'payload' value |
 | `protected` | string | no | ACME request 'protected' value |
 | `signature` | string | no | ACME request 'signature' value |
@@ -1800,13 +2111,13 @@ An endpoint implementing the standard ACME protocol
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `payload` | string | no | ACME request 'payload' value |
 | `protected` | string | no | ACME request 'protected' value |
 | `signature` | string | no | ACME request 'signature' value |
@@ -1826,13 +2137,13 @@ An endpoint implementing the standard ACME protocol
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `payload` | string | no | ACME request 'payload' value |
 | `protected` | string | no | ACME request 'protected' value |
 | `signature` | string | no | ACME request 'signature' value |
@@ -1852,7 +2163,7 @@ Fetch a CA, CRL, CA Chain, or non-revoked certificate.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -1860,7 +2171,7 @@ Fetch a CA, CRL, CA Chain, or non-revoked certificate.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `ca_chain` | string | no | Issuing CA Chain |
 | `certificate` | string | no | Certificate |
 | `issuer_id` | string | no | ID of the issuer |
@@ -1878,7 +2189,7 @@ Fetch a CA, CRL, CA Chain, or non-revoked certificate.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -1886,7 +2197,7 @@ Fetch a CA, CRL, CA Chain, or non-revoked certificate.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `ca_chain` | string | no | Issuing CA Chain |
 | `certificate` | string | no | Certificate |
 | `issuer_id` | string | no | ID of the issuer |
@@ -1904,7 +2215,7 @@ Fetch a CA, CRL, CA Chain, or non-revoked certificate.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -1912,7 +2223,7 @@ Fetch a CA, CRL, CA Chain, or non-revoked certificate.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `ca_chain` | string | no | Issuing CA Chain |
 | `certificate` | string | no | Certificate |
 | `issuer_id` | string | no | ID of the issuer |
@@ -1930,7 +2241,7 @@ Fetch a CA, CRL, CA Chain, or non-revoked certificate.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -1938,7 +2249,7 @@ Fetch a CA, CRL, CA Chain, or non-revoked certificate.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `ca_chain` | string | no | Issuing CA Chain |
 | `certificate` | string | no | Certificate |
 | `issuer_id` | string | no | ID of the issuer |
@@ -1956,7 +2267,7 @@ Fetch a CA, CRL, CA Chain, or non-revoked certificate.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -1964,7 +2275,7 @@ Fetch a CA, CRL, CA Chain, or non-revoked certificate.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `ca_chain` | string | no | Issuing CA Chain |
 | `certificate` | string | no | Certificate |
 | `issuer_id` | string | no | ID of the issuer |
@@ -1982,7 +2293,7 @@ Fetch a CA, CRL, CA Chain, or non-revoked certificate.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -1990,7 +2301,7 @@ Fetch a CA, CRL, CA Chain, or non-revoked certificate.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `ca_chain` | string | no | Issuing CA Chain |
 | `certificate` | string | no | Certificate |
 | `issuer_id` | string | no | ID of the issuer |
@@ -2008,7 +2319,7 @@ Fetch a CA, CRL, CA Chain, or non-revoked certificate.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -2016,7 +2327,7 @@ Fetch a CA, CRL, CA Chain, or non-revoked certificate.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `ca_chain` | string | no | Issuing CA Chain |
 | `certificate` | string | no | Certificate |
 | `issuer_id` | string | no | ID of the issuer |
@@ -2034,7 +2345,7 @@ Fetch a CA, CRL, CA Chain, or non-revoked certificate.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -2042,7 +2353,7 @@ Fetch a CA, CRL, CA Chain, or non-revoked certificate.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `ca_chain` | string | no | Issuing CA Chain |
 | `certificate` | string | no | Certificate |
 | `issuer_id` | string | no | ID of the issuer |
@@ -2060,7 +2371,7 @@ Fetch a CA, CRL, CA Chain, or non-revoked certificate.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `serial` | string | path | yes | Certificate serial number, in colon- or hyphen-separated octal |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -2069,7 +2380,7 @@ Fetch a CA, CRL, CA Chain, or non-revoked certificate.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `ca_chain` | string | no | Issuing CA Chain |
 | `certificate` | string | no | Certificate |
 | `issuer_id` | string | no | ID of the issuer |
@@ -2087,7 +2398,7 @@ Fetch a CA, CRL, CA Chain, or non-revoked certificate.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `serial` | string | path | yes | Certificate serial number, in colon- or hyphen-separated octal |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -2096,7 +2407,7 @@ Fetch a CA, CRL, CA Chain, or non-revoked certificate.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `ca_chain` | string | no | Issuing CA Chain |
 | `certificate` | string | no | Certificate |
 | `issuer_id` | string | no | ID of the issuer |
@@ -2114,7 +2425,7 @@ Fetch a CA, CRL, CA Chain, or non-revoked certificate.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `serial` | string | path | yes | Certificate serial number, in colon- or hyphen-separated octal |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -2123,7 +2434,7 @@ Fetch a CA, CRL, CA Chain, or non-revoked certificate.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `ca_chain` | string | no | Issuing CA Chain |
 | `certificate` | string | no | Certificate |
 | `issuer_id` | string | no | ID of the issuer |
@@ -2139,7 +2450,7 @@ Fetch a CA, CRL, CA Chain, or non-revoked certificate.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 | `list` | string (true) | query | yes | Must be set to `true` |
 
@@ -2148,7 +2459,7 @@ Fetch a CA, CRL, CA Chain, or non-revoked certificate.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `keys` | array | no | A list of keys |
 
 ### GET /{pki_mount_path}/certs/revocation-queue
@@ -2160,7 +2471,7 @@ List all pending, cross-cluster revocations known to the local cluster.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 | `list` | string (true) | query | yes | Must be set to `true` |
 
@@ -2177,7 +2488,7 @@ List all revoked serial numbers within the local cluster
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 | `list` | string (true) | query | yes | Must be set to `true` |
 
@@ -2186,7 +2497,7 @@ List all revoked serial numbers within the local cluster
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `keys` | array | no | List of Keys |
 
 ### GET /{pki_mount_path}/certs/unified-revoked
@@ -2198,7 +2509,7 @@ List all revoked serial numbers within this cluster's unified storage area.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 | `list` | string (true) | query | yes | Must be set to `true` |
 
@@ -2207,7 +2518,7 @@ List all revoked serial numbers within this cluster's unified storage area.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `key_info` | string | no | Key information |
 | `keys` | array | no | List of Keys |
 
@@ -2220,7 +2531,7 @@ Configuration of ACME Endpoints
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -2236,13 +2547,13 @@ Configuration of ACME Endpoints
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `allow_role_ext_key_usage` | boolean (default: False) | no | whether the ExtKeyUsage field from a role is used, defaults to false meaning that certificate will be signed with ServerAuth. |
 | `allowed_issuers` | array (default: ['*']) | no | which issuers are allowed for use with ACME; by default, this will only be the primary (default) issuer |
 | `allowed_roles` | array (default: ['*']) | no | which roles are allowed for use with ACME; by default via '*', these will be all roles including sign-verbatim; when concrete role names are specified, any default_directory_policy role must be included to allow usage of the default acme directories under /pki/acme/directory and /pki/issuer/:issuer_id/acme/directory. |
@@ -2265,7 +2576,7 @@ Modifies the current configuration for automatic tidy execution.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -2273,22 +2584,22 @@ Modifies the current configuration for automatic tidy execution.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `acme_account_safety_buffer` | integer | no | Safety buffer after creation after which accounts lacking orders are revoked |
 | `enabled` | boolean | no | Specifies whether automatic tidy is enabled or not |
 | `interval_duration` | integer | no | Specifies the duration between automatic tidy operation |
 | `issuer_safety_buffer` | integer | no | Issuer safety buffer |
-| `maintain_stored_certificate_counts` | boolean | no | |
+| `maintain_stored_certificate_counts` | boolean | no |  |
 | `pause_duration` | string | no | Duration to pause between tidying certificates |
-| `publish_stored_certificate_count_metrics` | boolean | no | |
-| `revocation_queue_safety_buffer` | integer | no | |
+| `publish_stored_certificate_count_metrics` | boolean | no |  |
+| `revocation_queue_safety_buffer` | integer | no |  |
 | `safety_buffer` | integer | no | Safety buffer time duration |
 | `tidy_acme` | boolean | no | Tidy Unused Acme Accounts, and Orders |
 | `tidy_cert_store` | boolean | no | Specifies whether to tidy up the certificate store |
-| `tidy_cross_cluster_revoked_certs` | boolean | no | |
+| `tidy_cross_cluster_revoked_certs` | boolean | no |  |
 | `tidy_expired_issuers` | boolean | no | Specifies whether tidy expired issuers |
-| `tidy_move_legacy_ca_bundle` | boolean | no | |
-| `tidy_revocation_queue` | boolean | no | |
+| `tidy_move_legacy_ca_bundle` | boolean | no |  |
+| `tidy_revocation_queue` | boolean | no |  |
 | `tidy_revoked_cert_issuer_associations` | boolean | no | Specifies whether to associate revoked certificates with their corresponding issuers |
 | `tidy_revoked_certs` | boolean | no | Specifies whether to remove all invalid and expired certificates from storage |
 
@@ -2301,13 +2612,13 @@ Modifies the current configuration for automatic tidy execution.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `acme_account_safety_buffer` | integer (default: 2592000) | no | The amount of time that must pass after creation that an account with no orders is marked revoked, and the amount of time after being marked revoked or deactivated. |
 | `enabled` | boolean | no | Set to true to enable automatic tidy operations. |
 | `interval_duration` | integer (default: 43200) | no | Interval at which to run an auto-tidy operation. This is the time between tidy invocations (after one finishes to the start of the next). Running a manual tidy will reset this duration. |
@@ -2332,22 +2643,22 @@ Modifies the current configuration for automatic tidy execution.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `acme_account_safety_buffer` | integer | no | Safety buffer after creation after which accounts lacking orders are revoked |
 | `enabled` | boolean | no | Specifies whether automatic tidy is enabled or not |
 | `interval_duration` | integer | no | Specifies the duration between automatic tidy operation |
 | `issuer_safety_buffer` | integer | no | Issuer safety buffer |
-| `maintain_stored_certificate_counts` | boolean | no | |
+| `maintain_stored_certificate_counts` | boolean | no |  |
 | `pause_duration` | string | no | Duration to pause between tidying certificates |
-| `publish_stored_certificate_count_metrics` | boolean | no | |
-| `revocation_queue_safety_buffer` | integer | no | |
+| `publish_stored_certificate_count_metrics` | boolean | no |  |
+| `revocation_queue_safety_buffer` | integer | no |  |
 | `safety_buffer` | integer | no | Safety buffer time duration |
 | `tidy_acme` | boolean | no | Tidy Unused Acme Accounts, and Orders |
 | `tidy_cert_store` | boolean | no | Specifies whether to tidy up the certificate store |
 | `tidy_cross_cluster_revoked_certs` | boolean | no | Tidy the cross-cluster revoked certificate store |
 | `tidy_expired_issuers` | boolean | no | Specifies whether tidy expired issuers |
-| `tidy_move_legacy_ca_bundle` | boolean | no | |
-| `tidy_revocation_queue` | boolean | no | |
+| `tidy_move_legacy_ca_bundle` | boolean | no |  |
+| `tidy_revocation_queue` | boolean | no |  |
 | `tidy_revoked_cert_issuer_associations` | boolean | no | Specifies whether to associate revoked certificates with their corresponding issuers |
 | `tidy_revoked_certs` | boolean | no | Specifies whether to remove all invalid and expired certificates from storage |
 
@@ -2360,13 +2671,13 @@ Set the CA certificate and private key used for generated credentials.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `pem_bundle` | string | no | PEM-format, concatenated unencrypted secret key and certificate. |
 
 #### Responses
@@ -2374,7 +2685,7 @@ Set the CA certificate and private key used for generated credentials.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `existing_issuers` | array | no | Existing issuers specified as part of the import bundle of this request |
 | `existing_keys` | array | no | Existing keys specified as part of the import bundle of this request |
 | `imported_issuers` | array | no | Net-new issuers imported as a part of this request |
@@ -2390,7 +2701,7 @@ Set cluster-local configuration, including address to this PR cluster.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -2398,7 +2709,7 @@ Set cluster-local configuration, including address to this PR cluster.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `aia_path` | string | no | Optional URI to this mount's AIA distribution point; may refer to an external non-Vault responder. This is for resolving AIA URLs and providing the {{cluster_aia_path}} template parameter and will not be used for other purposes. As such, unlike path above, this could safely be an insecure transit mechanism (like HTTP without TLS). For example: <http://cdn.example.com/pr1/pki> |
 | `path` | string | no | Canonical URI to this mount on this performance replication cluster's external address. This is for resolving AIA URLs and providing the {{cluster_path}} template parameter but might be used for other purposes in the future. This should only point back to this particular PR replica and should not ever point to another PR cluster. It may point to any node in the PR replica, including standby nodes, and need not always point to the active node. For example: <https://pr1.vault.example.com:8200/v1/pki> |
 
@@ -2411,13 +2722,13 @@ Set cluster-local configuration, including address to this PR cluster.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `aia_path` | string | no | Optional URI to this mount's AIA distribution point; may refer to an external non-Vault responder. This is for resolving AIA URLs and providing the {{cluster_aia_path}} template parameter and will not be used for other purposes. As such, unlike path above, this could safely be an insecure transit mechanism (like HTTP without TLS). For example: <http://cdn.example.com/pr1/pki> |
 | `path` | string | no | Canonical URI to this mount on this performance replication cluster's external address. This is for resolving AIA URLs and providing the {{cluster_path}} template parameter but might be used for other purposes in the future. This should only point back to this particular PR replica and should not ever point to another PR cluster. It may point to any node in the PR replica, including standby nodes, and need not always point to the active node. For example: <https://pr1.vault.example.com:8200/v1/pki> |
 
@@ -2426,7 +2737,7 @@ Set cluster-local configuration, including address to this PR cluster.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `aia_path` | string | no | Optional URI to this mount's AIA distribution point; may refer to an external non-Vault responder. This is for resolving AIA URLs and providing the {{cluster_aia_path}} template parameter and will not be used for other purposes. As such, unlike path above, this could safely be an insecure transit mechanism (like HTTP without TLS). For example: <http://cdn.example.com/pr1/pki> |
 | `path` | string | no | Canonical URI to this mount on this performance replication cluster's external address. This is for resolving AIA URLs and providing the {{cluster_path}} template parameter but might be used for other purposes in the future. This should only point back to this particular PR replica and should not ever point to another PR cluster. It may point to any node in the PR replica, including standby nodes, and need not always point to the active node. For example: <https://pr1.vault.example.com:8200/v1/pki> |
 
@@ -2439,7 +2750,7 @@ Configure the CRL expiration.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -2447,7 +2758,7 @@ Configure the CRL expiration.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `auto_rebuild` | boolean | no | If set to true, enables automatic rebuilding of the CRL |
 | `auto_rebuild_grace_period` | string | no | The time before the CRL expires to automatically rebuild it, when enabled. Must be shorter than the CRL expiry. Defaults to 12h. |
 | `cross_cluster_revocation` | boolean | no | Whether to enable a global, cross-cluster revocation queue. Must be used with auto_rebuild=true. |
@@ -2469,13 +2780,13 @@ Configure the CRL expiration.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `auto_rebuild` | boolean | no | If set to true, enables automatic rebuilding of the CRL |
 | `auto_rebuild_grace_period` | string (default: 12h) | no | The time before the CRL expires to automatically rebuild it, when enabled. Must be shorter than the CRL expiry. Defaults to 12h. |
 | `cross_cluster_revocation` | boolean | no | Whether to enable a global, cross-cluster revocation queue. Must be used with auto_rebuild=true. |
@@ -2493,7 +2804,7 @@ Configure the CRL expiration.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `auto_rebuild` | boolean | no | If set to true, enables automatic rebuilding of the CRL |
 | `auto_rebuild_grace_period` | string (default: 12h) | no | The time before the CRL expires to automatically rebuild it, when enabled. Must be shorter than the CRL expiry. Defaults to 12h. |
 | `cross_cluster_revocation` | boolean | no | Whether to enable a global, cross-cluster revocation queue. Must be used with auto_rebuild=true. |
@@ -2515,7 +2826,7 @@ Read and set the default issuer certificate for signing.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -2523,7 +2834,7 @@ Read and set the default issuer certificate for signing.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `default` | string | no | Reference (name or identifier) to the default issuer. |
 | `default_follows_latest_issuer` | boolean | no | Whether the default issuer should automatically follow the latest generated or imported issuer. Defaults to false. |
 
@@ -2536,13 +2847,13 @@ Read and set the default issuer certificate for signing.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `default` | string | no | Reference (name or identifier) to the default issuer. |
 | `default_follows_latest_issuer` | boolean (default: False) | no | Whether the default issuer should automatically follow the latest generated or imported issuer. Defaults to false. |
 
@@ -2551,7 +2862,7 @@ Read and set the default issuer certificate for signing.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `default` | string | no | Reference (name or identifier) to the default issuer. |
 | `default_follows_latest_issuer` | boolean | no | Whether the default issuer should automatically follow the latest generated or imported issuer. Defaults to false. |
 
@@ -2564,7 +2875,7 @@ Read and set the default key used for signing
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -2572,7 +2883,7 @@ Read and set the default key used for signing
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `default` | string | no | Reference (name or identifier) to the default issuer. |
 
 ### POST /{pki_mount_path}/config/keys
@@ -2584,13 +2895,13 @@ Read and set the default key used for signing
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `default` | string | no | Reference (name or identifier) of the default key. |
 
 #### Responses
@@ -2598,7 +2909,7 @@ Read and set the default key used for signing
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `default` | string | no | Reference (name or identifier) to the default issuer. |
 
 ### GET /{pki_mount_path}/config/urls
@@ -2610,7 +2921,7 @@ Set the URLs for the issuing CA, CRL distribution points, and OCSP servers.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -2618,7 +2929,7 @@ Set the URLs for the issuing CA, CRL distribution points, and OCSP servers.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `crl_distribution_points` | array | no | Comma-separated list of URLs to be used for the CRL distribution points attribute. See also RFC 5280 Section 4.2.1.13. |
 | `enable_templating` | boolean | no | Whether or not to enable templating of the above AIA fields. When templating is enabled the special values '{{issuer_id}}' and '{{cluster_path}}' are available, but the addresses are not checked for URI validity until issuance time. This requires /config/cluster's path to be set on all PR Secondary clusters. |
 | `issuing_certificates` | array | no | Comma-separated list of URLs to be used for the issuing certificate attribute. See also RFC 5280 Section 4.2.2.1. |
@@ -2633,13 +2944,13 @@ Set the URLs for the issuing CA, CRL distribution points, and OCSP servers.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `crl_distribution_points` | array | no | Comma-separated list of URLs to be used for the CRL distribution points attribute. See also RFC 5280 Section 4.2.1.13. |
 | `enable_templating` | boolean (default: False) | no | Whether or not to enabling templating of the above AIA fields. When templating is enabled the special values '{{issuer_id}}', '{{cluster_path}}', and '{{cluster_aia_path}}' are available, but the addresses are not checked for URI validity until issuance time. Using '{{cluster_path}}' requires /config/cluster's 'path' member to be set on all PR Secondary clusters and using '{{cluster_aia_path}}' requires /config/cluster's 'aia_path' member to be set on all PR secondary clusters. |
 | `issuing_certificates` | array | no | Comma-separated list of URLs to be used for the issuing certificate attribute. See also RFC 5280 Section 4.2.2.1. |
@@ -2650,7 +2961,7 @@ Set the URLs for the issuing CA, CRL distribution points, and OCSP servers.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `crl_distribution_points` | array | no | Comma-separated list of URLs to be used for the CRL distribution points attribute. See also RFC 5280 Section 4.2.1.13. |
 | `enable_templating` | boolean (default: False) | no | Whether or not to enabling templating of the above AIA fields. When templating is enabled the special values '{{issuer_id}}' and '{{cluster_path}}' are available, but the addresses are not checked for URI validity until issuance time. This requires /config/cluster's path to be set on all PR Secondary clusters. |
 | `issuing_certificates` | array | no | Comma-separated list of URLs to be used for the issuing certificate attribute. See also RFC 5280 Section 4.2.2.1. |
@@ -2667,7 +2978,7 @@ Fetch a CA, CRL, CA Chain, or non-revoked certificate.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -2675,7 +2986,7 @@ Fetch a CA, CRL, CA Chain, or non-revoked certificate.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `ca_chain` | string | no | Issuing CA Chain |
 | `certificate` | string | no | Certificate |
 | `issuer_id` | string | no | ID of the issuer |
@@ -2693,7 +3004,7 @@ Fetch a CA, CRL, CA Chain, or non-revoked certificate.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -2701,7 +3012,7 @@ Fetch a CA, CRL, CA Chain, or non-revoked certificate.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `ca_chain` | string | no | Issuing CA Chain |
 | `certificate` | string | no | Certificate |
 | `issuer_id` | string | no | ID of the issuer |
@@ -2719,7 +3030,7 @@ Fetch a CA, CRL, CA Chain, or non-revoked certificate.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -2727,7 +3038,7 @@ Fetch a CA, CRL, CA Chain, or non-revoked certificate.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `ca_chain` | string | no | Issuing CA Chain |
 | `certificate` | string | no | Certificate |
 | `issuer_id` | string | no | ID of the issuer |
@@ -2745,7 +3056,7 @@ Fetch a CA, CRL, CA Chain, or non-revoked certificate.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -2753,7 +3064,7 @@ Fetch a CA, CRL, CA Chain, or non-revoked certificate.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `ca_chain` | string | no | Issuing CA Chain |
 | `certificate` | string | no | Certificate |
 | `issuer_id` | string | no | ID of the issuer |
@@ -2769,7 +3080,7 @@ Force a rebuild of the CRL.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -2777,7 +3088,7 @@ Force a rebuild of the CRL.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `success` | boolean | no | Whether rotation was successful |
 
 ### GET /{pki_mount_path}/crl/rotate-delta
@@ -2789,7 +3100,7 @@ Force a rebuild of the delta CRL.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -2797,7 +3108,7 @@ Force a rebuild of the delta CRL.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `success` | boolean | no | Whether rotation was successful |
 
 ### GET /{pki_mount_path}/eab
@@ -2809,7 +3120,7 @@ list external account bindings to be used for ACME
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 | `list` | string (true) | query | yes | Must be set to `true` |
 
@@ -2818,7 +3129,7 @@ list external account bindings to be used for ACME
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `key_info` | object | no | EAB details keyed by the eab key id |
 | `keys` | array | no | A list of unused eab keys |
 
@@ -2831,7 +3142,7 @@ Delete an external account binding id prior to its use within an ACME account
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `key_id` | string | path | yes | EAB key identifier |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -2848,13 +3159,13 @@ Generate a new CSR and private key used for signing.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `add_basic_constraints` | boolean | no | Whether to add a Basic Constraints extension with CA: true. Only needed as a workaround in some compatibility scenarios with Active Directory Certificate Services. |
 | `alt_names` | string | no | The requested Subject Alternative Names, if any, in a comma-delimited list. May contain both DNS names and email addresses. |
 | `common_name` | string | no | The requested common name; if you want more than one, specify the alternative names in the alt_names map. If not specified when signing, the common name will be taken from the CSR; other names must still be specified in alt_names or ip_sans. |
@@ -2889,7 +3200,7 @@ Generate a new CSR and private key used for signing.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `csr` | string | no | Certificate signing request. |
 | `key_id` | string | no | Id of the key. |
 | `private_key` | string | no | Generated private key. |
@@ -2904,14 +3215,14 @@ Generate a new CSR and private key used for signing.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
-| `exported` | string (internal, exported, kms) | path | yes | Must be "internal", "exported" or "kms". If set to "exported", the generated private key will be returned. This is your *only* chance to retrieve the private key! |
+|----------|-----|--------------|--------------|----------|
+| `exported` | string (internal, exported, kms) | path | yes | Must be "internal", "exported" or "kms". If set to "exported", the generated private key will be returned. This is your \*only* chance to retrieve the private key! |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `add_basic_constraints` | boolean | no | Whether to add a Basic Constraints extension with CA: true. Only needed as a workaround in some compatibility scenarios with Active Directory Certificate Services. |
 | `alt_names` | string | no | The requested Subject Alternative Names, if any, in a comma-delimited list. May contain both DNS names and email addresses. |
 | `common_name` | string | no | The requested common name; if you want more than one, specify the alternative names in the alt_names map. If not specified when signing, the common name will be taken from the CSR; other names must still be specified in alt_names or ip_sans. |
@@ -2945,7 +3256,7 @@ Generate a new CSR and private key used for signing.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `csr` | string | no | Certificate signing request. |
 | `key_id` | string | no | Id of the key. |
 | `private_key` | string | no | Generated private key. |
@@ -2960,13 +3271,13 @@ Provide the signed intermediate CA cert.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `certificate` | string | no | PEM-format certificate. This must be a CA certificate with a public key matching the previously-generated key from the generation endpoint. Additional parent CAs may be optionally appended to the bundle. |
 
 #### Responses
@@ -2974,7 +3285,7 @@ Provide the signed intermediate CA cert.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `existing_issuers` | array | no | Existing issuers specified as part of the import bundle of this request |
 | `existing_keys` | array | no | Existing keys specified as part of the import bundle of this request |
 | `imported_issuers` | array | no | Net-new issuers imported as a part of this request |
@@ -2990,14 +3301,14 @@ Request a certificate using a certain role with the provided details.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `role` | string | path | yes | The desired role with configuration for this request |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `alt_names` | string | no | The requested Subject Alternative Names, if any, in a comma-delimited list. If email protection is enabled for the role, this may contain email addresses. |
 | `common_name` | string | no | The requested common name; if you want more than one, specify the alternative names in the alt_names map. If email protection is enabled in the role, this may be an email address. |
 | `exclude_cn_from_sans` | boolean (default: False) | no | If true, the Common Name will not be included in DNS or Email Subject Alternate Names. Defaults to false (CN is included). |
@@ -3018,7 +3329,7 @@ Request a certificate using a certain role with the provided details.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `ca_chain` | array | no | Certificate Chain |
 | `certificate` | string | no | Certificate |
 | `expiration` | integer | no | Time of expiration |
@@ -3036,7 +3347,7 @@ Fetch a single issuer certificate.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `issuer_ref` | string | path | yes | Reference to a existing issuer; either "default" for the configured default issuer, an identifier or the name assigned to the issuer. |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -3045,7 +3356,7 @@ Fetch a single issuer certificate.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `ca_chain` | array | no | CA Chain |
 | `certificate` | string | no | Certificate |
 | `crl_distribution_points` | array | no | CRL Distribution Points |
@@ -3058,8 +3369,8 @@ Fetch a single issuer certificate.
 | `manual_chain` | array | no | Manual Chain |
 | `ocsp_servers` | array | no | OCSP Servers |
 | `revocation_signature_algorithm` | string | no | Revocation Signature Alogrithm |
-| `revocation_time` | integer | no | |
-| `revocation_time_rfc3339` | string | no | |
+| `revocation_time` | integer | no |  |
+| `revocation_time_rfc3339` | string | no |  |
 | `revoked` | boolean | no | Revoked |
 | `usage` | string | no | Usage |
 
@@ -3072,14 +3383,14 @@ Fetch a single issuer certificate.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `issuer_ref` | string | path | yes | Reference to a existing issuer; either "default" for the configured default issuer, an identifier or the name assigned to the issuer. |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `crl_distribution_points` | array | no | Comma-separated list of URLs to be used for the CRL distribution points attribute. See also RFC 5280 Section 4.2.1.13. |
 | `enable_aia_url_templating` | boolean (default: False) | no | Whether or not to enabling templating of the above AIA fields. When templating is enabled the special values '{{issuer_id}}', '{{cluster_path}}', '{{cluster_aia_path}}' are available, but the addresses are not checked for URL validity until issuance time. Using '{{cluster_path}}' requires /config/cluster's 'path' member to be set on all PR Secondary clusters and using '{{cluster_aia_path}}' requires /config/cluster's 'aia_path' member to be set on all PR secondary clusters. |
 | `issuer_name` | string | no | Provide a name to the generated or existing issuer, the name must be unique across all issuers and not be the reserved value 'default' |
@@ -3095,7 +3406,7 @@ Fetch a single issuer certificate.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `ca_chain` | array | no | CA Chain |
 | `certificate` | string | no | Certificate |
 | `crl_distribution_points` | array | no | CRL Distribution Points |
@@ -3108,8 +3419,8 @@ Fetch a single issuer certificate.
 | `manual_chain` | array | no | Manual Chain |
 | `ocsp_servers` | array | no | OCSP Servers |
 | `revocation_signature_algorithm` | string | no | Revocation Signature Alogrithm |
-| `revocation_time` | integer | no | |
-| `revocation_time_rfc3339` | string | no | |
+| `revocation_time` | integer | no |  |
+| `revocation_time_rfc3339` | string | no |  |
 | `revoked` | boolean | no | Revoked |
 | `usage` | string | no | Usage |
 
@@ -3122,7 +3433,7 @@ Fetch a single issuer certificate.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `issuer_ref` | string | path | yes | Reference to a existing issuer; either "default" for the configured default issuer, an identifier or the name assigned to the issuer. |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -3141,7 +3452,7 @@ An endpoint implementing the standard ACME protocol
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `issuer_ref` | string | path | yes | Reference to an existing issuer name or issuer id |
 | `kid` | string | path | yes | The key identifier provided by the CA |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
@@ -3149,7 +3460,7 @@ An endpoint implementing the standard ACME protocol
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `payload` | string | no | ACME request 'payload' value |
 | `protected` | string | no | ACME request 'protected' value |
 | `signature` | string | no | ACME request 'signature' value |
@@ -3169,7 +3480,7 @@ An endpoint implementing the standard ACME protocol
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `auth_id` | string | path | yes | ACME authorization identifier value |
 | `issuer_ref` | string | path | yes | Reference to an existing issuer name or issuer id |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
@@ -3177,7 +3488,7 @@ An endpoint implementing the standard ACME protocol
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `payload` | string | no | ACME request 'payload' value |
 | `protected` | string | no | ACME request 'protected' value |
 | `signature` | string | no | ACME request 'signature' value |
@@ -3197,7 +3508,7 @@ An endpoint implementing the standard ACME protocol
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `auth_id` | string | path | yes | ACME authorization identifier value |
 | `challenge_type` | string | path | yes | ACME challenge type |
 | `issuer_ref` | string | path | yes | Reference to an existing issuer name or issuer id |
@@ -3206,7 +3517,7 @@ An endpoint implementing the standard ACME protocol
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `payload` | string | no | ACME request 'payload' value |
 | `protected` | string | no | ACME request 'protected' value |
 | `signature` | string | no | ACME request 'signature' value |
@@ -3226,7 +3537,7 @@ An endpoint implementing the standard ACME protocol
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `issuer_ref` | string | path | yes | Reference to an existing issuer name or issuer id |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -3245,14 +3556,14 @@ An endpoint implementing the standard ACME protocol
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `issuer_ref` | string | path | yes | Reference to an existing issuer name or issuer id |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `payload` | string | no | ACME request 'payload' value |
 | `protected` | string | no | ACME request 'protected' value |
 | `signature` | string | no | ACME request 'signature' value |
@@ -3270,7 +3581,7 @@ Generate external account bindings to be used for ACME
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `issuer_ref` | string | path | yes | Reference to an existing issuer name or issuer id |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -3279,7 +3590,7 @@ Generate external account bindings to be used for ACME
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `acme_directory` | string | no | The ACME directory to which the key belongs |
 | `created_on` | string | no | An RFC3339 formatted date time when the EAB token was created |
 | `id` | string | no | The EAB key identifier |
@@ -3297,7 +3608,7 @@ An endpoint implementing the standard ACME protocol
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `issuer_ref` | string | path | yes | Reference to an existing issuer name or issuer id |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -3316,14 +3627,14 @@ An endpoint implementing the standard ACME protocol
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `issuer_ref` | string | path | yes | Reference to an existing issuer name or issuer id |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `payload` | string | no | ACME request 'payload' value |
 | `protected` | string | no | ACME request 'protected' value |
 | `signature` | string | no | ACME request 'signature' value |
@@ -3343,7 +3654,7 @@ An endpoint implementing the standard ACME protocol
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `issuer_ref` | string | path | yes | Reference to an existing issuer name or issuer id |
 | `order_id` | string | path | yes | The ACME order identifier to fetch |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
@@ -3351,7 +3662,7 @@ An endpoint implementing the standard ACME protocol
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `payload` | string | no | ACME request 'payload' value |
 | `protected` | string | no | ACME request 'protected' value |
 | `signature` | string | no | ACME request 'signature' value |
@@ -3371,7 +3682,7 @@ An endpoint implementing the standard ACME protocol
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `issuer_ref` | string | path | yes | Reference to an existing issuer name or issuer id |
 | `order_id` | string | path | yes | The ACME order identifier to fetch |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
@@ -3379,7 +3690,7 @@ An endpoint implementing the standard ACME protocol
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `payload` | string | no | ACME request 'payload' value |
 | `protected` | string | no | ACME request 'protected' value |
 | `signature` | string | no | ACME request 'signature' value |
@@ -3399,7 +3710,7 @@ An endpoint implementing the standard ACME protocol
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `issuer_ref` | string | path | yes | Reference to an existing issuer name or issuer id |
 | `order_id` | string | path | yes | The ACME order identifier to fetch |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
@@ -3407,7 +3718,7 @@ An endpoint implementing the standard ACME protocol
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `payload` | string | no | ACME request 'payload' value |
 | `protected` | string | no | ACME request 'protected' value |
 | `signature` | string | no | ACME request 'signature' value |
@@ -3427,14 +3738,14 @@ An endpoint implementing the standard ACME protocol
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `issuer_ref` | string | path | yes | Reference to an existing issuer name or issuer id |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `payload` | string | no | ACME request 'payload' value |
 | `protected` | string | no | ACME request 'protected' value |
 | `signature` | string | no | ACME request 'signature' value |
@@ -3454,14 +3765,14 @@ An endpoint implementing the standard ACME protocol
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `issuer_ref` | string | path | yes | Reference to an existing issuer name or issuer id |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `payload` | string | no | ACME request 'payload' value |
 | `protected` | string | no | ACME request 'protected' value |
 | `signature` | string | no | ACME request 'signature' value |
@@ -3481,7 +3792,7 @@ Fetch an issuer's Certificate Revocation Log (CRL).
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `issuer_ref` | string | path | yes | Reference to a existing issuer; either "default" for the configured default issuer, an identifier or the name assigned to the issuer. |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -3490,8 +3801,8 @@ Fetch an issuer's Certificate Revocation Log (CRL).
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
-| `crl` | string | no | |
+|----------|-----|--------------|----------|
+| `crl` | string | no |  |
 
 ### GET /{pki_mount_path}/issuer/{issuer_ref}/crl/delta
 
@@ -3504,7 +3815,7 @@ Fetch an issuer's Certificate Revocation Log (CRL).
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `issuer_ref` | string | path | yes | Reference to a existing issuer; either "default" for the configured default issuer, an identifier or the name assigned to the issuer. |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -3513,8 +3824,8 @@ Fetch an issuer's Certificate Revocation Log (CRL).
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
-| `crl` | string | no | |
+|----------|-----|--------------|----------|
+| `crl` | string | no |  |
 
 ### GET /{pki_mount_path}/issuer/{issuer_ref}/crl/delta/der
 
@@ -3527,7 +3838,7 @@ Fetch an issuer's Certificate Revocation Log (CRL).
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `issuer_ref` | string | path | yes | Reference to a existing issuer; either "default" for the configured default issuer, an identifier or the name assigned to the issuer. |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -3536,8 +3847,8 @@ Fetch an issuer's Certificate Revocation Log (CRL).
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
-| `crl` | string | no | |
+|----------|-----|--------------|----------|
+| `crl` | string | no |  |
 
 ### GET /{pki_mount_path}/issuer/{issuer_ref}/crl/delta/pem
 
@@ -3550,7 +3861,7 @@ Fetch an issuer's Certificate Revocation Log (CRL).
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `issuer_ref` | string | path | yes | Reference to a existing issuer; either "default" for the configured default issuer, an identifier or the name assigned to the issuer. |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -3559,8 +3870,8 @@ Fetch an issuer's Certificate Revocation Log (CRL).
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
-| `crl` | string | no | |
+|----------|-----|--------------|----------|
+| `crl` | string | no |  |
 
 ### GET /{pki_mount_path}/issuer/{issuer_ref}/crl/der
 
@@ -3573,7 +3884,7 @@ Fetch an issuer's Certificate Revocation Log (CRL).
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `issuer_ref` | string | path | yes | Reference to a existing issuer; either "default" for the configured default issuer, an identifier or the name assigned to the issuer. |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -3582,8 +3893,8 @@ Fetch an issuer's Certificate Revocation Log (CRL).
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
-| `crl` | string | no | |
+|----------|-----|--------------|----------|
+| `crl` | string | no |  |
 
 ### GET /{pki_mount_path}/issuer/{issuer_ref}/crl/pem
 
@@ -3596,7 +3907,7 @@ Fetch an issuer's Certificate Revocation Log (CRL).
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `issuer_ref` | string | path | yes | Reference to a existing issuer; either "default" for the configured default issuer, an identifier or the name assigned to the issuer. |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -3605,8 +3916,8 @@ Fetch an issuer's Certificate Revocation Log (CRL).
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
-| `crl` | string | no | |
+|----------|-----|--------------|----------|
+| `crl` | string | no |  |
 
 ### GET /{pki_mount_path}/issuer/{issuer_ref}/der
 
@@ -3619,7 +3930,7 @@ Fetch a single issuer certificate.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `issuer_ref` | string | path | yes | Reference to a existing issuer; either "default" for the configured default issuer, an identifier or the name assigned to the issuer. |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -3628,7 +3939,7 @@ Fetch a single issuer certificate.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `ca_chain` | array | no | CA Chain |
 | `certificate` | string | no | Certificate |
 | `issuer_id` | string | no | Issuer Id |
@@ -3645,7 +3956,7 @@ Request a certificate using a certain role with the provided details.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `issuer_ref` | string | path | yes | Reference to a existing issuer; either "default" for the configured default issuer, an identifier or the name assigned to the issuer. |
 | `role` | string | path | yes | The desired role with configuration for this request |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
@@ -3653,7 +3964,7 @@ Request a certificate using a certain role with the provided details.
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `alt_names` | string | no | The requested Subject Alternative Names, if any, in a comma-delimited list. If email protection is enabled for the role, this may contain email addresses. |
 | `common_name` | string | no | The requested common name; if you want more than one, specify the alternative names in the alt_names map. If email protection is enabled in the role, this may be an email address. |
 | `exclude_cn_from_sans` | boolean (default: False) | no | If true, the Common Name will not be included in DNS or Email Subject Alternate Names. Defaults to false (CN is included). |
@@ -3673,7 +3984,7 @@ Request a certificate using a certain role with the provided details.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `ca_chain` | array | no | Certificate Chain |
 | `certificate` | string | no | Certificate |
 | `expiration` | integer | no | Time of expiration |
@@ -3693,7 +4004,7 @@ Fetch a single issuer certificate.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `issuer_ref` | string | path | yes | Reference to a existing issuer; either "default" for the configured default issuer, an identifier or the name assigned to the issuer. |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -3702,7 +4013,7 @@ Fetch a single issuer certificate.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `ca_chain` | array | no | CA Chain |
 | `certificate` | string | no | Certificate |
 | `issuer_id` | string | no | Issuer Id |
@@ -3721,7 +4032,7 @@ Fetch a single issuer certificate.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `issuer_ref` | string | path | yes | Reference to a existing issuer; either "default" for the configured default issuer, an identifier or the name assigned to the issuer. |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -3730,7 +4041,7 @@ Fetch a single issuer certificate.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `ca_chain` | array | no | CA Chain |
 | `certificate` | string | no | Certificate |
 | `issuer_id` | string | no | Issuer Id |
@@ -3747,14 +4058,14 @@ Combine and sign with the provided issuer different CRLs
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `issuer_ref` | string | path | yes | Reference to a existing issuer; either "default" for the configured default issuer, an identifier or the name assigned to the issuer. |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `crl_number` | integer | no | The sequence number to be written within the CRL Number extension. |
 | `crls` | array | no | A list of PEM encoded CRLs to combine, originally signed by the requested issuer. |
 | `delta_crl_base_number` | integer (default: -1) | no | Using a zero or greater value specifies the base CRL revision number to encode within a Delta CRL indicator extension, otherwise the extension will not be added. |
@@ -3766,7 +4077,7 @@ Combine and sign with the provided issuer different CRLs
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `crl` | string | no | CRL |
 
 ### POST /{pki_mount_path}/issuer/{issuer_ref}/revoke
@@ -3778,7 +4089,7 @@ Revoke the specified issuer certificate.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `issuer_ref` | string | path | yes | Reference to a existing issuer; either "default" for the configured default issuer, an identifier or the name assigned to the issuer. |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -3787,7 +4098,7 @@ Revoke the specified issuer certificate.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `ca_chain` | array | no | Certificate Authority Chain |
 | `certificate` | string | no | Certificate |
 | `crl_distribution_points` | array | no | Specifies the URL values for the CRL Distribution Points field |
@@ -3795,7 +4106,7 @@ Revoke the specified issuer certificate.
 | `issuer_name` | string | no | Name of the issuer |
 | `issuing_certificates` | array | no | Specifies the URL values for the Issuing Certificate field |
 | `key_id` | string | no | ID of the Key |
-| `leaf_not_after_behavior` | string | no | |
+| `leaf_not_after_behavior` | string | no |  |
 | `manual_chain` | array | no | Manual Chain |
 | `ocsp_servers` | array | no | Specifies the URL values for the OCSP Servers field |
 | `revocation_signature_algorithm` | string | no | Which signature algorithm to use when building CRLs |
@@ -3815,7 +4126,7 @@ An endpoint implementing the standard ACME protocol
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `issuer_ref` | string | path | yes | Reference to an existing issuer name or issuer id |
 | `kid` | string | path | yes | The key identifier provided by the CA |
 | `role` | string | path | yes | The desired role for the acme request |
@@ -3824,7 +4135,7 @@ An endpoint implementing the standard ACME protocol
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `payload` | string | no | ACME request 'payload' value |
 | `protected` | string | no | ACME request 'protected' value |
 | `signature` | string | no | ACME request 'signature' value |
@@ -3844,7 +4155,7 @@ An endpoint implementing the standard ACME protocol
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `auth_id` | string | path | yes | ACME authorization identifier value |
 | `issuer_ref` | string | path | yes | Reference to an existing issuer name or issuer id |
 | `role` | string | path | yes | The desired role for the acme request |
@@ -3853,7 +4164,7 @@ An endpoint implementing the standard ACME protocol
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `payload` | string | no | ACME request 'payload' value |
 | `protected` | string | no | ACME request 'protected' value |
 | `signature` | string | no | ACME request 'signature' value |
@@ -3873,7 +4184,7 @@ An endpoint implementing the standard ACME protocol
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `auth_id` | string | path | yes | ACME authorization identifier value |
 | `challenge_type` | string | path | yes | ACME challenge type |
 | `issuer_ref` | string | path | yes | Reference to an existing issuer name or issuer id |
@@ -3883,7 +4194,7 @@ An endpoint implementing the standard ACME protocol
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `payload` | string | no | ACME request 'payload' value |
 | `protected` | string | no | ACME request 'protected' value |
 | `signature` | string | no | ACME request 'signature' value |
@@ -3903,7 +4214,7 @@ An endpoint implementing the standard ACME protocol
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `issuer_ref` | string | path | yes | Reference to an existing issuer name or issuer id |
 | `role` | string | path | yes | The desired role for the acme request |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
@@ -3923,7 +4234,7 @@ An endpoint implementing the standard ACME protocol
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `issuer_ref` | string | path | yes | Reference to an existing issuer name or issuer id |
 | `role` | string | path | yes | The desired role for the acme request |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
@@ -3931,7 +4242,7 @@ An endpoint implementing the standard ACME protocol
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `payload` | string | no | ACME request 'payload' value |
 | `protected` | string | no | ACME request 'protected' value |
 | `signature` | string | no | ACME request 'signature' value |
@@ -3949,7 +4260,7 @@ Generate external account bindings to be used for ACME
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `issuer_ref` | string | path | yes | Reference to an existing issuer name or issuer id |
 | `role` | string | path | yes | The desired role for the acme request |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
@@ -3959,7 +4270,7 @@ Generate external account bindings to be used for ACME
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `acme_directory` | string | no | The ACME directory to which the key belongs |
 | `created_on` | string | no | An RFC3339 formatted date time when the EAB token was created |
 | `id` | string | no | The EAB key identifier |
@@ -3977,7 +4288,7 @@ An endpoint implementing the standard ACME protocol
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `issuer_ref` | string | path | yes | Reference to an existing issuer name or issuer id |
 | `role` | string | path | yes | The desired role for the acme request |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
@@ -3997,7 +4308,7 @@ An endpoint implementing the standard ACME protocol
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `issuer_ref` | string | path | yes | Reference to an existing issuer name or issuer id |
 | `role` | string | path | yes | The desired role for the acme request |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
@@ -4005,7 +4316,7 @@ An endpoint implementing the standard ACME protocol
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `payload` | string | no | ACME request 'payload' value |
 | `protected` | string | no | ACME request 'protected' value |
 | `signature` | string | no | ACME request 'signature' value |
@@ -4025,7 +4336,7 @@ An endpoint implementing the standard ACME protocol
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `issuer_ref` | string | path | yes | Reference to an existing issuer name or issuer id |
 | `order_id` | string | path | yes | The ACME order identifier to fetch |
 | `role` | string | path | yes | The desired role for the acme request |
@@ -4034,7 +4345,7 @@ An endpoint implementing the standard ACME protocol
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `payload` | string | no | ACME request 'payload' value |
 | `protected` | string | no | ACME request 'protected' value |
 | `signature` | string | no | ACME request 'signature' value |
@@ -4054,7 +4365,7 @@ An endpoint implementing the standard ACME protocol
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `issuer_ref` | string | path | yes | Reference to an existing issuer name or issuer id |
 | `order_id` | string | path | yes | The ACME order identifier to fetch |
 | `role` | string | path | yes | The desired role for the acme request |
@@ -4063,7 +4374,7 @@ An endpoint implementing the standard ACME protocol
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `payload` | string | no | ACME request 'payload' value |
 | `protected` | string | no | ACME request 'protected' value |
 | `signature` | string | no | ACME request 'signature' value |
@@ -4083,7 +4394,7 @@ An endpoint implementing the standard ACME protocol
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `issuer_ref` | string | path | yes | Reference to an existing issuer name or issuer id |
 | `order_id` | string | path | yes | The ACME order identifier to fetch |
 | `role` | string | path | yes | The desired role for the acme request |
@@ -4092,7 +4403,7 @@ An endpoint implementing the standard ACME protocol
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `payload` | string | no | ACME request 'payload' value |
 | `protected` | string | no | ACME request 'protected' value |
 | `signature` | string | no | ACME request 'signature' value |
@@ -4112,7 +4423,7 @@ An endpoint implementing the standard ACME protocol
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `issuer_ref` | string | path | yes | Reference to an existing issuer name or issuer id |
 | `role` | string | path | yes | The desired role for the acme request |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
@@ -4120,7 +4431,7 @@ An endpoint implementing the standard ACME protocol
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `payload` | string | no | ACME request 'payload' value |
 | `protected` | string | no | ACME request 'protected' value |
 | `signature` | string | no | ACME request 'signature' value |
@@ -4140,7 +4451,7 @@ An endpoint implementing the standard ACME protocol
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `issuer_ref` | string | path | yes | Reference to an existing issuer name or issuer id |
 | `role` | string | path | yes | The desired role for the acme request |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
@@ -4148,7 +4459,7 @@ An endpoint implementing the standard ACME protocol
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `payload` | string | no | ACME request 'payload' value |
 | `protected` | string | no | ACME request 'protected' value |
 | `signature` | string | no | ACME request 'signature' value |
@@ -4166,14 +4477,14 @@ Issue an intermediate CA certificate based on the provided CSR.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `issuer_ref` | string | path | yes | Reference to a existing issuer; either "default" for the configured default issuer, an identifier or the name assigned to the issuer. |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `alt_names` | string | no | The requested Subject Alternative Names, if any, in a comma-delimited list. May contain both DNS names and email addresses. |
 | `common_name` | string | no | The requested common name; if you want more than one, specify the alternative names in the alt_names map. If not specified when signing, the common name will be taken from the CSR; other names must still be specified in alt_names or ip_sans. |
 | `country` | array | no | If set, Country will be set to this value. |
@@ -4207,7 +4518,7 @@ Issue an intermediate CA certificate based on the provided CSR.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `ca_chain` | array | no | CA Chain |
 | `certificate` | string | no | Certificate |
 | `expiration` | integer | no | Expiration Time |
@@ -4223,14 +4534,14 @@ Generate and sign a CRL based on the provided parameters.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `issuer_ref` | string | path | yes | Reference to a existing issuer; either "default" for the configured default issuer, an identifier or the name assigned to the issuer. |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `crl_number` | integer | no | The sequence number to be written within the CRL Number extension. |
 | `delta_crl_base_number` | integer (default: -1) | no | Using a zero or greater value specifies the base CRL revision number to encode within a Delta CRL indicator extension, otherwise the extension will not be added. |
 | `extensions` | array | no | A list of maps containing extensions with keys id (string), critical (bool), value (string) |
@@ -4243,7 +4554,7 @@ Generate and sign a CRL based on the provided parameters.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `crl` | string | no | CRL |
 
 ### POST /{pki_mount_path}/issuer/{issuer_ref}/sign-self-issued
@@ -4255,14 +4566,14 @@ Re-issue a self-signed certificate based on the provided certificate.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `issuer_ref` | string | path | yes | Reference to a existing issuer; either "default" for the configured default issuer, an identifier or the name assigned to the issuer. |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `certificate` | string | no | PEM-format self-issued certificate to be signed. |
 | `require_matching_certificate_algorithms` | boolean (default: False) | no | If true, require the public key algorithm of the signer to match that of the self issued certificate. |
 
@@ -4271,7 +4582,7 @@ Re-issue a self-signed certificate based on the provided certificate.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `certificate` | string | no | Certificate |
 | `issuing_ca` | string | no | Issuing CA |
 
@@ -4284,14 +4595,14 @@ Issue a certificate directly based on the provided CSR.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `issuer_ref` | string | path | yes | Reference to a existing issuer; either "default" for the configured default issuer, an identifier or the name assigned to the issuer. |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `alt_names` | string | no | The requested Subject Alternative Names, if any, in a comma-delimited list. If email protection is enabled for the role, this may contain email addresses. |
 | `common_name` | string | no | The requested common name; if you want more than one, specify the alternative names in the alt_names map. If email protection is enabled in the role, this may be an email address. |
 | `csr` | string (default: ) | no | PEM-format CSR to be signed. Values will be taken verbatim from the CSR, except for basic constraints. |
@@ -4318,7 +4629,7 @@ Issue a certificate directly based on the provided CSR.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `ca_chain` | array | no | Certificate Chain |
 | `certificate` | string | no | Certificate |
 | `expiration` | integer | no | Time of expiration |
@@ -4336,7 +4647,7 @@ Issue a certificate directly based on the provided CSR.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `issuer_ref` | string | path | yes | Reference to a existing issuer; either "default" for the configured default issuer, an identifier or the name assigned to the issuer. |
 | `role` | string | path | yes | The desired role with configuration for this request |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
@@ -4344,7 +4655,7 @@ Issue a certificate directly based on the provided CSR.
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `alt_names` | string | no | The requested Subject Alternative Names, if any, in a comma-delimited list. If email protection is enabled for the role, this may contain email addresses. |
 | `common_name` | string | no | The requested common name; if you want more than one, specify the alternative names in the alt_names map. If email protection is enabled in the role, this may be an email address. |
 | `csr` | string (default: ) | no | PEM-format CSR to be signed. Values will be taken verbatim from the CSR, except for basic constraints. |
@@ -4370,7 +4681,7 @@ Issue a certificate directly based on the provided CSR.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `ca_chain` | array | no | Certificate Chain |
 | `certificate` | string | no | Certificate |
 | `expiration` | integer | no | Time of expiration |
@@ -4388,7 +4699,7 @@ Request certificates using a certain role with the provided details.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `issuer_ref` | string | path | yes | Reference to a existing issuer; either "default" for the configured default issuer, an identifier or the name assigned to the issuer. |
 | `role` | string | path | yes | The desired role with configuration for this request |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
@@ -4396,7 +4707,7 @@ Request certificates using a certain role with the provided details.
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `alt_names` | string | no | The requested Subject Alternative Names, if any, in a comma-delimited list. If email protection is enabled for the role, this may contain email addresses. |
 | `common_name` | string | no | The requested common name; if you want more than one, specify the alternative names in the alt_names map. If email protection is enabled in the role, this may be an email address. |
 | `csr` | string (default: ) | no | PEM-format CSR to be signed. |
@@ -4417,7 +4728,7 @@ Request certificates using a certain role with the provided details.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `ca_chain` | array | no | Certificate Chain |
 | `certificate` | string | no | Certificate |
 | `expiration` | integer | no | Time of expiration |
@@ -4437,7 +4748,7 @@ Fetch an issuer's Certificate Revocation Log (CRL).
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `issuer_ref` | string | path | yes | Reference to a existing issuer; either "default" for the configured default issuer, an identifier or the name assigned to the issuer. |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -4446,8 +4757,8 @@ Fetch an issuer's Certificate Revocation Log (CRL).
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
-| `crl` | string | no | |
+|----------|-----|--------------|----------|
+| `crl` | string | no |  |
 
 ### GET /{pki_mount_path}/issuer/{issuer_ref}/unified-crl/delta
 
@@ -4460,7 +4771,7 @@ Fetch an issuer's Certificate Revocation Log (CRL).
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `issuer_ref` | string | path | yes | Reference to a existing issuer; either "default" for the configured default issuer, an identifier or the name assigned to the issuer. |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -4469,8 +4780,8 @@ Fetch an issuer's Certificate Revocation Log (CRL).
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
-| `crl` | string | no | |
+|----------|-----|--------------|----------|
+| `crl` | string | no |  |
 
 ### GET /{pki_mount_path}/issuer/{issuer_ref}/unified-crl/delta/der
 
@@ -4483,7 +4794,7 @@ Fetch an issuer's Certificate Revocation Log (CRL).
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `issuer_ref` | string | path | yes | Reference to a existing issuer; either "default" for the configured default issuer, an identifier or the name assigned to the issuer. |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -4492,8 +4803,8 @@ Fetch an issuer's Certificate Revocation Log (CRL).
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
-| `crl` | string | no | |
+|----------|-----|--------------|----------|
+| `crl` | string | no |  |
 
 ### GET /{pki_mount_path}/issuer/{issuer_ref}/unified-crl/delta/pem
 
@@ -4506,7 +4817,7 @@ Fetch an issuer's Certificate Revocation Log (CRL).
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `issuer_ref` | string | path | yes | Reference to a existing issuer; either "default" for the configured default issuer, an identifier or the name assigned to the issuer. |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -4515,8 +4826,8 @@ Fetch an issuer's Certificate Revocation Log (CRL).
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
-| `crl` | string | no | |
+|----------|-----|--------------|----------|
+| `crl` | string | no |  |
 
 ### GET /{pki_mount_path}/issuer/{issuer_ref}/unified-crl/der
 
@@ -4529,7 +4840,7 @@ Fetch an issuer's Certificate Revocation Log (CRL).
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `issuer_ref` | string | path | yes | Reference to a existing issuer; either "default" for the configured default issuer, an identifier or the name assigned to the issuer. |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -4538,8 +4849,8 @@ Fetch an issuer's Certificate Revocation Log (CRL).
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
-| `crl` | string | no | |
+|----------|-----|--------------|----------|
+| `crl` | string | no |  |
 
 ### GET /{pki_mount_path}/issuer/{issuer_ref}/unified-crl/pem
 
@@ -4552,7 +4863,7 @@ Fetch an issuer's Certificate Revocation Log (CRL).
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `issuer_ref` | string | path | yes | Reference to a existing issuer; either "default" for the configured default issuer, an identifier or the name assigned to the issuer. |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -4561,8 +4872,8 @@ Fetch an issuer's Certificate Revocation Log (CRL).
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
-| `crl` | string | no | |
+|----------|-----|--------------|----------|
+| `crl` | string | no |  |
 
 ### GET /{pki_mount_path}/issuers
 
@@ -4573,7 +4884,7 @@ Fetch a list of CA certificates.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 | `list` | string (true) | query | yes | Must be set to `true` |
 
@@ -4582,7 +4893,7 @@ Fetch a list of CA certificates.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `key_info` | object | no | Key info with issuer name |
 | `keys` | array | no | A list of keys |
 
@@ -4595,14 +4906,14 @@ Generate a new CSR and private key used for signing.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
-| `exported` | string (internal, exported, kms) | path | yes | Must be "internal", "exported" or "kms". If set to "exported", the generated private key will be returned. This is your *only* chance to retrieve the private key! |
+|----------|-----|--------------|--------------|----------|
+| `exported` | string (internal, exported, kms) | path | yes | Must be "internal", "exported" or "kms". If set to "exported", the generated private key will be returned. This is your \*only* chance to retrieve the private key! |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `add_basic_constraints` | boolean | no | Whether to add a Basic Constraints extension with CA: true. Only needed as a workaround in some compatibility scenarios with Active Directory Certificate Services. |
 | `alt_names` | string | no | The requested Subject Alternative Names, if any, in a comma-delimited list. May contain both DNS names and email addresses. |
 | `common_name` | string | no | The requested common name; if you want more than one, specify the alternative names in the alt_names map. If not specified when signing, the common name will be taken from the CSR; other names must still be specified in alt_names or ip_sans. |
@@ -4636,7 +4947,7 @@ Generate a new CSR and private key used for signing.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `csr` | string | no | Certificate signing request. |
 | `key_id` | string | no | Id of the key. |
 | `private_key` | string | no | Generated private key. |
@@ -4651,15 +4962,14 @@ Generate a new CA certificate and private key used for signing.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-
-| ---------- | ----- | -------------- | -------------- | ---------- |
-| `exported` | string (internal, exported, kms) | path | yes | Must be "internal", "exported" or "kms". If set to "exported", the generated private key will be returned. This is your *only* chance to retrieve the private key! |
+|----------|-----|--------------|--------------|----------|
+| `exported` | string (internal, exported, kms) | path | yes | Must be "internal", "exported" or "kms". If set to "exported", the generated private key will be returned. This is your \*only* chance to retrieve the private key! |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `alt_names` | string | no | The requested Subject Alternative Names, if any, in a comma-delimited list. May contain both DNS names and email addresses. |
 | `common_name` | string | no | The requested common name; if you want more than one, specify the alternative names in the alt_names map. If not specified when signing, the common name will be taken from the CSR; other names must still be specified in alt_names or ip_sans. |
 | `country` | array | no | If set, Country will be set to this value. |
@@ -4696,7 +5006,7 @@ Generate a new CA certificate and private key used for signing.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `certificate` | string | no | The generated self-signed CA certificate. |
 | `expiration` | integer | no | The expiration of the given issuer. |
 | `issuer_id` | string | no | The ID of the issuer |
@@ -4716,13 +5026,13 @@ Import the specified issuing certificates.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `pem_bundle` | string | no | PEM-format, concatenated unencrypted secret-key (optional) and certificates. |
 
 #### Responses
@@ -4730,7 +5040,7 @@ Import the specified issuing certificates.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `existing_issuers` | array | no | Existing issuers specified as part of the import bundle of this request |
 | `existing_keys` | array | no | Existing keys specified as part of the import bundle of this request |
 | `imported_issuers` | array | no | Net-new issuers imported as a part of this request |
@@ -4746,13 +5056,13 @@ Import the specified issuing certificates.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `pem_bundle` | string | no | PEM-format, concatenated unencrypted secret-key (optional) and certificates. |
 
 #### Responses
@@ -4760,7 +5070,7 @@ Import the specified issuing certificates.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `existing_issuers` | array | no | Existing issuers specified as part of the import bundle of this request |
 | `existing_keys` | array | no | Existing keys specified as part of the import bundle of this request |
 | `imported_issuers` | array | no | Net-new issuers imported as a part of this request |
@@ -4776,7 +5086,7 @@ Fetch a single issuer key
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `key_ref` | string | path | yes | Reference to key; either "default" for the configured default key, an identifier of a key, or the name assigned to the key. |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -4785,7 +5095,7 @@ Fetch a single issuer key
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `key_id` | string | no | Key Id |
 | `key_name` | string | no | Key Name |
 | `key_type` | string | no | Key Type |
@@ -4802,14 +5112,14 @@ Fetch a single issuer key
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `key_ref` | string | path | yes | Reference to key; either "default" for the configured default key, an identifier of a key, or the name assigned to the key. |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `key_name` | string | no | Human-readable name for this key. |
 
 #### Responses
@@ -4817,7 +5127,7 @@ Fetch a single issuer key
 **204**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `key_id` | string | no | Key Id |
 | `key_name` | string | no | Key Name |
 | `key_type` | string | no | Key Type |
@@ -4831,7 +5141,7 @@ Fetch a single issuer key
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `key_ref` | string | path | yes | Reference to key; either "default" for the configured default key, an identifier of a key, or the name assigned to the key. |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -4848,7 +5158,7 @@ Fetch a list of all issuer keys
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 | `list` | string (true) | query | yes | Must be set to `true` |
 
@@ -4857,7 +5167,7 @@ Fetch a list of all issuer keys
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `key_info` | object | no | Key info with issuer name |
 | `keys` | array | no | A list of keys |
 
@@ -4870,13 +5180,13 @@ Generate a new private key used for signing.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `key_bits` | integer (default: 0) | no | The number of bits to use. Allowed values are 0 (universal default); with rsa key_type: 2048 (default), 3072, or 4096; with ec key_type: 224, 256 (default), 384, or 521; ignored with ed25519. |
 | `key_name` | string | no | Optional name to be used for this key |
 | `key_type` | string (rsa, ec, ed25519, gost3410-256-paramset-a, gost3410-256-paramset-b, gost3410-256-paramset-c, gost3410-256-paramset-d, gost3410-512-paramset-a, gost3410-512-paramset-b, gost3410-512-paramset-c) (default: rsa) | no | The type of key to use; defaults to RSA. "rsa" "ec", "ed25519", "gost3410-256-paramset-a", "gost3410-256-paramset-b", "gost3410-256-paramset-c", "gost3410-256-paramset-d", "gost3410-512-paramset-a", "gost3410-512-paramset-b", "gost3410-512-paramset-c" are the only valid values. |
@@ -4888,7 +5198,7 @@ Generate a new private key used for signing.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `key_id` | string | no | ID assigned to this key. |
 | `key_name` | string | no | Name assigned to this key. |
 | `key_type` | string | no | The type of key to use; defaults to RSA. "rsa" "ec", "ed25519", "gost3410-256-paramset-a", "gost3410-256-paramset-b", "gost3410-256-paramset-c", "gost3410-256-paramset-d", "gost3410-512-paramset-a", "gost3410-512-paramset-b", "gost3410-512-paramset-c" are the only valid values. |
@@ -4903,13 +5213,13 @@ Generate a new private key used for signing.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `key_bits` | integer (default: 0) | no | The number of bits to use. Allowed values are 0 (universal default); with rsa key_type: 2048 (default), 3072, or 4096; with ec key_type: 224, 256 (default), 384, or 521; ignored with ed25519. |
 | `key_name` | string | no | Optional name to be used for this key |
 | `key_type` | string (rsa, ec, ed25519, gost3410-256-paramset-a, gost3410-256-paramset-b, gost3410-256-paramset-c, gost3410-256-paramset-d, gost3410-512-paramset-a, gost3410-512-paramset-b, gost3410-512-paramset-c) (default: rsa) | no | The type of key to use; defaults to RSA. "rsa" "ec", "ed25519", "gost3410-256-paramset-a", "gost3410-256-paramset-b", "gost3410-256-paramset-c", "gost3410-256-paramset-d", "gost3410-512-paramset-a", "gost3410-512-paramset-b", "gost3410-512-paramset-c" are the only valid values. |
@@ -4921,7 +5231,7 @@ Generate a new private key used for signing.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `key_id` | string | no | ID assigned to this key. |
 | `key_name` | string | no | Name assigned to this key. |
 | `key_type` | string | no | The type of key to use; defaults to RSA. "rsa" "ec", "ed25519", "gost3410-256-paramset-a", "gost3410-256-paramset-b", "gost3410-256-paramset-c", "gost3410-256-paramset-d", "gost3410-512-paramset-a", "gost3410-512-paramset-b", "gost3410-512-paramset-c" are the only valid values. |
@@ -4936,13 +5246,13 @@ Generate a new private key used for signing.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `key_bits` | integer (default: 0) | no | The number of bits to use. Allowed values are 0 (universal default); with rsa key_type: 2048 (default), 3072, or 4096; with ec key_type: 224, 256 (default), 384, or 521; ignored with ed25519. |
 | `key_name` | string | no | Optional name to be used for this key |
 | `key_type` | string (rsa, ec, ed25519, gost3410-256-paramset-a, gost3410-256-paramset-b, gost3410-256-paramset-c, gost3410-256-paramset-d, gost3410-512-paramset-a, gost3410-512-paramset-b, gost3410-512-paramset-c) (default: rsa) | no | The type of key to use; defaults to RSA. "rsa" "ec", "ed25519", "gost3410-256-paramset-a", "gost3410-256-paramset-b", "gost3410-256-paramset-c", "gost3410-256-paramset-d", "gost3410-512-paramset-a", "gost3410-512-paramset-b", "gost3410-512-paramset-c" are the only valid values. |
@@ -4954,7 +5264,7 @@ Generate a new private key used for signing.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `key_id` | string | no | ID assigned to this key. |
 | `key_name` | string | no | Name assigned to this key. |
 | `key_type` | string | no | The type of key to use; defaults to RSA. "rsa" "ec", "ed25519", "gost3410-256-paramset-a", "gost3410-256-paramset-b", "gost3410-256-paramset-c", "gost3410-256-paramset-d", "gost3410-512-paramset-a", "gost3410-512-paramset-b", "gost3410-512-paramset-c" are the only valid values. |
@@ -4969,13 +5279,13 @@ Import the specified key.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `key_name` | string | no | Optional name to be used for this key |
 | `pem_bundle` | string | no | PEM-format, unencrypted secret key |
 
@@ -4984,7 +5294,7 @@ Import the specified key.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `key_id` | string | no | ID assigned to this key. |
 | `key_name` | string | no | Name assigned to this key. |
 | `key_type` | string | no | The type of key to use; defaults to RSA. "rsa" "ec", "ed25519", "gost3410-256-paramset-a", "gost3410-256-paramset-b", "gost3410-256-paramset-c", "gost3410-256-paramset-d", "gost3410-512-paramset-a", "gost3410-512-paramset-b", "gost3410-512-paramset-c" are the only valid values. |
@@ -5000,7 +5310,7 @@ Query a certificate's revocation status through OCSP'
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -5018,7 +5328,7 @@ Query a certificate's revocation status through OCSP'
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `req` | string | path | yes | base-64 encoded ocsp request |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -5035,13 +5345,13 @@ Revoke a certificate by serial number or with explicit certificate. When calling
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `certificate` | string | no | Certificate to revoke in PEM format; must be signed by an issuer in this mount. |
 | `serial_number` | string | no | Certificate serial number, in colon- or hyphen-separated octal |
 
@@ -5050,7 +5360,7 @@ Revoke a certificate by serial number or with explicit certificate. When calling
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `revocation_time` | integer | no | Revocation Time |
 | `revocation_time_rfc3339` | string | no | Revocation Time |
 | `state` | string | no | Revocation State |
@@ -5064,13 +5374,13 @@ Revoke a certificate by serial number or with explicit certificate. When calling
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `certificate` | string | no | Certificate to revoke in PEM format; must be signed by an issuer in this mount. |
 | `private_key` | string | no | Key to use to verify revocation permission; must be in PEM format. |
 | `serial_number` | string | no | Certificate serial number, in colon- or hyphen-separated octal |
@@ -5080,7 +5390,7 @@ Revoke a certificate by serial number or with explicit certificate. When calling
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `revocation_time` | integer | no | Revocation Time |
 | `revocation_time_rfc3339` | string | no | Revocation Time |
 | `state` | string | no | Revocation State |
@@ -5094,7 +5404,7 @@ List the existing roles in this backend
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 | `list` | string (true) | query | yes | Must be set to `true` |
 
@@ -5103,7 +5413,7 @@ List the existing roles in this backend
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `keys` | array | no | List of roles |
 
 ### GET /{pki_mount_path}/roles/{name}
@@ -5115,7 +5425,7 @@ Manage the roles that can be created with this backend.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the role |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -5124,7 +5434,7 @@ Manage the roles that can be created with this backend.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `allow_any_name` | boolean | no | If set, clients can request certificates for any domain, regardless of allowed_domains restrictions. See the documentation for more information. |
 | `allow_bare_domains` | boolean | no | If set, clients can request certificates for the base domains themselves, e.g. "example.com" of domains listed in allowed_domains. This is a separate option as in some cases this can be considered a security threat. See the documentation for more information. |
 | `allow_glob_domains` | boolean | no | If set, domains specified in allowed_domains can include shell-style glob patterns, e.g. "ftp*.example.com". See the documentation for more information. |
@@ -5183,14 +5493,14 @@ Manage the roles that can be created with this backend.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the role |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `allow_any_name` | boolean | no | If set, clients can request certificates for any domain, regardless of allowed_domains restrictions. See the documentation for more information. |
 | `allow_bare_domains` | boolean | no | If set, clients can request certificates for the base domains themselves, e.g. "example.com" of domains listed in allowed_domains. This is a separate option as in some cases this can be considered a security threat. See the documentation for more information. |
 | `allow_glob_domains` | boolean | no | If set, domains specified in allowed_domains can include shell-style glob patterns, e.g. "ftp*.example.com". See the documentation for more information. |
@@ -5245,7 +5555,7 @@ Manage the roles that can be created with this backend.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `allow_any_name` | boolean | no | If set, clients can request certificates for any domain, regardless of allowed_domains restrictions. See the documentation for more information. |
 | `allow_bare_domains` | boolean | no | If set, clients can request certificates for the base domains themselves, e.g. "example.com" of domains listed in allowed_domains. This is a separate option as in some cases this can be considered a security threat. See the documentation for more information. |
 | `allow_glob_domains` | boolean | no | If set, domains specified in allowed_domains can include shell-style glob patterns, e.g. "ftp*.example.com". See the documentation for more information. |
@@ -5304,7 +5614,7 @@ Manage the roles that can be created with this backend.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the role |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -5323,7 +5633,7 @@ An endpoint implementing the standard ACME protocol
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `kid` | string | path | yes | The key identifier provided by the CA |
 | `role` | string | path | yes | The desired role for the acme request |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
@@ -5331,7 +5641,7 @@ An endpoint implementing the standard ACME protocol
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `payload` | string | no | ACME request 'payload' value |
 | `protected` | string | no | ACME request 'protected' value |
 | `signature` | string | no | ACME request 'signature' value |
@@ -5351,7 +5661,7 @@ An endpoint implementing the standard ACME protocol
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `auth_id` | string | path | yes | ACME authorization identifier value |
 | `role` | string | path | yes | The desired role for the acme request |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
@@ -5359,7 +5669,7 @@ An endpoint implementing the standard ACME protocol
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `payload` | string | no | ACME request 'payload' value |
 | `protected` | string | no | ACME request 'protected' value |
 | `signature` | string | no | ACME request 'signature' value |
@@ -5379,7 +5689,7 @@ An endpoint implementing the standard ACME protocol
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `auth_id` | string | path | yes | ACME authorization identifier value |
 | `challenge_type` | string | path | yes | ACME challenge type |
 | `role` | string | path | yes | The desired role for the acme request |
@@ -5388,7 +5698,7 @@ An endpoint implementing the standard ACME protocol
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `payload` | string | no | ACME request 'payload' value |
 | `protected` | string | no | ACME request 'protected' value |
 | `signature` | string | no | ACME request 'signature' value |
@@ -5408,7 +5718,7 @@ An endpoint implementing the standard ACME protocol
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `role` | string | path | yes | The desired role for the acme request |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -5427,14 +5737,14 @@ An endpoint implementing the standard ACME protocol
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `role` | string | path | yes | The desired role for the acme request |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `payload` | string | no | ACME request 'payload' value |
 | `protected` | string | no | ACME request 'protected' value |
 | `signature` | string | no | ACME request 'signature' value |
@@ -5452,7 +5762,7 @@ Generate external account bindings to be used for ACME
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `role` | string | path | yes | The desired role for the acme request |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -5461,7 +5771,7 @@ Generate external account bindings to be used for ACME
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `acme_directory` | string | no | The ACME directory to which the key belongs |
 | `created_on` | string | no | An RFC3339 formatted date time when the EAB token was created |
 | `id` | string | no | The EAB key identifier |
@@ -5479,7 +5789,7 @@ An endpoint implementing the standard ACME protocol
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `role` | string | path | yes | The desired role for the acme request |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -5498,14 +5808,14 @@ An endpoint implementing the standard ACME protocol
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `role` | string | path | yes | The desired role for the acme request |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `payload` | string | no | ACME request 'payload' value |
 | `protected` | string | no | ACME request 'protected' value |
 | `signature` | string | no | ACME request 'signature' value |
@@ -5525,7 +5835,7 @@ An endpoint implementing the standard ACME protocol
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `order_id` | string | path | yes | The ACME order identifier to fetch |
 | `role` | string | path | yes | The desired role for the acme request |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
@@ -5533,7 +5843,7 @@ An endpoint implementing the standard ACME protocol
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `payload` | string | no | ACME request 'payload' value |
 | `protected` | string | no | ACME request 'protected' value |
 | `signature` | string | no | ACME request 'signature' value |
@@ -5553,7 +5863,7 @@ An endpoint implementing the standard ACME protocol
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `order_id` | string | path | yes | The ACME order identifier to fetch |
 | `role` | string | path | yes | The desired role for the acme request |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
@@ -5561,7 +5871,7 @@ An endpoint implementing the standard ACME protocol
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `payload` | string | no | ACME request 'payload' value |
 | `protected` | string | no | ACME request 'protected' value |
 | `signature` | string | no | ACME request 'signature' value |
@@ -5581,7 +5891,7 @@ An endpoint implementing the standard ACME protocol
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `order_id` | string | path | yes | The ACME order identifier to fetch |
 | `role` | string | path | yes | The desired role for the acme request |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
@@ -5589,7 +5899,7 @@ An endpoint implementing the standard ACME protocol
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `payload` | string | no | ACME request 'payload' value |
 | `protected` | string | no | ACME request 'protected' value |
 | `signature` | string | no | ACME request 'signature' value |
@@ -5609,14 +5919,14 @@ An endpoint implementing the standard ACME protocol
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `role` | string | path | yes | The desired role for the acme request |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `payload` | string | no | ACME request 'payload' value |
 | `protected` | string | no | ACME request 'protected' value |
 | `signature` | string | no | ACME request 'signature' value |
@@ -5636,14 +5946,14 @@ An endpoint implementing the standard ACME protocol
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `role` | string | path | yes | The desired role for the acme request |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `payload` | string | no | ACME request 'payload' value |
 | `protected` | string | no | ACME request 'protected' value |
 | `signature` | string | no | ACME request 'signature' value |
@@ -5663,7 +5973,7 @@ Deletes the root CA key to allow a new one to be generated.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -5679,15 +5989,14 @@ Generate a new CA certificate and private key used for signing.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-
-| ---------- | ----- | -------------- | -------------- | ---------- |
-| `exported` | string (internal, exported, kms) | path | yes | Must be "internal", "exported" or "kms". If set to "exported", the generated private key will be returned. This is your *only* chance to retrieve the private key! |
+|----------|-----|--------------|--------------|----------|
+| `exported` | string (internal, exported, kms) | path | yes | Must be "internal", "exported" or "kms". If set to "exported", the generated private key will be returned. This is your \*only* chance to retrieve the private key! |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `alt_names` | string | no | The requested Subject Alternative Names, if any, in a comma-delimited list. May contain both DNS names and email addresses. |
 | `common_name` | string | no | The requested common name; if you want more than one, specify the alternative names in the alt_names map. If not specified when signing, the common name will be taken from the CSR; other names must still be specified in alt_names or ip_sans. |
 | `country` | array | no | If set, Country will be set to this value. |
@@ -5724,7 +6033,7 @@ Generate a new CA certificate and private key used for signing.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `certificate` | string | no | The generated self-signed CA certificate. |
 | `expiration` | integer | no | The expiration of the given issuer. |
 | `issuer_id` | string | no | The ID of the issuer |
@@ -5744,13 +6053,13 @@ Read and set the default issuer certificate for signing.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `default` | string (default: next) | no | Reference (name or identifier) to the default issuer. |
 
 #### Responses
@@ -5758,7 +6067,7 @@ Read and set the default issuer certificate for signing.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `default` | string | no | Reference (name or identifier) to the default issuer. |
 | `default_follows_latest_issuer` | boolean | no | Whether the default issuer should automatically follow the latest generated or imported issuer. Defaults to false. |
 
@@ -5771,15 +6080,14 @@ Generate a new CA certificate and private key used for signing.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-
-| ---------- | ----- | -------------- | -------------- | ---------- |
-| `exported` | string (internal, exported, kms) | path | yes | Must be "internal", "exported" or "kms". If set to "exported", the generated private key will be returned. This is your *only* chance to retrieve the private key! |
+|----------|-----|--------------|--------------|----------|
+| `exported` | string (internal, exported, kms) | path | yes | Must be "internal", "exported" or "kms". If set to "exported", the generated private key will be returned. This is your \*only* chance to retrieve the private key! |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `alt_names` | string | no | The requested Subject Alternative Names, if any, in a comma-delimited list. May contain both DNS names and email addresses. |
 | `common_name` | string | no | The requested common name; if you want more than one, specify the alternative names in the alt_names map. If not specified when signing, the common name will be taken from the CSR; other names must still be specified in alt_names or ip_sans. |
 | `country` | array | no | If set, Country will be set to this value. |
@@ -5816,7 +6124,7 @@ Generate a new CA certificate and private key used for signing.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `certificate` | string | no | The generated self-signed CA certificate. |
 | `expiration` | integer | no | The expiration of the given issuer. |
 | `issuer_id` | string | no | The ID of the issuer |
@@ -5836,13 +6144,13 @@ Issue an intermediate CA certificate based on the provided CSR.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `alt_names` | string | no | The requested Subject Alternative Names, if any, in a comma-delimited list. May contain both DNS names and email addresses. |
 | `common_name` | string | no | The requested common name; if you want more than one, specify the alternative names in the alt_names map. If not specified when signing, the common name will be taken from the CSR; other names must still be specified in alt_names or ip_sans. |
 | `country` | array | no | If set, Country will be set to this value. |
@@ -5877,7 +6185,7 @@ Issue an intermediate CA certificate based on the provided CSR.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `ca_chain` | array | no | CA Chain |
 | `certificate` | string | no | Certificate |
 | `expiration` | integer | no | Expiration Time |
@@ -5895,13 +6203,13 @@ Re-issue a self-signed certificate based on the provided certificate.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `certificate` | string | no | PEM-format self-issued certificate to be signed. |
 | `issuer_ref` | string (default: default) | no | Reference to a existing issuer; either "default" for the configured default issuer, an identifier or the name assigned to the issuer. |
 | `require_matching_certificate_algorithms` | boolean (default: False) | no | If true, require the public key algorithm of the signer to match that of the self issued certificate. |
@@ -5911,7 +6219,7 @@ Re-issue a self-signed certificate based on the provided certificate.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `certificate` | string | no | Certificate |
 | `issuing_ca` | string | no | Issuing CA |
 
@@ -5924,13 +6232,13 @@ Issue a certificate directly based on the provided CSR.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `alt_names` | string | no | The requested Subject Alternative Names, if any, in a comma-delimited list. If email protection is enabled for the role, this may contain email addresses. |
 | `common_name` | string | no | The requested common name; if you want more than one, specify the alternative names in the alt_names map. If email protection is enabled in the role, this may be an email address. |
 | `csr` | string (default: ) | no | PEM-format CSR to be signed. Values will be taken verbatim from the CSR, except for basic constraints. |
@@ -5958,7 +6266,7 @@ Issue a certificate directly based on the provided CSR.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `ca_chain` | array | no | Certificate Chain |
 | `certificate` | string | no | Certificate |
 | `expiration` | integer | no | Time of expiration |
@@ -5976,14 +6284,14 @@ Issue a certificate directly based on the provided CSR.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `role` | string | path | yes | The desired role with configuration for this request |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `alt_names` | string | no | The requested Subject Alternative Names, if any, in a comma-delimited list. If email protection is enabled for the role, this may contain email addresses. |
 | `common_name` | string | no | The requested common name; if you want more than one, specify the alternative names in the alt_names map. If email protection is enabled in the role, this may be an email address. |
 | `csr` | string (default: ) | no | PEM-format CSR to be signed. Values will be taken verbatim from the CSR, except for basic constraints. |
@@ -6010,7 +6318,7 @@ Issue a certificate directly based on the provided CSR.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `ca_chain` | array | no | Certificate Chain |
 | `certificate` | string | no | Certificate |
 | `expiration` | integer | no | Time of expiration |
@@ -6028,14 +6336,14 @@ Request certificates using a certain role with the provided details.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `role` | string | path | yes | The desired role with configuration for this request |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `alt_names` | string | no | The requested Subject Alternative Names, if any, in a comma-delimited list. If email protection is enabled for the role, this may contain email addresses. |
 | `common_name` | string | no | The requested common name; if you want more than one, specify the alternative names in the alt_names map. If email protection is enabled in the role, this may be an email address. |
 | `csr` | string (default: ) | no | PEM-format CSR to be signed. |
@@ -6057,7 +6365,7 @@ Request certificates using a certain role with the provided details.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `ca_chain` | array | no | Certificate Chain |
 | `certificate` | string | no | Certificate |
 | `expiration` | integer | no | Time of expiration |
@@ -6075,13 +6383,13 @@ Tidy up the backend by removing expired certificates, revocation information, or
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `acme_account_safety_buffer` | integer (default: 2592000) | no | The amount of time that must pass after creation that an account with no orders is marked revoked, and the amount of time after being marked revoked or deactivated. |
 | `issuer_safety_buffer` | integer (default: 31536000) | no | The amount of extra time that must have passed beyond issuer's expiration before it is removed from the backend storage. Defaults to 8760 hours (1 year). |
 | `pause_duration` | string (default: 0s) | no | The amount of time to wait between processing certificates. This allows operators to change the execution profile of tidy to take consume less resources by slowing down how long it takes to run. Note that the entire list of certificates will be stored in memory during the entire tidy operation, but resources to read/process/update existing entries will be spread out over a greater period of time. By default this is zero seconds. |
@@ -6110,7 +6418,7 @@ Cancels a currently running tidy operation.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -6118,23 +6426,23 @@ Cancels a currently running tidy operation.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `acme_account_deleted_count` | integer | no | The number of revoked acme accounts removed |
 | `acme_account_revoked_count` | integer | no | The number of unused acme accounts revoked |
 | `acme_account_safety_buffer` | integer | no | Safety buffer after creation after which accounts lacking orders are revoked |
 | `acme_orders_deleted_count` | integer | no | The number of expired, unused acme orders removed |
 | `cert_store_deleted_count` | integer | no | The number of certificate storage entries deleted |
-| `cross_revoked_cert_deleted_count` | integer | no | |
+| `cross_revoked_cert_deleted_count` | integer | no |  |
 | `current_cert_store_count` | integer | no | The number of revoked certificate entries deleted |
 | `current_revoked_cert_count` | integer | no | The number of revoked certificate entries deleted |
 | `error` | string | no | The error message |
-| `internal_backend_uuid` | string | no | |
+| `internal_backend_uuid` | string | no |  |
 | `issuer_safety_buffer` | integer | no | Issuer safety buffer |
 | `last_auto_tidy_finished` | string | no | Time the last auto-tidy operation finished |
 | `message` | string | no | Message of the operation |
-| `missing_issuer_cert_count` | integer | no | |
+| `missing_issuer_cert_count` | integer | no |  |
 | `pause_duration` | string | no | Duration to pause between tidying certificates |
-| `revocation_queue_deleted_count` | integer | no | |
+| `revocation_queue_deleted_count` | integer | no |  |
 | `revocation_queue_safety_buffer` | integer | no | Revocation queue safety buffer |
 | `revoked_cert_deleted_count` | integer | no | The number of revoked certificate entries deleted |
 | `safety_buffer` | integer | no | Safety buffer time duration |
@@ -6143,8 +6451,8 @@ Cancels a currently running tidy operation.
 | `tidy_cert_store` | boolean | no | Tidy certificate store |
 | `tidy_cross_cluster_revoked_certs` | boolean | no | Tidy the cross-cluster revoked certificate store |
 | `tidy_expired_issuers` | boolean | no | Tidy expired issuers |
-| `tidy_move_legacy_ca_bundle` | boolean | no | |
-| `tidy_revocation_queue` | boolean | no | |
+| `tidy_move_legacy_ca_bundle` | boolean | no |  |
+| `tidy_revocation_queue` | boolean | no |  |
 | `tidy_revoked_cert_issuer_associations` | boolean | no | Tidy revoked certificate issuer associations |
 | `tidy_revoked_certs` | boolean | no | Tidy revoked certificates |
 | `time_finished` | string | no | Time the operation finished |
@@ -6160,7 +6468,7 @@ Returns the status of the tidy operation.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -6168,23 +6476,23 @@ Returns the status of the tidy operation.
 **200**: OK
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `acme_account_deleted_count` | integer | no | The number of revoked acme accounts removed |
 | `acme_account_revoked_count` | integer | no | The number of unused acme accounts revoked |
 | `acme_account_safety_buffer` | integer | no | Safety buffer after creation after which accounts lacking orders are revoked |
 | `acme_orders_deleted_count` | integer | no | The number of expired, unused acme orders removed |
 | `cert_store_deleted_count` | integer | no | The number of certificate storage entries deleted |
-| `cross_revoked_cert_deleted_count` | integer | no | |
+| `cross_revoked_cert_deleted_count` | integer | no |  |
 | `current_cert_store_count` | integer | no | The number of revoked certificate entries deleted |
 | `current_revoked_cert_count` | integer | no | The number of revoked certificate entries deleted |
 | `error` | string | no | The error message |
-| `internal_backend_uuid` | string | no | |
+| `internal_backend_uuid` | string | no |  |
 | `issuer_safety_buffer` | integer | no | Issuer safety buffer |
 | `last_auto_tidy_finished` | string | no | Time the last auto-tidy operation finished |
 | `message` | string | no | Message of the operation |
-| `missing_issuer_cert_count` | integer | no | |
+| `missing_issuer_cert_count` | integer | no |  |
 | `pause_duration` | string | no | Duration to pause between tidying certificates |
-| `revocation_queue_deleted_count` | integer | no | |
+| `revocation_queue_deleted_count` | integer | no |  |
 | `revocation_queue_safety_buffer` | integer | no | Revocation queue safety buffer |
 | `revoked_cert_deleted_count` | integer | no | The number of revoked certificate entries deleted |
 | `safety_buffer` | integer | no | Safety buffer time duration |
@@ -6193,8 +6501,8 @@ Returns the status of the tidy operation.
 | `tidy_cert_store` | boolean | no | Tidy certificate store |
 | `tidy_cross_cluster_revoked_certs` | boolean | no | Tidy the cross-cluster revoked certificate store |
 | `tidy_expired_issuers` | boolean | no | Tidy expired issuers |
-| `tidy_move_legacy_ca_bundle` | boolean | no | |
-| `tidy_revocation_queue` | boolean | no | |
+| `tidy_move_legacy_ca_bundle` | boolean | no |  |
+| `tidy_revocation_queue` | boolean | no |  |
 | `tidy_revoked_cert_issuer_associations` | boolean | no | Tidy revoked certificate issuer associations |
 | `tidy_revoked_certs` | boolean | no | Tidy revoked certificates |
 | `time_finished` | string | no | Time the operation finished |
@@ -6212,7 +6520,7 @@ Fetch a CA, CRL, CA Chain, or non-revoked certificate.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -6230,7 +6538,7 @@ Fetch a CA, CRL, CA Chain, or non-revoked certificate.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -6248,7 +6556,7 @@ Fetch a CA, CRL, CA Chain, or non-revoked certificate.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -6266,7 +6574,7 @@ Fetch a CA, CRL, CA Chain, or non-revoked certificate.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -6284,7 +6592,7 @@ Query a certificate's revocation status through OCSP'
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -6302,7 +6610,7 @@ Query a certificate's revocation status through OCSP'
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `req` | string | path | yes | base-64 encoded ocsp request |
 | `pki_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -6319,13 +6627,13 @@ Configure the connection URI, username, and password to talk to RabbitMQ managem
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `rabbitmq_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `connection_uri` | string | no | RabbitMQ Management URI |
 | `password` | string | no | Password of the provided RabbitMQ management user |
 | `password_policy` | string | no | Name of the password policy to use to generate passwords for dynamic credentials. |
@@ -6346,7 +6654,7 @@ Configure the lease parameters for generated credentials
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `rabbitmq_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -6362,13 +6670,13 @@ Configure the lease parameters for generated credentials
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `rabbitmq_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `max_ttl` | integer (default: 0) | no | Duration after which the issued credentials should not be allowed to be renewed |
 | `ttl` | integer (default: 0) | no | Duration before which the issued credentials needs renewal |
 
@@ -6385,7 +6693,7 @@ Request RabbitMQ credentials for a certain role.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the role. |
 | `rabbitmq_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -6402,7 +6710,7 @@ Manage the roles that can be created with this backend.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `rabbitmq_mount_path` | string | path | yes | Path that the backend was mounted at |
 | `list` | string (true) | query | yes | Must be set to `true` |
 
@@ -6419,7 +6727,7 @@ Manage the roles that can be created with this backend.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the role. |
 | `rabbitmq_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -6436,14 +6744,14 @@ Manage the roles that can be created with this backend.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the role. |
 | `rabbitmq_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `tags` | string | no | Comma-separated list of tags for this role. |
 | `vhost_topics` | string | no | A nested map of virtual hosts and exchanges to topic permissions. |
 | `vhosts` | string | no | A map of virtual hosts to permissions. |
@@ -6461,7 +6769,7 @@ Manage the roles that can be created with this backend.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the role. |
 | `rabbitmq_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -6478,7 +6786,7 @@ Set the SSH private key used for signing certificates.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `ssh_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -6494,14 +6802,14 @@ Set the SSH private key used for signing certificates.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `ssh_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
-| `generate_signing_key` | boolean (default: True) | no | Generate SSH key pair internally rather than use the private_key and public_key fields. |
+|----------|-----|--------------|----------|
+| `generate_signing_key` | boolean (default: True) | no | Generate SSH key pair internally rather than use the private_key and public_key fields. If managed key config is provided, this field is ignored. |
 | `key_bits` | integer (default: 0) | no | Specifies the desired key bits when generating variable-length keys (such as when key_type="ssh-rsa") or which NIST P-curve to use when key_type="ec" (256, 384, or 521). |
 | `key_type` | string (default: ssh-rsa) | no | Specifies the desired key type when generating; could be a OpenSSH key type identifier (ssh-rsa, ecdsa-sha2-nistp256, ecdsa-sha2-nistp384, ecdsa-sha2-nistp521, or ssh-ed25519) or an algorithm (rsa, ec, ed25519). |
 | `managed_key_id` | string | no | The id of the managed key to use. When using a managed key, this field or managed_key_name is required. |
@@ -6522,7 +6830,7 @@ Set the SSH private key used for signing certificates.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `ssh_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -6538,7 +6846,7 @@ Assign zero address as default CIDR block for select roles.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `ssh_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -6554,13 +6862,13 @@ Assign zero address as default CIDR block for select roles.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `ssh_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `roles` | array | no | [Required] Comma separated list of role names which allows credentials to be requested for any IP address. CIDR blocks previously registered under these roles will be ignored. |
 
 #### Responses
@@ -6576,7 +6884,7 @@ Assign zero address as default CIDR block for select roles.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `ssh_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -6592,14 +6900,14 @@ Creates a credential for establishing SSH connection with the remote host.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `role` | string | path | yes | [Required] Name of the role |
 | `ssh_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `ip` | string | no | [Required] IP of the remote host |
 | `username` | string | no | [Optional] Username in remote host |
 
@@ -6616,14 +6924,14 @@ Request a certificate using a certain role with the provided details.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `role` | string | path | yes | The desired role with configuration for this request. |
 | `ssh_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `cert_type` | string (default: user) | no | Type of certificate to be created; either "user" or "host". |
 | `critical_options` | object | no | Critical options that the certificate should be signed for. |
 | `extensions` | object | no | Extensions that the certificate should be signed for. |
@@ -6646,13 +6954,13 @@ List all the roles associated with the given IP address.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `ssh_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `ip` | string | no | [Required] IP address of remote host |
 
 #### Responses
@@ -6670,7 +6978,7 @@ Retrieve the public key.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `ssh_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -6686,7 +6994,7 @@ Manage the 'roles' that can be created with this backend.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `ssh_mount_path` | string | path | yes | Path that the backend was mounted at |
 | `list` | string (true) | query | yes | Must be set to `true` |
 
@@ -6703,7 +7011,7 @@ Manage the 'roles' that can be created with this backend.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `role` | string | path | yes | [Required for all types] Name of the role being created. |
 | `ssh_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -6720,14 +7028,14 @@ Manage the 'roles' that can be created with this backend.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `role` | string | path | yes | [Required for all types] Name of the role being created. |
 | `ssh_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `algorithm_signer` | string (, default, ssh-rsa, rsa-sha2-256, rsa-sha2-512) | no | [Not applicable for OTP type] [Optional for CA type] When supplied, this value specifies a signing algorithm for the key. Possible values: ssh-rsa, rsa-sha2-256, rsa-sha2-512, default, or the empty string. |
 | `allow_bare_domains` | boolean | no | [Not applicable for OTP type] [Optional for CA type] If set, host certificates that are requested are allowed to use the base domains listed in "allowed_domains", e.g. "example.com". This is a separate option as in some cases this can be considered a security threat. |
 | `allow_empty_principals` | boolean | no | [Optional for CA type] If true, host and user certificates can be issued without any valid principals. For host certificates, this means that any domain a host claims to be will be trusted by the connecting client. For user certificates, when a CA certificate is placed in a user's AuthorizedKeys file, any principal on that certificate will be allowed to connect. When allowed_users or allowed_domains is set to \* (corresponding to the role/certificate type), allow_empty_principals=false still permits issuance. It is recommend to leave this disabled. |
@@ -6769,7 +7077,7 @@ Manage the 'roles' that can be created with this backend.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `role` | string | path | yes | [Required for all types] Name of the role being created. |
 | `ssh_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -6786,14 +7094,14 @@ Request signing an SSH key using a certain role with the provided details.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `role` | string | path | yes | The desired role with configuration for this request. |
 | `ssh_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `cert_type` | string (default: user) | no | Type of certificate to be created; either "user" or "host". |
 | `critical_options` | object | no | Critical options that the certificate should be signed for. |
 | `extensions` | object | no | Extensions that the certificate should be signed for. |
@@ -6815,7 +7123,7 @@ This endpoint removes the stored host keys used for the removed Dynamic Key feat
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `ssh_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -6833,13 +7141,13 @@ Validate the OTP provided by Vault SSH Agent.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `ssh_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `otp` | string | no | [Required] One-Time-Key that needs to be validated |
 
 #### Responses
@@ -6855,7 +7163,7 @@ Request time-based one-time use password or validate a password for a certain ke
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the key. |
 | `totp_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -6872,14 +7180,14 @@ Request time-based one-time use password or validate a password for a certain ke
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the key. |
 | `totp_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `code` | string | no | TOTP code to be validated. |
 
 #### Responses
@@ -6895,7 +7203,7 @@ Manage the keys that can be created with this backend.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `totp_mount_path` | string | path | yes | Path that the backend was mounted at |
 | `list` | string (true) | query | yes | Must be set to `true` |
 
@@ -6912,7 +7220,7 @@ Manage the keys that can be created with this backend.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the key. |
 | `totp_mount_path` | string | path | yes | Path that the backend was mounted at |
 | `list` | string | query | no | Return a list if `true` |
@@ -6930,14 +7238,14 @@ Manage the keys that can be created with this backend.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the key. |
 | `totp_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `account_name` | string | no | The name of the account associated with the key. Required if generate is true. |
 | `algorithm` | string (default: SHA1) | no | The hashing algorithm used to generate the TOTP token. Options include SHA1, SHA256 and SHA512. |
 | `digits` | integer (default: 6) | no | The number of digits in the generated TOTP token. This value can either be 6 or 8. |
@@ -6964,7 +7272,7 @@ Manage the keys that can be created with this backend.
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the key. |
 | `totp_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -6981,7 +7289,7 @@ Backup the named key
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the key |
 | `transit_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -6998,7 +7306,7 @@ Securely export named encryption or signing key
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `destination` | string | path | yes | Destination key to export to; usually the public wrapping key of another Transit instance. |
 | `source` | string | path | yes | Source key to export; could be any present key within Transit. |
 | `transit_mount_path` | string | path | yes | Path that the backend was mounted at |
@@ -7016,7 +7324,7 @@ Securely export named encryption or signing key
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `destination` | string | path | yes | Destination key to export to; usually the public wrapping key of another Transit instance. |
 | `source` | string | path | yes | Source key to export; could be any present key within Transit. |
 | `version` | string | path | yes | Optional version of the key to export, else all key versions are exported. |
@@ -7035,7 +7343,7 @@ Returns the size of the active cache
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `transit_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -7053,13 +7361,13 @@ Configures a new cache of the specified size
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `transit_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `size` | integer (default: 0) | no | Size of cache, use 0 for an unlimited cache size, defaults to 0 |
 
 #### Responses
@@ -7075,7 +7383,7 @@ Configuration common across all keys
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `transit_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
@@ -7091,13 +7399,13 @@ Configuration common across all keys
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `transit_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `disable_upsert` | boolean | no | Whether to allow automatic upserting (creation) of keys on the encrypt endpoint. |
 
 #### Responses
@@ -7113,7 +7421,7 @@ Generate a data key
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | The backend key used for encrypting the data key |
 | `plaintext` | string | path | yes | "plaintext" will return the key in both plaintext and ciphertext; "wrapped" will return the ciphertext only. |
 | `transit_mount_path` | string | path | yes | Path that the backend was mounted at |
@@ -7121,7 +7429,7 @@ Generate a data key
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `bits` | integer (default: 256) | no | Number of bits for the key; currently 128, 256, and 512 bits are supported. Defaults to 256. |
 | `context` | string | no | Context for key derivation. Required for derived keys. |
 | `key_version` | integer | no | The version of the Vault key to use for encryption of the data key. Must be 0 (for latest) or a value greater than or equal to the min_encryption_version configured on the key. |
@@ -7140,14 +7448,14 @@ Decrypt a ciphertext value using a named key
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the key |
 | `transit_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `associated_data` | string | no | When using an AEAD cipher mode, such as AES-GCM, this parameter allows passing associated data (AD/AAD) into the encryption function; this data must be passed on subsequent decryption requests but can be transited in plaintext. On successful decryption, both the ciphertext and the associated data are attested not to have been tampered with. |
 | `batch_input` | array | no | Specifies a list of items to be decrypted in a single batch. When this parameter is set, if the parameters 'ciphertext', 'context' and 'nonce' are also set, they will be ignored. Any batch output will preserve the order of the batch input. |
 | `ciphertext` | string | no | The ciphertext to decrypt, provided as returned by encrypt. |
@@ -7171,14 +7479,14 @@ blocks using a named key
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the key |
 | `transit_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `associated_data` | string | no | When using an AEAD cipher mode, such as AES-GCM, this parameter allows passing associated data (AD/AAD) into the encryption function; this data must be passed on subsequent decryption requests but can be transited in plaintext. On successful decryption, both the ciphertext and the associated data are attested not to have been tampered with. |
 | `batch_input` | array | no | Specifies a list of items to be encrypted in a single batch. When this parameter is set, if the parameters 'plaintext', 'context' and 'nonce' are also set, they will be ignored. Any batch output will preserve the order of the batch input. |
 | `context` | string | no | Base64 encoded context for key derivation. Required if key derivation is enabled |
@@ -7202,7 +7510,7 @@ Export named encryption or signing key
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the key |
 | `type` | string | path | yes | Type of key to export (encryption-key, signing-key, hmac-key, public-key) |
 | `transit_mount_path` | string | path | yes | Path that the backend was mounted at |
@@ -7220,7 +7528,7 @@ Export named encryption or signing key
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the key |
 | `type` | string | path | yes | Type of key to export (encryption-key, signing-key, hmac-key, public-key) |
 | `version` | string | path | yes | Version of the key |
@@ -7239,14 +7547,14 @@ Generate a hash sum for input data
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `transit_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
-| `algorithm` | string (default: sha2-256) | no | Algorithm to use (POST body parameter). Valid values are: *sha2-224* sha2-256 *sha2-384* sha2-512 *sha3-224* sha3-256 *sha3-384* sha3-512 *streebog-256* streebog-512 Defaults to "sha2-256". |
+|----------|-----|--------------|----------|
+| `algorithm` | string (default: sha2-256) | no | Algorithm to use (POST body parameter). Valid values are: \* sha2-224 \* sha2-256 \* sha2-384 \* sha2-512 \* sha3-224 \* sha3-256 \* sha3-384 \* sha3-512 \* streebog-256 \* streebog-512 Defaults to "sha2-256". |
 | `format` | string (default: hex) | no | Encoding format to use. Can be "hex" or "base64". Defaults to "hex". |
 | `input` | string | no | The base64-encoded input data |
 | `urlalgorithm` | string | no | Algorithm to use (POST URL parameter) |
@@ -7264,15 +7572,15 @@ Generate a hash sum for input data
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `urlalgorithm` | string | path | yes | Algorithm to use (POST URL parameter) |
 | `transit_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
-| `algorithm` | string (default: sha2-256) | no | Algorithm to use (POST body parameter). Valid values are: *sha2-224* sha2-256 *sha2-384* sha2-512 *sha3-224* sha3-256 *sha3-384* sha3-512 *streebog-256* streebog-512 Defaults to "sha2-256". |
+|----------|-----|--------------|----------|
+| `algorithm` | string (default: sha2-256) | no | Algorithm to use (POST body parameter). Valid values are: \* sha2-224 \* sha2-256 \* sha2-384 \* sha2-512 \* sha3-224 \* sha3-256 \* sha3-384 \* sha3-512 \* streebog-256 \* streebog-512 Defaults to "sha2-256". |
 | `format` | string (default: hex) | no | Encoding format to use. Can be "hex" or "base64". Defaults to "hex". |
 | `input` | string | no | The base64-encoded input data |
 
@@ -7289,15 +7597,15 @@ Generate an HMAC for input data using the named key
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | The key to use for the HMAC function |
 | `transit_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
-| `algorithm` | string (default: sha2-256) | no | Algorithm to use (POST body parameter). Valid values are: *sha2-224* sha2-256 *sha2-384* sha2-512 *sha3-224* sha3-256 *sha3-384* sha3-512 *streebog-256* streebog-512 Defaults to "sha2-256". |
+|----------|-----|--------------|----------|
+| `algorithm` | string (default: sha2-256) | no | Algorithm to use (POST body parameter). Valid values are: \* sha2-224 \* sha2-256 \* sha2-384 \* sha2-512 \* sha3-224 \* sha3-256 \* sha3-384 \* sha3-512 \* streebog-256 \* streebog-512 Defaults to "sha2-256". |
 | `batch_input` | array | no | Specifies a list of items to be processed in a single batch. When this parameter is set, if the parameter 'input' is also set, it will be ignored. Any batch output will preserve the order of the batch input. |
 | `input` | string | no | The base64-encoded input data |
 | `key_version` | integer | no | The version of the key to use for generating the HMAC. Must be 0 (for latest) or a value greater than or equal to the min_encryption_version configured on the key. |
@@ -7316,7 +7624,7 @@ Generate an HMAC for input data using the named key
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | The key to use for the HMAC function |
 | `urlalgorithm` | string | path | yes | Algorithm to use (POST URL parameter) |
 | `transit_mount_path` | string | path | yes | Path that the backend was mounted at |
@@ -7324,8 +7632,8 @@ Generate an HMAC for input data using the named key
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
-| `algorithm` | string (default: sha2-256) | no | Algorithm to use (POST body parameter). Valid values are: *sha2-224* sha2-256 *sha2-384* sha2-512 *sha3-224* sha3-256 *sha3-384* sha3-512 *streebog-256* streebog-512 Defaults to "sha2-256". |
+|----------|-----|--------------|----------|
+| `algorithm` | string (default: sha2-256) | no | Algorithm to use (POST body parameter). Valid values are: \* sha2-224 \* sha2-256 \* sha2-384 \* sha2-512 \* sha3-224 \* sha3-256 \* sha3-384 \* sha3-512 \* streebog-256 \* streebog-512 Defaults to "sha2-256". |
 | `batch_input` | array | no | Specifies a list of items to be processed in a single batch. When this parameter is set, if the parameter 'input' is also set, it will be ignored. Any batch output will preserve the order of the batch input. |
 | `input` | string | no | The base64-encoded input data |
 | `key_version` | integer | no | The version of the key to use for generating the HMAC. Must be 0 (for latest) or a value greater than or equal to the min_encryption_version configured on the key. |
@@ -7343,7 +7651,7 @@ Managed named encryption keys
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `transit_mount_path` | string | path | yes | Path that the backend was mounted at |
 | `list` | string (true) | query | yes | Must be set to `true` |
 
@@ -7360,7 +7668,7 @@ Managed named encryption keys
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the key |
 | `transit_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -7377,14 +7685,14 @@ Managed named encryption keys
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the key |
 | `transit_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `allow_plaintext_backup` | boolean | no | Enables taking a backup of the named key in plaintext format. Once set, this cannot be disabled. |
 | `auto_rotate_period` | integer (default: 0) | no | Amount of time the key should live before being automatically rotated. A value of 0 (default) disables automatic rotation for the key. |
 | `context` | string | no | Base64 encoded context for key derivation. When reading a key with key derivation enabled, if the key type supports public keys, this will return the public key for the given context. |
@@ -7409,7 +7717,7 @@ Managed named encryption keys
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the key |
 | `transit_mount_path` | string | path | yes | Path that the backend was mounted at |
 
@@ -7426,14 +7734,14 @@ Configure a named encryption key
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the key |
 | `transit_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `allow_plaintext_backup` | boolean | no | Enables taking a backup of the named key in plaintext format. Once set, this cannot be disabled. |
 | `auto_rotate_period` | integer | no | Amount of time the key should live before being automatically rotated. A value of 0 disables automatic rotation for the key. |
 | `deletion_allowed` | boolean | no | Whether to allow deletion of the key |
@@ -7454,14 +7762,14 @@ Imports an externally-generated key into a new transit key
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | The name of the key |
 | `transit_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `allow_plaintext_backup` | boolean | no | Enables taking a backup of the named key in plaintext format. Once set, this cannot be disabled. |
 | `allow_rotation` | boolean | no | True if the imported key may be rotated within Vault; false otherwise. |
 | `auto_rotate_period` | integer (default: 0) | no | Amount of time the key should live before being automatically rotated. A value of 0 (default) disables automatic rotation for the key. |
@@ -7486,14 +7794,14 @@ Imports an externally-generated key into an existing imported key
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | The name of the key |
 | `transit_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `ciphertext` | string | no | The base64-encoded ciphertext of the keys. The AES key should be encrypted using OAEP with the wrapping key and then concatenated with the import key, wrapped by the AES key. |
 | `hash_function` | string (default: SHA256) | no | The hash function used as a random oracle in the OAEP wrapping of the user-generated, ephemeral AES key. Can be one of "SHA1", "SHA224", "SHA256" (default), "SHA384", or "SHA512" |
 | `public_key` | string | no | The plaintext public key to be imported. If "ciphertext" is set, this field is ignored. |
@@ -7512,14 +7820,14 @@ Rotate named encryption key
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the key |
 | `transit_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `managed_key_id` | string | no | The UUID of the managed key to use for the new version of this transit key |
 | `managed_key_name` | string | no | The name of the managed key to use for the new version of this transit key |
 
@@ -7536,14 +7844,14 @@ Trim key versions of a named key
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the key |
 | `transit_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `min_available_version` | integer | no | The minimum available version for the key ring. All versions before this version will be permanently deleted. This value can at most be equal to the lesser of 'min_decryption_version' and 'min_encryption_version'. This is not allowed to be set when either 'min_encryption_version' or 'min_decryption_version' is set to zero. |
 
 #### Responses
@@ -7559,13 +7867,13 @@ Generate random bytes
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `transit_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `bytes` | integer (default: 32) | no | The number of bytes to generate (POST body parameter). Defaults to 32 (256 bits). |
 | `format` | string (default: base64) | no | Encoding format to use. Can be "hex" or "base64". Defaults to "base64". |
 | `source` | string (default: platform) | no | Which system to source random data from, ether "platform", "seal", or "all". |
@@ -7584,14 +7892,14 @@ Generate random bytes
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `source` | string | path | yes | Which system to source random data from, ether "platform", "seal", or "all". |
 | `transit_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `bytes` | integer (default: 32) | no | The number of bytes to generate (POST body parameter). Defaults to 32 (256 bits). |
 | `format` | string (default: base64) | no | Encoding format to use. Can be "hex" or "base64". Defaults to "base64". |
 | `urlbytes` | string | no | The number of bytes to generate (POST URL parameter) |
@@ -7609,7 +7917,7 @@ Generate random bytes
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `source` | string | path | yes | Which system to source random data from, ether "platform", "seal", or "all". |
 | `urlbytes` | string | path | yes | The number of bytes to generate (POST URL parameter) |
 | `transit_mount_path` | string | path | yes | Path that the backend was mounted at |
@@ -7617,7 +7925,7 @@ Generate random bytes
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `bytes` | integer (default: 32) | no | The number of bytes to generate (POST body parameter). Defaults to 32 (256 bits). |
 | `format` | string (default: base64) | no | Encoding format to use. Can be "hex" or "base64". Defaults to "base64". |
 
@@ -7634,14 +7942,14 @@ Generate random bytes
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `urlbytes` | string | path | yes | The number of bytes to generate (POST URL parameter) |
 | `transit_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `bytes` | integer (default: 32) | no | The number of bytes to generate (POST body parameter). Defaults to 32 (256 bits). |
 | `format` | string (default: base64) | no | Encoding format to use. Can be "hex" or "base64". Defaults to "base64". |
 | `source` | string (default: platform) | no | Which system to source random data from, ether "platform", "seal", or "all". |
@@ -7659,13 +7967,13 @@ Restore the named key
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `transit_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `backup` | string | no | Backed up key data to be restored. This should be the output from the 'backup/' endpoint. |
 | `force` | boolean (default: False) | no | If set and a key by the given name exists, force the restore operation and override the key. |
 | `name` | string | no | If set, this will be the name of the restored key. |
@@ -7683,14 +7991,14 @@ Restore the named key
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | If set, this will be the name of the restored key. |
 | `transit_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `backup` | string | no | Backed up key data to be restored. This should be the output from the 'backup/' endpoint. |
 | `force` | boolean (default: False) | no | If set and a key by the given name exists, force the restore operation and override the key. |
 
@@ -7707,14 +8015,14 @@ Rewrap ciphertext
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | Name of the key |
 | `transit_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `batch_input` | array | no | Specifies a list of items to be re-encrypted in a single batch. When this parameter is set, if the parameters 'ciphertext', 'context' and 'nonce' are also set, they will be ignored. Any batch output will preserve the order of the batch input. |
 | `ciphertext` | string | no | Ciphertext value to rewrap |
 | `context` | string | no | Base64 encoded context for key derivation. Required for derived keys. |
@@ -7734,14 +8042,14 @@ Generate a signature for input data using the named key
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | The key to use |
 | `transit_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `algorithm` | string (default: sha2-256) | no | Deprecated: use "hash_algorithm" instead. |
 | `batch_input` | array | no | Specifies a list of items for processing. When this parameter is set, any supplied 'input' or 'context' parameters will be ignored. Responses are returned in the 'batch_results' array component of the 'data' element of the response. Any batch output will preserve the order of the batch input |
 | `context` | string | no | Base64 encoded context for key derivation. Required if key derivation is enabled; currently only available with ed25519 keys. |
@@ -7767,7 +8075,7 @@ Generate a signature for input data using the named key
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | The key to use |
 | `urlalgorithm` | string | path | yes | Hash algorithm to use (POST URL parameter) |
 | `transit_mount_path` | string | path | yes | Path that the backend was mounted at |
@@ -7775,7 +8083,7 @@ Generate a signature for input data using the named key
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `algorithm` | string (default: sha2-256) | no | Deprecated: use "hash_algorithm" instead. |
 | `batch_input` | array | no | Specifies a list of items for processing. When this parameter is set, any supplied 'input' or 'context' parameters will be ignored. Responses are returned in the 'batch_results' array component of the 'data' element of the response. Any batch output will preserve the order of the batch input |
 | `context` | string | no | Base64 encoded context for key derivation. Required if key derivation is enabled; currently only available with ed25519 keys. |
@@ -7800,14 +8108,14 @@ Verify a signature or HMAC for input data created using the named key
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | The key to use |
 | `transit_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `algorithm` | string (default: sha2-256) | no | Deprecated: use "hash_algorithm" instead. |
 | `batch_input` | array | no | Specifies a list of items for processing. When this parameter is set, any supplied 'input', 'hmac' or 'signature' parameters will be ignored. Responses are returned in the 'batch_results' array component of the 'data' element of the response. Any batch output will preserve the order of the batch input |
 | `context` | string | no | Base64 encoded context for key derivation. Required if key derivation is enabled; currently only available with ed25519 keys. |
@@ -7834,7 +8142,7 @@ Verify a signature or HMAC for input data created using the named key
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `name` | string | path | yes | The key to use |
 | `urlalgorithm` | string | path | yes | Hash algorithm to use (POST URL parameter) |
 | `transit_mount_path` | string | path | yes | Path that the backend was mounted at |
@@ -7842,7 +8150,7 @@ Verify a signature or HMAC for input data created using the named key
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
-| ---------- | ----- | -------------- | ---------- |
+|----------|-----|--------------|----------|
 | `algorithm` | string (default: sha2-256) | no | Deprecated: use "hash_algorithm" instead. |
 | `batch_input` | array | no | Specifies a list of items for processing. When this parameter is set, any supplied 'input', 'hmac' or 'signature' parameters will be ignored. Responses are returned in the 'batch_results' array component of the 'data' element of the response. Any batch output will preserve the order of the batch input |
 | `context` | string | no | Base64 encoded context for key derivation. Required if key derivation is enabled; currently only available with ed25519 keys. |
@@ -7868,7 +8176,7 @@ Returns the public key to use for wrapping imported keys
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
-| ---------- | ----- | -------------- | -------------- | ---------- |
+|----------|-----|--------------|--------------|----------|
 | `transit_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Responses
