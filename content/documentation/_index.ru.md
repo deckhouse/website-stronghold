@@ -5,7 +5,10 @@ description: Документация продукта Deckhouse Stronghold
 weight: 10
 outputs:
   - HTML
+  - markdown
   - search
+  - llms
+  - corpus
   - print
 params:
   no_list: true

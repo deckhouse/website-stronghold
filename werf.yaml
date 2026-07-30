@@ -11,6 +11,8 @@ final: false
 shell:
   setup:
   - hugo -s /src -d /out --minify --enableGitInfo=false
+  - mv -f /out/ru/sitemap.xml /out/ru/documentation/sitemap.xml
+  - mv -f /out/en/sitemap.xml /out/en/documentation/sitemap.xml
 git:
 - add: /
   to: /src

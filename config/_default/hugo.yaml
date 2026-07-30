@@ -51,6 +51,10 @@ disableKinds:
 
 enableGitInfo: true
 
+outputs:
+  page: [HTML, markdown]
+  section: [HTML, markdown]
+
 sitemap:
   filename: "sitemap.xml"
   priority: 0.75
@@ -71,6 +75,11 @@ params:
 
   # Enable PDF/DOCX documentation exports (generated in CI, downloadable from sidebar).
   pdf: true
+
+  # Optional one-sentence summary for /{lang}/documentation/llms.txt (AI agents).
+  # Default: "Documentation for <site.Title>."
+  # llms:
+  #   summary: "..."
 
   # Global relevant links.
   links:
