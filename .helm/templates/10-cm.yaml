@@ -77,6 +77,12 @@ data:
             return 200;
         }
 
+        # Serve generated Markdown outputs (llms.txt links to *.md) as text/plain.
+        location ~* ^/products/{{ .Values.productCode }}/(?<path>(documentation|guides|modules|gs|reference)/.*\.md)$  {
+            default_type text/plain;
+            try_files /$lang/$path /$lang/$path/index.html /$lang/$path/ $path $path/index.html $path/ =404;
+        }
+
         location ~* ^/products/{{ .Values.productCode }}/(?<path>(documentation|guides|modules|gs|reference)/.*)$  {
             try_files /$lang/$path /$lang/$path/index.html /$lang/$path/ $path $path/index.html $path/ =404;
         }
