@@ -50,5 +50,12 @@ spec:
             name: frontend
             port:
               name: http
+      - path: /products/{{ $.Values.productCode }}/images
+        pathType: Prefix
+        backend:
+          service:
+            name: frontend
+            port:
+              name: http
 ---
 {{ end -}}
