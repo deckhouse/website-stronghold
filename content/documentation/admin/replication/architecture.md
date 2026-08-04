@@ -57,7 +57,7 @@ A request passes through the node layers top to bottom. The key point is the **o
 
 ### CE node
 
-![Stronghold CE node layers](/images/stronghold/stronghold-node-ce.png "CE node: API → Security Barrier → Raft → Physical storage")
+![Stronghold CE node layers](../../../../images/stronghold-node-ce.png "CE node: API → Security Barrier → Raft → Physical storage")
 
 In CE a node has four layers: `Stronghold API → Security Barrier → Raft → Physical storage`.
 
@@ -70,7 +70,7 @@ CE has neither a WAL Backend nor seal wrap. That is why a CE cluster does not ta
 
 ### EE node
 
-![Stronghold EE node layers](/images/stronghold/stronghold-node-ee.png "EE node: API → Barrier → WAL Backend → Raft → Sealwrap → Physical storage")
+![Stronghold EE node layers](../../../../images/stronghold-node-ee.png "EE node: API → Barrier → WAL Backend → Raft → Sealwrap → Physical storage")
 
 EE adds two layers, and **where** they sit matters: `Stronghold API → Security Barrier → WAL Backend → Raft → Sealwrap → Physical storage`.
 
@@ -99,13 +99,13 @@ Several nodes form a cluster on top of shared Raft storage: one node is active, 
 
 ### HA cluster (CE)
 
-![Stronghold CE HA cluster](/images/stronghold/stronghold-cluster-ha-ce.png "CE HA cluster: active node and standby, Raft sync")
+![Stronghold CE HA cluster](../../../../images/stronghold-cluster-ha-ce.png "CE HA cluster: active node and standby, Raft sync")
 
 The client reads from and writes to the active node (green R/W). In CE, standby nodes do not serve requests: they forward both reads and writes to the active node (Forward Read and Writes). The active node syncs storage to the standby nodes over Raft — this provides fault tolerance: if the active node fails, one of the standby nodes becomes active.
 
 ### Performance standby (EE)
 
-![Stronghold EE performance standby cluster](/images/stronghold/stronghold-cluster-perf-standby-ee.png "EE cluster: performance standby and Events WAL Streaming")
+![Stronghold EE performance standby cluster](../../../../images/stronghold-cluster-perf-standby-ee.png "EE cluster: performance standby and Events WAL Streaming")
 
 The same HA cluster, but in EE the standby nodes act as performance standby: they serve reads locally and forward writes to the active node (Forward Writes). To keep the standby nodes serving fresh data, the active node streams log events to them (blue Events WAL Streaming). Because the WAL Backend is below the barrier, these events carry already-encrypted data. The cluster still has a single seal.
 
@@ -117,13 +117,13 @@ Cross-cluster replication is available only in EE and only in a Standalone insta
 
 ### Performance
 
-![Performance: primary → secondary](/images/stronghold/stronghold-clusters-performance.png "Performance replication: Data WAL Streaming (non local)")
+![Performance: primary → secondary](../../../../images/stronghold-clusters-performance.png "Performance replication: Data WAL Streaming (non local)")
 
 The primary streams only non-local data to the secondary — `Data WAL Streaming (non local)`. Local mounts and data stay on each cluster and never leave it. The secondary serves reads locally and forwards writes to the primary. There can be several secondary clusters — the primary streams to all of them. You can limit the data replicated to a specific secondary with [path filters](../performance/#path-filters).
 
 ### Disaster Recovery
 
-![Disaster Recovery: primary → secondary](/images/stronghold/stronghold-clusters-dr.png "DR replication: Data WAL Streaming (all data)")
+![Disaster Recovery: primary → secondary](../../../../images/stronghold-clusters-dr.png "DR replication: Data WAL Streaming (all data)")
 
 DR copies everything, including local data — `Data WAL Streaming (all data)`. The secondary is a full copy of the primary, but it does not serve clients and waits for a promote. When the primary fails, the secondary is promoted and takes over. The promote steps and how to recover the former primary are on the [Disaster recovery](../disaster-recovery/) page.
 
@@ -139,7 +139,7 @@ For more, see the [seal wrap](../../kms-hsm/sealwrap/) page. For what exactly is
 
 ## KV replication (at the API level)
 
-![EE node with KV replication](/images/stronghold/stronghold-node-kv-replication.png "KV replication: the KV replicator in the Stronghold API layer, syncing over the API")
+![EE node with KV replication](../../../../images/stronghold-node-kv-replication.png "KV replication: the KV replicator in the Stronghold API layer, syncing over the API")
 
 KV replication stands apart from cross-cluster WAL replication. It is performed by a separate component — the **KV replicator** — that lives in the topmost node layer, `Stronghold API`, that is **above the Security Barrier**. Because of that it does not work with the encrypted WAL stream but with logical secrets through the regular public API endpoints.
 
@@ -165,14 +165,14 @@ The modes are independent and can be combined:
 
 Below are a few examples of such combinations. They show that the size (HA or a single node) is chosen per cluster, and that KV replication can be attached to any cluster except a DR secondary.
 
-![Combined topology: single-node primary, HA secondaries and KV replication](/images/stronghold/stronghold-topology-combined-1.png "A single-node DR+Performance primary, HA secondaries, KV replication into the primary")
+![Combined topology: single-node primary, HA secondaries and KV replication](../../../../images/stronghold-topology-combined-1.png "A single-node DR+Performance primary, HA secondaries, KV replication into the primary")
 
 The primary is a DR and a Performance primary at once and consists of a single node; both secondaries are HA clusters. A separate cluster feeds the primary over KV replication.
 
-![Combined topology: HA primary with performance standby, HA secondaries and KV replication](/images/stronghold/stronghold-topology-combined-2.png "An HA primary with perf standby, HA secondaries, KV replication into a performance secondary")
+![Combined topology: HA primary with performance standby, HA secondaries and KV replication](../../../../images/stronghold-topology-combined-2.png "An HA primary with perf standby, HA secondaries, KV replication into a performance secondary")
 
 The same combined primary, but HA with performance standby; both secondaries are HA too. Here KV replication is attached to a performance secondary — so it can be added not only to the primary.
 
-![Combined topology: HA primary and single-node secondaries](/images/stronghold/stronghold-topology-combined-3.png "An HA primary with perf standby, single-node secondaries, no KV")
+![Combined topology: HA primary and single-node secondaries](../../../../images/stronghold-topology-combined-3.png "An HA primary with perf standby, single-node secondaries, no KV")
 
 An HA primary with performance standby streams data to single-node DR and Performance secondaries; KV replication is not used.

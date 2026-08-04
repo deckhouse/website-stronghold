@@ -41,14 +41,14 @@ An entity cannot have more than one alias for a particular authentication backen
 For example, a user with accounts in both GitHub and LDAP can be mapped to a single entity in Stronghold with two aliases,
 one of type GitHub and one of type LDAP.
 
-![Entity overview](/images/stronghold/identity-doc-1.png)
+![Entity overview](../../../images/identity-doc-1.png)
 
 However, if both aliases are created on the same auth mount, such as a GitHub mount, both aliases cannot be mapped to the same entity.
 The aliases can have the same auth type, as long as the auth mounts are different, and still be associated to the same entity.
 The diagrams below illustrate both valid and invalid scenarios.
 
-![Valid Alias Mapping](/images/stronghold/identity-doc-4.png)
-![Invalid Alias Mapping](/images/stronghold/identity-doc-5.png)
+![Valid Alias Mapping](../../../images/identity-doc-4.png)
+![Invalid Alias Mapping](../../../images/identity-doc-5.png)
 
 When a client authenticates via any credential backend (except the Token backend), Stronghold creates a new entity.
 It attaches a new alias to it if a corresponding entity does not already exist.
@@ -140,7 +140,7 @@ Policies set on the group are granted to all members of the group.
 During request time, when the token's entity ID is being evaluated for the policies that it has access to,
 policies that are inherited due to group memberships are granted along with the policies on the entity itself.
 
-![Identity overview](/images/stronghold/identity-doc-3.png)
+![Identity overview](../../../images/identity-doc-3.png)
 
 ## Group hierarchical permissions
 

@@ -17,4 +17,4 @@ Stronghold Agent решает эту проблему, действуя как �
 Доставка секретов в приложения подробно разбирается [в курсе «Установка и обзор Deckhouse Stronghold»](https://education.flant.ru/course/ustanovka-i-obzor-deckhouse-stronghold/).
 {{< /alert >}}
 
-![agent](/images/stronghold/agent.png)
+![agent](../../../../images/agent.png)

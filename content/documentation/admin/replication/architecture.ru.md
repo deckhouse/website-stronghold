@@ -57,7 +57,7 @@ description: "Слои узла Stronghold, различия CE и EE и как 
 
 ### Узел CE
 
-![Слои узла Stronghold CE](/images/stronghold/stronghold-node-ce.png "Узел CE: API → Security Barrier → Raft → Physical storage")
+![Слои узла Stronghold CE](../../../../images/stronghold-node-ce.png "Узел CE: API → Security Barrier → Raft → Physical storage")
 
 В CE узел состоит из четырёх слоёв: `Stronghold API → Security Barrier → Raft → Physical storage`.
 
@@ -70,7 +70,7 @@ description: "Слои узла Stronghold, различия CE и EE и как 
 
 ### Узел EE
 
-![Слои узла Stronghold EE](/images/stronghold/stronghold-node-ee.png "Узел EE: API → Barrier → WAL Backend → Raft → Sealwrap → Physical storage")
+![Слои узла Stronghold EE](../../../../images/stronghold-node-ee.png "Узел EE: API → Barrier → WAL Backend → Raft → Sealwrap → Physical storage")
 
 EE добавляет два слоя, и важно, **где именно** они стоят: `Stronghold API → Security Barrier → WAL Backend → Raft → Sealwrap → Physical storage`.
 
@@ -99,13 +99,13 @@ EE добавляет два слоя, и важно, **где именно** о
 
 ### HA-кластер (CE)
 
-![HA-кластер Stronghold CE](/images/stronghold/stronghold-cluster-ha-ce.png "HA-кластер CE: активный узел и standby, синхронизация по Raft")
+![HA-кластер Stronghold CE](../../../../images/stronghold-cluster-ha-ce.png "HA-кластер CE: активный узел и standby, синхронизация по Raft")
 
 Клиент читает и пишет на активный узел (зелёные R/W). В CE standby-узлы запросы не обслуживают: они перенаправляют и чтение, и запись на активный узел (Forward Read and Writes). Активный узел синхронизирует хранилище со standby по Raft — так обеспечивается отказоустойчивость: при отказе активного один из standby становится активным.
 
 ### Performance standby (EE)
 
-![Performance standby кластер Stronghold EE](/images/stronghold/stronghold-cluster-perf-standby-ee.png "EE-кластер: performance standby и Events WAL Streaming")
+![Performance standby кластер Stronghold EE](../../../../images/stronghold-cluster-perf-standby-ee.png "EE-кластер: performance standby и Events WAL Streaming")
 
 Тот же HA-кластер, но в EE standby работают как performance standby: чтения они обслуживают локально, а запись перенаправляют на активный узел (Forward Writes). Чтобы standby отдавали свежие данные, активный узел стримит им события журнала (синие Events WAL Streaming). Так как WAL Backend ниже барьера, эти события несут уже зашифрованные данные. Seal у кластера по-прежнему один.
 
@@ -117,13 +117,13 @@ EE добавляет два слоя, и важно, **где именно** о
 
 ### Performance
 
-![Performance: primary → secondary](/images/stronghold/stronghold-clusters-performance.png "Performance-репликация: Data WAL Streaming (non local)")
+![Performance: primary → secondary](../../../../images/stronghold-clusters-performance.png "Performance-репликация: Data WAL Streaming (non local)")
 
 Primary стримит на secondary только нелокальные данные — `Data WAL Streaming (non local)`. Локальные маунты и данные остаются на каждом кластере и не покидают его. Secondary обслуживает чтения локально, а записи перенаправляет на primary. Secondary-кластеров может быть несколько — primary раздаёт поток всем. Отдельному secondary можно ограничить набор реплицируемых данных [фильтрами путей](../performance/#фильтры-путей).
 
 ### Disaster Recovery
 
-![Disaster Recovery: primary → secondary](/images/stronghold/stronghold-clusters-dr.png "DR-репликация: Data WAL Streaming (all data)")
+![Disaster Recovery: primary → secondary](../../../../images/stronghold-clusters-dr.png "DR-репликация: Data WAL Streaming (all data)")
 
 DR копирует всё, включая локальные данные — `Data WAL Streaming (all data)`. Secondary — полная копия primary, но клиентов он не обслуживает и ждёт promote. При отказе primary secondary повышают (promote), и он берёт нагрузку на себя. Порядок promote и возврата прежнего primary — на странице [Disaster recovery](../disaster-recovery/).
 
@@ -139,7 +139,7 @@ DR копирует всё, включая локальные данные — `
 
 ## KV-репликация (на уровне API)
 
-![Узел EE с KV-репликацией](/images/stronghold/stronghold-node-kv-replication.png "KV-репликация: KV replicator в слое Stronghold API, синхронизация по API")
+![Узел EE с KV-репликацией](../../../../images/stronghold-node-kv-replication.png "KV-репликация: KV replicator в слое Stronghold API, синхронизация по API")
 
 KV-репликация стоит особняком от межкластерной WAL-репликации. Её выполняет отдельный компонент — **KV replicator**, который живёт в самом верхнем слое узла, `Stronghold API`, то есть **над Security Barrier**. Поэтому она работает не с зашифрованным потоком WAL, а с логическими секретами через обычные публичные API-ручки.
 
@@ -165,14 +165,14 @@ KV-репликация — независимый оверлей: она не �
 
 Ниже — несколько примеров таких комбинаций. Они показывают, что размер (HA или один узел) выбирается для каждого кластера отдельно, а KV-репликацию можно навесить на любой кластер, кроме DR secondary.
 
-![Комбинированная топология: одноузловой primary, HA-secondary и KV-репликация](/images/stronghold/stronghold-topology-combined-1.png "Primary DR+Performance из одного узла, HA-secondary, KV-репликация в primary")
+![Комбинированная топология: одноузловой primary, HA-secondary и KV-репликация](../../../../images/stronghold-topology-combined-1.png "Primary DR+Performance из одного узла, HA-secondary, KV-репликация в primary")
 
 Primary одновременно DR- и Performance-primary и состоит из одного узла; оба secondary — HA-кластеры. Отдельный кластер подаёт данные в primary по KV-репликации.
 
-![Комбинированная топология: HA-primary с performance standby, HA-secondary и KV-репликация](/images/stronghold/stronghold-topology-combined-2.png "HA-primary с perf standby, HA-secondary, KV-репликация в performance secondary")
+![Комбинированная топология: HA-primary с performance standby, HA-secondary и KV-репликация](../../../../images/stronghold-topology-combined-2.png "HA-primary с perf standby, HA-secondary, KV-репликация в performance secondary")
 
 Тот же комбинированный primary, но HA с performance standby; оба secondary — тоже HA. KV-репликация здесь подключена к performance secondary — то есть навесить её можно не только на primary.
 
-![Комбинированная топология: HA-primary и одноузловые secondary](/images/stronghold/stronghold-topology-combined-3.png "HA-primary с perf standby, одноузловые secondary, без KV")
+![Комбинированная топология: HA-primary и одноузловые secondary](../../../../images/stronghold-topology-combined-3.png "HA-primary с perf standby, одноузловые secondary, без KV")
 
 HA-primary с performance standby раздаёт данные на одноузловые DR- и Performance-secondary; KV-репликация не используется.

@@ -83,7 +83,7 @@ data:
             try_files /$lang/$path /$lang/$path/index.html /$lang/$path/ $path $path/index.html $path/ =404;
         }
 
-        location ~* ^/products/{{ .Values.productCode }}/(?<path>(documentation|guides|modules|gs|reference)/.*)$  {
+        location ~* ^/products/{{ .Values.productCode }}/(?<path>(documentation|guides|modules|gs|reference|images)/.*)$  {
             try_files /$lang/$path /$lang/$path/index.html /$lang/$path/ $path $path/index.html $path/ =404;
         }
 
