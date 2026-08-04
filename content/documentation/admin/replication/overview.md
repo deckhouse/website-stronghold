@@ -143,8 +143,8 @@ There is no need to call `sys/replication/reindex` manually.
 
 ## Available pages
 
-- [Topologies and scenarios](../topologies/) for diagrams and typical cases
-  across all three modes.
+- [Architecture and diagrams](../architecture/) for what nodes and clusters are,
+  plus combined topologies.
 - [Performance replication](../performance/) for read scaling, secondary setup,
   and path filters.
 - [Disaster recovery](../disaster-recovery/) for a hot standby, failover, and

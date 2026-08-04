@@ -7,7 +7,7 @@ description: "Stronghold node layers, CE vs EE differences, and how the layer or
 
 This page shows the architectural differences between CE and EE through the layers of a single node, and explains how the order of those layers shapes replication behavior: why the replication stream carries already-encrypted data and why each cluster owns its own seal.
 
-The diagrams are simplified: they show what a node is made of and the direction of requests, not the network layout. The terms "node" and "cluster", along with replication scenarios, are covered on the [Topologies and scenarios](../topologies/) page.
+The diagrams are simplified: they show what a node is made of and the direction of requests, not the network layout.
 
 ## Legend
 
