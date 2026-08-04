@@ -176,5 +176,3 @@ Primary одновременно DR- и Performance-primary и состоит и
 ![Комбинированная топология: HA-primary и одно-нодовые secondary](/images/stronghold/stronghold-topology-combined-3.png "HA-primary с perf standby, одно-нодовые secondary, без KV")
 
 HA-primary с performance standby раздаёт данные на одно-нодовые DR- и Performance-secondary; KV-репликация не используется.
-
-Схемы комбинаций и типовые сценарии — на странице [Топологии и сценарии](../topologies/#комбинированные-топологии).

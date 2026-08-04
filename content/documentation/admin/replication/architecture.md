@@ -176,5 +176,3 @@ The same combined primary, but HA with performance standby; both secondaries are
 ![Combined topology: HA primary and single-node secondaries](/images/stronghold/stronghold-topology-combined-3.png "An HA primary with perf standby, single-node secondaries, no KV")
 
 An HA primary with performance standby streams data to single-node DR and Performance secondaries; KV replication is not used.
-
-Diagrams of the combinations and typical scenarios are on the [Topologies and scenarios](../topologies/#combined-topologies) page.
