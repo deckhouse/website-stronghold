@@ -18,7 +18,7 @@ The diagrams have two levels of objects (node and cluster) and three kinds of li
 | Node | a box with a stack of colored layers | a single Stronghold instance; each layer is a processing level inside the node |
 | Cluster | an ellipse around several nodes | a group of nodes on shared Raft storage, acting as a single unit |
 | Client | a small circle on the left | an external consumer that talks to the cluster |
-| Sealwrapper | a separate box on the side | the seal — the mechanism that provides the key for the seal wrap layer; one per cluster |
+| Sealwrapper | a separate box on the side | the seal — the mechanism that holds the key for the seal wrap layer; one per cluster |
 
 | Arrow | Color | Meaning |
 | --- | --- | --- |
@@ -36,7 +36,7 @@ The node layer colors are the same on every diagram:
 | Security Barrier | light blue | CE and EE | encryption: everything below the barrier is stored encrypted |
 | WAL Backend | blue | EE only | a log of mutations for replication; sits below the barrier |
 | Raft | orange | CE and EE | consensus and storage replication between nodes (HA) |
-| Sealwrap | crimson | EE only | a second encryption layer for sensitive paths; the key comes from the seal |
+| Sealwrap | crimson | EE only | a second encryption layer for sensitive paths; the key is held by the seal |
 | Physical storage | purple | CE and EE | data on disk (already encrypted) |
 
 ## Comparing the variants
@@ -47,8 +47,8 @@ Replication works at several levels — within a cluster, between clusters, and 
 | --- | --- | --- | --- | --- |
 | HA: storage replication | Within a cluster | Node fault tolerance | Standby nodes forward all requests to the active node | CE and EE |
 | Performance standby | Within a cluster | Scaling reads | Standby nodes read locally, writes go to the active node | EE |
-| Disaster Recovery | Between clusters | Hot standby and failover | The secondary does not serve clients and waits for a promote | EE, Standalone only |
-| Performance | Between clusters | Scaling and distributing reads | Secondaries read locally, writes go to the primary | EE, Standalone only |
+| Disaster Recovery | Between clusters | Hot standby and failover | The secondary does not serve clients and waits for a promote | EE |
+| Performance | Between clusters | Scaling and distributing reads | Secondaries read locally, writes go to the primary | EE |
 | KV replication (KV1/KV2) | Cross-cluster, per mount (API) | Copying selected KV stores | the replica (slave) is read-only, writes go to the master | EE, except a DR secondary |
 
 ## The layers of a single node
@@ -74,8 +74,8 @@ CE has neither a WAL Backend nor seal wrap. That is why a CE cluster does not ta
 
 EE adds two layers, and **where** they sit matters: `Stronghold API → Security Barrier → WAL Backend → Raft → Sealwrap → Physical storage`.
 
-- **WAL Backend** sits right under the barrier. It records every mutation into an ordered log — replication feeds from it. Because it is below the barrier, the log receives values that are already barrier-encrypted.
-- **Sealwrap** sits at the very bottom, between Raft and physical storage. It is a second encryption layer for sensitive paths; the key comes from the seal (the `Sealwrapper` box on the side).
+- **WAL Backend** sits right under the barrier. It records every mutation into an ordered log that serves as the data source for replication. Because it is below the barrier, the log receives values that are already barrier-encrypted.
+- **Sealwrap** sits at the very bottom, between Raft and physical storage. It is a second encryption layer for sensitive paths; the key is held by the seal (the `Sealwrapper` box on the side).
 
 | Layer | CE | EE |
 | --- | --- | --- |
@@ -113,7 +113,7 @@ See the [Performance standby](../performance-standby/) page for details.
 
 ## Clusters between each other
 
-Cross-cluster replication is available only in EE and only in a Standalone installation. It links whole clusters: the primary streams its log to the secondary (blue Data WAL Streaming), and the secondary forwards client writes back to the primary. Each cluster has its own `Sealwrapper`, and it may differ.
+Cross-cluster replication is available only in EE. It links whole clusters: the primary streams its log to the secondary (blue Data WAL Streaming), and the secondary forwards client writes back to the primary. Each cluster has its own `Sealwrapper`, and it may differ.
 
 ### Performance
 
@@ -148,8 +148,9 @@ How it differs from perf/DR replication:
 - **API level, not WAL.** WAL replication is captured below the barrier (at the WAL Backend layer) and carries the ciphertext of a whole cluster. KV replication works above the barrier, talking to API endpoints, and syncs only `KV1/KV2` mounts.
 - **Configured on the slave node.** A `master-slave`, pull model: the consumer (`slave`) reaches out to the source (`master`) and pulls the secrets. The configuration is set when mounting a KV store on the consumer side.
 - **Works at the node level.** Since it communicates through a specific node's API endpoints, replication is configured on a specific node of a cluster, not on the cluster as a whole.
+- **Compatible with other stores.** The `master` can be a store of a different version or implementation — Vault CE, Vault EE, or any secret store with a compatible Vault KV/KV2 API. This simplifies migration and makes heterogeneous architectures possible.
 
-Hence **where KV replication can be enabled**: anywhere a node serves API endpoints, that is on any cluster **except a DR secondary** (which does not answer client requests until promoted). In particular, KV replication can be attached to a performance secondary, a DR primary, or a standalone cluster — independently of their perf/DR role.
+Hence **where KV replication can be enabled**: on any node that serves API endpoints, regardless of its role in perf/DR replication. The only exception is a **DR secondary**: it does not answer client requests until promoted, so KV replication is not available there.
 
 KV replication is an independent overlay: it is unrelated to the seal, the WAL, and cross-cluster replication, and is configured per mount.
 

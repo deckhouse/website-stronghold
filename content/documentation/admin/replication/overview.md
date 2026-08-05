@@ -93,12 +93,6 @@ replication.
   cluster port (`cluster_address`, TLS with ALPN), not the API port. That port
   must be reachable between the clusters, and their TLS certificates must match.
 
-{{< alert level="warning" >}}
-Native Performance and DR replication is available only in a Standalone
-Stronghold installation. Cross-cluster replication is not supported in the DKP
-module.
-{{< /alert >}}
-
 ## Enabling and disabling
 
 In Stronghold EE replication is enabled by default: the `sys/replication/*`
