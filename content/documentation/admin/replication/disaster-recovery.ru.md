@@ -24,6 +24,13 @@ DR-secondary не обслуживает клиентов (кроме распе
 В примерах ниже `${PRIMARY_ADDR}` и `${SECONDARY_ADDR}` — API-адреса кластеров,
 а `${VAULT_TOKEN}` — токен с правами на `sys/replication/*`.
 
+{{< alert level="info" >}}
+Если репликацию включают на кластере, где уже есть данные (например, после
+обновления со сборки без репликации), или после периода с отключённой
+репликацией, узел при первом запуске сам заново индексирует хранилище. Вызывать
+`sys/replication/reindex` вручную не нужно.
+{{< /alert >}}
+
 ## Шаг 1. Включите DR primary
 
 ```shell
@@ -68,6 +75,10 @@ curl \
 ```shell
 d8 stronghold read -address="${SECONDARY_ADDR}" sys/replication/dr/status
 ```
+
+Статус показывает `mode`, `state`, `connection_state`, `last_wal` и
+`last_remote_wal`. DR-secondary догнал primary, когда его `last_wal` дошёл до
+`last_remote_wal`.
 
 ## Повышение DR-secondary
 
@@ -122,8 +133,8 @@ DR secondary.
 1. Подключите его к новому primary:
    `d8 stronghold write sys/replication/dr/secondary/update-primary token=<activation_token>`.
 
-Используйте именно token-метод: у нового primary другая идентичность, и
-`primary_cluster_addr` для него не подойдёт.
+Используйте именно token-метод: у нового primary другой идентификатор кластера,
+и `primary_cluster_addr` для него не подойдёт.
 
 ## Операции управления
 

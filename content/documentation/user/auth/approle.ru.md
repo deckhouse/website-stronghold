@@ -23,19 +23,19 @@ d8 stronghold auth enable -path=my-login approle
 ```
 
 Включение с помощью UI:
-![Включение метода аутентификации](/images/stronghold/admin-guide-image1.png)
+![Включение метода аутентификации](../../../../images/admin-guide-image1.png)
 
 Выберите метод аутентификации:
-![Выбор метода аутентификации](/images/stronghold/admin-guide-image2.png)
+![Выбор метода аутентификации](../../../../images/admin-guide-image2.png)
 
 Настройте и подтвердите включение метода аутентификации:
-![Настройка и подтверждение метода аутентификации](/images/stronghold/admin-guide-image3.png)
+![Настройка и подтверждение метода аутентификации](../../../../images/admin-guide-image3.png)
 
 Для отключения метода аутентификации выберите метод:
-![Выбор метода аутентификации](/images/stronghold/admin-guide-image4.png)
+![Выбор метода аутентификации](../../../../images/admin-guide-image4.png)
 
 Подтвердите удаление метода:
-![Подтверждение удаление метода](/images/stronghold/admin-guide-image5.png)
+![Подтверждение удаление метода](../../../../images/admin-guide-image5.png)
 
 ### Метод аутентификации AppRole
 

@@ -7,4 +7,4 @@ coming soon...
 
 ## Functional scheme
 
-![agent](/images/stronghold/agent.png)
+![agent](../../../../images/agent.png)

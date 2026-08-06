@@ -1,5 +1,5 @@
 ---
-title: "Репликация (Performance и DR)"
+title: "Репликация"
 weight: 46
 params:
   edition: ee

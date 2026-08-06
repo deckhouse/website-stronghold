@@ -22,6 +22,13 @@ In the examples below `${PRIMARY_ADDR}` and `${SECONDARY_ADDR}` are the API
 addresses of the clusters, and `${VAULT_TOKEN}` is a token authorized for
 `sys/replication/*`.
 
+{{< alert level="info" >}}
+If you enable replication on a cluster that already holds data (for example,
+after upgrading from a build without replication), or after a period with
+replication disabled, the node re-indexes its storage on the first boot by
+itself. You do not need to call `sys/replication/reindex` manually.
+{{< /alert >}}
+
 ## Step 1. Enable the primary
 
 ```shell
@@ -97,7 +104,8 @@ d8 stronghold read -address="${SECONDARY_ADDR}" sys/replication/performance/stat
 ```
 
 When the secondary is connected and pulling the WAL, `state` is `stream-wals`
-and `connection_state` is `ready`.
+and `connection_state` is `ready`. The secondary has caught up with the primary
+when its `last_wal` reaches `last_remote_wal`.
 
 ## Step 5. Verify data replication
 

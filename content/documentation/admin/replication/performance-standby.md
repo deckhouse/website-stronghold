@@ -2,11 +2,12 @@
 title: "Performance standby"
 linkTitle: "Performance standby"
 weight: 40
-description: "Serve read requests from non-active HA nodes within a single Stronghold cluster."
+description: "Serve read requests from standby (non-leader) HA nodes within a single Stronghold cluster."
 ---
 
-Performance standby lets the non-active HA nodes **inside a single cluster**
-serve read requests locally instead of forwarding every request to the active
+Performance standby lets the standby (non-leader) HA nodes **inside a single
+cluster** serve read requests locally instead of forwarding every request to the
+active
 node. This spreads read load across all cluster nodes and reduces latency, while
 writes and other operations that change state are still forwarded to the active
 node.
@@ -24,7 +25,7 @@ cross-cluster setup.
 - Requests that modify state (writes, deletes) are forwarded to the active node
   and applied there.
 
-Performance standby is enabled by default in EE builds. No additional
+Performance standby is enabled by default in Stronghold EE. No additional
 configuration is required beyond running an HA cluster on integrated Raft
 storage.
 
