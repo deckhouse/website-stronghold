@@ -21,6 +21,13 @@ description: "Настройка репликации Performance между к�
 В примерах ниже `${PRIMARY_ADDR}` и `${SECONDARY_ADDR}` — API-адреса кластеров,
 а `${VAULT_TOKEN}` — токен с правами на `sys/replication/*`.
 
+{{< alert level="info" >}}
+Если репликацию включают на кластере, где уже есть данные (например, после
+обновления со сборки без репликации), или после периода с отключённой
+репликацией, узел при первом запуске сам заново индексирует хранилище. Вызывать
+`sys/replication/reindex` вручную не нужно.
+{{< /alert >}}
+
 ## Шаг 1. Включите primary
 
 ```shell
@@ -96,7 +103,8 @@ d8 stronghold read -address="${SECONDARY_ADDR}" sys/replication/performance/stat
 ```
 
 Когда secondary подключён и тянет WAL, поле `state` равно `stream-wals`, а
-`connection_state` — `ready`.
+`connection_state` — `ready`. Secondary догнал primary, когда его `last_wal`
+дошёл до `last_remote_wal`.
 
 ## Шаг 5. Проверьте репликацию данных
 
@@ -179,7 +187,7 @@ Performance-secondary нельзя повысить (promote), пока на н�
 Примечания:
 
 - `revoke-secondary` также удаляет фильтр этого secondary.
-- Для `update-primary`, когда у нового primary **новая** идентичность (например,
-  это повышенный бывший secondary), используйте token-метод со свежим
+- Для `update-primary`, когда у нового primary **новый** идентификатор кластера
+  (например, это повышенный бывший secondary), используйте token-метод со свежим
   activation-токеном нового primary. Address-метод (`primary_cluster_addr`)
-  применим только если primary сохранил идентичность.
+  применим только если primary сохранил прежний идентификатор.

@@ -104,6 +104,35 @@ Key rules:
 
 Mixed EN/RU compound terms use a hyphen: `S3-бакет`, `managed-сервис`, `master-узел`, `HTTP-протокол`.
 
+### Stronghold product and edition names
+
+- The base product is **Stronghold** (corresponds to Vault CE); the enterprise
+  build is **Stronghold EE**.
+- Do not use bare `CE`/`EE` as product names. Write `Stronghold` or
+  `Stronghold EE`. When you need the base edition explicitly, write
+  «базовый Stronghold» / "base Stronghold".
+- `Vault CE` / `Vault Enterprise` are allowed only when referring to upstream
+  HashiCorp Vault (for example, an external KV store for KV1/KV2 replication).
+- Stronghold CLI examples use `d8 stronghold ...`.
+
+### Replication terminology (EN kept)
+
+Keep these established terms in English (both languages), do not translate:
+`primary`, `secondary`, `standby`, `active node`, `promote`, `demote`, `WAL`,
+`Raft`, `seal`, `seal wrap`, `mount`, `token store`, `master`/`slave`,
+`performance standby`. Diagram labels on images (`Data WAL Streaming`,
+`Forward Writes`, `R/W`, and similar) are kept in English to match the pictures.
+
+### Russian translations of common terms
+
+- `entity` → «сущность»; `identity` (the subsystem) →
+  «идентификационные данные (Identity)».
+- `identity` in the sense of a cluster's identity → «идентификатор кластера».
+- Do not call standby nodes «неактивные»: use «standby-узлы» or
+  «неведущие узлы HA», because they still serve reads under performance standby.
+- «seal material» → «данные, зашифрованные через Seal»; the wrapper block on
+  diagrams is «внешний блок Sealwrapper», not «блок сбоку».
+
 ## Russian text style
 
 In Russian instructional text, always use the imperative вы-form:

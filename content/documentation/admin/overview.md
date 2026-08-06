@@ -27,8 +27,13 @@ The platform’s Administrator Guide includes the following sections:
   - [Inspect a snapshot](./backups/inspect/) - locally inspect snapshot contents and basic consistency before restore.
   - [Restore from a snapshot](./backups/restore/) - restore a Stronghold cluster from a saved snapshot.
   - [Automated snapshots](./backups/automated-snapshots/) - configure schedules, storage targets, and status checks for automated backups.
-- KV replication
-  - [Introduction](./kv-replication/overview/) - pull-based KV1/KV2 replication between Stronghold clusters. English documentation is in development.
+- Replication
+  - [Overview](./replication/overview/) - native Performance and DR replication between Stronghold clusters.
+  - [Architecture: CE and EE](./replication/architecture/) - node layers and how their order shapes replication behavior.
+  - [Performance replication](./replication/performance/) - read scaling, secondary setup, and path filters.
+  - [Disaster recovery](./replication/disaster-recovery/) - hot standby, failover, and the promote ceremony.
+  - [Performance standby](./replication/performance-standby/) - serving reads from non-active HA nodes within a cluster.
+  - [KV1/KV2 replication](./replication/kv-replication/) - pull-based KV1/KV2 replication between Stronghold clusters. English documentation is in development.
 - Namespaces
   - [Introduction](./namespaces/overview/) - isolate configuration and secrets between namespaces, manage them through CLI and API, and use Namespace API Lock.
 - Cryptographic algorithms

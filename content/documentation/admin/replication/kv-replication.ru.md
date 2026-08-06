@@ -1,7 +1,7 @@
 ---
 title: "Репликация KV1/KV2"
-linkTitle: "Введение"
-weight: 10
+linkTitle: "Репликация KV1/KV2"
+weight: 45
 description: "Руководство администратора по репликации KV1/KV2 в Stronghold."
 ---
 

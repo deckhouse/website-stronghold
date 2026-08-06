@@ -27,8 +27,13 @@ weight: 10
   - [Проверка снимка](./backups/inspect/) - локальная проверка содержимого и базовой консистентности файла снимка.
   - [Восстановление из снимка](./backups/restore/) - восстановление кластера Stronghold из сохранённого снимка.
   - [Автоматические снимки](./backups/automated-snapshots/) - настройка расписания, хранилища и статуса автоматических резервных копий.
-- Репликация KV
-  - [Введение](./kv-replication/overview/) - настройка pull-репликации KV1/KV2 между кластерами Stronghold, включая CLI и API сценарии.
+- Репликация
+  - [Обзор](./replication/overview/) - нативная репликация Performance и DR между кластерами Stronghold.
+  - [Архитектура: CE и EE](./replication/architecture/) - слои узла и как их порядок определяет поведение репликации.
+  - [Репликация Performance](./replication/performance/) - масштабирование чтений, настройка secondary и фильтры путей.
+  - [Disaster recovery](./replication/disaster-recovery/) - горячий резерв, аварийное переключение и церемония promote.
+  - [Performance standby](./replication/performance-standby/) - чтения на неактивных HA-узлах внутри кластера.
+  - [Репликация KV1/KV2](./replication/kv-replication/) - настройка pull-репликации KV1/KV2 между кластерами Stronghold, включая CLI и API-сценарии.
 - Пространства имён
   - [Введение](./namespaces/overview/) - изоляция конфигурации и секретов между пространствами имён, управление через CLI и API, а также блокировка Namespace API.
 - Криптоалгоритмы

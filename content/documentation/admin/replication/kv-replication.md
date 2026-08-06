@@ -1,7 +1,7 @@
 ---
 title: "KV1/KV2 replication"
-linkTitle: "Introduction"
-weight: 10
+linkTitle: "KV1/KV2 replication"
+weight: 45
 description: "Administrator guide for KV1/KV2 replication in Stronghold."
 ---
 
