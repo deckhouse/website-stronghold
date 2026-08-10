@@ -20,7 +20,8 @@ Stronghold для DKP поставляется в виде модуля, и ка
 
 **Примеры:**
 Вывод команд в консоли, при наличии ошибки:
-```
+
+```text
 $ d8 stronghold operator raft list-peers
 * local node not active but active cluster node not found
 
@@ -29,7 +30,8 @@ $ d8 stronghold kv get kv/apikey
 ```
 
 В логах нерабочего узла:
-```
+
+```text
 {"@level":"info","@message":"attempting to join possible raft leader node","@module":"core","@timestamp":"2025-10-20T10:54:02.578963Z","leader_addr":"https://stronghold-0.stronghold-internal:8300"}
 {"@level":"error","@message":"failed to get raft challenge","@module":"core","@timestamp":"2025-10-20T10:54:32.597558Z","error":"error during raft bootstrap init call: Put \"https://10.0.12.69:8300/v1/sys/storage/raft/bootstrap/challenge\": dial tcp 10.10.12.69:8300: i/o timeout","leader_addr":"https://stronghold-0.stronghold-internal:8300"}
 ```
@@ -52,7 +54,7 @@ $ d8 stronghold kv get kv/apikey
 
 Внутри каталога хранилища (`/var/lib/deckhouse/stronghold/`) находится папка с именем `raft`.
 
-```
+```text
 stronghold
 ├── raft
 │   ├── raft.db
@@ -83,6 +85,7 @@ EOF
 - **non_voter** (bool: \<false\>) — указывает, участвует ли сервер в голосовании.
 
 Убедитесь, что файл `peers.json` содержит корректные права на файл:
+
 ```bash
 chown deckhouse:deckhouse /var/lib/deckhouse/stronghold/raft/peers.json
 chmod 600 /var/lib/deckhouse/stronghold/raft/peers.json
@@ -126,7 +129,7 @@ Raft Applied Index       155344
 
 Процедура восстановления прошла успешно, если Stronghold запустился и отобразил следующие сообщения в логах.
 
-```
+```text
 ...
 [INFO]  core.cluster-listener: serving cluster requests: cluster_listen_address=[::]:8201
 [INFO]  storage.raft: raft recovery initiated: recovery_file=peers.json

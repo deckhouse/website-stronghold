@@ -21,7 +21,8 @@ Although one of the servers is fully functioning, the cluster won't be able to p
 
 **Example:**
 Command outputs for this case:
-```
+
+```text
 $ d8 stronghold operator raft list-peers
 No raft cluster configuration found
 
@@ -30,7 +31,8 @@ nil response from pre-flight request
 ```
 
 Failing Pod logs:
-```
+
+```text
 {"@level":"info","@message":"attempting to join possible raft leader node","@module":"core","@timestamp":"2025-10-20T10:54:02.578963Z","leader_addr":"https://stronghold-0.stronghold-internal:8300"}
 {"@level":"error","@message":"failed to get raft challenge","@module":"core","@timestamp":"2025-10-20T10:54:32.597558Z","error":"error during raft bootstrap init call: Put \"https://10.0.12.69:8300/v1/sys/storage/raft/bootstrap/challenge\": dial tcp 10.10.12.69:8300: i/o timeout","leader_addr":"https://stronghold-0.stronghold-internal:8300"}
 ```
@@ -53,7 +55,7 @@ On the healthy Stronghold Pod's corresponding DKP master server, locate the Raft
 
 Inside the storage directory (`/var/lib/deckhouse/stronghold/`), there is a folder named `raft`.
 
-```
+```text
 stronghold
 ├── raft
 │   ├── raft.db
@@ -83,6 +85,7 @@ EOF
 - **non_voter** (bool: \<false\>) - This controls whether the server is a non-voter.
 
 Make sure file `peers.json` has valid read/write permissions and owner:
+
 ```bash
 chown deckhouse:deckhouse /var/lib/deckhouse/stronghold/raft/peers.json
 chmod 600 /var/lib/deckhouse/stronghold/raft/peers.json
@@ -126,7 +129,7 @@ Raft Applied Index       155344
 
 The recovery procedure is successful when Stronghold starts up and displays these messages in the system logs.
 
-```
+```text
 ...snip...
 [INFO]  core.cluster-listener: serving cluster requests: cluster_listen_address=[::]:8201
 [INFO]  storage.raft: raft recovery initiated: recovery_file=peers.json
