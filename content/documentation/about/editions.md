@@ -23,7 +23,7 @@ The table below provides a brief comparison of the Deckhouse Stronghold editions
 | Support for namespaces | {{< icon-edition type="not_supported" >}} | {{< icon-edition type="supported" >}} |
 | Built-in automatic vault unsealing without requiring any external services or KMS | {{< icon-edition type="not_supported" >}} | {{< icon-edition type="supported" >}} |
 | HA configurations | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} |
-| Trans-cluster data replication | {{< icon-edition type="not_supported" >}} | KV1/KV2, Performance, DR |
+| Cross-cluster data replication | {{< icon-edition type="not_supported" >}} | KV1/KV2, Performance, DR |
 | Automatic backup creation on a schedule | {{< icon-edition type="not_supported" >}} | {{< icon-edition type="supported" >}} |
 | Audit logging support | {{< icon-edition type="not_supported" >}} | {{< icon-edition type="supported" >}} |
 | Managed Keys | {{< icon-edition type="not_supported" >}} | {{< icon-edition type="supported" >}} |
