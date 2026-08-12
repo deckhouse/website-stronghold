@@ -1,6 +1,6 @@
 ---
 title: "Аудит в Stronghold"
-linkTitle: "Введение"
+linkTitle: "Обзор"
 weight: 10
 description: "Обзор журналов аудита Stronghold: что логируется, какие бэкенды доступны и как безопасно настраивать аудит."
 ---
