@@ -44,8 +44,3 @@ weight: 10
   - [«Обзор»](./plugins/overview/) - обзор встроенных и внешних плагинов Stronghold и различий между Standalone и DKP.
   - [«Плагины в Standalone»](./plugins/standalone/) - plugin directory, регистрация, versioning и подключение внешних плагинов на Linux-сервере.
   - [«Плагины в DKP»](./plugins/dkp/) - загрузка плагинов через `ModuleConfig`, регистрация и включение в Deckhouse Kubernetes Platform.
-
-Если вам нужна помощь:
-
-- задайте вопрос [в Telegram-канале «Deckhouse | RU-сообщество»](https://t.me/deckhouse_ru);
-- если вы используете Enterprise-редакцию, обратитесь в поддержку по адресу [`support@deckhouse.ru`](mailto:support@deckhouse.ru).

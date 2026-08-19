@@ -44,8 +44,3 @@ The administrator guide includes the following sections:
   - ["Overview"](./plugins/overview/): Overview of built-in and external Stronghold plugins and the differences between Standalone and DKP.
   - ["Plugins in Standalone"](./plugins/standalone/): Plugin directory, registration, versioning, and mounting of external plugins on Linux servers.
   - ["Plugins in DKP"](./plugins/dkp/): Plugin delivery through `ModuleConfig`, registration, and enablement in Deckhouse Kubernetes Platform.
-
-If you need help:
-
-- Ask a question in the ["Deckhouse | EN-community"](https://t.me/deckhouse) Telegram channel.
-- If you use the Enterprise Edition, contact support at [`support@deckhouse.io`](mailto:support@deckhouse.io).

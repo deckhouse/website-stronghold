@@ -1,6 +1,6 @@
 ---
 title: "Editions"
-weight: 10
+weight: 20
 ---
 
 Deckhouse Stronghold is available as Community Edition (CE) and Enterprise Edition (EE).

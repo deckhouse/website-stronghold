@@ -16,8 +16,8 @@ Below are the two main cluster types considered depending on their purpose:
 | :--- | :--- | :--- |
 | CPU | 4–8 cores | 8–16 cores |
 | Memory | 8–16 GB | 16–32 GB |
-| Disk input/output | 3000+ IOPS | 3000+ IOPS |
-| Disk input/output | 70+ MB/s | 200+ MB/s |
+| Disk I/O operations | 3000+ IOPS | 3000+ IOPS |
+| Disk throughput | 70+ MB/s | 200+ MB/s |
 
 Depending on the expected number and type of operations, consider the following requirements:
 

@@ -1,6 +1,6 @@
 ---
 title: "Редакции"
-weight: 10
+weight: 20
 ---
 
 Deckhouse Stronghold поставляется в редакциях Community Edition (CE), Enterprise Edition (EE) и Certified Security Edition (CSE), сертифицированной ФСТЭК России для сред с повышенными требованиями к информационной безопасности.
