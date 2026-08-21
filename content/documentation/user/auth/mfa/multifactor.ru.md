@@ -1,190 +1,146 @@
 ---
-title: "MULTIFACTOR Ldap Adapter"
+title: "Multifactor"
+description: "Настройка многофакторной аутентификации Stronghold через сервис Multifactor"
 weight: 10
 ---
 
-MULTIFACTOR Ldap Adapter — это LDAP proxy-сервер, разработанный и поддерживаемый компанией МУЛЬТИФАКТОР. Он используется для двухфакторной защиты пользователей в приложениях, использующих LDAP-аутентификацию.
-Система обеспечивает многофакторную аутентификацию и контроль доступа для любых удалённых подключений: RDP, VPN, VDI, SSH и других.
+## Настройка Multifactor
 
-## Настройка LDAP Adapter
+Stronghold поддерживает проверку дополнительного фактора при аутентификации через сервис [Multifactor](https://multifactor.ru/docs/intro/).
+После успешного входа по основному методу аутентификации Stronghold отправляет запрос в Multifactor и ожидает подтверждения от пользователя.
 
-### Схема работы
+Подтверждение выполняется одним из способов, настроенных для пользователя в Multifactor:
 
-Stronghold может осуществлять двухфакторную аутентификацию пользователей из каталога LDAP или Active Directory:
+- Push в мобильное приложение Multifactor;
+- Telegram;
+- звонок — примите вызов и нажмите `#`.
 
-1. Пользователь подключается к Stronghold, вводит логин и пароль.
-1. Stronghold по протоколу LDAP подключается к компоненту [MULTIFACTOR Ldap Adapter](https://multifactor.ru/docs/ldap-adapter/ldap-adapter/).
-1. Компонент проверяет логин и пароль пользователя в Active Directory или другом LDAP-каталоге и запрашивает второй фактор аутентификации.
-1. Пользователь подтверждает запрос доступа выбранным способом аутентификации.
+{{< alert level="info" >}}
+Stronghold не принимает одноразовые коды (OTP) для Multifactor MFA.
+Запрос обрабатывается как подтверждение доступа: пользователь одобряет или отклоняет его в выбранном канале.
+{{< /alert >}}
 
-### Настройка MULTIFACTOR
+### Поддерживаемые методы аутентификации
 
-1. Зайдите в [систему управления MULTIFACTOR](https://admin.multifactor.ru/account/login). В разделе «Ресурсы» создайте новое LDAP-приложение.
-  После создания будут доступны два параметра: `NAS Identifier` и `Shared Secret`, они потребуются для последующих шагов.
-1. Загрузите и установите [MULTIFACTOR Ldap Adapter](https://multifactor.ru/docs/ldap-adapter/ldap-adapter/).
+Login MFA, в том числе Multifactor, не ограничивает список типов методов аутентификации на уровне кода.
+Проверку можно включить для любого метода, у которого при входе есть сущность (entity), например (но не ограничиваясь):
 
-### Запуск LDAP Adapter в Kubernetes
+- `userpass`
+- `ldap`
+- `oidc`
+- `jwt`
+- `saml`
+- `approle`
+- `kubernetes`
 
-Для запуска воспользуйтесь образом `multifactor-ldap-adapter:3.0.7` и следующим манифестом:
+Multifactor MFA рассчитан на интерактивное подтверждение.
+Для машинных методов вроде `approle` и `kubernetes` автоматический клиент сам подтвердить push, Telegram
+или звонок не сможет.
 
-```yaml
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: ldap-adapter
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: ldap-adapter
-  template:
-    metadata:
-      labels:
-        app: ldap-adapter
-    spec:
-      containers:
-      - image: registry.deckhouse.ru/stronghold/multifactor/multifactor-ldap-adapter:3.0.7
-        name: ldap-adapter
-        volumeMounts:
-        - mountPath: /opt/multifactor/ldap/multifactor-ldap-adapter.dll.config
-          name: config
-          subPath: multifactor-ldap-adapter.dll.config
-      volumes:
-      - configMap:
-          defaultMode: 420
-          name: ldap-adapter
-        name: config
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: ldap-adapter
-spec:
-  ports:
-  - port: 389
-    protocol: TCP
-    targetPort: 389
-  selector:
-    app: ldap-adapter
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: ldap-adapter
-data:
-  multifactor-ldap-adapter.dll.config: |
-    <?xml version="1.0" encoding="utf-8"?>
-    <configuration>
-      <configSections>
-        <section name="UserNameTransformRules" type="MultiFactor.Ldap.Adapter.Configuration.UserNameTransformRulesSection, multifactor-ldap-adapter" />
-      </configSections>
-      <appSettings>
-        <add key="adapter-ldap-endpoint" value="0.0.0.0:389"/>
-        <add key="ldap-server" value="ldap://ldap.example.com"/>
-        <add key="ldap-service-accounts" value="CN=admin,DC=example,DC=com"/>
-        <add key="ldap-base-dn" value="ou=Users,dc=example,dc=com"/>
-        <add key="multifactor-api-url" value="https://api.multifactor.ru" />
-        <add key="multifactor-nas-identifier" value="YOUR-NAS-IDENTIFIER" />
-        <add key="multifactor-shared-secret" value="YOUR-NAS-SECRET" />
-        <add key="logging-level" value="Debug"/>
-      </appSettings>
-    </configuration>
-```
+Для таких случаев возможен сценарий с общим подтверждением: в `username_format` задайте статическое имя
+учётной записи Multifactor, например администратора.
+Тогда все запросы аутентификации будут приходить на эту учётную запись,
+а оператор подтверждает вход, ориентируясь на идентификатор машины в запросе.
 
-В конфигурации укажите адрес своего LDAP-сервера и значения `multifactor-nas-identifier` и `multifactor-shared-secret` из панели управления MULTIFACTOR.
 
-Доступные образы:
+### Предварительные требования
 
-- на базе Ubuntu 24.04: `registry.deckhouse.ru/stronghold/multifactor/multifactor-ldap-adapter:3.0.7`;
-- на базе Alpine 3.22: `registry.deckhouse.ru/stronghold/multifactor/multifactor-ldap-adapter:3.0.7-alpine`.
+Перед настройкой выполните следующие шаги:
 
-## Настройка Stronghold
+1. В личном кабинете Multifactor создайте ресурс для серверной аутентификации, например `Linux`.
+   Не используйте тип ресурса `WebSite`.
 
-Для настройки Stronghold создайте и сконфигурируйте метод аутентификации `ldap`, где в качестве сервера укажите адрес `ldap-adapter`. Если для запуска адаптера вы использовали манифест из примера выше, то нужно указать адрес `ldap://ldap-adapter.default.svc`:
+1. Скопируйте из настроек ресурса значения **NAS Identifier** и **Shared Secret**.
+
+1. Убедитесь, что пользователи есть в Multifactor или будет работать их автоматическая регистрация.
+   Stronghold не синхронизирует пользователей с Multifactor, но передаёт запрос с возможностью inline-регистрации.
+   Если в настройках ресурса Multifactor включена опция **Регистрировать новых пользователей**,
+   при первом успешном подключении Multifactor создаёт учётную запись и пишет об этом в журнал доступа.
+   Доступ выдаётся в соответствии с политиками Multifactor.
+   Если опция выключена, Multifactor отказывает в доступе и не регистрирует новые учётные записи.
+
+   Значение identity в Multifactor должно совпадать со значением, которое формирует параметр `username_format`.
+
+Пользователей также можно завести вручную или через API Multifactor, а также синхронизировать из AD/LDAP средствами Directory Sync в Multifactor.
+
+### Создание метода MFA
+
+Чтобы включить метод MFA Multifactor и получить его идентификатор, выполните:
 
 ```shell
-d8 stronghold auth enable ldap
-d8 stronghold write auth/ldap/config url="ldap://ldap-adapter.default.svc" \
-   binddn="cn=admin,dc=example,dc=com" bindpass="Password-1" \
-   userdn="ou=Users,dc=example,dc=com" groupdn="ou=Groups,dc=example,dc=com" \
-   username_as_alias=true
+d8 stronghold write identity/mfa/method/multifactor method_name=my-mfa nas_identifier="rs_nas_id" shared_secret="secret"
+
+Key          Value
+---          -----
+method_id    93964fd0-dd7e-e22a-74d0-0880ca5e0398
+
 ```
 
-## Тестирование с помощью локального сервера OpenLDAP
+Параметры метода:
 
-Ниже приведен пример манифеста, с помощью которого можно запустить сервис OpenLDAP в Kubernetes для целей тестирования:
+| Параметр | Описание |
+| --- | --- |
+| `method_name` | Уникальное имя метода MFA. |
+| `nas_identifier` | NAS Identifier из настроек ресурса Multifactor. |
+| `shared_secret` | Shared Secret из настроек ресурса Multifactor. |
+| `api_url` | Базовый URL API Multifactor. По умолчанию — `https://api.multifactor.ru`. |
+| `username_format` | Шаблон преобразования сущности Stronghold в identity Multifactor. Если не задан, используется имя сущности. |
+| `timeout_seconds` | Максимальное время ожидания подтверждения в секундах. Значение по умолчанию — `90`, минимум — `65`. |
 
-```yaml
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: openldap
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: openldap
-  template:
-    metadata:
-      labels:
-        app: openldap
-    spec:
-      containers:
-      - env:
-        - name: LDAP_ADMIN_DN
-          value: cn=admin,dc=example,dc=com
-        - name: LDAP_ROOT
-          value: dc=example,dc=com
-        - name: LDAP_ADMIN_USERNAME
-          value: admin
-        - name: LDAP_ADMIN_PASSWORD
-          value: Password-1
-        image: bitnami/openldap:2.6.10
-        name: openldap
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: openldap
-spec:
-  ports:
-  - name: p389
-    port: 389
-    protocol: TCP
-    targetPort: 1389
-  selector:
-    app: openldap
+{{< alert level="warning" >}}
+Параметр `shared_secret` записывается только при создании или обновлении метода.
+При чтении конфигурации метода значение секрета не возвращается.
+{{< /alert >}}
+
+### Включение MFA
+
+Ниже приведён пример проверки MFA для метода аутентификации Userpass.
+
+1. Получите идентификатор (accessor) метода аутентификации:
+
+   ```shell
+   USERPASS_ACCESSOR=$(d8 stronghold auth list -format=json \
+       --detailed | jq -r '."userpass/".accessor')
+   echo $USERPASS_ACCESSOR
+   ```
+
+1. Включите MFA:
+
+   ```shell
+   d8 stronghold write /identity/mfa/login-enforcement/userpass-multifactor-enforcement \
+       mfa_method_ids="93964fd0-dd7e-e22a-74d0-0880ca5e0398" \
+       auth_method_accessors=$USERPASS_ACCESSOR
+   ```
+
+1. Выполните вход:
+
+   ```shell
+   d8 stronghold login -method=userpass username=mfa-user
+   Password (will be hidden):
+   Initiating Interactive MFA Validation...
+   Asking Stronghold to perform MFA validation with upstream service. You should receive a push notification in your authenticator app shortly
+   Success! You are now authenticated. The token information displayed below is
+   already stored in the token helper. You do NOT need to run "stronghold login"
+   again. Future Stronghold requests will automatically use this token.
+
+   Key                    Value
+   ---                    -----
+   token                  hv.....
+   token_accessor         uH1voyZljOCbttJSICUtom17
+   token_duration         768h
+   token_renewable        true
+   token_policies         ["default"]
+   policies               ["default"]
+   token_meta_username    mfa-user
+
+   ```
+
+После успешной проверки основного фактора Stronghold инициирует запрос в Multifactor и ожидает подтверждения.
+Подтвердите запрос в мобильном приложении Multifactor, в Telegram или по звонку — в зависимости от настроек пользователя в Multifactor.
+После статуса `Granted` Stronghold выдаст токен.
+
+Чтобы отключить проверку MFA, выполните:
+
+```shell
+d8 stronghold delete identity/mfa/login-enforcement/userpass-multifactor-enforcement
 ```
-
-После запуска контейнера создайте пользователя (в качестве примера приведено создание пользователя `alice` с паролем `D3mo-Passw0rd`):
-
-1. Сначала выполните вход в контейнер OpenLDAP:
-
-   ```shell
-   d8 k exec svc/openldap -it -- bash
-   ```
-
-1. Создайте пользователя с помощью следующих команд:
-
-   ```shell
-   cd /tmp
-   cat << EOF > create_entries.ldif
-   dn: uid=alice,ou=users,dc=example,dc=com
-   objectClass: inetOrgPerson
-   objectClass: person
-   objectClass: top
-   cn: Alice
-   sn: User
-   userPassword: D3mo-Passw0rd
-   EOF
-
-   ldapadd -H ldap://openldap -cxD "cn=admin,dc=example,dc=com" \
-           -w "Password-1" -f "create_entries.ldif"
-   ```
-
-Можете выполнить вход под пользователем `alice` с паролем `D3mo-Passw0rd`. В [панели управления MULTIFACTOR](https://admin.multifactor.ru/account/login)
-в разделе «Пользователи» будет создан пользователь `alice`, для которого можно назначить второй фактор.
-Далее будет требоваться его подтверждение при каждом входе в Stronghold.
-Помимо аудит-логов на стороне Stronghold подтверждение второго фактора будет фиксироваться также на стороне MULTIFACTOR.
