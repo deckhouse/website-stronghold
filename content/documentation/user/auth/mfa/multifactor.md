@@ -30,6 +30,7 @@ You can enable the check for any method that has an entity at login, for example
 - `oidc`
 - `jwt`
 - `saml`
+- `webauthn`
 - `approle`
 - `kubernetes`
 
@@ -83,7 +84,7 @@ Method parameters:
 | `nas_identifier` | NAS Identifier from the Multifactor resource settings. |
 | `shared_secret` | Shared Secret from the Multifactor resource settings. |
 | `api_url` | Base URL of the Multifactor API. Default is `https://api.multifactor.ru`. |
-| `username_format` | Template that maps a Stronghold entity to a Multifactor identity. If unset, the entity name is used. |
+| `username_format` | Template that maps a Stronghold entity to a Multifactor identity. Available parameters are listed under [Templated policies](../../../concepts/policy/#templated-policies). If unset, the entity name is used. |
 | `timeout_seconds` | Maximum wait time for confirmation in seconds. Default is `90`, minimum is `65`. |
 
 {{< alert level="warning" >}}

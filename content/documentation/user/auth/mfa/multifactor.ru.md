@@ -30,6 +30,7 @@ Login MFA, в том числе Multifactor, не ограничивает сп�
 - `oidc`
 - `jwt`
 - `saml`
+- `webauthn`
 - `approle`
 - `kubernetes`
 
@@ -83,7 +84,7 @@ method_id    93964fd0-dd7e-e22a-74d0-0880ca5e0398
 | `nas_identifier` | NAS Identifier из настроек ресурса Multifactor. |
 | `shared_secret` | Shared Secret из настроек ресурса Multifactor. |
 | `api_url` | Базовый URL API Multifactor. По умолчанию — `https://api.multifactor.ru`. |
-| `username_format` | Шаблон преобразования сущности Stronghold в identity Multifactor. Если не задан, используется имя сущности. |
+| `username_format` | Шаблон преобразования сущности Stronghold в identity Multifactor. Доступные параметры — в разделе [Шаблонные политики](../../../concepts/policy/#шаблонные-политики). Если шаблон не задан, используется имя сущности. |
 | `timeout_seconds` | Максимальное время ожидания подтверждения в секундах. Значение по умолчанию — `90`, минимум — `65`. |
 
 {{< alert level="warning" >}}
