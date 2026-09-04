@@ -50,7 +50,7 @@ The endpoint requires `sudo` privileges.
 |-----------|------|----------|---------|-------------|
 | `local_max_space` | Integer | No | `0` | Maximum number of bytes backup files with the specified `file_prefix` may use in the `path_prefix` directory. A value of `0` disables the check |
 
-### Additional parameters for aws-s3
+### Additional parameters for `aws-s3`
 
 <div class="table__styling--container"></div>
 
