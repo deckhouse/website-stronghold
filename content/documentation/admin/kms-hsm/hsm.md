@@ -129,10 +129,20 @@ Do the following to create a token, generate a key pair and configure Stronghold
 
 1. Start Stronghold while specifying the SoftHSM2 configuration:
 
+   {{< tabs name="stronghold_cmd_65285" >}}
+   {{% tab name="Stronghold in DKP" %}}
    ```shell
    export SOFTHSM2_CONF=/home/stronghold/softhsm2.conf
    d8 stronghold server -config config.hcl
    ```
+   {{% /tab %}}
+   {{% tab name="Stronghold in Linux" %}}
+   ```shell
+   export SOFTHSM2_CONF=/home/stronghold/softhsm2.conf
+   stronghold server -config config.hcl
+   ```
+   {{% /tab %}}
+   {{< /tabs >}}
 
 ## Migration from Shamir keys to HSM
 
@@ -155,9 +165,18 @@ Do the following to create a token, generate a key pair and configure Stronghold
 
 1. Perform the migration by entering the unseal keys:
 
+   {{< tabs name="stronghold_cmd_66874" >}}
+   {{% tab name="Stronghold in DKP" %}}
    ```shell
    d8 stronghold operator unseal -migrate
    ```
+   {{% /tab %}}
+   {{% tab name="Stronghold in Linux" %}}
+   ```shell
+   stronghold operator unseal -migrate
+   ```
+   {{% /tab %}}
+   {{< /tabs >}}
 
 After the migration is complete, Stronghold will automatically unseal using PKCS #11 on restart.
 
@@ -179,8 +198,17 @@ After the migration is complete, Stronghold will automatically unseal using PKCS
 
 1. Perform the migration by entering the recovery keys:
 
+   {{< tabs name="stronghold_cmd_66874" >}}
+   {{% tab name="Stronghold in DKP" %}}
    ```shell
    d8 stronghold operator unseal -migrate
    ```
+   {{% /tab %}}
+   {{% tab name="Stronghold in Linux" %}}
+   ```shell
+   stronghold operator unseal -migrate
+   ```
+   {{% /tab %}}
+   {{< /tabs >}}
 
 After the migration is complete, Stronghold will require manual entry of unseal keys on each restart.

@@ -18,16 +18,28 @@ ClickHouse это один из поддерживаемых плагинов д
 
 1. Включите механизм секретов базы данных, если он еще не включен:
 
+   {{< tabs name="stronghold_cmd_10649" >}}
+   {{% tab name="Stronghold в DKP" %}}
    ```shell-session
    $ d8 stronghold secrets enable database
    Success! Enabled the database secrets engine at: database/
    ```
+   {{% /tab %}}
+   {{% tab name="Stronghold в Linux" %}}
+   ```shell-session
+   $ stronghold secrets enable database
+   Success! Enabled the database secrets engine at: database/
+   ```
+   {{% /tab %}}
+   {{< /tabs >}}
 
    По умолчанию механизм секретов будет включаться на основе его имени.
    Чтобы включить механизм секретов по другому пути, используйте аргумент `-path`.
 
 2. Настройте Stronghold с помощью соответствующего плагина и информации о подключении:
 
+   {{< tabs name="stronghold_cmd_92590" >}}
+   {{% tab name="Stronghold в DKP" %}}
    ```shell-session
    $ d8 stronghold write database/config/my-clickhouse-database \
        plugin_name="clickhouse-database-plugin" \
@@ -36,11 +48,25 @@ ClickHouse это один из поддерживаемых плагинов д
        username="strongholduser" \
        password="strongholdpass"
    ```
+   {{% /tab %}}
+   {{% tab name="Stronghold в Linux" %}}
+   ```shell-session
+   $ stronghold write database/config/my-clickhouse-database \
+       plugin_name="clickhouse-database-plugin" \
+       allowed_roles="my-role" \
+       connection_url="clickhouse://clickhouse-server.my:9000??username={{username}}&password={{password}}&secure=true&skip_verify=true" \
+       username="strongholduser" \
+       password="strongholdpass"
+   ```
+   {{% /tab %}}
+   {{< /tabs >}}
 
 3. Настройте роль, которая сопоставляет имя в Stronghold SQL-запросом,
 выполняемым для создания учетной записи базы данных.
    В примере предполагается, что в кластере баз данных `my_cluster` создана роль `readonly`
 
+   {{< tabs name="stronghold_cmd_5924" >}}
+   {{% tab name="Stronghold в DKP" %}}
    ```shell-session
    $ d8 stronghold write database/roles/my-role \
         db_name="my-clickhouse-database" \
@@ -51,6 +77,20 @@ ClickHouse это один из поддерживаемых плагинов д
         max_ttl="24h"
    Success! Data written to: database/roles/my-role
    ```
+   {{% /tab %}}
+   {{% tab name="Stronghold в Linux" %}}
+   ```shell-session
+   $ stronghold write database/roles/my-role \
+        db_name="my-clickhouse-database" \
+        creation_statements="CREATE USER '{{name}}' IDENTIFIED BY '{{password}}' ON CLUSTER 'my_cluster'; \
+            GRANT readonly TO '{{name}}' ON CLUSTER 'my_cluster'; \
+            SET DEFAULT ROLE readonly TO '{{name}}';" \
+        default_ttl="1h" \
+        max_ttl="24h"
+   Success! Data written to: database/roles/my-role
+   ```
+   {{% /tab %}}
+   {{< /tabs >}}
 
 ## Использование
 
@@ -59,6 +99,8 @@ ClickHouse это один из поддерживаемых плагинов д
 
 1. Сгенерируйте новую учетную запись, используя `/creds` и имя роли:
 
+   {{< tabs name="stronghold_cmd_55861" >}}
+   {{% tab name="Stronghold в DKP" %}}
    ```shell-session
    $ d8 stronghold read database/creds/my-role
    Key                Value
@@ -69,3 +111,17 @@ ClickHouse это один из поддерживаемых плагинов д
    password           SsnoaA-8Tv4t34f41baD
    username           v-strongholduse-my-role-x
    ```
+   {{% /tab %}}
+   {{% tab name="Stronghold в Linux" %}}
+   ```shell-session
+   $ stronghold read database/creds/my-role
+   Key                Value
+   ---                -----
+   lease_id           database/creds/my-role/2f6a614c-4aa2-7b19-24b9-ad944a8d4de6
+   lease_duration     1h
+   lease_renewable    true
+   password           SsnoaA-8Tv4t34f41baD
+   username           v-strongholduse-my-role-x
+   ```
+   {{% /tab %}}
+   {{< /tabs >}}

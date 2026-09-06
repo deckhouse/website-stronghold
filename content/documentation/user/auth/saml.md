@@ -27,15 +27,33 @@ Stronghold supports two client modes:
 
 ## Enable the method
 
+{{< tabs name="stronghold_cmd_62772" >}}
+{{% tab name="Stronghold in DKP" %}}
 ```shell
 d8 stronghold auth enable saml
 ```
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+```shell
+stronghold auth enable saml
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 By default the method is mounted at `auth/saml`. You can mount it at a custom path if needed:
 
+{{< tabs name="stronghold_cmd_98944" >}}
+{{% tab name="Stronghold in DKP" %}}
 ```shell
 d8 stronghold auth enable -path=corp-saml saml
 ```
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+```shell
+stronghold auth enable -path=corp-saml saml
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 ## Configuration
 
@@ -53,6 +71,8 @@ Main configuration parameters:
 
 ### Configure via IdP metadata
 
+{{< tabs name="stronghold_cmd_61004" >}}
+{{% tab name="Stronghold in DKP" %}}
 ```shell
 d8 stronghold write auth/saml/config \
   entity_id="https://stronghold.example.com/v1/auth/saml" \
@@ -62,11 +82,26 @@ d8 stronghold write auth/saml/config \
   validate_response_signature=true \
   validate_assertion_signature=true
 ```
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+```shell
+stronghold write auth/saml/config \
+  entity_id="https://stronghold.example.com/v1/auth/saml" \
+  acs_urls="https://stronghold.example.com/v1/auth/saml/callback" \
+  idp_metadata_url="https://idp.example.com/app/stronghold/sso/saml/metadata" \
+  default_role="employees" \
+  validate_response_signature=true \
+  validate_assertion_signature=true
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 ### Configure manually
 
 Use manual configuration when metadata is unavailable:
 
+{{< tabs name="stronghold_cmd_66352" >}}
+{{% tab name="Stronghold in DKP" %}}
 ```shell
 d8 stronghold write auth/saml/config \
   entity_id="https://stronghold.example.com/v1/auth/saml" \
@@ -77,6 +112,20 @@ d8 stronghold write auth/saml/config \
   validate_response_signature=true \
   validate_assertion_signature=true
 ```
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+```shell
+stronghold write auth/saml/config \
+  entity_id="https://stronghold.example.com/v1/auth/saml" \
+  acs_urls="https://stronghold.example.com/v1/auth/saml/callback" \
+  idp_sso_url="https://idp.example.com/sso" \
+  idp_entity_id="https://idp.example.com/entity" \
+  idp_cert=@idp-signing-cert.pem \
+  validate_response_signature=true \
+  validate_assertion_signature=true
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 If multiple `acs_urls` are configured, the client must explicitly choose which one to use when starting the login flow.
 
@@ -92,12 +141,24 @@ When configuring `acs_urls`, make sure that each value:
 
 If Stronghold is exposed through multiple public addresses, you can configure several ACS URLs:
 
+{{< tabs name="stronghold_cmd_99652" >}}
+{{% tab name="Stronghold in DKP" %}}
 ```shell
 d8 stronghold write auth/saml/config \
   entity_id="https://stronghold.example.com/v1/auth/saml" \
   acs_urls="https://primary.example.com/v1/auth/saml/callback,https://secondary.example.com/v1/auth/saml/callback" \
   idp_metadata_url="https://idp.example.com/app/stronghold/sso/saml/metadata"
 ```
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+```shell
+stronghold write auth/saml/config \
+  entity_id="https://stronghold.example.com/v1/auth/saml" \
+  acs_urls="https://primary.example.com/v1/auth/saml/callback,https://secondary.example.com/v1/auth/saml/callback" \
+  idp_metadata_url="https://idp.example.com/app/stronghold/sso/saml/metadata"
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 If you use namespaces, include the namespace path in the API URL or pass the `X-Vault-Namespace` header so that the resulting callback URL matches the real auth mount location.
 
@@ -117,6 +178,8 @@ Main role parameters:
 
 Example role:
 
+{{< tabs name="stronghold_cmd_51229" >}}
+{{% tab name="Stronghold in DKP" %}}
 ```shell
 d8 stronghold write auth/saml/role/employees \
   bound_subjects="*@example.com" \
@@ -126,6 +189,19 @@ d8 stronghold write auth/saml/role/employees \
   token_policies="default,developers" \
   token_ttl="1h"
 ```
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+```shell
+stronghold write auth/saml/role/employees \
+  bound_subjects="*@example.com" \
+  bound_subjects_type="glob" \
+  bound_attributes=department=platform \
+  groups_attribute="memberOf" \
+  token_policies="default,developers" \
+  token_ttl="1h"
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 If your IdP sends multi-value attributes, `bound_attributes` can match any of the expected values. Matching is case-insensitive for attribute names.
 
@@ -138,6 +214,8 @@ After the user is authenticated by the Identity Provider, Stronghold checks the 
 
 This lets you allow access only to selected users or groups from the Identity Provider. For example:
 
+{{< tabs name="stronghold_cmd_8682" >}}
+{{% tab name="Stronghold in DKP" %}}
 ```shell
 d8 stronghold write auth/saml/role/support \
   bound_subjects="*@example.com" \
@@ -145,6 +223,17 @@ d8 stronghold write auth/saml/role/support \
   bound_attributes=groups="support,engineering" \
   token_policies="support-ro"
 ```
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+```shell
+stronghold write auth/saml/role/support \
+  bound_subjects="*@example.com" \
+  bound_subjects_type="glob" \
+  bound_attributes=groups="support,engineering" \
+  token_policies="support-ro"
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 The role above authorizes users whose subject ends with `@example.com` and whose `groups` attribute contains either `support` or `engineering`.
 
@@ -162,23 +251,56 @@ Example flow:
 
 Example commands:
 
+{{< tabs name="stronghold_cmd_9795" >}}
+{{% tab name="Stronghold in DKP" %}}
 ```shell
 d8 stronghold write identity/group \
   name="SamlDevelopers" \
   type="external" \
   policies="developers"
 ```
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+```shell
+stronghold write identity/group \
+  name="SamlDevelopers" \
+  type="external" \
+  policies="developers"
+```
+{{% /tab %}}
+{{< /tabs >}}
 
+{{< tabs name="stronghold_cmd_95645" >}}
+{{% tab name="Stronghold in DKP" %}}
 ```shell
 d8 stronghold auth list -format=json
 ```
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+```shell
+stronghold auth list -format=json
+```
+{{% /tab %}}
+{{< /tabs >}}
 
+{{< tabs name="stronghold_cmd_7643" >}}
+{{% tab name="Stronghold in DKP" %}}
 ```shell
 d8 stronghold write identity/group-alias \
   name="engineering" \
   mount_accessor="<saml-mount-accessor>" \
   canonical_id="<identity-group-id>"
 ```
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+```shell
+stronghold write identity/group-alias \
+  name="engineering" \
+  mount_accessor="<saml-mount-accessor>" \
+  canonical_id="<identity-group-id>"
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 With this setup, a SAML login that returns `engineering` in the attribute referenced by `groups_attribute` will be linked to the external Identity group.
 

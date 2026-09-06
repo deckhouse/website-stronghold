@@ -22,20 +22,41 @@ The GitOps secrets engine is **built-in**. You do not need to register or load a
 
 1. Enable the GitOps secrets engine:
 
+   {{< tabs name="stronghold_cmd_429" >}}
+   {{% tab name="Stronghold in DKP" %}}
    ```bash
    d8 stronghold secrets enable gitops
    ```
+   {{% /tab %}}
+   {{% tab name="Stronghold in Linux" %}}
+   ```bash
+   stronghold secrets enable gitops
+   ```
+   {{% /tab %}}
+   {{< /tabs >}}
 
    By default, the engine mounts at `gitops/`. To use another path, pass `-path`.
 
 1. Configure the Git repository to monitor:
 
+   {{< tabs name="stronghold_cmd_97842" >}}
+   {{% tab name="Stronghold in DKP" %}}
    ```bash
    d8 stronghold write gitops/configure/git_repository \
        git_repo_url="https://gitlab.example.com/org/stronghold-gitops.git" \
        required_number_of_verified_signatures_on_commit=1 \
        git_poll_period=1m
    ```
+   {{% /tab %}}
+   {{% tab name="Stronghold in Linux" %}}
+   ```bash
+   stronghold write gitops/configure/git_repository \
+       git_repo_url="https://gitlab.example.com/org/stronghold-gitops.git" \
+       required_number_of_verified_signatures_on_commit=1 \
+       git_poll_period=1m
+   ```
+   {{% /tab %}}
+   {{< /tabs >}}
 
    | Parameter | Required | Default | Description |
    |-----------|----------|---------|-------------|
@@ -48,11 +69,22 @@ The GitOps secrets engine is **built-in**. You do not need to register or load a
 
 1. If the repository is private, configure credentials:
 
+   {{< tabs name="stronghold_cmd_46118" >}}
+   {{% tab name="Stronghold in DKP" %}}
    ```bash
    d8 stronghold write gitops/configure/git_credential \
        username=token \
        password=glpat-XXXXXXXX
    ```
+   {{% /tab %}}
+   {{% tab name="Stronghold in Linux" %}}
+   ```bash
+   stronghold write gitops/configure/git_credential \
+       username=token \
+       password=glpat-XXXXXXXX
+   ```
+   {{% /tab %}}
+   {{< /tabs >}}
 
 1. Create PGP keys for commit signing:
 
@@ -63,6 +95,8 @@ The GitOps secrets engine is **built-in**. You do not need to register or load a
 
 1. Export the public keys and upload them to Stronghold:
 
+   {{< tabs name="stronghold_cmd_91259" >}}
+   {{% tab name="Stronghold in DKP" %}}
    ```bash
    gpg --armor --output key1.pgp --export key1
    gpg --armor --output key2.pgp --export key2
@@ -70,9 +104,22 @@ The GitOps secrets engine is **built-in**. You do not need to register or load a
    d8 stronghold write gitops/configure/trusted_pgp_public_key/key1 public_key=@key1.pgp
    d8 stronghold write gitops/configure/trusted_pgp_public_key/key2 public_key=@key2.pgp
    ```
+   {{% /tab %}}
+   {{% tab name="Stronghold in Linux" %}}
+   ```bash
+   gpg --armor --output key1.pgp --export key1
+   gpg --armor --output key2.pgp --export key2
+
+   stronghold write gitops/configure/trusted_pgp_public_key/key1 public_key=@key1.pgp
+   stronghold write gitops/configure/trusted_pgp_public_key/key2 public_key=@key2.pgp
+   ```
+   {{% /tab %}}
+   {{< /tabs >}}
 
 1. Configure API access for the engine. Prefer a wrapped renewable periodic token. The engine unwraps the token and stores it; the token cannot be read back later:
 
+   {{< tabs name="stronghold_cmd_11329" >}}
+   {{% tab name="Stronghold in DKP" %}}
    ```bash
    TOKEN=$(d8 stronghold token create -orphan -period=7d -policy=gitops-apply \
        -display-name="gitops-plugin" -wrap-ttl=1m -field=wrapping_token)
@@ -81,6 +128,18 @@ The GitOps secrets engine is **built-in**. You do not need to register or load a
        vault_addr=https://stronghold.example.com:8200 \
        wrapping_token=$TOKEN
    ```
+   {{% /tab %}}
+   {{% tab name="Stronghold in Linux" %}}
+   ```bash
+   TOKEN=$(stronghold token create -orphan -period=7d -policy=gitops-apply \
+       -display-name="gitops-plugin" -wrap-ttl=1m -field=wrapping_token)
+
+   stronghold write gitops/configure/vault \
+       vault_addr=https://stronghold.example.com:8200 \
+       wrapping_token=$TOKEN
+   ```
+   {{% /tab %}}
+   {{< /tabs >}}
 
    | Parameter | Description |
    |-----------|-------------|
@@ -137,9 +196,18 @@ After the next poll, if the commit has enough verified signatures from trusted k
 
 Check the current status:
 
+{{< tabs name="stronghold_cmd_43910" >}}
+{{% tab name="Stronghold in DKP" %}}
 ```bash
 d8 stronghold read gitops/status
 ```
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+```bash
+stronghold read gitops/status
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 The response includes:
 
@@ -150,8 +218,17 @@ The response includes:
 
 ## Disable
 
+{{< tabs name="stronghold_cmd_9753" >}}
+{{% tab name="Stronghold in DKP" %}}
 ```bash
 d8 stronghold secrets disable gitops
 ```
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+```bash
+stronghold secrets disable gitops
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 Disabling the engine deletes its storage data for that mount, including the stored API token and apply state.

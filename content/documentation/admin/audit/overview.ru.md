@@ -101,9 +101,18 @@ Stronghold поддерживает те же базовые бэкенды ау
 
 Пример включения:
 
+{{< tabs name="stronghold_cmd_20236" >}}
+{{% tab name="Stronghold в DKP" %}}
 ```shell
 d8 stronghold audit enable file file_path=/var/log/stronghold_audit.log
 ```
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+```shell
+stronghold audit enable file file_path=/var/log/stronghold_audit.log
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 ### Syslog
 
@@ -111,9 +120,18 @@ d8 stronghold audit enable file file_path=/var/log/stronghold_audit.log
 
 Пример включения:
 
+{{< tabs name="stronghold_cmd_96533" >}}
+{{% tab name="Stronghold в DKP" %}}
 ```shell
 d8 stronghold audit enable syslog tag="stronghold" facility="AUTH"
 ```
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+```shell
+stronghold audit enable syslog tag="stronghold" facility="AUTH"
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 {{< alert level="warning" >}}
 Записи аудита могут быть большими, поэтому для `syslog` лучше использовать надёжную транспортную конфигурацию или дополнительно включать бэкенд `file`.
@@ -125,9 +143,18 @@ d8 stronghold audit enable syslog tag="stronghold" facility="AUTH"
 
 Пример включения:
 
+{{< tabs name="stronghold_cmd_5855" >}}
+{{% tab name="Stronghold в DKP" %}}
 ```shell
 d8 stronghold audit enable socket address=127.0.0.1:9090 socket_type=tcp
 ```
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+```shell
+stronghold audit enable socket address=127.0.0.1:9090 socket_type=tcp
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 При использовании UDP учитывайте риск незаметной потери сообщений. Для production-сценариев желательно комбинировать `socket` с другим, более надежным аудит-устройством.
 
@@ -135,21 +162,48 @@ d8 stronghold audit enable socket address=127.0.0.1:9090 socket_type=tcp
 
 Включить аудит-устройство:
 
+{{< tabs name="stronghold_cmd_20236" >}}
+{{% tab name="Stronghold в DKP" %}}
 ```shell
 d8 stronghold audit enable file file_path=/var/log/stronghold_audit.log
 ```
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+```shell
+stronghold audit enable file file_path=/var/log/stronghold_audit.log
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 Посмотреть список устройств:
 
+{{< tabs name="stronghold_cmd_22849" >}}
+{{% tab name="Stronghold в DKP" %}}
 ```shell
 d8 stronghold audit list
 ```
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+```shell
+stronghold audit list
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 Отключить устройство:
 
+{{< tabs name="stronghold_cmd_42190" >}}
+{{% tab name="Stronghold в DKP" %}}
 ```shell
 d8 stronghold audit disable file/
 ```
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+```shell
+stronghold audit disable file/
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 ## Продвинутые возможности
 

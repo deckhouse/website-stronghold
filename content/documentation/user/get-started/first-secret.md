@@ -23,15 +23,33 @@ To create a test secret, follow these steps:
 
 1. Create a secret by writing test values to the selected path:
 
+   {{< tabs name="stronghold_cmd_58984" >}}
+   {{% tab name="Stronghold in DKP" %}}
    ```shell
    d8 stronghold kv put secret/my-first-secret username=demo password=secret123
    ```
+   {{% /tab %}}
+   {{% tab name="Stronghold in Linux" %}}
+   ```shell
+   stronghold kv put secret/my-first-secret username=demo password=secret123
+   ```
+   {{% /tab %}}
+   {{< /tabs >}}
 
 1. Verify the saved values:
 
+   {{< tabs name="stronghold_cmd_55073" >}}
+   {{% tab name="Stronghold in DKP" %}}
    ```shell
    d8 stronghold kv get secret/my-first-secret
    ```
+   {{% /tab %}}
+   {{% tab name="Stronghold in Linux" %}}
+   ```shell
+   stronghold kv get secret/my-first-secret
+   ```
+   {{% /tab %}}
+   {{< /tabs >}}
 
    Example output:
 
@@ -45,15 +63,33 @@ To create a test secret, follow these steps:
 
 1. Edit the secret value by rewriting it to the same path:
 
+   {{< tabs name="stronghold_cmd_85471" >}}
+   {{% tab name="Stronghold in DKP" %}}
    ```shell
    d8 stronghold kv put secret/my-first-secret username=demo password=new-secret
    ```
+   {{% /tab %}}
+   {{% tab name="Stronghold in Linux" %}}
+   ```shell
+   stronghold kv put secret/my-first-secret username=demo password=new-secret
+   ```
+   {{% /tab %}}
+   {{< /tabs >}}
 
 1. Make sure the value has been updated:
 
+   {{< tabs name="stronghold_cmd_55073" >}}
+   {{% tab name="Stronghold in DKP" %}}
    ```shell
    d8 stronghold kv get secret/my-first-secret
    ```
+   {{% /tab %}}
+   {{% tab name="Stronghold in Linux" %}}
+   ```shell
+   stronghold kv get secret/my-first-secret
+   ```
+   {{% /tab %}}
+   {{< /tabs >}}
 
 {{< alert level="info" >}}
 After verification, replace the test path and values with the parameters used in your project.

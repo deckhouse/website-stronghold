@@ -39,6 +39,8 @@ Directory](http://social.technet.microsoft.com/wiki/contents/articles/5312.activ
 
 ### Via the CLI
 
+{{< tabs name="stronghold_cmd_53415" >}}
+{{% tab name="Stronghold in DKP" %}}
 ```shell-session
 $ d8 stronghold login -method=ldap username=mitchellh
 Password (will be hidden):
@@ -47,6 +49,18 @@ with this token are listed below:
 
 admins
 ```
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+```shell-session
+$ stronghold login -method=ldap username=mitchellh
+Password (will be hidden):
+Successfully authenticated! The policies that are associated
+with this token are listed below:
+
+admins
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 ### Via the API
 
@@ -87,9 +101,18 @@ management tool.
 
 1. Enable the ldap auth method:
 
+   {{< tabs name="stronghold_cmd_97337" >}}
+   {{% tab name="Stronghold in DKP" %}}
    ```text
    d8 stronghold auth enable ldap
    ```
+   {{% /tab %}}
+   {{% tab name="Stronghold in Linux" %}}
+   ```text
+   stronghold auth enable ldap
+   ```
+   {{% /tab %}}
+   {{< /tabs >}}
 
 1. Configure connection details for your LDAP server, information on how to
    authenticate users, and instructions on how to query for group membership. The
@@ -174,6 +197,8 @@ _Note_: When using _Authenticated Search_ for binding parameters (see above) the
 - Group search will start under `ou=Groups,dc=example,dc=com`. For all group objects under that path, the `member` attribute will be checked for a match against the authenticated user.
 - Group names are identified using their `cn` attribute.
 
+{{< tabs name="stronghold_cmd_94101" >}}
+{{% tab name="Stronghold in DKP" %}}
 ```shell-session
 $ d8 stronghold write auth/ldap/config \
     url="ldap://ldap.example.com" \
@@ -187,6 +212,23 @@ $ d8 stronghold write auth/ldap/config \
     starttls=true
 ...
 ```
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+```shell-session
+$ stronghold write auth/ldap/config \
+    url="ldap://ldap.example.com" \
+    userdn="ou=Users,dc=example,dc=com" \
+    groupdn="ou=Groups,dc=example,dc=com" \
+    groupfilter="(&(objectClass=group)(member:1.2.840.113556.1.4.1941:={{.UserDN}}))" \
+    groupattr="cn" \
+    upndomain="example.com" \
+    certificate=@ldap_ca_cert.pem \
+    insecure_tls=false \
+    starttls=true
+...
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 ### Scenario 2
 
@@ -199,6 +241,8 @@ $ d8 stronghold write auth/ldap/config \
 - Username passed to stronghold when authenticating maps to the `sAMAccountName` attribute.
 - Group membership will be resolved via the `memberOf` attribute of _user_ objects. That search will begin under `ou=Users,dc=example,dc=com`.
 
+{{< tabs name="stronghold_cmd_84945" >}}
+{{% tab name="Stronghold in DKP" %}}
 ```shell-session
 $ d8 stronghold write auth/ldap/config \
     url="ldap://ldap.example.com" \
@@ -214,6 +258,25 @@ $ d8 stronghold write auth/ldap/config \
     starttls=true
 ...
 ```
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+```shell-session
+$ stronghold write auth/ldap/config \
+    url="ldap://ldap.example.com" \
+    userattr=sAMAccountName \
+    userdn="ou=Users,dc=example,dc=com" \
+    groupdn="ou=Users,dc=example,dc=com" \
+    groupfilter="(&(objectClass=person)(uid={{.Username}}))" \
+    groupattr="memberOf" \
+    binddn="cn=stronghold,ou=users,dc=example,dc=com" \
+    bindpass='My$ecrt3tP4ss' \
+    certificate=@ldap_ca_cert.pem \
+    insecure_tls=false \
+    starttls=true
+...
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 ### Scenario 3
 
@@ -225,6 +288,8 @@ $ d8 stronghold write auth/ldap/config \
 - Group membership will be resolved via any one of `memberUid`, `member`, or `uniqueMember` attributes. That search will begin under `ou=Groups,dc=example,dc=com`.
 - Group names are identified using the `cn` attribute.
 
+{{< tabs name="stronghold_cmd_71" >}}
+{{% tab name="Stronghold in DKP" %}}
 ```shell-session
 $ d8 stronghold write auth/ldap/config \
     url="ldaps://ldap.example.com" \
@@ -237,27 +302,64 @@ $ d8 stronghold write auth/ldap/config \
     starttls=true
 ...
 ```
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+```shell-session
+$ stronghold write auth/ldap/config \
+    url="ldaps://ldap.example.com" \
+    userattr="uid" \
+    userdn="ou=Users,dc=example,dc=com" \
+    discoverdn=true \
+    groupdn="ou=Groups,dc=example,dc=com" \
+    certificate=@ldap_ca_cert.pem \
+    insecure_tls=false \
+    starttls=true
+...
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 ## LDAP group -> policy mapping
 
 Next we want to create a mapping from an LDAP group to an Stronghold policy:
 
+{{< tabs name="stronghold_cmd_42241" >}}
+{{% tab name="Stronghold in DKP" %}}
 ```shell-session
 d8 stronghold write auth/ldap/groups/scientists policies=foo,bar
 ```
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+```shell-session
+stronghold write auth/ldap/groups/scientists policies=foo,bar
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 This maps the LDAP group "scientists" to the "foo" and "bar" Stronghold policies.
 We can also add specific LDAP users to additional (potentially non-LDAP) groups. Note that policies can also be specified on LDAP users as well.
 
+{{< tabs name="stronghold_cmd_39421" >}}
+{{% tab name="Stronghold in DKP" %}}
 ```shell-session
 d8 stronghold write auth/ldap/groups/engineers policies=foobar
 d8 stronghold write auth/ldap/users/tesla groups=engineers policies=zoobar
 ```
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+```shell-session
+stronghold write auth/ldap/groups/engineers policies=foobar
+stronghold write auth/ldap/users/tesla groups=engineers policies=zoobar
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 This adds the LDAP user "tesla" to the "engineers" group, which maps to the "foobar" Stronghold policy. User "tesla" itself is associated with "zoobar" policy.
 
 Finally, we can test this by authenticating:
 
+{{< tabs name="stronghold_cmd_5859" >}}
+{{% tab name="Stronghold in DKP" %}}
 ```shell-session
 $ d8 stronghold login -method=ldap username=tesla
 Password (will be hidden):
@@ -266,6 +368,18 @@ with this token are listed below:
 
 default, foobar, zoobar
 ```
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+```shell-session
+$ stronghold login -method=ldap username=tesla
+Password (will be hidden):
+Successfully authenticated! The policies that are associated
+with this token are listed below:
+
+default, foobar, zoobar
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 ## Note on policy mapping
 

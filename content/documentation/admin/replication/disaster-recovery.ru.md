@@ -33,15 +33,33 @@ DR-secondary не обслуживает клиентов (кроме распе
 
 ## Шаг 1. Включите DR primary
 
+{{< tabs name="stronghold_cmd_7602" >}}
+{{% tab name="Stronghold в DKP" %}}
 ```shell
 d8 stronghold write -force sys/replication/dr/primary/enable
 ```
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+```shell
+stronghold write -force sys/replication/dr/primary/enable
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 ## Шаг 2. Создайте activation-токен для DR secondary
 
+{{< tabs name="stronghold_cmd_3365" >}}
+{{% tab name="Stronghold в DKP" %}}
 ```shell
 d8 stronghold write sys/replication/dr/primary/secondary-token id=dr-1 ttl=24h
 ```
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+```shell
+stronghold write sys/replication/dr/primary/secondary-token id=dr-1 ttl=24h
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 Параметр `id` обязателен, `ttl` по умолчанию — `24h`. Команда возвращает
 wrapping-токен в поле `wrap_info.token` — его и передайте на secondary.
@@ -72,9 +90,18 @@ curl \
 
 ## Шаг 4. Проверьте статус
 
+{{< tabs name="stronghold_cmd_63656" >}}
+{{% tab name="Stronghold в DKP" %}}
 ```shell
 d8 stronghold read -address="${SECONDARY_ADDR}" sys/replication/dr/status
 ```
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+```shell
+stronghold read -address="${SECONDARY_ADDR}" sys/replication/dr/status
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 Статус показывает `mode`, `state`, `connection_state`, `last_wal` и
 `last_remote_wal`. DR-secondary догнал primary, когда его `last_wal` дошёл до

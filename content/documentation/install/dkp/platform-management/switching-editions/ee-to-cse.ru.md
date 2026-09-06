@@ -39,6 +39,8 @@ Stronghold Enterprise Edition (EE) можно обновить до Stronghold C
 
 1. Создайте резервную копию или снимок (snapshot) кластера Stronghold. Пример:
 
+   {{< tabs name="stronghold_cmd_21012" >}}
+   {{% tab name="Stronghold в DKP" %}}
    ```sh
    export STRONGHOLD_ADDR=https://$(d8 k -n d8-stronghold get ing stronghold -o json | jq -r '.spec.rules[0].host')
    d8 stronghold login -method=oidc -path=oidc_deckhouse
@@ -46,6 +48,17 @@ Stronghold Enterprise Edition (EE) можно обновить до Stronghold C
    ## d8 stronghold login -method=token
    d8 stronghold operator raft snapshot save stronghold-$(date +%F_%H-%M).snap
    ```
+   {{% /tab %}}
+   {{% tab name="Stronghold в Linux" %}}
+   ```sh
+   export STRONGHOLD_ADDR=https://$(d8 k -n d8-stronghold get ing stronghold -o json | jq -r '.spec.rules[0].host')
+   stronghold login -method=oidc -path=oidc_deckhouse
+   # Либо через root-токен:
+   ## stronghold login -method=token
+   stronghold operator raft snapshot save stronghold-$(date +%F_%H-%M).snap
+   ```
+   {{% /tab %}}
+   {{< /tabs >}}
 
    Проверить снимок можно с помощью команды:
 
@@ -430,6 +443,8 @@ Stronghold Enterprise Edition (EE) можно обновить до Stronghold C
 
    - Восстановите снимок (snapshot):
 
+     {{< tabs name="stronghold_cmd_70751" >}}
+     {{% tab name="Stronghold в DKP" %}}
      ```shell
      export STRONGHOLD_ADDR=https://$(d8 k -n d8-stronghold get ing stronghold -o json | jq -r '.spec.rules[0].host')
      d8 stronghold login -method=oidc -path=oidc_deckhouse
@@ -437,6 +452,17 @@ Stronghold Enterprise Edition (EE) можно обновить до Stronghold C
      ## d8 stronghold login -method=token
      d8 stronghold operator raft snapshot restore -force stronghold-<SNAPSHOT_DATE>.snap
      ```
+     {{% /tab %}}
+     {{% tab name="Stronghold в Linux" %}}
+     ```shell
+     export STRONGHOLD_ADDR=https://$(d8 k -n d8-stronghold get ing stronghold -o json | jq -r '.spec.rules[0].host')
+     stronghold login -method=oidc -path=oidc_deckhouse
+     # Либо через root-токен:
+     ## stronghold login -method=token
+     stronghold operator raft snapshot restore -force stronghold-<SNAPSHOT_DATE>.snap
+     ```
+     {{% /tab %}}
+     {{< /tabs >}}
 
    - Восстановите unseal-ключи и root-токен:
 

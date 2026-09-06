@@ -82,9 +82,18 @@ params:
 
 Примените конфигурацию из файла `local-snapshot.json` следующей командой:
 
+{{< tabs name="stronghold_cmd_6865" >}}
+{{% tab name="Stronghold в DKP" %}}
 ```shell
 d8 stronghold write sys/storage/raft/snapshot-auto/config/my-local-snapshots @local-snapshot.json
 ```
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+```shell
+stronghold write sys/storage/raft/snapshot-auto/config/my-local-snapshots @local-snapshot.json
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 {{< alert level="info" >}}
 Перед применением конфигурации убедитесь, что директория из `path_prefix` существует и доступна для записи. Ошибка `failed to create snapshot directory at destination` обычно означает, что директория отсутствует или недоступна.
@@ -110,9 +119,18 @@ d8 stronghold write sys/storage/raft/snapshot-auto/config/my-local-snapshots @lo
 
 Примените конфигурацию из файла `minio-snapshot.json` следующей командой:
 
+{{< tabs name="stronghold_cmd_45767" >}}
+{{% tab name="Stronghold в DKP" %}}
 ```shell
 d8 stronghold write sys/storage/raft/snapshot-auto/config/my-remote-snapshots @minio-snapshot.json
 ```
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+```shell
+stronghold write sys/storage/raft/snapshot-auto/config/my-remote-snapshots @minio-snapshot.json
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 {{< alert level="info" >}}
 Перед применением конфигурации убедитесь, что бакет уже существует, а указанные учётные данные имеют права на чтение и запись.
@@ -131,9 +149,18 @@ d8 stronghold write sys/storage/raft/snapshot-auto/config/my-remote-snapshots @m
 
 Примените обновлённую конфигурацию из файла `local-snapshot-update.json` следующей командой:
 
+{{< tabs name="stronghold_cmd_53206" >}}
+{{% tab name="Stronghold в DKP" %}}
 ```shell
 d8 stronghold write sys/storage/raft/snapshot-auto/config/my-local-snapshots @local-snapshot-update.json
 ```
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+```shell
+stronghold write sys/storage/raft/snapshot-auto/config/my-local-snapshots @local-snapshot-update.json
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 ## Просмотр списка конфигураций
 
@@ -143,9 +170,18 @@ d8 stronghold write sys/storage/raft/snapshot-auto/config/my-local-snapshots @lo
 
 Пример команды:
 
+{{< tabs name="stronghold_cmd_33978" >}}
+{{% tab name="Stronghold в DKP" %}}
 ```shell
 d8 stronghold list sys/storage/raft/snapshot-auto/config
 ```
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+```shell
+stronghold list sys/storage/raft/snapshot-auto/config
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 ## Получение параметров конфигурации
 
@@ -155,9 +191,18 @@ d8 stronghold list sys/storage/raft/snapshot-auto/config
 
 Пример команды:
 
+{{< tabs name="stronghold_cmd_67199" >}}
+{{% tab name="Stronghold в DKP" %}}
 ```shell
 d8 stronghold read sys/storage/raft/snapshot-auto/config/my-remote-snapshots
 ```
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+```shell
+stronghold read sys/storage/raft/snapshot-auto/config/my-remote-snapshots
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 Для `aws-s3` значения `aws_access_key_id` и `aws_secret_access_key` в ответе не отображаются.
 
@@ -169,9 +214,18 @@ d8 stronghold read sys/storage/raft/snapshot-auto/config/my-remote-snapshots
 
 Пример команды:
 
+{{< tabs name="stronghold_cmd_50803" >}}
+{{% tab name="Stronghold в DKP" %}}
 ```shell
 d8 stronghold delete sys/storage/raft/snapshot-auto/config/my-remote-snapshots
 ```
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+```shell
+stronghold delete sys/storage/raft/snapshot-auto/config/my-remote-snapshots
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 {{< alert level="info" >}}
 Удаление конфигурации автоматического резервного копирования не удаляет уже созданные файлы снимков из локального или объектного хранилища.
@@ -185,9 +239,18 @@ d8 stronghold delete sys/storage/raft/snapshot-auto/config/my-remote-snapshots
 
 Пример команды:
 
+{{< tabs name="stronghold_cmd_25509" >}}
+{{% tab name="Stronghold в DKP" %}}
 ```shell
 d8 stronghold read sys/storage/raft/snapshot-auto/status/my-remote-snapshots
 ```
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+```shell
+stronghold read sys/storage/raft/snapshot-auto/status/my-remote-snapshots
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 Ключевые поля статуса:
 

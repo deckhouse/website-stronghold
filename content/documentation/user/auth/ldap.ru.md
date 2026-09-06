@@ -10,6 +10,8 @@ weight: 70
 
 ### С помощью CLI
 
+{{< tabs name="stronghold_cmd_53415" >}}
+{{% tab name="Stronghold в DKP" %}}
 ```shell-session
 $ d8 stronghold login -method=ldap username=mitchellh
 Password (will be hidden):
@@ -18,6 +20,18 @@ with this token are listed below:
 
 admins
 ```
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+```shell-session
+$ stronghold login -method=ldap username=mitchellh
+Password (will be hidden):
+Successfully authenticated! The policies that are associated
+with this token are listed below:
+
+admins
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 ### С помощью API
 
@@ -56,9 +70,18 @@ $ curl \
 
 1. Включить метод аутентификации LDAP:
 
+{{< tabs name="stronghold_cmd_55411" >}}
+{{% tab name="Stronghold в DKP" %}}
 ```text
 d8 stronghold auth enable ldap
 ```
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+```text
+stronghold auth enable ldap
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 1. Настройте параметры подключения к серверу LDAP, а также информацию о том, как аутентифицировать пользователей, и как запрашивать членство в группах.
 
@@ -132,6 +155,8 @@ _Примечание_: При использовании _Аутентифиц�
 - Поиск групп начнется с `ou=Groups,dc=example,dc=com`. Для всех объектов групп по этому пути атрибут `member` будет проверяться на соответствие аутентифицированному пользователю.
 - Имена групп определяются на основании их атрибута `cn`.
 
+{{< tabs name="stronghold_cmd_94101" >}}
+{{% tab name="Stronghold в DKP" %}}
 ```shell-session
 $ d8 stronghold write auth/ldap/config \
     url="ldap://ldap.example.com" \
@@ -145,6 +170,23 @@ $ d8 stronghold write auth/ldap/config \
     starttls=true
 ...
 ```
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+```shell-session
+$ stronghold write auth/ldap/config \
+    url="ldap://ldap.example.com" \
+    userdn="ou=Users,dc=example,dc=com" \
+    groupdn="ou=Groups,dc=example,dc=com" \
+    groupfilter="(&(objectClass=group)(member:1.2.840.113556.1.4.1941:={{.UserDN}}))" \
+    groupattr="cn" \
+    upndomain="example.com" \
+    certificate=@ldap_ca_cert.pem \
+    insecure_tls=false \
+    starttls=true
+...
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 ### Сценарий 2
 
@@ -157,6 +199,8 @@ $ d8 stronghold write auth/ldap/config \
 - Имя пользователя, переданное в stronghold при аутентификации, отображается на атрибут `sAMAccountName`.
 - Членство в группе будет определяться через атрибут `memberOf` объектов _user_. Этот поиск начнется в `ou=Users,dc=example,dc=com`.
 
+{{< tabs name="stronghold_cmd_84945" >}}
+{{% tab name="Stronghold в DKP" %}}
 ```shell-session
 $ d8 stronghold write auth/ldap/config \
     url="ldap://ldap.example.com" \
@@ -172,6 +216,25 @@ $ d8 stronghold write auth/ldap/config \
     starttls=true
 ...
 ```
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+```shell-session
+$ stronghold write auth/ldap/config \
+    url="ldap://ldap.example.com" \
+    userattr=sAMAccountName \
+    userdn="ou=Users,dc=example,dc=com" \
+    groupdn="ou=Users,dc=example,dc=com" \
+    groupfilter="(&(objectClass=person)(uid={{.Username}}))" \
+    groupattr="memberOf" \
+    binddn="cn=stronghold,ou=users,dc=example,dc=com" \
+    bindpass='My$ecrt3tP4ss' \
+    certificate=@ldap_ca_cert.pem \
+    insecure_tls=false \
+    starttls=true
+...
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 ### Сценарий 3
 
@@ -183,6 +246,8 @@ $ d8 stronghold write auth/ldap/config \
 - Членство в группе будет определяться через один из атрибутов: `memberUid`, `member` или `uniqueMember`. Этот поиск начнется в `ou=Groups,dc=example,dc=com`.
 - Имена групп идентифицируются с использованием атрибута `cn`.
 
+{{< tabs name="stronghold_cmd_71" >}}
+{{% tab name="Stronghold в DKP" %}}
 ```shell-session
 $ d8 stronghold write auth/ldap/config \
     url="ldaps://ldap.example.com" \
@@ -195,26 +260,63 @@ $ d8 stronghold write auth/ldap/config \
     starttls=true
 ...
 ```
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+```shell-session
+$ stronghold write auth/ldap/config \
+    url="ldaps://ldap.example.com" \
+    userattr="uid" \
+    userdn="ou=Users,dc=example,dc=com" \
+    discoverdn=true \
+    groupdn="ou=Groups,dc=example,dc=com" \
+    certificate=@ldap_ca_cert.pem \
+    insecure_tls=false \
+    starttls=true
+...
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 ## Сопоставление групп LDAP и политик
 
 Далее мы хотим создать сопоставление группы LDAP с политикой Stronghold:
 
+{{< tabs name="stronghold_cmd_42241" >}}
+{{% tab name="Stronghold в DKP" %}}
 ```shell-session
 d8 stronghold write auth/ldap/groups/scientists policies=foo,bar
 ```
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+```shell-session
+stronghold write auth/ldap/groups/scientists policies=foo,bar
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 Это сопоставляет группу LDAP «scientists» с политиками Stronghold «foo» и «bar». Мы также можем добавить определенных пользователей LDAP в дополнительные (потенциально не-LDAP) группы. Обратите внимание, что политики могут быть указаны и для пользователей LDAP.
 
+{{< tabs name="stronghold_cmd_39421" >}}
+{{% tab name="Stronghold в DKP" %}}
 ```shell-session
 d8 stronghold write auth/ldap/groups/engineers policies=foobar
 d8 stronghold write auth/ldap/users/tesla groups=engineers policies=zoobar
 ```
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+```shell-session
+stronghold write auth/ldap/groups/engineers policies=foobar
+stronghold write auth/ldap/users/tesla groups=engineers policies=zoobar
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 Это добавляет пользователя LDAP «tesla» в группу «engineers», которая соответствует политике Stronghold «foobar». Сам пользователь «tesla» связан с политикой «zoobar».
 
 Наконец, мы можем проверить это, пройдя аутентификацию:
 
+{{< tabs name="stronghold_cmd_5859" >}}
+{{% tab name="Stronghold в DKP" %}}
 ```shell-session
 $ d8 stronghold login -method=ldap username=tesla
 Password (will be hidden):
@@ -223,6 +325,18 @@ with this token are listed below:
 
 default, foobar, zoobar
 ```
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+```shell-session
+$ stronghold login -method=ldap username=tesla
+Password (will be hidden):
+Successfully authenticated! The policies that are associated
+with this token are listed below:
+
+default, foobar, zoobar
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 ## Примечание о сопоставлении политик
 

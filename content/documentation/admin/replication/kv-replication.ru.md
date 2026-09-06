@@ -66,6 +66,8 @@ description: "Руководство администратора по репл�
 
 Ниже приведён пример создания политики и токена для репликации из `mount` `dev-secrets`, расположенного в пространстве имён `ns_path_1`:
 
+{{< tabs name="stronghold_cmd_42837" >}}
+{{% tab name="Stronghold в DKP" %}}
 ```shell
 d8 stronghold policy write -namespace=ns_path_1 replicate-dev-secrets - <<'EOF'
 # Allow token to list/read secrets from dev-secrets
@@ -91,6 +93,35 @@ EOF
 
 d8 stronghold token create -namespace=ns_path_1 -policy=replicate-dev-secrets -orphan=true -period=30d
 ```
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+```shell
+stronghold policy write -namespace=ns_path_1 replicate-dev-secrets - <<'EOF'
+# Allow token to list/read secrets from dev-secrets
+path "dev-secrets/*" {
+  capabilities = ["read", "list"]
+}
+
+# Allow token to read info about dev-secrets
+path "sys/mounts/dev-secrets" {
+  capabilities = ["read"]
+}
+
+# Allow token to look up own properties
+path "auth/token/lookup-self" {
+  capabilities = ["read"]
+}
+
+# Allow token to renew self
+path "auth/token/renew-self" {
+  capabilities = ["update"]
+}
+EOF
+
+stronghold token create -namespace=ns_path_1 -policy=replicate-dev-secrets -orphan=true -period=30d
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 ## Создание wrapping token
 
@@ -100,6 +131,8 @@ d8 stronghold token create -namespace=ns_path_1 -policy=replicate-dev-secrets -o
 
 Пример создания wrapping token на исходном кластере:
 
+{{< tabs name="stronghold_cmd_90364" >}}
+{{% tab name="Stronghold в DKP" %}}
 ```shell
 d8 stronghold token create \
   -namespace=ns_path_1 \
@@ -109,6 +142,19 @@ d8 stronghold token create \
   -wrap-ttl=5m \
   -field=wrapping_token
 ```
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+```shell
+stronghold token create \
+  -namespace=ns_path_1 \
+  -policy=replicate-dev-secrets \
+  -orphan=true \
+  -period=30d \
+  -wrap-ttl=5m \
+  -field=wrapping_token
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 Полученный `wrapping token` нужно передать при настройке репликации на кластере-потребителе.
 
@@ -116,6 +162,8 @@ d8 stronghold token create \
 
 ### Без TLS
 
+{{< tabs name="stronghold_cmd_6304" >}}
+{{% tab name="Stronghold в DKP" %}}
 ```shell
 d8 stronghold secrets enable \
   -path=<local_mount_path_name> \
@@ -128,9 +176,27 @@ d8 stronghold secrets enable \
   -namespace=<namespace_path_in_local_cluster> \
   kv
 ```
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+```shell
+stronghold secrets enable \
+  -path=<local_mount_path_name> \
+  -src-address=<address_of_source_cluster> \
+  -src-wrapping-token=<wrapping_token_from_source_cluster> \
+  -src-namespace=<namespace_path_in_source_cluster> \
+  -src-mount-path=<mount_path_in_source_cluster> \
+  -sync-period-min=<interval_in_minutes> \
+  -version=<1|2> \
+  -namespace=<namespace_path_in_local_cluster> \
+  kv
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 ### С TLS
 
+{{< tabs name="stronghold_cmd_40961" >}}
+{{% tab name="Stronghold в DKP" %}}
 ```shell
 d8 stronghold secrets enable \
   -path=<local_mount_path_name> \
@@ -144,6 +210,23 @@ d8 stronghold secrets enable \
   -namespace=<namespace_path_in_local_cluster> \
   kv
 ```
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+```shell
+stronghold secrets enable \
+  -path=<local_mount_path_name> \
+  -src-address=<address_of_source_cluster> \
+  -src-wrapping-token=<wrapping_token_from_source_cluster> \
+  -src-namespace=<namespace_path_in_source_cluster> \
+  -src-mount-path=<mount_path_in_source_cluster> \
+  -src-ca-cert=@<path_to_file_with_certificate> \
+  -sync-period-min=<interval_in_minutes> \
+  -version=<1|2> \
+  -namespace=<namespace_path_in_local_cluster> \
+  kv
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 Пояснение параметров:
 
@@ -176,6 +259,8 @@ d8 stronghold secrets enable \
 
 Пример изменения настроек:
 
+{{< tabs name="stronghold_cmd_91012" >}}
+{{% tab name="Stronghold в DKP" %}}
 ```shell
 d8 stronghold secrets tune \
   -src-wrapping-token=<wrapping_token_from_source_cluster> \
@@ -186,32 +271,81 @@ d8 stronghold secrets tune \
   -namespace=<namespace_path_in_local_cluster> \
   <local_mount_path_name>
 ```
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+```shell
+stronghold secrets tune \
+  -src-wrapping-token=<wrapping_token_from_source_cluster> \
+  -src-secret-path=<list_of_secret_paths_in_source_cluster> \
+  -src-ca-cert=@<path_to_file_with_certificate> \
+  -sync-enable=true \
+  -sync-period-min=<interval_in_minutes> \
+  -namespace=<namespace_path_in_local_cluster> \
+  <local_mount_path_name>
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 Для отключения репликации:
 
+{{< tabs name="stronghold_cmd_83685" >}}
+{{% tab name="Stronghold в DKP" %}}
 ```shell
 d8 stronghold secrets tune \
   -sync-enable=false \
   -namespace=<namespace_path_in_local_cluster> \
   <local_mount_path_name>
 ```
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+```shell
+stronghold secrets tune \
+  -sync-enable=false \
+  -namespace=<namespace_path_in_local_cluster> \
+  <local_mount_path_name>
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 Для повторного включения:
 
+{{< tabs name="stronghold_cmd_53688" >}}
+{{% tab name="Stronghold в DKP" %}}
 ```shell
 d8 stronghold secrets tune \
   -sync-enable=true \
   -namespace=<namespace_path_in_local_cluster> \
   <local_mount_path_name>
 ```
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+```shell
+stronghold secrets tune \
+  -sync-enable=true \
+  -namespace=<namespace_path_in_local_cluster> \
+  <local_mount_path_name>
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 Для чтения текущих настроек:
 
+{{< tabs name="stronghold_cmd_50008" >}}
+{{% tab name="Stronghold в DKP" %}}
 ```shell
 d8 stronghold read \
   -namespace=<namespace_path_in_local_cluster> \
   sys/mounts/<mount_path>/tune
 ```
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+```shell
+stronghold read \
+  -namespace=<namespace_path_in_local_cluster> \
+  sys/mounts/<mount_path>/tune
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 ## Настройка через API
 

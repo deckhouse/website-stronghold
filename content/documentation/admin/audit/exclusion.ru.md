@@ -131,6 +131,8 @@ Stronghold поддерживает включение аудит-устройс
 
 Включение аудит-устройства `file` с исключением данных ответа для `kv`-монтирований:
 
+{{< tabs name="stronghold_cmd_19617" >}}
+{{% tab name="Stronghold в DKP" %}}
 ```shell
 d8 stronghold audit enable           \
   -path filtered-file                \
@@ -138,9 +140,22 @@ d8 stronghold audit enable           \
   file_path=/logs/audit.log          \
   exclude='[{"condition": "\"/request/mount_type\" == kv", "fields": ["/response/data"]}]'
 ```
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+```shell
+stronghold audit enable           \
+  -path filtered-file                \
+  file                               \
+  file_path=/logs/audit.log          \
+  exclude='[{"condition": "\"/request/mount_type\" == kv", "fields": ["/response/data"]}]'
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 Комбинация фильтрации и исключений:
 
+{{< tabs name="stronghold_cmd_21928" >}}
+{{% tab name="Stronghold в DKP" %}}
 ```shell
 d8 stronghold audit enable                \
   -path transit-only                      \
@@ -149,6 +164,18 @@ d8 stronghold audit enable                \
   file_path=/logs/transit.log             \
   exclude='[{"fields": ["/request/data"]}]'
 ```
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+```shell
+stronghold audit enable                \
+  -path transit-only                      \
+  file                                    \
+  filter='mount_type == "transit"'        \
+  file_path=/logs/transit.log             \
+  exclude='[{"fields": ["/request/data"]}]'
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 В этом примере устройство:
 

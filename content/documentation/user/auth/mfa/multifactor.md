@@ -64,12 +64,24 @@ You can also create users manually, through the Multifactor API, or synchronize 
 
 To create a Multifactor MFA method and obtain its ID, run the following command:
 
+{{< tabs name="stronghold_cmd_91754" >}}
+{{% tab name="Stronghold in DKP" %}}
 ```shell
 d8 stronghold write identity/mfa/method/multifactor \
   method_name=my-mfa \
   nas_identifier="rs_nas_id" \
   shared_secret="secret"
 ```
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+```shell
+stronghold write identity/mfa/method/multifactor \
+  method_name=my-mfa \
+  nas_identifier="rs_nas_id" \
+  shared_secret="secret"
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 Example output:
 
@@ -100,26 +112,58 @@ The following is an MFA configuration example for the Userpass authentication me
 
 1. Get the authentication method accessor:
 
+   {{< tabs name="stronghold_cmd_95992" >}}
+   {{% tab name="Stronghold in DKP" %}}
    ```shell
    USERPASS_ACCESSOR=$(d8 stronghold auth list -format=json \
        --detailed | jq -r '."userpass/".accessor')
    echo $USERPASS_ACCESSOR
    ```
+   {{% /tab %}}
+   {{% tab name="Stronghold in Linux" %}}
+   ```shell
+   USERPASS_ACCESSOR=$(stronghold auth list -format=json \
+       --detailed | jq -r '."userpass/".accessor')
+   echo $USERPASS_ACCESSOR
+   ```
+   {{% /tab %}}
+   {{< /tabs >}}
 
 1. Enable MFA:
 
+   {{< tabs name="stronghold_cmd_99643" >}}
+   {{% tab name="Stronghold in DKP" %}}
    ```shell
    d8 stronghold write /identity/mfa/login-enforcement/userpass-multifactor-enforcement \
        mfa_method_ids="93964fd0-dd7e-e22a-74d0-0880ca5e0398" \
        auth_method_accessors=$USERPASS_ACCESSOR
    ```
+   {{% /tab %}}
+   {{% tab name="Stronghold in Linux" %}}
+   ```shell
+   stronghold write /identity/mfa/login-enforcement/userpass-multifactor-enforcement \
+       mfa_method_ids="93964fd0-dd7e-e22a-74d0-0880ca5e0398" \
+       auth_method_accessors=$USERPASS_ACCESSOR
+   ```
+   {{% /tab %}}
+   {{< /tabs >}}
 
 1. Log in:
 
+   {{< tabs name="stronghold_cmd_88070" >}}
+   {{% tab name="Stronghold in DKP" %}}
    ```shell
    d8 stronghold login -method=userpass username=mfa-user
    Password (will be hidden):
    ```
+   {{% /tab %}}
+   {{% tab name="Stronghold in Linux" %}}
+   ```shell
+   stronghold login -method=userpass username=mfa-user
+   Password (will be hidden):
+   ```
+   {{% /tab %}}
+   {{< /tabs >}}
 
    Example output:
 
@@ -147,6 +191,15 @@ After the "Granted" status is obtained, Stronghold issues a token.
 
 To disable the MFA verification for the Userpass method, run the following command:
 
+{{< tabs name="stronghold_cmd_13727" >}}
+{{% tab name="Stronghold in DKP" %}}
 ```shell
 d8 stronghold delete identity/mfa/login-enforcement/userpass-multifactor-enforcement
 ```
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+```shell
+stronghold delete identity/mfa/login-enforcement/userpass-multifactor-enforcement
+```
+{{% /tab %}}
+{{< /tabs >}}

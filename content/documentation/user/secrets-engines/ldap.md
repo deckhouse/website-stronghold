@@ -17,9 +17,18 @@ The secrets engine has three primary features:
 
 1. Enable the LDAP secret engine:
 
+   {{< tabs name="stronghold_cmd_63957" >}}
+   {{% tab name="Stronghold in DKP" %}}
    ```sh
    d8 stronghold secrets enable ldap
    ```
+   {{% /tab %}}
+   {{% tab name="Stronghold in Linux" %}}
+   ```sh
+   stronghold secrets enable ldap
+   ```
+   {{% /tab %}}
+   {{< /tabs >}}
 
    By default, the secrets engine will mount at the name of the engine. To
    enable the secrets engine at a different path, use the `-path` argument.
@@ -27,20 +36,41 @@ The secrets engine has three primary features:
 2. Configure the credentials that Stronghold uses to communicate with LDAP
    to generate passwords:
 
+   {{< tabs name="stronghold_cmd_29364" >}}
+   {{% tab name="Stronghold in DKP" %}}
    ```sh
    $ d8 stronghold write ldap/config \
        binddn=$USERNAME \
        bindpass=$PASSWORD \
        url=ldaps://138.91.247.105
    ```
+   {{% /tab %}}
+   {{% tab name="Stronghold in Linux" %}}
+   ```sh
+   $ stronghold write ldap/config \
+       binddn=$USERNAME \
+       bindpass=$PASSWORD \
+       url=ldaps://138.91.247.105
+   ```
+   {{% /tab %}}
+   {{< /tabs >}}
 
    Note: it's recommended a dedicated entry management account be created specifically for Stronghold.
 
 3. Rotate the root password so only Stronghold knows the credentials:
 
+   {{< tabs name="stronghold_cmd_27218" >}}
+   {{% tab name="Stronghold in DKP" %}}
    ```sh
    d8 stronghold write -f ldap/rotate-root
    ```
+   {{% /tab %}}
+   {{% tab name="Stronghold in Linux" %}}
+   ```sh
+   stronghold write -f ldap/rotate-root
+   ```
+   {{% /tab %}}
+   {{< /tabs >}}
 
    Note: it's not possible to retrieve the generated password once rotated by Stronghold.
    It's recommended a dedicated entry management account be created specifically for Stronghold.
@@ -73,6 +103,8 @@ engine must be configured to use the schema `racf`.
 Generated passwords must be 8 characters or less to support RACF. The length of the
 password can be configured using a password policy:
 
+{{< tabs name="stronghold_cmd_15056" >}}
+{{% tab name="Stronghold in DKP" %}}
 ```bash
 $ d8 stronghold write ldap/config \
  binddn=$USERNAME \
@@ -81,12 +113,26 @@ $ d8 stronghold write ldap/config \
  schema=racf \
  password_policy=racf_password_policy
 ```
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+```bash
+$ stronghold write ldap/config \
+ binddn=$USERNAME \
+ bindpass=$PASSWORD \
+ url=ldaps://138.91.247.105 \
+ schema=racf \
+ password_policy=racf_password_policy
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 #### Active directory (AD)
 
 For managing Active Directory instances, the secret engine must be configured to use the
 schema `ad`.
 
+{{< tabs name="stronghold_cmd_28249" >}}
+{{% tab name="Stronghold in DKP" %}}
 ```bash
 $ d8 stronghold write ldap/config \
  binddn=$USERNAME \
@@ -94,6 +140,17 @@ $ d8 stronghold write ldap/config \
  url=ldaps://138.91.247.105 \
  schema=ad
 ```
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+```bash
+$ stronghold write ldap/config \
+ binddn=$USERNAME \
+ bindpass=$PASSWORD \
+ url=ldaps://138.91.247.105 \
+ schema=ad
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 ## Static credentials
 
@@ -102,18 +159,39 @@ $ d8 stronghold write ldap/config \
 1. Configure a static role that maps a name in Stronghold to an entry in LDAP.
    Password rotation settings will be managed by this role.
 
+   {{< tabs name="stronghold_cmd_49190" >}}
+   {{% tab name="Stronghold in DKP" %}}
    ```sh
    $ d8 stronghold write ldap/static-role/lf-edge\
        dn='uid=lf-edge,ou=users,dc=lf-edge,dc=com' \
        username='stronghold'\
        rotation_period="24h"
    ```
+   {{% /tab %}}
+   {{% tab name="Stronghold in Linux" %}}
+   ```sh
+   $ stronghold write ldap/static-role/lf-edge\
+       dn='uid=lf-edge,ou=users,dc=lf-edge,dc=com' \
+       username='stronghold'\
+       rotation_period="24h"
+   ```
+   {{% /tab %}}
+   {{< /tabs >}}
 
 2. Request credentials for the "stronghold" role:
 
+   {{< tabs name="stronghold_cmd_15348" >}}
+   {{% tab name="Stronghold in DKP" %}}
    ```sh
    d8 stronghold read ldap/static-cred/lf-edge
    ```
+   {{% /tab %}}
+   {{% tab name="Stronghold in Linux" %}}
+   ```sh
+   stronghold read ldap/static-cred/lf-edge
+   ```
+   {{% /tab %}}
+   {{< /tabs >}}
 
 ### Password rotation
 
@@ -148,6 +226,8 @@ rotated prior to deleting the role or revoking access to the static role.
 
 Dynamic credentials can be configured by calling the `/role/:role_name` endpoint:
 
+{{< tabs name="stronghold_cmd_98921" >}}
+{{% tab name="Stronghold in DKP" %}}
 ```bash
 $ d8 stronghold write ldap/role/dynamic-role \
   creation_ldif=@/path/to/creation.ldif \
@@ -156,6 +236,18 @@ $ d8 stronghold write ldap/role/dynamic-role \
   default_ttl=1h \
   max_ttl=24h
 ```
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+```bash
+$ stronghold write ldap/role/dynamic-role \
+  creation_ldif=@/path/to/creation.ldif \
+  deletion_ldif=@/path/to/deletion.ldif \
+  rollback_ldif=@/path/to/rollback.ldif \
+  default_ttl=1h \
+  max_ttl=24h
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 {{< alert level="info" >}}
 The `rollback_ldif` argument is optional, but recommended. The statements within `rollback_ldif` will be
@@ -163,6 +255,8 @@ executed if the creation fails for any reason. This ensures any entities are rem
 {{< /alert >}}
 To generate credentials:
 
+{{< tabs name="stronghold_cmd_1475" >}}
+{{% tab name="Stronghold in DKP" %}}
 ```bash
 $ d8 stronghold read ldap/creds/dynamic-role
 Key                    Value
@@ -174,6 +268,21 @@ distinguished_names    [cn=v_token_dynamic-role_FfH2i1c4dO_1611952635,ou=users,d
 password               xWMjkIFMerYttEbzfnBVZvhRQGmhpAA0yeTya8fdmDB3LXDzGrjNEPV2bCPE9CW6
 username               v_token_testrole_FfH2i1c4dO_1611952635
 ```
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+```bash
+$ stronghold read ldap/creds/dynamic-role
+Key                    Value
+---                    -----
+lease_id               ldap/creds/dynamic-role/HFgd6uKaDomVMvJpYbn9q4q5
+lease_duration         1h
+lease_renewable        true
+distinguished_names    [cn=v_token_dynamic-role_FfH2i1c4dO_1611952635,ou=users,dc=learn,dc=example]
+password               xWMjkIFMerYttEbzfnBVZvhRQGmhpAA0yeTya8fdmDB3LXDzGrjNEPV2bCPE9CW6
+username               v_token_testrole_FfH2i1c4dO_1611952635
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 The `distinguished_names` field is an array of DNs that are created from the `creation_ldif` statements. If more than
 one LDIF entry is included, the DN from each statement will be included in this field. Each entry in this field
@@ -274,6 +383,8 @@ engine is configured to manage a library of service accounts in an Active Direct
 First we'll need to enable the LDAP secrets engine and tell it how to securely connect
 to an AD server.
 
+{{< tabs name="stronghold_cmd_68847" >}}
+{{% tab name="Stronghold in DKP" %}}
 ```shell-session
 $ d8 stronghold secrets enable ldap
 Success! Enabled the ad secrets engine at: ldap/
@@ -284,9 +395,25 @@ $ d8 stronghold write ldap/config \
     url=ldaps://138.91.247.105 \
     userdn='dc=example,dc=com'
 ```
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+```shell-session
+$ stronghold secrets enable ldap
+Success! Enabled the ad secrets engine at: ldap/
+
+$ stronghold write ldap/config \
+    binddn=$USERNAME \
+    bindpass=$PASSWORD \
+    url=ldaps://138.91.247.105 \
+    userdn='dc=example,dc=com'
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 Our next step is to designate a set of service accounts for check-out.
 
+{{< tabs name="stronghold_cmd_66679" >}}
+{{% tab name="Stronghold in DKP" %}}
 ```shell-session
 $ d8 stronghold write ldap/library/accounting-team \
     service_account_names=fizz@example.com,buzz@example.com \
@@ -294,6 +421,17 @@ $ d8 stronghold write ldap/library/accounting-team \
     max_ttl=20h \
     disable_check_in_enforcement=false
 ```
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+```shell-session
+$ stronghold write ldap/library/accounting-team \
+    service_account_names=fizz@example.com,buzz@example.com \
+    ttl=10h \
+    max_ttl=20h \
+    disable_check_in_enforcement=false
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 In this example, the service account names of `fizz@example.com` and `buzz@example.com` have
 already been created on the remote AD server. They've been set aside solely for Stronghold to handle.
@@ -306,6 +444,8 @@ checked it out. However, if this behavior causes problems, set `disable_check_in
 When a library of service accounts has been created, view their status at any time to see if they're
 available or checked out.
 
+{{< tabs name="stronghold_cmd_10184" >}}
+{{% tab name="Stronghold in DKP" %}}
 ```shell-session
 $ d8 stronghold read ldap/library/accounting-team/status
 Key                 Value
@@ -313,9 +453,22 @@ Key                 Value
 buzz@example.com    map[available:true]
 fizz@example.com    map[available:true]
 ```
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+```shell-session
+$ stronghold read ldap/library/accounting-team/status
+Key                 Value
+---                 -----
+buzz@example.com    map[available:true]
+fizz@example.com    map[available:true]
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 To check out any service account that's available, simply execute:
 
+{{< tabs name="stronghold_cmd_81908" >}}
+{{% tab name="Stronghold in DKP" %}}
 ```shell-session
 $ d8 stronghold write -f ldap/library/accounting-team/check-out
 Key                     Value
@@ -326,10 +479,26 @@ lease_renewable         true
 password                ?@09AZKh03hBORZPJcTDgLfntlHqxLy29tcQjPVThzuwWAx/Twx4a2ZcRQRqrZ1w
 service_account_name    fizz@example.com
 ```
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+```shell-session
+$ stronghold write -f ldap/library/accounting-team/check-out
+Key                     Value
+---                     -----
+lease_id                ldap/library/accounting-team/check-out/EpuS8cX7uEsDzOwW9kkKOyGW
+lease_duration          10h
+lease_renewable         true
+password                ?@09AZKh03hBORZPJcTDgLfntlHqxLy29tcQjPVThzuwWAx/Twx4a2ZcRQRqrZ1w
+service_account_name    fizz@example.com
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 If the default `ttl` for the check-out is higher than needed, set the check-out to last
 for a shorter time by using:
 
+{{< tabs name="stronghold_cmd_30249" >}}
+{{% tab name="Stronghold in DKP" %}}
 ```shell-session
 $ d8 stronghold write ldap/library/accounting-team/check-out ttl=30m
 Key                     Value
@@ -340,6 +509,20 @@ lease_renewable         true
 password                ?@09AZerLLuJfEMbRqP+3yfQYDSq6laP48TCJRBJaJu/kDKLsq9WxL9szVAvL/E1
 service_account_name    buzz@example.com
 ```
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+```shell-session
+$ stronghold write ldap/library/accounting-team/check-out ttl=30m
+Key                     Value
+---                     -----
+lease_id                ldap/library/accounting-team/check-out/gMonJ2jB6kYs6d3Vw37WFDCY
+lease_duration          30m
+lease_renewable         true
+password                ?@09AZerLLuJfEMbRqP+3yfQYDSq6laP48TCJRBJaJu/kDKLsq9WxL9szVAvL/E1
+service_account_name    buzz@example.com
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 This can be a nice way to say, "Although I _can_ have a check-out for 24 hours, if I
 haven't checked it in after 30 minutes, I forgot or I'm a dead instance, so you can just
@@ -347,6 +530,8 @@ check it back in."
 
 If no service accounts are available for check-out, Stronghold will return a 400 Bad Request.
 
+{{< tabs name="stronghold_cmd_26194" >}}
+{{% tab name="Stronghold in DKP" %}}
 ```shell-session
 $ d8 stronghold write -f ldap/library/accounting-team/check-out
 Error writing data to ldap/library/accounting-team/check-out: Error making API request.
@@ -356,9 +541,24 @@ Code: 400. Errors:
 
 * No service accounts available for check-out.
 ```
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+```shell-session
+$ stronghold write -f ldap/library/accounting-team/check-out
+Error writing data to ldap/library/accounting-team/check-out: Error making API request.
+
+URL: POST http://localhost:8200/v1/ldap/library/accounting-team/check-out
+Code: 400. Errors:
+
+* No service accounts available for check-out.
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 To extend a check-out, renew its lease.
 
+{{< tabs name="stronghold_cmd_94689" >}}
+{{% tab name="Stronghold in DKP" %}}
 ```shell-session
 $ d8 stronghold lease renew ldap/library/accounting-team/check-out/0C2wmeaDmsToVFc0zDiX9cMq
 Key                Value
@@ -367,6 +567,18 @@ lease_id           ldap/library/accounting-team/check-out/0C2wmeaDmsToVFc0zDiX9c
 lease_duration     10h
 lease_renewable    true
 ```
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+```shell-session
+$ stronghold lease renew ldap/library/accounting-team/check-out/0C2wmeaDmsToVFc0zDiX9cMq
+Key                Value
+---                -----
+lease_id           ldap/library/accounting-team/check-out/0C2wmeaDmsToVFc0zDiX9cMq
+lease_duration     10h
+lease_renewable    true
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 Renewing a check-out means its current password will live longer, since passwords are rotated
 anytime a password is _checked in_ either by a caller, or by Stronghold because the check-out `ttl`
@@ -374,22 +586,46 @@ ends.
 
 To check a service account back in for others to use, call:
 
+{{< tabs name="stronghold_cmd_9067" >}}
+{{% tab name="Stronghold in DKP" %}}
 ```shell-session
 $ d8 stronghold write -f ldap/library/accounting-team/check-in
 Key          Value
 ---          -----
 check_ins    [fizz@example.com]
 ```
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+```shell-session
+$ stronghold write -f ldap/library/accounting-team/check-in
+Key          Value
+---          -----
+check_ins    [fizz@example.com]
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 Most of the time this will just work, but if multiple service accounts are checked out by the same
 caller, Stronghold will need to know which one(s) to check in.
 
+{{< tabs name="stronghold_cmd_25132" >}}
+{{% tab name="Stronghold in DKP" %}}
 ```shell-session
 $ d8 stronghold write ldap/library/accounting-team/check-in service_account_names=fizz@example.com
 Key          Value
 ---          -----
 check_ins    [fizz@example.com]
 ```
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+```shell-session
+$ stronghold write ldap/library/accounting-team/check-in service_account_names=fizz@example.com
+Key          Value
+---          -----
+check_ins    [fizz@example.com]
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 To perform a check-in, Stronghold verifies that the caller _should_ be able to check in a given service account.
 To do this, Stronghold looks for either the same entity ID
@@ -399,19 +635,41 @@ If a caller is unable to check in a service account, or simply doesn't try,
 Stronghold will check it back in automatically when the `ttl` expires. However, if that is too long,
 service accounts can be forcibly checked in by a highly privileged user through:
 
+{{< tabs name="stronghold_cmd_3582" >}}
+{{% tab name="Stronghold in DKP" %}}
 ```shell-session
 $ d8 stronghold write -f ldap/library/manage/accounting-team/check-in
 Key          Value
 ---          -----
 check_ins    [fizz@example.com]
 ```
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+```shell-session
+$ stronghold write -f ldap/library/manage/accounting-team/check-in
+Key          Value
+---          -----
+check_ins    [fizz@example.com]
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 Or, alternatively, revoking the secret's lease has the same effect.
 
+{{< tabs name="stronghold_cmd_41166" >}}
+{{% tab name="Stronghold in DKP" %}}
 ```shell-session
 $ d8 stronghold lease revoke ldap/library/accounting-team/check-out/PvBVG0m7pEg2940Cb3Jw3KpJ
 All revocation operations queued successfully!
 ```
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+```shell-session
+$ stronghold lease revoke ldap/library/accounting-team/check-out/PvBVG0m7pEg2940Cb3Jw3KpJ
+All revocation operations queued successfully!
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 ## LDAP password policy
 

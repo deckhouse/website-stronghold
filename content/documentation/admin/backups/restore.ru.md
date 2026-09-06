@@ -21,9 +21,18 @@ description: "Восстановление Stronghold из снимка встр
 
 Для восстановления снимка используйте команду с флагом `-force`:
 
+{{< tabs name="stronghold_cmd_64681" >}}
+{{% tab name="Stronghold в DKP" %}}
 ```shell
 d8 stronghold operator raft snapshot restore -force /tmp/snapshots/backup.snap
 ```
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+```shell
+stronghold operator raft snapshot restore -force /tmp/snapshots/backup.snap
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 Флаг `-force` нужен потому, что текущее состояние кластера и данные снимка относятся к разным состояниям хранилища.
 
@@ -43,9 +52,18 @@ curl \
 
 После загрузки снимка распечатайте хранилище Stronghold, используя исходные ключи:
 
+{{< tabs name="stronghold_cmd_32174" >}}
+{{% tab name="Stronghold в DKP" %}}
 ```shell
 d8 stronghold operator unseal
 ```
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+```shell
+stronghold operator unseal
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 ## Рекомендации
 

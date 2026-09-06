@@ -22,9 +22,18 @@ description: "Ручное создание снимка встроенного 
 
 Для создания снимка используйте команду:
 
+{{< tabs name="stronghold_cmd_86904" >}}
+{{% tab name="Stronghold в DKP" %}}
 ```shell
 d8 stronghold operator raft snapshot save backup.snap
 ```
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+```shell
+stronghold operator raft snapshot save backup.snap
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 В результате Stronghold сохранит снимок в локальный файл `backup.snap`.
 

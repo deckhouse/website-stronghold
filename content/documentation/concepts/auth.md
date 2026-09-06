@@ -20,9 +20,18 @@ Most authentication backends must be enabled before use.
 
 To enable an authentication method, run the following command:
 
+{{< tabs name="stronghold_cmd_35731" >}}
+{{% tab name="Stronghold in DKP" %}}
 ```shell
 d8 stronghold write sys/auth/my-auth type=userpass
 ```
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+```shell
+stronghold write sys/auth/my-auth type=userpass
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 This enables the `userpass` authentication method at the `my-auth` path.
 This authentication will be accessible at the `my-auth` path.
@@ -30,9 +39,18 @@ Often you will see authentications at the same path as their name, but this is n
 
 To learn more about this authentication, use the built-in `path-help` command:
 
+{{< tabs name="stronghold_cmd_81768" >}}
+{{% tab name="Stronghold in DKP" %}}
 ```shell
 d8 stronghold path-help auth/my-auth
 ```
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+```shell
+stronghold path-help auth/my-auth
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 Stronghold supports multiple authentication methods simultaneously,
 and you can even mount the same type of authentication method at different paths.
@@ -60,9 +78,18 @@ This supports many of the built-in authentication methods.
 
 For example, to authenticate with OIDC, run the following command:
 
+{{< tabs name="stronghold_cmd_6157" >}}
+{{% tab name="Stronghold in DKP" %}}
 ```shell
 d8 stronghold login -method=oidc
 ```
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+```shell
+stronghold login -method=oidc
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 After authenticating, you will be logged in.
 The CLI command will also output your raw token.
@@ -81,9 +108,18 @@ Each authentication method implements its own login endpoint.
 
 To find the proper endpoint, use the following command:
 
+{{< tabs name="stronghold_cmd_42184" >}}
+{{% tab name="Stronghold in DKP" %}}
 ```shell
 d8 stronghold path-help
 ```
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+```shell
+stronghold path-help
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 ## Authentication leases
 
@@ -96,6 +132,15 @@ It is specific to each backend how leasing is implemented.
 And just like secrets, identities can be renewed without having to completely reauthenticate.
 To renew it, use the following command, specifying the token associated with your identity:
 
+{{< tabs name="stronghold_cmd_60820" >}}
+{{% tab name="Stronghold in DKP" %}}
 ```shell
 d8 stronghold token renew <token>
 ```
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+```shell
+stronghold token renew <token>
+```
+{{% /tab %}}
+{{< /tabs >}}

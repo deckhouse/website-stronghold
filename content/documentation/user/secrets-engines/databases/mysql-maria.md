@@ -30,16 +30,28 @@ accept different lengths. The available plugins are:
 
 1. Enable the database secrets engine if it is not already enabled:
 
+   {{< tabs name="stronghold_cmd_10649" >}}
+   {{% tab name="Stronghold in DKP" %}}
    ```text
    $ d8 stronghold secrets enable database
    Success! Enabled the database secrets engine at: database/
    ```
+   {{% /tab %}}
+   {{% tab name="Stronghold in Linux" %}}
+   ```text
+   $ stronghold secrets enable database
+   Success! Enabled the database secrets engine at: database/
+   ```
+   {{% /tab %}}
+   {{< /tabs >}}
 
    By default, the secrets engine will enable at the name of the engine. To
    enable the secrets engine at a different path, use the `-path` argument.
 
 1. Configure Stronghold with the proper plugin and connection information:
 
+   {{< tabs name="stronghold_cmd_83463" >}}
+   {{% tab name="Stronghold in DKP" %}}
    ```text
    $ d8 stronghold write database/config/my-mysql-database \
        plugin_name=mysql-database-plugin \
@@ -48,10 +60,24 @@ accept different lengths. The available plugins are:
        username="strongholduser" \
        password="strongholdpass"
    ```
+   {{% /tab %}}
+   {{% tab name="Stronghold in Linux" %}}
+   ```text
+   $ stronghold write database/config/my-mysql-database \
+       plugin_name=mysql-database-plugin \
+       connection_url="{{username}}:{{password}}@tcp(127.0.0.1:3306)/" \
+       allowed_roles="my-role" \
+       username="strongholduser" \
+       password="strongholdpass"
+   ```
+   {{% /tab %}}
+   {{< /tabs >}}
 
 1. Configure a role that maps a name in Stronghold to an SQL statement to execute to
    create the database credential:
 
+   {{< tabs name="stronghold_cmd_47606" >}}
+   {{% tab name="Stronghold in DKP" %}}
    ```text
    $ d8 stronghold write database/roles/my-role \
        db_name=my-mysql-database \
@@ -60,6 +86,18 @@ accept different lengths. The available plugins are:
        max_ttl="24h"
    Success! Data written to: database/roles/my-role
    ```
+   {{% /tab %}}
+   {{% tab name="Stronghold in Linux" %}}
+   ```text
+   $ stronghold write database/roles/my-role \
+       db_name=my-mysql-database \
+       creation_statements="CREATE USER '{{name}}'@'%' IDENTIFIED BY '{{password}}';GRANT SELECT ON *.* TO '{{name}}'@'%';" \
+       default_ttl="1h" \
+       max_ttl="24h"
+   Success! Data written to: database/roles/my-role
+   ```
+   {{% /tab %}}
+   {{< /tabs >}}
 
 ## Usage
 
@@ -69,6 +107,8 @@ the proper permission, it can generate credentials.
 1. Generate a new credential by reading from the `/creds` endpoint with the name
    of the role:
 
+   {{< tabs name="stronghold_cmd_48675" >}}
+   {{% tab name="Stronghold in DKP" %}}
    ```text
    $ d8 stronghold read database/creds/my-role
    Key                Value
@@ -79,6 +119,20 @@ the proper permission, it can generate credentials.
    password           yY-57n3X5UQhxnmFRP3f
    username           v_strongholduser_my-role_crBWVqVh2Hc1
    ```
+   {{% /tab %}}
+   {{% tab name="Stronghold in Linux" %}}
+   ```text
+   $ stronghold read database/creds/my-role
+   Key                Value
+   ---                -----
+   lease_id           database/creds/my-role/2f6a614c-4aa2-7b19-24b9-ad944a8d4de6
+   lease_duration     1h
+   lease_renewable    true
+   password           yY-57n3X5UQhxnmFRP3f
+   username           v_strongholduser_my-role_crBWVqVh2Hc1
+   ```
+   {{% /tab %}}
+   {{< /tabs >}}
 
 ## Client x509 certificate authentication
 
@@ -86,6 +140,8 @@ This plugin supports using MySQL's [x509 Client-side Certificate Authentication]
 
 To use this authentication mechanism, configure the plugin:
 
+{{< tabs name="stronghold_cmd_74044" >}}
+{{% tab name="Stronghold in DKP" %}}
 ```shell-session
 $ d8 stronghold write database/config/my-mysql-database \
     plugin_name=mysql-database-plugin \
@@ -94,6 +150,18 @@ $ d8 stronghold write database/config/my-mysql-database \
     tls_certificate_key=@/path/to/client.pem \
     tls_ca=@/path/to/client.ca
 ```
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+```shell-session
+$ stronghold write database/config/my-mysql-database \
+    plugin_name=mysql-database-plugin \
+    allowed_roles="my-role" \
+    connection_url="user:password@tcp(localhost:3306)/test" \
+    tls_certificate_key=@/path/to/client.pem \
+    tls_ca=@/path/to/client.ca
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 Note: `tls_certificate_key` and `tls_ca` map to [`ssl-cert (combined with ssl-key)`](https://dev.mysql.com/doc/refman/8.0/en/connection-options.html#option_general_ssl-cert)
 and [`ssl-ca`](https://dev.mysql.com/doc/refman/8.0/en/connection-options.html#option_general_ssl-ca) configuration options
@@ -122,6 +190,8 @@ text between the backticks as something that must be executed. The easiest way t
 get around this is to encode the creation statement as Base64 and feed this to Stronghold.
 For example:
 
+{{< tabs name="stronghold_cmd_60475" >}}
+{{% tab name="Stronghold in DKP" %}}
 ```shell-session
 $ d8 stronghold write database/roles/my-role \
     db_name=mysql \
@@ -129,6 +199,17 @@ $ d8 stronghold write database/roles/my-role \
     default_ttl="1h" \
     max_ttl="24h"
 ```
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+```shell-session
+$ stronghold write database/roles/my-role \
+    db_name=mysql \
+    creation_statements="Q1JFQVRFIFVTRVIgJ3t7bmFtZX19J0AnJScgSURFTlRJRklFRCBCWSAne3twYXNzd29yZH19JzsgR1JBTlQgU0VMRUNUIE9OIGBmb29hcHBcXyVgLiogVE8gJ3t7bmFtZX19J0AnJSc7" \
+    default_ttl="1h" \
+    max_ttl="24h"
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 ### Rotating root credentials in MySQL 5.6
 
@@ -136,6 +217,8 @@ The default root rotation setup for MySQL uses the `ALTER USER` syntax present
 in MySQL 5.7 and up. For MySQL 5.6, `root_rotation_statements`
 must be configured to use the old `SET PASSWORD` syntax. For example:
 
+{{< tabs name="stronghold_cmd_82482" >}}
+{{% tab name="Stronghold in DKP" %}}
 ```shell-session
 $ d8 stronghold write database/config/my-mysql-database \
     plugin_name=mysql-database-plugin \
@@ -145,3 +228,16 @@ $ d8 stronghold write database/config/my-mysql-database \
     username="root" \
     password="mysql"
 ```
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+```shell-session
+$ stronghold write database/config/my-mysql-database \
+    plugin_name=mysql-database-plugin \
+    connection_url="{{username}}:{{password}}@tcp(127.0.0.1:3306)/" \
+    root_rotation_statements="SET PASSWORD = PASSWORD('{{password}}')" \
+    allowed_roles="my-role" \
+    username="root" \
+    password="mysql"
+```
+{{% /tab %}}
+{{< /tabs >}}

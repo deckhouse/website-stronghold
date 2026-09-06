@@ -129,10 +129,20 @@ Stronghold поддерживает шифрование root-ключа с ис
 
 1. Запустите Stronghold, указав конфигурацию SoftHSM2:
 
+   {{< tabs name="stronghold_cmd_65285" >}}
+   {{% tab name="Stronghold в DKP" %}}
    ```shell
    export SOFTHSM2_CONF=/home/stronghold/softhsm2.conf
    d8 stronghold server -config config.hcl
    ```
+   {{% /tab %}}
+   {{% tab name="Stronghold в Linux" %}}
+   ```shell
+   export SOFTHSM2_CONF=/home/stronghold/softhsm2.conf
+   stronghold server -config config.hcl
+   ```
+   {{% /tab %}}
+   {{< /tabs >}}
 
 ## Использование Рутокен ЭЦП 3.0
 
@@ -190,16 +200,35 @@ Stronghold поддерживает шифрование root-ключа с ис
 
 1. Запустите Stronghold и выполните `init`:
 
+   {{< tabs name="stronghold_cmd_16679" >}}
+   {{% tab name="Stronghold в DKP" %}}
    ```shell
    systemctl start stronghold
    d8 stronghold operator init
    ```
+   {{% /tab %}}
+   {{% tab name="Stronghold в Linux" %}}
+   ```shell
+   systemctl start stronghold
+   stronghold operator init
+   ```
+   {{% /tab %}}
+   {{< /tabs >}}
 
 1. Проверьте статус Stronghold:
 
+   {{< tabs name="stronghold_cmd_594" >}}
+   {{% tab name="Stronghold в DKP" %}}
    ```shell
    d8 stronghold status
    ```
+   {{% /tab %}}
+   {{% tab name="Stronghold в Linux" %}}
+   ```shell
+   stronghold status
+   ```
+   {{% /tab %}}
+   {{< /tabs >}}
 
    Пример вывода:
 
@@ -240,9 +269,18 @@ Stronghold поддерживает шифрование root-ключа с ис
 
 1. Выполните миграцию, введя unseal-ключи:
 
+   {{< tabs name="stronghold_cmd_66874" >}}
+   {{% tab name="Stronghold в DKP" %}}
    ```shell
    d8 stronghold operator unseal -migrate
    ```
+   {{% /tab %}}
+   {{% tab name="Stronghold в Linux" %}}
+   ```shell
+   stronghold operator unseal -migrate
+   ```
+   {{% /tab %}}
+   {{< /tabs >}}
 
 После завершения миграции Stronghold при перезапуске будет автоматически распечатываться с использованием PKCS #11.
 
@@ -264,8 +302,17 @@ Stronghold поддерживает шифрование root-ключа с ис
 
 1. Выполните миграцию, введя recovery-ключи:
 
+   {{< tabs name="stronghold_cmd_66874" >}}
+   {{% tab name="Stronghold в DKP" %}}
    ```shell
    d8 stronghold operator unseal -migrate
    ```
+   {{% /tab %}}
+   {{% tab name="Stronghold в Linux" %}}
+   ```shell
+   stronghold operator unseal -migrate
+   ```
+   {{% /tab %}}
+   {{< /tabs >}}
 
 После завершения миграции при каждом перезапуске Stronghold потребуется вводить unseal-ключи вручную.

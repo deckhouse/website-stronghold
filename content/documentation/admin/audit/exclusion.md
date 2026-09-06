@@ -131,6 +131,8 @@ If you are unsure whether a path is correct, first verify how the field is seria
 
 Enabling a `file` audit device and excluding response data for `kv` mounts:
 
+{{< tabs name="stronghold_cmd_19617" >}}
+{{% tab name="Stronghold in DKP" %}}
 ```shell
 d8 stronghold audit enable           \
   -path filtered-file                \
@@ -138,9 +140,22 @@ d8 stronghold audit enable           \
   file_path=/logs/audit.log          \
   exclude='[{"condition": "\"/request/mount_type\" == kv", "fields": ["/response/data"]}]'
 ```
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+```shell
+stronghold audit enable           \
+  -path filtered-file                \
+  file                               \
+  file_path=/logs/audit.log          \
+  exclude='[{"condition": "\"/request/mount_type\" == kv", "fields": ["/response/data"]}]'
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 Combining filtering and exclusions:
 
+{{< tabs name="stronghold_cmd_21928" >}}
+{{% tab name="Stronghold in DKP" %}}
 ```shell
 d8 stronghold audit enable                \
   -path transit-only                      \
@@ -149,6 +164,18 @@ d8 stronghold audit enable                \
   file_path=/logs/transit.log             \
   exclude='[{"fields": ["/request/data"]}]'
 ```
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+```shell
+stronghold audit enable                \
+  -path transit-only                      \
+  file                                    \
+  filter='mount_type == "transit"'        \
+  file_path=/logs/transit.log             \
+  exclude='[{"fields": ["/request/data"]}]'
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 In this example the device:
 

@@ -21,16 +21,28 @@ Roles.
 
 1. Enable the database secrets engine if it is not already enabled:
 
+    {{< tabs name="stronghold_cmd_1716" >}}
+    {{% tab name="Stronghold in DKP" %}}
     ```shell-session
     $ d8 stronghold secrets enable database
     Success! Enabled the database secrets engine at: database/
     ```
+    {{% /tab %}}
+    {{% tab name="Stronghold in Linux" %}}
+    ```shell-session
+    $ stronghold secrets enable database
+    Success! Enabled the database secrets engine at: database/
+    ```
+    {{% /tab %}}
+    {{< /tabs >}}
 
     By default, the secrets engine will enable at the name of the engine. To
     enable the secrets engine at a different path, use the `-path` argument.
 
 1. Configure Stronghold with the proper plugin and connection information:
 
+   {{< tabs name="stronghold_cmd_36784" >}}
+   {{% tab name="Stronghold in DKP" %}}
    ```shell-session
    $ d8 stronghold write database/roles/my-role \
         db_name="my-clickhouse-database" \
@@ -41,11 +53,27 @@ Roles.
         max_ttl="24h"
      Success! Data written to: database/roles/my-role
    ```
+   {{% /tab %}}
+   {{% tab name="Stronghold in Linux" %}}
+   ```shell-session
+   $ stronghold write database/roles/my-role \
+        db_name="my-clickhouse-database" \
+        creation_statements="CREATE USER '{{name}}' IDENTIFIED BY '{{password}}' ON CLUSTER 'my_cluster'; \
+            GRANT readonly TO '{{name}}' ON CLUSTER 'my_cluster'; \
+            SET DEFAULT ROLE readonly TO '{{name}}';" \
+        default_ttl="1h" \
+        max_ttl="24h"
+     Success! Data written to: database/roles/my-role
+   ```
+   {{% /tab %}}
+   {{< /tabs >}}
 
 1. Configure a role that maps a name in Stronghold to an SQL statement to execute to
     create the database credential.
     The example assumes that the `readonly` role has been created in the `my_cluster` database cluster.
 
+   {{< tabs name="stronghold_cmd_8101" >}}
+   {{% tab name="Stronghold in DKP" %}}
    ```shell-session
    $ d8 stronghold write database/roles/my-role \
         db_name="my-clickhouse-database" \
@@ -55,7 +83,21 @@ Roles.
         default_ttl="1h" \
         max_ttl="24h"
     Success! Data written to: database/roles/my-role
-    ```
+   ```
+   {{% /tab %}}
+   {{% tab name="Stronghold in Linux" %}}
+   ```shell-session
+   $ stronghold write database/roles/my-role \
+        db_name="my-clickhouse-database" \
+        creation_statements="CREATE USER '{{name}}' IDENTIFIED BY '{{password}}' ON CLUSTER 'my_cluster'; \
+            GRANT readonly TO '{{name}}' ON CLUSTER 'my_cluster'; \
+            SET DEFAULT ROLE readonly TO '{{name}}';" \
+        default_ttl="1h" \
+        max_ttl="24h"
+    Success! Data written to: database/roles/my-role
+   ```
+   {{% /tab %}}
+   {{< /tabs >}}
 
 ## Usage
 
@@ -64,6 +106,8 @@ the proper permission, it can generate credentials.
 
 Generate a new credential by reading from the `/creds` endpoint with the name of the role:
 
+{{< tabs name="stronghold_cmd_55362" >}}
+{{% tab name="Stronghold in DKP" %}}
 ```shell-session
 $ d8 stronghold read database/creds/my-role
 Key                Value
@@ -74,3 +118,17 @@ lease_renewable    true
 password           SsnoaA-8Tv4t34f41baD
 username           v-strongholduse-my-role-x
 ```
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+```shell-session
+$ stronghold read database/creds/my-role
+Key                Value
+---                -----
+lease_id           database/creds/my-role/2f6a614c-4aa2-7b19-24b9-ad944a8d4de6
+lease_duration     1h
+lease_renewable    true
+password           SsnoaA-8Tv4t34f41baD
+username           v-strongholduse-my-role-x
+```
+{{% /tab %}}
+{{< /tabs >}}

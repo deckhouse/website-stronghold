@@ -42,10 +42,20 @@ Kubernetes может выступать в качестве OIDC-провайд
 
 1. Включите и настройте аутентификацию JWT в Stronghold.
 
+   {{< tabs name="stronghold_cmd_81485" >}}
+   {{% tab name="Stronghold в DKP" %}}
    ```bash
    d8 stronghold auth enable jwt
    d8 stronghold write auth/jwt/config oidc_discovery_url="${ISSUER}"
    ```
+   {{% /tab %}}
+   {{% tab name="Stronghold в Linux" %}}
+   ```bash
+   stronghold auth enable jwt
+   stronghold write auth/jwt/config oidc_discovery_url="${ISSUER}"
+   ```
+   {{% /tab %}}
+   {{< /tabs >}}
 
 1. Настройте [необходимые роли](#создание-ролей-и-аутентификация).
 
@@ -76,6 +86,8 @@ Kubernetes может выступать в качестве OIDC-провайд
 
 1. Настройте эндпоинт JWT auth на использование полученных ключей.
 
+   {{< tabs name="stronghold_cmd_39007" >}}
+   {{% tab name="Stronghold в DKP" %}}
    ```bash
    d8 stronghold write auth/jwt/config \
       jwt_validation_pubkeys="-----BEGIN PUBLIC KEY-----
@@ -84,6 +96,18 @@ Kubernetes может выступать в качестве OIDC-провайд
    MIIBIjANBgkqhkiG9...
    -----END PUBLIC KEY-----"
    ```
+   {{% /tab %}}
+   {{% tab name="Stronghold в Linux" %}}
+   ```bash
+   stronghold write auth/jwt/config \
+      jwt_validation_pubkeys="-----BEGIN PUBLIC KEY-----
+   MIIBIjANBgkqhkiG9...
+   -----END PUBLIC KEY-----","-----BEGIN PUBLIC KEY-----
+   MIIBIjANBgkqhkiG9...
+   -----END PUBLIC KEY-----"
+   ```
+   {{% /tab %}}
+   {{< /tabs >}}
 
 1. Настройте [необходимые роли](#создание-ролей-и-аутентификация).
 
@@ -111,6 +135,8 @@ d8 k exec my-pod -- cat /var/run/secrets/kubernetes.io/serviceaccount/token | cu
 
 Создайте роль для JWT auth, которую сможет использовать учётная запись сервиса `default` в неймспейсе `default`.
 
+{{< tabs name="stronghold_cmd_14558" >}}
+{{% tab name="Stronghold в DKP" %}}
 ```bash
 d8 stronghold write auth/jwt/role/my-role \
 role_type="jwt" \
@@ -120,14 +146,38 @@ bound_subject="system:serviceaccount:default:default" \
 policies="default" \
 ttl="1h"
 ```
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+```bash
+stronghold write auth/jwt/role/my-role \
+role_type="jwt" \
+bound_audiences="<AUDIENCE-FROM-PREVIOUS-STEP>" \
+user_claim="sub" \
+bound_subject="system:serviceaccount:default:default" \
+policies="default" \
+ttl="1h"
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 Теперь поды или клиенты, имеющие доступ к JWT учётной записи сервиса, смогут аутентифицироваться с помощью этого токена.
 
+{{< tabs name="stronghold_cmd_96573" >}}
+{{% tab name="Stronghold в DKP" %}}
 ```bash
 d8 stronghold write auth/jwt/login \
   role=my-role \
   jwt=@/var/run/secrets/kubernetes.io/serviceaccount/token
 ```
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+```bash
+stronghold write auth/jwt/login \
+  role=my-role \
+  jwt=@/var/run/secrets/kubernetes.io/serviceaccount/token
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 Пример эквивалентного HTTP-запроса:
 

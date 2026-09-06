@@ -83,6 +83,8 @@ Stronghold публикует telemetry-метрики, связанные с и
 
 1. Включите аудит-устройство `file` с фильтром по `mount_type`:
 
+   {{< tabs name="stronghold_cmd_8360" >}}
+   {{% tab name="Stronghold в DKP" %}}
    ```shell
    d8 stronghold audit enable             \
      -path kv-only                        \
@@ -90,9 +92,22 @@ Stronghold публикует telemetry-метрики, связанные с и
      filter='mount_type == "kv"'          \
      file_path=/logs/kv-audit.log
    ```
+   {{% /tab %}}
+   {{% tab name="Stronghold в Linux" %}}
+   ```shell
+   stronghold audit enable             \
+     -path kv-only                        \
+     file                                 \
+     filter='mount_type == "kv"'          \
+     file_path=/logs/kv-audit.log
+   ```
+   {{% /tab %}}
+   {{< /tabs >}}
 
 2. Включите резервное устройство:
 
+   {{< tabs name="stronghold_cmd_38609" >}}
+   {{% tab name="Stronghold в DKP" %}}
    ```shell
    d8 stronghold audit enable             \
      -path=my-fallback                    \
@@ -101,23 +116,62 @@ Stronghold публикует telemetry-метрики, связанные с и
      fallback=true                        \
      file_path=/tmp/kv-audit.fallback.log
    ```
+   {{% /tab %}}
+   {{% tab name="Stronghold в Linux" %}}
+   ```shell
+   stronghold audit enable             \
+     -path=my-fallback                    \
+     -description="fallback device"       \
+     file                                 \
+     fallback=true                        \
+     file_path=/tmp/kv-audit.fallback.log
+   ```
+   {{% /tab %}}
+   {{< /tabs >}}
 
 3. Убедитесь, что устройства включены:
 
+   {{< tabs name="stronghold_cmd_16152" >}}
+   {{% tab name="Stronghold в DKP" %}}
    ```shell
    d8 stronghold audit list --detailed
    ```
+   {{% /tab %}}
+   {{% tab name="Stronghold в Linux" %}}
+   ```shell
+   stronghold audit list --detailed
+   ```
+   {{% /tab %}}
+   {{< /tabs >}}
 
 4. Включите KV secrets engine:
 
+   {{< tabs name="stronghold_cmd_97241" >}}
+   {{% tab name="Stronghold в DKP" %}}
    ```shell
    d8 stronghold secrets enable -path my-kv kv-v2
    ```
+   {{% /tab %}}
+   {{% tab name="Stronghold в Linux" %}}
+   ```shell
+   stronghold secrets enable -path my-kv kv-v2
+   ```
+   {{% /tab %}}
+   {{< /tabs >}}
 
 5. Запишите секрет:
 
+   {{< tabs name="stronghold_cmd_62847" >}}
+   {{% tab name="Stronghold в DKP" %}}
    ```shell
    d8 stronghold kv put -mount=my-kv my_secret the_value=always_angry
    ```
+   {{% /tab %}}
+   {{% tab name="Stronghold в Linux" %}}
+   ```shell
+   stronghold kv put -mount=my-kv my_secret the_value=always_angry
+   ```
+   {{% /tab %}}
+   {{< /tabs >}}
 
 После этого файл `kv-audit.log` будет содержать записи по операциям с `my-kv`, а резервное устройство перехватит записи, не попавшие под фильтр.

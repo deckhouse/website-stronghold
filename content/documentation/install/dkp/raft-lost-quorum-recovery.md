@@ -23,6 +23,8 @@ Despite one fully operational node, the cluster cannot process read or write req
 
 Console command output when an error is present:
 
+{{< tabs name="stronghold_cmd_6115" >}}
+{{% tab name="Stronghold in DKP" %}}
 ```text
 $ d8 stronghold operator raft list-peers
 * local node not active but active cluster node not found
@@ -30,6 +32,17 @@ $ d8 stronghold operator raft list-peers
 $ d8 stronghold kv get kv/apikey
 * local node not active but active cluster node not found
 ```
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+```text
+$ stronghold operator raft list-peers
+* local node not active but active cluster node not found
+
+$ stronghold kv get kv/apikey
+* local node not active but active cluster node not found
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 Logs from an inoperative node:
 
@@ -104,6 +117,8 @@ If automatic unseal is not configured, unseal Stronghold and then check the stat
 
 **Example:**
 
+{{< tabs name="stronghold_cmd_96020" >}}
+{{% tab name="Stronghold in DKP" %}}
 ```bash
 $ d8 stronghold operator unseal
 Unseal Key (will be hidden):
@@ -127,6 +142,33 @@ Active Since             2021-07-20T00:07:32.215236307Z
 Raft Committed Index     155344
 Raft Applied Index       155344
 ```
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+```bash
+$ stronghold operator unseal
+Unseal Key (will be hidden):
+
+$ stronghold status
+Key                      Value
+---                      -----
+Recovery Seal Type       shamir
+Initialized              true
+Sealed                   false
+Total Recovery Shares    1
+Threshold                1
+Version                  1.16.8+ee
+Storage Type             raft
+Cluster Name             stronghold-cluster-4a1a40af
+Cluster ID               d09df2c7-1d3e-f7d0-a9f7-93fadcc29110
+HA Enabled               true
+HA Cluster               https://stronghold-0.stronghold-internal:8301
+HA Mode                  active
+Active Since             2021-07-20T00:07:32.215236307Z
+Raft Committed Index     155344
+Raft Applied Index       155344
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 ## Verify success
 
@@ -145,12 +187,24 @@ The recovery procedure is successful if Stronghold starts and displays the follo
 
 The cluster now lists only one server. This allowed Stronghold to reach quorum and restore operation. To verify the number of servers, run `d8 stronghold operator raft list-peers`.
 
+{{< tabs name="stronghold_cmd_75226" >}}
+{{% tab name="Stronghold in DKP" %}}
 ```bash
 $ d8 stronghold operator raft list-peers
 Node                                    Address                                  State       Voter
 ----                                    -------                                  -----       -----
 d3816d62-29eb-4f42-98cb-f25ab05e8fbd    stronghold-0.stronghold-internal:8301    leader      true
 ```
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+```bash
+$ stronghold operator raft list-peers
+Node                                    Address                                  State       Voter
+----                                    -------                                  -----       -----
+d3816d62-29eb-4f42-98cb-f25ab05e8fbd    stronghold-0.stronghold-internal:8301    leader      true
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 As shown, the cluster peer list contains only one server.
 
