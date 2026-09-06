@@ -63,7 +63,7 @@ log_file = "/var/log/stronghold-agent.log"
 
 ## Секция vault/stronghold
 
-Для подключения к Stronghold серверу используется имя секции `stronghold`. Если требуется интеграция с Hashicorp Vault, то следует использовать `vault` в качестве имени секции.
+Для подключения к Stronghold серверу используется имя секции `stronghold`. Если требуется интеграция с HashiCorp Vault, то следует использовать `vault` в качестве имени секции.
 
 ```hcl
 stronghold {

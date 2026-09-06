@@ -9,7 +9,7 @@ weight: 10
 * kv версии 2, с версионностью и возможностью хранения произвольно настроиваемового количества версий для каждого ключа.
 
 {{< alert level="info" >}}
-Работа с механизмом KV в веб-интерфейсе и консоли разбирается [в курсе «Установка и обзор Deckhouse Stronghold»](https://education.flant.ru/course/ustanovka-i-obzor-deckhouse-stronghold/).
+Работа с механизмом KV в веб-интерфейсе и консоли разбирается [в курсе «Обзор возможностей Deckhouse Stronghold»](https://education.flant.ru/course/obzor-vozmozhnostej-deckhouse-stronghold/).
 {{< /alert >}}
 
 ## KV версия 1

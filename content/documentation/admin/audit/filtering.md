@@ -7,7 +7,7 @@ description: "Configure filtering of Stronghold audit records for individual aud
 Stronghold supports enabling audit devices with the `filter` option, which limits which records are written to a specific audit log. Filters are defined when the device is enabled and cannot be changed afterward. To change a filter, you must disable and re-enable the device.
 
 {{< alert level="warning" >}}
-Audit log filtering is an advanced feature. Using only filtered devices without a configured fallback can lead to gaps in audit logs. Always test the configuration in a non-production environment.
+Using filtered devices without a configured fallback can lead to gaps in audit logs. Always test the configuration in a test environment first before using it in the production.
 {{< /alert >}}
 
 When an audit device is enabled with a filter, each audit record is matched against a predicate expression. Only matching records are written to the log. The behavior of existing devices and new devices without a filter does not change.
@@ -30,7 +30,7 @@ Only one fallback device can exist in a Stronghold installation.
 - Filtering is supported for all audit device types: `file`, `socket`, and `syslog`.
 - You cannot specify both `filter` and `fallback=true`. These options are mutually exclusive.
 - Only one fallback device is allowed.
-- A fallback device can be the only audit backend, in which case it receives all records.
+- A fallback device can be the only audit backend. In this case, it receives all records.
 
 ## Filtering and test messages
 
@@ -40,9 +40,9 @@ Default test message properties:
 
 | Property | Value |
 |---|---|
-| `mount_point` | empty string |
-| `mount_type` | empty string |
-| `namespace` | empty string |
+| `mount_point` | Empty string |
+| `mount_type` | Empty string |
+| `namespace` | Empty string |
 | `operation` | `update` |
 | `path` | `sys/audit/test` |
 
@@ -64,27 +64,27 @@ Non-root namespace paths must end with `/` for matching to work correctly. The r
 
 Filters use [bexpr](https://github.com/hashicorp/go-bexpr) syntax and support:
 
-- comparison operators `==` and `!=`;
-- the `matches` operator for regular expressions;
-- compound expressions with `and`, `or`, and `not`.
+- Comparison operators `==` and `!=`
+- The `matches` operator for regular expressions
+- Compound expressions with `and`, `or`, and `not`
 
 ## Fallback metrics
 
 Stronghold publishes telemetry metrics related to fallback auditing:
 
-- `audit.fallback.success` increments when a fallback device successfully writes an audit event that was not successfully written by any non-fallback device;
-- `audit.fallback.miss` increments when an event was not written by any filtered device and no fallback device is configured.
+- `audit.fallback.success`: Incremented when a fallback device successfully writes an audit event that was not successfully written by any non-fallback device.
+- `audit.fallback.miss`: Incremented when an event was not written by any filtered device and no fallback device is configured.
 
-The `audit.fallback.miss` metric is especially useful for detecting audit event loss in configurations that use filtered devices only.
+The `audit.fallback.miss` metric is useful for detecting audit event loss in configurations that use filtered devices only.
 
-## Practical example
+## Configuring audit log filtering
 
-Assume you already have an audit file named `stronghold-audit.log` and want to route key/value (`kv`) events to a separate `kv-audit.log` file.
+Assume you have an audit file named `stronghold-audit.log` and you want to route key/value (`kv`) events to a separate `kv-audit.log` file. To do this:
 
 1. Enable a `file` audit device filtered by `mount_type`:
 
    ```shell
-   stronghold audit enable                \
+   d8 stronghold audit enable             \
      -path kv-only                        \
      file                                 \
      filter='mount_type == "kv"'          \
@@ -94,7 +94,7 @@ Assume you already have an audit file named `stronghold-audit.log` and want to r
 2. Enable a fallback device:
 
    ```shell
-   stronghold audit enable                \
+   d8 stronghold audit enable             \
      -path=my-fallback                    \
      -description="fallback device"       \
      file                                 \
@@ -105,19 +105,19 @@ Assume you already have an audit file named `stronghold-audit.log` and want to r
 3. Verify that the devices are enabled:
 
    ```shell
-   stronghold audit list --detailed
+   d8 stronghold audit list --detailed
    ```
 
 4. Enable the KV secrets engine:
 
    ```shell
-   stronghold secrets enable -path my-kv kv-v2
+   d8 stronghold secrets enable -path my-kv kv-v2
    ```
 
 5. Write a secret:
 
    ```shell
-   stronghold kv put -mount=my-kv my_secret the_value=always_angry
+   d8 stronghold kv put -mount=my-kv my_secret the_value=always_angry
    ```
 
 After that, `kv-audit.log` will contain records for operations on `my-kv`, while the fallback device will capture records that do not match the filter.

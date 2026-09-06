@@ -64,5 +64,5 @@ d8 stronghold <command>
 После входа рекомендуется создать тестовый секрет. Порядок действий описан в разделе [«Создание тестового секрета»](../first-secret/).
 
 {{< alert level="info" >}}
-Работа с Stronghold через консоль подробно разбирается [в курсе «Установка и обзор Deckhouse Stronghold»](https://education.flant.ru/course/ustanovka-i-obzor-deckhouse-stronghold/).
+Работа с Stronghold через консоль подробно разбирается [в курсе «Обзор возможностей Deckhouse Stronghold»](https://education.flant.ru/course/obzor-vozmozhnostej-deckhouse-stronghold/).
 {{< /alert >}}

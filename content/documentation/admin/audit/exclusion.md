@@ -7,21 +7,23 @@ description: "Configure exclusion of selected fields from Stronghold audit recor
 Stronghold supports enabling audit devices with the `exclude` option, which removes selected fields from audit records before they are written to the log. This makes it possible to fine-tune the contents of records for each device.
 
 {{< alert level="warning" >}}
-Audit field exclusion is an advanced feature. Using exclusions can cause loss of important information in audit logs. Always test the configuration in a non-production environment.
+Excluding fields can cause loss of information in audit logs. Always test the configuration in a test environment first before using it in the production.
 {{< /alert >}}
 
-When an audit device is enabled with exclusions, each audit record is checked against optional conditions before it is written. If a condition matches, the specified fields are removed from the record. A single device can have multiple condition/field combinations.
+When an audit device is enabled with exclusions, each audit record is checked against optional conditions before it is written. If a condition matches, the specified fields are removed from the record. A single device can have multiple condition and field combinations.
 
 The behavior of existing devices and new devices without exclusions does not change.
 
-## The `exclude` option
+## Exclude option
 
 The value of `exclude` must be a valid JSON array of exclusion objects.
 
 ### Exclusion object
 
-- `condition` `(string, optional)` is a predicate expression in [bexpr](https://github.com/hashicorp/go-bexpr) syntax. When it matches, Stronghold removes the fields listed in `fields`. If `condition` is omitted or an empty string, the rule is applied unconditionally.
-- `fields` `(string[], required)` is an array of fields to remove, expressed in [JSON Pointer](https://tools.ietf.org/html/rfc6901) syntax.
+The exclusion object is defined using the following fields:
+
+- `condition` (`string`, optional): Predicate expression in [bexpr](https://github.com/hashicorp/go-bexpr) syntax. When it matches, Stronghold removes the fields listed in `fields`. If `condition` is omitted or an empty string, the rule is applied unconditionally.
+- `fields` (`string[]`, required): Array of fields to remove, expressed in [JSON Pointer](https://tools.ietf.org/html/rfc6901) syntax.
 
 ```json
 [
@@ -38,9 +40,9 @@ Exclusion conditions are always evaluated against the original, unmodified audit
 
 ## Exclusion examples
 
-### Exclude response data
+### Excluding response data
 
-Remove the `data` field from the response in any audit record:
+The following is an example of removing the `data` field from the response in any audit record:
 
 ```json
 [
@@ -50,9 +52,9 @@ Remove the `data` field from the response in any audit record:
 ]
 ```
 
-### Exclude request data for transit mounts
+### Excluding request data for transit mounts
 
-Remove the `data` field from the request for records where `mount_type == "transit"`:
+The following is an example of removing the `data` field from the request for records where `mount_type == "transit"`:
 
 ```json
 [
@@ -65,7 +67,7 @@ Remove the `data` field from the request for records where `mount_type == "trans
 
 ### Multiple exclusions
 
-Remove `data` from request and response for `transit`, and also remove `entity_id` from `auth` when `client_token` starts with `hmac`:
+The following is an example of removing `data` from request and response for `transit`, and also removing `entity_id` from `auth` when `client_token` starts with `hmac`:
 
 ```json
 [
@@ -84,8 +86,8 @@ Remove `data` from request and response for `transit`, and also remove `entity_i
 
 Conditions in `condition` support two field reference formats:
 
-1. **Quoted JSON Pointer**. Example: `"/request/mount_type" == transit`
-2. **Native bexpr format**. Example: `request.mount_type == "transit"`
+- **Quoted JSON Pointer**. For example, `"/request/mount_type" == transit`.
+- **Native bexpr format**. For example, `request.mount_type == "transit"`.
 
 Supported operators include:
 
@@ -108,9 +110,9 @@ The fields available in exclusion conditions follow the actual JSON structure of
 
 In practice this means:
 
-- for JSON Pointer references, use the real path of the field in the JSON structure;
-- for bexpr conditions, you can use the equivalent dot notation;
-- if a field is an object, you can address both the object itself and its nested fields.
+- For JSON Pointer references, use the real path of the field in the JSON structure.
+- For bexpr conditions, you can use the equivalent dot notation.
+- If a field is an object, you can address both the object itself and its nested fields.
 
 Typical examples:
 
@@ -125,22 +127,22 @@ Typical examples:
 
 If you are unsure whether a path is correct, first verify how the field is serialized in the relevant audit record type (`request` or `response`) and only then add the exclusion rule.
 
-## Practical example
+## Configuration example with field exclusions
 
-Enable a `file` audit device and exclude response data for `kv` mounts:
+Enabling a `file` audit device and excluding response data for `kv` mounts:
 
 ```shell
-stronghold audit enable              \
+d8 stronghold audit enable           \
   -path filtered-file                \
   file                               \
   file_path=/logs/audit.log          \
   exclude='[{"condition": "\"/request/mount_type\" == kv", "fields": ["/response/data"]}]'
 ```
 
-Combine filtering and exclusions:
+Combining filtering and exclusions:
 
 ```shell
-stronghold audit enable                   \
+d8 stronghold audit enable                \
   -path transit-only                      \
   file                                    \
   filter='mount_type == "transit"'        \

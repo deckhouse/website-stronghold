@@ -1,6 +1,6 @@
 ---
 title: "Deckhouse Stronghold documentation"
-linkTitle: "Introduction"
+linkTitle: "Overview"
 weight: 10
 outputs:
   - HTML
@@ -18,20 +18,17 @@ cascade:
 
 {{< downloads >}}
 
-Welcome to the home page of the Deckhouse Stronghold documentation!
+Welcome to the home page of the Deckhouse Stronghold documentation.
 
-The Deckhouse Stronghold is designed for launching, managing, and orchestrating virtual machines and associated resources.
+Deckhouse Stronghold provides secure storage and lifecycle management for sensitive data (secrets).
+The secret storage uses a key-value format and is compatible with the HashiCorp Vault API.
 
-The documentation includes the following sections:
+To quickly find the information you need:
 
-- [Getting started](/products/stronghold/gs/) — step-by-step instructions for installing the standard configuration of the platform.
-- [Platform overview](./about/editions/) — information about the platform editions, release channels, and technical requirements.
-- [Administration guide](./admin/overview) — information on the requirements, installation procedures, and configuration of the platform subsystems, as well as information for creating user projects and organizing access.
-- [User guide](./user/overview/) — information on managing user resources for projects (virtual machines, disks, images, etc.).
-- [Reference](/products/kubernetes-platform/documentation/v1/cli/d8/) - reference information about command line utilities and resources provided by the platform for use.
+- Use search if you are looking for a specific Stronghold feature, parameter, or other object.
+- Use the side menu to navigate through documentation sections.
 
-If you have any questions, feel free to contact us via [our Telegram channel](https://t.me/deckhouse).
-We will do our best to help you.
+If you need help:
 
-If you are an Enterprise Edition user, reach out via <a href="mailto:support@deckhouse.io">support@deckhouse.io</a>.
-We will be glad to provide assistance.
+- Ask a question in the ["Deckhouse | EN-community"](https://t.me/deckhouse) Telegram channel.
+- If you use the Enterprise Edition, contact support at [`support@deckhouse.io`](mailto:support@deckhouse.io).
