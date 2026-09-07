@@ -682,6 +682,7 @@ Initializes a new root generation attempt.
 
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
+| `otp` | string | no | Specifies a one-time password used to encrypt the generated token. |
 | `pgp_key` | string | no | Specifies a base64-encoded PGP public key. |
 
 #### Responses
@@ -717,8 +718,6 @@ Cancels any in-progress root generation attempt.
 
 Read the configuration and progress of the current root generation attempt.
 
-**Available without authentication:** yes
-
 #### Responses
 
 **200**: OK
@@ -742,12 +741,11 @@ Read the configuration and progress of the current root generation attempt.
 
 Initializes a new root generation attempt.
 
-**Available without authentication:** yes
-
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
+| `otp` | string | no | Specifies a one-time password used to encrypt the generated token. |
 | `pgp_key` | string | no | Specifies a base64-encoded PGP public key. |
 
 #### Responses
@@ -773,8 +771,6 @@ Initializes a new root generation attempt.
 
 Cancels any in-progress root generation attempt.
 
-**Available without authentication:** yes
-
 #### Responses
 
 **204**: OK
@@ -784,8 +780,6 @@ Cancels any in-progress root generation attempt.
 **Operation ID:** `root-token-generation-update`
 
 Enter a single unseal key share to progress the root generation attempt.
-
-**Available without authentication:** yes
 
 #### Request body parameters
 
@@ -1560,37 +1554,33 @@ Revert a single logger to use log level provided in config.
 
 ### GET /sys/managed-keys/{type}
 
-**Operation ID:** `managed-keys-list-keys`
+**Operation ID:** `system-list-managed-keys-type`
 
-List managed keys of a given type
+List configured managed keys.
 
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `type` | string | path | yes | The type of managed key (pkcs11, yandexcloudkms) |
+| `type` | string | path | yes | The type of the managed key. |
 | `list` | string (true) | query | yes | Must be set to `true` |
 
 #### Responses
 
 **200**: OK
 
-| Parameter | Type | Required | Description |
-|----------|-----|--------------|----------|
-| `keys` | array | no |  |
-
 ### GET /sys/managed-keys/{type}/{name}
 
-**Operation ID:** `managed-keys-read-key`
+**Operation ID:** `system-read-managed-keys-type-name`
 
-Read managed key configuration
+Create, update and read the managed key configurations.
 
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `name` | string | path | yes | The name of the managed key |
-| `type` | string | path | yes | The type of managed key (pkcs11, yandexcloudkms) |
+| `name` | string | path | yes | The name of the managed key. |
+| `type` | string | path | yes | The type of the managed key. |
 
 #### Responses
 
@@ -1598,9 +1588,9 @@ Read managed key configuration
 
 ### POST /sys/managed-keys/{type}/{name}
 
-**Operation ID:** `managed-keys-update`
+**Operation ID:** `system-write-managed-keys-type-name`
 
-Update a managed key
+Create, update and read the managed key configurations.
 
 **Creation supported:** yes
 
@@ -1608,60 +1598,60 @@ Update a managed key
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `name` | string | path | yes | The name of the managed key |
-| `type` | string | path | yes | The type of managed key (pkcs11, yandexcloudkms) |
+| `name` | string | path | yes | The name of the managed key. |
+| `type` | string | path | yes | The type of the managed key. |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
-| `allow_generate_key` | boolean | no | If true, allows users of the key to trigger key generation. |
-| `allow_replace_key` | boolean | no | If true, allows users of the key to provide key material which may replace keys that were previously present. |
+| `allow_generate_key` | boolean | no | If true, allows users of the key to trigger key generation. If false and generation is needed, it will fail. |
+| `allow_replace_key` | boolean | no | If true, allows users of the key to provide key material which may replace keys that were previously present. allow_store_key being false overrides this behavior. |
 | `allow_store_key` | boolean | no | If true, allows users of the key to provide key material where none was present. |
 | `any_mount` | boolean | no | If true, this key may be accessed by any mount without the mount's allowed_manage_keys field being set. |
+| `curve` | string | no | For ECDSA mechanisms, the desired elliptic curve if the key is to be generated, either P256, P384, or P521. |
 | `endpoint` | string | no | [yandexcloudkms] Custom Yandex Cloud API endpoint (optional). |
-| `force_rw_session` | boolean (default: False) | no | [pkcs11] If true, forces read/write sessions on the HSM. |
-| `key_bits` | integer | no | [pkcs11] For RSA keys, the desired key length in bits (2048, 3072, or 4096). |
-| `key_id` | string | no | [pkcs11] The id of a PKCS#11 key to use. |
-| `key_label` | string | no | [pkcs11] The label of a PKCS#11 key to use. |
-| `kms_key_id` | string | no | [yandexcloudkms] The ID of the symmetric key in Yandex Cloud KMS. |
-| `library` | string | no | [pkcs11] The name of a kms_library stanza from server configuration. |
-| `max_parallel` | integer | no | [pkcs11] The maximum number of concurrent operations to the HSM. |
-| `mechanism` | string | no | [pkcs11] The mechanism for the given key, specified as a decimal or hexadecimal (prefixed by 0x) string. |
+| `force_rw_session` | boolean (default: False) | no | If true, forces read/write sessions on the HSM, to work around some buggy HSMs. |
+| `key_bits` | integer | no | For RSA mechanisms, the desired key length in bits if the key is to be generated, either 2048, 3072, or 4096. |
+| `key_id` | string | no | The id of a PKCS#11 key to use. As key ids are created by the HSM, it is an error if the key does not yet exist. This value or key_label must be specified. |
+| `key_label` | string | no | The label of a PKCS#11 key to use. If the key does not exist and generation is enabled, this is the label that will be given to the generated key. This value or key_id must be specified. |
+| `kms_key_id` | string | no | [yandexcloudkms] The ID of the key in Yandex Cloud KMS (symmetric or asymmetric). |
+| `library` | string | no | The name of a managed key access library, as defined in the server configuration. |
+| `max_parallel` | integer | no | The maximum number of concurrent operations that may be submitted to the HSM at a time. |
+| `mechanism` | string | no | The mechanism for the given key, specified as a decimal or hexadecimal (prefixed by 0x) string. |
 | `oauth_token` | string | no | [yandexcloudkms] OAuth token for Yandex Cloud authentication. Mutually exclusive with service_account_key_json. |
-| `pin` | string | no | [pkcs11] The access PIN for the slot. |
-| `reverse_signature` | boolean (default: False) | no | [pkcs11] If true, reverses GOST signature bytes from the HSM (CryptoPro compatibility). |
-| `service_account_key_json` | string | no | [yandexcloudkms] JSON of the authorized key for a Yandex Cloud service account. Stored inside Vault, not on the filesystem. Mutually exclusive with oauth_token. |
-| `slot` | string | no | [pkcs11] The slot number to use, specified as a string (e.g. "0"). |
-| `token_label` | string | no | [pkcs11] The slot token label to use. |
+| `pin` | string | no | The access PIN for the slot. |
+| `service_account_key_json` | string | no | [yandexcloudkms] JSON of the authorized key for a Yandex Cloud service account. Stored inside Stronghold, not on the filesystem. Mutually exclusive with oauth_token. |
+| `slot` | string | no | The slot number to use, specified as a string (e.g. "0"). |
+| `token_label` | string | no | The slot token label to use. |
 | `usages` | string | no | A comma-delimited list of the allowed usages of this key. Valid values are encrypt, decrypt, sign, verify, wrap, unwrap, mac, and random. |
 
 #### Responses
 
-**204**: OK
+**200**: OK
 
 ### DELETE /sys/managed-keys/{type}/{name}
 
-**Operation ID:** `managed-keys-delete-key`
+**Operation ID:** `system-delete-managed-keys-type-name`
 
-Delete a managed key
+Create, update and read the managed key configurations.
 
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `name` | string | path | yes | The name of the managed key |
-| `type` | string | path | yes | The type of managed key (pkcs11, yandexcloudkms) |
+| `name` | string | path | yes | The name of the managed key. |
+| `type` | string | path | yes | The type of the managed key. |
 
 #### Responses
 
-**204**: OK
+**204**: empty body
 
 ### POST /sys/managed-keys/{type}/{name}/test/sign
 
-**Operation ID:** `managed-keys-test-sign`
+**Operation ID:** `system-write-managed-keys-type-name-test-sign`
 
-Test managed key signing
+Test a managed key by signing and verifying some random data.
 
 **Creation supported:** yes
 
@@ -1669,19 +1659,19 @@ Test managed key signing
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `name` | string | path | yes | The name of the managed key |
-| `type` | string | path | yes | The type of managed key (pkcs11, yandexcloudkms) |
+| `name` | string | path | yes | The name of the managed key. |
+| `type` | string | path | yes | The type of the managed key. |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
-| `hash_algorithm` | string (default: ) | no | The hashing algorithm to use when signing/verifying the random data. |
+| `hash_algorithm` | string (default: sha2-256) | no | Hash for the test digest. If omitted, inferred from the managed key PKCS#11 mechanism for GOST (streebog-256 / streebog-512); otherwise sha2-256. |
 | `use_pss` | boolean (default: False) | no | For RSA backed managed keys attempt to sign with PSS |
 
 #### Responses
 
-**204**: OK
+**200**: OK
 
 ### GET /sys/metrics
 
@@ -1744,6 +1734,48 @@ Export the metrics aggregated for telemetry purpose.
 ### DELETE /sys/mfa/method/duo/{name}
 
 **Operation ID:** `enterprise-stub-delete-mfa-method-duo-name`
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `name` | string | path | yes |  |
+
+#### Responses
+
+**204**: empty body
+
+### GET /sys/mfa/method/multifactor/{name}
+
+**Operation ID:** `enterprise-stub-read-mfa-method-multifactor-name`
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `name` | string | path | yes |  |
+
+#### Responses
+
+**200**: OK
+
+### POST /sys/mfa/method/multifactor/{name}
+
+**Operation ID:** `enterprise-stub-write-mfa-method-multifactor-name`
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `name` | string | path | yes |  |
+
+#### Responses
+
+**200**: OK
+
+### DELETE /sys/mfa/method/multifactor/{name}
+
+**Operation ID:** `enterprise-stub-delete-mfa-method-multifactor-name`
 
 #### Parameters
 
@@ -3153,6 +3185,151 @@ Get, create or update rate limit resource quota for an optional namespace or mou
 
 **204**: OK
 
+### GET /sys/rekey-recovery-key/init
+
+**Operation ID:** `rekey-recovery-key-attempt-read-progress`
+
+Reads the configuration and progress of the current recovery key rekey attempt.
+
+#### Responses
+
+**200**: OK
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `backup` | boolean | no |  |
+| `n` | integer | no |  |
+| `nonce` | string | no |  |
+| `pgp_fingerprints` | array | no |  |
+| `progress` | integer | no |  |
+| `required` | integer | no |  |
+| `started` | boolean | no |  |
+| `t` | integer | no |  |
+| `verification_nonce` | string | no |  |
+| `verification_required` | boolean | no |  |
+
+### POST /sys/rekey-recovery-key/init
+
+**Operation ID:** `rekey-recovery-key-attempt-initialize`
+
+Initializes a new recovery key rekey attempt.
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `backup` | boolean | no | Specifies if using PGP-encrypted keys, whether Vault should also store a plaintext backup of the PGP-encrypted keys. |
+| `pgp_keys` | array | no | Specifies an array of PGP public keys used to encrypt the output recovery keys. |
+| `require_verification` | boolean | no | Turns on verification functionality |
+| `secret_shares` | integer | no | Specifies the number of shares to split the recovery key into. |
+| `secret_threshold` | integer | no | Specifies the number of shares required to reconstruct the recovery key. |
+| `stored_shares` | integer | no | Specifies the number of shares that should be encrypted by the HSM and stored for auto-unsealing. Currently must be the same as `secret_shares`. |
+
+#### Responses
+
+**200**: OK
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `backup` | boolean | no |  |
+| `n` | integer | no |  |
+| `nonce` | string | no |  |
+| `pgp_fingerprints` | array | no |  |
+| `progress` | integer | no |  |
+| `required` | integer | no |  |
+| `started` | boolean | no |  |
+| `t` | integer | no |  |
+| `verification_nonce` | string | no |  |
+| `verification_required` | boolean | no |  |
+
+### DELETE /sys/rekey-recovery-key/init
+
+**Operation ID:** `rekey-recovery-key-attempt-cancel`
+
+Cancels any in-progress recovery key rekey.
+
+#### Responses
+
+**200**: OK
+
+### POST /sys/rekey-recovery-key/update
+
+**Operation ID:** `rekey-recovery-key-attempt-update`
+
+Enter a single recovery key share to progress the rekey of the Vault.
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `key` | string | no | Specifies a single recovery key share. |
+| `nonce` | string | no | Specifies the nonce of the rekey attempt. |
+
+#### Responses
+
+**200**: OK
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `backup` | boolean | no |  |
+| `complete` | boolean | no |  |
+| `keys` | array | no |  |
+| `keys_base64` | array | no |  |
+| `nonce` | string | no |  |
+| `pgp_fingerprints` | array | no |  |
+| `verification_nonce` | string | no |  |
+| `verification_required` | boolean | no |  |
+
+### GET /sys/rekey-recovery-key/verify
+
+**Operation ID:** `rekey-recovery-key-verification-read-progress`
+
+Read the configuration and progress of the current recovery key rekey verification attempt.
+
+#### Responses
+
+**200**: OK
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `n` | integer | no |  |
+| `nonce` | string | no |  |
+| `progress` | integer | no |  |
+| `started` | boolean | no |  |
+| `t` | integer | no |  |
+
+### POST /sys/rekey-recovery-key/verify
+
+**Operation ID:** `rekey-recovery-key-verification-update`
+
+Enter a single new recovery key share to progress the rekey verification operation.
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `key` | string | no | Specifies a single recovery key share from the new set of shares. |
+| `nonce` | string | no | Specifies the nonce of the rekey verification operation. |
+
+#### Responses
+
+**200**: OK
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `complete` | boolean | no |  |
+| `nonce` | string | no |  |
+
+### DELETE /sys/rekey-recovery-key/verify
+
+**Operation ID:** `rekey-recovery-key-verification-cancel`
+
+Cancel any in-progress recovery key rekey verification operation.
+
+#### Responses
+
+**200**: OK
+
 ### GET /sys/rekey/backup
 
 **Operation ID:** `rekey-read-backup-key`
@@ -3185,8 +3362,6 @@ Delete the backup copy of PGP-encrypted unseal keys.
 
 Reads the configuration and progress of the current rekey attempt.
 
-**Available without authentication:** yes
-
 #### Responses
 
 **200**: OK
@@ -3195,11 +3370,11 @@ Reads the configuration and progress of the current rekey attempt.
 |----------|-----|--------------|----------|
 | `backup` | boolean | no |  |
 | `n` | integer | no |  |
-| `nounce` | string | no |  |
+| `nonce` | string | no |  |
 | `pgp_fingerprints` | array | no |  |
 | `progress` | integer | no |  |
 | `required` | integer | no |  |
-| `started` | string | no |  |
+| `started` | boolean | no |  |
 | `t` | integer | no |  |
 | `verification_nonce` | string | no |  |
 | `verification_required` | boolean | no |  |
@@ -3210,17 +3385,17 @@ Reads the configuration and progress of the current rekey attempt.
 
 Initializes a new rekey attempt.
 
-**Available without authentication:** yes
-
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
 | `backup` | boolean | no | Specifies if using PGP-encrypted keys, whether Stronghold should also store a plaintext backup of the PGP-encrypted keys. |
+| `nonce` | string | no | Specifies the nonce of the rekey operation. If the rekey was initialized within the last 10 minutes, you must provide the nonce to cancel the operation. |
 | `pgp_keys` | array | no | Specifies an array of PGP public keys used to encrypt the output unseal keys. Ordering is preserved. The keys must be base64-encoded from their original binary representation. The size of this array must be the same as secret_shares. |
 | `require_verification` | boolean | no | Turns on verification functionality |
 | `secret_shares` | integer | no | Specifies the number of shares to split the unseal key into. |
 | `secret_threshold` | integer | no | Specifies the number of shares required to reconstruct the unseal key. This must be less than or equal secret_shares. If using Stronghold HSM with auto-unsealing, this value must be the same as secret_shares. |
+| `stored_shares` | integer | no | Specifies the number of shares that should be encrypted by the HSM and stored for auto-unsealing. Currently must be the same as secret_shares. |
 
 #### Responses
 
@@ -3230,11 +3405,11 @@ Initializes a new rekey attempt.
 |----------|-----|--------------|----------|
 | `backup` | boolean | no |  |
 | `n` | integer | no |  |
-| `nounce` | string | no |  |
+| `nonce` | string | no |  |
 | `pgp_fingerprints` | array | no |  |
 | `progress` | integer | no |  |
 | `required` | integer | no |  |
-| `started` | string | no |  |
+| `started` | boolean | no |  |
 | `t` | integer | no |  |
 | `verification_nonce` | string | no |  |
 | `verification_required` | boolean | no |  |
@@ -3244,8 +3419,6 @@ Initializes a new rekey attempt.
 **Operation ID:** `rekey-attempt-cancel`
 
 Cancels any in-progress rekey.
-
-**Available without authentication:** yes
 
 #### Responses
 
@@ -3283,8 +3456,6 @@ Allows fetching or deleting the backup of the rotated unseal keys.
 
 Enter a single unseal key share to progress the rekey of the Stronghold.
 
-**Available without authentication:** yes
-
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
@@ -3318,8 +3489,6 @@ Enter a single unseal key share to progress the rekey of the Stronghold.
 
 Read the configuration and progress of the current rekey verification attempt.
 
-**Available without authentication:** yes
-
 #### Responses
 
 **200**: OK
@@ -3337,8 +3506,6 @@ Read the configuration and progress of the current rekey verification attempt.
 **Operation ID:** `rekey-verification-update`
 
 Enter a single new key share to progress the rekey verification operation.
-
-**Available without authentication:** yes
 
 #### Request body parameters
 
@@ -3361,8 +3528,6 @@ Enter a single new key share to progress the rekey verification operation.
 **Operation ID:** `rekey-verification-cancel`
 
 Cancel any in-progress rekey verification operation.
-
-**Available without authentication:** yes
 
 #### Responses
 
@@ -3550,6 +3715,52 @@ Renews a lease, requesting to extend the lease.
 | `client_key_pem` | string | no |  |
 | `primary_api_addr` | string | no |  |
 | `token` | string | no |  |
+
+#### Responses
+
+**200**: OK
+
+### GET /sys/replication/dr/secondary/generate-operation-token/attempt
+
+**Operation ID:** `system-read-replication-dr-secondary-generate-operation-token-attempt`
+
+#### Responses
+
+**200**: OK
+
+### POST /sys/replication/dr/secondary/generate-operation-token/attempt
+
+**Operation ID:** `system-write-replication-dr-secondary-generate-operation-token-attempt`
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `otp` | string | no | Specifies a one-time password used to encrypt the generated token. |
+| `pgp_key` | string | no | Specifies a base64-encoded PGP public key. |
+
+#### Responses
+
+**200**: OK
+
+### DELETE /sys/replication/dr/secondary/generate-operation-token/attempt
+
+**Operation ID:** `system-delete-replication-dr-secondary-generate-operation-token-attempt`
+
+#### Responses
+
+**204**: empty body
+
+### POST /sys/replication/dr/secondary/generate-operation-token/update
+
+**Operation ID:** `system-write-replication-dr-secondary-generate-operation-token-update`
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `key` | string | no | Specifies a single unseal key share. |
+| `nonce` | string | no | Specifies the nonce of the attempt. |
 
 #### Responses
 
@@ -4313,16 +4524,18 @@ Updates the configuration of the automatic snapshot.
 | `aws_access_key_id` | string | no | S3 access key ID. |
 | `aws_s3_bucket` | string | yes | S3 bucket to write snapshots to. |
 | `aws_s3_ca_certificate` | string (default: ) | no | S3 CA certificate PEM. |
-| `aws_s3_disable_tls` | boolean (default: False) | no | Disable TLS for the S3 endpoint. This should only be used for testing purposes, typically in conjunction with `s3_endpoint`. |
+| `aws_s3_disable_tls` | boolean (default: False) | no | Disable TLS for the S3 endpoint. This should only be used for testing purposes, typically in conjunction with `aws_s3_endpoint`. |
 | `aws_s3_endpoint` | string | no | S3 endpoint. |
 | `aws_s3_region` | string (default: ) | no | S3 region bucket is in. |
 | `aws_secret_access_key` | string | no | S3 secret access key. |
 | `file_prefix` | string (default: stronghold-snapshot) | no | Within the directory or bucket prefix given by `path_prefix`, the file or object name of snapshot files will start with this string. |
-| `interval` | integer | yes | Time between snapshots. This can be either an integer number of seconds, or a Go duration format string (e.g. 24h). |
+| `interval` | integer | yes | Time between snapshots. Must be at least 3m. Accepts an integer number of seconds or a duration string. Duration strings may combine Go duration units ns, us/µs, ms, s, m, and h, for example 15m, 1h, 1h30m, or 24h3m. A standalone day value such as 1d is also accepted; combine days with smaller units by using equivalent hours, for example 24h3m. |
 | `local_max_space` | integer (default: 0) | yes | For `storage_type=local`, the maximum space, in bytes, to use for all snapshots with the given `file_prefix` in the `path_prefix` directory. Snapshot attempts will fail if there is not enough space left in this allowance. Value `0` disables limit. |
 | `path_prefix` | string | yes | For `storage_type=local`, the directory to write the snapshots in. For cloud storage types, the bucket prefix to use, also leading `/` is ignored. The trailing `/` is optional. |
 | `retain` | integer (default: 3) | no | How many snapshots are to be kept; when writing a snapshot, if there are more snapshots already stored than this number, the oldest ones will be deleted. |
-| `storage_type` | string (local, aws-s3) | yes | One of "local" or "s3". The remaining parameters described below are all specific to the selected `storage_type` and prefixed accordingly. |
+| `retry_enabled` | boolean (default: False) | no | Enable retry for failed S3 uploads. Only applicable when `storage_type=aws-s3`. |
+| `retry_max_attempts` | integer (default: 5) | no | Maximum number of retry attempts for failed S3 uploads. Backoff schedule: 1m, 5m, 15m, then 30m. Only applicable when `storage_type=aws-s3`. |
+| `storage_type` | string (local, aws-s3) | yes | One of "local" or "aws-s3". The remaining parameters described below are all specific to the selected `storage_type` and prefixed accordingly. |
 
 #### Responses
 
