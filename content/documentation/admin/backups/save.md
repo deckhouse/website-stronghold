@@ -24,14 +24,18 @@ To create a snapshot, run:
 
 {{< tabs name="stronghold_cmd_86904" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold operator raft snapshot save backup.snap
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell
 stronghold operator raft snapshot save backup.snap
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 

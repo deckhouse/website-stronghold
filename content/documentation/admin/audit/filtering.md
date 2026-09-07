@@ -85,6 +85,7 @@ Assume you have an audit file named `stronghold-audit.log` and you want to route
 
    {{< tabs name="stronghold_cmd_8360" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```shell
    d8 stronghold audit enable             \
      -path kv-only                        \
@@ -92,8 +93,10 @@ Assume you have an audit file named `stronghold-audit.log` and you want to route
      filter='mount_type == "kv"'          \
      file_path=/logs/kv-audit.log
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```shell
    stronghold audit enable             \
      -path kv-only                        \
@@ -101,6 +104,7 @@ Assume you have an audit file named `stronghold-audit.log` and you want to route
      filter='mount_type == "kv"'          \
      file_path=/logs/kv-audit.log
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -108,6 +112,7 @@ Assume you have an audit file named `stronghold-audit.log` and you want to route
 
    {{< tabs name="stronghold_cmd_38609" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```shell
    d8 stronghold audit enable             \
      -path=my-fallback                    \
@@ -116,8 +121,10 @@ Assume you have an audit file named `stronghold-audit.log` and you want to route
      fallback=true                        \
      file_path=/tmp/kv-audit.fallback.log
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```shell
    stronghold audit enable             \
      -path=my-fallback                    \
@@ -126,6 +133,7 @@ Assume you have an audit file named `stronghold-audit.log` and you want to route
      fallback=true                        \
      file_path=/tmp/kv-audit.fallback.log
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -133,14 +141,18 @@ Assume you have an audit file named `stronghold-audit.log` and you want to route
 
    {{< tabs name="stronghold_cmd_16152" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```shell
    d8 stronghold audit list --detailed
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```shell
    stronghold audit list --detailed
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -148,14 +160,18 @@ Assume you have an audit file named `stronghold-audit.log` and you want to route
 
    {{< tabs name="stronghold_cmd_97241" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```shell
    d8 stronghold secrets enable -path my-kv kv-v2
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```shell
    stronghold secrets enable -path my-kv kv-v2
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -163,14 +179,18 @@ Assume you have an audit file named `stronghold-audit.log` and you want to route
 
    {{< tabs name="stronghold_cmd_62847" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```shell
    d8 stronghold kv put -mount=my-kv my_secret the_value=always_angry
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```shell
    stronghold kv put -mount=my-kv my_secret the_value=always_angry
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 

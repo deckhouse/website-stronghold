@@ -23,14 +23,18 @@ Use the `-force` flag when restoring a snapshot:
 
 {{< tabs name="stronghold_cmd_64681" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold operator raft snapshot restore -force /tmp/snapshots/backup.snap
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell
 stronghold operator raft snapshot restore -force /tmp/snapshots/backup.snap
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -54,14 +58,18 @@ After the snapshot is loaded, unseal Stronghold with the original keys:
 
 {{< tabs name="stronghold_cmd_32174" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold operator unseal
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell
 stronghold operator unseal
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 

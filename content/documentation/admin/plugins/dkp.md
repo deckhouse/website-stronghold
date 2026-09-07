@@ -103,6 +103,7 @@ After the plugin is delivered into the container, register it through the CLI:
 
 {{< tabs name="stronghold_cmd_95303" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```bash
 PLUGIN_SHA=$(sha256sum <plugin_binary> | awk '{print $1;}')
 
@@ -113,8 +114,10 @@ d8 stronghold plugin register \
   <plugin_type> \
   <plugin_name>
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```bash
 PLUGIN_SHA=$(sha256sum <plugin_binary> | awk '{print $1;}')
 
@@ -125,6 +128,7 @@ stronghold plugin register \
   <plugin_type> \
   <plugin_name>
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -132,6 +136,7 @@ Example: register the secret plugin `mykv`:
 
 {{< tabs name="stronghold_cmd_71502" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```bash
 d8 stronghold plugin register \
   -command mykvplugin \
@@ -140,8 +145,10 @@ d8 stronghold plugin register \
   secret \
   mykv
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```bash
 stronghold plugin register \
   -command mykvplugin \
@@ -150,6 +157,7 @@ stronghold plugin register \
   secret \
   mykv
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -159,18 +167,22 @@ After registration, enable the plugin as a `secret` or `auth` engine:
 
 {{< tabs name="stronghold_cmd_99722" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```bash
 d8 stronghold <secrets|auth> enable \
   -path <mount_path> \
   <plugin_name>
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```bash
 stronghold <secrets|auth> enable \
   -path <mount_path> \
   <plugin_name>
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -185,14 +197,18 @@ Example:
 
 {{< tabs name="stronghold_cmd_75805" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```bash
 d8 stronghold secrets enable -path test-kv mykv
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```bash
 stronghold secrets enable -path test-kv mykv
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -203,14 +219,18 @@ stronghold secrets enable -path test-kv mykv
 
 {{< tabs name="stronghold_cmd_72514" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```bash
 d8 stronghold plugin deregister secret my-custom-plugin
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```bash
 stronghold plugin deregister secret my-custom-plugin
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 

@@ -103,14 +103,18 @@ Stronghold поддерживает те же базовые бэкенды ау
 
 {{< tabs name="stronghold_cmd_20236" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold audit enable file file_path=/var/log/stronghold_audit.log
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold audit enable file file_path=/var/log/stronghold_audit.log
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -122,14 +126,18 @@ stronghold audit enable file file_path=/var/log/stronghold_audit.log
 
 {{< tabs name="stronghold_cmd_96533" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold audit enable syslog tag="stronghold" facility="AUTH"
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold audit enable syslog tag="stronghold" facility="AUTH"
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -145,14 +153,18 @@ stronghold audit enable syslog tag="stronghold" facility="AUTH"
 
 {{< tabs name="stronghold_cmd_5855" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold audit enable socket address=127.0.0.1:9090 socket_type=tcp
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold audit enable socket address=127.0.0.1:9090 socket_type=tcp
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -164,14 +176,18 @@ stronghold audit enable socket address=127.0.0.1:9090 socket_type=tcp
 
 {{< tabs name="stronghold_cmd_20236" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold audit enable file file_path=/var/log/stronghold_audit.log
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold audit enable file file_path=/var/log/stronghold_audit.log
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -179,14 +195,18 @@ stronghold audit enable file file_path=/var/log/stronghold_audit.log
 
 {{< tabs name="stronghold_cmd_22849" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold audit list
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold audit list
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -194,14 +214,18 @@ stronghold audit list
 
 {{< tabs name="stronghold_cmd_42190" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold audit disable file/
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold audit disable file/
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 

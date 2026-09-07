@@ -39,20 +39,24 @@ description: "Руководство администратора по изол�
 
 {{< tabs name="stronghold_cmd_55611" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold namespace create \
   -namespace=<parent_namespace_name> \
   -custom-metadata=key="value" \
   <new_namespace_name>
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold namespace create \
   -namespace=<parent_namespace_name> \
   -custom-metadata=key="value" \
   <new_namespace_name>
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -93,14 +97,18 @@ curl \
 
 {{< tabs name="stronghold_cmd_41027" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold namespace lookup -namespace=<parent_namespace_name> <namespace_name>
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold namespace lookup -namespace=<parent_namespace_name> <namespace_name>
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -128,14 +136,18 @@ curl \
 
 {{< tabs name="stronghold_cmd_58281" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold namespace list -namespace=<parent_namespace_name>
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold namespace list -namespace=<parent_namespace_name>
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -164,14 +176,18 @@ curl \
 
 {{< tabs name="stronghold_cmd_8806" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold namespace delete -namespace=<parent_namespace_name> <namespace_name>
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold namespace delete -namespace=<parent_namespace_name> <namespace_name>
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -199,14 +215,18 @@ curl \
 
 {{< tabs name="stronghold_cmd_69466" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold namespace lock
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold namespace lock
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -214,14 +234,18 @@ stronghold namespace lock
 
 {{< tabs name="stronghold_cmd_52362" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold namespace lock ns1/ns2
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold namespace lock ns1/ns2
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -272,14 +296,18 @@ curl \
 
 {{< tabs name="stronghold_cmd_22637" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold namespace unlock -unlock-key=<key>
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold namespace unlock -unlock-key=<key>
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -287,14 +315,18 @@ stronghold namespace unlock -unlock-key=<key>
 
 {{< tabs name="stronghold_cmd_76641" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold namespace unlock
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold namespace unlock
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -302,14 +334,18 @@ stronghold namespace unlock
 
 {{< tabs name="stronghold_cmd_32282" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold namespace unlock -unlock-key=<key> ns1/ns2
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold namespace unlock -unlock-key=<key> ns1/ns2
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -345,6 +381,7 @@ curl \
 
 {{< tabs name="stronghold_cmd_46189" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 # Создаём пространство имён.
 d8 stronghold namespace create production
@@ -365,8 +402,10 @@ d8 stronghold namespace unlock -unlock-key=7Hk3xQ9mR2pN5vL8wY4tZa production
 # Доступ восстановлен.
 d8 stronghold secrets list -namespace=production
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 # Создаём пространство имён.
 stronghold namespace create production
@@ -387,5 +426,6 @@ stronghold namespace unlock -unlock-key=7Hk3xQ9mR2pN5vL8wY4tZa production
 # Доступ восстановлен.
 stronghold secrets list -namespace=production
 ```
+
 {{% /tab %}}
 {{< /tabs >}}

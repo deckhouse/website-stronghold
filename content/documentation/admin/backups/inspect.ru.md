@@ -18,14 +18,18 @@ description: "Локальная проверка и анализ снимка �
 
 {{< tabs name="stronghold_cmd_30895" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold operator raft snapshot inspect <SNAPSHOT_FILE>
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold operator raft snapshot inspect <SNAPSHOT_FILE>
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -33,14 +37,18 @@ stronghold operator raft snapshot inspect <SNAPSHOT_FILE>
 
 {{< tabs name="stronghold_cmd_60240" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold operator raft snapshot inspect raft.snap
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold operator raft snapshot inspect raft.snap
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -90,16 +98,20 @@ core/cluster                                      2          236 B
 
 {{< tabs name="stronghold_cmd_11011" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold operator raft snapshot save /backup/raft.snap
 d8 stronghold operator raft snapshot inspect /backup/raft.snap
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold operator raft snapshot save /backup/raft.snap
 stronghold operator raft snapshot inspect /backup/raft.snap
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -109,14 +121,18 @@ stronghold operator raft snapshot inspect /backup/raft.snap
 
 {{< tabs name="stronghold_cmd_82428" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold operator raft snapshot inspect -validate raft.snap
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold operator raft snapshot inspect -validate raft.snap
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -134,14 +150,18 @@ stronghold operator raft snapshot inspect -validate raft.snap
 
 {{< tabs name="stronghold_cmd_98176" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold operator raft snapshot inspect -depth 3 -filter=core raft.snap
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold operator raft snapshot inspect -depth 3 -filter=core raft.snap
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -153,14 +173,18 @@ stronghold operator raft snapshot inspect -depth 3 -filter=core raft.snap
 
 {{< tabs name="stronghold_cmd_96016" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold operator raft snapshot inspect -format=json raft.snap
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold operator raft snapshot inspect -format=json raft.snap
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 

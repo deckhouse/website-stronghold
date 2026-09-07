@@ -36,14 +36,18 @@ itself. You do not need to call `sys/replication/reindex` manually.
 
 {{< tabs name="stronghold_cmd_7602" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold write -force sys/replication/dr/primary/enable
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell
 stronghold write -force sys/replication/dr/primary/enable
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -51,14 +55,18 @@ stronghold write -force sys/replication/dr/primary/enable
 
 {{< tabs name="stronghold_cmd_3365" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold write sys/replication/dr/primary/secondary-token id=dr-1 ttl=24h
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell
 stronghold write sys/replication/dr/primary/secondary-token id=dr-1 ttl=24h
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -94,14 +102,18 @@ does not serve client requests.
 
 {{< tabs name="stronghold_cmd_63656" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold read -address="${SECONDARY_ADDR}" sys/replication/dr/status
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell
 stronghold read -address="${SECONDARY_ADDR}" sys/replication/dr/status
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 

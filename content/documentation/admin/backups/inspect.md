@@ -18,14 +18,18 @@ To check a snapshot, run the following command specifying a path to the snapshot
 
 {{< tabs name="stronghold_cmd_30895" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold operator raft snapshot inspect <SNAPSHOT_FILE>
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell
 stronghold operator raft snapshot inspect <SNAPSHOT_FILE>
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -33,14 +37,18 @@ Example:
 
 {{< tabs name="stronghold_cmd_60240" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold operator raft snapshot inspect raft.snap
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell
 stronghold operator raft snapshot inspect raft.snap
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -90,16 +98,20 @@ You can inspect the file immediately after creating it:
 
 {{< tabs name="stronghold_cmd_11011" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold operator raft snapshot save /backup/raft.snap
 d8 stronghold operator raft snapshot inspect /backup/raft.snap
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell
 stronghold operator raft snapshot save /backup/raft.snap
 stronghold operator raft snapshot inspect /backup/raft.snap
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -109,14 +121,18 @@ Use the `-validate` flag for a thorough backup check:
 
 {{< tabs name="stronghold_cmd_82428" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold operator raft snapshot inspect -validate raft.snap
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell
 stronghold operator raft snapshot inspect -validate raft.snap
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -134,14 +150,18 @@ To inspect a specific part of the stored data, use `-filter` together with `-dep
 
 {{< tabs name="stronghold_cmd_98176" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold operator raft snapshot inspect -depth 3 -filter=core raft.snap
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell
 stronghold operator raft snapshot inspect -depth 3 -filter=core raft.snap
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -153,14 +173,18 @@ For scripts and monitoring workflows, use JSON output:
 
 {{< tabs name="stronghold_cmd_96016" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold operator raft snapshot inspect -format=json raft.snap
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell
 stronghold operator raft snapshot inspect -format=json raft.snap
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 

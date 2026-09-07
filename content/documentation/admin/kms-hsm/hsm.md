@@ -131,16 +131,20 @@ Do the following to create a token, generate a key pair and configure Stronghold
 
    {{< tabs name="stronghold_cmd_65285" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```shell
    export SOFTHSM2_CONF=/home/stronghold/softhsm2.conf
    d8 stronghold server -config config.hcl
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```shell
    export SOFTHSM2_CONF=/home/stronghold/softhsm2.conf
    stronghold server -config config.hcl
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -167,14 +171,18 @@ Do the following to create a token, generate a key pair and configure Stronghold
 
    {{< tabs name="stronghold_cmd_66874" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```shell
    d8 stronghold operator unseal -migrate
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```shell
    stronghold operator unseal -migrate
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -200,14 +208,18 @@ After the migration is complete, Stronghold will automatically unseal using PKCS
 
    {{< tabs name="stronghold_cmd_66874" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```shell
    d8 stronghold operator unseal -migrate
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```shell
    stronghold operator unseal -migrate
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 

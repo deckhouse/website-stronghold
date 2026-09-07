@@ -84,14 +84,18 @@ Apply the configuration from `local-snapshot.json` using the following command:
 
 {{< tabs name="stronghold_cmd_6865" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold write sys/storage/raft/snapshot-auto/config/my-local-snapshots @local-snapshot.json
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell
 stronghold write sys/storage/raft/snapshot-auto/config/my-local-snapshots @local-snapshot.json
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -121,14 +125,18 @@ Apply the configuration from `minio-snapshot.json` using the following command:
 
 {{< tabs name="stronghold_cmd_45767" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold write sys/storage/raft/snapshot-auto/config/my-remote-snapshots @minio-snapshot.json
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell
 stronghold write sys/storage/raft/snapshot-auto/config/my-remote-snapshots @minio-snapshot.json
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -151,14 +159,18 @@ Apply the modified configuration from `local-snapshot-update.json` using the fol
 
 {{< tabs name="stronghold_cmd_53206" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold write sys/storage/raft/snapshot-auto/config/my-local-snapshots @local-snapshot-update.json
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell
 stronghold write sys/storage/raft/snapshot-auto/config/my-local-snapshots @local-snapshot-update.json
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -172,14 +184,18 @@ Example command:
 
 {{< tabs name="stronghold_cmd_33978" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold list sys/storage/raft/snapshot-auto/config
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell
 stronghold list sys/storage/raft/snapshot-auto/config
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -193,14 +209,18 @@ Example command:
 
 {{< tabs name="stronghold_cmd_67199" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold read sys/storage/raft/snapshot-auto/config/my-remote-snapshots
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell
 stronghold read sys/storage/raft/snapshot-auto/config/my-remote-snapshots
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -216,14 +236,18 @@ Example command:
 
 {{< tabs name="stronghold_cmd_50803" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold delete sys/storage/raft/snapshot-auto/config/my-remote-snapshots
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell
 stronghold delete sys/storage/raft/snapshot-auto/config/my-remote-snapshots
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -241,14 +265,18 @@ Example command:
 
 {{< tabs name="stronghold_cmd_25509" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold read sys/storage/raft/snapshot-auto/status/my-remote-snapshots
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell
 stronghold read sys/storage/raft/snapshot-auto/status/my-remote-snapshots
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 

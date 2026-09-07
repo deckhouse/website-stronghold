@@ -131,16 +131,20 @@ Stronghold поддерживает шифрование root-ключа с ис
 
    {{< tabs name="stronghold_cmd_65285" >}}
    {{% tab name="Stronghold в DKP" %}}
+
    ```shell
    export SOFTHSM2_CONF=/home/stronghold/softhsm2.conf
    d8 stronghold server -config config.hcl
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold в Linux" %}}
+
    ```shell
    export SOFTHSM2_CONF=/home/stronghold/softhsm2.conf
    stronghold server -config config.hcl
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -202,16 +206,20 @@ Stronghold поддерживает шифрование root-ключа с ис
 
    {{< tabs name="stronghold_cmd_16679" >}}
    {{% tab name="Stronghold в DKP" %}}
+
    ```shell
    systemctl start stronghold
    d8 stronghold operator init
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold в Linux" %}}
+
    ```shell
    systemctl start stronghold
    stronghold operator init
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -219,14 +227,18 @@ Stronghold поддерживает шифрование root-ключа с ис
 
    {{< tabs name="stronghold_cmd_594" >}}
    {{% tab name="Stronghold в DKP" %}}
+
    ```shell
    d8 stronghold status
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold в Linux" %}}
+
    ```shell
    stronghold status
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -271,14 +283,18 @@ Stronghold поддерживает шифрование root-ключа с ис
 
    {{< tabs name="stronghold_cmd_66874" >}}
    {{% tab name="Stronghold в DKP" %}}
+
    ```shell
    d8 stronghold operator unseal -migrate
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold в Linux" %}}
+
    ```shell
    stronghold operator unseal -migrate
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -304,14 +320,18 @@ Stronghold поддерживает шифрование root-ключа с ис
 
    {{< tabs name="stronghold_cmd_66874" >}}
    {{% tab name="Stronghold в DKP" %}}
+
    ```shell
    d8 stronghold operator unseal -migrate
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold в Linux" %}}
+
    ```shell
    stronghold operator unseal -migrate
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 

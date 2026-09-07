@@ -33,14 +33,18 @@ itself. You do not need to call `sys/replication/reindex` manually.
 
 {{< tabs name="stronghold_cmd_10766" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold write -force sys/replication/performance/primary/enable
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell
 stronghold write -force sys/replication/performance/primary/enable
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -57,16 +61,20 @@ Generate a wrapping activation token for a specific secondary identified by
 
 {{< tabs name="stronghold_cmd_30185" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold write sys/replication/performance/primary/secondary-token \
   id=sec-1 ttl=24h
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell
 stronghold write sys/replication/performance/primary/secondary-token \
   id=sec-1 ttl=24h
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -120,14 +128,18 @@ replication was enabled.
 
 {{< tabs name="stronghold_cmd_33280" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold read -address="${SECONDARY_ADDR}" sys/replication/performance/status
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell
 stronghold read -address="${SECONDARY_ADDR}" sys/replication/performance/status
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -143,6 +155,7 @@ the secondary.
 
 {{< tabs name="stronghold_cmd_22692" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell
 # Write on the primary.
 d8 stronghold kv put -address="${PRIMARY_ADDR}" secret/hello value=world
@@ -153,8 +166,10 @@ d8 stronghold kv get -address="${SECONDARY_ADDR}" secret/hello
 # A write on the secondary is forwarded to the primary and returns through the WAL.
 d8 stronghold kv put -address="${SECONDARY_ADDR}" secret/fromsec value=1
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell
 # Write on the primary.
 stronghold kv put -address="${PRIMARY_ADDR}" secret/hello value=world
@@ -165,6 +180,7 @@ stronghold kv get -address="${SECONDARY_ADDR}" secret/hello
 # A write on the secondary is forwarded to the primary and returns through the WAL.
 stronghold kv put -address="${SECONDARY_ADDR}" secret/fromsec value=1
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 

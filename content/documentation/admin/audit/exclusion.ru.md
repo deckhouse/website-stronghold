@@ -133,6 +133,7 @@ Stronghold поддерживает включение аудит-устройс
 
 {{< tabs name="stronghold_cmd_19617" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold audit enable           \
   -path filtered-file                \
@@ -140,8 +141,10 @@ d8 stronghold audit enable           \
   file_path=/logs/audit.log          \
   exclude='[{"condition": "\"/request/mount_type\" == kv", "fields": ["/response/data"]}]'
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold audit enable           \
   -path filtered-file                \
@@ -149,6 +152,7 @@ stronghold audit enable           \
   file_path=/logs/audit.log          \
   exclude='[{"condition": "\"/request/mount_type\" == kv", "fields": ["/response/data"]}]'
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -156,6 +160,7 @@ stronghold audit enable           \
 
 {{< tabs name="stronghold_cmd_21928" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold audit enable                \
   -path transit-only                      \
@@ -164,8 +169,10 @@ d8 stronghold audit enable                \
   file_path=/logs/transit.log             \
   exclude='[{"fields": ["/request/data"]}]'
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold audit enable                \
   -path transit-only                      \
@@ -174,6 +181,7 @@ stronghold audit enable                \
   file_path=/logs/transit.log             \
   exclude='[{"fields": ["/request/data"]}]'
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 

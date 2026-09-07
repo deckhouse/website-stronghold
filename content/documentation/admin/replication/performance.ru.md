@@ -32,14 +32,18 @@ description: "Настройка репликации Performance между к�
 
 {{< tabs name="stronghold_cmd_10766" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold write -force sys/replication/performance/primary/enable
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold write -force sys/replication/performance/primary/enable
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -56,16 +60,20 @@ stronghold write -force sys/replication/performance/primary/enable
 
 {{< tabs name="stronghold_cmd_30185" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold write sys/replication/performance/primary/secondary-token \
   id=sec-1 ttl=24h
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold write sys/replication/performance/primary/secondary-token \
   id=sec-1 ttl=24h
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -119,14 +127,18 @@ root-токен secondary перестаёт работать. Выполняй�
 
 {{< tabs name="stronghold_cmd_33280" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold read -address="${SECONDARY_ADDR}" sys/replication/performance/status
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold read -address="${SECONDARY_ADDR}" sys/replication/performance/status
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -142,6 +154,7 @@ stronghold read -address="${SECONDARY_ADDR}" sys/replication/performance/status
 
 {{< tabs name="stronghold_cmd_48194" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 # Запись на primary.
 d8 stronghold kv put -address="${PRIMARY_ADDR}" secret/hello value=world
@@ -152,8 +165,10 @@ d8 stronghold kv get -address="${SECONDARY_ADDR}" secret/hello
 # Запись на secondary перенаправляется на primary и возвращается через WAL.
 d8 stronghold kv put -address="${SECONDARY_ADDR}" secret/fromsec value=1
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 # Запись на primary.
 stronghold kv put -address="${PRIMARY_ADDR}" secret/hello value=world
@@ -164,6 +179,7 @@ stronghold kv get -address="${SECONDARY_ADDR}" secret/hello
 # Запись на secondary перенаправляется на primary и возвращается через WAL.
 stronghold kv put -address="${SECONDARY_ADDR}" secret/fromsec value=1
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 

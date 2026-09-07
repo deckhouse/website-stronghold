@@ -68,6 +68,7 @@ description: "Руководство администратора по репл�
 
 {{< tabs name="stronghold_cmd_42837" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold policy write -namespace=ns_path_1 replicate-dev-secrets - <<'EOF'
 # Allow token to list/read secrets from dev-secrets
@@ -93,8 +94,10 @@ EOF
 
 d8 stronghold token create -namespace=ns_path_1 -policy=replicate-dev-secrets -orphan=true -period=30d
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold policy write -namespace=ns_path_1 replicate-dev-secrets - <<'EOF'
 # Allow token to list/read secrets from dev-secrets
@@ -120,6 +123,7 @@ EOF
 
 stronghold token create -namespace=ns_path_1 -policy=replicate-dev-secrets -orphan=true -period=30d
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -133,6 +137,7 @@ stronghold token create -namespace=ns_path_1 -policy=replicate-dev-secrets -orph
 
 {{< tabs name="stronghold_cmd_90364" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold token create \
   -namespace=ns_path_1 \
@@ -142,8 +147,10 @@ d8 stronghold token create \
   -wrap-ttl=5m \
   -field=wrapping_token
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold token create \
   -namespace=ns_path_1 \
@@ -153,6 +160,7 @@ stronghold token create \
   -wrap-ttl=5m \
   -field=wrapping_token
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -164,6 +172,7 @@ stronghold token create \
 
 {{< tabs name="stronghold_cmd_6304" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold secrets enable \
   -path=<local_mount_path_name> \
@@ -176,8 +185,10 @@ d8 stronghold secrets enable \
   -namespace=<namespace_path_in_local_cluster> \
   kv
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold secrets enable \
   -path=<local_mount_path_name> \
@@ -190,6 +201,7 @@ stronghold secrets enable \
   -namespace=<namespace_path_in_local_cluster> \
   kv
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -197,6 +209,7 @@ stronghold secrets enable \
 
 {{< tabs name="stronghold_cmd_40961" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold secrets enable \
   -path=<local_mount_path_name> \
@@ -210,8 +223,10 @@ d8 stronghold secrets enable \
   -namespace=<namespace_path_in_local_cluster> \
   kv
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold secrets enable \
   -path=<local_mount_path_name> \
@@ -225,6 +240,7 @@ stronghold secrets enable \
   -namespace=<namespace_path_in_local_cluster> \
   kv
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -261,6 +277,7 @@ stronghold secrets enable \
 
 {{< tabs name="stronghold_cmd_91012" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold secrets tune \
   -src-wrapping-token=<wrapping_token_from_source_cluster> \
@@ -271,8 +288,10 @@ d8 stronghold secrets tune \
   -namespace=<namespace_path_in_local_cluster> \
   <local_mount_path_name>
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold secrets tune \
   -src-wrapping-token=<wrapping_token_from_source_cluster> \
@@ -283,6 +302,7 @@ stronghold secrets tune \
   -namespace=<namespace_path_in_local_cluster> \
   <local_mount_path_name>
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -290,20 +310,24 @@ stronghold secrets tune \
 
 {{< tabs name="stronghold_cmd_83685" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold secrets tune \
   -sync-enable=false \
   -namespace=<namespace_path_in_local_cluster> \
   <local_mount_path_name>
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold secrets tune \
   -sync-enable=false \
   -namespace=<namespace_path_in_local_cluster> \
   <local_mount_path_name>
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -311,20 +335,24 @@ stronghold secrets tune \
 
 {{< tabs name="stronghold_cmd_53688" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold secrets tune \
   -sync-enable=true \
   -namespace=<namespace_path_in_local_cluster> \
   <local_mount_path_name>
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold secrets tune \
   -sync-enable=true \
   -namespace=<namespace_path_in_local_cluster> \
   <local_mount_path_name>
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -332,18 +360,22 @@ stronghold secrets tune \
 
 {{< tabs name="stronghold_cmd_50008" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold read \
   -namespace=<namespace_path_in_local_cluster> \
   sys/mounts/<mount_path>/tune
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold read \
   -namespace=<namespace_path_in_local_cluster> \
   sys/mounts/<mount_path>/tune
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 

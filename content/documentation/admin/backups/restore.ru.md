@@ -23,14 +23,18 @@ description: "Восстановление Stronghold из снимка встр
 
 {{< tabs name="stronghold_cmd_64681" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold operator raft snapshot restore -force /tmp/snapshots/backup.snap
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold operator raft snapshot restore -force /tmp/snapshots/backup.snap
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -54,14 +58,18 @@ curl \
 
 {{< tabs name="stronghold_cmd_32174" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold operator unseal
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold operator unseal
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
