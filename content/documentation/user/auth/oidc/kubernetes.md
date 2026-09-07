@@ -49,16 +49,20 @@ To configure this mode, follow these steps:
 
    {{< tabs name="stronghold_cmd_81485" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```bash
    d8 stronghold auth enable jwt
    d8 stronghold write auth/jwt/config oidc_discovery_url="${ISSUER}"
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```bash
    stronghold auth enable jwt
    stronghold write auth/jwt/config oidc_discovery_url="${ISSUER}"
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -95,6 +99,7 @@ To configure JWT auth using Kubernetes public keys, follow these steps:
 
    {{< tabs name="stronghold_cmd_39007" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```bash
    d8 stronghold write auth/jwt/config \
       jwt_validation_pubkeys="-----BEGIN PUBLIC KEY-----
@@ -103,8 +108,10 @@ To configure JWT auth using Kubernetes public keys, follow these steps:
    MIIBIjANBgkqhkiG9...
    -----END PUBLIC KEY-----"
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```bash
    stronghold write auth/jwt/config \
       jwt_validation_pubkeys="-----BEGIN PUBLIC KEY-----
@@ -113,6 +120,7 @@ To configure JWT auth using Kubernetes public keys, follow these steps:
    MIIBIjANBgkqhkiG9...
    -----END PUBLIC KEY-----"
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -148,6 +156,7 @@ Create a role for JWT auth that the `default` service account in the `default` n
 
 {{< tabs name="stronghold_cmd_14558" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```bash
 d8 stronghold write auth/jwt/role/my-role \
 role_type="jwt" \
@@ -157,8 +166,10 @@ bound_subject="system:serviceaccount:default:default" \
 policies="default" \
 ttl="1h"
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```bash
 stronghold write auth/jwt/role/my-role \
 role_type="jwt" \
@@ -168,6 +179,7 @@ bound_subject="system:serviceaccount:default:default" \
 policies="default" \
 ttl="1h"
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -177,18 +189,22 @@ Authentication example using the Deckhouse CLI:
 
 {{< tabs name="stronghold_cmd_96573" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```bash
 d8 stronghold write auth/jwt/login \
   role=my-role \
   jwt=@/var/run/secrets/kubernetes.io/serviceaccount/token
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```bash
 stronghold write auth/jwt/login \
   role=my-role \
   jwt=@/var/run/secrets/kubernetes.io/serviceaccount/token
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 

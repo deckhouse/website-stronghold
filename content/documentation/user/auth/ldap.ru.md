@@ -12,6 +12,7 @@ weight: 70
 
 {{< tabs name="stronghold_cmd_53415" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell-session
 $ d8 stronghold login -method=ldap username=mitchellh
 Password (will be hidden):
@@ -20,8 +21,10 @@ with this token are listed below:
 
 admins
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell-session
 $ stronghold login -method=ldap username=mitchellh
 Password (will be hidden):
@@ -30,6 +33,7 @@ with this token are listed below:
 
 admins
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -72,14 +76,18 @@ $ curl \
 
 {{< tabs name="stronghold_cmd_55411" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```text
 d8 stronghold auth enable ldap
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```text
 stronghold auth enable ldap
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -157,6 +165,7 @@ _Примечание_: При использовании _Аутентифиц�
 
 {{< tabs name="stronghold_cmd_94101" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell-session
 $ d8 stronghold write auth/ldap/config \
     url="ldap://ldap.example.com" \
@@ -170,8 +179,10 @@ $ d8 stronghold write auth/ldap/config \
     starttls=true
 ...
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell-session
 $ stronghold write auth/ldap/config \
     url="ldap://ldap.example.com" \
@@ -185,6 +196,7 @@ $ stronghold write auth/ldap/config \
     starttls=true
 ...
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -201,6 +213,7 @@ $ stronghold write auth/ldap/config \
 
 {{< tabs name="stronghold_cmd_84945" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell-session
 $ d8 stronghold write auth/ldap/config \
     url="ldap://ldap.example.com" \
@@ -216,8 +229,10 @@ $ d8 stronghold write auth/ldap/config \
     starttls=true
 ...
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell-session
 $ stronghold write auth/ldap/config \
     url="ldap://ldap.example.com" \
@@ -233,6 +248,7 @@ $ stronghold write auth/ldap/config \
     starttls=true
 ...
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -248,6 +264,7 @@ $ stronghold write auth/ldap/config \
 
 {{< tabs name="stronghold_cmd_71" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell-session
 $ d8 stronghold write auth/ldap/config \
     url="ldaps://ldap.example.com" \
@@ -260,8 +277,10 @@ $ d8 stronghold write auth/ldap/config \
     starttls=true
 ...
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell-session
 $ stronghold write auth/ldap/config \
     url="ldaps://ldap.example.com" \
@@ -274,6 +293,7 @@ $ stronghold write auth/ldap/config \
     starttls=true
 ...
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -283,14 +303,18 @@ $ stronghold write auth/ldap/config \
 
 {{< tabs name="stronghold_cmd_42241" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell-session
 d8 stronghold write auth/ldap/groups/scientists policies=foo,bar
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell-session
 stronghold write auth/ldap/groups/scientists policies=foo,bar
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -298,16 +322,20 @@ stronghold write auth/ldap/groups/scientists policies=foo,bar
 
 {{< tabs name="stronghold_cmd_39421" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell-session
 d8 stronghold write auth/ldap/groups/engineers policies=foobar
 d8 stronghold write auth/ldap/users/tesla groups=engineers policies=zoobar
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell-session
 stronghold write auth/ldap/groups/engineers policies=foobar
 stronghold write auth/ldap/users/tesla groups=engineers policies=zoobar
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -317,6 +345,7 @@ stronghold write auth/ldap/users/tesla groups=engineers policies=zoobar
 
 {{< tabs name="stronghold_cmd_5859" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell-session
 $ d8 stronghold login -method=ldap username=tesla
 Password (will be hidden):
@@ -325,8 +354,10 @@ with this token are listed below:
 
 default, foobar, zoobar
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell-session
 $ stronghold login -method=ldap username=tesla
 Password (will be hidden):
@@ -335,6 +366,7 @@ with this token are listed below:
 
 default, foobar, zoobar
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 

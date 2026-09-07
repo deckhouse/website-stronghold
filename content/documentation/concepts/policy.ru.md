@@ -210,14 +210,18 @@ path "secret/metadata/groups/{{identity.groups.ids.fb036ebc-2f62-4124-9503-42aa7
 
 {{< tabs name="stronghold_cmd_15166" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold auth list
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold auth list
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -397,14 +401,18 @@ path "secret/foo" {
 
 {{< tabs name="stronghold_cmd_91886" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold write secret/foo no_store=false value=bar
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold write secret/foo no_store=false value=bar
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -412,16 +420,20 @@ stronghold write secret/foo no_store=false value=bar
 
 {{< tabs name="stronghold_cmd_68782" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 # Команда будет выполнена, потому что параметры не содержат "no_store=false".
 d8 stronghold write secret/foo value=bar
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 # Команда будет выполнена, потому что параметры не содержат "no_store=false".
 stronghold write secret/foo value=bar
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -443,14 +455,18 @@ path "secret/foo" {
 
 {{< tabs name="stronghold_cmd_55005" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold write secret/foo value=bar
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold write secret/foo value=bar
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -512,14 +528,18 @@ path "auth/approle/role/my-role/secret-id" {
 
 {{< tabs name="stronghold_cmd_47901" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold read sys/policy/default
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold read sys/policy/default
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -527,14 +547,18 @@ stronghold read sys/policy/default
 
 {{< tabs name="stronghold_cmd_40391" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold token create -no-default-policy
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold token create -no-default-policy
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -558,14 +582,18 @@ Root-политика — это встроенная политика Stronghol
 
 {{< tabs name="stronghold_cmd_99272" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold token revoke "<token>"
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold token revoke "<token>"
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -589,14 +617,18 @@ curl \
 
 {{< tabs name="stronghold_cmd_88024" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold read sys/policy
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold read sys/policy
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -614,14 +646,18 @@ curl \
 
 {{< tabs name="stronghold_cmd_90838" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold policy write policy-name policy-file.hcl
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold policy write policy-name policy-file.hcl
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -643,14 +679,18 @@ curl \
 
 {{< tabs name="stronghold_cmd_8371" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold write sys/policy/my-existing-policy policy=@updated-policy.json
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold write sys/policy/my-existing-policy policy=@updated-policy.json
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -670,14 +710,18 @@ curl \
 
 {{< tabs name="stronghold_cmd_29617" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold delete sys/policy/policy-name
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold delete sys/policy/policy-name
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -700,18 +744,22 @@ Stronghold может автоматически прикреплять набо
 
    {{< tabs name="stronghold_cmd_72057" >}}
    {{% tab name="Stronghold в DKP" %}}
+
    ```shell
    d8 stronghold write auth/userpass/users/sethvargo \
        password="s3cr3t!" \
        policies="dev-readonly,logs"
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold в Linux" %}}
+
    ```shell
    stronghold write auth/userpass/users/sethvargo \
        password="s3cr3t!" \
        policies="dev-readonly,logs"
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -721,16 +769,20 @@ Stronghold может автоматически прикреплять набо
 
    {{< tabs name="stronghold_cmd_65344" >}}
    {{% tab name="Stronghold в DKP" %}}
+
    ```shell
    d8 stronghold login -method="userpass" username="sethvargo"
    Password: ...
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold в Linux" %}}
+
    ```shell
    stronghold login -method="userpass" username="sethvargo"
    Password: ...
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -783,14 +835,18 @@ Stronghold рассматривает HTTP-методы POST и PUT как ра�
 
 {{< tabs name="stronghold_cmd_127" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold token create -policy=dev-readonly -policy=logs
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold token create -policy=dev-readonly -policy=logs
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 

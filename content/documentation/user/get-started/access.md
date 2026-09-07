@@ -32,14 +32,18 @@ To configure access to your project from the command line, follow these steps.
 
    {{< tabs name="stronghold_cmd_85012" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```shell
    d8 stronghold login -path=oidc_deckhouse -method=oidc -no-print
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```shell
    stronghold login -path=oidc_deckhouse -method=oidc -no-print
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -51,14 +55,18 @@ To configure access to your project from the command line, follow these steps.
 
    {{< tabs name="stronghold_cmd_594" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```shell
    d8 stronghold status
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```shell
    stronghold status
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -66,14 +74,18 @@ To work with Deckhouse Stronghold, use commands in the following format:
 
 {{< tabs name="stronghold_cmd_86358" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold <command>
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell
 stronghold <command>
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 

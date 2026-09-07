@@ -26,14 +26,18 @@ weight: 80
 
 {{< tabs name="stronghold_cmd_58862" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold write -path=your-path auth/kubernetes/login role=demo jwt=...
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold write -path=your-path auth/kubernetes/login role=demo jwt=...
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -79,14 +83,18 @@ curl \
 
    {{< tabs name="stronghold_cmd_52748" >}}
    {{% tab name="Stronghold в DKP" %}}
+
    ```bash
    d8 stronghold auth enable kubernetes
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold в Linux" %}}
+
    ```bash
    stronghold auth enable kubernetes
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -94,20 +102,24 @@ curl \
 
    {{< tabs name="stronghold_cmd_45453" >}}
    {{% tab name="Stronghold в DKP" %}}
+
    ```bash
    d8 stronghold write auth/kubernetes/config \
    token_reviewer_jwt="<your reviewer service account JWT>" \
    kubernetes_host=https://192.168.99.100:<your TCP port or blank for 443> \
    kubernetes_ca_cert=@ca.crt
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold в Linux" %}}
+
    ```bash
    stronghold write auth/kubernetes/config \
    token_reviewer_jwt="<your reviewer service account JWT>" \
    kubernetes_host=https://192.168.99.100:<your TCP port or blank for 443> \
    kubernetes_ca_cert=@ca.crt
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -119,6 +131,7 @@ curl \
 
    {{< tabs name="stronghold_cmd_29773" >}}
    {{% tab name="Stronghold в DKP" %}}
+
    ```shell
    d8 stronghold write auth/kubernetes/role/demo \
       bound_service_account_names=myapp \
@@ -126,8 +139,10 @@ curl \
       policies=default \
       ttl=1h
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold в Linux" %}}
+
    ```shell
    stronghold write auth/kubernetes/role/demo \
       bound_service_account_names=myapp \
@@ -135,6 +150,7 @@ curl \
       policies=default \
       ttl=1h
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -179,16 +195,20 @@ curl \
 
 {{< tabs name="stronghold_cmd_19761" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```bash
 d8 stronghold write auth/kubernetes/config \
   kubernetes_host=https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```bash
 stronghold write auth/kubernetes/config \
   kubernetes_host=https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 

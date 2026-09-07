@@ -15,6 +15,7 @@ To configure TOTP, follow these steps:
 
    {{< tabs name="stronghold_cmd_49406" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```shell
    TOTP_METHOD_ID=$(d8 stronghold write identity/mfa/method/totp \
        -format=json \
@@ -26,8 +27,10 @@ To configure TOTP, follow these steps:
        digits=6 | jq -r '.data.method_id')
    echo $TOTP_METHOD_ID
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```shell
    TOTP_METHOD_ID=$(stronghold write identity/mfa/method/totp \
        -format=json \
@@ -39,6 +42,7 @@ To configure TOTP, follow these steps:
        digits=6 | jq -r '.data.method_id')
    echo $TOTP_METHOD_ID
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -52,20 +56,24 @@ To configure TOTP, follow these steps:
 
    {{< tabs name="stronghold_cmd_64039" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```shell
    d8 stronghold write -field=barcode \
        /identity/mfa/method/totp/admin-generate \
        method_id=$TOTP_METHOD_ID entity_id=$ENTITY_ID \
        | base64 -d > /tmp/qr-code.png
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```shell
    stronghold write -field=barcode \
        /identity/mfa/method/totp/admin-generate \
        method_id=$TOTP_METHOD_ID entity_id=$ENTITY_ID \
        | base64 -d > /tmp/qr-code.png
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -80,18 +88,22 @@ As an example, let's configure MFA verification for the Userpass authentication 
 
    {{< tabs name="stronghold_cmd_18206" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```shell
    LDAP_ACCESSOR=$(d8 stronghold auth list -format=json \
        --detailed | jq -r '."userpass/".accessor')
    echo $LDAP_ACCESSOR
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```shell
    LDAP_ACCESSOR=$(stronghold auth list -format=json \
        --detailed | jq -r '."userpass/".accessor')
    echo $LDAP_ACCESSOR
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -99,18 +111,22 @@ As an example, let's configure MFA verification for the Userpass authentication 
 
    {{< tabs name="stronghold_cmd_35603" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```shell
    d8 stronghold write /identity/mfa/login-enforcement/userpass-totp-enforcement \
        mfa_method_ids="$TOTP_METHOD_ID" \
        auth_method_accessors=$LDAP_ACCESSOR
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```shell
    stronghold write /identity/mfa/login-enforcement/userpass-totp-enforcement \
        mfa_method_ids="$TOTP_METHOD_ID" \
        auth_method_accessors=$LDAP_ACCESSOR
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -118,18 +134,22 @@ As an example, let's configure MFA verification for the Userpass authentication 
 
    {{< tabs name="stronghold_cmd_84099" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```shell
    d8 stronghold login -method=userpass username=user password='My-Password-1234'
    Initiating Interactive MFA Validation...
    Enter the passphrase for methodID "22c35aa4-bf37-cf31-4187-c5a676c19aca" of type "totp":
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```shell
    stronghold login -method=userpass username=user password='My-Password-1234'
    Initiating Interactive MFA Validation...
    Enter the passphrase for methodID "22c35aa4-bf37-cf31-4187-c5a676c19aca" of type "totp":
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -137,13 +157,17 @@ To disable MFA verification, run:
 
 {{< tabs name="stronghold_cmd_42432" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold delete identity/mfa/login-enforcement/userpass-totp-enforcement
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell
 stronghold delete identity/mfa/login-enforcement/userpass-totp-enforcement
 ```
+
 {{% /tab %}}
 {{< /tabs >}}

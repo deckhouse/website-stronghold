@@ -22,14 +22,18 @@ To enable an authentication method, run the following command:
 
 {{< tabs name="stronghold_cmd_35731" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold write sys/auth/my-auth type=userpass
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell
 stronghold write sys/auth/my-auth type=userpass
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -41,14 +45,18 @@ To learn more about this authentication, use the built-in `path-help` command:
 
 {{< tabs name="stronghold_cmd_81768" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold path-help auth/my-auth
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell
 stronghold path-help auth/my-auth
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -80,14 +88,18 @@ For example, to authenticate with OIDC, run the following command:
 
 {{< tabs name="stronghold_cmd_6157" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold login -method=oidc
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell
 stronghold login -method=oidc
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -110,14 +122,18 @@ To find the proper endpoint, use the following command:
 
 {{< tabs name="stronghold_cmd_42184" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold path-help
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell
 stronghold path-help
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -134,13 +150,17 @@ To renew it, use the following command, specifying the token associated with you
 
 {{< tabs name="stronghold_cmd_60820" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold token renew <token>
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell
 stronghold token renew <token>
 ```
+
 {{% /tab %}}
 {{< /tabs >}}

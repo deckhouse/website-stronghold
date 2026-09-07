@@ -32,16 +32,20 @@ team, or configuration management tooling.
 
     {{< tabs name="stronghold_cmd_31407" >}}
     {{% tab name="Stronghold in DKP" %}}
+
     ```text
     $ d8 stronghold secrets enable -path=ssh-client-signer ssh
     Successfully mounted 'ssh' at 'ssh-client-signer'!
     ```
+
     {{% /tab %}}
     {{% tab name="Stronghold in Linux" %}}
+
     ```text
     $ stronghold secrets enable -path=ssh-client-signer ssh
     Successfully mounted 'ssh' at 'ssh-client-signer'!
     ```
+
     {{% /tab %}}
     {{< /tabs >}}
 
@@ -56,20 +60,24 @@ team, or configuration management tooling.
 
     {{< tabs name="stronghold_cmd_53619" >}}
     {{% tab name="Stronghold in DKP" %}}
+
     ```text
     $ d8 stronghold write ssh-client-signer/config/ca generate_signing_key=true
     Key             Value
     ---             -----
     public_key      ssh-rsa AAAAB3NzaC1yc2EA...
     ```
+
     {{% /tab %}}
     {{% tab name="Stronghold in Linux" %}}
+
     ```text
     $ stronghold write ssh-client-signer/config/ca generate_signing_key=true
     Key             Value
     ---             -----
     public_key      ssh-rsa AAAAB3NzaC1yc2EA...
     ```
+
     {{% /tab %}}
     {{< /tabs >}}
 
@@ -78,18 +86,22 @@ team, or configuration management tooling.
 
     {{< tabs name="stronghold_cmd_82508" >}}
     {{% tab name="Stronghold in DKP" %}}
+
     ```text
     $ d8 stronghold write ssh-client-signer/config/ca \
         private_key="..." \
         public_key="..."
     ```
+
     {{% /tab %}}
     {{% tab name="Stronghold in Linux" %}}
+
     ```text
     $ stronghold write ssh-client-signer/config/ca \
         private_key="..." \
         public_key="..."
     ```
+
     {{% /tab %}}
     {{< /tabs >}}
 
@@ -114,14 +126,18 @@ team, or configuration management tooling.
 
     {{< tabs name="stronghold_cmd_13360" >}}
     {{% tab name="Stronghold in DKP" %}}
+
     ```text
     d8 stronghold read -field=public_key ssh-client-signer/config/ca > /etc/ssh/trusted-user-ca-keys.pem
     ```
+
     {{% /tab %}}
     {{% tab name="Stronghold in Linux" %}}
+
     ```text
     stronghold read -field=public_key ssh-client-signer/config/ca > /etc/ssh/trusted-user-ca-keys.pem
     ```
+
     {{% /tab %}}
     {{< /tabs >}}
 
@@ -145,6 +161,7 @@ team, or configuration management tooling.
 
     {{< tabs name="stronghold_cmd_37289" >}}
     {{% tab name="Stronghold in DKP" %}}
+
     ```text
     $ d8 stronghold write ssh-client-signer/roles/my-role -<<"EOH"
     {
@@ -161,8 +178,10 @@ team, or configuration management tooling.
     }
     EOH
     ```
+
     {{% /tab %}}
     {{% tab name="Stronghold in Linux" %}}
+
     ```text
     $ stronghold write ssh-client-signer/roles/my-role -<<"EOH"
     {
@@ -179,6 +198,7 @@ team, or configuration management tooling.
     }
     EOH
     ```
+
     {{% /tab %}}
     {{< /tabs >}}
 
@@ -200,6 +220,7 @@ the client's local workstation.
 
     {{< tabs name="stronghold_cmd_33285" >}}
     {{% tab name="Stronghold in DKP" %}}
+
     ```text
     $ d8 stronghold write ssh-client-signer/sign/my-role \
         public_key=@$HOME/.ssh/id_rsa.pub
@@ -209,8 +230,10 @@ the client's local workstation.
     serial_number   c73f26d2340276aa
     signed_key      ssh-rsa-cert-v01@openssh.com AAAAHHNzaC1...
     ```
+
     {{% /tab %}}
     {{% tab name="Stronghold in Linux" %}}
+
     ```text
     $ stronghold write ssh-client-signer/sign/my-role \
         public_key=@$HOME/.ssh/id_rsa.pub
@@ -220,6 +243,7 @@ the client's local workstation.
     serial_number   c73f26d2340276aa
     signed_key      ssh-rsa-cert-v01@openssh.com AAAAHHNzaC1...
     ```
+
     {{% /tab %}}
     {{< /tabs >}}
 
@@ -230,6 +254,7 @@ the client's local workstation.
 
     {{< tabs name="stronghold_cmd_45915" >}}
     {{% tab name="Stronghold in DKP" %}}
+
     ```text
     $ d8 stronghold write ssh-client-signer/sign/my-role -<<"EOH"
     {
@@ -243,8 +268,10 @@ the client's local workstation.
     }
     EOH
     ```
+
     {{% /tab %}}
     {{% tab name="Stronghold in Linux" %}}
+
     ```text
     $ stronghold write ssh-client-signer/sign/my-role -<<"EOH"
     {
@@ -258,6 +285,7 @@ the client's local workstation.
     }
     EOH
     ```
+
     {{% /tab %}}
     {{< /tabs >}}
 
@@ -265,16 +293,20 @@ the client's local workstation.
 
     {{< tabs name="stronghold_cmd_92060" >}}
     {{% tab name="Stronghold in DKP" %}}
+
     ```text
     $ d8 stronghold write -field=signed_key ssh-client-signer/sign/my-role \
         public_key=@$HOME/.ssh/id_rsa.pub > signed-cert.pub
     ```
+
     {{% /tab %}}
     {{% tab name="Stronghold in Linux" %}}
+
     ```text
     $ stronghold write -field=signed_key ssh-client-signer/sign/my-role \
         public_key=@$HOME/.ssh/id_rsa.pub > signed-cert.pub
     ```
+
     {{% /tab %}}
     {{< /tabs >}}
 
@@ -312,16 +344,20 @@ accidentally SSHing into an unmanaged or malicious machine.
 
     {{< tabs name="stronghold_cmd_15148" >}}
     {{% tab name="Stronghold in DKP" %}}
+
     ```text
     $ d8 stronghold secrets enable -path=ssh-host-signer ssh
     Successfully mounted 'ssh' at 'ssh-host-signer'!
     ```
+
     {{% /tab %}}
     {{% tab name="Stronghold in Linux" %}}
+
     ```text
     $ stronghold secrets enable -path=ssh-host-signer ssh
     Successfully mounted 'ssh' at 'ssh-host-signer'!
     ```
+
     {{% /tab %}}
     {{< /tabs >}}
 
@@ -331,20 +367,24 @@ accidentally SSHing into an unmanaged or malicious machine.
 
     {{< tabs name="stronghold_cmd_64533" >}}
     {{% tab name="Stronghold in DKP" %}}
+
     ```text
     $ d8 stronghold write ssh-host-signer/config/ca generate_signing_key=true
     Key             Value
     ---             -----
     public_key      ssh-rsa AAAAB3NzaC1yc2EA...
     ```
+
     {{% /tab %}}
     {{% tab name="Stronghold in Linux" %}}
+
     ```text
     $ stronghold write ssh-host-signer/config/ca generate_signing_key=true
     Key             Value
     ---             -----
     public_key      ssh-rsa AAAAB3NzaC1yc2EA...
     ```
+
     {{% /tab %}}
     {{< /tabs >}}
 
@@ -353,18 +393,22 @@ accidentally SSHing into an unmanaged or malicious machine.
 
     {{< tabs name="stronghold_cmd_69325" >}}
     {{% tab name="Stronghold in DKP" %}}
+
     ```text
     $ d8 stronghold write ssh-host-signer/config/ca \
         private_key="..." \
         public_key="..."
     ```
+
     {{% /tab %}}
     {{% tab name="Stronghold in Linux" %}}
+
     ```text
     $ stronghold write ssh-host-signer/config/ca \
         private_key="..." \
         public_key="..."
     ```
+
     {{% /tab %}}
     {{< /tabs >}}
 
@@ -375,14 +419,18 @@ accidentally SSHing into an unmanaged or malicious machine.
 
     {{< tabs name="stronghold_cmd_8104" >}}
     {{% tab name="Stronghold in DKP" %}}
+
     ```text
     d8 stronghold secrets tune -max-lease-ttl=87600h ssh-host-signer
     ```
+
     {{% /tab %}}
     {{% tab name="Stronghold in Linux" %}}
+
     ```text
     stronghold secrets tune -max-lease-ttl=87600h ssh-host-signer
     ```
+
     {{% /tab %}}
     {{< /tabs >}}
 
@@ -391,6 +439,7 @@ accidentally SSHing into an unmanaged or malicious machine.
 
     {{< tabs name="stronghold_cmd_72216" >}}
     {{% tab name="Stronghold in DKP" %}}
+
     ```text
     $ d8 stronghold write ssh-host-signer/roles/hostrole \
         key_type=ca \
@@ -400,8 +449,10 @@ accidentally SSHing into an unmanaged or malicious machine.
         allowed_domains="localdomain,example.com" \
         allow_subdomains=true
     ```
+
     {{% /tab %}}
     {{% tab name="Stronghold in Linux" %}}
+
     ```text
     $ stronghold write ssh-host-signer/roles/hostrole \
         key_type=ca \
@@ -411,6 +462,7 @@ accidentally SSHing into an unmanaged or malicious machine.
         allowed_domains="localdomain,example.com" \
         allow_subdomains=true
     ```
+
     {{% /tab %}}
     {{< /tabs >}}
 
@@ -418,6 +470,7 @@ accidentally SSHing into an unmanaged or malicious machine.
 
     {{< tabs name="stronghold_cmd_49407" >}}
     {{% tab name="Stronghold in DKP" %}}
+
     ```text
     $ d8 stronghold write ssh-host-signer/sign/hostrole \
         cert_type=host \
@@ -427,8 +480,10 @@ accidentally SSHing into an unmanaged or malicious machine.
     serial_number   3746eb17371540d9
     signed_key      ssh-rsa-cert-v01@openssh.com AAAAHHNzaC1y...
     ```
+
     {{% /tab %}}
     {{% tab name="Stronghold in Linux" %}}
+
     ```text
     $ stronghold write ssh-host-signer/sign/hostrole \
         cert_type=host \
@@ -438,6 +493,7 @@ accidentally SSHing into an unmanaged or malicious machine.
     serial_number   3746eb17371540d9
     signed_key      ssh-rsa-cert-v01@openssh.com AAAAHHNzaC1y...
     ```
+
     {{% /tab %}}
     {{< /tabs >}}
 
@@ -446,18 +502,22 @@ accidentally SSHing into an unmanaged or malicious machine.
 
     {{< tabs name="stronghold_cmd_87520" >}}
     {{% tab name="Stronghold in DKP" %}}
+
     ```text
     $ d8 stronghold write -field=signed_key ssh-host-signer/sign/hostrole \
         cert_type=host \
         public_key=@/etc/ssh/ssh_host_rsa_key.pub > /etc/ssh/ssh_host_rsa_key-cert.pub
     ```
+
     {{% /tab %}}
     {{% tab name="Stronghold in Linux" %}}
+
     ```text
     $ stronghold write -field=signed_key ssh-host-signer/sign/hostrole \
         cert_type=host \
         public_key=@/etc/ssh/ssh_host_rsa_key.pub > /etc/ssh/ssh_host_rsa_key-cert.pub
     ```
+
     {{% /tab %}}
     {{< /tabs >}}
 
@@ -494,14 +554,18 @@ accidentally SSHing into an unmanaged or malicious machine.
 
     {{< tabs name="stronghold_cmd_4386" >}}
     {{% tab name="Stronghold in DKP" %}}
+
     ```text
     d8 stronghold read -field=public_key ssh-host-signer/config/ca
     ```
+
     {{% /tab %}}
     {{% tab name="Stronghold in Linux" %}}
+
     ```text
     stronghold read -field=public_key ssh-host-signer/config/ca
     ```
+
     {{% /tab %}}
     {{< /tabs >}}
 
@@ -559,6 +623,7 @@ issue:
 
     {{< tabs name="stronghold_cmd_61107" >}}
     {{% tab name="Stronghold in DKP" %}}
+
     ```text
     $ d8 stronghold write ssh/roles/my-role -<<"EOH"
     {
@@ -567,8 +632,10 @@ issue:
     }
     EOH
     ```
+
     {{% /tab %}}
     {{% tab name="Stronghold in Linux" %}}
+
     ```text
     $ stronghold write ssh/roles/my-role -<<"EOH"
     {
@@ -577,6 +644,7 @@ issue:
     }
     EOH
     ```
+
     {{% /tab %}}
     {{< /tabs >}}
 
@@ -586,6 +654,7 @@ issue:
 
     {{< tabs name="stronghold_cmd_8993" >}}
     {{% tab name="Stronghold in DKP" %}}
+
     ```text
     $ d8 stronghold write ssh-client-signer/sign/my-role -<<"EOH"
     {
@@ -594,8 +663,10 @@ issue:
     }
     EOH
     ```
+
     {{% /tab %}}
     {{% tab name="Stronghold in Linux" %}}
+
     ```text
     $ stronghold write ssh-client-signer/sign/my-role -<<"EOH"
     {
@@ -604,6 +675,7 @@ issue:
     }
     EOH
     ```
+
     {{% /tab %}}
     {{< /tabs >}}
 
@@ -617,6 +689,7 @@ this extension to the signed certificate.
 
   {{< tabs name="stronghold_cmd_4124" >}}
   {{% tab name="Stronghold in DKP" %}}
+
   ```text
   $ d8 stronghold write ssh-client-signer/roles/my-role -<<"EOH"
   {
@@ -627,8 +700,10 @@ this extension to the signed certificate.
   }
   EOH
   ```
+
   {{% /tab %}}
   {{% tab name="Stronghold in Linux" %}}
+
   ```text
   $ stronghold write ssh-client-signer/roles/my-role -<<"EOH"
   {
@@ -639,6 +714,7 @@ this extension to the signed certificate.
   }
   EOH
   ```
+
   {{% /tab %}}
   {{< /tabs >}}
 
@@ -646,6 +722,7 @@ this extension to the signed certificate.
 
   {{< tabs name="stronghold_cmd_70267" >}}
   {{% tab name="Stronghold in DKP" %}}
+
   ```text
   $ d8 stronghold write ssh-client-signer/sign/my-role -<<"EOH"
   {
@@ -656,8 +733,10 @@ this extension to the signed certificate.
   }
   EOH
   ```
+
   {{% /tab %}}
   {{% tab name="Stronghold in Linux" %}}
+
   ```text
   $ stronghold write ssh-client-signer/sign/my-role -<<"EOH"
   {
@@ -668,6 +747,7 @@ this extension to the signed certificate.
   }
   EOH
   ```
+
   {{% /tab %}}
   {{< /tabs >}}
 
@@ -732,6 +812,7 @@ parameters as per the Stronghold CLI and API steps demonstrated below.
 
 {{< tabs name="stronghold_cmd_3535" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell-extension
 # Using CLI:
 d8 stronghold secrets enable -path=hosts-ca ssh
@@ -743,8 +824,10 @@ d8 stronghold write ssh-client-signer/config/ca \
   private_key="${KEY_PRI}" \
   public_key="${KEY_PUB}"
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell-extension
 # Using CLI:
 stronghold secrets enable -path=hosts-ca ssh
@@ -756,6 +839,7 @@ stronghold write ssh-client-signer/config/ca \
   private_key="${KEY_PRI}" \
   public_key="${KEY_PUB}"
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 

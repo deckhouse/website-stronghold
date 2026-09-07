@@ -42,18 +42,22 @@ Deckhouse Stronghold включает два встроенных сценари
 
 {{< tabs name="stronghold_cmd_96765" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold login -method=oidc -path=oidc_deckhouse role=test
 Complete the login via your OIDC provider. Launching browser to:
 https://myco.auth0.com/authorize?redirect_uri=http%3A%2F%2Flocalhost%3A8400%2Foidc%2Fcallback&client_id=r3qXc2bix9eF...
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold login -method=oidc -path=oidc_deckhouse role=test
 Complete the login via your OIDC provider. Launching browser to:
 https://myco.auth0.com/authorize?redirect_uri=http%3A%2F%2Flocalhost%3A8400%2Foidc%2Fcallback&client_id=r3qXc2bix9eF...
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -80,6 +84,7 @@ https://myco.auth0.com/authorize?redirect_uri=http%3A%2F%2Flocalhost%3A8400%2Foi
 
   {{< tabs name="stronghold_cmd_97815" >}}
   {{% tab name="Stronghold в DKP" %}}
+
   ```shell
   d8 stronghold write auth/oidc/role/demo -<<EOF
   {
@@ -92,8 +97,10 @@ https://myco.auth0.com/authorize?redirect_uri=http%3A%2F%2Flocalhost%3A8400%2Foi
   }
   EOF
   ```
+
   {{% /tab %}}
   {{% tab name="Stronghold в Linux" %}}
+
   ```shell
   stronghold write auth/oidc/role/demo -<<EOF
   {
@@ -106,6 +113,7 @@ https://myco.auth0.com/authorize?redirect_uri=http%3A%2F%2Flocalhost%3A8400%2Foi
   }
   EOF
   ```
+
   {{% /tab %}}
   {{< /tabs >}}
 

@@ -24,16 +24,20 @@ Stronghold в качестве OIDC-провайдера.
 
 {{< tabs name="stronghold_cmd_98347" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```text
 $ d8 stronghold auth enable userpass
 Success! Enabled userpass auth method at: userpass/
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```text
 $ stronghold auth enable userpass
 Success! Enabled userpass auth method at: userpass/
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -44,16 +48,20 @@ Success! Enabled userpass auth method at: userpass/
 
 {{< tabs name="stronghold_cmd_15681" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```text
 $ d8 stronghold write auth/userpass/users/end-user password="securepassword"
 Success! Data written to: auth/userpass/users/end-user
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```text
 $ stronghold write auth/userpass/users/end-user password="securepassword"
 Success! Data written to: auth/userpass/users/end-user
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -64,20 +72,24 @@ OIDC [relying party](https://openid.net/specs/openid-connect-core-1_0.html#Termi
 
 {{< tabs name="stronghold_cmd_3004" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```text
 $ d8 stronghold write identity/oidc/client/my-webapp \
   redirect_uris="https://localhost:9702/auth/oidc-callback" \
   assignments="allow_all"
 Success! Data written to: identity/oidc/client/my-webapp
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```text
 $ stronghold write identity/oidc/client/my-webapp \
   redirect_uris="https://localhost:9702/auth/oidc-callback" \
   assignments="allow_all"
 Success! Data written to: identity/oidc/client/my-webapp
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -91,6 +103,7 @@ Success! Data written to: identity/oidc/client/my-webapp
 
 {{< tabs name="stronghold_cmd_24531" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```text
 $ d8 stronghold read identity/oidc/client/my-webapp
 
@@ -105,8 +118,10 @@ id_token_ttl        24h
 key                 default
 redirect_uris       [https://localhost:9702/auth/oidc-callback]
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```text
 $ stronghold read identity/oidc/client/my-webapp
 
@@ -121,6 +136,7 @@ id_token_ttl        24h
 key                 default
 redirect_uris       [https://localhost:9702/auth/oidc-callback]
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 

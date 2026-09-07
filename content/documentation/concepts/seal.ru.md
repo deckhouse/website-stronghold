@@ -258,14 +258,18 @@ rekey выполняется флагом `-target=recovery` у команды `
 
 {{< tabs name="stronghold_cmd_64419" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```bash
 d8 stronghold operator unseal -migrate
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```bash
 stronghold operator unseal -migrate
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 

@@ -268,14 +268,18 @@ keys.
 
 {{< tabs name="stronghold_cmd_64419" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```bash
 d8 stronghold operator unseal -migrate
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```bash
 stronghold operator unseal -migrate
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 

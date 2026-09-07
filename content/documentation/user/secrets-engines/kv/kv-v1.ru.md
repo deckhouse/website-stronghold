@@ -20,14 +20,18 @@ weight: 20
 
 {{< tabs name="stronghold_cmd_35718" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell-session
 d8 stronghold secrets enable -version=1 kv
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell-session
 stronghold secrets enable -version=1 kv
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -39,16 +43,20 @@ stronghold secrets enable -version=1 kv
 
    {{< tabs name="stronghold_cmd_81605" >}}
    {{% tab name="Stronghold в DKP" %}}
+
    ```shell-session
    $ d8 stronghold kv put kv/my-secret my-value=s3cr3t
    Success! Data written to: kv/my-secret
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold в Linux" %}}
+
    ```shell-session
    $ stronghold kv put kv/my-secret my-value=s3cr3t
    Success! Data written to: kv/my-secret
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -56,20 +64,24 @@ stronghold secrets enable -version=1 kv
 
    {{< tabs name="stronghold_cmd_34392" >}}
    {{% tab name="Stronghold в DKP" %}}
+
    ```shell-session
    $ d8 stronghold kv get kv/my-secret
    Key                 Value
    ---                 -----
    my-value            s3cr3t
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold в Linux" %}}
+
    ```shell-session
    $ stronghold kv get kv/my-secret
    Key                 Value
    ---                 -----
    my-value            s3cr3t
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -77,20 +89,24 @@ stronghold secrets enable -version=1 kv
 
    {{< tabs name="stronghold_cmd_87945" >}}
    {{% tab name="Stronghold в DKP" %}}
+
    ```shell-session
    $ d8 stronghold kv list kv/
    Keys
    ----
    my-secret
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold в Linux" %}}
+
    ```shell-session
    $ stronghold kv list kv/
    Keys
    ----
    my-secret
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -98,16 +114,20 @@ stronghold secrets enable -version=1 kv
 
    {{< tabs name="stronghold_cmd_3924" >}}
    {{% tab name="Stronghold в DKP" %}}
+
    ```shell-session
    $ d8 stronghold kv delete kv/my-secret
    Success! Data deleted (if it existed) at: kv/my-secret
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold в Linux" %}}
+
    ```shell-session
    $ stronghold kv delete kv/my-secret
    Success! Data deleted (if it existed) at: kv/my-secret
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -117,6 +137,7 @@ stronghold secrets enable -version=1 kv
 
    {{< tabs name="stronghold_cmd_86586" >}}
    {{% tab name="Stronghold в DKP" %}}
+
    ```shell-session
    $ d8 stronghold write sys/policies/password/example policy=-<<EOF
    
@@ -134,8 +155,10 @@ stronghold secrets enable -version=1 kv
    
    EOF
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold в Linux" %}}
+
    ```shell-session
    $ stronghold write sys/policies/password/example policy=-<<EOF
    
@@ -153,6 +176,7 @@ stronghold secrets enable -version=1 kv
    
    EOF
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -160,16 +184,20 @@ stronghold secrets enable -version=1 kv
 
    {{< tabs name="stronghold_cmd_95485" >}}
    {{% tab name="Stronghold в DKP" %}}
+
    ```shell-session
    $ d8 stronghold kv put kv/my-generated-secret \
        password=$(d8 stronghold read -field password sys/policies/password/example/generate)
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold в Linux" %}}
+
    ```shell-session
    $ stronghold kv put kv/my-generated-secret \
        password=$(stronghold read -field password sys/policies/password/example/generate)
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -177,6 +205,7 @@ stronghold secrets enable -version=1 kv
 
    {{< tabs name="stronghold_cmd_86790" >}}
    {{% tab name="Stronghold в DKP" %}}
+
    ```shell-session
    $ d8 stronghold kv get kv/my-generated-secret
    ====== Data ======
@@ -184,8 +213,10 @@ stronghold secrets enable -version=1 kv
    ---         -----
    password    ^dajd609Xf8Zhac$dW24
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold в Linux" %}}
+
    ```shell-session
    $ stronghold kv get kv/my-generated-secret
    ====== Data ======
@@ -193,6 +224,7 @@ stronghold secrets enable -version=1 kv
    ---         -----
    password    ^dajd609Xf8Zhac$dW24
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -207,16 +239,20 @@ stronghold secrets enable -version=1 kv
 
 {{< tabs name="stronghold_cmd_91824" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell-session
 $ d8 stronghold kv put kv/my-secret ttl=5s my-value=s3cr3t
 Success! Data written to: kv/my-secret
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell-session
 $ stronghold kv put kv/my-secret ttl=5s my-value=s3cr3t
 Success! Data written to: kv/my-secret
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -226,6 +262,7 @@ Success! Data written to: kv/my-secret
 
 {{< tabs name="stronghold_cmd_45129" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell-session
 $ d8 stronghold kv get kv/my-secret
 Key                 Value
@@ -251,8 +288,10 @@ curl -X 'GET' \
   "auth": null
 }
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell-session
 $ stronghold kv get kv/my-secret
 Key                 Value
@@ -278,5 +317,6 @@ curl -X 'GET' \
   "auth": null
 }
 ```
+
 {{% /tab %}}
 {{< /tabs >}}

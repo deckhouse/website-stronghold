@@ -60,16 +60,20 @@ Stronghold не делает различий между стандартным�
 
 {{< tabs name="stronghold_cmd_99650" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell-session
 $ d8 stronghold secrets enable database
 Success! Enabled the database secrets engine at: database/
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell-session
 $ stronghold secrets enable database
 Success! Enabled the database secrets engine at: database/
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -80,6 +84,7 @@ Success! Enabled the database secrets engine at: database/
 
    {{< tabs name="stronghold_cmd_69573" >}}
    {{% tab name="Stronghold в DKP" %}}
+
    ```shell-session
    $ d8 stronghold write database/config/my-database \
        plugin_name="..." \
@@ -88,8 +93,10 @@ Success! Enabled the database secrets engine at: database/
        username="..." \
        password="..." \
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold в Linux" %}}
+
    ```shell-session
    $ stronghold write database/config/my-database \
        plugin_name="..." \
@@ -98,6 +105,7 @@ Success! Enabled the database secrets engine at: database/
        username="..." \
        password="..." \
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -120,14 +128,18 @@ Success! Enabled the database secrets engine at: database/
 
 {{< tabs name="stronghold_cmd_23336" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell-session
 d8 stronghold write -force database/rotate-root/my-database
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell-session
 stronghold write -force database/rotate-root/my-database
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -139,6 +151,7 @@ stronghold write -force database/rotate-root/my-database
 
 {{< tabs name="stronghold_cmd_14613" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell-session
 $ d8 stronghold write database/roles/my-role \
     db_name=my-database \
@@ -147,8 +160,10 @@ $ d8 stronghold write database/roles/my-role \
     max_ttl="24h"
 Success! Data written to: database/roles/my-role
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell-session
 $ stronghold write database/roles/my-role \
     db_name=my-database \
@@ -157,6 +172,7 @@ $ stronghold write database/roles/my-role \
     max_ttl="24h"
 Success! Data written to: database/roles/my-role
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -172,6 +188,7 @@ Success! Data written to: database/roles/my-role
 
 {{< tabs name="stronghold_cmd_87687" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell-session
 $ d8 stronghold read database/creds/my-role
 Key                Value
@@ -182,8 +199,10 @@ lease_renewable    true
 password           FSREZ1S0kFsZtLat-y94
 username           v-strongholduser-e2978cd0-ugp7iqI2hdlff5hfjylJ-1602537260
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell-session
 $ stronghold read database/creds/my-role
 Key                Value
@@ -194,6 +213,7 @@ lease_renewable    true
 password           FSREZ1S0kFsZtLat-y94
 username           v-strongholduser-e2978cd0-ugp7iqI2hdlff5hfjylJ-1602537260
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -263,6 +283,7 @@ rule "charset" {
 
 {{< tabs name="stronghold_cmd_74473" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell-session
 $ d8 stronghold write database/config/my-mysql-database \
 plugin_name="mysql-database-plugin" \
@@ -271,8 +292,10 @@ username="root" \
 password='your#StrongPassword%' \
 disable_escaping="true"
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell-session
 $ stronghold write database/config/my-mysql-database \
 plugin_name="mysql-database-plugin" \
@@ -281,5 +304,6 @@ username="root" \
 password='your#StrongPassword%' \
 disable_escaping="true"
 ```
+
 {{% /tab %}}
 {{< /tabs >}}

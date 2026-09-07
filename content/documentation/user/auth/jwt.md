@@ -33,14 +33,18 @@ different path, specify `-path=/my-path` in the CLI.
 
 {{< tabs name="stronghold_cmd_95783" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell-session
 d8 stronghold write auth/jwt/login role=demo jwt=...
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell-session
 stronghold write auth/jwt/login role=demo jwt=...
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -84,18 +88,22 @@ management tool.
 
    {{< tabs name="stronghold_cmd_16925" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```text
    $ d8 stronghold auth enable jwt
      or
    $ d8 stronghold auth enable oidc
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```text
    $ stronghold auth enable jwt
      or
    $ stronghold auth enable oidc
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -104,6 +112,7 @@ management tool.
 
    {{< tabs name="stronghold_cmd_75501" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```text
    $ d8 stronghold write auth/jwt/config \
        oidc_discovery_url="https://myco.auth0.com/" \
@@ -111,8 +120,10 @@ management tool.
        oidc_client_secret="f4ubv72nfiu23hnsj" \
        default_role="demo"
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```text
    $ stronghold write auth/jwt/config \
        oidc_discovery_url="https://myco.auth0.com/" \
@@ -120,6 +131,7 @@ management tool.
        oidc_client_secret="f4ubv72nfiu23hnsj" \
        default_role="demo"
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -127,20 +139,24 @@ management tool.
 
    {{< tabs name="stronghold_cmd_24178" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```text
    $ d8 stronghold write auth/jwt/config \
       oidc_discovery_url="https://MYDOMAIN.eu.auth0.com/" \
       oidc_client_id="" \
       oidc_client_secret="" \
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```text
    $ stronghold write auth/jwt/config \
       oidc_discovery_url="https://MYDOMAIN.eu.auth0.com/" \
       oidc_client_id="" \
       oidc_client_secret="" \
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -148,6 +164,7 @@ management tool.
 
    {{< tabs name="stronghold_cmd_74265" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```text
    d8 stronghold write auth/jwt/role/demo \
        allowed_redirect_uris="http://localhost:8250/oidc/callback" \
@@ -158,8 +175,10 @@ management tool.
        policies=webapps \
        ttl=1h
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```text
    stronghold write auth/jwt/role/demo \
        allowed_redirect_uris="http://localhost:8250/oidc/callback" \
@@ -170,6 +189,7 @@ management tool.
        policies=webapps \
        ttl=1h
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 

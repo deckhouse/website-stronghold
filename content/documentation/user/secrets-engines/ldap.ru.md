@@ -17,14 +17,18 @@ weight: 80
 
 {{< tabs name="stronghold_cmd_26337" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```sh
 d8 stronghold secrets enable ldap
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```sh
 stronghold secrets enable ldap
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -34,20 +38,24 @@ stronghold secrets enable ldap
 
 {{< tabs name="stronghold_cmd_72315" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```sh
 d8 stronghold write ldap/config \
     binddn=$USERNAME \
     bindpass=$PASSWORD \
     url=ldaps://138.91.247.105
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```sh
 stronghold write ldap/config \
     binddn=$USERNAME \
     bindpass=$PASSWORD \
     url=ldaps://138.91.247.105
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -57,14 +65,18 @@ stronghold write ldap/config \
 
 {{< tabs name="stronghold_cmd_50537" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```sh
 d8 stronghold write -f ldap/rotate-root
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```sh
 stronghold write -f ldap/rotate-root
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -98,6 +110,7 @@ stronghold write -f ldap/rotate-root
 
 {{< tabs name="stronghold_cmd_91814" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```bash
 d8 stronghold write ldap/config \
  binddn=$USERNAME \
@@ -106,8 +119,10 @@ d8 stronghold write ldap/config \
  schema=racf \
  password_policy=racf_password_policy
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```bash
 stronghold write ldap/config \
  binddn=$USERNAME \
@@ -116,6 +131,7 @@ stronghold write ldap/config \
  schema=racf \
  password_policy=racf_password_policy
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -125,6 +141,7 @@ stronghold write ldap/config \
 
 {{< tabs name="stronghold_cmd_93682" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```bash
 d8 stronghold write ldap/config \
  binddn=$USERNAME \
@@ -132,8 +149,10 @@ d8 stronghold write ldap/config \
  url=ldaps://138.91.247.105 \
  schema=ad
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```bash
 stronghold write ldap/config \
  binddn=$USERNAME \
@@ -141,6 +160,7 @@ stronghold write ldap/config \
  url=ldaps://138.91.247.105 \
  schema=ad
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -153,20 +173,24 @@ stronghold write ldap/config \
 
 {{< tabs name="stronghold_cmd_53273" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```sh
 d8 stronghold write ldap/static-role/lf-edge\
     dn='uid=lf-edge,ou=users,dc=lf-edge,dc=com' \
     username='stronghold'\
     rotation_period="24h"
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```sh
 stronghold write ldap/static-role/lf-edge\
     dn='uid=lf-edge,ou=users,dc=lf-edge,dc=com' \
     username='stronghold'\
     rotation_period="24h"
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -174,14 +198,18 @@ stronghold write ldap/static-role/lf-edge\
 
 {{< tabs name="stronghold_cmd_10588" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```sh
 d8 stronghold read ldap/static-cred/lf-edge
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```sh
 stronghold read ldap/static-cred/lf-edge
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -214,6 +242,7 @@ stronghold read ldap/static-cred/lf-edge
 
 {{< tabs name="stronghold_cmd_144" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```bash
 d8 stronghold write ldap/role/dynamic-role \
   creation_ldif=@/path/to/creation.ldif \
@@ -222,8 +251,10 @@ d8 stronghold write ldap/role/dynamic-role \
   default_ttl=1h \
   max_ttl=24h
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```bash
 stronghold write ldap/role/dynamic-role \
   creation_ldif=@/path/to/creation.ldif \
@@ -232,6 +263,7 @@ stronghold write ldap/role/dynamic-role \
   default_ttl=1h \
   max_ttl=24h
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -243,14 +275,18 @@ stronghold write ldap/role/dynamic-role \
 
 {{< tabs name="stronghold_cmd_19125" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```bash
 d8 stronghold read ldap/creds/dynamic-role
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```bash
 stronghold read ldap/creds/dynamic-role
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -347,6 +383,7 @@ Stronghold может автоматически менять пароли дл�
 
 {{< tabs name="stronghold_cmd_68847" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell-session
 $ d8 stronghold secrets enable ldap
 Success! Enabled the ad secrets engine at: ldap/
@@ -357,8 +394,10 @@ $ d8 stronghold write ldap/config \
     url=ldaps://138.91.247.105 \
     userdn='dc=example,dc=com'
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell-session
 $ stronghold secrets enable ldap
 Success! Enabled the ad secrets engine at: ldap/
@@ -369,6 +408,7 @@ $ stronghold write ldap/config \
     url=ldaps://138.91.247.105 \
     userdn='dc=example,dc=com'
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -376,6 +416,7 @@ $ stronghold write ldap/config \
 
 {{< tabs name="stronghold_cmd_64185" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell-session
 d8 stronghold write ldap/library/accounting-team \
     service_account_names=fizz@example.com,buzz@example.com \
@@ -383,8 +424,10 @@ d8 stronghold write ldap/library/accounting-team \
     max_ttl=20h \
     disable_check_in_enforcement=false
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell-session
 stronghold write ldap/library/accounting-team \
     service_account_names=fizz@example.com,buzz@example.com \
@@ -392,6 +435,7 @@ stronghold write ldap/library/accounting-team \
     max_ttl=20h \
     disable_check_in_enforcement=false
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -403,14 +447,18 @@ stronghold write ldap/library/accounting-team \
 
 {{< tabs name="stronghold_cmd_5453" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell-session
 d8 stronghold read ldap/library/accounting-team/status
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell-session
 stronghold read ldap/library/accounting-team/status
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -427,14 +475,18 @@ fizz@example.com    map[available:true]
 
 {{< tabs name="stronghold_cmd_34855" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell-session
 d8 stronghold write -f ldap/library/accounting-team/check-out
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell-session
 stronghold write -f ldap/library/accounting-team/check-out
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -454,14 +506,18 @@ service_account_name    fizz@example.com
 
 {{< tabs name="stronghold_cmd_98460" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell-session
 d8 stronghold write ldap/library/accounting-team/check-out ttl=30m
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell-session
 stronghold write ldap/library/accounting-team/check-out ttl=30m
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -481,14 +537,18 @@ service_account_name    buzz@example.com
 
 {{< tabs name="stronghold_cmd_76471" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell-session
 d8 stronghold lease renew ldap/library/accounting-team/check-out/0C2wmeaDmsToVFc0zDiX9cMq
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell-session
 stronghold lease renew ldap/library/accounting-team/check-out/0C2wmeaDmsToVFc0zDiX9cMq
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 

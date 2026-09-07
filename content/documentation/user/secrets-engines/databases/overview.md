@@ -62,16 +62,20 @@ management tool.
 
    {{< tabs name="stronghold_cmd_10649" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```shell-session
    $ d8 stronghold secrets enable database
    Success! Enabled the database secrets engine at: database/
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```shell-session
    $ stronghold secrets enable database
    Success! Enabled the database secrets engine at: database/
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -82,6 +86,7 @@ management tool.
 
    {{< tabs name="stronghold_cmd_69573" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```shell-session
    $ d8 stronghold write database/config/my-database \
        plugin_name="..." \
@@ -90,8 +95,10 @@ management tool.
        username="..." \
        password="..." \
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```shell-session
    $ stronghold write database/config/my-database \
        plugin_name="..." \
@@ -100,6 +107,7 @@ management tool.
        username="..." \
        password="..." \
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -124,14 +132,18 @@ management tool.
 
    {{< tabs name="stronghold_cmd_14214" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```shell-session
    d8 stronghold write -force database/rotate-root/my-database
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```shell-session
    stronghold write -force database/rotate-root/my-database
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -147,6 +159,7 @@ When this is done, the password for the user specified in the previous step
 
    {{< tabs name="stronghold_cmd_39943" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```shell-session
    $ d8 stronghold write database/roles/my-role \
        db_name=my-database \
@@ -155,8 +168,10 @@ When this is done, the password for the user specified in the previous step
        max_ttl="24h"
    Success! Data written to: database/roles/my-role
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```shell-session
    $ stronghold write database/roles/my-role \
        db_name=my-database \
@@ -165,6 +180,7 @@ When this is done, the password for the user specified in the previous step
        max_ttl="24h"
    Success! Data written to: database/roles/my-role
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -181,6 +197,7 @@ the proper permission, it can generate credentials.
 
     {{< tabs name="stronghold_cmd_25067" >}}
     {{% tab name="Stronghold in DKP" %}}
+
     ```shell-session
     $ d8 stronghold read database/creds/my-role
     Key                Value
@@ -191,8 +208,10 @@ the proper permission, it can generate credentials.
     password           FSREZ1S0kFsZtLat-y94
     username           v-strongholduser-e2978cd0-ugp7iqI2hdlff5hfjylJ-1602537260
     ```
+
     {{% /tab %}}
     {{% tab name="Stronghold in Linux" %}}
+
     ```shell-session
     $ stronghold read database/creds/my-role
     Key                Value
@@ -203,6 +222,7 @@ the proper permission, it can generate credentials.
     password           FSREZ1S0kFsZtLat-y94
     username           v-strongholduser-e2978cd0-ugp7iqI2hdlff5hfjylJ-1602537260
     ```
+
     {{% /tab %}}
     {{< /tabs >}}
 
@@ -271,6 +291,7 @@ remain as so instead of becoming `%23` and `%25` respectively.
 
 {{< tabs name="stronghold_cmd_74473" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell-session
 $ d8 stronghold write database/config/my-mysql-database \
 plugin_name="mysql-database-plugin" \
@@ -279,8 +300,10 @@ username="root" \
 password='your#StrongPassword%' \
 disable_escaping="true"
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell-session
 $ stronghold write database/config/my-mysql-database \
 plugin_name="mysql-database-plugin" \
@@ -289,5 +312,6 @@ username="root" \
 password='your#StrongPassword%' \
 disable_escaping="true"
 ```
+
 {{% /tab %}}
 {{< /tabs >}}

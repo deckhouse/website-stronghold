@@ -19,14 +19,18 @@ weight: 60
 
 {{< tabs name="stronghold_cmd_98272" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold login token=<token>
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold login token=<token>
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -34,18 +38,22 @@ stronghold login token=<token>
 
 {{< tabs name="stronghold_cmd_6358" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold login -method=userpass \
    username=mitchellh \
    password=foo
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold login -method=userpass \
    username=mitchellh \
    password=foo
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 

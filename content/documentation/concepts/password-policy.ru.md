@@ -242,14 +242,18 @@ rule "charset" {
 
 {{< tabs name="stronghold_cmd_10695" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold write sys/policies/password/my-policy policy=@my-policy.hcl
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold write sys/policies/password/my-policy policy=@my-policy.hcl
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -257,6 +261,7 @@ stronghold write sys/policies/password/my-policy policy=@my-policy.hcl
 
 {{< tabs name="stronghold_cmd_89650" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold write sys/policies/password/my-policy policy=- <<EOF
 length = 20
@@ -265,8 +270,10 @@ rule "charset" {
 }
 EOF
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold write sys/policies/password/my-policy policy=- <<EOF
 length = 20
@@ -275,6 +282,7 @@ rule "charset" {
 }
 EOF
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -282,14 +290,18 @@ EOF
 
 {{< tabs name="stronghold_cmd_15846" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```bash
 d8 stronghold read sys/policies/password/my-policy
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```bash
 stronghold read sys/policies/password/my-policy
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -311,14 +323,18 @@ curl \
 
 {{< tabs name="stronghold_cmd_12295" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```bash
 d8 stronghold read sys/policies/password
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```bash
 stronghold read sys/policies/password
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -339,14 +355,18 @@ curl \
 
 {{< tabs name="stronghold_cmd_15846" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```bash
 d8 stronghold read sys/policies/password/my-policy
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```bash
 stronghold read sys/policies/password/my-policy
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -366,14 +386,18 @@ curl \
 
 {{< tabs name="stronghold_cmd_11334" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```bash
 d8 stronghold delete sys/policies/password/my-policy
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```bash
 stronghold delete sys/policies/password/my-policy
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -395,14 +419,18 @@ curl \
 
 {{< tabs name="stronghold_cmd_16213" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold read sys/policies/password/my-policy/generate
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold read sys/policies/password/my-policy/generate
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 

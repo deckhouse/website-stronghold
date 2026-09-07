@@ -191,16 +191,20 @@ management tool.
 
    {{< tabs name="stronghold_cmd_99999" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```shell-session
    $ d8 stronghold secrets enable kubernetes
    Success! Enabled the kubernetes Secrets Engine at: kubernetes/
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```shell-session
    $ stronghold secrets enable kubernetes
    Success! Enabled the kubernetes Secrets Engine at: kubernetes/
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -211,14 +215,18 @@ management tool.
 
    {{< tabs name="stronghold_cmd_26263" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```shell-session
    d8 stronghold write -f kubernetes/config
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```shell-session
    stronghold write -f kubernetes/config
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -227,20 +235,24 @@ management tool.
 
    {{< tabs name="stronghold_cmd_75004" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```shell-session
    $ d8 stronghold write kubernetes/roles/my-role \
        allowed_kubernetes_namespaces="*" \
        service_account_name="test-service-account-with-generated-token" \
        token_default_ttl="10m"
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```shell-session
    $ stronghold write kubernetes/roles/my-role \
        allowed_kubernetes_namespaces="*" \
        service_account_name="test-service-account-with-generated-token" \
        token_default_ttl="10m"
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -251,6 +263,7 @@ After a user has authenticated to Stronghold and has sufficient permissions, a w
 
 {{< tabs name="stronghold_cmd_24195" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell-session
 $ d8 stronghold write kubernetes/creds/my-role \
     kubernetes_namespace=test
@@ -264,8 +277,10 @@ service_account_name       test-service-account-with-generated-token
 service_account_namespace  test
 service_account_token      eyJHbGci0iJSUzI1NiIsImtpZCI6ImlrUEE...
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell-session
 $ stronghold write kubernetes/creds/my-role \
     kubernetes_namespace=test
@@ -279,6 +294,7 @@ service_account_name       test-service-account-with-generated-token
 service_account_namespace  test
 service_account_token      eyJHbGci0iJSUzI1NiIsImtpZCI6ImlrUEE...
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -324,6 +340,7 @@ creating or tuning the Stronghold role.
 
 {{< tabs name="stronghold_cmd_51431" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell-session
 $ d8 stronghold write kubernetes/roles/my-role \
     allowed_kubernetes_namespaces="*" \
@@ -331,8 +348,10 @@ $ d8 stronghold write kubernetes/roles/my-role \
     token_default_ttl="10m" \
     token_max_ttl="2h"
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell-session
 $ stronghold write kubernetes/roles/my-role \
     allowed_kubernetes_namespaces="*" \
@@ -340,6 +359,7 @@ $ stronghold write kubernetes/roles/my-role \
     token_default_ttl="10m" \
     token_max_ttl="2h"
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -349,6 +369,7 @@ maximum TTL of the role, if present).
 
 {{< tabs name="stronghold_cmd_43148" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell-session
 $ d8 stronghold write kubernetes/creds/my-role \
     kubernetes_namespace=test \
@@ -363,8 +384,10 @@ service_account_name       new-service-account-with-generated-token
 service_account_namespace  test
 service_account_token      eyJHbGci0iJSUzI1NiIsImtpZCI6ImlrUEE...
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell-session
 $ stronghold write kubernetes/creds/my-role \
     kubernetes_namespace=test \
@@ -379,6 +402,7 @@ service_account_name       new-service-account-with-generated-token
 service_account_namespace  test
 service_account_token      eyJHbGci0iJSUzI1NiIsImtpZCI6ImlrUEE...
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -400,20 +424,24 @@ The Kubernetes cluster default audiences for service account tokens will be used
 
 {{< tabs name="stronghold_cmd_83269" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell-session
 $ d8 stronghold write kubernetes/roles/my-role \
     allowed_kubernetes_namespaces="*" \
     service_account_name="new-service-account-with-generated-token" \
     token_default_audiences="custom-audience"
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell-session
 $ stronghold write kubernetes/roles/my-role \
     allowed_kubernetes_namespaces="*" \
     service_account_name="new-service-account-with-generated-token" \
     token_default_audiences="custom-audience"
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -422,6 +450,7 @@ The audiences of the token will be given the default audiences if not specified.
 
 {{< tabs name="stronghold_cmd_29349" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell-session
 $ d8 stronghold write kubernetes/creds/my-role \
     kubernetes_namespace=test \
@@ -436,8 +465,10 @@ service_account_name       new-service-account-with-generated-token
 service_account_namespace  test
 service_account_token      eyJHbGci0iJSUzI1NiIsImtpZCI6ImlrUEE...
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell-session
 $ stronghold write kubernetes/creds/my-role \
     kubernetes_namespace=test \
@@ -452,6 +483,7 @@ service_account_name       new-service-account-with-generated-token
 service_account_namespace  test
 service_account_token      eyJHbGci0iJSUzI1NiIsImtpZCI6ImlrUEE...
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -474,18 +506,22 @@ parameter.
 
 {{< tabs name="stronghold_cmd_37869" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell-session
 $ d8 stronghold write kubernetes/roles/auto-managed-sa-role \
     allowed_kubernetes_namespaces="test" \
     kubernetes_role_name="test-role-list-pods"
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell-session
 $ stronghold write kubernetes/roles/auto-managed-sa-role \
     allowed_kubernetes_namespaces="test" \
     kubernetes_role_name="test-role-list-pods"
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -502,6 +538,7 @@ You can then get credentials with the automatically generated service account.
 
 {{< tabs name="stronghold_cmd_72154" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell-session
 $ d8 stronghold write kubernetes/creds/auto-managed-sa-role \
     kubernetes_namespace=test
@@ -514,8 +551,10 @@ service_account_name         v-token-auto-man-1653001548-5z6hrgsxnmzncxejztml4ar
 service_account_namespace    test
 service_account_token        eyJHbGci0iJSUzI1Ni...
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell-session
 $ stronghold write kubernetes/creds/auto-managed-sa-role \
     kubernetes_namespace=test
@@ -528,6 +567,7 @@ service_account_name         v-token-auto-man-1653001548-5z6hrgsxnmzncxejztml4ar
 service_account_namespace    test
 service_account_token        eyJHbGci0iJSUzI1Ni...
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -537,18 +577,22 @@ rules for the generated role.
 
 {{< tabs name="stronghold_cmd_25284" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell-session
 $ d8 stronghold write kubernetes/roles/auto-managed-sa-and-role \
     allowed_kubernetes_namespaces="test" \
     generated_role_rules='{"rules":[{"apiGroups":[""],"resources":["pods"],"verbs":["list"]}]}'
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell-session
 $ stronghold write kubernetes/roles/auto-managed-sa-and-role \
     allowed_kubernetes_namespaces="test" \
     generated_role_rules='{"rules":[{"apiGroups":[""],"resources":["pods"],"verbs":["list"]}]}'
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -556,6 +600,7 @@ You can then get credentials in the same way as before.
 
 {{< tabs name="stronghold_cmd_68" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell-session
 $ d8 stronghold write kubernetes/creds/auto-managed-sa-and-role \
     kubernetes_namespace=test
@@ -568,8 +613,10 @@ service_account_name         v-token-auto-man-1653002096-4imxf3ytjh5hbyro9s1oqdo
 service_account_namespace    test
 service_account_token        eyJHbGci0iJSUzI1Ni...
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell-session
 $ stronghold write kubernetes/creds/auto-managed-sa-and-role \
     kubernetes_namespace=test
@@ -582,5 +629,6 @@ service_account_name         v-token-auto-man-1653002096-4imxf3ytjh5hbyro9s1oqdo
 service_account_namespace    test
 service_account_token        eyJHbGci0iJSUzI1Ni...
 ```
+
 {{% /tab %}}
 {{< /tabs >}}

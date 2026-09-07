@@ -246,14 +246,18 @@ Example of creating a policy from an HCL file:
 
 {{< tabs name="stronghold_cmd_10695" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold write sys/policies/password/my-policy policy=@my-policy.hcl
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell
 stronghold write sys/policies/password/my-policy policy=@my-policy.hcl
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -261,6 +265,7 @@ Example of passing a policy directly when creating it:
 
 {{< tabs name="stronghold_cmd_10932" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold write sys/policies/password/my-policy policy=- <<EOF
 length = 20
@@ -269,8 +274,10 @@ rule “charset” {
 }
 EOF
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell
 stronghold write sys/policies/password/my-policy policy=- <<EOF
 length = 20
@@ -279,6 +286,7 @@ rule “charset” {
 }
 EOF
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -286,14 +294,18 @@ To verify that the policy has been created, use the following command:
 
 {{< tabs name="stronghold_cmd_15846" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```bash
 d8 stronghold read sys/policies/password/my-policy
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```bash
 stronghold read sys/policies/password/my-policy
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -315,14 +327,18 @@ Example:
 
 {{< tabs name="stronghold_cmd_12295" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```bash
 d8 stronghold read sys/policies/password
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```bash
 stronghold read sys/policies/password
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -343,14 +359,18 @@ Example:
 
 {{< tabs name="stronghold_cmd_15846" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```bash
 d8 stronghold read sys/policies/password/my-policy
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```bash
 stronghold read sys/policies/password/my-policy
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -370,14 +390,18 @@ Example:
 
 {{< tabs name="stronghold_cmd_11334" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```bash
 d8 stronghold delete sys/policies/password/my-policy
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```bash
 stronghold delete sys/policies/password/my-policy
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -399,14 +423,18 @@ Example:
 
 {{< tabs name="stronghold_cmd_16213" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold read sys/policies/password/my-policy/generate
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell
 stronghold read sys/policies/password/my-policy/generate
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 

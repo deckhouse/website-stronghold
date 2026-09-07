@@ -25,14 +25,18 @@ To create a test secret, follow these steps:
 
    {{< tabs name="stronghold_cmd_58984" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```shell
    d8 stronghold kv put secret/my-first-secret username=demo password=secret123
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```shell
    stronghold kv put secret/my-first-secret username=demo password=secret123
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -40,14 +44,18 @@ To create a test secret, follow these steps:
 
    {{< tabs name="stronghold_cmd_55073" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```shell
    d8 stronghold kv get secret/my-first-secret
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```shell
    stronghold kv get secret/my-first-secret
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -65,14 +73,18 @@ To create a test secret, follow these steps:
 
    {{< tabs name="stronghold_cmd_85471" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```shell
    d8 stronghold kv put secret/my-first-secret username=demo password=new-secret
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```shell
    stronghold kv put secret/my-first-secret username=demo password=new-secret
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -80,14 +92,18 @@ To create a test secret, follow these steps:
 
    {{< tabs name="stronghold_cmd_55073" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```shell
    d8 stronghold kv get secret/my-first-secret
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```shell
    stronghold kv get secret/my-first-secret
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 

@@ -34,16 +34,20 @@ engine allows for writing keys with arbitrary values.
 
    {{< tabs name="stronghold_cmd_15959" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```text
    $ d8 stronghold write cubbyhole/my-secret my-value=s3cr3t
    Success! Data written to: cubbyhole/my-secret
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```text
    $ stronghold write cubbyhole/my-secret my-value=s3cr3t
    Success! Data written to: cubbyhole/my-secret
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -51,19 +55,23 @@ engine allows for writing keys with arbitrary values.
 
    {{< tabs name="stronghold_cmd_31040" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```text
    $ d8 stronghold read cubbyhole/my-secret
    Key         Value
    ---         -----
    my-value    s3cr3t
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```text
    $ stronghold read cubbyhole/my-secret
    Key         Value
    ---         -----
    my-value    s3cr3t
    ```
+
    {{% /tab %}}
    {{< /tabs >}}

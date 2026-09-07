@@ -23,6 +23,7 @@ Stronghold для DKP поставляется в виде модуля, и ка
 
 {{< tabs name="stronghold_cmd_6115" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```text
 $ d8 stronghold operator raft list-peers
 * local node not active but active cluster node not found
@@ -30,8 +31,10 @@ $ d8 stronghold operator raft list-peers
 $ d8 stronghold kv get kv/apikey
 * local node not active but active cluster node not found
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```text
 $ stronghold operator raft list-peers
 * local node not active but active cluster node not found
@@ -39,6 +42,7 @@ $ stronghold operator raft list-peers
 $ stronghold kv get kv/apikey
 * local node not active but active cluster node not found
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -116,6 +120,7 @@ chmod 600 /var/lib/deckhouse/stronghold/raft/peers.json
 
 {{< tabs name="stronghold_cmd_96020" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```bash
 $ d8 stronghold operator unseal
 Unseal Key (will be hidden):
@@ -139,8 +144,10 @@ Active Since             2021-07-20T00:07:32.215236307Z
 Raft Committed Index     155344
 Raft Applied Index       155344
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```bash
 $ stronghold operator unseal
 Unseal Key (will be hidden):
@@ -164,6 +171,7 @@ Active Since             2021-07-20T00:07:32.215236307Z
 Raft Committed Index     155344
 Raft Applied Index       155344
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -186,20 +194,24 @@ Raft Applied Index       155344
 
 {{< tabs name="stronghold_cmd_75226" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```bash
 $ d8 stronghold operator raft list-peers
 Node                                    Address                                  State       Voter
 ----                                    -------                                  -----       -----
 d3816d62-29eb-4f42-98cb-f25ab05e8fbd    stronghold-0.stronghold-internal:8301    leader      true
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```bash
 $ stronghold operator raft list-peers
 Node                                    Address                                  State       Voter
 ----                                    -------                                  -----       -----
 d3816d62-29eb-4f42-98cb-f25ab05e8fbd    stronghold-0.stronghold-internal:8301    leader      true
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 

@@ -25,14 +25,18 @@ weight: 30
 
    {{< tabs name="stronghold_cmd_58984" >}}
    {{% tab name="Stronghold в DKP" %}}
+
    ```shell
    d8 stronghold kv put secret/my-first-secret username=demo password=secret123
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold в Linux" %}}
+
    ```shell
    stronghold kv put secret/my-first-secret username=demo password=secret123
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -42,14 +46,18 @@ weight: 30
 
    {{< tabs name="stronghold_cmd_55073" >}}
    {{% tab name="Stronghold в DKP" %}}
+
    ```shell
    d8 stronghold kv get secret/my-first-secret
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold в Linux" %}}
+
    ```shell
    stronghold kv get secret/my-first-secret
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -67,14 +75,18 @@ weight: 30
 
    {{< tabs name="stronghold_cmd_85471" >}}
    {{% tab name="Stronghold в DKP" %}}
+
    ```shell
    d8 stronghold kv put secret/my-first-secret username=demo password=new-secret
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold в Linux" %}}
+
    ```shell
    stronghold kv put secret/my-first-secret username=demo password=new-secret
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -82,14 +94,18 @@ weight: 30
 
    {{< tabs name="stronghold_cmd_55073" >}}
    {{% tab name="Stronghold в DKP" %}}
+
    ```shell
    d8 stronghold kv get secret/my-first-secret
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold в Linux" %}}
+
    ```shell
    stronghold kv get secret/my-first-secret
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 

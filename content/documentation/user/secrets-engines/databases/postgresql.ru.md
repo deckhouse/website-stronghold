@@ -19,16 +19,20 @@ PostgreSQL это один из поддерживаемых плагинов д
 
    {{< tabs name="stronghold_cmd_10649" >}}
    {{% tab name="Stronghold в DKP" %}}
+
    ```shell-session
    $ d8 stronghold secrets enable database
    Success! Enabled the database secrets engine at: database/
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold в Linux" %}}
+
    ```shell-session
    $ stronghold secrets enable database
    Success! Enabled the database secrets engine at: database/
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -39,6 +43,7 @@ PostgreSQL это один из поддерживаемых плагинов д
 
    {{< tabs name="stronghold_cmd_8534" >}}
    {{% tab name="Stronghold в DKP" %}}
+
    ```shell-session
    $ d8 stronghold write database/config/my-postgresql-database \
      plugin_name="postgresql-database-plugin" \
@@ -48,8 +53,10 @@ PostgreSQL это один из поддерживаемых плагинов д
      password="strongholdpass" \
      password_authentication="scram-sha-256"
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold в Linux" %}}
+
    ```shell-session
    $ stronghold write database/config/my-postgresql-database \
      plugin_name="postgresql-database-plugin" \
@@ -59,6 +66,7 @@ PostgreSQL это один из поддерживаемых плагинов д
      password="strongholdpass" \
      password_authentication="scram-sha-256"
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -67,6 +75,7 @@ PostgreSQL это один из поддерживаемых плагинов д
 
    {{< tabs name="stronghold_cmd_68791" >}}
    {{% tab name="Stronghold в DKP" %}}
+
    ```shell-session
    $ d8 stronghold write database/roles/my-role \
      db_name="my-postgresql-database" \
@@ -76,8 +85,10 @@ PostgreSQL это один из поддерживаемых плагинов д
      max_ttl="24h"
    Success! Data written to: database/roles/my-role
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold в Linux" %}}
+
    ```shell-session
    $ stronghold write database/roles/my-role \
      db_name="my-postgresql-database" \
@@ -87,6 +98,7 @@ PostgreSQL это один из поддерживаемых плагинов д
      max_ttl="24h"
    Success! Data written to: database/roles/my-role
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -99,6 +111,7 @@ PostgreSQL это один из поддерживаемых плагинов д
 
    {{< tabs name="stronghold_cmd_55861" >}}
    {{% tab name="Stronghold в DKP" %}}
+
    ```shell-session
    $ d8 stronghold read database/creds/my-role
    Key                Value
@@ -109,8 +122,10 @@ PostgreSQL это один из поддерживаемых плагинов д
    password           SsnoaA-8Tv4t34f41baD
    username           v-strongholduse-my-role-x
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold в Linux" %}}
+
    ```shell-session
    $ stronghold read database/creds/my-role
    Key                Value
@@ -121,5 +136,6 @@ PostgreSQL это один из поддерживаемых плагинов д
    password           SsnoaA-8Tv4t34f41baD
    username           v-strongholduse-my-role-x
    ```
+
    {{% /tab %}}
    {{< /tabs >}}

@@ -41,6 +41,7 @@ Directory](http://social.technet.microsoft.com/wiki/contents/articles/5312.activ
 
 {{< tabs name="stronghold_cmd_53415" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell-session
 $ d8 stronghold login -method=ldap username=mitchellh
 Password (will be hidden):
@@ -49,8 +50,10 @@ with this token are listed below:
 
 admins
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell-session
 $ stronghold login -method=ldap username=mitchellh
 Password (will be hidden):
@@ -59,6 +62,7 @@ with this token are listed below:
 
 admins
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -103,14 +107,18 @@ management tool.
 
    {{< tabs name="stronghold_cmd_97337" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```text
    d8 stronghold auth enable ldap
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```text
    stronghold auth enable ldap
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -199,6 +207,7 @@ _Note_: When using _Authenticated Search_ for binding parameters (see above) the
 
 {{< tabs name="stronghold_cmd_94101" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell-session
 $ d8 stronghold write auth/ldap/config \
     url="ldap://ldap.example.com" \
@@ -212,8 +221,10 @@ $ d8 stronghold write auth/ldap/config \
     starttls=true
 ...
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell-session
 $ stronghold write auth/ldap/config \
     url="ldap://ldap.example.com" \
@@ -227,6 +238,7 @@ $ stronghold write auth/ldap/config \
     starttls=true
 ...
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -243,6 +255,7 @@ $ stronghold write auth/ldap/config \
 
 {{< tabs name="stronghold_cmd_84945" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell-session
 $ d8 stronghold write auth/ldap/config \
     url="ldap://ldap.example.com" \
@@ -258,8 +271,10 @@ $ d8 stronghold write auth/ldap/config \
     starttls=true
 ...
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell-session
 $ stronghold write auth/ldap/config \
     url="ldap://ldap.example.com" \
@@ -275,6 +290,7 @@ $ stronghold write auth/ldap/config \
     starttls=true
 ...
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -290,6 +306,7 @@ $ stronghold write auth/ldap/config \
 
 {{< tabs name="stronghold_cmd_71" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell-session
 $ d8 stronghold write auth/ldap/config \
     url="ldaps://ldap.example.com" \
@@ -302,8 +319,10 @@ $ d8 stronghold write auth/ldap/config \
     starttls=true
 ...
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell-session
 $ stronghold write auth/ldap/config \
     url="ldaps://ldap.example.com" \
@@ -316,6 +335,7 @@ $ stronghold write auth/ldap/config \
     starttls=true
 ...
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -325,14 +345,18 @@ Next we want to create a mapping from an LDAP group to an Stronghold policy:
 
 {{< tabs name="stronghold_cmd_42241" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell-session
 d8 stronghold write auth/ldap/groups/scientists policies=foo,bar
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell-session
 stronghold write auth/ldap/groups/scientists policies=foo,bar
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -341,16 +365,20 @@ We can also add specific LDAP users to additional (potentially non-LDAP) groups.
 
 {{< tabs name="stronghold_cmd_39421" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell-session
 d8 stronghold write auth/ldap/groups/engineers policies=foobar
 d8 stronghold write auth/ldap/users/tesla groups=engineers policies=zoobar
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell-session
 stronghold write auth/ldap/groups/engineers policies=foobar
 stronghold write auth/ldap/users/tesla groups=engineers policies=zoobar
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -360,6 +388,7 @@ Finally, we can test this by authenticating:
 
 {{< tabs name="stronghold_cmd_5859" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell-session
 $ d8 stronghold login -method=ldap username=tesla
 Password (will be hidden):
@@ -368,8 +397,10 @@ with this token are listed below:
 
 default, foobar, zoobar
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell-session
 $ stronghold login -method=ldap username=tesla
 Password (will be hidden):
@@ -378,6 +409,7 @@ with this token are listed below:
 
 default, foobar, zoobar
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 

@@ -33,14 +33,18 @@ Enable and configure the method before users can authenticate. The main paramete
 
 {{< tabs name="stronghold_cmd_85100" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold auth enable webauthn
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell
 stronghold auth enable webauthn
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -48,14 +52,18 @@ By default the method is mounted at `auth/webauthn`. You can mount it at a custo
 
 {{< tabs name="stronghold_cmd_18070" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold auth enable -path=my-passkeys webauthn
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell
 stronghold auth enable -path=my-passkeys webauthn
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -63,20 +71,24 @@ stronghold auth enable -path=my-passkeys webauthn
 
 {{< tabs name="stronghold_cmd_42812" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold write auth/webauthn/config \
   rp_id="stronghold.example.com" \
   rp_display_name="Deckhouse Stronghold" \
   rp_origins="https://stronghold.example.com"
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell
 stronghold write auth/webauthn/config \
   rp_id="stronghold.example.com" \
   rp_display_name="Deckhouse Stronghold" \
   rp_origins="https://stronghold.example.com"
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -84,6 +96,7 @@ Example with self-registration disabled:
 
 {{< tabs name="stronghold_cmd_81147" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold write auth/webauthn/config \
   rp_id="stronghold.example.com" \
@@ -91,8 +104,10 @@ d8 stronghold write auth/webauthn/config \
   rp_origins="https://stronghold.example.com" \
   auto_registration=false
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell
 stronghold write auth/webauthn/config \
   rp_id="stronghold.example.com" \
@@ -100,6 +115,7 @@ stronghold write auth/webauthn/config \
   rp_origins="https://stronghold.example.com" \
   auto_registration=false
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -109,20 +125,24 @@ If `auto_registration=false`, an administrator must create the user in advance a
 
 {{< tabs name="stronghold_cmd_19735" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold write auth/webauthn/user/alice \
   display_name="Alice Doe" \
   token_policies="developers" \
   token_ttl="1h"
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell
 stronghold write auth/webauthn/user/alice \
   display_name="Alice Doe" \
   token_policies="developers" \
   token_ttl="1h"
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 

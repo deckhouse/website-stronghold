@@ -13,16 +13,20 @@ backend, the `pki` backend is not mounted by default.
 
 {{< tabs name="stronghold_cmd_10344" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell-session
 $ d8 stronghold secrets enable pki
 Successfully mounted 'pki' at 'pki'!
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell-session
 $ stronghold secrets enable pki
 Successfully mounted 'pki' at 'pki'!
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -42,16 +46,20 @@ TTL, first we adjust that:
 
 {{< tabs name="stronghold_cmd_62118" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell-session
 $ d8 stronghold secrets tune -max-lease-ttl=87600h pki
 Successfully tuned mount 'pki'!
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell-session
 $ stronghold secrets tune -max-lease-ttl=87600h pki
 Successfully tuned mount 'pki'!
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -62,6 +70,7 @@ Now, we generate our root certificate:
 
 {{< tabs name="stronghold_cmd_72325" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell-session
 $ d8 stronghold write pki/root/generate/internal common_name=myopenbao.com ttl=87600h
 Key             Value
@@ -109,8 +118,10 @@ BT55jevSPVVu
 -----END CERTIFICATE-----
 serial_number   26:aa:f0:ff:d1:03:65:ba:78:0c:4c:5a:2e:38:74:bd:20:07:c8:18
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell-session
 $ stronghold write pki/root/generate/internal common_name=myopenbao.com ttl=87600h
 Key             Value
@@ -158,6 +169,7 @@ BT55jevSPVVu
 -----END CERTIFICATE-----
 serial_number   26:aa:f0:ff:d1:03:65:ba:78:0c:4c:5a:2e:38:74:bd:20:07:c8:18
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -171,16 +183,20 @@ issuing certificate encoded. These values must be set manually and typically to 
 
 {{< tabs name="stronghold_cmd_70994" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell-session
 $ d8 stronghold write pki/config/urls issuing_certificates="http://openbao.example.com:8200/v1/pki/ca" crl_distribution_points="http://openbao.example.com:8200/v1/pki/crl"
 Success! Data written to: pki/ca/urls
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell-session
 $ stronghold write pki/config/urls issuing_certificates="http://openbao.example.com:8200/v1/pki/ca" crl_distribution_points="http://openbao.example.com:8200/v1/pki/crl"
 Success! Data written to: pki/ca/urls
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -192,20 +208,24 @@ policy used to generate those credentials. For example, let's create an
 
 {{< tabs name="stronghold_cmd_48235" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell-session
 $ d8 stronghold write pki/roles/example-dot-com \
     allowed_domains=example.com \
     allow_subdomains=true max_ttl=72h
 Success! Data written to: pki/roles/example-dot-com
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell-session
 $ stronghold write pki/roles/example-dot-com \
     allowed_domains=example.com \
     allow_subdomains=true max_ttl=72h
 Success! Data written to: pki/roles/example-dot-com
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -218,6 +238,7 @@ and manage certificates!
 
 {{< tabs name="stronghold_cmd_91902" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell-session
 $ d8 stronghold write pki/issue/example-dot-com \
     common_name=blah.example.com
@@ -296,8 +317,10 @@ vXxu6A+Qp50jra3UUtnI+hIirMS+XEeWqJghK1js3ZR6wA/ZkYZw5X1RYuPexb/4
 private_key_type    rsa
 serial_number       59:0b:af:a4:ca:40:db:29:b7:e8:4a:22:63:27:f7:3a:ce:54:78:8a
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell-session
 $ stronghold write pki/issue/example-dot-com \
     common_name=blah.example.com
@@ -376,6 +399,7 @@ vXxu6A+Qp50jra3UUtnI+hIirMS+XEeWqJghK1js3ZR6wA/ZkYZw5X1RYuPexb/4
 private_key_type    rsa
 serial_number       59:0b:af:a4:ca:40:db:29:b7:e8:4a:22:63:27:f7:3a:ce:54:78:8a
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 

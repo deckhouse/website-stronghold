@@ -44,16 +44,20 @@ Kubernetes может выступать в качестве OIDC-провайд
 
    {{< tabs name="stronghold_cmd_81485" >}}
    {{% tab name="Stronghold в DKP" %}}
+
    ```bash
    d8 stronghold auth enable jwt
    d8 stronghold write auth/jwt/config oidc_discovery_url="${ISSUER}"
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold в Linux" %}}
+
    ```bash
    stronghold auth enable jwt
    stronghold write auth/jwt/config oidc_discovery_url="${ISSUER}"
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -88,6 +92,7 @@ Kubernetes может выступать в качестве OIDC-провайд
 
    {{< tabs name="stronghold_cmd_39007" >}}
    {{% tab name="Stronghold в DKP" %}}
+
    ```bash
    d8 stronghold write auth/jwt/config \
       jwt_validation_pubkeys="-----BEGIN PUBLIC KEY-----
@@ -96,8 +101,10 @@ Kubernetes может выступать в качестве OIDC-провайд
    MIIBIjANBgkqhkiG9...
    -----END PUBLIC KEY-----"
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold в Linux" %}}
+
    ```bash
    stronghold write auth/jwt/config \
       jwt_validation_pubkeys="-----BEGIN PUBLIC KEY-----
@@ -106,6 +113,7 @@ Kubernetes может выступать в качестве OIDC-провайд
    MIIBIjANBgkqhkiG9...
    -----END PUBLIC KEY-----"
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -137,6 +145,7 @@ d8 k exec my-pod -- cat /var/run/secrets/kubernetes.io/serviceaccount/token | cu
 
 {{< tabs name="stronghold_cmd_14558" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```bash
 d8 stronghold write auth/jwt/role/my-role \
 role_type="jwt" \
@@ -146,8 +155,10 @@ bound_subject="system:serviceaccount:default:default" \
 policies="default" \
 ttl="1h"
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```bash
 stronghold write auth/jwt/role/my-role \
 role_type="jwt" \
@@ -157,6 +168,7 @@ bound_subject="system:serviceaccount:default:default" \
 policies="default" \
 ttl="1h"
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -164,18 +176,22 @@ ttl="1h"
 
 {{< tabs name="stronghold_cmd_96573" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```bash
 d8 stronghold write auth/jwt/login \
   role=my-role \
   jwt=@/var/run/secrets/kubernetes.io/serviceaccount/token
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```bash
 stronghold write auth/jwt/login \
   role=my-role \
   jwt=@/var/run/secrets/kubernetes.io/serviceaccount/token
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 

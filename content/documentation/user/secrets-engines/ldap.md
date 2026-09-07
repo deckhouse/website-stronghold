@@ -19,14 +19,18 @@ The secrets engine has three primary features:
 
    {{< tabs name="stronghold_cmd_63957" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```sh
    d8 stronghold secrets enable ldap
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```sh
    stronghold secrets enable ldap
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -38,20 +42,24 @@ The secrets engine has three primary features:
 
    {{< tabs name="stronghold_cmd_29364" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```sh
    $ d8 stronghold write ldap/config \
        binddn=$USERNAME \
        bindpass=$PASSWORD \
        url=ldaps://138.91.247.105
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```sh
    $ stronghold write ldap/config \
        binddn=$USERNAME \
        bindpass=$PASSWORD \
        url=ldaps://138.91.247.105
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -61,14 +69,18 @@ The secrets engine has three primary features:
 
    {{< tabs name="stronghold_cmd_27218" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```sh
    d8 stronghold write -f ldap/rotate-root
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```sh
    stronghold write -f ldap/rotate-root
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -105,6 +117,7 @@ password can be configured using a password policy:
 
 {{< tabs name="stronghold_cmd_15056" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```bash
 $ d8 stronghold write ldap/config \
  binddn=$USERNAME \
@@ -113,8 +126,10 @@ $ d8 stronghold write ldap/config \
  schema=racf \
  password_policy=racf_password_policy
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```bash
 $ stronghold write ldap/config \
  binddn=$USERNAME \
@@ -123,6 +138,7 @@ $ stronghold write ldap/config \
  schema=racf \
  password_policy=racf_password_policy
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -133,6 +149,7 @@ schema `ad`.
 
 {{< tabs name="stronghold_cmd_28249" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```bash
 $ d8 stronghold write ldap/config \
  binddn=$USERNAME \
@@ -140,8 +157,10 @@ $ d8 stronghold write ldap/config \
  url=ldaps://138.91.247.105 \
  schema=ad
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```bash
 $ stronghold write ldap/config \
  binddn=$USERNAME \
@@ -149,6 +168,7 @@ $ stronghold write ldap/config \
  url=ldaps://138.91.247.105 \
  schema=ad
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -161,20 +181,24 @@ $ stronghold write ldap/config \
 
    {{< tabs name="stronghold_cmd_49190" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```sh
    $ d8 stronghold write ldap/static-role/lf-edge\
        dn='uid=lf-edge,ou=users,dc=lf-edge,dc=com' \
        username='stronghold'\
        rotation_period="24h"
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```sh
    $ stronghold write ldap/static-role/lf-edge\
        dn='uid=lf-edge,ou=users,dc=lf-edge,dc=com' \
        username='stronghold'\
        rotation_period="24h"
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -182,14 +206,18 @@ $ stronghold write ldap/config \
 
    {{< tabs name="stronghold_cmd_15348" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```sh
    d8 stronghold read ldap/static-cred/lf-edge
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```sh
    stronghold read ldap/static-cred/lf-edge
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -228,6 +256,7 @@ Dynamic credentials can be configured by calling the `/role/:role_name` endpoint
 
 {{< tabs name="stronghold_cmd_98921" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```bash
 $ d8 stronghold write ldap/role/dynamic-role \
   creation_ldif=@/path/to/creation.ldif \
@@ -236,8 +265,10 @@ $ d8 stronghold write ldap/role/dynamic-role \
   default_ttl=1h \
   max_ttl=24h
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```bash
 $ stronghold write ldap/role/dynamic-role \
   creation_ldif=@/path/to/creation.ldif \
@@ -246,6 +277,7 @@ $ stronghold write ldap/role/dynamic-role \
   default_ttl=1h \
   max_ttl=24h
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -257,6 +289,7 @@ To generate credentials:
 
 {{< tabs name="stronghold_cmd_1475" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```bash
 $ d8 stronghold read ldap/creds/dynamic-role
 Key                    Value
@@ -268,8 +301,10 @@ distinguished_names    [cn=v_token_dynamic-role_FfH2i1c4dO_1611952635,ou=users,d
 password               xWMjkIFMerYttEbzfnBVZvhRQGmhpAA0yeTya8fdmDB3LXDzGrjNEPV2bCPE9CW6
 username               v_token_testrole_FfH2i1c4dO_1611952635
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```bash
 $ stronghold read ldap/creds/dynamic-role
 Key                    Value
@@ -281,6 +316,7 @@ distinguished_names    [cn=v_token_dynamic-role_FfH2i1c4dO_1611952635,ou=users,d
 password               xWMjkIFMerYttEbzfnBVZvhRQGmhpAA0yeTya8fdmDB3LXDzGrjNEPV2bCPE9CW6
 username               v_token_testrole_FfH2i1c4dO_1611952635
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -385,6 +421,7 @@ to an AD server.
 
 {{< tabs name="stronghold_cmd_68847" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell-session
 $ d8 stronghold secrets enable ldap
 Success! Enabled the ad secrets engine at: ldap/
@@ -395,8 +432,10 @@ $ d8 stronghold write ldap/config \
     url=ldaps://138.91.247.105 \
     userdn='dc=example,dc=com'
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell-session
 $ stronghold secrets enable ldap
 Success! Enabled the ad secrets engine at: ldap/
@@ -407,6 +446,7 @@ $ stronghold write ldap/config \
     url=ldaps://138.91.247.105 \
     userdn='dc=example,dc=com'
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -414,6 +454,7 @@ Our next step is to designate a set of service accounts for check-out.
 
 {{< tabs name="stronghold_cmd_66679" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell-session
 $ d8 stronghold write ldap/library/accounting-team \
     service_account_names=fizz@example.com,buzz@example.com \
@@ -421,8 +462,10 @@ $ d8 stronghold write ldap/library/accounting-team \
     max_ttl=20h \
     disable_check_in_enforcement=false
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell-session
 $ stronghold write ldap/library/accounting-team \
     service_account_names=fizz@example.com,buzz@example.com \
@@ -430,6 +473,7 @@ $ stronghold write ldap/library/accounting-team \
     max_ttl=20h \
     disable_check_in_enforcement=false
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -446,6 +490,7 @@ available or checked out.
 
 {{< tabs name="stronghold_cmd_10184" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell-session
 $ d8 stronghold read ldap/library/accounting-team/status
 Key                 Value
@@ -453,8 +498,10 @@ Key                 Value
 buzz@example.com    map[available:true]
 fizz@example.com    map[available:true]
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell-session
 $ stronghold read ldap/library/accounting-team/status
 Key                 Value
@@ -462,6 +509,7 @@ Key                 Value
 buzz@example.com    map[available:true]
 fizz@example.com    map[available:true]
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -469,6 +517,7 @@ To check out any service account that's available, simply execute:
 
 {{< tabs name="stronghold_cmd_81908" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell-session
 $ d8 stronghold write -f ldap/library/accounting-team/check-out
 Key                     Value
@@ -479,8 +528,10 @@ lease_renewable         true
 password                ?@09AZKh03hBORZPJcTDgLfntlHqxLy29tcQjPVThzuwWAx/Twx4a2ZcRQRqrZ1w
 service_account_name    fizz@example.com
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell-session
 $ stronghold write -f ldap/library/accounting-team/check-out
 Key                     Value
@@ -491,6 +542,7 @@ lease_renewable         true
 password                ?@09AZKh03hBORZPJcTDgLfntlHqxLy29tcQjPVThzuwWAx/Twx4a2ZcRQRqrZ1w
 service_account_name    fizz@example.com
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -499,6 +551,7 @@ for a shorter time by using:
 
 {{< tabs name="stronghold_cmd_30249" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell-session
 $ d8 stronghold write ldap/library/accounting-team/check-out ttl=30m
 Key                     Value
@@ -509,8 +562,10 @@ lease_renewable         true
 password                ?@09AZerLLuJfEMbRqP+3yfQYDSq6laP48TCJRBJaJu/kDKLsq9WxL9szVAvL/E1
 service_account_name    buzz@example.com
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell-session
 $ stronghold write ldap/library/accounting-team/check-out ttl=30m
 Key                     Value
@@ -521,6 +576,7 @@ lease_renewable         true
 password                ?@09AZerLLuJfEMbRqP+3yfQYDSq6laP48TCJRBJaJu/kDKLsq9WxL9szVAvL/E1
 service_account_name    buzz@example.com
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -532,6 +588,7 @@ If no service accounts are available for check-out, Stronghold will return a 400
 
 {{< tabs name="stronghold_cmd_26194" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell-session
 $ d8 stronghold write -f ldap/library/accounting-team/check-out
 Error writing data to ldap/library/accounting-team/check-out: Error making API request.
@@ -541,8 +598,10 @@ Code: 400. Errors:
 
 * No service accounts available for check-out.
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell-session
 $ stronghold write -f ldap/library/accounting-team/check-out
 Error writing data to ldap/library/accounting-team/check-out: Error making API request.
@@ -552,6 +611,7 @@ Code: 400. Errors:
 
 * No service accounts available for check-out.
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -559,6 +619,7 @@ To extend a check-out, renew its lease.
 
 {{< tabs name="stronghold_cmd_94689" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell-session
 $ d8 stronghold lease renew ldap/library/accounting-team/check-out/0C2wmeaDmsToVFc0zDiX9cMq
 Key                Value
@@ -567,8 +628,10 @@ lease_id           ldap/library/accounting-team/check-out/0C2wmeaDmsToVFc0zDiX9c
 lease_duration     10h
 lease_renewable    true
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell-session
 $ stronghold lease renew ldap/library/accounting-team/check-out/0C2wmeaDmsToVFc0zDiX9cMq
 Key                Value
@@ -577,6 +640,7 @@ lease_id           ldap/library/accounting-team/check-out/0C2wmeaDmsToVFc0zDiX9c
 lease_duration     10h
 lease_renewable    true
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -588,20 +652,24 @@ To check a service account back in for others to use, call:
 
 {{< tabs name="stronghold_cmd_9067" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell-session
 $ d8 stronghold write -f ldap/library/accounting-team/check-in
 Key          Value
 ---          -----
 check_ins    [fizz@example.com]
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell-session
 $ stronghold write -f ldap/library/accounting-team/check-in
 Key          Value
 ---          -----
 check_ins    [fizz@example.com]
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -610,20 +678,24 @@ caller, Stronghold will need to know which one(s) to check in.
 
 {{< tabs name="stronghold_cmd_25132" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell-session
 $ d8 stronghold write ldap/library/accounting-team/check-in service_account_names=fizz@example.com
 Key          Value
 ---          -----
 check_ins    [fizz@example.com]
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell-session
 $ stronghold write ldap/library/accounting-team/check-in service_account_names=fizz@example.com
 Key          Value
 ---          -----
 check_ins    [fizz@example.com]
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -637,20 +709,24 @@ service accounts can be forcibly checked in by a highly privileged user through:
 
 {{< tabs name="stronghold_cmd_3582" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell-session
 $ d8 stronghold write -f ldap/library/manage/accounting-team/check-in
 Key          Value
 ---          -----
 check_ins    [fizz@example.com]
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell-session
 $ stronghold write -f ldap/library/manage/accounting-team/check-in
 Key          Value
 ---          -----
 check_ins    [fizz@example.com]
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -658,16 +734,20 @@ Or, alternatively, revoking the secret's lease has the same effect.
 
 {{< tabs name="stronghold_cmd_41166" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell-session
 $ d8 stronghold lease revoke ldap/library/accounting-team/check-out/PvBVG0m7pEg2940Cb3Jw3KpJ
 All revocation operations queued successfully!
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell-session
 $ stronghold lease revoke ldap/library/accounting-team/check-out/PvBVG0m7pEg2940Cb3Jw3KpJ
 All revocation operations queued successfully!
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 

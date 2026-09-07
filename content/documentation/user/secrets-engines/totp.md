@@ -27,16 +27,20 @@ management tool.
 
     {{< tabs name="stronghold_cmd_18535" >}}
     {{% tab name="Stronghold in DKP" %}}
+
     ```text
     $ d8 stronghold secrets enable totp
     Success! Enabled the totp secrets engine at: totp/
     ```
+
     {{% /tab %}}
     {{% tab name="Stronghold in Linux" %}}
+
     ```text
     $ stronghold secrets enable totp
     Success! Enabled the totp secrets engine at: totp/
     ```
+
     {{% /tab %}}
     {{< /tabs >}}
 
@@ -48,18 +52,22 @@ management tool.
 
     {{< tabs name="stronghold_cmd_71100" >}}
     {{% tab name="Stronghold in DKP" %}}
+
     ```text
     $ d8 stronghold write totp/keys/my-key \
         url="otpauth://totp/Stronghold:test@test.com?secret=Y64VEVMBTSXCYIWRSHRNDZW62MPGVU2G&issuer=Stronghold"
     Success! Data written to: totp/keys/my-key
     ```
+
     {{% /tab %}}
     {{% tab name="Stronghold in Linux" %}}
+
     ```text
     $ stronghold write totp/keys/my-key \
         url="otpauth://totp/Stronghold:test@test.com?secret=Y64VEVMBTSXCYIWRSHRNDZW62MPGVU2G&issuer=Stronghold"
     Success! Data written to: totp/keys/my-key
     ```
+
     {{% /tab %}}
     {{< /tabs >}}
 
@@ -76,20 +84,24 @@ the proper permission, it can generate credentials.
 
     {{< tabs name="stronghold_cmd_11683" >}}
     {{% tab name="Stronghold in DKP" %}}
+
     ```text
     $ d8 stronghold read totp/code/my-key
     Key     Value
     ---     -----
     code    260610
     ```
+
     {{% /tab %}}
     {{% tab name="Stronghold in Linux" %}}
+
     ```text
     $ stronghold read totp/code/my-key
     Key     Value
     ---     -----
     code    260610
     ```
+
     {{% /tab %}}
     {{< /tabs >}}
 
@@ -112,16 +124,20 @@ management tool.
 
     {{< tabs name="stronghold_cmd_18535" >}}
     {{% tab name="Stronghold in DKP" %}}
+
     ```text
     $ d8 stronghold secrets enable totp
     Success! Enabled the totp secrets engine at: totp/
     ```
+
     {{% /tab %}}
     {{% tab name="Stronghold in Linux" %}}
+
     ```text
     $ stronghold secrets enable totp
     Success! Enabled the totp secrets engine at: totp/
     ```
+
     {{% /tab %}}
     {{< /tabs >}}
 
@@ -133,6 +149,7 @@ management tool.
 
     {{< tabs name="stronghold_cmd_2504" >}}
     {{% tab name="Stronghold in DKP" %}}
+
     ```text
     $ d8 stronghold write totp/keys/my-user \
         generate=true \
@@ -144,8 +161,10 @@ management tool.
     barcode    iVBORw0KGgoAAAANSUhEUgAAAMgAAADIEAAAAADYoy0BA...
     url        otpauth://totp/Stronghold:user@test.com?algorithm=SHA1&digits=6&issuer=Stronghold&period=30&secret=V7MBSK324I7KF6KVW34NDFH2GYHIF6JY
     ```
+
     {{% /tab %}}
     {{% tab name="Stronghold in Linux" %}}
+
     ```text
     $ stronghold write totp/keys/my-user \
         generate=true \
@@ -157,6 +176,7 @@ management tool.
     barcode    iVBORw0KGgoAAAANSUhEUgAAAMgAAADIEAAAAADYoy0BA...
     url        otpauth://totp/Stronghold:user@test.com?algorithm=SHA1&digits=6&issuer=Stronghold&period=30&secret=V7MBSK324I7KF6KVW34NDFH2GYHIF6JY
     ```
+
     {{% /tab %}}
     {{< /tabs >}}
 
@@ -169,19 +189,23 @@ management tool.
 
    {{< tabs name="stronghold_cmd_7823" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```text
    $ d8 stronghold write totp/code/my-user code=886531
    Key      Value
    ---      -----
    valid    true
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```text
    $ stronghold write totp/code/my-user code=886531
    Key      Value
    ---      -----
    valid    true
    ```
+
    {{% /tab %}}
    {{< /tabs >}}

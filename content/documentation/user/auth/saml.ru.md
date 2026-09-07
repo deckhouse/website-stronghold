@@ -29,14 +29,18 @@ Stronghold поддерживает два режима клиента:
 
 {{< tabs name="stronghold_cmd_62772" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold auth enable saml
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold auth enable saml
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -44,14 +48,18 @@ stronghold auth enable saml
 
 {{< tabs name="stronghold_cmd_98944" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold auth enable -path=corp-saml saml
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold auth enable -path=corp-saml saml
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -73,6 +81,7 @@ stronghold auth enable -path=corp-saml saml
 
 {{< tabs name="stronghold_cmd_61004" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold write auth/saml/config \
   entity_id="https://stronghold.example.com/v1/auth/saml" \
@@ -82,8 +91,10 @@ d8 stronghold write auth/saml/config \
   validate_response_signature=true \
   validate_assertion_signature=true
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold write auth/saml/config \
   entity_id="https://stronghold.example.com/v1/auth/saml" \
@@ -93,6 +104,7 @@ stronghold write auth/saml/config \
   validate_response_signature=true \
   validate_assertion_signature=true
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -102,6 +114,7 @@ stronghold write auth/saml/config \
 
 {{< tabs name="stronghold_cmd_66352" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold write auth/saml/config \
   entity_id="https://stronghold.example.com/v1/auth/saml" \
@@ -112,8 +125,10 @@ d8 stronghold write auth/saml/config \
   validate_response_signature=true \
   validate_assertion_signature=true
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold write auth/saml/config \
   entity_id="https://stronghold.example.com/v1/auth/saml" \
@@ -124,6 +139,7 @@ stronghold write auth/saml/config \
   validate_response_signature=true \
   validate_assertion_signature=true
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -143,20 +159,24 @@ stronghold write auth/saml/config \
 
 {{< tabs name="stronghold_cmd_99652" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold write auth/saml/config \
   entity_id="https://stronghold.example.com/v1/auth/saml" \
   acs_urls="https://primary.example.com/v1/auth/saml/callback,https://secondary.example.com/v1/auth/saml/callback" \
   idp_metadata_url="https://idp.example.com/app/stronghold/sso/saml/metadata"
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold write auth/saml/config \
   entity_id="https://stronghold.example.com/v1/auth/saml" \
   acs_urls="https://primary.example.com/v1/auth/saml/callback,https://secondary.example.com/v1/auth/saml/callback" \
   idp_metadata_url="https://idp.example.com/app/stronghold/sso/saml/metadata"
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -180,6 +200,7 @@ stronghold write auth/saml/config \
 
 {{< tabs name="stronghold_cmd_51229" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold write auth/saml/role/employees \
   bound_subjects="*@example.com" \
@@ -189,8 +210,10 @@ d8 stronghold write auth/saml/role/employees \
   token_policies="default,developers" \
   token_ttl="1h"
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold write auth/saml/role/employees \
   bound_subjects="*@example.com" \
@@ -200,6 +223,7 @@ stronghold write auth/saml/role/employees \
   token_policies="default,developers" \
   token_ttl="1h"
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -216,6 +240,7 @@ stronghold write auth/saml/role/employees \
 
 {{< tabs name="stronghold_cmd_8682" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold write auth/saml/role/support \
   bound_subjects="*@example.com" \
@@ -223,8 +248,10 @@ d8 stronghold write auth/saml/role/support \
   bound_attributes=groups="support,engineering" \
   token_policies="support-ro"
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold write auth/saml/role/support \
   bound_subjects="*@example.com" \
@@ -232,6 +259,7 @@ stronghold write auth/saml/role/support \
   bound_attributes=groups="support,engineering" \
   token_policies="support-ro"
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -253,52 +281,64 @@ stronghold write auth/saml/role/support \
 
 {{< tabs name="stronghold_cmd_9795" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold write identity/group \
   name="SamlDevelopers" \
   type="external" \
   policies="developers"
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold write identity/group \
   name="SamlDevelopers" \
   type="external" \
   policies="developers"
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
 {{< tabs name="stronghold_cmd_95645" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold auth list -format=json
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold auth list -format=json
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
 {{< tabs name="stronghold_cmd_7643" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold write identity/group-alias \
   name="engineering" \
   mount_accessor="<saml-mount-accessor>" \
   canonical_id="<identity-group-id>"
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold write identity/group-alias \
   name="engineering" \
   mount_accessor="<saml-mount-accessor>" \
   canonical_id="<identity-group-id>"
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 

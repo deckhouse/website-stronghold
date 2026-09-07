@@ -32,16 +32,20 @@ accept different lengths. The available plugins are:
 
    {{< tabs name="stronghold_cmd_10649" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```text
    $ d8 stronghold secrets enable database
    Success! Enabled the database secrets engine at: database/
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```text
    $ stronghold secrets enable database
    Success! Enabled the database secrets engine at: database/
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -52,6 +56,7 @@ accept different lengths. The available plugins are:
 
    {{< tabs name="stronghold_cmd_83463" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```text
    $ d8 stronghold write database/config/my-mysql-database \
        plugin_name=mysql-database-plugin \
@@ -60,8 +65,10 @@ accept different lengths. The available plugins are:
        username="strongholduser" \
        password="strongholdpass"
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```text
    $ stronghold write database/config/my-mysql-database \
        plugin_name=mysql-database-plugin \
@@ -70,6 +77,7 @@ accept different lengths. The available plugins are:
        username="strongholduser" \
        password="strongholdpass"
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -78,6 +86,7 @@ accept different lengths. The available plugins are:
 
    {{< tabs name="stronghold_cmd_47606" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```text
    $ d8 stronghold write database/roles/my-role \
        db_name=my-mysql-database \
@@ -86,8 +95,10 @@ accept different lengths. The available plugins are:
        max_ttl="24h"
    Success! Data written to: database/roles/my-role
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```text
    $ stronghold write database/roles/my-role \
        db_name=my-mysql-database \
@@ -96,6 +107,7 @@ accept different lengths. The available plugins are:
        max_ttl="24h"
    Success! Data written to: database/roles/my-role
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -109,6 +121,7 @@ the proper permission, it can generate credentials.
 
    {{< tabs name="stronghold_cmd_48675" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```text
    $ d8 stronghold read database/creds/my-role
    Key                Value
@@ -119,8 +132,10 @@ the proper permission, it can generate credentials.
    password           yY-57n3X5UQhxnmFRP3f
    username           v_strongholduser_my-role_crBWVqVh2Hc1
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```text
    $ stronghold read database/creds/my-role
    Key                Value
@@ -131,6 +146,7 @@ the proper permission, it can generate credentials.
    password           yY-57n3X5UQhxnmFRP3f
    username           v_strongholduser_my-role_crBWVqVh2Hc1
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -142,6 +158,7 @@ To use this authentication mechanism, configure the plugin:
 
 {{< tabs name="stronghold_cmd_74044" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell-session
 $ d8 stronghold write database/config/my-mysql-database \
     plugin_name=mysql-database-plugin \
@@ -150,8 +167,10 @@ $ d8 stronghold write database/config/my-mysql-database \
     tls_certificate_key=@/path/to/client.pem \
     tls_ca=@/path/to/client.ca
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell-session
 $ stronghold write database/config/my-mysql-database \
     plugin_name=mysql-database-plugin \
@@ -160,6 +179,7 @@ $ stronghold write database/config/my-mysql-database \
     tls_certificate_key=@/path/to/client.pem \
     tls_ca=@/path/to/client.ca
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -192,6 +212,7 @@ For example:
 
 {{< tabs name="stronghold_cmd_60475" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell-session
 $ d8 stronghold write database/roles/my-role \
     db_name=mysql \
@@ -199,8 +220,10 @@ $ d8 stronghold write database/roles/my-role \
     default_ttl="1h" \
     max_ttl="24h"
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell-session
 $ stronghold write database/roles/my-role \
     db_name=mysql \
@@ -208,6 +231,7 @@ $ stronghold write database/roles/my-role \
     default_ttl="1h" \
     max_ttl="24h"
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -219,6 +243,7 @@ must be configured to use the old `SET PASSWORD` syntax. For example:
 
 {{< tabs name="stronghold_cmd_82482" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell-session
 $ d8 stronghold write database/config/my-mysql-database \
     plugin_name=mysql-database-plugin \
@@ -228,8 +253,10 @@ $ d8 stronghold write database/config/my-mysql-database \
     username="root" \
     password="mysql"
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell-session
 $ stronghold write database/config/my-mysql-database \
     plugin_name=mysql-database-plugin \
@@ -239,5 +266,6 @@ $ stronghold write database/config/my-mysql-database \
     username="root" \
     password="mysql"
 ```
+
 {{% /tab %}}
 {{< /tabs >}}

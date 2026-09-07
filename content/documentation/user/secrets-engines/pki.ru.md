@@ -23,16 +23,20 @@ weight: 20
 
    {{< tabs name="stronghold_cmd_54596" >}}
    {{% tab name="Stronghold в DKP" %}}
+
    ```shell
    $ d8 stronghold secrets enable pki
    Success! Enabled the pki secrets engine at: pki/
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold в Linux" %}}
+
    ```shell
    $ stronghold secrets enable pki
    Success! Enabled the pki secrets engine at: pki/
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -42,16 +46,20 @@ weight: 20
 
    {{< tabs name="stronghold_cmd_45615" >}}
    {{% tab name="Stronghold в DKP" %}}
+
    ```shell
    $ d8 stronghold secrets tune -max-lease-ttl=8760h pki
    Success! Tuned the secrets engine at: pki/
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold в Linux" %}}
+
    ```shell
    $ stronghold secrets tune -max-lease-ttl=8760h pki
    Success! Tuned the secrets engine at: pki/
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -61,6 +69,7 @@ weight: 20
 
    {{< tabs name="stronghold_cmd_68298" >}}
    {{% tab name="Stronghold в DKP" %}}
+
    ```shell
    $ d8 stronghold write pki/root/generate/internal \
         common_name=my-website.ru \
@@ -73,8 +82,10 @@ weight: 20
    issuing_ca       -----BEGIN CERTIFICATE-----...
    serial_number    fc:f1:fb:2c:6d:4d:99:1e:82:1b:08:0a:81:ed:61:3e:1d:fa:f5:29
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold в Linux" %}}
+
    ```shell
    $ stronghold write pki/root/generate/internal \
         common_name=my-website.ru \
@@ -87,6 +98,7 @@ weight: 20
    issuing_ca       -----BEGIN CERTIFICATE-----...
    serial_number    fc:f1:fb:2c:6d:4d:99:1e:82:1b:08:0a:81:ed:61:3e:1d:fa:f5:29
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -96,20 +108,24 @@ weight: 20
 
    {{< tabs name="stronghold_cmd_23698" >}}
    {{% tab name="Stronghold в DKP" %}}
+
    ```shell
    $ d8 stronghold write pki/config/urls \
         issuing_certificates="http://127.0.0.1:8200/v1/pki/ca" \
         crl_distribution_points="http://127.0.0.1:8200/v1/pki/crl"
    Success! Data written to: pki/config/urls
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold в Linux" %}}
+
    ```shell
    $ stronghold write pki/config/urls \
         issuing_certificates="http://127.0.0.1:8200/v1/pki/ca" \
         crl_distribution_points="http://127.0.0.1:8200/v1/pki/crl"
    Success! Data written to: pki/config/urls
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -117,6 +133,7 @@ weight: 20
 
    {{< tabs name="stronghold_cmd_44323" >}}
    {{% tab name="Stronghold в DKP" %}}
+
    ```shell
    $ d8 stronghold write pki/roles/example-dot-ru \
         allowed_domains=my-website.ru \
@@ -124,8 +141,10 @@ weight: 20
         max_ttl=72h
    Success! Data written to: pki/roles/example-dot-ru
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold в Linux" %}}
+
    ```shell
    $ stronghold write pki/roles/example-dot-ru \
         allowed_domains=my-website.ru \
@@ -133,6 +152,7 @@ weight: 20
         max_ttl=72h
    Success! Data written to: pki/roles/example-dot-ru
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -144,6 +164,7 @@ weight: 20
 
    {{< tabs name="stronghold_cmd_86742" >}}
    {{% tab name="Stronghold в DKP" %}}
+
    ```shell
    $ d8 stronghold write pki/issue/example-dot-ru \
         common_name=www.my-website.ru
@@ -156,8 +177,10 @@ weight: 20
    private_key_type    rsa
    serial_number       1d:2e:c6:06:45:18:60:0e:23:d6:c5:17:43:c0:fe:46:ed:d1:50:be
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold в Linux" %}}
+
    ```shell
    $ stronghold write pki/issue/example-dot-ru \
         common_name=www.my-website.ru
@@ -170,6 +193,7 @@ weight: 20
    private_key_type    rsa
    serial_number       1d:2e:c6:06:45:18:60:0e:23:d6:c5:17:43:c0:fe:46:ed:d1:50:be
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 

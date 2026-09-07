@@ -31,14 +31,18 @@ To enable a version 1 kv store:
 
 {{< tabs name="stronghold_cmd_35718" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell-session
 d8 stronghold secrets enable -version=1 kv
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell-session
 stronghold secrets enable -version=1 kv
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -52,16 +56,20 @@ allows for writing keys with arbitrary values.
 
    {{< tabs name="stronghold_cmd_81605" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```shell-session
    $ d8 stronghold kv put kv/my-secret my-value=s3cr3t
    Success! Data written to: kv/my-secret
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```shell-session
    $ stronghold kv put kv/my-secret my-value=s3cr3t
    Success! Data written to: kv/my-secret
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -69,20 +77,24 @@ allows for writing keys with arbitrary values.
 
    {{< tabs name="stronghold_cmd_34392" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```shell-session
    $ d8 stronghold kv get kv/my-secret
    Key                 Value
    ---                 -----
    my-value            s3cr3t
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```shell-session
    $ stronghold kv get kv/my-secret
    Key                 Value
    ---                 -----
    my-value            s3cr3t
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -90,20 +102,24 @@ allows for writing keys with arbitrary values.
 
    {{< tabs name="stronghold_cmd_87945" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```shell-session
    $ d8 stronghold kv list kv/
    Keys
    ----
    my-secret
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```shell-session
    $ stronghold kv list kv/
    Keys
    ----
    my-secret
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -111,16 +127,20 @@ allows for writing keys with arbitrary values.
 
    {{< tabs name="stronghold_cmd_3924" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```shell-session
    $ d8 stronghold kv delete kv/my-secret
    Success! Data deleted (if it existed) at: kv/my-secret
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```shell-session
    $ stronghold kv delete kv/my-secret
    Success! Data deleted (if it existed) at: kv/my-secret
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -130,6 +150,7 @@ You can also use Stronghold's password policy feature to generate arbitrary valu
 
    {{< tabs name="stronghold_cmd_15069" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```shell-session
    $ d8 stronghold write sys/policies/password/example policy=-<<EOF
 
@@ -147,8 +168,10 @@ You can also use Stronghold's password policy feature to generate arbitrary valu
 
    EOF
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```shell-session
    $ stronghold write sys/policies/password/example policy=-<<EOF
 
@@ -166,6 +189,7 @@ You can also use Stronghold's password policy feature to generate arbitrary valu
 
    EOF
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -173,16 +197,20 @@ You can also use Stronghold's password policy feature to generate arbitrary valu
 
    {{< tabs name="stronghold_cmd_95485" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```shell-session
    $ d8 stronghold kv put kv/my-generated-secret \
        password=$(d8 stronghold read -field password sys/policies/password/example/generate)
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```shell-session
    $ stronghold kv put kv/my-generated-secret \
        password=$(stronghold read -field password sys/policies/password/example/generate)
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -190,6 +218,7 @@ You can also use Stronghold's password policy feature to generate arbitrary valu
 
    {{< tabs name="stronghold_cmd_86790" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```shell-session
    $ d8 stronghold kv get kv/my-generated-secret
    ====== Data ======
@@ -197,8 +226,10 @@ You can also use Stronghold's password policy feature to generate arbitrary valu
    ---         -----
    password    ^dajd609Xf8Zhac$dW24
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```shell-session
    $ stronghold kv get kv/my-generated-secret
    ====== Data ======
@@ -206,6 +237,7 @@ You can also use Stronghold's password policy feature to generate arbitrary valu
    ---         -----
    password    ^dajd609Xf8Zhac$dW24
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -220,16 +252,20 @@ as the lease duration:
 
 {{< tabs name="stronghold_cmd_62205" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell-session
 $ d8 stronghold kv put kv/my-secret ttl=30m my-value=s3cr3t
 Success! Data written to: kv/my-secret
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell-session
 $ stronghold kv put kv/my-secret ttl=30m my-value=s3cr3t
 Success! Data written to: kv/my-secret
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -241,6 +277,7 @@ will reflect the value:
 
 {{< tabs name="stronghold_cmd_85875" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell-session
 $ d8 stronghold kv get kv/my-secret
 Key                 Value
@@ -248,8 +285,10 @@ Key                 Value
 my-value            s3cr3t
 ttl                 30m
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell-session
 $ stronghold kv get kv/my-secret
 Key                 Value
@@ -257,5 +296,6 @@ Key                 Value
 my-value            s3cr3t
 ttl                 30m
 ```
+
 {{% /tab %}}
 {{< /tabs >}}

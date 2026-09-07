@@ -12,14 +12,18 @@ weight: 40
 
 {{< tabs name="stronghold_cmd_12027" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold auth enable approle
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold auth enable approle
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -29,14 +33,18 @@ stronghold auth enable approle
 
 {{< tabs name="stronghold_cmd_99538" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold auth enable -path=my-login approle
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold auth enable -path=my-login approle
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -67,6 +75,7 @@ AppRole — это набор политик и ограничений ауте�
 
 {{< tabs name="stronghold_cmd_15075" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold write auth/approle/login \
   role_id=db02de05-fa49-4055-059b-67221c5c2f63 \
@@ -80,8 +89,10 @@ token_duration     20m0s
 token_renewable    true
 token_policies     [default]
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold write auth/approle/login \
   role_id=db02de05-fa49-4055-059b-67221c5c2f63 \
@@ -95,6 +106,7 @@ token_duration     20m0s
 token_renewable    true
 token_policies     [default]
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -137,14 +149,18 @@ curl \
 
 {{< tabs name="stronghold_cmd_12027" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold auth enable approle
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold auth enable approle
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -152,6 +168,7 @@ stronghold auth enable approle
 
 {{< tabs name="stronghold_cmd_71976" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold write auth/approle/role/my-role \
  token_type=batch \
@@ -161,8 +178,10 @@ d8 stronghold write auth/approle/role/my-role \
  token_max_ttl=30m \
  secret_id_num_uses=40
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold write auth/approle/role/my-role \
  token_type=batch \
@@ -172,6 +191,7 @@ stronghold write auth/approle/role/my-role \
  token_max_ttl=30m \
  secret_id_num_uses=40
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -181,16 +201,20 @@ stronghold write auth/approle/role/my-role \
 
 {{< tabs name="stronghold_cmd_58119" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold read auth/approle/role/my-role/role-id
   role_id     db02de05-fa49-4055-059b-67221c5c2f63
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold read auth/approle/role/my-role/role-id
   role_id     db02de05-fa49-4055-059b-67221c5c2f63
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -198,6 +222,7 @@ stronghold read auth/approle/role/my-role/role-id
 
 {{< tabs name="stronghold_cmd_71920" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold write -f auth/approle/role/my-role/secret-id
  secret_id               6a174c20-f6de-a63c-74d2-6018fcceff64
@@ -205,8 +230,10 @@ d8 stronghold write -f auth/approle/role/my-role/secret-id
  secret_id_ttl           10m
  secret_id_num_uses      40
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold write -f auth/approle/role/my-role/secret-id
  secret_id               6a174c20-f6de-a63c-74d2-6018fcceff64
@@ -214,6 +241,7 @@ stronghold write -f auth/approle/role/my-role/secret-id
  secret_id_ttl           10m
  secret_id_num_uses      40
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 

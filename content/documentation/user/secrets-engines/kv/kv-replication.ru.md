@@ -54,6 +54,7 @@ weight: 40
 
 {{< tabs name="stronghold_cmd_81370" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold policy write -namespace=ns_path_1 replicate-dev-secrets - <<EOF
 # Allow token to list/read secrets from dev-secrets
@@ -79,8 +80,10 @@ EOF
 
 d8 stronghold token create -namespace=ns_path_1 -policy=replicate-dev-secrets -orphan=true -period=30d
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold policy write -namespace=ns_path_1 replicate-dev-secrets - <<EOF
 # Allow token to list/read secrets from dev-secrets
@@ -106,6 +109,7 @@ EOF
 
 stronghold token create -namespace=ns_path_1 -policy=replicate-dev-secrets -orphan=true -period=30d
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -117,6 +121,7 @@ stronghold token create -namespace=ns_path_1 -policy=replicate-dev-secrets -orph
 
 {{< tabs name="stronghold_cmd_71033" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold secrets enable \
  -path=<local_mount_path_name> \
@@ -129,8 +134,10 @@ d8 stronghold secrets enable \
  -namespace=<namespace_path_in_local_cluster> \
  kv
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold secrets enable \
  -path=<local_mount_path_name> \
@@ -143,6 +150,7 @@ stronghold secrets enable \
  -namespace=<namespace_path_in_local_cluster> \
  kv
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -150,6 +158,7 @@ stronghold secrets enable \
 
 {{< tabs name="stronghold_cmd_78059" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold secrets enable \
  -path=<local_mount_path_name> \
@@ -163,8 +172,10 @@ d8 stronghold secrets enable \
  -namespace=<namespace_path_in_local_cluster> \
  kv
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold secrets enable \
  -path=<local_mount_path_name> \
@@ -178,6 +189,7 @@ stronghold secrets enable \
  -namespace=<namespace_path_in_local_cluster> \
  kv
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -228,6 +240,7 @@ stronghold secrets enable \
 
 {{< tabs name="stronghold_cmd_87105" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold secrets tune \
  -src-token=<token_of_source_cluster> \
@@ -238,8 +251,10 @@ d8 stronghold secrets tune \
  -namespace=<namespace_path_in_local_cluster> \
  <local_mount_path_name>
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold secrets tune \
  -src-token=<token_of_source_cluster> \
@@ -250,6 +265,7 @@ stronghold secrets tune \
  -namespace=<namespace_path_in_local_cluster> \
  <local_mount_path_name>
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -272,14 +288,18 @@ stronghold secrets tune \
 
 {{< tabs name="stronghold_cmd_62983" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold secrets tune -sync-enable=false -namespace=<namespace_path_in_local_cluster> <local_mount_path_name>
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold secrets tune -sync-enable=false -namespace=<namespace_path_in_local_cluster> <local_mount_path_name>
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -289,14 +309,18 @@ stronghold secrets tune -sync-enable=false -namespace=<namespace_path_in_local_c
 
 {{< tabs name="stronghold_cmd_17061" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold secrets tune -sync-enable=true -namespace=<namespace_path_in_local_cluster> <local_mount_path_name>
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold secrets tune -sync-enable=true -namespace=<namespace_path_in_local_cluster> <local_mount_path_name>
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -306,14 +330,18 @@ stronghold secrets tune -sync-enable=true -namespace=<namespace_path_in_local_cl
 
 {{< tabs name="stronghold_cmd_88395" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold read -namespace=<namespace_path_in_local_cluster> sys/mounts/<mount_path>/tune
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold read -namespace=<namespace_path_in_local_cluster> sys/mounts/<mount_path>/tune
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 

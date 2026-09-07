@@ -22,14 +22,18 @@ weight: 30
 
 {{< tabs name="stronghold_cmd_85210" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold write auth/<path-to-jwt-backend>/login role=demo jwt=...
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold write auth/<path-to-jwt-backend>/login role=demo jwt=...
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -37,14 +41,18 @@ stronghold write auth/<path-to-jwt-backend>/login role=demo jwt=...
 
 {{< tabs name="stronghold_cmd_95783" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold write auth/jwt/login role=demo jwt=...
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold write auth/jwt/login role=demo jwt=...
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -86,18 +94,22 @@ curl \
 
 {{< tabs name="stronghold_cmd_18367" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold auth enable jwt
 or
 d8 stronghold auth enable oidc
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold auth enable jwt
 or
 stronghold auth enable oidc
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -105,6 +117,7 @@ stronghold auth enable oidc
 
 {{< tabs name="stronghold_cmd_43065" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold write auth/jwt/config \
    oidc_discovery_url="https://myco.auth0.com/" \
@@ -112,8 +125,10 @@ d8 stronghold write auth/jwt/config \
    oidc_client_secret="f4ubv72nfiu23hnsj" \
    default_role="demo"
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold write auth/jwt/config \
    oidc_discovery_url="https://myco.auth0.com/" \
@@ -121,6 +136,7 @@ stronghold write auth/jwt/config \
    oidc_client_secret="f4ubv72nfiu23hnsj" \
    default_role="demo"
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -128,20 +144,24 @@ stronghold write auth/jwt/config \
 
 {{< tabs name="stronghold_cmd_76133" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold write auth/jwt/config \
    oidc_discovery_url="https://MYDOMAIN.eu.auth0.com/" \
    oidc_client_id="" \
    oidc_client_secret=""
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold write auth/jwt/config \
    oidc_discovery_url="https://MYDOMAIN.eu.auth0.com/" \
    oidc_client_id="" \
    oidc_client_secret=""
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -149,6 +169,7 @@ stronghold write auth/jwt/config \
 
 {{< tabs name="stronghold_cmd_81282" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold write auth/jwt/role/demo \
   allowed_redirect_uris="http://localhost:8250/oidc/callback" \
@@ -159,8 +180,10 @@ d8 stronghold write auth/jwt/role/demo \
   policies=webapps \
   ttl=1h
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold write auth/jwt/role/demo \
   allowed_redirect_uris="http://localhost:8250/oidc/callback" \
@@ -171,6 +194,7 @@ stronghold write auth/jwt/role/demo \
   policies=webapps \
   ttl=1h
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 

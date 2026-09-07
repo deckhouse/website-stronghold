@@ -22,16 +22,20 @@ Roles.
 
     {{< tabs name="stronghold_cmd_1716" >}}
     {{% tab name="Stronghold in DKP" %}}
+
     ```shell-session
     $ d8 stronghold secrets enable database
     Success! Enabled the database secrets engine at: database/
     ```
+
     {{% /tab %}}
     {{% tab name="Stronghold in Linux" %}}
+
     ```shell-session
     $ stronghold secrets enable database
     Success! Enabled the database secrets engine at: database/
     ```
+
     {{% /tab %}}
     {{< /tabs >}}
 
@@ -42,6 +46,7 @@ Roles.
 
     {{< tabs name="stronghold_cmd_83564" >}}
     {{% tab name="Stronghold in DKP" %}}
+
     ```shell-session
     $ d8 stronghold write database/config/my-postgresql-database \
         plugin_name="postgresql-database-plugin" \
@@ -51,8 +56,10 @@ Roles.
         password="strongholdpass" \
         password_authentication="scram-sha-256"
     ```
+
     {{% /tab %}}
     {{% tab name="Stronghold in Linux" %}}
+
     ```shell-session
     $ stronghold write database/config/my-postgresql-database \
         plugin_name="postgresql-database-plugin" \
@@ -62,6 +69,7 @@ Roles.
         password="strongholdpass" \
         password_authentication="scram-sha-256"
     ```
+
     {{% /tab %}}
     {{< /tabs >}}
 
@@ -70,6 +78,7 @@ Roles.
 
     {{< tabs name="stronghold_cmd_61534" >}}
     {{% tab name="Stronghold in DKP" %}}
+
     ```shell-session
     $ d8 stronghold write database/roles/my-role \
         db_name="my-postgresql-database" \
@@ -79,8 +88,10 @@ Roles.
         max_ttl="24h"
     Success! Data written to: database/roles/my-role
     ```
+
     {{% /tab %}}
     {{% tab name="Stronghold in Linux" %}}
+
     ```shell-session
     $ stronghold write database/roles/my-role \
         db_name="my-postgresql-database" \
@@ -90,6 +101,7 @@ Roles.
         max_ttl="24h"
     Success! Data written to: database/roles/my-role
     ```
+
     {{% /tab %}}
     {{< /tabs >}}
 
@@ -103,6 +115,7 @@ the proper permission, it can generate credentials.
 
     {{< tabs name="stronghold_cmd_90694" >}}
     {{% tab name="Stronghold in DKP" %}}
+
     ```shell-session
     $ d8 stronghold read database/creds/my-role
     Key                Value
@@ -113,8 +126,10 @@ the proper permission, it can generate credentials.
     password           SsnoaA-8Tv4t34f41baD
     username           v-strongholduse-my-role-x
     ```
+
     {{% /tab %}}
     {{% tab name="Stronghold in Linux" %}}
+
     ```shell-session
     $ stronghold read database/creds/my-role
     Key                Value
@@ -125,5 +140,6 @@ the proper permission, it can generate credentials.
     password           SsnoaA-8Tv4t34f41baD
     username           v-strongholduse-my-role-x
     ```
+
     {{% /tab %}}
     {{< /tabs >}}

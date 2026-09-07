@@ -84,14 +84,18 @@ hidden: true
 
    {{< tabs name="stronghold_cmd_594" >}}
    {{% tab name="Stronghold в DKP" %}}
+
    ```shell
    d8 stronghold status
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold в Linux" %}}
+
    ```shell
    stronghold status
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 

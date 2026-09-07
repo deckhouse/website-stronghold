@@ -30,16 +30,20 @@ MySQL - один из поддерживаемых плагинов для ме�
 
 {{< tabs name="stronghold_cmd_99650" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```text
 $ d8 stronghold secrets enable database
 Success! Enabled the database secrets engine at: database/
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```text
 $ stronghold secrets enable database
 Success! Enabled the database secrets engine at: database/
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -50,6 +54,7 @@ Success! Enabled the database secrets engine at: database/
 
 {{< tabs name="stronghold_cmd_33266" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```text
 $ d8 stronghold write database/config/my-mysql-database \
     plugin_name=mysql-database-plugin \
@@ -58,8 +63,10 @@ $ d8 stronghold write database/config/my-mysql-database \
     username="strongholduser" \
     password="strongholdpass"
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```text
 $ stronghold write database/config/my-mysql-database \
     plugin_name=mysql-database-plugin \
@@ -68,6 +75,7 @@ $ stronghold write database/config/my-mysql-database \
     username="strongholduser" \
     password="strongholdpass"
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -76,6 +84,7 @@ $ stronghold write database/config/my-mysql-database \
 
 {{< tabs name="stronghold_cmd_93540" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```text
 $ d8 stronghold write database/roles/my-role \
     db_name=my-mysql-database \
@@ -84,8 +93,10 @@ $ d8 stronghold write database/roles/my-role \
     max_ttl="24h"
 Success! Data written to: database/roles/my-role
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```text
 $ stronghold write database/roles/my-role \
     db_name=my-mysql-database \
@@ -94,6 +105,7 @@ $ stronghold write database/roles/my-role \
     max_ttl="24h"
 Success! Data written to: database/roles/my-role
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -106,6 +118,7 @@ Success! Data written to: database/roles/my-role
 
 {{< tabs name="stronghold_cmd_30896" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```text
 $ d8 stronghold read database/creds/my-role
 Key                Value
@@ -116,8 +129,10 @@ lease_renewable    true
 password           yY-57n3X5UQhxnmFRP3f
 username           v_strongholduser_my-role_crBWVqVh2Hc1
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```text
 $ stronghold read database/creds/my-role
 Key                Value
@@ -128,6 +143,7 @@ lease_renewable    true
 password           yY-57n3X5UQhxnmFRP3f
 username           v_strongholduser_my-role_crBWVqVh2Hc1
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -139,6 +155,7 @@ username           v_strongholduser_my-role_crBWVqVh2Hc1
 
 {{< tabs name="stronghold_cmd_74044" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell-session
 $ d8 stronghold write database/config/my-mysql-database \
     plugin_name=mysql-database-plugin \
@@ -147,8 +164,10 @@ $ d8 stronghold write database/config/my-mysql-database \
     tls_certificate_key=@/path/to/client.pem \
     tls_ca=@/path/to/client.ca
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell-session
 $ stronghold write database/config/my-mysql-database \
     plugin_name=mysql-database-plugin \
@@ -157,6 +176,7 @@ $ stronghold write database/config/my-mysql-database \
     tls_certificate_key=@/path/to/client.pem \
     tls_ca=@/path/to/client.ca
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -190,6 +210,7 @@ CLI, потому что shell интерпретирует текст межд�
 
 {{< tabs name="stronghold_cmd_60475" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell-session
 $ d8 stronghold write database/roles/my-role \
     db_name=mysql \
@@ -197,8 +218,10 @@ $ d8 stronghold write database/roles/my-role \
     default_ttl="1h" \
     max_ttl="24h"
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell-session
 $ stronghold write database/roles/my-role \
     db_name=mysql \
@@ -206,6 +229,7 @@ $ stronghold write database/roles/my-role \
     default_ttl="1h" \
     max_ttl="24h"
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -218,6 +242,7 @@ $ stronghold write database/roles/my-role \
 
 {{< tabs name="stronghold_cmd_82482" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell-session
 $ d8 stronghold write database/config/my-mysql-database \
     plugin_name=mysql-database-plugin \
@@ -227,8 +252,10 @@ $ d8 stronghold write database/config/my-mysql-database \
     username="root" \
     password="mysql"
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell-session
 $ stronghold write database/config/my-mysql-database \
     plugin_name=mysql-database-plugin \
@@ -238,5 +265,6 @@ $ stronghold write database/config/my-mysql-database \
     username="root" \
     password="mysql"
 ```
+
 {{% /tab %}}
 {{< /tabs >}}

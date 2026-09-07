@@ -26,6 +26,7 @@ path, specify `auth/my-path/login` instead.
 
 {{< tabs name="stronghold_cmd_27297" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell-session
 $ d8 stronghold write auth/approle/login \
     role_id=db02de05-fa39-4855-059b-67221c5c2f63 \
@@ -39,8 +40,10 @@ token_duration     20m0s
 token_renewable    true
 token_policies     [default]
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell-session
 $ stronghold write auth/approle/login \
     role_id=db02de05-fa39-4855-059b-67221c5c2f63 \
@@ -54,6 +57,7 @@ token_duration     20m0s
 token_renewable    true
 token_policies     [default]
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -96,14 +100,18 @@ management tool.
 
    {{< tabs name="stronghold_cmd_6914" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```shell-session
    d8 stronghold auth enable approle
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```shell-session
    stronghold auth enable approle
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -111,6 +119,7 @@ management tool.
 
    {{< tabs name="stronghold_cmd_91925" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```shell-session
    $ d8 stronghold write auth/approle/role/my-role \
        secret_id_ttl=10m \
@@ -119,8 +128,10 @@ management tool.
        token_max_ttl=30m \
        secret_id_num_uses=40
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```shell-session
    $ stronghold write auth/approle/role/my-role \
        secret_id_ttl=10m \
@@ -129,6 +140,7 @@ management tool.
        token_max_ttl=30m \
        secret_id_num_uses=40
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -144,16 +156,20 @@ documentation.
 
    {{< tabs name="stronghold_cmd_81093" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```shell-session
    $ d8 stronghold read auth/approle/role/my-role/role-id
    role_id     db02de05-fa39-4855-059b-67221c5c2f63
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```shell-session
    $ stronghold read auth/approle/role/my-role/role-id
    role_id     db02de05-fa39-4855-059b-67221c5c2f63
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 
@@ -161,6 +177,7 @@ documentation.
 
    {{< tabs name="stronghold_cmd_53681" >}}
    {{% tab name="Stronghold in DKP" %}}
+
    ```shell-session
    $ d8 stronghold write -f auth/approle/role/my-role/secret-id
    secret_id               6a174c20-f6de-a53c-74d2-6018fcceff64
@@ -168,8 +185,10 @@ documentation.
    secret_id_ttl           10m
    secret_id_num_uses      40
    ```
+
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
+
    ```shell-session
    $ stronghold write -f auth/approle/role/my-role/secret-id
    secret_id               6a174c20-f6de-a53c-74d2-6018fcceff64
@@ -177,6 +196,7 @@ documentation.
    secret_id_ttl           10m
    secret_id_num_uses      40
    ```
+
    {{% /tab %}}
    {{< /tabs >}}
 

@@ -31,14 +31,18 @@ Auth methods can be enabled/disabled using the CLI or the API.
 
 {{< tabs name="stronghold_cmd_16299" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell-session
 d8 stronghold auth enable userpass
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell-session
 stronghold auth enable userpass
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -53,14 +57,18 @@ auth method multiple times.
 
 {{< tabs name="stronghold_cmd_73169" >}}
 {{% tab name="Stronghold in DKP" %}}
+
 ```shell-session
 d8 stronghold auth enable -path=my-login userpass
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
+
 ```shell-session
 stronghold auth enable -path=my-login userpass
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 

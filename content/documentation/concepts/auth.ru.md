@@ -15,14 +15,18 @@ Stronghold поддерживает несколько методов аутен
 
 {{< tabs name="stronghold_cmd_35731" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold write sys/auth/my-auth type=userpass
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold write sys/auth/my-auth type=userpass
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -32,14 +36,18 @@ stronghold write sys/auth/my-auth type=userpass
 
 {{< tabs name="stronghold_cmd_81768" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold path-help auth/my-auth
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold path-help auth/my-auth
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -65,14 +73,18 @@ Stronghold поддерживает одновременно несколько 
 
 {{< tabs name="stronghold_cmd_6157" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold login -method=oidc
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold login -method=oidc
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -93,14 +105,18 @@ stronghold login -method=oidc
 
 {{< tabs name="stronghold_cmd_42184" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold path-help
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold path-help
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -117,13 +133,17 @@ stronghold path-help
 
 {{< tabs name="stronghold_cmd_60820" >}}
 {{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold token renew <token>
 ```
+
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
+
 ```shell
 stronghold token renew <token>
 ```
+
 {{% /tab %}}
 {{< /tabs >}}
