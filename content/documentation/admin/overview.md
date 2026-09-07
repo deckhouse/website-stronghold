@@ -4,49 +4,43 @@ linkTitle: "Overview"
 weight: 10
 ---
 
-This section is intended for administrators of Deckhouse Stronghold.
+This section is intended for Deckhouse Stronghold administrators.
 
-The platform’s Administrator Guide includes the following sections:
+The administrator guide includes the following sections:
 
-- Running on Linux OS
-  - [Running on Linux OS](../install/standalone/installation/) — quick installation and HA cluster deployment.
-  - [Configuration](../install/standalone/configuration/) – a guide to the Standalone execution configuration parameters.
-- Running on Deckhouse Kubernetes Platform
-  - [Platform Installation](../install/dkp/install/steps/prepare/) - environment preparation, installation, and initial access setup.
-  - [Platform Configuration](../install/dkp/platform-management/node-management/node-group/) – cluster node management, networking, storage systems, virtualization, and access control.
-  - [Platform Update](../install/dkp/update/update/) – configuring update modes and windows, and manual approval of updates.
-  - [Platform Removal](../install/dkp/removing/) – the process of removing the platform.
 - Audit
-  - [Introduction](./audit/overview/) - what Stronghold audit logs contain, which backends are supported, and how to configure auditing safely.
-  - [Audit log record schema](./audit/log-format/) - audit record structure, key objects, and protection of sensitive data.
-  - [Audit log filtering](./audit/filtering/) - select audit records by condition and configure a fallback device.
-  - [Audit field exclusion](./audit/exclusion/) - remove selected fields from audit records before they are stored.
-- Backups
-  - [Introduction](./backups/overview/) - overview of manual and automated backups for Stronghold integrated storage.
-  - [Save a storage snapshot](./backups/save/) - create a snapshot manually through CLI or API.
-  - [Inspect a snapshot](./backups/inspect/) - locally inspect snapshot contents and basic consistency before restore.
-  - [Restore from a snapshot](./backups/restore/) - restore a Stronghold cluster from a saved snapshot.
-  - [Automated snapshots](./backups/automated-snapshots/) - configure schedules, storage targets, and status checks for automated backups.
-- Replication
-  - [Overview](./replication/overview/) - native Performance and DR replication between Stronghold clusters.
-  - [Architecture: CE and EE](./replication/architecture/) - node layers and how their order shapes replication behavior.
-  - [Performance replication](./replication/performance/) - read scaling, secondary setup, and path filters.
-  - [Disaster recovery](./replication/disaster-recovery/) - hot standby, failover, and the promote ceremony.
-  - [Performance standby](./replication/performance-standby/) - serving reads from non-active HA nodes within a cluster.
-  - [KV1/KV2 replication](./replication/kv-replication/) - pull-based KV1/KV2 replication between Stronghold clusters. English documentation is in development.
-- Namespaces
-  - [Introduction](./namespaces/overview/) - isolate configuration and secrets between namespaces, manage them through CLI and API, and use Namespace API Lock.
-- Cryptographic algorithms
-  - [Introduction](./cryptography/overview/) - overview of TLS, storage encryption, HSM, and the algorithms available in PKI and Transit.
-- Plugins
-  - [Introduction](./plugins/overview/) - overview of built-in and external Stronghold plugins and the differences between Standalone and DKP.
-  - [Plugins in Standalone](./plugins/standalone/) - plugin directory, registration, versioning, and mounting of external plugins on Linux servers.
-  - [Plugins in DKP](./plugins/dkp/) - plugin delivery through `ModuleConfig`, registration, and enablement in Deckhouse Kubernetes Platform.
+  - ["Overview"](./audit/overview/): What Stronghold audit logs contain, which backends are supported, and how to configure auditing safely.
+  - ["Audit log record schema"](./audit/log-format/): Audit record structure, key objects, and protection of sensitive data.
+  - ["Audit log filtering"](./audit/filtering/): Selecting audit records by condition and configure a fallback device.
+  - ["Audit field exclusion"](./audit/exclusion/): Removing selected fields from audit records before they are stored.
+
+- Backup and restore
+  - ["Overview"](./backups/overview/): Overview of manual and automated backups for Stronghold integrated storage.
+  - ["Creating a snapshot"](./backups/save/): Creating a snapshot manually through CLI or API.
+  - ["Inspecting a snapshot"](./backups/inspect/): Inspecting snapshot contents and basic consistency locally.
+  - ["Restoring from a snapshot"](./backups/restore/): Restoring a Stronghold cluster from a saved snapshot.
+  - ["Automated snapshots"](./backups/automated-snapshots/): Configuring schedules, storage targets, and status checks for automated backups.
+
 - KMS and HSM
-  - [HSM support](./kms-hsm/hsm/) - PKCS11-based HSM integration for auto-unseal and root key protection; currently supported only for Standalone installations.
-  - [Yandex Cloud KMS](./kms-hsm/yandexcloudkms/) - configure `seal "yandexcloudkms"` for auto-unseal and root key protection; currently supported only for Standalone installations.
-  - [Double encryption](./kms-hsm/sealwrap/) - the `seal wrap` mechanism that adds an extra encryption layer for critical data.
+  - ["HSM support"](./kms-hsm/hsm/): PKCS11-based HSM integration for auto-unseal and root key protection; currently supported only for Standalone installations.
+  - ["Yandex Cloud KMS"](./kms-hsm/yandexcloudkms/): Configure `seal "yandexcloudkms"` for auto-unseal and root key protection; currently supported only for Standalone installations.
+  - ["Double encryption"](./kms-hsm/sealwrap/): The `seal wrap` mechanism that adds an extra encryption layer for critical data.
 
-If you have any questions, you can ask for assistance in our [Telegram channel](https://t.me/deckhouse). We will be happy to help and provide guidance.
+- Replication
+  - ["Overview"](./replication/overview/): Native Performance and DR replication between Stronghold clusters.
+  - ["Architecture: CE and EE"](./replication/architecture/): Node layers and how their order shapes replication behavior.
+  - ["Performance replication"](./replication/performance/): Read scaling, secondary setup, and path filters.
+  - ["Disaster recovery"](./replication/disaster-recovery/): Hot standby, failover, and the promote ceremony.
+  - ["Performance standby"](./replication/performance-standby/): Serving reads from non-active HA nodes within a cluster.
+  - ["KV1/KV2 replication"](./replication/kv-replication/): Pull-based KV1/KV2 replication between Stronghold clusters. English documentation is in development.
 
-If you are using the Enterprise edition, you can also email us at&nbsp;<a href="mailto:support@deckhouse.io">support@deckhouse.io</a> for additional support.
+- Namespaces
+  - ["Overview"](./namespaces/overview/): Isolate configuration and secrets between namespaces, manage them through CLI and API, and use Namespace API Lock.
+
+- Cryptographic algorithms
+  - ["Overview"](./cryptography/overview/): Overview of TLS, storage encryption, HSM, and the algorithms available in PKI and Transit.
+
+- Extensions and integrations
+  - ["Overview"](./plugins/overview/): Overview of built-in and external Stronghold plugins and the differences between Standalone and DKP.
+  - ["Plugins in Standalone"](./plugins/standalone/): Plugin directory, registration, versioning, and mounting of external plugins on Linux servers.
+  - ["Plugins in DKP"](./plugins/dkp/): Plugin delivery through `ModuleConfig`, registration, and enablement in Deckhouse Kubernetes Platform.

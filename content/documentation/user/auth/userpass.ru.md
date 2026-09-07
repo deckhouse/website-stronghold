@@ -23,19 +23,48 @@ weight: 50
 
 1. Включите метод аутентификации `userpass`:
 
+   {{< tabs name="stronghold_cmd_10" >}}
+   {{% tab name="Stronghold в DKP" %}}
+
    ```shell
    d8 stronghold auth enable userpass
    ```
+
+   {{% /tab %}}
+   {{% tab name="Stronghold в Linux" %}}
+
+   ```shell
+   stronghold auth enable userpass
+   ```
+
+   {{% /tab %}}
+   {{< /tabs >}}
 
    Метод будет включён по пути `auth/userpass`.
 
    Чтобы включить метод по другому пути, используйте флаг `-path`:
 
+   {{< tabs name="stronghold_cmd_24481" >}}
+   {{% tab name="Stronghold в DKP" %}}
+
    ```shell
    d8 stronghold auth enable -path=<userpass_mount_path> userpass
    ```
 
+   {{% /tab %}}
+   {{% tab name="Stronghold в Linux" %}}
+
+   ```shell
+   stronghold auth enable -path=<userpass_mount_path> userpass
+   ```
+
+   {{% /tab %}}
+   {{< /tabs >}}
+
 1. Создайте пользователя (если необходимо), которому разрешена аутентификация:
+
+   {{< tabs name="stronghold_cmd_67504" >}}
+   {{% tab name="Stronghold в DKP" %}}
 
    ```shell
    d8 stronghold write auth/<userpass_mount_path>/users/alice \
@@ -43,15 +72,40 @@ weight: 50
      token_policies=admins
    ```
 
+   {{% /tab %}}
+   {{% tab name="Stronghold в Linux" %}}
+
+   ```shell
+   stronghold write auth/<userpass_mount_path>/users/alice \
+     password=Pass-123! \
+     token_policies=admins
+   ```
+
+   {{% /tab %}}
+   {{< /tabs >}}
+
 В результате будет создан пользователь `alice` с паролем `Pass-123!` и [политикой](../../concepts/policy/) `admins`.
 
 ### Аутентификация пользователя с помощью метода userpass
 
 Пример команды для аутентификации пользователя с помощью метода `userpass`:
 
+{{< tabs name="stronghold_cmd_13653" >}}
+{{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold login -method=userpass username=alice password="Pass-123!"
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+
+```shell
+stronghold login -method=userpass username=alice password="Pass-123!"
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 ### Блокировка пользователя
 
@@ -76,9 +130,22 @@ d8 stronghold login -method=userpass username=alice password="Pass-123!"
 
 Функцию блокировки пользователя можно отключить с помощью команды `auth tune`, передав параметру `disable_lockout` значение `true`:
 
+{{< tabs name="stronghold_cmd_24697" >}}
+{{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold auth tune -user-lockout-disable=true userpass
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+
+```shell
+stronghold auth tune -user-lockout-disable=true userpass
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 {{< alert level="warning" >}}
 Функция блокировки пользователя поддерживается только методами аутентификации `userpass`, `ldap` и `approle`.
@@ -101,9 +168,22 @@ path "auth/userpass/users/{{identity.entity.aliases.<accessor>.name}}/password" 
 
 Значение `<accessor>` получите с помощью команды:
 
+{{< tabs name="stronghold_cmd_55997" >}}
+{{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold read -field=accessor sys/auth/userpass
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+
+```shell
+stronghold read -field=accessor sys/auth/userpass
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 Шаблон `{{identity.entity.aliases.<accessor>.name}}` автоматически подставляет имя аутентифицированного пользователя.
 Поэтому путь всегда указывает только на пароль текущего пользователя.
@@ -119,11 +199,27 @@ d8 stronghold read -field=accessor sys/auth/userpass
 
 1. Получите уникальный идентификатор метода:
 
+   {{< tabs name="stronghold_cmd_3381" >}}
+   {{% tab name="Stronghold в DKP" %}}
+
    ```shell
    ACCESSOR=$(d8 stronghold read -field=accessor sys/auth/userpass)
    ```
 
+   {{% /tab %}}
+   {{% tab name="Stronghold в Linux" %}}
+
+   ```shell
+   ACCESSOR=$(stronghold read -field=accessor sys/auth/userpass)
+   ```
+
+   {{% /tab %}}
+   {{< /tabs >}}
+
 1. Создайте политику, позволяющую пользователю, аутентифицированному через `userpass`, менять свой пароль:
+
+   {{< tabs name="stronghold_cmd_50546" >}}
+   {{% tab name="Stronghold в DKP" %}}
 
    ```shell
    d8 stronghold policy write self-change-password - <<EOF
@@ -133,26 +229,69 @@ d8 stronghold read -field=accessor sys/auth/userpass
    EOF
    ```
 
+   {{% /tab %}}
+   {{% tab name="Stronghold в Linux" %}}
+
+   ```shell
+   stronghold policy write self-change-password - <<EOF
+   path "auth/userpass/users/{{identity.entity.aliases.${ACCESSOR}.name}}/password" {
+     capabilities = ["update"]
+   }
+   EOF
+   ```
+
+   {{% /tab %}}
+   {{< /tabs >}}
+
 1. Привяжите политику к пользователю, которому нужно разрешить менять свой пароль:
 
 {{< tabs >}}
 {{% tab "Если пользователь существует" %}}
+
+{{< tabs name="stronghold_cmd_54664" >}}
+{{% tab name="Stronghold в DKP" %}}
 
 ```shell
 d8 stronghold write auth/userpass/users/alice/policies \
   token_policies="self-change-password"
 ```
 
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+
+```shell
+stronghold write auth/userpass/users/alice/policies \
+  token_policies="self-change-password"
+```
+
+{{% /tab %}}
+{{< /tabs >}}
+
 Этот пример привяжет политику `self-change-password` к существующему пользователю `alice`
 
 {{% /tab %}}
 {{% tab "Если пользователя не существует" %}}
+
+{{< tabs name="stronghold_cmd_90751" >}}
+{{% tab name="Stronghold в DKP" %}}
 
 ```shell
 d8 stronghold write auth/userpass/users/alice \
   password="OldPass-123!" \
   token_policies="self-change-password"
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+
+```shell
+stronghold write auth/userpass/users/alice \
+  password="OldPass-123!" \
+  token_policies="self-change-password"
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 Этот пример создаст пользователя `alice`, разрешит ему аутентификацию через `userpass` и привяжет к нему политику `self-change-password`.
 
@@ -164,17 +303,46 @@ d8 stronghold write auth/userpass/users/alice \
 
 1. Включите метод `userpass`:
 
+   {{< tabs name="stronghold_cmd_10" >}}
+   {{% tab name="Stronghold в DKP" %}}
+
    ```shell
    d8 stronghold auth enable userpass
    ```
 
+   {{% /tab %}}
+   {{% tab name="Stronghold в Linux" %}}
+
+   ```shell
+   stronghold auth enable userpass
+   ```
+
+   {{% /tab %}}
+   {{< /tabs >}}
+
 1. Получите уникальный идентификатор метода:
+
+   {{< tabs name="stronghold_cmd_3381" >}}
+   {{% tab name="Stronghold в DKP" %}}
 
    ```shell
    ACCESSOR=$(d8 stronghold read -field=accessor sys/auth/userpass)
    ```
 
+   {{% /tab %}}
+   {{% tab name="Stronghold в Linux" %}}
+
+   ```shell
+   ACCESSOR=$(stronghold read -field=accessor sys/auth/userpass)
+   ```
+
+   {{% /tab %}}
+   {{< /tabs >}}
+
 1. Создайте политику, позволяющую пользователю, аутентифицированному через `userpass`, менять свой пароль:
+
+   {{< tabs name="stronghold_cmd_50546" >}}
+   {{% tab name="Stronghold в DKP" %}}
 
    ```shell
    d8 stronghold policy write self-change-password - <<EOF
@@ -184,26 +352,69 @@ d8 stronghold write auth/userpass/users/alice \
    EOF
    ```
 
+   {{% /tab %}}
+   {{% tab name="Stronghold в Linux" %}}
+
+   ```shell
+   stronghold policy write self-change-password - <<EOF
+   path "auth/userpass/users/{{identity.entity.aliases.${ACCESSOR}.name}}/password" {
+     capabilities = ["update"]
+   }
+   EOF
+   ```
+
+   {{% /tab %}}
+   {{< /tabs >}}
+
 1. Привяжите политику к пользователю, которому нужно разрешить менять свой пароль:
 
 {{< tabs >}}
 {{% tab "Если пользователь существует" %}}
+
+{{< tabs name="stronghold_cmd_54664" >}}
+{{% tab name="Stronghold в DKP" %}}
 
 ```shell
 d8 stronghold write auth/userpass/users/alice/policies \
   token_policies="self-change-password"
 ```
 
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+
+```shell
+stronghold write auth/userpass/users/alice/policies \
+  token_policies="self-change-password"
+```
+
+{{% /tab %}}
+{{< /tabs >}}
+
 Этот пример привяжет политику `self-change-password` к существующему пользователю `alice`
 
 {{% /tab %}}
 {{% tab "Если пользователя не существует" %}}
+
+{{< tabs name="stronghold_cmd_90751" >}}
+{{% tab name="Stronghold в DKP" %}}
 
 ```shell
 d8 stronghold write auth/userpass/users/alice \
   password="OldPass-123!" \
   token_policies="self-change-password"
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+
+```shell
+stronghold write auth/userpass/users/alice \
+  password="OldPass-123!" \
+  token_policies="self-change-password"
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 Этот пример создаст пользователя `alice`, разрешит ему аутентификацию через `userpass` и привяжет к нему политику `self-change-password`.
 
@@ -219,9 +430,22 @@ d8 stronghold write auth/userpass/users/alice \
 
 Пример команды для смены пользователем своего пароля:
 
+{{< tabs name="stronghold_cmd_95815" >}}
+{{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold write auth/userpass/users/alice/password password="NewPass-456!"
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+
+```shell
+stronghold write auth/userpass/users/alice/password password="NewPass-456!"
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 Если пользователь попытается изменить чужой пароль, Stronghold вернёт ошибку `permission denied`.
 При указании пользователем неверных учетных данных при смене пароля возможна его [блокировка](#блокировка-пользователя).
@@ -240,6 +464,19 @@ d8 stronghold write auth/userpass/users/alice/password password="NewPass-456!"
 
 Чтобы для метода `userpass` вместо политики паролей по умолчанию использовать пользовательскую политику, выполните команду (вместо `policy_name` укажите название нужной политики):
 
+{{< tabs name="stronghold_cmd_86644" >}}
+{{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold write auth/userpass/password-policy/{policy_name}
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+
+```shell
+stronghold write auth/userpass/password-policy/{policy_name}
+```
+
+{{% /tab %}}
+{{< /tabs >}}

@@ -30,9 +30,22 @@ description: "Настройка репликации Performance между к�
 
 ## Шаг 1. Включите primary
 
+{{< tabs name="stronghold_cmd_10766" >}}
+{{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold write -force sys/replication/performance/primary/enable
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+
+```shell
+stronghold write -force sys/replication/performance/primary/enable
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 {{< alert level="warning" >}}
 Включение primary перезапускает ядро, и на несколько секунд узел становится
@@ -45,10 +58,24 @@ d8 stronghold write -force sys/replication/performance/primary/enable
 Сгенерируйте wrapping-токен активации для конкретного secondary, заданного через
 `id`:
 
+{{< tabs name="stronghold_cmd_30185" >}}
+{{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold write sys/replication/performance/primary/secondary-token \
   id=sec-1 ttl=24h
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+
+```shell
+stronghold write sys/replication/performance/primary/secondary-token \
+  id=sec-1 ttl=24h
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 Параметр `id` обязателен, `ttl` по умолчанию — `24h`. Команда возвращает
 одноразовый wrapping-токен в поле `wrap_info.token` — его и передайте на
@@ -98,9 +125,22 @@ root-токен secondary перестаёт работать. Выполняй�
 
 ## Шаг 4. Проверьте статус
 
+{{< tabs name="stronghold_cmd_33280" >}}
+{{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold read -address="${SECONDARY_ADDR}" sys/replication/performance/status
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+
+```shell
+stronghold read -address="${SECONDARY_ADDR}" sys/replication/performance/status
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 Когда secondary подключён и тянет WAL, поле `state` равно `stream-wals`, а
 `connection_state` — `ready`. Secondary догнал primary, когда его `last_wal`
@@ -112,6 +152,9 @@ d8 stronghold read -address="${SECONDARY_ADDR}" sys/replication/performance/stat
 реплицированный метод аутентификации (шаг 3): root-токен primary на secondary
 недействителен.
 
+{{< tabs name="stronghold_cmd_48194" >}}
+{{% tab name="Stronghold в DKP" %}}
+
 ```shell
 # Запись на primary.
 d8 stronghold kv put -address="${PRIMARY_ADDR}" secret/hello value=world
@@ -122,6 +165,23 @@ d8 stronghold kv get -address="${SECONDARY_ADDR}" secret/hello
 # Запись на secondary перенаправляется на primary и возвращается через WAL.
 d8 stronghold kv put -address="${SECONDARY_ADDR}" secret/fromsec value=1
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+
+```shell
+# Запись на primary.
+stronghold kv put -address="${PRIMARY_ADDR}" secret/hello value=world
+
+# Чтение на secondary после схождения.
+stronghold kv get -address="${SECONDARY_ADDR}" secret/hello
+
+# Запись на secondary перенаправляется на primary и возвращается через WAL.
+stronghold kv put -address="${SECONDARY_ADDR}" secret/fromsec value=1
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 ## Фильтры путей
 

@@ -22,25 +22,56 @@ Stronghold в качестве OIDC-провайдера.
 
 1. Включите метод аутентификации Stronghold:
 
+{{< tabs name="stronghold_cmd_98347" >}}
+{{% tab name="Stronghold в DKP" %}}
+
 ```text
 $ d8 stronghold auth enable userpass
 Success! Enabled userpass auth method at: userpass/
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+
+```text
+$ stronghold auth enable userpass
+Success! Enabled userpass auth method at: userpass/
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
    В режиме OIDC можно использовать любой метод аутентификации Stronghold. Для простоты включите
    метод аутентификации `userpass`.
 
 1. Создайте пользователя:
 
+{{< tabs name="stronghold_cmd_15681" >}}
+{{% tab name="Stronghold в DKP" %}}
+
 ```text
 $ d8 stronghold write auth/userpass/users/end-user password="securepassword"
 Success! Data written to: auth/userpass/users/end-user
 ```
 
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+
+```text
+$ stronghold write auth/userpass/users/end-user password="securepassword"
+Success! Data written to: auth/userpass/users/end-user
+```
+
+{{% /tab %}}
+{{< /tabs >}}
+
 Этот пользователь аутентифицируется в Stronghold через клиентское приложение, иначе известное как
 OIDC [relying party](https://openid.net/specs/openid-connect-core-1_0.html#Terminology).
 
 1. Создайте клиентское приложение:
+
+{{< tabs name="stronghold_cmd_3004" >}}
+{{% tab name="Stronghold в DKP" %}}
 
 ```text
 $ d8 stronghold write identity/oidc/client/my-webapp \
@@ -49,6 +80,19 @@ $ d8 stronghold write identity/oidc/client/my-webapp \
 Success! Data written to: identity/oidc/client/my-webapp
 ```
 
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+
+```text
+$ stronghold write identity/oidc/client/my-webapp \
+  redirect_uris="https://localhost:9702/auth/oidc-callback" \
+  assignments="allow_all"
+Success! Data written to: identity/oidc/client/my-webapp
+```
+
+{{% /tab %}}
+{{< /tabs >}}
+
    Эта операция создает клиентское приложение, которое может быть использовано для настройки OIDC доверяющей стороны.
 
    Параметр `assignments` ограничивает сущности и группы Stronghold, которым разрешена
@@ -56,6 +100,9 @@ Success! Data written to: identity/oidc/client/my-webapp
    Чтобы разрешить аутентификацию всем сущностям Stronghold, используется встроенное назначение `allow_all`.
 
 1. Считывание учетных данных клиента:
+
+{{< tabs name="stronghold_cmd_24531" >}}
+{{% tab name="Stronghold в DKP" %}}
 
 ```text
 $ d8 stronghold read identity/oidc/client/my-webapp
@@ -71,6 +118,27 @@ id_token_ttl        24h
 key                 default
 redirect_uris       [https://localhost:9702/auth/oidc-callback]
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+
+```text
+$ stronghold read identity/oidc/client/my-webapp
+
+Key                 Value
+---                 -----
+access_token_ttl    24h
+assignments         [allow_all]
+client_id           GSDTnn3KaOrLpNlVGlYLS9TVsZgOTweO
+client_secret       hvo_secret_gBKHcTP58C4aq7FqPWsuqKgpiiegd7ahpifGae9WGkHRCwFEJTZA9KGdNVpzE0r8
+client_type         confidential
+id_token_ttl        24h
+key                 default
+redirect_uris       [https://localhost:9702/auth/oidc-callback]
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 Параметры `client_id` и `client_secret` - это учетные данные клиентского приложения. Эти
 значения обычно требуются при настройке доверяющей стороны OIDC.

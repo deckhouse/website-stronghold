@@ -17,17 +17,45 @@ weight: 60
 
 В этом примере пользователь выполняет вход в систему, используя токен:
 
+{{< tabs name="stronghold_cmd_98272" >}}
+{{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold login token=<token>
 ```
 
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+
+```shell
+stronghold login token=<token>
+```
+
+{{% /tab %}}
+{{< /tabs >}}
+
 В следующем примере пользователь выполняет вход в систему с использованием метода аутентификации `userpass`. Пользователь вводит свои учетные данные в формате `username=значение` и `password=значение`.
+
+{{< tabs name="stronghold_cmd_6358" >}}
+{{% tab name="Stronghold в DKP" %}}
 
 ```shell
 d8 stronghold login -method=userpass \
    username=mitchellh \
    password=foo
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+
+```shell
+stronghold login -method=userpass \
+   username=mitchellh \
+   password=foo
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 ##### Через API
 

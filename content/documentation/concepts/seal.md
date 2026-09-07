@@ -266,9 +266,22 @@ All unseal commands must specify the `-migrate` flag. Once you enter the require
 threshold of unseal keys, Stronghold migrates the unseal keys to recovery
 keys.
 
+{{< tabs name="stronghold_cmd_64419" >}}
+{{% tab name="Stronghold in DKP" %}}
+
 ```bash
 d8 stronghold operator unseal -migrate
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+
+```bash
+stronghold operator unseal -migrate
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 #### Migration from auto unseal to Shamir
 

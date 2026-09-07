@@ -4,29 +4,57 @@ weight: 25
 description: "Локальная проверка и анализ снимка встроенного Raft-хранилища Stronghold."
 ---
 
-Команда `stronghold operator raft snapshot inspect` позволяет проверить и проанализировать уже созданный файл снимка без восстановления его в кластер.
+Вы можете проверить и проанализировать созданный файл снимка без восстановления его в кластере с помощью команды `d8 stronghold operator raft snapshot inspect`.
 
-В отличие от `snapshot save` и `snapshot restore`, эта команда работает **локально** и не требует подключения к работающему серверу Stronghold. Это делает её удобной для валидации резервных копий, первичной диагностики и анализа содержимого снимка перед восстановлением.
+В отличие от `snapshot save` и `snapshot restore`, эта команда работает **локально** и не требует подключения к работающему серверу Stronghold. Это упрощает валидацию резервных копий, первичную диагностику и анализ содержимого снимка перед восстановлением.
 
 {{< alert level="warning" >}}
-Команда `inspect` относится к снимкам интегрированного Raft-хранилища. Если Stronghold использует `etcd`, `postgresql` или другой внешний backend, проверку резервной копии нужно выполнять средствами соответствующего хранилища.
+Команда `inspect` относится к снимкам интегрированного Raft-хранилища. Если Stronghold использует etcd, PostgreSQL или другой внешний бэкенд, проверку резервной копии нужно выполнять средствами соответствующего хранилища.
 {{< /alert >}}
 
 ## Базовое использование
 
+Для проверки снимка выполните следующую команду, указав вместо `<SNAPSHOT_FILE>` путь к файлу снимка:
+
+{{< tabs name="stronghold_cmd_30895" >}}
+{{% tab name="Stronghold в DKP" %}}
+
 ```shell
-stronghold operator raft snapshot inspect <snapshot_file>
+d8 stronghold operator raft snapshot inspect <SNAPSHOT_FILE>
 ```
 
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+
+```shell
+stronghold operator raft snapshot inspect <SNAPSHOT_FILE>
+```
+
+{{% /tab %}}
+{{< /tabs >}}
+
 Пример:
+
+{{< tabs name="stronghold_cmd_60240" >}}
+{{% tab name="Stronghold в DKP" %}}
+
+```shell
+d8 stronghold operator raft snapshot inspect raft.snap
+```
+
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
 
 ```shell
 stronghold operator raft snapshot inspect raft.snap
 ```
 
+{{% /tab %}}
+{{< /tabs >}}
+
 Команда выводит сводную информацию о снимке и таблицу с количеством ключей и их суммарным размером по группам.
 
-## Что показывает команда
+### Вывод команды
 
 В стандартном выводе отображаются:
 
@@ -52,7 +80,7 @@ sys/policy                                        3          3.4 KB
 core/cluster                                      2          236 B
 ```
 
-## Основные флаги
+### Основные флаги
 
 | Флаг | Описание |
 |------|----------|
@@ -62,61 +90,108 @@ core/cluster                                      2          236 B
 | `-format` | Формат вывода: `table` или `json`. |
 | `-validate` | Выполняет дополнительную проверку консистентности снимка. |
 
-## Полезные сценарии
+## Сценарии использования
 
 ### Быстрая проверка после создания резервной копии
 
 Сразу после создания снимка можно проверить, что файл читается и содержит ожидаемые данные:
+
+{{< tabs name="stronghold_cmd_11011" >}}
+{{% tab name="Stronghold в DKP" %}}
+
+```shell
+d8 stronghold operator raft snapshot save /backup/raft.snap
+d8 stronghold operator raft snapshot inspect /backup/raft.snap
+```
+
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
 
 ```shell
 stronghold operator raft snapshot save /backup/raft.snap
 stronghold operator raft snapshot inspect /backup/raft.snap
 ```
 
+{{% /tab %}}
+{{< /tabs >}}
+
 ### Проверка консистентности снимка
 
 Для расширенной проверки используйте флаг `-validate`:
+
+{{< tabs name="stronghold_cmd_82428" >}}
+{{% tab name="Stronghold в DKP" %}}
+
+```shell
+d8 stronghold operator raft snapshot inspect -validate raft.snap
+```
+
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
 
 ```shell
 stronghold operator raft snapshot inspect -validate raft.snap
 ```
 
+{{% /tab %}}
+{{< /tabs >}}
+
 Такая проверка помогает убедиться, что:
 
 - снимок не пустой;
 - содержимое `state.bin` корректно разбирается;
-- в снимке присутствуют критические пути, например `core` и `sys`.
+- в снимке присутствуют критические пути, например, `core` и `sys`.
 
 Это полезно для автоматических проверок резервных копий, но не заменяет полноценного тестового восстановления.
 
 ### Анализ отдельных префиксов
 
-Чтобы посмотреть только интересующую часть данных, используйте `-filter` и `-depth`:
+Чтобы посмотреть определённую часть данных, используйте флаги `-filter` и `-depth`:
+
+{{< tabs name="stronghold_cmd_98176" >}}
+{{% tab name="Stronghold в DKP" %}}
+
+```shell
+d8 stronghold operator raft snapshot inspect -depth 3 -filter=core raft.snap
+```
+
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
 
 ```shell
 stronghold operator raft snapshot inspect -depth 3 -filter=core raft.snap
 ```
 
+{{% /tab %}}
+{{< /tabs >}}
+
 Это удобно для диагностики роста хранилища или поиска крупных групп ключей.
 
 ### Вывод в формате JSON
 
-Для интеграции со скриптами и monitoring-сценариями можно использовать JSON:
+Для интеграции со скриптами и сценариями мониторинга можно использовать JSON:
+
+{{< tabs name="stronghold_cmd_96016" >}}
+{{% tab name="Stronghold в DKP" %}}
+
+```shell
+d8 stronghold operator raft snapshot inspect -format=json raft.snap
+```
+
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
 
 ```shell
 stronghold operator raft snapshot inspect -format=json raft.snap
 ```
 
-При использовании `-validate` JSON-вывод удобно обрабатывать автоматически, например через `jq`.
+{{% /tab %}}
+{{< /tabs >}}
+
+При использовании `-validate` JSON-вывод удобно обрабатывать автоматически, например, через `jq`.
 
 ## Что важно учитывать
 
-- `inspect` не восстанавливает снимок и не изменяет состояние кластера;
-- проверка контрольных сумм и базовой структуры не гарантирует, что снимок точно подойдёт для восстановления в конкретный кластер;
-- для полной уверенности в восстановимости нужно периодически выполнять тестовое восстановление на отдельном контуре.
-
-## См. также
-
-- [Создание снимка](./save/)
-- [Восстановление из снимка](./restore/)
-- [Автоматические снимки](./automated-snapshots/)
+- Команда `inspect` не восстанавливает снимок и не изменяет состояние кластера.
+- Проверка контрольных сумм и базовой структуры не гарантирует, что снимок точно подойдёт для восстановления в конкретный кластер.
+- Для полной уверенности в том, что снимок позволяет корректно восстановить данные, периодически выполняйте тестовое восстановление на отдельном контуре.

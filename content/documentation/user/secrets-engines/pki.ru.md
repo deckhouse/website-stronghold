@@ -12,7 +12,7 @@ weight: 20
 Кроме того, благодаря возможности обойтись без отзыва, этот механизм секретов позволяет использовать эфемерные сертификаты. Сертификаты могут извлекаться и храниться в памяти при запуске приложения и удаляться при завершении работы, никогда не записываясь на диск.
 
 {{< alert level="info" >}}
-Работа с сертификатами и механизмом PKI также рассмотрена [в курсе «Установка и обзор Deckhouse Stronghold»](https://education.flant.ru/course/ustanovka-i-obzor-deckhouse-stronghold/).
+Работа с сертификатами и механизмом PKI также рассмотрена [в курсе «Обзор возможностей Deckhouse Stronghold»](https://education.flant.ru/course/obzor-vozmozhnostej-deckhouse-stronghold/).
 {{< /alert >}}
 
 ## Настройка
@@ -21,23 +21,54 @@ weight: 20
 
 1. Включите механизм секретов PKI:
 
+   {{< tabs name="stronghold_cmd_54596" >}}
+   {{% tab name="Stronghold в DKP" %}}
+
    ```shell
    $ d8 stronghold secrets enable pki
    Success! Enabled the pki secrets engine at: pki/
    ```
 
+   {{% /tab %}}
+   {{% tab name="Stronghold в Linux" %}}
+
+   ```shell
+   $ stronghold secrets enable pki
+   Success! Enabled the pki secrets engine at: pki/
+   ```
+
+   {{% /tab %}}
+   {{< /tabs >}}
+
    По умолчанию механизм секретов будет установлен с именем движка. Чтобы включить механизм секретов по другому пути, используйте аргумент `-path`.
 
 1. Увеличьте TTL, настроив механизм секретов. Значение по умолчанию в 30 дней может быть слишком коротким, поэтому увеличьте его до 1 года:
+
+   {{< tabs name="stronghold_cmd_45615" >}}
+   {{% tab name="Stronghold в DKP" %}}
 
    ```shell
    $ d8 stronghold secrets tune -max-lease-ttl=8760h pki
    Success! Tuned the secrets engine at: pki/
    ```
 
+   {{% /tab %}}
+   {{% tab name="Stronghold в Linux" %}}
+
+   ```shell
+   $ stronghold secrets tune -max-lease-ttl=8760h pki
+   Success! Tuned the secrets engine at: pki/
+   ```
+
+   {{% /tab %}}
+   {{< /tabs >}}
+
    Обратите внимание, что отдельные роли могут ограничивать это значение до более короткого на основе каждого сертификата. Это лишь настраивает глобальное максимальное значение для этого механизма секретов.
 
 1. Настройте сертификат CA и приватный ключ. Stronghold может использовать уже существующую пару ключей или сгенерировать собственный самоподписанный корневой сертификат. В общем случае, мы рекомендуем поддерживать ваш корневой CA вне Stronghold и предоставлять Stronghold подписанный промежуточный CA.
+
+   {{< tabs name="stronghold_cmd_68298" >}}
+   {{% tab name="Stronghold в DKP" %}}
 
    ```shell
    $ d8 stronghold write pki/root/generate/internal \
@@ -52,9 +83,31 @@ weight: 20
    serial_number    fc:f1:fb:2c:6d:4d:99:1e:82:1b:08:0a:81:ed:61:3e:1d:fa:f5:29
    ```
 
+   {{% /tab %}}
+   {{% tab name="Stronghold в Linux" %}}
+
+   ```shell
+   $ stronghold write pki/root/generate/internal \
+        common_name=my-website.ru \
+        ttl=8760h
+   
+   Key              Value
+   ---              -----
+   certificate      -----BEGIN CERTIFICATE-----...
+   expiration       1756317679
+   issuing_ca       -----BEGIN CERTIFICATE-----...
+   serial_number    fc:f1:fb:2c:6d:4d:99:1e:82:1b:08:0a:81:ed:61:3e:1d:fa:f5:29
+   ```
+
+   {{% /tab %}}
+   {{< /tabs >}}
+
    Возвращаемый сертификат является чисто информативным. Закрытый ключ безопасно хранится внутри Stronghold.
 
 1. Обновите местоположение CRL и выпускающие сертификаты. Эти значения могут быть обновлены в будущем.
+
+   {{< tabs name="stronghold_cmd_23698" >}}
+   {{% tab name="Stronghold в DKP" %}}
 
    ```shell
    $ d8 stronghold write pki/config/urls \
@@ -63,7 +116,23 @@ weight: 20
    Success! Data written to: pki/config/urls
    ```
 
+   {{% /tab %}}
+   {{% tab name="Stronghold в Linux" %}}
+
+   ```shell
+   $ stronghold write pki/config/urls \
+        issuing_certificates="http://127.0.0.1:8200/v1/pki/ca" \
+        crl_distribution_points="http://127.0.0.1:8200/v1/pki/crl"
+   Success! Data written to: pki/config/urls
+   ```
+
+   {{% /tab %}}
+   {{< /tabs >}}
+
 1. Настройте роль, которая сопоставляет имя в Stronghold с процедурой генерации сертификата. Когда пользователи или машины генерируют учетные данные, они генерируются для этой роли:
+
+   {{< tabs name="stronghold_cmd_44323" >}}
+   {{% tab name="Stronghold в DKP" %}}
 
    ```shell
    $ d8 stronghold write pki/roles/example-dot-ru \
@@ -73,11 +142,28 @@ weight: 20
    Success! Data written to: pki/roles/example-dot-ru
    ```
 
+   {{% /tab %}}
+   {{% tab name="Stronghold в Linux" %}}
+
+   ```shell
+   $ stronghold write pki/roles/example-dot-ru \
+        allowed_domains=my-website.ru \
+        allow_subdomains=true \
+        max_ttl=72h
+   Success! Data written to: pki/roles/example-dot-ru
+   ```
+
+   {{% /tab %}}
+   {{< /tabs >}}
+
 ## Использование
 
 После того как механизм секретов настроен и у пользователя/машины есть Stronghold-токен с соответствующими правами, можно генерировать учетные данные.
 
 1. Сгенерируйте новые учетные данные, записав их в путь `/issue` с именем роли:
+
+   {{< tabs name="stronghold_cmd_86742" >}}
+   {{% tab name="Stronghold в DKP" %}}
 
    ```shell
    $ d8 stronghold write pki/issue/example-dot-ru \
@@ -91,5 +177,24 @@ weight: 20
    private_key_type    rsa
    serial_number       1d:2e:c6:06:45:18:60:0e:23:d6:c5:17:43:c0:fe:46:ed:d1:50:be
    ```
+
+   {{% /tab %}}
+   {{% tab name="Stronghold в Linux" %}}
+
+   ```shell
+   $ stronghold write pki/issue/example-dot-ru \
+        common_name=www.my-website.ru
+   
+   Key                 Value
+   ---                 -----
+   certificate         -----BEGIN CERTIFICATE-----...
+   issuing_ca          -----BEGIN CERTIFICATE-----...
+   private_key         -----BEGIN RSA PRIVATE KEY-----...
+   private_key_type    rsa
+   serial_number       1d:2e:c6:06:45:18:60:0e:23:d6:c5:17:43:c0:fe:46:ed:d1:50:be
+   ```
+
+   {{% /tab %}}
+   {{< /tabs >}}
 
    Вывод будет включать динамически сгенерированный закрытый ключ и сертификат, который соответствует данной роли и истекает через 72 часа (как указано в нашем определении роли). Также возвращаются выпускающий CA и цепочка доверия для упрощения автоматизации.

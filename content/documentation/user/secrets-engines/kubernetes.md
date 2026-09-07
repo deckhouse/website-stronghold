@@ -189,22 +189,52 @@ management tool.
 
 1. Enable the Kubernetes Secrets Engine:
 
+   {{< tabs name="stronghold_cmd_99999" >}}
+   {{% tab name="Stronghold in DKP" %}}
+
    ```shell-session
    $ d8 stronghold secrets enable kubernetes
    Success! Enabled the kubernetes Secrets Engine at: kubernetes/
    ```
+
+   {{% /tab %}}
+   {{% tab name="Stronghold in Linux" %}}
+
+   ```shell-session
+   $ stronghold secrets enable kubernetes
+   Success! Enabled the kubernetes Secrets Engine at: kubernetes/
+   ```
+
+   {{% /tab %}}
+   {{< /tabs >}}
 
    By default, the secrets engine will mount at the same name as the engine, i.e.,
    `kubernetes/` here. This can be changed by passing the `-path` argument when enabling.
 
 1. Configure the mount point. An empty config is allowed.
 
+   {{< tabs name="stronghold_cmd_26263" >}}
+   {{% tab name="Stronghold in DKP" %}}
+
    ```shell-session
    d8 stronghold write -f kubernetes/config
    ```
 
+   {{% /tab %}}
+   {{% tab name="Stronghold in Linux" %}}
+
+   ```shell-session
+   stronghold write -f kubernetes/config
+   ```
+
+   {{% /tab %}}
+   {{< /tabs >}}
+
 1. You can now configure Kubernetes Secrets Engine to create an Stronghold role (**not** the same as a
    Kubernetes role) that can generate service account tokens for the given service account:
+
+   {{< tabs name="stronghold_cmd_75004" >}}
+   {{% tab name="Stronghold in DKP" %}}
 
    ```shell-session
    $ d8 stronghold write kubernetes/roles/my-role \
@@ -213,10 +243,26 @@ management tool.
        token_default_ttl="10m"
    ```
 
+   {{% /tab %}}
+   {{% tab name="Stronghold in Linux" %}}
+
+   ```shell-session
+   $ stronghold write kubernetes/roles/my-role \
+       allowed_kubernetes_namespaces="*" \
+       service_account_name="test-service-account-with-generated-token" \
+       token_default_ttl="10m"
+   ```
+
+   {{% /tab %}}
+   {{< /tabs >}}
+
 ## Generating credentials
 
 After a user has authenticated to Stronghold and has sufficient permissions, a write to the
 `creds` endpoint for the Stronghold role will generate and return a new service account token.
+
+{{< tabs name="stronghold_cmd_24195" >}}
+{{% tab name="Stronghold in DKP" %}}
 
 ```shell-session
 $ d8 stronghold write kubernetes/creds/my-role \
@@ -231,6 +277,26 @@ service_account_name       test-service-account-with-generated-token
 service_account_namespace  test
 service_account_token      eyJHbGci0iJSUzI1NiIsImtpZCI6ImlrUEE...
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+
+```shell-session
+$ stronghold write kubernetes/creds/my-role \
+    kubernetes_namespace=test
+
+Key                        Value
+–--                        -----
+lease_id                   kubernetes/creds/my-role/31d771a6-...
+lease_duration             10m0s
+lease_renwable             false
+service_account_name       test-service-account-with-generated-token
+service_account_namespace  test
+service_account_token      eyJHbGci0iJSUzI1NiIsImtpZCI6ImlrUEE...
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 You can use the service account token above (`eyJHbG...`) with any Kubernetes API request that
 its service account is authorized for (through role bindings).
@@ -272,6 +338,9 @@ automatically revoked.
 You can set a default (`token_default_ttl`) and a maximum TTL (`token_max_ttl`) when
 creating or tuning the Stronghold role.
 
+{{< tabs name="stronghold_cmd_51431" >}}
+{{% tab name="Stronghold in DKP" %}}
+
 ```shell-session
 $ d8 stronghold write kubernetes/roles/my-role \
     allowed_kubernetes_namespaces="*" \
@@ -280,9 +349,26 @@ $ d8 stronghold write kubernetes/roles/my-role \
     token_max_ttl="2h"
 ```
 
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+
+```shell-session
+$ stronghold write kubernetes/roles/my-role \
+    allowed_kubernetes_namespaces="*" \
+    service_account_name="new-service-account-with-generated-token" \
+    token_default_ttl="10m" \
+    token_max_ttl="2h"
+```
+
+{{% /tab %}}
+{{< /tabs >}}
+
 You can also set a TTL (`ttl`) when you generate the token from the credentials endpoint.
 The TTL of the token will be given the default if not specified (and cannot exceed the
 maximum TTL of the role, if present).
+
+{{< tabs name="stronghold_cmd_43148" >}}
+{{% tab name="Stronghold in DKP" %}}
 
 ```shell-session
 $ d8 stronghold write kubernetes/creds/my-role \
@@ -298,6 +384,27 @@ service_account_name       new-service-account-with-generated-token
 service_account_namespace  test
 service_account_token      eyJHbGci0iJSUzI1NiIsImtpZCI6ImlrUEE...
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+
+```shell-session
+$ stronghold write kubernetes/creds/my-role \
+    kubernetes_namespace=test \
+    ttl=20m
+
+Key                        Value
+–--                        -----
+lease_id                   kubernetes/creds/my-role/31d771a6-...
+lease_duration             20m0s
+lease_renwable             false
+service_account_name       new-service-account-with-generated-token
+service_account_namespace  test
+service_account_token      eyJHbGci0iJSUzI1NiIsImtpZCI6ImlrUEE...
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 You can verify the token's TTL by decoding the JWT token and extracting the `iat`
 (issued at) and `exp` (expiration time) claims.
@@ -315,6 +422,9 @@ Kubernetes service account tokens have audiences.
 You can set default audiences (`token_default_audiences`) when creating or tuning the Stronghold role.
 The Kubernetes cluster default audiences for service account tokens will be used if not specified.
 
+{{< tabs name="stronghold_cmd_83269" >}}
+{{% tab name="Stronghold in DKP" %}}
+
 ```shell-session
 $ d8 stronghold write kubernetes/roles/my-role \
     allowed_kubernetes_namespaces="*" \
@@ -322,8 +432,24 @@ $ d8 stronghold write kubernetes/roles/my-role \
     token_default_audiences="custom-audience"
 ```
 
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+
+```shell-session
+$ stronghold write kubernetes/roles/my-role \
+    allowed_kubernetes_namespaces="*" \
+    service_account_name="new-service-account-with-generated-token" \
+    token_default_audiences="custom-audience"
+```
+
+{{% /tab %}}
+{{< /tabs >}}
+
 You can also set audiences (`audiences`) when you generate the token from the credentials endpoint.
 The audiences of the token will be given the default audiences if not specified.
+
+{{< tabs name="stronghold_cmd_29349" >}}
+{{% tab name="Stronghold in DKP" %}}
 
 ```shell-session
 $ d8 stronghold write kubernetes/creds/my-role \
@@ -339,6 +465,27 @@ service_account_name       new-service-account-with-generated-token
 service_account_namespace  test
 service_account_token      eyJHbGci0iJSUzI1NiIsImtpZCI6ImlrUEE...
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+
+```shell-session
+$ stronghold write kubernetes/creds/my-role \
+    kubernetes_namespace=test \
+    audiences="another-custom-audience"
+
+Key                        Value
+–--                        -----
+lease_id                   kubernetes/creds/my-role/SriWQf0bPZ...
+lease_duration             768h
+lease_renwable             false
+service_account_name       new-service-account-with-generated-token
+service_account_namespace  test
+service_account_token      eyJHbGci0iJSUzI1NiIsImtpZCI6ImlrUEE...
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 You can verify the token's audiences by decoding the JWT.
 
@@ -357,11 +504,26 @@ If you want to configure the Stronghold role to use a pre-existing Kubernetes ro
 the service account and role binding automatically, you can set the `kubernetes_role_name`
 parameter.
 
+{{< tabs name="stronghold_cmd_37869" >}}
+{{% tab name="Stronghold in DKP" %}}
+
 ```shell-session
 $ d8 stronghold write kubernetes/roles/auto-managed-sa-role \
     allowed_kubernetes_namespaces="test" \
     kubernetes_role_name="test-role-list-pods"
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+
+```shell-session
+$ stronghold write kubernetes/roles/auto-managed-sa-role \
+    allowed_kubernetes_namespaces="test" \
+    kubernetes_role_name="test-role-list-pods"
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 {{< alert level="warning" >}}
 
@@ -373,6 +535,9 @@ You can read more in the
 
 {{< /alert >}}
 You can then get credentials with the automatically generated service account.
+
+{{< tabs name="stronghold_cmd_72154" >}}
+{{% tab name="Stronghold in DKP" %}}
 
 ```shell-session
 $ d8 stronghold write kubernetes/creds/auto-managed-sa-role \
@@ -387,9 +552,31 @@ service_account_namespace    test
 service_account_token        eyJHbGci0iJSUzI1Ni...
 ```
 
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+
+```shell-session
+$ stronghold write kubernetes/creds/auto-managed-sa-role \
+    kubernetes_namespace=test
+Key                          Value
+---                          -----
+lease_id                     kubernetes/creds/auto-managed-sa-role/cujRLYjKZUMQk6dkHBGGWm67
+lease_duration               768h
+lease_renewable              false
+service_account_name         v-token-auto-man-1653001548-5z6hrgsxnmzncxejztml4arz
+service_account_namespace    test
+service_account_token        eyJHbGci0iJSUzI1Ni...
+```
+
+{{% /tab %}}
+{{< /tabs >}}
+
 Furthermore, Stronghold can also automatically create the role in addition to the service account and
 role binding by specifying the `generated_role_rules` parameter, which accepts a set of JSON or YAML
 rules for the generated role.
+
+{{< tabs name="stronghold_cmd_25284" >}}
+{{% tab name="Stronghold in DKP" %}}
 
 ```shell-session
 $ d8 stronghold write kubernetes/roles/auto-managed-sa-and-role \
@@ -397,7 +584,22 @@ $ d8 stronghold write kubernetes/roles/auto-managed-sa-and-role \
     generated_role_rules='{"rules":[{"apiGroups":[""],"resources":["pods"],"verbs":["list"]}]}'
 ```
 
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+
+```shell-session
+$ stronghold write kubernetes/roles/auto-managed-sa-and-role \
+    allowed_kubernetes_namespaces="test" \
+    generated_role_rules='{"rules":[{"apiGroups":[""],"resources":["pods"],"verbs":["list"]}]}'
+```
+
+{{% /tab %}}
+{{< /tabs >}}
+
 You can then get credentials in the same way as before.
+
+{{< tabs name="stronghold_cmd_68" >}}
+{{% tab name="Stronghold in DKP" %}}
 
 ```shell-session
 $ d8 stronghold write kubernetes/creds/auto-managed-sa-and-role \
@@ -411,3 +613,22 @@ service_account_name         v-token-auto-man-1653002096-4imxf3ytjh5hbyro9s1oqdo
 service_account_namespace    test
 service_account_token        eyJHbGci0iJSUzI1Ni...
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+
+```shell-session
+$ stronghold write kubernetes/creds/auto-managed-sa-and-role \
+    kubernetes_namespace=test
+Key                          Value
+---                          -----
+lease_id                     kubernetes/creds/auto-managed-sa-and-role/pehLtegoTP8vCkcaQozUqOHf
+lease_duration               768h
+lease_renewable              false
+service_account_name         v-token-auto-man-1653002096-4imxf3ytjh5hbyro9s1oqdo3
+service_account_namespace    test
+service_account_token        eyJHbGci0iJSUzI1Ni...
+```
+
+{{% /tab %}}
+{{< /tabs >}}

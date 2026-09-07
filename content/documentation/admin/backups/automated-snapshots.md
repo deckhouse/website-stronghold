@@ -9,14 +9,12 @@ params:
 Automated snapshots let Stronghold create scheduled backups of integrated Raft storage and write them either to local disk or to S3-compatible object storage.
 
 {{< alert level="warning" >}}
-Automated snapshots are available only when Stronghold uses integrated Raft storage. For `etcd`, `postgresql`, and other external backends, configure backup procedures provided by the storage system itself.
+Automated snapshots are available only when Stronghold uses integrated Raft storage. For etcd, PostgreSQL, and other external backends, configure backup procedures provided by the storage system itself.
 {{< /alert >}}
-
-## When to use them
 
 Automated snapshots are designed for recurring backups without manual command execution. They are especially useful for production clusters where backup retention must be predictable and copies should be stored outside the cluster itself.
 
-## How they work
+Consider the following when using automated snapshots:
 
 - You can create multiple named snapshot configurations.
 - Each configuration defines the schedule, retention policy, and storage type.
@@ -27,7 +25,7 @@ Automated snapshots are designed for recurring backups without manual command ex
 
 | Method | Path |
 |--------|------|
-| POST   | `/sys/storage/raft/snapshot-auto/config/:name` |
+| `POST`   | `/sys/storage/raft/snapshot-auto/config/:name` |
 
 The endpoint requires `sudo` privileges.
 
@@ -37,20 +35,20 @@ The endpoint requires `sudo` privileges.
 
 | Parameter | Type | Required | Default | Description |
 |-----------|------|----------|---------|-------------|
-| `name` | String | Yes | — | Name of the configuration to create or update. |
-| `interval` | Integer or string | Yes | — | Time between backups. You can specify seconds or Go duration format such as `24h`. |
-| `retain` | Integer | No | `3` | Number of backups to keep. Older backups are deleted when the limit is exceeded. |
-| `storage_type` | Immutable string | Yes | — | Storage type: `local` or `aws-s3`. |
-| `path_prefix` | Immutable string | Yes | — | For `local`, the directory where snapshots are stored. For `aws-s3`, the object prefix inside the bucket. |
-| `file_prefix` | Immutable string | No | `stronghold-snapshot` | Prefix for the file or object name. |
+| `name` | String | Yes | — | Name of the configuration to create or update |
+| `interval` | Integer or string | Yes | — | Time between backups. You can specify seconds or Go duration format such as `24h` |
+| `retain` | Integer | No | `3` | Number of backups to keep. Older backups are deleted when the limit is exceeded |
+| `storage_type` | Immutable string | Yes | — | Storage type: `local` or `aws-s3` |
+| `path_prefix` | Immutable string | Yes | — | For `local`, the directory where snapshots are stored. For `aws-s3`, the object prefix inside the bucket |
+| `file_prefix` | Immutable string | No | `stronghold-snapshot` | Prefix for the file or object name |
 
-### Additional parameters for `local`
+### Additional parameters for local
 
 <div class="table__styling--container"></div>
 
 | Parameter | Type | Required | Default | Description |
 |-----------|------|----------|---------|-------------|
-| `local_max_space` | Integer | No | `0` | Maximum number of bytes backup files with the specified `file_prefix` may use in the `path_prefix` directory. A value of `0` disables the check. |
+| `local_max_space` | Integer | No | `0` | Maximum number of bytes backup files with the specified `file_prefix` may use in the `path_prefix` directory. A value of `0` disables the check |
 
 ### Additional parameters for `aws-s3`
 
@@ -58,13 +56,13 @@ The endpoint requires `sudo` privileges.
 
 | Parameter | Type | Required | Default | Description |
 |-----------|------|----------|---------|-------------|
-| `aws_s3_bucket` | String | Yes | — | Bucket name used for backup storage. |
-| `aws_s3_region` | String | No | — | Bucket region. |
-| `aws_access_key_id` | String | No | — | Access key ID for the bucket. |
-| `aws_secret_access_key` | String | No | — | Secret access key for the bucket. |
-| `aws_s3_endpoint` | String | No | — | S3 service endpoint. |
-| `aws_s3_disable_tls` | Boolean | No | — | Disables TLS for the S3 endpoint. Use only for testing. |
-| `aws_s3_ca_certificate` | String | No | — | CA certificate for the S3 endpoint in PEM format. |
+| `aws_s3_bucket` | String | Yes | — | Bucket name used for backup storage |
+| `aws_s3_region` | String | No | — | Bucket region |
+| `aws_access_key_id` | String | No | — | Access key ID for the bucket |
+| `aws_secret_access_key` | String | No | — | Secret access key for the bucket |
+| `aws_s3_endpoint` | String | No | — | S3 service endpoint |
+| `aws_s3_disable_tls` | Boolean | No | — | Disables TLS for the S3 endpoint. Use only for testing |
+| `aws_s3_ca_certificate` | String | No | — | CA certificate for the S3 endpoint in PEM format |
 
 ## Configuration examples
 
@@ -82,9 +80,24 @@ The following `local-snapshot.json` file creates a configuration that saves a sn
 }
 ```
 
+Apply the configuration from `local-snapshot.json` using the following command:
+
+{{< tabs name="stronghold_cmd_6865" >}}
+{{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold write sys/storage/raft/snapshot-auto/config/my-local-snapshots @local-snapshot.json
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+
+```shell
+stronghold write sys/storage/raft/snapshot-auto/config/my-local-snapshots @local-snapshot.json
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 {{< alert level="info" >}}
 Before applying the configuration, make sure the directory from `path_prefix` exists and is writable. The `failed to create snapshot directory at destination` error usually means the directory is missing or unavailable.
@@ -108,15 +121,30 @@ The following `minio-snapshot.json` file stores snapshots in S3-compatible objec
 }
 ```
 
+Apply the configuration from `minio-snapshot.json` using the following command:
+
+{{< tabs name="stronghold_cmd_45767" >}}
+{{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold write sys/storage/raft/snapshot-auto/config/my-remote-snapshots @minio-snapshot.json
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+
+```shell
+stronghold write sys/storage/raft/snapshot-auto/config/my-remote-snapshots @minio-snapshot.json
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 {{< alert level="info" >}}
 Before applying the configuration, make sure the bucket already exists and the provided credentials have read and write permissions.
 {{< /alert >}}
 
-### Update an existing configuration
+### Updating an existing configuration
 
 To modify only selected fields, provide a partial JSON document:
 
@@ -127,29 +155,74 @@ To modify only selected fields, provide a partial JSON document:
 }
 ```
 
+Apply the modified configuration from `local-snapshot-update.json` using the following command:
+
+{{< tabs name="stronghold_cmd_53206" >}}
+{{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold write sys/storage/raft/snapshot-auto/config/my-local-snapshots @local-snapshot-update.json
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+
+```shell
+stronghold write sys/storage/raft/snapshot-auto/config/my-local-snapshots @local-snapshot-update.json
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 ## List configurations
 
 | Method | Path |
 |--------|------|
-| LIST   | `/sys/storage/raft/snapshot-auto/config` |
+| `LIST`   | `/sys/storage/raft/snapshot-auto/config` |
+
+Example command:
+
+{{< tabs name="stronghold_cmd_33978" >}}
+{{% tab name="Stronghold in DKP" %}}
 
 ```shell
 d8 stronghold list sys/storage/raft/snapshot-auto/config
 ```
 
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+
+```shell
+stronghold list sys/storage/raft/snapshot-auto/config
+```
+
+{{% /tab %}}
+{{< /tabs >}}
+
 ## Read configuration parameters
 
 | Method | Path |
 |--------|------|
-| GET    | `/sys/storage/raft/snapshot-auto/config/:name` |
+| `GET`    | `/sys/storage/raft/snapshot-auto/config/:name` |
+
+Example command:
+
+{{< tabs name="stronghold_cmd_67199" >}}
+{{% tab name="Stronghold in DKP" %}}
 
 ```shell
 d8 stronghold read sys/storage/raft/snapshot-auto/config/my-remote-snapshots
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+
+```shell
+stronghold read sys/storage/raft/snapshot-auto/config/my-remote-snapshots
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 For `aws-s3`, the response does not expose `aws_access_key_id` or `aws_secret_access_key`.
 
@@ -157,11 +230,26 @@ For `aws-s3`, the response does not expose `aws_access_key_id` or `aws_secret_ac
 
 | Method | Path |
 |--------|------|
-| DELETE | `/sys/storage/raft/snapshot-auto/config/:name` |
+| `DELETE` | `/sys/storage/raft/snapshot-auto/config/:name` |
+
+Example command:
+
+{{< tabs name="stronghold_cmd_50803" >}}
+{{% tab name="Stronghold in DKP" %}}
 
 ```shell
 d8 stronghold delete sys/storage/raft/snapshot-auto/config/my-remote-snapshots
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+
+```shell
+stronghold delete sys/storage/raft/snapshot-auto/config/my-remote-snapshots
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 {{< alert level="info" >}}
 Deleting an automated snapshot configuration does not remove existing snapshot files from local or object storage.
@@ -171,24 +259,34 @@ Deleting an automated snapshot configuration does not remove existing snapshot f
 
 | Method | Path |
 |--------|------|
-| GET    | `/sys/storage/raft/snapshot-auto/status/:name` |
+| `GET`    | `/sys/storage/raft/snapshot-auto/status/:name` |
+
+Example command:
+
+{{< tabs name="stronghold_cmd_25509" >}}
+{{% tab name="Stronghold in DKP" %}}
 
 ```shell
 d8 stronghold read sys/storage/raft/snapshot-auto/status/my-remote-snapshots
 ```
 
-Important status fields:
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
 
-- `consecutive_errors`: number of backup errors in a row;
-- `last_snapshot_end`: end time of the last successful snapshot;
-- `last_snapshot_error`: text of the most recent error;
-- `last_snapshot_start`: start time of the last completed backup;
-- `last_snapshot_url`: location of the last successful snapshot;
-- `next_snapshot_start`: next scheduled start time;
-- `snapshot_start`: start time of the current backup job;
-- `snapshot_url`: location of the currently written snapshot.
+```shell
+stronghold read sys/storage/raft/snapshot-auto/status/my-remote-snapshots
+```
 
-## See also
+{{% /tab %}}
+{{< /tabs >}}
 
-- [Save a storage snapshot](./save/)
-- [Restore from a snapshot](./restore/)
+Main status fields:
+
+- `consecutive_errors`: Number of backup errors in a row.
+- `last_snapshot_end`: End time of the last successful snapshot.
+- `last_snapshot_error`: Text of the most recent error.
+- `last_snapshot_start`: Start time of the last completed snapshot.
+- `last_snapshot_url`: Location of the last successful snapshot.
+- `next_snapshot_start`: Next scheduled start time.
+- `snapshot_start`: Start time of the current backup job.
+- `snapshot_url`: Location of the currently written snapshot.

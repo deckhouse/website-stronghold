@@ -14,7 +14,7 @@ Stronghold Agent решает эту проблему, действуя как �
 - **Упрощение интеграции** — не требуется изменение кода приложения.
 
 {{< alert level="info" >}}
-Доставка секретов в приложения подробно разбирается [в курсе «Установка и обзор Deckhouse Stronghold»](https://education.flant.ru/course/ustanovka-i-obzor-deckhouse-stronghold/).
+Доставка секретов в приложения подробно разбирается [в курсе «Обзор возможностей Deckhouse Stronghold»](https://education.flant.ru/course/obzor-vozmozhnostej-deckhouse-stronghold/).
 {{< /alert >}}
 
 ![agent](../../../../images/agent.png)

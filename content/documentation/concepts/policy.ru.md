@@ -208,9 +208,22 @@ path "secret/metadata/groups/{{identity.groups.ids.fb036ebc-2f62-4124-9503-42aa7
 
 Чтобы узнать идентификатор бэкенда аутентификации, используйте следующую команду:
 
+{{< tabs name="stronghold_cmd_15166" >}}
+{{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold auth list
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+
+```shell
+stronghold auth list
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 Пример вывода:
 
@@ -386,16 +399,43 @@ path "secret/foo" {
 
 Следующая операция завершится ошибкой, поскольку для параметра `no_store` установлено значение `false`:
 
+{{< tabs name="stronghold_cmd_91886" >}}
+{{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold write secret/foo no_store=false value=bar
 ```
 
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+
+```shell
+stronghold write secret/foo no_store=false value=bar
+```
+
+{{% /tab %}}
+{{< /tabs >}}
+
 В то время как следующая операция будет выполнена, даже если параметр `no_store` должен быть булевым, а его значение по умолчанию равно `false`:
+
+{{< tabs name="stronghold_cmd_68782" >}}
+{{% tab name="Stronghold в DKP" %}}
 
 ```shell
 # Команда будет выполнена, потому что параметры не содержат "no_store=false".
 d8 stronghold write secret/foo value=bar
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+
+```shell
+# Команда будет выполнена, потому что параметры не содержат "no_store=false".
+stronghold write secret/foo value=bar
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 Это происходит потому, что анализатор политики не знает, какое значение по умолчанию установлено для параметра `no_store`. Он видит только то, что запрещённого параметра нет в команде.
 
@@ -413,9 +453,22 @@ path "secret/foo" {
 
 Следующая команда, которая ранее выполнялась без ошибок, теперь не будет выполнена в соответствии с новой политикой, поскольку в ней отсутствует параметр `no_store`:
 
+{{< tabs name="stronghold_cmd_55005" >}}
+{{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold write secret/foo value=bar
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+
+```shell
+stronghold write secret/foo value=bar
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 #### Использование маски
 
@@ -473,15 +526,41 @@ path "auth/approle/role/my-role/secret-id" {
 
 Чтобы просмотреть все разрешения, предоставленные политикой по умолчанию для вашего экземпляра Stronghold, выполните следующую команду:
 
+{{< tabs name="stronghold_cmd_47901" >}}
+{{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold read sys/policy/default
 ```
 
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+
+```shell
+stronghold read sys/policy/default
+```
+
+{{% /tab %}}
+{{< /tabs >}}
+
 Чтобы отключить прикрепление политики по умолчанию, выполните следующую команду:
+
+{{< tabs name="stronghold_cmd_40391" >}}
+{{% tab name="Stronghold в DKP" %}}
 
 ```shell
 d8 stronghold token create -no-default-policy
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+
+```shell
+stronghold token create -no-default-policy
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 Или используйте API:
 
@@ -501,9 +580,22 @@ Root-политика — это встроенная политика Stronghol
 
 Чтобы отозвать root-токен, выполните следующую команду:
 
+{{< tabs name="stronghold_cmd_99272" >}}
+{{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold token revoke "<token>"
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+
+```shell
+stronghold token revoke "<token>"
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 Или используйте API:
 
@@ -523,9 +615,22 @@ curl \
 
 Чтобы вывести список всех зарегистрированных политик в Stronghold:
 
+{{< tabs name="stronghold_cmd_88024" >}}
+{{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold read sys/policy
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+
+```shell
+stronghold read sys/policy
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 Или используйте API:
 
@@ -539,9 +644,22 @@ curl \
 
 Политики могут быть созданы (подгружены) через CLI-интерфейс или API. Чтобы создать новую политику в Stronghold, используйте следующую команду:
 
+{{< tabs name="stronghold_cmd_90838" >}}
+{{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold policy write policy-name policy-file.hcl
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+
+```shell
+stronghold policy write policy-name policy-file.hcl
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 Или используйте API:
 
@@ -559,9 +677,22 @@ curl \
 
 Существующие политики можно обновлять через CLI-интерфейс или API для изменения уровней доступа. Чтобы обновить существующую политику в Stronghold, выполните те же действия, что и при создании политики, но при этом используйте имя существующей политики:
 
+{{< tabs name="stronghold_cmd_8371" >}}
+{{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold write sys/policy/my-existing-policy policy=@updated-policy.json
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+
+```shell
+stronghold write sys/policy/my-existing-policy policy=@updated-policy.json
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 Или используйте API:
 
@@ -577,9 +708,22 @@ curl \
 
 Существующие политики можно удалять через CLI-интерфейс или API. Чтобы удалить политику, используйте следующую команду:
 
+{{< tabs name="stronghold_cmd_29617" >}}
+{{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold delete sys/policy/policy-name
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+
+```shell
+stronghold delete sys/policy/policy-name
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 Или используйте API:
 
@@ -598,20 +742,49 @@ Stronghold может автоматически прикреплять набо
 
 1. Администратор Stronghold или член команды безопасности создаёт пользователя со списком привязанных политик:
 
+   {{< tabs name="stronghold_cmd_72057" >}}
+   {{% tab name="Stronghold в DKP" %}}
+
    ```shell
    d8 stronghold write auth/userpass/users/sethvargo \
        password="s3cr3t!" \
        policies="dev-readonly,logs"
    ```
 
+   {{% /tab %}}
+   {{% tab name="Stronghold в Linux" %}}
+
+   ```shell
+   stronghold write auth/userpass/users/sethvargo \
+       password="s3cr3t!" \
+       policies="dev-readonly,logs"
+   ```
+
+   {{% /tab %}}
+   {{< /tabs >}}
+
 1. Это запустит процесс сопоставления аутентификации с политикой, который приведёт к тому, что при успешной аутентификации пользователя в Stronghold пользователю будет выдан токен со списком привязанных политик.
 
 1. Пользователь, желающий пройти аутентификацию, выполняет следующую команду:
+
+   {{< tabs name="stronghold_cmd_65344" >}}
+   {{% tab name="Stronghold в DKP" %}}
 
    ```shell
    d8 stronghold login -method="userpass" username="sethvargo"
    Password: ...
    ```
+
+   {{% /tab %}}
+   {{% tab name="Stronghold в Linux" %}}
+
+   ```shell
+   stronghold login -method="userpass" username="sethvargo"
+   Password: ...
+   ```
+
+   {{% /tab %}}
+   {{< /tabs >}}
 
 1. Если предоставленная информация верна, Stronghold сгенерирует токен, присвоит ему список настроенных политик и вернёт этот токен аутентифицированному пользователю.
 
@@ -660,9 +833,22 @@ Stronghold рассматривает HTTP-методы POST и PUT как ра�
 
 Привязка к политикам происходит во время создания токенов. Например:
 
+{{< tabs name="stronghold_cmd_127" >}}
+{{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold token create -policy=dev-readonly -policy=logs
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+
+```shell
+stronghold token create -policy=dev-readonly -policy=logs
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 Обычно можно указывать только те политики, которые присутствуют в политиках текущего токена (родительского токена). Однако root-пользователи могут назначать любые политики.
 

@@ -30,9 +30,22 @@ weight: 10
 
 1. Выполните вход через OIDC. Для этого авторизуйтесь в Stronghold с помощью команды:
 
+   {{< tabs name="stronghold_cmd_85012" >}}
+   {{% tab name="Stronghold в DKP" %}}
+
    ```shell
    d8 stronghold login -path=oidc_deckhouse -method=oidc -no-print
    ```
+
+   {{% /tab %}}
+   {{% tab name="Stronghold в Linux" %}}
+
+   ```shell
+   stronghold login -path=oidc_deckhouse -method=oidc -no-print
+   ```
+
+   {{% /tab %}}
+   {{< /tabs >}}
 
    В примере используется [OIDC-аутентификация](../auth/oidc/overview/) по методу `oidc` и путь `oidc_deckhouse`. Если в вашей инсталляции используются другие параметры, укажите значения, предоставленные администратором.
 
@@ -40,15 +53,41 @@ weight: 10
 
 1. Для проверки доступа используйте команду:
 
+   {{< tabs name="stronghold_cmd_594" >}}
+   {{% tab name="Stronghold в DKP" %}}
+
    ```shell
    d8 stronghold status
    ```
 
+   {{% /tab %}}
+   {{% tab name="Stronghold в Linux" %}}
+
+   ```shell
+   stronghold status
+   ```
+
+   {{% /tab %}}
+   {{< /tabs >}}
+
 Для работы с Deckhouse Stronghold используйте команды в формате:
+
+{{< tabs name="stronghold_cmd_86358" >}}
+{{% tab name="Stronghold в DKP" %}}
 
 ```shell
 d8 stronghold <command>
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+
+```shell
+stronghold <command>
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 ## Вход через веб-интерфейс
 
@@ -64,5 +103,5 @@ d8 stronghold <command>
 После входа рекомендуется создать тестовый секрет. Порядок действий описан в разделе [«Создание тестового секрета»](../first-secret/).
 
 {{< alert level="info" >}}
-Работа с Stronghold через консоль подробно разбирается [в курсе «Установка и обзор Deckhouse Stronghold»](https://education.flant.ru/course/ustanovka-i-obzor-deckhouse-stronghold/).
+Работа с Stronghold через консоль подробно разбирается [в курсе «Обзор возможностей Deckhouse Stronghold»](https://education.flant.ru/course/obzor-vozmozhnostej-deckhouse-stronghold/).
 {{< /alert >}}

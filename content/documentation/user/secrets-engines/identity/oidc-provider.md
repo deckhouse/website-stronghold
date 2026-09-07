@@ -25,25 +25,56 @@ Stronghold as an OIDC provider.
 
 1. Enable an Stronghold auth method:
 
+   {{< tabs name="stronghold_cmd_47747" >}}
+   {{% tab name="Stronghold in DKP" %}}
+
    ```text
    $ d8 stronghold auth enable userpass
    Success! Enabled userpass auth method at: userpass/
    ```
+
+   {{% /tab %}}
+   {{% tab name="Stronghold in Linux" %}}
+
+   ```text
+   $ stronghold auth enable userpass
+   Success! Enabled userpass auth method at: userpass/
+   ```
+
+   {{% /tab %}}
+   {{< /tabs >}}
 
    Any Stronghold auth method may be used within the OIDC flow. For simplicity, enable the
    `userpass` auth method.
 
 2. Create a user:
 
+   {{< tabs name="stronghold_cmd_27343" >}}
+   {{% tab name="Stronghold in DKP" %}}
+
    ```text
    $ d8 stronghold write auth/userpass/users/end-user password="securepassword"
    Success! Data written to: auth/userpass/users/end-user
    ```
 
+   {{% /tab %}}
+   {{% tab name="Stronghold in Linux" %}}
+
+   ```text
+   $ stronghold write auth/userpass/users/end-user password="securepassword"
+   Success! Data written to: auth/userpass/users/end-user
+   ```
+
+   {{% /tab %}}
+   {{< /tabs >}}
+
    This user will authenticate to Stronghold through a client application, otherwise known as
    an OIDC [relying party](https://openid.net/specs/openid-connect-core-1_0.html#Terminology).
 
 3. Create a client application:
+
+   {{< tabs name="stronghold_cmd_67193" >}}
+   {{% tab name="Stronghold in DKP" %}}
 
    ```text
    $ d8 stronghold write identity/oidc/client/my-webapp \
@@ -51,6 +82,19 @@ Stronghold as an OIDC provider.
      assignments="allow_all"
    Success! Data written to: identity/oidc/client/my-webapp
    ```
+
+   {{% /tab %}}
+   {{% tab name="Stronghold in Linux" %}}
+
+   ```text
+   $ stronghold write identity/oidc/client/my-webapp \
+     redirect_uris="https://localhost:9702/auth/oidc-callback" \
+     assignments="allow_all"
+   Success! Data written to: identity/oidc/client/my-webapp
+   ```
+
+   {{% /tab %}}
+   {{< /tabs >}}
 
    This operation creates a client application which can be used to configure an OIDC
    relying party.
@@ -61,6 +105,9 @@ Stronghold as an OIDC provider.
    assignment is provided.
 
 4. Read client credentials:
+
+   {{< tabs name="stronghold_cmd_65001" >}}
+   {{% tab name="Stronghold in DKP" %}}
 
    ```text
    $ d8 stronghold read identity/oidc/client/my-webapp
@@ -76,6 +123,27 @@ Stronghold as an OIDC provider.
    key                 default
    redirect_uris       [https://localhost:9702/auth/oidc-callback]
    ```
+
+   {{% /tab %}}
+   {{% tab name="Stronghold in Linux" %}}
+
+   ```text
+   $ stronghold read identity/oidc/client/my-webapp
+
+   Key                 Value
+   ---                 -----
+   access_token_ttl    24h
+   assignments         [allow_all]
+   client_id           GSDTnn3KaOrLpNlVGlYLS9TVsZgOTweO
+   client_secret       hvo_secret_gBKHcTP58C4aq7FqPWsuqKgpiiegd7ahpifGae9WGkHRCwFEJTZA9KGdNVpzE0r8
+   client_type         confidential
+   id_token_ttl        24h
+   key                 default
+   redirect_uris       [https://localhost:9702/auth/oidc-callback]
+   ```
+
+   {{% /tab %}}
+   {{< /tabs >}}
 
    The `client_id` and `client_secret` are the client application's credentials. These
    values are typically required when configuring an OIDC relying party.

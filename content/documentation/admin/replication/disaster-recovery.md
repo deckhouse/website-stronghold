@@ -34,15 +34,41 @@ itself. You do not need to call `sys/replication/reindex` manually.
 
 ## Step 1. Enable the DR primary
 
+{{< tabs name="stronghold_cmd_7602" >}}
+{{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold write -force sys/replication/dr/primary/enable
 ```
 
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+
+```shell
+stronghold write -force sys/replication/dr/primary/enable
+```
+
+{{% /tab %}}
+{{< /tabs >}}
+
 ## Step 2. Create an activation token for the DR secondary
+
+{{< tabs name="stronghold_cmd_3365" >}}
+{{% tab name="Stronghold in DKP" %}}
 
 ```shell
 d8 stronghold write sys/replication/dr/primary/secondary-token id=dr-1 ttl=24h
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+
+```shell
+stronghold write sys/replication/dr/primary/secondary-token id=dr-1 ttl=24h
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 The `id` parameter is required; `ttl` defaults to `24h`. The command returns a
 wrapping token in the `wrap_info.token` field — pass exactly this token to the
@@ -74,9 +100,22 @@ does not serve client requests.
 
 ## Step 4. Verify the status
 
+{{< tabs name="stronghold_cmd_63656" >}}
+{{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold read -address="${SECONDARY_ADDR}" sys/replication/dr/status
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+
+```shell
+stronghold read -address="${SECONDARY_ADDR}" sys/replication/dr/status
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 The status shows `mode`, `state`, `connection_state`, `last_wal`, and
 `last_remote_wal`. The DR secondary has caught up with the primary when its

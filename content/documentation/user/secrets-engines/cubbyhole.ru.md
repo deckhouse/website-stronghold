@@ -21,13 +21,31 @@ weight: 30
 
 1. Запись произвольных данных:
 
+   {{< tabs name="stronghold_cmd_4388" >}}
+   {{% tab name="Stronghold в DKP" %}}
+
    ```console
       $ d8 stronghold write cubbyhole/my-secret my-value=s3cr3t
    
       Success! Data written to: cubbyhole/my-secret
    ```
 
+   {{% /tab %}}
+   {{% tab name="Stronghold в Linux" %}}
+
+   ```console
+      $ stronghold write cubbyhole/my-secret my-value=s3cr3t
+   
+      Success! Data written to: cubbyhole/my-secret
+   ```
+
+   {{% /tab %}}
+   {{< /tabs >}}
+
 2. Чтение произвольных данных:
+
+   {{< tabs name="stronghold_cmd_89341" >}}
+   {{% tab name="Stronghold в DKP" %}}
 
    ```console
       $ d8 stronghold read cubbyhole/my-secret
@@ -38,3 +56,19 @@ weight: 30
    
       my-value    s3cr3t
    ```
+
+   {{% /tab %}}
+   {{% tab name="Stronghold в Linux" %}}
+
+   ```console
+      $ stronghold read cubbyhole/my-secret
+   
+      Key         Value
+   
+      ---         -----
+   
+      my-value    s3cr3t
+   ```
+
+   {{% /tab %}}
+   {{< /tabs >}}

@@ -12,7 +12,7 @@ d8 system module enable stronghold
 ```
 
 {{< alert level="info" >}}
-Подробнее о включении и первичной настройке — [в бесплатном курсе «Установка и обзор Deckhouse Stronghold»](https://education.flant.ru/course/ustanovka-i-obzor-deckhouse-stronghold/) [Академии Deckhouse](https://deckhouse.ru/course-catalog/).
+Подробнее о включении и первичной настройке — [в бесплатном курсе «Обзор возможностей Deckhouse Stronghold»](https://education.flant.ru/course/obzor-vozmozhnostej-deckhouse-stronghold/) [Академии Deckhouse](https://deckhouse.ru/course-catalog/).
 {{< /alert >}}
 
 По умолчанию модуль запустится в режиме `Automatic` с инлетом `Ingress`.
@@ -55,7 +55,7 @@ d8 system module disable stronghold
 Также настраивается автоматическое подключение текущего кластера Deckhouse к Stronghold для работы модуля [`secrets-store-integration`](/modules/secrets-store-integration/stable/).
 
 {{< alert level="info" >}}
-Практический разбор доставки секретов в приложение — [в курсе «Установка и обзор Deckhouse Stronghold»](https://education.flant.ru/course/ustanovka-i-obzor-deckhouse-stronghold/).
+Практический разбор доставки секретов в приложение — [в курсе «Обзор возможностей Deckhouse Stronghold»](https://education.flant.ru/course/obzor-vozmozhnostej-deckhouse-stronghold/).
 {{< /alert >}}
 
 Для того, чтоб выдать права пользователям, находящимся в группе `admins` (членство в группе передаётся из используемого IdP или LDAP с помощью [Dex](/modules/user-authn/)), нужно указать эту группу в массиве `administrators` в `ModuleConfig`:

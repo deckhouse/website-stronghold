@@ -58,15 +58,32 @@ Stronghold не делает различий между стандартным�
 
 1. Включить механизм секретов базы данных:
 
+{{< tabs name="stronghold_cmd_99650" >}}
+{{% tab name="Stronghold в DKP" %}}
+
 ```shell-session
 $ d8 stronghold secrets enable database
 Success! Enabled the database secrets engine at: database/
 ```
 
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+
+```shell-session
+$ stronghold secrets enable database
+Success! Enabled the database secrets engine at: database/
+```
+
+{{% /tab %}}
+{{< /tabs >}}
+
    По умолчанию, механизм секретов будет включаться по имени движка.
    Чтобы включить механизм секретов по другому пути, используйте аргумент `-path`.
 
 1. Настроить Stronghold с помощью соответствующего плагина и информации о подключении:
+
+   {{< tabs name="stronghold_cmd_69573" >}}
+   {{% tab name="Stronghold в DKP" %}}
 
    ```shell-session
    $ d8 stronghold write database/config/my-database \
@@ -76,6 +93,21 @@ Success! Enabled the database secrets engine at: database/
        username="..." \
        password="..." \
    ```
+
+   {{% /tab %}}
+   {{% tab name="Stronghold в Linux" %}}
+
+   ```shell-session
+   $ stronghold write database/config/my-database \
+       plugin_name="..." \
+       connection_url="..." \
+       allowed_roles="..." \
+       username="..." \
+       password="..." \
+   ```
+
+   {{% /tab %}}
+   {{< /tabs >}}
 
    > **Внимание!** Настоятельно рекомендуется создать пользователя в базе данных специально для Stronghold. Этот пользователь будет использоваться
    > для работы с динамическими и статическими пользователями в базе данных.
@@ -94,15 +126,31 @@ Success! Enabled the database secrets engine at: database/
    для него таким образом, чтобы пользователь stronghold не был доступен
    никаким пользователям, кроме самого Stronghold:
 
+{{< tabs name="stronghold_cmd_23336" >}}
+{{% tab name="Stronghold в DKP" %}}
+
 ```shell-session
 d8 stronghold write -force database/rotate-root/my-database
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+
+```shell-session
+stronghold write -force database/rotate-root/my-database
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
    > **Внимание!** После этого пароль для пользователя, указанного в предыдущем шаге, будет недоступен.
    > В связи с этим настоятельно рекомендуется создать пользователя, который будет использоваться Stronghold для управления пользователями базы данных.
 
 1. Настройте роль, которая сопоставляет имя в Stronghold с набором инструкций для
    создания учетных данных базы данных.
+
+{{< tabs name="stronghold_cmd_14613" >}}
+{{% tab name="Stronghold в DKP" %}}
 
 ```shell-session
 $ d8 stronghold write database/roles/my-role \
@@ -112,6 +160,21 @@ $ d8 stronghold write database/roles/my-role \
     max_ttl="24h"
 Success! Data written to: database/roles/my-role
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+
+```shell-session
+$ stronghold write database/roles/my-role \
+    db_name=my-database \
+    creation_statements="..." \
+    default_ttl="1h" \
+    max_ttl="24h"
+Success! Data written to: database/roles/my-role
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 Поля `{{username}}` and `{{password}}` будут заполнены плагином динамически
 сгенерированными значениями. В некоторых плагинах также поддерживается поле `{{expiration}}`.
@@ -123,6 +186,9 @@ Success! Data written to: database/roles/my-role
 
 1. Сгенерировать новую учетную запись, используя `/creds` и имя роли:
 
+{{< tabs name="stronghold_cmd_87687" >}}
+{{% tab name="Stronghold в DKP" %}}
+
 ```shell-session
 $ d8 stronghold read database/creds/my-role
 Key                Value
@@ -133,6 +199,23 @@ lease_renewable    true
 password           FSREZ1S0kFsZtLat-y94
 username           v-strongholduser-e2978cd0-ugp7iqI2hdlff5hfjylJ-1602537260
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+
+```shell-session
+$ stronghold read database/creds/my-role
+Key                Value
+---                -----
+lease_id           database/creds/my-role/2f6a614c-4aa2-7b19-24b9-ad944a8d4de6
+lease_duration     1h
+lease_renewable    true
+password           FSREZ1S0kFsZtLat-y94
+username           v-strongholduser-e2978cd0-ugp7iqI2hdlff5hfjylJ-1602537260
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 ## Возможности базы данных
 
@@ -198,6 +281,9 @@ rule "charset" {
 Например, если пароль содержит символы URL-escaped, такие как `#` или `%`,
 они останутся таковыми, а не станут `%23` и `%25` соответственно.
 
+{{< tabs name="stronghold_cmd_74473" >}}
+{{% tab name="Stronghold в DKP" %}}
+
 ```shell-session
 $ d8 stronghold write database/config/my-mysql-database \
 plugin_name="mysql-database-plugin" \
@@ -206,3 +292,18 @@ username="root" \
 password='your#StrongPassword%' \
 disable_escaping="true"
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+
+```shell-session
+$ stronghold write database/config/my-mysql-database \
+plugin_name="mysql-database-plugin" \
+connection_url='server=localhost;port=3306;user id={{username}};password={{password}};database=mydb;' \
+username="root" \
+password='your#StrongPassword%' \
+disable_escaping="true"
+```
+
+{{% /tab %}}
+{{< /tabs >}}

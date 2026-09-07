@@ -1,4 +1,4 @@
 ---
-title: "About the product"
+title: "About"
 weight: 20
 ---

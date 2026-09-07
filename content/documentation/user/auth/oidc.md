@@ -72,6 +72,9 @@ Logging in using Deckhouse Stronghold doesn't require manually configuring the U
 The CLI login defaults to path of `/oidc`. If this auth method was enabled at a
 different path, specify `-path=/my-path` in the CLI.
 
+{{< tabs name="stronghold_cmd_53172" >}}
+{{% tab name="Stronghold in DKP" %}}
+
 ```shell-session
 $ d8 stronghold login -method=oidc port=8400 role=test
 
@@ -79,6 +82,20 @@ Complete the login via your OIDC provider. Launching browser to:
 
     https://myco.auth0.com/authorize?redirect_uri=http%3A%2F%2Flocalhost%3A8400%2Foidc%2Fcallback&client_id=r3qXc2bix9eF...
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+
+```shell-session
+$ stronghold login -method=oidc port=8400 role=test
+
+Complete the login via your OIDC provider. Launching browser to:
+
+    https://myco.auth0.com/authorize?redirect_uri=http%3A%2F%2Flocalhost%3A8400%2Foidc%2Fcallback&client_id=r3qXc2bix9eF...
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 The browser will open to the generated URL to complete the provider's login. The
 URL may be entered manually if the browser cannot be automatically opened.
@@ -117,6 +134,9 @@ why things aren't working. Some tips for setting up OIDC:
   the Stronghold CLI. In these cases the best approach is to write the entire configuration as a single
   JSON object:
 
+{{< tabs name="stronghold_cmd_77561" >}}
+{{% tab name="Stronghold in DKP" %}}
+
 ```text
 d8 stronghold write auth/oidc/role/demo -<<EOF
 {
@@ -129,6 +149,25 @@ d8 stronghold write auth/oidc/role/demo -<<EOF
 }
 EOF
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+
+```text
+stronghold write auth/oidc/role/demo -<<EOF
+{
+  "user_claim": "sub",
+  "bound_audiences": "abc123",
+  "role_type": "oidc",
+  "policies": "demo",
+  "ttl": "1h",
+  "bound_claims": { "groups": ["mygroup/mysubgroup"] }
+}
+EOF
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 - Monitor Stronghold's log output. Important information about OIDC validation failures will be emitted.
 

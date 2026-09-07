@@ -9,27 +9,25 @@ params:
 Автоматические снимки позволяют Stronghold по расписанию создавать резервные копии встроенного Raft-хранилища и сохранять их на локальный диск или в S3-совместимое объектное хранилище.
 
 {{< alert level="warning" >}}
-Автоматические снимки доступны только при использовании интегрированного Raft-хранилища. Для `etcd`, `postgresql` и других внешних backend-ов нужно настраивать резервное копирование средствами самого хранилища.
+Автоматические снимки доступны только при использовании интегрированного Raft-хранилища. Для etcd, PostgreSQL и других внешних бэкендов нужно настраивать резервное копирование средствами самого хранилища.
 {{< /alert >}}
-
-## Когда использовать
 
 Автоматические снимки подходят для регулярного резервного копирования без ручного запуска команд. Они особенно полезны для production-кластеров, где важно иметь повторяемую политику хранения и выносить резервные копии за пределы самого кластера.
 
-## Как это работает
+Особенности использования автоматических снимков:
 
-- Можно создать несколько именованных конфигураций снимков.
-- Каждая конфигурация определяет интервал запуска, политику хранения и тип хранилища.
-- Поддерживаются типы хранилища `local` и `aws-s3`.
-- Для production-сред локальное хранилище обычно менее предпочтительно, чем внешнее объектное хранилище: активный узел кластера может меняться, а резервные копии лучше хранить отдельно от защищаемой системы.
+- можно создать несколько именованных конфигураций снимков;
+- каждая конфигурация определяет интервал запуска, политику хранения и тип хранилища;
+- поддерживаются типы хранилища `local` и `aws-s3`;
+- для production-сред локальное хранилище обычно менее предпочтительно, чем внешнее объектное хранилище: активный узел кластера может меняться, а резервные копии лучше хранить отдельно от защищаемой системы.
 
 ## Создание или обновление конфигурации
 
 | Метод | Путь |
 |-------|------|
-| POST  | `/sys/storage/raft/snapshot-auto/config/:name` |
+| `POST`  | `/sys/storage/raft/snapshot-auto/config/:name` |
 
-Для работы с endpoint требуются права `sudo`.
+Для работы с эндпоинтом требуются права `sudo`.
 
 ### Основные параметры
 
@@ -37,20 +35,20 @@ params:
 
 | Параметр | Тип | Обязательный | Значение по умолчанию | Описание |
 |----------|-----|--------------|-----------------------|----------|
-| `name` | Строка | Да | — | Имя конфигурации, которую нужно создать или обновить. |
-| `interval` | Целое число или строка | Да | — | Интервал между созданием резервных копий. Можно указывать в секундах или в формате Go duration, например `24h`. |
-| `retain` | Целое число | Нет | `3` | Сколько резервных копий хранить. При превышении лимита самые старые копии удаляются. |
-| `storage_type` | Неизменяемая строка | Да | — | Тип хранилища: `local` или `aws-s3`. |
-| `path_prefix` | Неизменяемая строка | Да | — | Для `local` это директория хранения снимков. Для `aws-s3` это префикс объекта в бакете. |
-| `file_prefix` | Неизменяемая строка | Нет | `stronghold-snapshot` | Префикс имени файла или объекта. |
+| `name` | Строка | Да | — | Имя конфигурации, которую нужно создать или обновить |
+| `interval` | Целое число или строка | Да | — | Интервал между созданием резервных копий. Можно указывать в секундах или в формате Go duration, например `24h` |
+| `retain` | Целое число | Нет | `3` | Сколько резервных копий хранить. При превышении лимита самые старые копии удаляются |
+| `storage_type` | Неизменяемая строка | Да | — | Тип хранилища: `local` или `aws-s3` |
+| `path_prefix` | Неизменяемая строка | Да | — | Для `local` это директория хранения снимков. Для `aws-s3` это префикс объекта в бакете |
+| `file_prefix` | Неизменяемая строка | Нет | `stronghold-snapshot` | Префикс имени файла или объекта |
 
-### Дополнительные параметры для `local`
+### Дополнительные параметры для local
 
 <div class="table__styling--container"></div>
 
 | Параметр | Тип | Обязательный | Значение по умолчанию | Описание |
 |----------|-----|--------------|-----------------------|----------|
-| `local_max_space` | Целое число | Нет | `0` | Максимальный объём в байтах, который можно занять резервными копиями с указанным `file_prefix` в директории `path_prefix`. Значение `0` отключает проверку. |
+| `local_max_space` | Целое число | Нет | `0` | Максимальный объём в байтах, который можно занять резервными копиями с указанным `file_prefix` в директории `path_prefix`. Значение `0` отключает проверку |
 
 ### Дополнительные параметры для `aws-s3`
 
@@ -58,19 +56,19 @@ params:
 
 | Параметр | Тип | Обязательный | Значение по умолчанию | Описание |
 |----------|-----|--------------|-----------------------|----------|
-| `aws_s3_bucket` | Строка | Да | — | Имя бакета для хранения резервных копий. |
-| `aws_s3_region` | Строка | Нет | — | Регион бакета. |
-| `aws_access_key_id` | Строка | Нет | — | Идентификатор ключа доступа к бакету. |
-| `aws_secret_access_key` | Строка | Нет | — | Секретный ключ доступа к бакету. |
-| `aws_s3_endpoint` | Строка | Нет | — | Endpoint S3-сервиса. |
-| `aws_s3_disable_tls` | Булевый | Нет | — | Отключает TLS для S3-endpoint. Используйте только для тестирования. |
-| `aws_s3_ca_certificate` | Строка | Нет | — | CA-сертификат для S3-endpoint в PEM-формате. |
+| `aws_s3_bucket` | Строка | Да | — | Имя бакета для хранения резервных копий |
+| `aws_s3_region` | Строка | Нет | — | Регион бакета |
+| `aws_access_key_id` | Строка | Нет | — | Идентификатор ключа доступа к бакету |
+| `aws_secret_access_key` | Строка | Нет | — | Секретный ключ доступа к бакету |
+| `aws_s3_endpoint` | Строка | Нет | — | Эндпоинт S3-сервиса |
+| `aws_s3_disable_tls` | Булевый | Нет | — | Отключает TLS для S3-эндпоинта. Используйте только для тестирования |
+| `aws_s3_ca_certificate` | Строка | Нет | — | CA-сертификат для S3-эндпоинта в PEM-формате |
 
 ## Примеры конфигурации
 
 ### Локальный диск
 
-Следующий файл `local-snapshot.json` создаёт конфигурацию, которая сохраняет снимок каждые 5 минут в каталог `/stronghold/data/backups`, хранит 4 копии и использует префикс `main_stronghold`:
+Следующий файл `local-snapshot.json` создаёт конфигурацию, которая сохраняет снимок каждые 5 минут в директорию `/stronghold/data/backups`, хранит 4 копии и использует префикс `main_stronghold`:
 
 ```json
 {
@@ -82,12 +80,27 @@ params:
 }
 ```
 
+Примените конфигурацию из файла `local-snapshot.json` следующей командой:
+
+{{< tabs name="stronghold_cmd_6865" >}}
+{{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold write sys/storage/raft/snapshot-auto/config/my-local-snapshots @local-snapshot.json
 ```
 
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+
+```shell
+stronghold write sys/storage/raft/snapshot-auto/config/my-local-snapshots @local-snapshot.json
+```
+
+{{% /tab %}}
+{{< /tabs >}}
+
 {{< alert level="info" >}}
-Перед применением конфигурации убедитесь, что каталог из `path_prefix` существует и доступен для записи. Ошибка `failed to create snapshot directory at destination` обычно означает, что каталог отсутствует или недоступен.
+Перед применением конфигурации убедитесь, что директория из `path_prefix` существует и доступна для записи. Ошибка `failed to create snapshot directory at destination` обычно означает, что директория отсутствует или недоступна.
 {{< /alert >}}
 
 ### S3-совместимое хранилище
@@ -108,9 +121,24 @@ d8 stronghold write sys/storage/raft/snapshot-auto/config/my-local-snapshots @lo
 }
 ```
 
+Примените конфигурацию из файла `minio-snapshot.json` следующей командой:
+
+{{< tabs name="stronghold_cmd_45767" >}}
+{{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold write sys/storage/raft/snapshot-auto/config/my-remote-snapshots @minio-snapshot.json
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+
+```shell
+stronghold write sys/storage/raft/snapshot-auto/config/my-remote-snapshots @minio-snapshot.json
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 {{< alert level="info" >}}
 Перед применением конфигурации убедитесь, что бакет уже существует, а указанные учётные данные имеют права на чтение и запись.
@@ -127,29 +155,74 @@ d8 stronghold write sys/storage/raft/snapshot-auto/config/my-remote-snapshots @m
 }
 ```
 
+Примените обновлённую конфигурацию из файла `local-snapshot-update.json` следующей командой:
+
+{{< tabs name="stronghold_cmd_53206" >}}
+{{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold write sys/storage/raft/snapshot-auto/config/my-local-snapshots @local-snapshot-update.json
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+
+```shell
+stronghold write sys/storage/raft/snapshot-auto/config/my-local-snapshots @local-snapshot-update.json
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 ## Просмотр списка конфигураций
 
 | Метод | Путь |
 |-------|------|
-| LIST  | `/sys/storage/raft/snapshot-auto/config` |
+| `LIST`  | `/sys/storage/raft/snapshot-auto/config` |
+
+Пример команды:
+
+{{< tabs name="stronghold_cmd_33978" >}}
+{{% tab name="Stronghold в DKP" %}}
 
 ```shell
 d8 stronghold list sys/storage/raft/snapshot-auto/config
 ```
 
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+
+```shell
+stronghold list sys/storage/raft/snapshot-auto/config
+```
+
+{{% /tab %}}
+{{< /tabs >}}
+
 ## Получение параметров конфигурации
 
 | Метод | Путь |
 |-------|------|
-| GET   | `/sys/storage/raft/snapshot-auto/config/:name` |
+| `GET`   | `/sys/storage/raft/snapshot-auto/config/:name` |
+
+Пример команды:
+
+{{< tabs name="stronghold_cmd_67199" >}}
+{{% tab name="Stronghold в DKP" %}}
 
 ```shell
 d8 stronghold read sys/storage/raft/snapshot-auto/config/my-remote-snapshots
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+
+```shell
+stronghold read sys/storage/raft/snapshot-auto/config/my-remote-snapshots
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 Для `aws-s3` значения `aws_access_key_id` и `aws_secret_access_key` в ответе не отображаются.
 
@@ -157,11 +230,26 @@ d8 stronghold read sys/storage/raft/snapshot-auto/config/my-remote-snapshots
 
 | Метод | Путь |
 |-------|------|
-| DELETE | `/sys/storage/raft/snapshot-auto/config/:name` |
+| `DELETE` | `/sys/storage/raft/snapshot-auto/config/:name` |
+
+Пример команды:
+
+{{< tabs name="stronghold_cmd_50803" >}}
+{{% tab name="Stronghold в DKP" %}}
 
 ```shell
 d8 stronghold delete sys/storage/raft/snapshot-auto/config/my-remote-snapshots
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+
+```shell
+stronghold delete sys/storage/raft/snapshot-auto/config/my-remote-snapshots
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 {{< alert level="info" >}}
 Удаление конфигурации автоматического резервного копирования не удаляет уже созданные файлы снимков из локального или объектного хранилища.
@@ -171,24 +259,34 @@ d8 stronghold delete sys/storage/raft/snapshot-auto/config/my-remote-snapshots
 
 | Метод | Путь |
 |-------|------|
-| GET   | `/sys/storage/raft/snapshot-auto/status/:name` |
+| `GET`   | `/sys/storage/raft/snapshot-auto/status/:name` |
+
+Пример команды:
+
+{{< tabs name="stronghold_cmd_25509" >}}
+{{% tab name="Stronghold в DKP" %}}
 
 ```shell
 d8 stronghold read sys/storage/raft/snapshot-auto/status/my-remote-snapshots
 ```
 
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+
+```shell
+stronghold read sys/storage/raft/snapshot-auto/status/my-remote-snapshots
+```
+
+{{% /tab %}}
+{{< /tabs >}}
+
 Ключевые поля статуса:
 
-- `consecutive_errors` — количество подряд идущих ошибок резервного копирования;
-- `last_snapshot_end` — время завершения последнего успешного снимка;
+- `consecutive_errors` — количество идущих подряд ошибок резервного копирования;
+- `last_snapshot_end` — время завершения создания последнего успешного снимка;
 - `last_snapshot_error` — текст последней ошибки;
-- `last_snapshot_start` — время начала последнего завершённого резервного копирования;
+- `last_snapshot_start` — время начала создания последнего снимка;
 - `last_snapshot_url` — адрес последнего успешно созданного снимка;
 - `next_snapshot_start` — время следующего запуска;
 - `snapshot_start` — время начала текущего резервного копирования;
 - `snapshot_url` — адрес текущего создаваемого снимка.
-
-## См. также
-
-- [Создание снимка](./save/)
-- [Восстановление из снимка](./restore/)

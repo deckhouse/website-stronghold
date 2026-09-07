@@ -208,9 +208,22 @@ If you want to use the metadata associated with an authentication plugin in your
 
 You can get the mount accessor value using the following command:
 
+{{< tabs name="stronghold_cmd_15166" >}}
+{{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold auth list
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+
+```shell
+stronghold auth list
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 Example output:
 
@@ -384,16 +397,43 @@ path "secret/foo" {
 
 The following operation will error, because `no_store` is set to `false`:
 
+{{< tabs name="stronghold_cmd_91886" >}}
+{{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold write secret/foo no_store=false value=bar
 ```
 
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+
+```shell
+stronghold write secret/foo no_store=false value=bar
+```
+
+{{% /tab %}}
+{{< /tabs >}}
+
 Whereas the following operation will succeed, even if the `no_store` parameter must be a boolean, and it defaults to `false`:
+
+{{< tabs name="stronghold_cmd_14219" >}}
+{{% tab name="Stronghold in DKP" %}}
 
 ```shell
 # Succeeds because "no_store=false" isn't present in the parameters.
 d8 stronghold write secret/foo value=bar
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+
+```shell
+# Succeeds because "no_store=false" isn't present in the parameters.
+stronghold write secret/foo value=bar
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 This is because the policy evaluator does not know what the default value is for the `no_store` parameter. All it sees is that the denied parameter isn't present in the command.
 
@@ -411,9 +451,22 @@ path "secret/foo" {
 
 The following command, which previously succeeded, will now fail under the new policy because there is no `no_store` parameter:
 
+{{< tabs name="stronghold_cmd_55005" >}}
+{{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold write secret/foo value=bar
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+
+```shell
+stronghold write secret/foo value=bar
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 #### Globbing
 
@@ -471,15 +524,41 @@ The policy contains basic functionality such as the ability for the token to loo
 
 To view all permissions granted by the default policy on your Stronghold installation, run:
 
+{{< tabs name="stronghold_cmd_47901" >}}
+{{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold read sys/policy/default
 ```
 
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+
+```shell
+stronghold read sys/policy/default
+```
+
+{{% /tab %}}
+{{< /tabs >}}
+
 To disable attachment of the default policy:
+
+{{< tabs name="stronghold_cmd_40391" >}}
+{{% tab name="Stronghold in DKP" %}}
 
 ```shell
 d8 stronghold token create -no-default-policy
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+
+```shell
+stronghold token create -no-default-policy
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 or via the API:
 
@@ -499,9 +578,22 @@ When a Stronghold server is first initialized, there always exists one root user
 
 To revoke a root token, run:
 
+{{< tabs name="stronghold_cmd_99272" >}}
+{{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold token revoke "<token>"
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+
+```shell
+stronghold token revoke "<token>"
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 or via the API:
 
@@ -521,9 +613,22 @@ Policies are authored (written) in your editor of choice. They can be authored i
 
 To list all registered policies in Stronghold:
 
+{{< tabs name="stronghold_cmd_88024" >}}
+{{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold read sys/policy
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+
+```shell
+stronghold read sys/policy
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 or via the API:
 
@@ -537,9 +642,22 @@ curl \
 
 Policies may be created (uploaded) via the CLI or via the API. To create a new policy in Stronghold:
 
+{{< tabs name="stronghold_cmd_90838" >}}
+{{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold policy write policy-name policy-file.hcl
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+
+```shell
+stronghold policy write policy-name policy-file.hcl
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 or via the API:
 
@@ -557,9 +675,22 @@ In both examples, the name of the policy is `policy-name`. You can think of this
 
 Existing policies may be updated to change permissions via the CLI or via the API. To update an existing policy in Stronghold, follow the same steps as creating a policy, but use an existing policy name:
 
+{{< tabs name="stronghold_cmd_8371" >}}
+{{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold write sys/policy/my-existing-policy policy=@updated-policy.json
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+
+```shell
+stronghold write sys/policy/my-existing-policy policy=@updated-policy.json
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 or via the API:
 
@@ -575,9 +706,22 @@ curl \
 
 Existing policies may be deleted via the CLI or API. To delete a policy:
 
+{{< tabs name="stronghold_cmd_29617" >}}
+{{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold delete sys/policy/policy-name
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+
+```shell
+stronghold delete sys/policy/policy-name
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 or via the API:
 
@@ -596,20 +740,49 @@ Stronghold can automatically associate a set of policies to a token based on an 
 
 1. A Stronghold administrator or someone from the security team would create the user in Stronghold with a list of associated policies:
 
+   {{< tabs name="stronghold_cmd_72057" >}}
+   {{% tab name="Stronghold in DKP" %}}
+
    ```shell
    d8 stronghold write auth/userpass/users/sethvargo \
        password="s3cr3t!" \
        policies="dev-readonly,logs"
    ```
 
+   {{% /tab %}}
+   {{% tab name="Stronghold in Linux" %}}
+
+   ```shell
+   stronghold write auth/userpass/users/sethvargo \
+       password="s3cr3t!" \
+       policies="dev-readonly,logs"
+   ```
+
+   {{% /tab %}}
+   {{< /tabs >}}
+
 1. This creates an authentication mapping to the policy such that, when the user authenticates successfully to Stronghold, they will be given a token which has the list of policies attached.
 
 1. The user wishing to authenticate would run:
+
+   {{< tabs name="stronghold_cmd_65344" >}}
+   {{% tab name="Stronghold in DKP" %}}
 
    ```shell
    d8 stronghold login -method="userpass" username="sethvargo"
    Password: ...
    ```
+
+   {{% /tab %}}
+   {{% tab name="Stronghold in Linux" %}}
+
+   ```shell
+   stronghold login -method="userpass" username="sethvargo"
+   Password: ...
+   ```
+
+   {{% /tab %}}
+   {{< /tabs >}}
 
 1. If the provided information is correct, Stronghold will generate a token, assign the list of configured policies to the token, and return that token to the authenticated user.
 
@@ -658,9 +831,22 @@ Tokens have two sets of policies: identity policies, which are computed based on
 
 Tokens are associated with their policies at creation time. For example:
 
+{{< tabs name="stronghold_cmd_127" >}}
+{{% tab name="Stronghold in DKP" %}}
+
 ```shell
 d8 stronghold token create -policy=dev-readonly -policy=logs
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold in Linux" %}}
+
+```shell
+stronghold token create -policy=dev-readonly -policy=logs
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 Normally the only policies that may be specified are those which are present in the current token's (i.e. the new token's parent's) token policies. However, root users can assign any policies.
 

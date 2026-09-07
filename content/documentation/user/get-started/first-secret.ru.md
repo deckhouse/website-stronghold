@@ -23,17 +23,43 @@ weight: 30
 
 1. Создайте секрет, записав тестовые значения по выбранному пути:
 
+   {{< tabs name="stronghold_cmd_58984" >}}
+   {{% tab name="Stronghold в DKP" %}}
+
    ```shell
    d8 stronghold kv put secret/my-first-secret username=demo password=secret123
    ```
+
+   {{% /tab %}}
+   {{% tab name="Stronghold в Linux" %}}
+
+   ```shell
+   stronghold kv put secret/my-first-secret username=demo password=secret123
+   ```
+
+   {{% /tab %}}
+   {{< /tabs >}}
 
    Если операция завершилась успешно, Stronghold подтвердит запись секрета.
 
 1. Проверьте сохранённые значения:
 
+   {{< tabs name="stronghold_cmd_55073" >}}
+   {{% tab name="Stronghold в DKP" %}}
+
    ```shell
    d8 stronghold kv get secret/my-first-secret
    ```
+
+   {{% /tab %}}
+   {{% tab name="Stronghold в Linux" %}}
+
+   ```shell
+   stronghold kv get secret/my-first-secret
+   ```
+
+   {{% /tab %}}
+   {{< /tabs >}}
 
    Пример вывода:
 
@@ -47,15 +73,41 @@ weight: 30
 
 1. Измените значение секрета, повторно записав его по тому же пути:
 
+   {{< tabs name="stronghold_cmd_85471" >}}
+   {{% tab name="Stronghold в DKP" %}}
+
    ```shell
    d8 stronghold kv put secret/my-first-secret username=demo password=new-secret
    ```
 
+   {{% /tab %}}
+   {{% tab name="Stronghold в Linux" %}}
+
+   ```shell
+   stronghold kv put secret/my-first-secret username=demo password=new-secret
+   ```
+
+   {{% /tab %}}
+   {{< /tabs >}}
+
 1. Убедитесь, что значение обновилось:
+
+   {{< tabs name="stronghold_cmd_55073" >}}
+   {{% tab name="Stronghold в DKP" %}}
 
    ```shell
    d8 stronghold kv get secret/my-first-secret
    ```
+
+   {{% /tab %}}
+   {{% tab name="Stronghold в Linux" %}}
+
+   ```shell
+   stronghold kv get secret/my-first-secret
+   ```
+
+   {{% /tab %}}
+   {{< /tabs >}}
 
 {{< alert level="info" >}}
 После проверки замените тестовый путь и значения на параметры, которые используются в вашем проекте.

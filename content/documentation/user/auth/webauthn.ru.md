@@ -31,17 +31,46 @@ weight: 85
 
 ### Включение метода
 
+{{< tabs name="stronghold_cmd_85100" >}}
+{{% tab name="Stronghold в DKP" %}}
+
 ```shell
 d8 stronghold auth enable webauthn
 ```
 
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+
+```shell
+stronghold auth enable webauthn
+```
+
+{{% /tab %}}
+{{< /tabs >}}
+
 По умолчанию метод будет доступен по пути `auth/webauthn`. При необходимости можно использовать другой путь монтирования:
+
+{{< tabs name="stronghold_cmd_18070" >}}
+{{% tab name="Stronghold в DKP" %}}
 
 ```shell
 d8 stronghold auth enable -path=my-passkeys webauthn
 ```
 
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+
+```shell
+stronghold auth enable -path=my-passkeys webauthn
+```
+
+{{% /tab %}}
+{{< /tabs >}}
+
 ### Настройка `Relying Party`
+
+{{< tabs name="stronghold_cmd_42812" >}}
+{{% tab name="Stronghold в DKP" %}}
 
 ```shell
 d8 stronghold write auth/webauthn/config \
@@ -50,7 +79,23 @@ d8 stronghold write auth/webauthn/config \
   rp_origins="https://stronghold.example.com"
 ```
 
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+
+```shell
+stronghold write auth/webauthn/config \
+  rp_id="stronghold.example.com" \
+  rp_display_name="Deckhouse Stronghold" \
+  rp_origins="https://stronghold.example.com"
+```
+
+{{% /tab %}}
+{{< /tabs >}}
+
 Пример конфигурации, в которой самостоятельная регистрация отключена:
+
+{{< tabs name="stronghold_cmd_81147" >}}
+{{% tab name="Stronghold в DKP" %}}
 
 ```shell
 d8 stronghold write auth/webauthn/config \
@@ -60,9 +105,26 @@ d8 stronghold write auth/webauthn/config \
   auto_registration=false
 ```
 
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+
+```shell
+stronghold write auth/webauthn/config \
+  rp_id="stronghold.example.com" \
+  rp_display_name="Deckhouse Stronghold" \
+  rp_origins="https://stronghold.example.com" \
+  auto_registration=false
+```
+
+{{% /tab %}}
+{{< /tabs >}}
+
 ### Предварительное создание пользователя
 
 Если `auto_registration=false`, администратор должен заранее создать пользователя и назначить ему параметры будущего токена:
+
+{{< tabs name="stronghold_cmd_19735" >}}
+{{% tab name="Stronghold в DKP" %}}
 
 ```shell
 d8 stronghold write auth/webauthn/user/alice \
@@ -70,6 +132,19 @@ d8 stronghold write auth/webauthn/user/alice \
   token_policies="developers" \
   token_ttl="1h"
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+
+```shell
+stronghold write auth/webauthn/user/alice \
+  display_name="Alice Doe" \
+  token_policies="developers" \
+  token_ttl="1h"
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 Через путь `auth/webauthn/user/<name>` можно:
 

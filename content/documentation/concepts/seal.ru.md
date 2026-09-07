@@ -256,9 +256,22 @@ rekey выполняется флагом `-target=recovery` у команды `
 Во всех командах unseal должен быть указан флаг `-migrate`. После ввода требуемого
 порога unseal-ключей Stronghold мигрирует unseal-ключи в recovery-ключи.
 
+{{< tabs name="stronghold_cmd_64419" >}}
+{{% tab name="Stronghold в DKP" %}}
+
 ```bash
 d8 stronghold operator unseal -migrate
 ```
+
+{{% /tab %}}
+{{% tab name="Stronghold в Linux" %}}
+
+```bash
+stronghold operator unseal -migrate
+```
+
+{{% /tab %}}
+{{< /tabs >}}
 
 #### Миграция с auto unseal на Shamir
 
