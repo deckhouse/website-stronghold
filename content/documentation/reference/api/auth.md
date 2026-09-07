@@ -1782,6 +1782,234 @@ Delete an existing role.
 
 **204**: empty body
 
+### GET /auth/{kerberos_mount_path}/config
+
+**Operation ID:** `kerberos-read-configuration`
+
+Configures the Kerberos keytab and service account.
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `kerberos_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Responses
+
+**200**: OK
+
+### POST /auth/{kerberos_mount_path}/config
+
+**Operation ID:** `kerberos-configure`
+
+Configures the Kerberos keytab and service account.
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `kerberos_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `add_group_aliases` | boolean | no | If set to true, returns any groups found in LDAP as a group alias. |
+| `keytab` | string | no | Base64 encoded keytab |
+| `remove_instance_name` | boolean | no | Remove instance/FQDN from keytab principal names. |
+| `service_account` | string | no | Service Account |
+
+#### Responses
+
+**200**: OK
+
+### GET /auth/{kerberos_mount_path}/config/ldap
+
+**Operation ID:** `kerberos-read-ldap-configuration`
+
+Configure the LDAP server to connect to, along with its options.
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `kerberos_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Responses
+
+**200**: OK
+
+### POST /auth/{kerberos_mount_path}/config/ldap
+
+**Operation ID:** `kerberos-configure-ldap`
+
+Configure the LDAP server to connect to, along with its options.
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `kerberos_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `anonymous_group_search` | boolean (default: False) | no | Use anonymous binds when performing LDAP group searches (if true the initial credentials will still be used for the initial connection test). |
+| `binddn` | string | no | LDAP DN for searching for the user DN (optional) |
+| `bindpass` | string | no | LDAP password for searching for the user DN (optional) |
+| `case_sensitive_names` | boolean | no | If true, case sensitivity will be used when comparing usernames and groups for matching policies. |
+| `certificate` | string | no | CA certificate to use when verifying LDAP server certificate, must be x509 PEM encoded (optional) |
+| `client_tls_cert` | string | no | Client certificate to provide to the LDAP server, must be x509 PEM encoded (optional) |
+| `client_tls_key` | string | no | Client certificate key to provide to the LDAP server, must be x509 PEM encoded (optional) |
+| `connection_timeout` | integer (default: 30s) | no | Timeout, in seconds, when attempting to connect to the LDAP server before trying the next URL in the configuration. |
+| `deny_null_bind` | boolean (default: True) | no | ⚠️ Deprecated. Denies an unauthenticated LDAP bind request if the user's password is empty; defaults to true |
+| `dereference_aliases` | string (never, finding, searching, always) (default: never) | no | When aliases should be dereferenced on search operations. Accepted values are 'never', 'finding', 'searching', 'always'. Defaults to 'never'. |
+| `discoverdn` | boolean | no | Use anonymous bind to discover the bind DN of a user (optional) |
+| `enable_samaccountname_login` | boolean (default: False) | no | If true, matching sAMAccountName attribute values will be allowed to login when upndomain is defined. |
+| `groupattr` | string (default: cn) | no | LDAP attribute to follow on objects returned by <groupfilter> in order to enumerate user group membership. Examples: "cn" or "memberOf", etc. Default: cn |
+| `groupdn` | string | no | LDAP search base to use for group membership search (eg: ou=Groups,dc=example,dc=org) |
+| `groupfilter` | string (default: (\|(memberUid={{.Username}})(member={{.UserDN}})(uniqueMember={{.UserDN}}))) | no | Go template for querying group membership of user (optional) The template can access the following context variables: UserDN, Username Example: (&(objectClass=group)(member:1.2.840.113556.1.4.1941:={{.UserDN}})) Default: (\|(memberUid={{.Username}})(member={{.UserDN}})(uniqueMember={{.UserDN}})) |
+| `insecure_tls` | boolean | no | Skip LDAP server SSL Certificate verification - VERY insecure (optional) |
+| `max_page_size` | integer (default: 0) | no | If set to a value greater than 0, the LDAP backend will use the LDAP server's paged search control to request pages of up to the given size. This can be used to avoid hitting the LDAP server's maximum result size limit. Otherwise, the LDAP backend will not use the paged search control. |
+| `request_timeout` | integer (default: 90s) | no | Timeout, in seconds, for the connection when making requests against the server before returning back an error. |
+| `starttls` | boolean | no | Issue a StartTLS command after establishing unencrypted connection (optional) |
+| `tls_max_version` | string (tls10, tls11, tls12, tls13) (default: tls12) | no | Maximum TLS version to use. Accepted values are 'tls10', 'tls11', 'tls12' or 'tls13'. Defaults to 'tls12' |
+| `tls_min_version` | string (tls10, tls11, tls12, tls13) (default: tls12) | no | Minimum TLS version to use. Accepted values are 'tls10', 'tls11', 'tls12' or 'tls13'. Defaults to 'tls12' |
+| `token_bound_cidrs` | array | no | Comma separated string or JSON list of CIDR blocks. If set, specifies the blocks of IP addresses which are allowed to use the generated token. |
+| `token_explicit_max_ttl` | integer | no | If set, tokens created via this role carry an explicit maximum TTL. During renewal, the current maximum TTL values of the role and the mount are not checked for changes, and any updates to these values will have no effect on the token being renewed. |
+| `token_max_ttl` | integer | no | The maximum lifetime of the generated token |
+| `token_no_default_policy` | boolean | no | If true, the 'default' policy will not automatically be added to generated tokens |
+| `token_num_uses` | integer | no | The maximum number of times a token may be used, a value of zero means unlimited |
+| `token_period` | integer | no | If set, tokens created via this role will have no max lifetime; instead, their renewal period will be fixed to this value. This takes an integer number of seconds, or a string duration (e.g. "24h"). |
+| `token_policies` | array | no | Comma-separated list of policies. This will apply to all tokens generated by this auth method, in addition to any configured for specific users/groups. |
+| `token_ttl` | integer | no | The initial ttl of the token to generate |
+| `token_type` | string (default: default-service) | no | The type of token to generate, service or batch |
+| `upndomain` | string | no | Enables userPrincipalDomain login with [username]@UPNDomain (optional) |
+| `url` | string (default: ldap://127.0.0.1) | no | LDAP URL to connect to (default: ldap://127.0.0.1). Multiple URLs can be specified by concatenating them with commas; they will be tried in-order. |
+| `use_pre111_group_cn_behavior` | boolean | no | In Vault 1.1.1 a fix for handling group CN values of different cases unfortunately introduced a regression that could cause previously defined groups to not be found due to a change in the resulting name. If set true, the pre-1.1.1 behavior for matching group CNs will be used. This is only needed in some upgrade scenarios for backwards compatibility. It is enabled by default if the config is upgraded but disabled by default on new configurations. |
+| `use_token_groups` | boolean (default: False) | no | If true, use the Active Directory tokenGroups constructed attribute of the user to find the group memberships. This will find all security groups including nested ones. |
+| `userattr` | string (default: cn) | no | Attribute used for users (default: cn) |
+| `userdn` | string | no | LDAP domain to use for users (eg: ou=People,dc=example,dc=org) |
+| `userfilter` | string (default: ({{.UserAttr}}={{.Username}})) | no | Go template for LDAP user search filer (optional) The template can access the following context variables: UserAttr, Username Default: ({{.UserAttr}}={{.Username}}) |
+| `username_as_alias` | boolean (default: False) | no | If true, sets the alias name to the username |
+
+#### Responses
+
+**200**: OK
+
+### GET /auth/{kerberos_mount_path}/groups
+
+**Operation ID:** `kerberos-list-groups`
+
+Manage users allowed to authenticate.
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `kerberos_mount_path` | string | path | yes | Path that the backend was mounted at |
+| `list` | string (true) | query | yes | Must be set to `true` |
+
+#### Responses
+
+**200**: OK
+
+### GET /auth/{kerberos_mount_path}/groups/{name}
+
+**Operation ID:** `kerberos-read-group`
+
+Manage users allowed to authenticate.
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `name` | string | path | yes | Name of the LDAP group. |
+| `kerberos_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Responses
+
+**200**: OK
+
+### POST /auth/{kerberos_mount_path}/groups/{name}
+
+**Operation ID:** `kerberos-write-group`
+
+Manage users allowed to authenticate.
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `name` | string | path | yes | Name of the LDAP group. |
+| `kerberos_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `policies` | array | no | Comma-separated list of policies associated to the group. |
+
+#### Responses
+
+**200**: OK
+
+### DELETE /auth/{kerberos_mount_path}/groups/{name}
+
+**Operation ID:** `kerberos-delete-group`
+
+Manage users allowed to authenticate.
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `name` | string | path | yes | Name of the LDAP group. |
+| `kerberos_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Responses
+
+**204**: empty body
+
+### GET /auth/{kerberos_mount_path}/login
+
+**Operation ID:** `kerberos-login2`
+
+**Available without authentication:** yes
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `kerberos_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Responses
+
+**200**: OK
+
+### POST /auth/{kerberos_mount_path}/login
+
+**Operation ID:** `kerberos-login`
+
+**Available without authentication:** yes
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `kerberos_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `authorization` | string | no | SPNEGO Authorization header. Required. |
+
+#### Responses
+
+**200**: OK
+
 ### GET /auth/{kubernetes_mount_path}/config
 
 **Operation ID:** `kubernetes-read-auth-configuration`

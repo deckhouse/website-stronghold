@@ -898,6 +898,7 @@ Pass-through secret storage to the storage backend, allowing you to read/write a
 | `path` | string | path | yes | Location of the secret. |
 | `kv_v1_mount_path` | string | path | yes | Path that the backend was mounted at |
 | `list` | string | query | no | Return a list if `true` |
+| `recursive` | boolean | query | no | Return every key beneath the path rather than only its immediate children, as paths relative to it. Requires `list=true` and the `allow_recursive` capability on the path. |
 
 #### Responses
 
@@ -1119,6 +1120,7 @@ Configures settings for the KV store
 | `path` | string | path | yes | Location of the secret. |
 | `kv_v2_mount_path` | string | path | yes | Path that the backend was mounted at |
 | `list` | string | query | no | Return a list if `true` |
+| `recursive` | boolean | query | no | Return every key beneath the path rather than only its immediate children, as paths relative to it. Requires `list=true` and the `allow_recursive` capability on the path. |
 
 #### Responses
 
@@ -2557,6 +2559,8 @@ Configuration of ACME Endpoints
 | `allow_role_ext_key_usage` | boolean (default: False) | no | whether the ExtKeyUsage field from a role is used, defaults to false meaning that certificate will be signed with ServerAuth. |
 | `allowed_issuers` | array (default: ['*']) | no | which issuers are allowed for use with ACME; by default, this will only be the primary (default) issuer |
 | `allowed_roles` | array (default: ['*']) | no | which roles are allowed for use with ACME; by default via '*', these will be all roles including sign-verbatim; when concrete role names are specified, any default_directory_policy role must be included to allow usage of the default acme directories under /pki/acme/directory and /pki/issuer/:issuer_id/acme/directory. |
+| `challenge_excluded_ip_ranges` | array (default: []) | no | List of CIDR blocks that are excluded from ACME challenge validation. IPs within these ranges will be rejected for validation. Can be individual IPs or CIDR notation. This list takes precedence over challenge_permitted_ip_ranges. |
+| `challenge_permitted_ip_ranges` | array (default: []) | no | List of CIDR blocks that are permitted for ACME challenge validation. If set, only IPs within these ranges will be allowed for validation. Can be individual IPs or CIDR notation. |
 | `default_directory_policy` | string (default: sign-verbatim) | no | the policy to be used for non-role-qualified ACME requests; by default ACME issuance will be otherwise unrestricted, equivalent to the sign-verbatim endpoint; one may also specify a role to use as this policy, as "role:<role_name>", the specified role must be allowed by allowed_roles |
 | `dns_resolver` | string (default: ) | no | DNS resolver to use for domain resolution on this mount. Defaults to using the default system resolver. Must be in the format <host>:<port>, with both parts mandatory. |
 | `eab_policy` | string (default: always-required) | no | Specify the policy to use for external account binding behaviour, 'not-required', 'new-account-required' or 'always-required' |
@@ -3184,7 +3188,7 @@ Generate a new CSR and private key used for signing.
 | `not_after` | string | no | Set the not after field of the certificate with specified date value. The value format should be given in UTC format YYYY-MM-ddTHH:MM:SSZ |
 | `not_before_duration` | integer (default: 30) | no | The duration before now which the certificate needs to be backdated by. |
 | `organization` | array | no | If set, O (Organization) will be set to this value. |
-| `other_sans` | array | no | Requested other SANs, in an array with the format <oid>;UTF8:<utf8 string value> for each entry. |
+| `other_sans` | array | no | Requested other SANs, in an array with the format <oid>;<type>:<value> for each entry, where <type> is one of UTF8, IA5 and KRB5. A KRB5 value is a Kerberos principal such as host/kdc.example.com@EXAMPLE.COM and is only defined for OID 1.3.6.1.5.2.2. |
 | `ou` | array | no | If set, OU (OrganizationalUnit) will be set to this value. |
 | `postal_code` | array | no | If set, Postal Code will be set to this value. |
 | `private_key_format` | string (, der, pem, pkcs8) (default: der) | no | Format for the returned private key. Generally the default will be controlled by the "format" parameter as either base64-encoded DER or PEM-encoded DER. However, this can be set to "pkcs8" to have the returned private key contain base64-encoded pkcs8 or PEM-encoded pkcs8 instead. Defaults to "der". |
@@ -3240,7 +3244,7 @@ Generate a new CSR and private key used for signing.
 | `not_after` | string | no | Set the not after field of the certificate with specified date value. The value format should be given in UTC format YYYY-MM-ddTHH:MM:SSZ |
 | `not_before_duration` | integer (default: 30) | no | The duration before now which the certificate needs to be backdated by. |
 | `organization` | array | no | If set, O (Organization) will be set to this value. |
-| `other_sans` | array | no | Requested other SANs, in an array with the format <oid>;UTF8:<utf8 string value> for each entry. |
+| `other_sans` | array | no | Requested other SANs, in an array with the format <oid>;<type>:<value> for each entry, where <type> is one of UTF8, IA5 and KRB5. A KRB5 value is a Kerberos principal such as host/kdc.example.com@EXAMPLE.COM and is only defined for OID 1.3.6.1.5.2.2. |
 | `ou` | array | no | If set, OU (OrganizationalUnit) will be set to this value. |
 | `postal_code` | array | no | If set, Postal Code will be set to this value. |
 | `private_key_format` | string (, der, pem, pkcs8) (default: der) | no | Format for the returned private key. Generally the default will be controlled by the "format" parameter as either base64-encoded DER or PEM-encoded DER. However, this can be set to "pkcs8" to have the returned private key contain base64-encoded pkcs8 or PEM-encoded pkcs8 instead. Defaults to "der". |
@@ -3316,7 +3320,7 @@ Request a certificate using a certain role with the provided details.
 | `ip_sans` | array | no | The requested IP SANs, if any, in a comma-delimited list |
 | `issuer_ref` | string (default: default) | no | Reference to a existing issuer; either "default" for the configured default issuer, an identifier or the name assigned to the issuer. |
 | `not_after` | string | no | Set the not after field of the certificate with specified date value. The value format should be given in UTC format YYYY-MM-ddTHH:MM:SSZ |
-| `other_sans` | array | no | Requested other SANs, in an array with the format <oid>;UTF8:<utf8 string value> for each entry. |
+| `other_sans` | array | no | Requested other SANs, in an array with the format <oid>;<type>:<value> for each entry, where <type> is one of UTF8, IA5 and KRB5. A KRB5 value is a Kerberos principal such as host/kdc.example.com@EXAMPLE.COM and is only defined for OID 1.3.6.1.5.2.2. |
 | `private_key_format` | string (, der, pem, pkcs8) (default: der) | no | Format for the returned private key. Generally the default will be controlled by the "format" parameter as either base64-encoded DER or PEM-encoded DER. However, this can be set to "pkcs8" to have the returned private key contain base64-encoded pkcs8 or PEM-encoded pkcs8 instead. Defaults to "der". |
 | `remove_roots_from_chain` | boolean (default: False) | no | Whether or not to remove self-signed CA certificates in the output of the ca_chain field. |
 | `serial_number` | string | no | The Subject's requested serial number, if any. See RFC 4519 Section 2.31 'serialNumber' for a description of this field. If you want more than one, specify alternative names in the alt_names map using OID 2.5.4.5. This has no impact on the final certificate's Serial Number field. |
@@ -3971,7 +3975,7 @@ Request a certificate using a certain role with the provided details.
 | `format` | string (pem, der, pem_bundle) (default: pem) | no | Format for returned data. Can be "pem", "der", or "pem_bundle". If "pem_bundle", any private key and issuing cert will be appended to the certificate pem. If "der", the value will be base64 encoded. Defaults to "pem". |
 | `ip_sans` | array | no | The requested IP SANs, if any, in a comma-delimited list |
 | `not_after` | string | no | Set the not after field of the certificate with specified date value. The value format should be given in UTC format YYYY-MM-ddTHH:MM:SSZ |
-| `other_sans` | array | no | Requested other SANs, in an array with the format <oid>;UTF8:<utf8 string value> for each entry. |
+| `other_sans` | array | no | Requested other SANs, in an array with the format <oid>;<type>:<value> for each entry, where <type> is one of UTF8, IA5 and KRB5. A KRB5 value is a Kerberos principal such as host/kdc.example.com@EXAMPLE.COM and is only defined for OID 1.3.6.1.5.2.2. |
 | `private_key_format` | string (, der, pem, pkcs8) (default: der) | no | Format for the returned private key. Generally the default will be controlled by the "format" parameter as either base64-encoded DER or PEM-encoded DER. However, this can be set to "pkcs8" to have the returned private key contain base64-encoded pkcs8 or PEM-encoded pkcs8 instead. Defaults to "der". |
 | `remove_roots_from_chain` | boolean (default: False) | no | Whether or not to remove self-signed CA certificates in the output of the ca_chain field. |
 | `serial_number` | string | no | The Subject's requested serial number, if any. See RFC 4519 Section 2.31 'serialNumber' for a description of this field. If you want more than one, specify alternative names in the alt_names map using OID 2.5.4.5. This has no impact on the final certificate's Serial Number field. |
@@ -4498,7 +4502,7 @@ Issue an intermediate CA certificate based on the provided CSR.
 | `not_after` | string | no | Set the not after field of the certificate with specified date value. The value format should be given in UTC format YYYY-MM-ddTHH:MM:SSZ |
 | `not_before_duration` | integer (default: 30) | no | The duration before now which the certificate needs to be backdated by. |
 | `organization` | array | no | If set, O (Organization) will be set to this value. |
-| `other_sans` | array | no | Requested other SANs, in an array with the format <oid>;UTF8:<utf8 string value> for each entry. |
+| `other_sans` | array | no | Requested other SANs, in an array with the format <oid>;<type>:<value> for each entry, where <type> is one of UTF8, IA5 and KRB5. A KRB5 value is a Kerberos principal such as host/kdc.example.com@EXAMPLE.COM and is only defined for OID 1.3.6.1.5.2.2. |
 | `ou` | array | no | If set, OU (OrganizationalUnit) will be set to this value. |
 | `permitted_dns_domains` | array | no | Domains for which this certificate is allowed to sign or issue child certificates. If set, all DNS names (subject and alt) on child certs must be exact matches or subsets of the given domains (see <https://tools.ietf.org/html/rfc5280#section-4.2.1.10>). |
 | `postal_code` | array | no | If set, Postal Code will be set to this value. |
@@ -4613,7 +4617,7 @@ Issue a certificate directly based on the provided CSR.
 | `ip_sans` | array | no | The requested IP SANs, if any, in a comma-delimited list |
 | `key_usage` | array (default: ['DigitalSignature', 'KeyAgreement', 'KeyEncipherment']) | no | A comma-separated string or list of key usages (not extended key usages). Valid values can be found at <https://golang.org/pkg/crypto/x509/#KeyUsage> -- simply drop the "KeyUsage" part of the name. To remove all key usages from being set, set this value to an empty list. |
 | `not_after` | string | no | Set the not after field of the certificate with specified date value. The value format should be given in UTC format YYYY-MM-ddTHH:MM:SSZ |
-| `other_sans` | array | no | Requested other SANs, in an array with the format <oid>;UTF8:<utf8 string value> for each entry. |
+| `other_sans` | array | no | Requested other SANs, in an array with the format <oid>;<type>:<value> for each entry, where <type> is one of UTF8, IA5 and KRB5. A KRB5 value is a Kerberos principal such as host/kdc.example.com@EXAMPLE.COM and is only defined for OID 1.3.6.1.5.2.2. |
 | `private_key_format` | string (, der, pem, pkcs8) (default: der) | no | Format for the returned private key. Generally the default will be controlled by the "format" parameter as either base64-encoded DER or PEM-encoded DER. However, this can be set to "pkcs8" to have the returned private key contain base64-encoded pkcs8 or PEM-encoded pkcs8 instead. Defaults to "der". |
 | `remove_roots_from_chain` | boolean (default: False) | no | Whether or not to remove self-signed CA certificates in the output of the ca_chain field. |
 | `role` | string | no | The desired role with configuration for this request |
@@ -4666,7 +4670,7 @@ Issue a certificate directly based on the provided CSR.
 | `ip_sans` | array | no | The requested IP SANs, if any, in a comma-delimited list |
 | `key_usage` | array (default: ['DigitalSignature', 'KeyAgreement', 'KeyEncipherment']) | no | A comma-separated string or list of key usages (not extended key usages). Valid values can be found at <https://golang.org/pkg/crypto/x509/#KeyUsage> -- simply drop the "KeyUsage" part of the name. To remove all key usages from being set, set this value to an empty list. |
 | `not_after` | string | no | Set the not after field of the certificate with specified date value. The value format should be given in UTC format YYYY-MM-ddTHH:MM:SSZ |
-| `other_sans` | array | no | Requested other SANs, in an array with the format <oid>;UTF8:<utf8 string value> for each entry. |
+| `other_sans` | array | no | Requested other SANs, in an array with the format <oid>;<type>:<value> for each entry, where <type> is one of UTF8, IA5 and KRB5. A KRB5 value is a Kerberos principal such as host/kdc.example.com@EXAMPLE.COM and is only defined for OID 1.3.6.1.5.2.2. |
 | `private_key_format` | string (, der, pem, pkcs8) (default: der) | no | Format for the returned private key. Generally the default will be controlled by the "format" parameter as either base64-encoded DER or PEM-encoded DER. However, this can be set to "pkcs8" to have the returned private key contain base64-encoded pkcs8 or PEM-encoded pkcs8 instead. Defaults to "der". |
 | `remove_roots_from_chain` | boolean (default: False) | no | Whether or not to remove self-signed CA certificates in the output of the ca_chain field. |
 | `serial_number` | string | no | The Subject's requested serial number, if any. See RFC 4519 Section 2.31 'serialNumber' for a description of this field. If you want more than one, specify alternative names in the alt_names map using OID 2.5.4.5. This has no impact on the final certificate's Serial Number field. |
@@ -4715,7 +4719,7 @@ Request certificates using a certain role with the provided details.
 | `format` | string (pem, der, pem_bundle) (default: pem) | no | Format for returned data. Can be "pem", "der", or "pem_bundle". If "pem_bundle", any private key and issuing cert will be appended to the certificate pem. If "der", the value will be base64 encoded. Defaults to "pem". |
 | `ip_sans` | array | no | The requested IP SANs, if any, in a comma-delimited list |
 | `not_after` | string | no | Set the not after field of the certificate with specified date value. The value format should be given in UTC format YYYY-MM-ddTHH:MM:SSZ |
-| `other_sans` | array | no | Requested other SANs, in an array with the format <oid>;UTF8:<utf8 string value> for each entry. |
+| `other_sans` | array | no | Requested other SANs, in an array with the format <oid>;<type>:<value> for each entry, where <type> is one of UTF8, IA5 and KRB5. A KRB5 value is a Kerberos principal such as host/kdc.example.com@EXAMPLE.COM and is only defined for OID 1.3.6.1.5.2.2. |
 | `private_key_format` | string (, der, pem, pkcs8) (default: der) | no | Format for the returned private key. Generally the default will be controlled by the "format" parameter as either base64-encoded DER or PEM-encoded DER. However, this can be set to "pkcs8" to have the returned private key contain base64-encoded pkcs8 or PEM-encoded pkcs8 instead. Defaults to "der". |
 | `remove_roots_from_chain` | boolean (default: False) | no | Whether or not to remove self-signed CA certificates in the output of the ca_chain field. |
 | `serial_number` | string | no | The Subject's requested serial number, if any. See RFC 4519 Section 2.31 'serialNumber' for a description of this field. If you want more than one, specify alternative names in the alt_names map using OID 2.5.4.5. This has no impact on the final certificate's Serial Number field. |
@@ -4931,7 +4935,7 @@ Generate a new CSR and private key used for signing.
 | `not_after` | string | no | Set the not after field of the certificate with specified date value. The value format should be given in UTC format YYYY-MM-ddTHH:MM:SSZ |
 | `not_before_duration` | integer (default: 30) | no | The duration before now which the certificate needs to be backdated by. |
 | `organization` | array | no | If set, O (Organization) will be set to this value. |
-| `other_sans` | array | no | Requested other SANs, in an array with the format <oid>;UTF8:<utf8 string value> for each entry. |
+| `other_sans` | array | no | Requested other SANs, in an array with the format <oid>;<type>:<value> for each entry, where <type> is one of UTF8, IA5 and KRB5. A KRB5 value is a Kerberos principal such as host/kdc.example.com@EXAMPLE.COM and is only defined for OID 1.3.6.1.5.2.2. |
 | `ou` | array | no | If set, OU (OrganizationalUnit) will be set to this value. |
 | `postal_code` | array | no | If set, Postal Code will be set to this value. |
 | `private_key_format` | string (, der, pem, pkcs8) (default: der) | no | Format for the returned private key. Generally the default will be controlled by the "format" parameter as either base64-encoded DER or PEM-encoded DER. However, this can be set to "pkcs8" to have the returned private key contain base64-encoded pkcs8 or PEM-encoded pkcs8 instead. Defaults to "der". |
@@ -4988,7 +4992,7 @@ Generate a new CA certificate and private key used for signing.
 | `not_after` | string | no | Set the not after field of the certificate with specified date value. The value format should be given in UTC format YYYY-MM-ddTHH:MM:SSZ |
 | `not_before_duration` | integer (default: 30) | no | The duration before now which the certificate needs to be backdated by. |
 | `organization` | array | no | If set, O (Organization) will be set to this value. |
-| `other_sans` | array | no | Requested other SANs, in an array with the format <oid>;UTF8:<utf8 string value> for each entry. |
+| `other_sans` | array | no | Requested other SANs, in an array with the format <oid>;<type>:<value> for each entry, where <type> is one of UTF8, IA5 and KRB5. A KRB5 value is a Kerberos principal such as host/kdc.example.com@EXAMPLE.COM and is only defined for OID 1.3.6.1.5.2.2. |
 | `ou` | array | no | If set, OU (OrganizationalUnit) will be set to this value. |
 | `permitted_dns_domains` | array | no | Domains for which this certificate is allowed to sign or issue child certificates. If set, all DNS names (subject and alt) on child certs must be exact matches or subsets of the given domains (see <https://tools.ietf.org/html/rfc5280#section-4.2.1.10>). |
 | `postal_code` | array | no | If set, Postal Code will be set to this value. |
@@ -5445,7 +5449,7 @@ Manage the roles that can be created with this backend.
 | `allow_wildcard_certificates` | boolean | no | If set, allows certificates with wildcards in the common name to be issued, conforming to RFC 6125's Section 6.4.3; e.g., "*.example.net" or "b*z.example.net". See the documentation for more information. |
 | `allowed_domains` | array | no | Specifies the domains this role is allowed to issue certificates for. This is used with the allow_bare_domains, allow_subdomains, and allow_glob_domains to determine matches for the common name, DNS-typed SAN entries, and Email-typed SAN entries of certificates. See the documentation for more information. This parameter accepts a comma-separated string or list of domains. |
 | `allowed_domains_template` | boolean | no | If set, Allowed domains can be specified using identity template policies. Non-templated domains are also permitted. |
-| `allowed_other_sans` | array | no | If set, an array of allowed other names to put in SANs. These values support globbing and must be in the format <oid>;<type>:<value>. Currently only "utf8" is a valid type. All values, including globbing values, must use this syntax, with the exception being a single "*" which allows any OID and any value (but type must still be utf8). |
+| `allowed_other_sans` | array | no | If set, an array of allowed other names to put in SANs. These values support globbing and must be in the format <oid>;<type>:<value>. Valid types are "utf8" for an otherName holding a UTF8String, "ia5" for one holding an IA5String, and "krb5" for the KRB5PrincipalName of RFC 4556, which is only defined for OID 1.3.6.1.5.2.2 and whose value is written in the usual Kerberos form, as in "1.3.6.1.5.2.2;krb5:host/*@EXAMPLE.COM". A value is only matched against the entries written for its own type. All values, including globbing values, must use this syntax, with the exception being a single "*" which allows any OID, type and value. |
 | `allowed_serial_numbers` | array | no | If set, an array of allowed serial numbers to put in Subject. These values support globbing. |
 | `allowed_uri_sans` | array | no | If set, an array of allowed URIs for URI Subject Alternative Names. Any valid URI is accepted, these values support globbing. |
 | `allowed_uri_sans_template` | boolean | no | If set, Allowed URI SANs can be specified using identity template policies. Non-templated URI SANs are also permitted. |
@@ -5471,7 +5475,7 @@ Manage the roles that can be created with this backend.
 | `not_before_duration` | integer | no | The duration in seconds before now which the certificate needs to be backdated by. |
 | `organization` | array | no | If set, O (Organization) will be set to this value in certificates issued by this role. |
 | `ou` | array | no | If set, OU (OrganizationalUnit) will be set to this value in certificates issued by this role. |
-| `policy_identifiers` | array | no | A comma-separated string or list of policy OIDs, or a JSON list of qualified policy information, which must include an oid, and may include a notice and/or cps url, using the form [{"oid"="1.3.6.1.4.1.7.8","notice"="I am a user Notice"}, {"oid"="1.3.6.1.4.1.44947.1.2.4 ","cps"="https://example.com"}]. |
+| `policy_identifiers` | array | no | A comma-separated string or list of policy OIDs, or a JSON list of qualified policy information, which must include an oid, and may include a notice and/or cps url, using the form [{"oid"="1.3.6.1.4.1.7.8","notice"="I am a user Notice"}, {"oid"="1.3.6.1.4.1.44947.1.2.4 ","cps"="<https://example.com>"}]. |
 | `postal_code` | array | no | If set, Postal Code will be set to this value in certificates issued by this role. |
 | `province` | array | no | If set, Province will be set to this value in certificates issued by this role. |
 | `require_cn` | boolean | no | If set to false, makes the 'common_name' field optional while generating a certificate. |
@@ -5510,7 +5514,7 @@ Manage the roles that can be created with this backend.
 | `allow_wildcard_certificates` | boolean (default: True) | no | If set, allows certificates with wildcards in the common name to be issued, conforming to RFC 6125's Section 6.4.3; e.g., "*.example.net" or "b*z.example.net". See the documentation for more information. |
 | `allowed_domains` | array | no | Specifies the domains this role is allowed to issue certificates for. This is used with the allow_bare_domains, allow_subdomains, and allow_glob_domains to determine matches for the common name, DNS-typed SAN entries, and Email-typed SAN entries of certificates. See the documentation for more information. This parameter accepts a comma-separated string or list of domains. |
 | `allowed_domains_template` | boolean (default: False) | no | If set, Allowed domains can be specified using identity template policies. Non-templated domains are also permitted. |
-| `allowed_other_sans` | array | no | If set, an array of allowed other names to put in SANs. These values support globbing and must be in the format <oid>;<type>:<value>. Currently only "utf8" is a valid type. All values, including globbing values, must use this syntax, with the exception being a single "*" which allows any OID and any value (but type must still be utf8). |
+| `allowed_other_sans` | array | no | If set, an array of allowed other names to put in SANs. These values support globbing and must be in the format <oid>;<type>:<value>. Valid types are "utf8" for an otherName holding a UTF8String, "ia5" for one holding an IA5String, and "krb5" for the KRB5PrincipalName of RFC 4556, which is only defined for OID 1.3.6.1.5.2.2 and whose value is written in the usual Kerberos form, as in "1.3.6.1.5.2.2;krb5:host/*@EXAMPLE.COM". A value is only matched against the entries written for its own type. All values, including globbing values, must use this syntax, with the exception being a single "*" which allows any OID, type and value. |
 | `allowed_serial_numbers` | array | no | If set, an array of allowed serial numbers to put in Subject. These values support globbing. |
 | `allowed_uri_sans` | array | no | If set, an array of allowed URIs for URI Subject Alternative Names. Any valid URI is accepted, these values support globbing. |
 | `allowed_uri_sans_template` | boolean (default: False) | no | If set, Allowed URI SANs can be specified using identity template policies. Non-templated URI SANs are also permitted. |
@@ -5537,7 +5541,7 @@ Manage the roles that can be created with this backend.
 | `not_before_duration` | integer (default: 30) | no | The duration before now which the certificate needs to be backdated by. |
 | `organization` | array | no | If set, O (Organization) will be set to this value in certificates issued by this role. |
 | `ou` | array | no | If set, OU (OrganizationalUnit) will be set to this value in certificates issued by this role. |
-| `policy_identifiers` | array | no | A comma-separated string or list of policy OIDs, or a JSON list of qualified policy information, which must include an oid, and may include a notice and/or cps url, using the form [{"oid"="1.3.6.1.4.1.7.8","notice"="I am a user Notice"}, {"oid"="1.3.6.1.4.1.44947.1.2.4 ","cps"="https://example.com"}]. |
+| `policy_identifiers` | array | no | A comma-separated string or list of policy OIDs, or a JSON list of qualified policy information, which must include an oid, and may include a notice and/or cps url, using the form [{"oid"="1.3.6.1.4.1.7.8","notice"="I am a user Notice"}, {"oid"="1.3.6.1.4.1.44947.1.2.4 ","cps"="<https://example.com>"}]. |
 | `postal_code` | array | no | If set, Postal Code will be set to this value in certificates issued by this role. |
 | `province` | array | no | If set, Province will be set to this value in certificates issued by this role. |
 | `require_cn` | boolean (default: True) | no | If set to false, makes the 'common_name' field optional while generating a certificate. |
@@ -5566,7 +5570,7 @@ Manage the roles that can be created with this backend.
 | `allow_wildcard_certificates` | boolean | no | If set, allows certificates with wildcards in the common name to be issued, conforming to RFC 6125's Section 6.4.3; e.g., "*.example.net" or "b*z.example.net". See the documentation for more information. |
 | `allowed_domains` | array | no | Specifies the domains this role is allowed to issue certificates for. This is used with the allow_bare_domains, allow_subdomains, and allow_glob_domains to determine matches for the common name, DNS-typed SAN entries, and Email-typed SAN entries of certificates. See the documentation for more information. This parameter accepts a comma-separated string or list of domains. |
 | `allowed_domains_template` | boolean | no | If set, Allowed domains can be specified using identity template policies. Non-templated domains are also permitted. |
-| `allowed_other_sans` | array | no | If set, an array of allowed other names to put in SANs. These values support globbing and must be in the format <oid>;<type>:<value>. Currently only "utf8" is a valid type. All values, including globbing values, must use this syntax, with the exception being a single "*" which allows any OID and any value (but type must still be utf8). |
+| `allowed_other_sans` | array | no | If set, an array of allowed other names to put in SANs. These values support globbing and must be in the format <oid>;<type>:<value>. Valid types are "utf8" for an otherName holding a UTF8String, "ia5" for one holding an IA5String, and "krb5" for the KRB5PrincipalName of RFC 4556, which is only defined for OID 1.3.6.1.5.2.2 and whose value is written in the usual Kerberos form, as in "1.3.6.1.5.2.2;krb5:host/*@EXAMPLE.COM". A value is only matched against the entries written for its own type. All values, including globbing values, must use this syntax, with the exception being a single "*" which allows any OID, type and value. |
 | `allowed_serial_numbers` | array | no | If set, an array of allowed serial numbers to put in Subject. These values support globbing. |
 | `allowed_uri_sans` | array | no | If set, an array of allowed URIs for URI Subject Alternative Names. Any valid URI is accepted, these values support globbing. |
 | `allowed_uri_sans_template` | boolean | no | If set, Allowed URI SANs can be specified using identity template policies. Non-templated URI SANs are also permitted. |
@@ -5592,7 +5596,7 @@ Manage the roles that can be created with this backend.
 | `not_before_duration` | integer | no | The duration in seconds before now which the certificate needs to be backdated by. |
 | `organization` | array | no | If set, O (Organization) will be set to this value in certificates issued by this role. |
 | `ou` | array | no | If set, OU (OrganizationalUnit) will be set to this value in certificates issued by this role. |
-| `policy_identifiers` | array | no | A comma-separated string or list of policy OIDs, or a JSON list of qualified policy information, which must include an oid, and may include a notice and/or cps url, using the form [{"oid"="1.3.6.1.4.1.7.8","notice"="I am a user Notice"}, {"oid"="1.3.6.1.4.1.44947.1.2.4 ","cps"="https://example.com"}]. |
+| `policy_identifiers` | array | no | A comma-separated string or list of policy OIDs, or a JSON list of qualified policy information, which must include an oid, and may include a notice and/or cps url, using the form [{"oid"="1.3.6.1.4.1.7.8","notice"="I am a user Notice"}, {"oid"="1.3.6.1.4.1.44947.1.2.4 ","cps"="<https://example.com>"}]. |
 | `postal_code` | array | no | If set, Postal Code will be set to this value in certificates issued by this role. |
 | `province` | array | no | If set, Province will be set to this value in certificates issued by this role. |
 | `require_cn` | boolean | no | If set to false, makes the 'common_name' field optional while generating a certificate. |
@@ -6015,7 +6019,7 @@ Generate a new CA certificate and private key used for signing.
 | `not_after` | string | no | Set the not after field of the certificate with specified date value. The value format should be given in UTC format YYYY-MM-ddTHH:MM:SSZ |
 | `not_before_duration` | integer (default: 30) | no | The duration before now which the certificate needs to be backdated by. |
 | `organization` | array | no | If set, O (Organization) will be set to this value. |
-| `other_sans` | array | no | Requested other SANs, in an array with the format <oid>;UTF8:<utf8 string value> for each entry. |
+| `other_sans` | array | no | Requested other SANs, in an array with the format <oid>;<type>:<value> for each entry, where <type> is one of UTF8, IA5 and KRB5. A KRB5 value is a Kerberos principal such as host/kdc.example.com@EXAMPLE.COM and is only defined for OID 1.3.6.1.5.2.2. |
 | `ou` | array | no | If set, OU (OrganizationalUnit) will be set to this value. |
 | `permitted_dns_domains` | array | no | Domains for which this certificate is allowed to sign or issue child certificates. If set, all DNS names (subject and alt) on child certs must be exact matches or subsets of the given domains (see <https://tools.ietf.org/html/rfc5280#section-4.2.1.10>). |
 | `postal_code` | array | no | If set, Postal Code will be set to this value. |
@@ -6106,7 +6110,7 @@ Generate a new CA certificate and private key used for signing.
 | `not_after` | string | no | Set the not after field of the certificate with specified date value. The value format should be given in UTC format YYYY-MM-ddTHH:MM:SSZ |
 | `not_before_duration` | integer (default: 30) | no | The duration before now which the certificate needs to be backdated by. |
 | `organization` | array | no | If set, O (Organization) will be set to this value. |
-| `other_sans` | array | no | Requested other SANs, in an array with the format <oid>;UTF8:<utf8 string value> for each entry. |
+| `other_sans` | array | no | Requested other SANs, in an array with the format <oid>;<type>:<value> for each entry, where <type> is one of UTF8, IA5 and KRB5. A KRB5 value is a Kerberos principal such as host/kdc.example.com@EXAMPLE.COM and is only defined for OID 1.3.6.1.5.2.2. |
 | `ou` | array | no | If set, OU (OrganizationalUnit) will be set to this value. |
 | `permitted_dns_domains` | array | no | Domains for which this certificate is allowed to sign or issue child certificates. If set, all DNS names (subject and alt) on child certs must be exact matches or subsets of the given domains (see <https://tools.ietf.org/html/rfc5280#section-4.2.1.10>). |
 | `postal_code` | array | no | If set, Postal Code will be set to this value. |
@@ -6165,7 +6169,7 @@ Issue an intermediate CA certificate based on the provided CSR.
 | `not_after` | string | no | Set the not after field of the certificate with specified date value. The value format should be given in UTC format YYYY-MM-ddTHH:MM:SSZ |
 | `not_before_duration` | integer (default: 30) | no | The duration before now which the certificate needs to be backdated by. |
 | `organization` | array | no | If set, O (Organization) will be set to this value. |
-| `other_sans` | array | no | Requested other SANs, in an array with the format <oid>;UTF8:<utf8 string value> for each entry. |
+| `other_sans` | array | no | Requested other SANs, in an array with the format <oid>;<type>:<value> for each entry, where <type> is one of UTF8, IA5 and KRB5. A KRB5 value is a Kerberos principal such as host/kdc.example.com@EXAMPLE.COM and is only defined for OID 1.3.6.1.5.2.2. |
 | `ou` | array | no | If set, OU (OrganizationalUnit) will be set to this value. |
 | `permitted_dns_domains` | array | no | Domains for which this certificate is allowed to sign or issue child certificates. If set, all DNS names (subject and alt) on child certs must be exact matches or subsets of the given domains (see <https://tools.ietf.org/html/rfc5280#section-4.2.1.10>). |
 | `postal_code` | array | no | If set, Postal Code will be set to this value. |
@@ -6250,7 +6254,7 @@ Issue a certificate directly based on the provided CSR.
 | `issuer_ref` | string (default: default) | no | Reference to a existing issuer; either "default" for the configured default issuer, an identifier or the name assigned to the issuer. |
 | `key_usage` | array (default: ['DigitalSignature', 'KeyAgreement', 'KeyEncipherment']) | no | A comma-separated string or list of key usages (not extended key usages). Valid values can be found at <https://golang.org/pkg/crypto/x509/#KeyUsage> -- simply drop the "KeyUsage" part of the name. To remove all key usages from being set, set this value to an empty list. |
 | `not_after` | string | no | Set the not after field of the certificate with specified date value. The value format should be given in UTC format YYYY-MM-ddTHH:MM:SSZ |
-| `other_sans` | array | no | Requested other SANs, in an array with the format <oid>;UTF8:<utf8 string value> for each entry. |
+| `other_sans` | array | no | Requested other SANs, in an array with the format <oid>;<type>:<value> for each entry, where <type> is one of UTF8, IA5 and KRB5. A KRB5 value is a Kerberos principal such as host/kdc.example.com@EXAMPLE.COM and is only defined for OID 1.3.6.1.5.2.2. |
 | `private_key_format` | string (, der, pem, pkcs8) (default: der) | no | Format for the returned private key. Generally the default will be controlled by the "format" parameter as either base64-encoded DER or PEM-encoded DER. However, this can be set to "pkcs8" to have the returned private key contain base64-encoded pkcs8 or PEM-encoded pkcs8 instead. Defaults to "der". |
 | `remove_roots_from_chain` | boolean (default: False) | no | Whether or not to remove self-signed CA certificates in the output of the ca_chain field. |
 | `role` | string | no | The desired role with configuration for this request |
@@ -6303,7 +6307,7 @@ Issue a certificate directly based on the provided CSR.
 | `issuer_ref` | string (default: default) | no | Reference to a existing issuer; either "default" for the configured default issuer, an identifier or the name assigned to the issuer. |
 | `key_usage` | array (default: ['DigitalSignature', 'KeyAgreement', 'KeyEncipherment']) | no | A comma-separated string or list of key usages (not extended key usages). Valid values can be found at <https://golang.org/pkg/crypto/x509/#KeyUsage> -- simply drop the "KeyUsage" part of the name. To remove all key usages from being set, set this value to an empty list. |
 | `not_after` | string | no | Set the not after field of the certificate with specified date value. The value format should be given in UTC format YYYY-MM-ddTHH:MM:SSZ |
-| `other_sans` | array | no | Requested other SANs, in an array with the format <oid>;UTF8:<utf8 string value> for each entry. |
+| `other_sans` | array | no | Requested other SANs, in an array with the format <oid>;<type>:<value> for each entry, where <type> is one of UTF8, IA5 and KRB5. A KRB5 value is a Kerberos principal such as host/kdc.example.com@EXAMPLE.COM and is only defined for OID 1.3.6.1.5.2.2. |
 | `private_key_format` | string (, der, pem, pkcs8) (default: der) | no | Format for the returned private key. Generally the default will be controlled by the "format" parameter as either base64-encoded DER or PEM-encoded DER. However, this can be set to "pkcs8" to have the returned private key contain base64-encoded pkcs8 or PEM-encoded pkcs8 instead. Defaults to "der". |
 | `remove_roots_from_chain` | boolean (default: False) | no | Whether or not to remove self-signed CA certificates in the output of the ca_chain field. |
 | `serial_number` | string | no | The Subject's requested serial number, if any. See RFC 4519 Section 2.31 'serialNumber' for a description of this field. If you want more than one, specify alternative names in the alt_names map using OID 2.5.4.5. This has no impact on the final certificate's Serial Number field. |
@@ -6352,7 +6356,7 @@ Request certificates using a certain role with the provided details.
 | `ip_sans` | array | no | The requested IP SANs, if any, in a comma-delimited list |
 | `issuer_ref` | string (default: default) | no | Reference to a existing issuer; either "default" for the configured default issuer, an identifier or the name assigned to the issuer. |
 | `not_after` | string | no | Set the not after field of the certificate with specified date value. The value format should be given in UTC format YYYY-MM-ddTHH:MM:SSZ |
-| `other_sans` | array | no | Requested other SANs, in an array with the format <oid>;UTF8:<utf8 string value> for each entry. |
+| `other_sans` | array | no | Requested other SANs, in an array with the format <oid>;<type>:<value> for each entry, where <type> is one of UTF8, IA5 and KRB5. A KRB5 value is a Kerberos principal such as host/kdc.example.com@EXAMPLE.COM and is only defined for OID 1.3.6.1.5.2.2. |
 | `private_key_format` | string (, der, pem, pkcs8) (default: der) | no | Format for the returned private key. Generally the default will be controlled by the "format" parameter as either base64-encoded DER or PEM-encoded DER. However, this can be set to "pkcs8" to have the returned private key contain base64-encoded pkcs8 or PEM-encoded pkcs8 instead. Defaults to "der". |
 | `remove_roots_from_chain` | boolean (default: False) | no | Whether or not to remove self-signed CA certificates in the output of the ca_chain field. |
 | `serial_number` | string | no | The Subject's requested serial number, if any. See RFC 4519 Section 2.31 'serialNumber' for a description of this field. If you want more than one, specify alternative names in the alt_names map using OID 2.5.4.5. This has no impact on the final certificate's Serial Number field. |
@@ -8217,6 +8221,11 @@ Configure the plugin
 
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
+| `buildkitd_address` | string | no | An address of a running buildkitd (unix://, tcp://, docker-container:// or kube-pod:// scheme) to build release artifacts with the BuildKit client; the docker CLI is used only when neither this nor buildkitd_driver is set. Build secrets are sent to that daemon, and tcp:// is neither encrypted nor authenticated, so securing the channel and isolating the daemon is the administrator's responsibility |
+| `buildkitd_driver` | string | no | Provision an ephemeral buildkitd per build instead of using the docker CLI: kubernetes runs it as a pod and needs no docker binary next to the plugin. Cannot be combined with buildkitd_address, buildx_driver or buildx_driver_opts. A TRDL_BUILDKITD_ADDRESS set on the process wins over a stored driver, and the build reports the driver as unused |
+| `buildkitd_driver_opts` | array | no | The buildkitd driver options, one name=value pair per element (e.g. namespace=trdl-build); they require buildkitd_driver to be set. The kubernetes driver accepts annotations, deadline, image, labels, limits.cpu, limits.ephemeral-storage, limits.memory, namespace, nodeselector, requests.cpu, requests.ephemeral-storage, requests.memory, rootless, serviceaccount and timeout; anything else is rejected. When deadline is not set, it defaults to the release task's remaining time at pod creation plus a five-minute margin, so a plugin crash cannot leave the builder pod running indefinitely |
+| `buildx_driver` | string | no | The buildx driver to build release artifacts with: docker-container (used by default) or kubernetes. Takes precedence over the TRDL_BUILDX_DRIVER environment variable, and cannot be combined with buildkitd_address or buildkitd_driver |
+| `buildx_driver_opts` | array | no | The buildx driver options, one --driver-opt per element (e.g. namespace=trdl-build), passed through as is. Take precedence over the TRDL_BUILDX_DRIVER_OPTS_* environment variables, and cannot be combined with buildkitd_address or buildkitd_driver |
 | `git_repo_url` | string | yes | URL of the Git repository |
 | `git_trdl_channels_branch` | string | no | A special Git branch to store the trdl channels configuration file |
 | `git_trdl_channels_path` | string | no | A path in the Git repository to the trdl channels configuration file (trdl_channels.yaml is used by default) |

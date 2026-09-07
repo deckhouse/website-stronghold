@@ -805,7 +805,7 @@ Create the given MFA method
 | `push_info` | string | no | Push information for Duo. |
 | `secret_key` | string | no | Secret key for Duo. |
 | `use_passcode` | boolean | no | If true, the user is reminded to use the passcode upon MFA validation. This option does not enforce using the passcode. Defaults to false. |
-| `username_format` | string | no | A template string for mapping Identity names to MFA method names. Values to subtitute should be placed in {{}}. For example, "{{alias.name}}@example.com". Currently-supported mappings: alias.name: The name returned by the mount configured via the mount_accessor parameter If blank, the Alias's name field will be used as-is. |
+| `username_format` | string | no | A template string for mapping Identity names to MFA method names. Values to substitute should be placed in {{}}. For example, "{{identity.entity.aliases.auth_userpass_abc123.name}}@example.com". If blank, the Entity's name field will be used as-is. |
 
 #### Responses
 
@@ -849,7 +849,7 @@ Update the configuration for the given MFA method
 | `push_info` | string | no | Push information for Duo. |
 | `secret_key` | string | no | Secret key for Duo. |
 | `use_passcode` | boolean | no | If true, the user is reminded to use the passcode upon MFA validation. This option does not enforce using the passcode. Defaults to false. |
-| `username_format` | string | no | A template string for mapping Identity names to MFA method names. Values to subtitute should be placed in {{}}. For example, "{{alias.name}}@example.com". Currently-supported mappings: alias.name: The name returned by the mount configured via the mount_accessor parameter If blank, the Alias's name field will be used as-is. |
+| `username_format` | string | no | A template string for mapping Identity names to MFA method names. Values to substitute should be placed in {{}}. For example, "{{identity.entity.aliases.auth_userpass_abc123.name}}@example.com". If blank, the Entity's name field will be used as-is. |
 
 #### Responses
 
@@ -858,6 +858,102 @@ Update the configuration for the given MFA method
 ### DELETE /identity/mfa/method/duo/{method_id}
 
 **Operation ID:** `mfa-delete-duo-method`
+
+Delete a configuration for the given MFA method
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `method_id` | string | path | yes | The unique identifier for this MFA method. |
+
+#### Responses
+
+**204**: empty body
+
+### GET /identity/mfa/method/multifactor
+
+**Operation ID:** `mfa-list-multifactor-methods`
+
+List MFA method configurations for the given MFA method
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `list` | string (true) | query | yes | Must be set to `true` |
+
+#### Responses
+
+**200**: OK
+
+### POST /identity/mfa/method/multifactor
+
+**Operation ID:** `mfa-create-multifactor-method`
+
+Create the given MFA method
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `api_url` | string | no | Base URL for the Multifactor API. Defaults to "<https://api.multifactor.ru>". |
+| `method_name` | string | no | The unique name identifier for this MFA method. |
+| `nas_identifier` | string | no | Multifactor NAS Identifier from the resource settings. |
+| `shared_secret` | string | no | Multifactor Shared Secret from the resource settings. |
+| `timeout_seconds` | integer | no | Maximum number of seconds to wait for Multifactor push confirmation. Defaults to 90. Minimum 65. |
+| `username_format` | string | no | A template string for mapping Identity names to Multifactor identities. Values to substitute should be placed in {{}}. For example, "{{identity.entity.aliases.auth_userpass_abc123.name}}@example.com". If blank, the Entity's name field will be used as-is. |
+
+#### Responses
+
+**200**: OK
+
+### GET /identity/mfa/method/multifactor/{method_id}
+
+**Operation ID:** `mfa-read-multifactor-method-configuration`
+
+Read the current configuration for the given MFA method
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `method_id` | string | path | yes | The unique identifier for this MFA method. |
+
+#### Responses
+
+**200**: OK
+
+### POST /identity/mfa/method/multifactor/{method_id}
+
+**Operation ID:** `mfa-configure-multifactor-method`
+
+Update the configuration for the given MFA method
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `method_id` | string | path | yes | The unique identifier for this MFA method. |
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `api_url` | string | no | Base URL for the Multifactor API. Defaults to "<https://api.multifactor.ru>". |
+| `method_name` | string | no | The unique name identifier for this MFA method. |
+| `nas_identifier` | string | no | Multifactor NAS Identifier from the resource settings. |
+| `shared_secret` | string | no | Multifactor Shared Secret from the resource settings. |
+| `timeout_seconds` | integer | no | Maximum number of seconds to wait for Multifactor push confirmation. Defaults to 90. Minimum 65. |
+| `username_format` | string | no | A template string for mapping Identity names to Multifactor identities. Values to substitute should be placed in {{}}. For example, "{{identity.entity.aliases.auth_userpass_abc123.name}}@example.com". If blank, the Entity's name field will be used as-is. |
+
+#### Responses
+
+**200**: OK
+
+### DELETE /identity/mfa/method/multifactor/{method_id}
+
+**Operation ID:** `mfa-delete-multifactor-method`
 
 Delete a configuration for the given MFA method
 
@@ -903,7 +999,7 @@ Create the given MFA method
 | `org_name` | string | no | Name of the organization to be used in the Okta API. |
 | `primary_email` | boolean | no | If true, the username will only match the primary email for the account. Defaults to false. |
 | `production` | boolean | no | (DEPRECATED) Use base_url instead. |
-| `username_format` | string | no | A template string for mapping Identity names to MFA method names. Values to substitute should be placed in {{}}. For example, "{{entity.name}}@example.com". If blank, the Entity's name field will be used as-is. |
+| `username_format` | string | no | A template string for mapping Identity names to MFA method names. Values to substitute should be placed in {{}}. For example, "{{identity.entity.name}}@example.com". If blank, the Entity's name field will be used as-is. |
 
 #### Responses
 
@@ -947,7 +1043,7 @@ Update the configuration for the given MFA method
 | `org_name` | string | no | Name of the organization to be used in the Okta API. |
 | `primary_email` | boolean | no | If true, the username will only match the primary email for the account. Defaults to false. |
 | `production` | boolean | no | (DEPRECATED) Use base_url instead. |
-| `username_format` | string | no | A template string for mapping Identity names to MFA method names. Values to substitute should be placed in {{}}. For example, "{{entity.name}}@example.com". If blank, the Entity's name field will be used as-is. |
+| `username_format` | string | no | A template string for mapping Identity names to MFA method names. Values to substitute should be placed in {{}}. For example, "{{identity.entity.name}}@example.com". If blank, the Entity's name field will be used as-is. |
 
 #### Responses
 
@@ -997,7 +1093,7 @@ Create the given MFA method
 |----------|-----|--------------|----------|
 | `method_name` | string | no | The unique name identifier for this MFA method. |
 | `settings_file_base64` | string | no | The settings file provided by Ping, Base64-encoded. This must be a settings file suitable for third-party clients, not the PingID SDK or PingFederate. |
-| `username_format` | string | no | A template string for mapping Identity names to MFA method names. Values to subtitute should be placed in {{}}. For example, "{{alias.name}}@example.com". Currently-supported mappings: alias.name: The name returned by the mount configured via the mount_accessor parameter If blank, the Alias's name field will be used as-is. |
+| `username_format` | string | no | A template string for mapping Identity names to MFA method names. Values to substitute should be placed in {{}}. For example, "{{identity.entity.aliases.auth_userpass_abc123.name}}@example.com". If blank, the Entity's name field will be used as-is. |
 
 #### Responses
 
@@ -1037,7 +1133,7 @@ Update the configuration for the given MFA method
 |----------|-----|--------------|----------|
 | `method_name` | string | no | The unique name identifier for this MFA method. |
 | `settings_file_base64` | string | no | The settings file provided by Ping, Base64-encoded. This must be a settings file suitable for third-party clients, not the PingID SDK or PingFederate. |
-| `username_format` | string | no | A template string for mapping Identity names to MFA method names. Values to subtitute should be placed in {{}}. For example, "{{alias.name}}@example.com". Currently-supported mappings: alias.name: The name returned by the mount configured via the mount_accessor parameter If blank, the Alias's name field will be used as-is. |
+| `username_format` | string | no | A template string for mapping Identity names to MFA method names. Values to substitute should be placed in {{}}. For example, "{{identity.entity.aliases.auth_userpass_abc123.name}}@example.com". If blank, the Entity's name field will be used as-is. |
 
 #### Responses
 
