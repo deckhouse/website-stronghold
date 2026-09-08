@@ -21,6 +21,30 @@ Consider the following when using automated snapshots:
 - Supported storage types are `local` and `aws-s3`.
 - For production environments, local storage is usually less suitable than external object storage: the active node can change over time, and backups are safer when stored outside the system they protect.
 
+Snapshot names use the format `<file_prefix>_<RFC3339_timestamp>.tar.gz`. Retention cleanup only considers files or objects with this naming format under the configured path or prefix.
+
+The manager checks configurations once a minute. After creating or updating a configuration, the next snapshot is scheduled immediately; subsequent snapshots are scheduled from the start time of the previous snapshot plus the configured `interval`.
+
+## Server configuration (S3 upload pool)
+
+Optional top-level keys in the Stronghold **server** HCL configuration tune background S3 uploads for automated Raft snapshots. These are set in the server configuration file used to start a specific node: `stronghold server -config config.hcl`.
+
+<div class="table__styling--container"></div>
+
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| `snapshot_auto_s3_upload_workers` | Integer | `3` | Maximum concurrent background S3 uploads. Parallelism applies only **across different** auto-snapshot configurations. When the limit is reached, new uploads wait in the queue. Allowed range: `1`–`32`. |
+| `snapshot_auto_upload_pool_shutdown` | Duration string | `60s` | Time from the start of the auto-snapshot loop shutdown on a specific node (due to process termination or loss of leadership) after which background upload processes are forcibly terminated. Allowed range: `1s`–`15m`. |
+
+Example:
+
+```hcl
+snapshot_auto_s3_upload_workers = 4
+snapshot_auto_upload_pool_shutdown = "90s"
+```
+
+Increase the number of background upload processes if you have many S3 auto-snapshot configurations and spare network/CPU; decrease if you hit S3 rate limits or a narrow uplink.
+
 ## Create or update a configuration
 
 | Method | Path |
@@ -36,11 +60,11 @@ The endpoint requires `sudo` privileges.
 | Parameter | Type | Required | Default | Description |
 |-----------|------|----------|---------|-------------|
 | `name` | String | Yes | — | Name of the configuration to create or update |
-| `interval` | Integer or string | Yes | — | Time between backups. You can specify seconds or Go duration format such as `24h` |
-| `retain` | Integer | No | `3` | Number of backups to keep. Older backups are deleted when the limit is exceeded |
+| `interval` | Integer or string | Yes | — | Time between backups. You can specify seconds or Go duration format such as `24h`, `1h30m`. A standalone day value such as `1d` is also accepted; to combine days with smaller units use equivalent hours (e.g. `25h30m` instead of `1d1h30m`). The minimum interval is `3m` |
+| `retain` | Integer | No | `3` | Number of backups to keep. Retention cleanup runs only after a successful snapshot save or upload. Older backups are deleted when the limit is exceeded. A value of `0` disables deletion of old snapshots |
 | `storage_type` | Immutable string | Yes | — | Storage type: `local` or `aws-s3` |
-| `path_prefix` | Immutable string | Yes | — | For `local`, the directory where snapshots are stored. For `aws-s3`, the object prefix inside the bucket |
-| `file_prefix` | Immutable string | No | `stronghold-snapshot` | Prefix for the file or object name |
+| `path_prefix` | String | Yes | — | For `local`, the directory where snapshots are stored. For `aws-s3`, the object prefix inside the bucket; a leading `/` is ignored. For local storage, `path_prefix` cannot be changed after creation. |
+| `file_prefix` | String | No | `stronghold-snapshot` | Prefix for the file or object name put in `path_prefix`. For local storage, `file_prefix` cannot be changed after creation. |
 
 ### Additional parameters for local
 
@@ -61,8 +85,12 @@ The endpoint requires `sudo` privileges.
 | `aws_access_key_id` | String | No | — | Access key ID for the bucket |
 | `aws_secret_access_key` | String | No | — | Secret access key for the bucket |
 | `aws_s3_endpoint` | String | No | — | S3 service endpoint |
-| `aws_s3_disable_tls` | Boolean | No | — | Disables TLS for the S3 endpoint. Use only for testing |
+| `aws_s3_disable_tls` | Boolean | No | `false` | Disables TLS for the S3 endpoint. Use only for testing |
 | `aws_s3_ca_certificate` | String | No | — | CA certificate for the S3 endpoint in PEM format |
+| `retry_enabled` | Boolean | No | `false` | Enables retry attempts if uploading a snapshot to S3 fails |
+| `retry_max_attempts` | Integer | No | `5` | Maximum number of retry upload attempts after the initial upload failure. Backoff schedule: 1 minute, 5 minutes, 15 minutes, then every 30 minutes. A value of `0` disables the retry limit (unlimited retries) |
+
+Retries reuse the temporary upload copy from the failed upload. They stop when the configured maximum is reached, when retries are disabled, when the temporary file is no longer available, or when the next scheduled snapshot time is reached. A retry attempt must also finish at least one minute before the next scheduled snapshot; otherwise the attempt is considered failed and the next one is scheduled according to the backoff schedule. Retry failures update `last_snapshot_error` in the status, but do not increment `consecutive_errors` beyond the original failed scheduled snapshot.
 
 ## Configuration examples
 
@@ -79,6 +107,10 @@ The following `local-snapshot.json` file creates a configuration that saves a sn
   "storage_type": "local"
 }
 ```
+
+{{< alert level="info" >}}
+Before applying the configuration, make sure the directory from `path_prefix` exists and is writable. The `failed to create snapshot directory at destination` error usually means the directory is missing or unavailable.
+{{< /alert >}}
 
 Apply the configuration from `local-snapshot.json` using the following command:
 
@@ -100,7 +132,7 @@ stronghold write sys/storage/raft/snapshot-auto/config/my-local-snapshots @local
 {{< /tabs >}}
 
 {{< alert level="info" >}}
-Before applying the configuration, make sure the directory from `path_prefix` exists and is writable. The `failed to create snapshot directory at destination` error usually means the directory is missing or unavailable.
+In the example, the path `/stronghold/data/` is a path inside the container, and by default it is mounted at `/var/lib/deckhouse/stronghold/` on the master nodes of the DKP cluster. Created snapshots can be found and downloaded from the master nodes at `/var/lib/deckhouse/stronghold/backups/`. Snapshots will remain unchanged when pods are restarted.
 {{< /alert >}}
 
 ### S3-compatible storage
@@ -117,9 +149,15 @@ The following `minio-snapshot.json` file stores snapshots in S3-compatible objec
   "aws_s3_bucket": "my_bucket",
   "aws_s3_endpoint": "minio.domain.ru",
   "aws_access_key_id": "<ACCESS_KEY>",
-  "aws_secret_access_key": "<SECRET_ACCESS_KEY>"
+  "aws_secret_access_key": "<SECRET_ACCESS_KEY>",
+  "retry_enabled": true,
+  "retry_max_attempts": 5
 }
 ```
+
+{{< alert level="info" >}}
+Before applying the configuration, make sure the bucket already exists and the provided credentials have read and write permissions.
+{{< /alert >}}
 
 Apply the configuration from `minio-snapshot.json` using the following command:
 
@@ -139,10 +177,6 @@ stronghold write sys/storage/raft/snapshot-auto/config/my-remote-snapshots @mini
 
 {{% /tab %}}
 {{< /tabs >}}
-
-{{< alert level="info" >}}
-Before applying the configuration, make sure the bucket already exists and the provided credentials have read and write permissions.
-{{< /alert >}}
 
 ### Updating an existing configuration
 
@@ -173,6 +207,8 @@ stronghold write sys/storage/raft/snapshot-auto/config/my-local-snapshots @local
 
 {{% /tab %}}
 {{< /tabs >}}
+
+After any successful update, the next snapshot is scheduled immediately.
 
 ## List configurations
 
@@ -282,11 +318,17 @@ stronghold read sys/storage/raft/snapshot-auto/status/my-remote-snapshots
 
 Main status fields:
 
-- `consecutive_errors`: Number of backup errors in a row.
+- `consecutive_errors`: Number of backup errors in a row. Resets after a successfully completed snapshot.
 - `last_snapshot_end`: End time of the last successful snapshot.
-- `last_snapshot_error`: Text of the most recent error.
+- `last_snapshot_error`: Text of the most recent error during snapshot.
 - `last_snapshot_start`: Start time of the last completed snapshot.
 - `last_snapshot_url`: Location of the last successful snapshot.
+- `last_rotation_error`: Text of the last cleanup rotation error after a successful snapshot, or `n/a` if cleanup succeeded. Rotation error does not mark the snapshot itself as failed.
 - `next_snapshot_start`: Next scheduled start time.
 - `snapshot_start`: Start time of the current backup job.
 - `snapshot_url`: Location of the currently written snapshot.
+
+Additional fields for `aws-s3`
+
+- `retry_in_progress`: Flag indicating that a failed upload retry is in progress for S3.
+- `retry_attempt`: Number of the current retry attempts. `0` if retries are not active.
