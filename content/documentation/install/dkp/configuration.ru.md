@@ -5,11 +5,33 @@ weight: 60
 
 ## Включение модуля
 
-Чтобы включить модуль, выполните команду:
+Модуль работает в одной из двух редакций, и она определяется наличием лицензионного ключа в ModuleConfig. Выберите редакцию до включения модуля.
+
+**Базовый Stronghold** — лицензионный ключ не требуется, достаточно включить модуль:
 
 ```shell
 d8 system module enable stronghold
 ```
+
+**Stronghold EE** — создайте ModuleConfig с лицензионным ключом в параметре [`spec.settings.license`](/modules/stronghold/stable/configuration.html#parameters-license). Отдельная команда включения не нужна: модуль включает `spec.enabled: true` в манифесте.
+
+```yaml
+apiVersion: deckhouse.io/v1alpha1
+kind: ModuleConfig
+metadata:
+  name: stronghold
+spec:
+  enabled: true
+  version: 1
+  settings:
+    license: <STRONGHOLD_EE_LICENSE_KEY>
+```
+
+Stronghold EE лицензируется отдельно и доступен для использования только в коммерческих редакциях DKP. Сравнение редакций — в разделе [«Редакции»](../../about/editions/).
+
+{{< alert level="warning" >}}
+Если модуль уже работает и в хранилище есть данные, добавляйте ключ по [инструкции по переключению на редакцию EE](../platform-management/switching-editions/ce-to-ee/)
+{{< /alert >}}
 
 {{< alert level="info" >}}
 Подробнее о включении и первичной настройке — [в бесплатном курсе «Обзор возможностей Deckhouse Stronghold»](https://education.flant.ru/course/obzor-vozmozhnostej-deckhouse-stronghold/) [Академии Deckhouse](https://deckhouse.ru/course-catalog/).
