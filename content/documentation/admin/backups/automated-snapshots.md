@@ -6,7 +6,7 @@ params:
   edition: ee
 ---
 
-Automated snapshots let Stronghold create scheduled backups of integrated Raft storage and write them either to local disk or to S3-compatible object storage.
+Automated snapshots let Stronghold create backups of integrated Raft storage on a schedule and write them either to local disk or to S3-compatible object storage.
 
 {{< alert level="warning" >}}
 Automated snapshots are available only when Stronghold uses integrated Raft storage. For etcd, PostgreSQL, and other external backends, configure backup procedures provided by the storage system itself.
@@ -23,18 +23,18 @@ Consider the following when using automated snapshots:
 
 Snapshot names use the format `<file_prefix>_<RFC3339_timestamp>.tar.gz`. Retention cleanup only considers files or objects with this naming format under the configured path or prefix.
 
-The manager checks configurations once a minute. After creating or updating a configuration, the next snapshot is scheduled immediately; subsequent snapshots are scheduled from the start time of the previous snapshot plus the configured `interval`.
+The snapshot manager checks configurations once a minute. After creating or updating a configuration, the next snapshot is scheduled immediately; subsequent snapshots are scheduled from the start time of the previous snapshot plus the configured `interval`.
 
 ## Server configuration (S3 upload pool)
 
-Optional top-level keys in the Stronghold **server** HCL configuration tune background S3 uploads for automated Raft snapshots. These are set in the server configuration file used to start a specific node: `stronghold server -config config.hcl`.
+Optional top-level keys in the Stronghold **server** HCL configuration tune background S3 uploads for automated snapshots of Raft storage. These are set in the server configuration file used to start a specific node: `stronghold server -config config.hcl`.
 
 <div class="table__styling--container"></div>
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| `snapshot_auto_s3_upload_workers` | Integer | `3` | Maximum concurrent background S3 uploads. Parallelism applies only **across different** auto-snapshot configurations. When the limit is reached, new uploads wait in the queue. Allowed range: `1`–`32`. |
-| `snapshot_auto_upload_pool_shutdown` | Duration string | `60s` | Time from the start of the auto-snapshot loop shutdown on a specific node (due to process termination or loss of leadership) after which background upload processes are forcibly terminated. Allowed range: `1s`–`15m`. |
+| `snapshot_auto_s3_upload_workers` | Integer | `3` | Maximum concurrent background S3 uploads. Parallelism applies only **across different** snapshot configurations. When the limit is reached, new uploads wait in the queue. Allowed range: `1`–`32`. |
+| `snapshot_auto_upload_pool_shutdown` | Duration string | `60s` | Time from the start of the automated snapshot loop shutdown on a specific node (due to process termination or loss of leadership) until background upload processes are forcibly terminated. Allowed range: `1s`–`15m`. |
 
 Example:
 
@@ -43,7 +43,7 @@ snapshot_auto_s3_upload_workers = 4
 snapshot_auto_upload_pool_shutdown = "90s"
 ```
 
-Increase the number of background upload processes if you have many S3 auto-snapshot configurations and spare network/CPU; decrease if you hit S3 rate limits or a narrow uplink.
+Increase the number of background upload processes if you have many S3 snapshot configurations and sufficient network and CPU capacity; decrease it if you hit S3 rate limits or have limited bandwidth.
 
 ## Create or update a configuration
 
@@ -57,14 +57,14 @@ The endpoint requires `sudo` privileges.
 
 <div class="table__styling--container"></div>
 
-| Parameter | Type | Required | Default | Description |
-|-----------|------|----------|---------|-------------|
-| `name` | String | Yes | — | Name of the configuration to create or update |
+| Parameter | Type | Required | Default | Description                                                                                                                                                                                                                                                                  |
+|-----------|------|----------|---------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `name` | String | Yes | — | Name of the configuration to create or update                                                                                                                                                                                                                                |
 | `interval` | Integer or string | Yes | — | Time between backups. You can specify seconds or Go duration format such as `24h`, `1h30m`. A standalone day value such as `1d` is also accepted; to combine days with smaller units use equivalent hours (e.g. `25h30m` instead of `1d1h30m`). The minimum interval is `3m` |
-| `retain` | Integer | No | `3` | Number of backups to keep. Retention cleanup runs only after a successful snapshot save or upload. Older backups are deleted when the limit is exceeded. A value of `0` disables deletion of old snapshots |
-| `storage_type` | Immutable string | Yes | — | Storage type: `local` or `aws-s3` |
-| `path_prefix` | String | Yes | — | For `local`, the directory where snapshots are stored. For `aws-s3`, the object prefix inside the bucket; a leading `/` is ignored. For local storage, `path_prefix` cannot be changed after creation. |
-| `file_prefix` | String | No | `stronghold-snapshot` | Prefix for the file or object name put in `path_prefix`. For local storage, `file_prefix` cannot be changed after creation. |
+| `retain` | Integer | No | `3` | Number of backups to keep. Retention cleanup runs only after a snapshot has been successfully saved or uploaded. Older backups are deleted when the limit is exceeded. A value of `0` disables deletion of old snapshots                                                     |
+| `storage_type` | Immutable string | Yes | — | Storage type: `local` or `aws-s3`                                                                                                                                                                                                                                            |
+| `path_prefix` | String | Yes | — | For `local`, the directory where snapshots are stored. For `aws-s3`, the object prefix inside the bucket; a leading `/` is ignored. For local storage, `path_prefix` cannot be changed after creation.                                                                       |
+| `file_prefix` | String | No | `stronghold-snapshot` | Prefix for the file or object name stored in `path_prefix`. For local storage, `file_prefix` cannot be changed after creation.                                                                                                                                               |
 
 ### Additional parameters for local
 
@@ -90,7 +90,7 @@ The endpoint requires `sudo` privileges.
 | `retry_enabled` | Boolean | No | `false` | Enables retry attempts if uploading a snapshot to S3 fails |
 | `retry_max_attempts` | Integer | No | `5` | Maximum number of retry upload attempts after the initial upload failure. Backoff schedule: 1 minute, 5 minutes, 15 minutes, then every 30 minutes. A value of `0` disables the retry limit (unlimited retries) |
 
-Retries reuse the temporary upload copy from the failed upload. They stop when the configured maximum is reached, when retries are disabled, when the temporary file is no longer available, or when the next scheduled snapshot time is reached. A retry attempt must also finish at least one minute before the next scheduled snapshot; otherwise the attempt is considered failed and the next one is scheduled according to the backoff schedule. Retry failures update `last_snapshot_error` in the status, but do not increment `consecutive_errors` beyond the original failed scheduled snapshot.
+Retries reuse the temporary copy from the failed upload. They stop when the configured maximum is reached, when retries are disabled, when the temporary file is no longer available, or when the next scheduled snapshot time is reached. A retry attempt must also finish at least one minute before the next scheduled snapshot; otherwise the attempt is considered failed and the next one is scheduled according to the backoff schedule. Retry failures update `last_snapshot_error` in the status, but do not increment `consecutive_errors` beyond the original failed scheduled snapshot.
 
 ## Configuration examples
 
@@ -323,12 +323,12 @@ Main status fields:
 - `last_snapshot_error`: Text of the most recent error during snapshot.
 - `last_snapshot_start`: Start time of the last completed snapshot.
 - `last_snapshot_url`: Location of the last successful snapshot.
-- `last_rotation_error`: Text of the last cleanup rotation error after a successful snapshot, or `n/a` if cleanup succeeded. Rotation error does not mark the snapshot itself as failed.
+- `last_rotation_error`: Text of the last error during retention cleanup, or `n/a` if cleanup succeeded. A cleanup error does not mark the snapshot itself as failed.
 - `next_snapshot_start`: Next scheduled start time.
 - `snapshot_start`: Start time of the current backup job.
 - `snapshot_url`: Location of the currently written snapshot.
 
 Additional fields for `aws-s3`
 
-- `retry_in_progress`: Flag indicating that a failed upload retry is in progress for S3.
-- `retry_attempt`: Number of the current retry attempts. `0` if retries are not active.
+- `retry_in_progress`: Flag indicating that a retry of a failed S3 upload is in progress.
+- `retry_attempt`: Number of the current retry attempt. `0` if retries are not active.
