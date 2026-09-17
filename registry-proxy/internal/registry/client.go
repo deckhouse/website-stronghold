@@ -35,7 +35,7 @@ func EndpointFor(edition Edition) (host, repository string) {
 			envOr("REGISTRY_CSE_REPOSITORY", "stronghold/cse/modules/stronghold")
 	default:
 		return envOr("REGISTRY_HOST", "registry.deckhouse.ru"),
-			envOr("REGISTRY_REPOSITORY", "deckhouse/fe/modules/stronghold")
+			envOr("REGISTRY_REPOSITORY", "deckhouse/ee/modules/stronghold")
 	}
 }
 

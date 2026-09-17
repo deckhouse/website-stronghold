@@ -15,7 +15,7 @@ func TestParseWwwAuthenticate(t *testing.T) {
 
 func TestEndpointForDefaults(t *testing.T) {
 	host, repo := EndpointFor(EditionEE)
-	if host != "registry.deckhouse.ru" || repo != "deckhouse/fe/modules/stronghold" {
+	if host != "registry.deckhouse.ru" || repo != "deckhouse/ee/modules/stronghold" {
 		t.Fatalf("EE: %s / %s", host, repo)
 	}
 	host, repo = EndpointFor(EditionCSE)
