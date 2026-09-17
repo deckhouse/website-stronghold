@@ -111,6 +111,8 @@ git:
   to: /src
   excludePaths:
   - '**/*_test.go'
+  stageDependencies:
+    setup: ['**/*']
 shell:
   setup:
     - cd /src && CGO_ENABLED=0 go build -ldflags="-s -w" -o /stronghold-registry-proxy ./cmd/server/main.go
