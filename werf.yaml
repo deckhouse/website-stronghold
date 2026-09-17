@@ -24,6 +24,8 @@ git:
     - layouts/
     - static/
     - go.*
+  excludePaths:
+  - 'registry-proxy/'
   stageDependencies:
     setup: ['**/*']
 ---
@@ -99,3 +101,30 @@ import:
   to: /app
   before: setup
   stage: setup
+---
+image: proxy-builder
+final: false
+# builder/golang-alt
+from: registry.deckhouse.io/container-factory@sha256:5a614020f7f213d8bdd8db42d2d006b1e87470392e5867413fd53c8ffccd6dd4
+git:
+- add: /registry-proxy
+  to: /src
+  excludePaths:
+  - '**/*_test.go'
+shell:
+  setup:
+    - cd /src && CGO_ENABLED=0 go build -ldflags="-s -w" -o /stronghold-registry-proxy ./cmd/server/main.go
+---
+image: proxy-server
+# base/distroless
+fromImage: registry.deckhouse.io/container-factory@sha256:d1039ba9446eb7914847534d35f904cafb4fd357f13871649fac4302d963cf54
+final: true
+import:
+- image: proxy-builder
+  add: /stronghold-registry-proxy
+  to: /usr/bin/stronghold-registry-proxy
+  before: setup
+  stage: setup
+imageSpec:
+  config:
+    entrypoint: ["/usr/bin/stronghold-registry-proxy"]
