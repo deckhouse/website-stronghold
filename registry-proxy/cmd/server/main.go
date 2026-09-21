@@ -16,8 +16,15 @@ func main() {
 
 	prefix := os.Getenv("PATH_PREFIX")
 
-	srv := web.NewServer(prefix)
-	log.Printf("listening on %s (prefix %q)", addr, prefix)
+	// Where GET {prefix}/ redirects: the download UI lives in the getting
+	// started guide on the documentation site.
+	redirectURL := os.Getenv("GS_REDIRECT_URL")
+	if redirectURL == "" {
+		redirectURL = web.DefaultRedirectURL
+	}
+
+	srv := web.NewServer(prefix, redirectURL)
+	log.Printf("listening on %s (prefix %q, redirect %q)", addr, prefix, redirectURL)
 	if err := http.ListenAndServe(addr, srv); err != nil {
 		log.Fatal(err)
 	}
