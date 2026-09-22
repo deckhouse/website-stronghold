@@ -3,73 +3,103 @@ title: "Восстановление после потери кворума"
 weight: 40
 ---
 
-Кворум – минимальное количество узлов в кластере для возможности выполнения голосования с целью достижения консенсуса.
-В модуле Stronghold по умолчанию включен режим HA, который в свою очередь опирается на алгоритм консенсуса Raft. Наличие кворума для Raft вляется важным фактором эксплуатации среды Stronghold. Когда нет возможности восстановить достаточное количество рабочих узлов Stronghold, кластер Stronghold окончательно теряет кворум и вместе с этим возможность для достижения консенсуса и избрания лидера. В конечном итоге, без наличия лидера, Stronghold больше не может выполнять операции чтения и записи для клиента.
+Кворум — это минимальное количество узлов в кластере, необходимое для голосования с целью достижения консенсуса.
 
-Stronghold для DKP поставляется в виде модуля, и каждый его **узел** запускается в отдельном контейнере отдельных **подов**, и каждый *под* поштучно привязывается на *control-plane* (т.е. *master*) узлы кластера DKP. Как следствие, количество узлов кластера Stronghold динамически обновляется при подключении новых и удалении существующих мастер узлов кластера DKP. Таким образом, Stronghold будет рассчитывать кворум по формуле `(n+1)/2`, где `n` — по умолчанию равно количеству мастер узлов в кластере DKP. Полученное число значит, что для функционирования кластера Stronghold из 3 узлов потребуется как минимум 2 рабочих пода, `(3+1)/2 = 2`. В частности, для выполнения операций чтения и записи потребуется 2 **постоянно** активных пода.
+В модуле `stronghold` по умолчанию включен режим высокой доступности (high availability, HA), который опирается на алгоритм консенсуса Raft. Наличие кворума для Raft является важным фактором эксплуатации среды Stronghold. Когда нет возможности восстановить достаточное количество рабочих узлов Stronghold, кластер окончательно теряет кворум и вместе с этим возможность для достижения консенсуса и избрания лидера. В конечном итоге, без наличия лидера, Stronghold больше не может выполнять операции чтения и записи для клиента.
+
+Stronghold для Deckhouse Platform (DP) поставляется в виде модуля, и каждый его узел запускается в отдельном контейнере отдельных подов. Каждый под поштучно привязывается на master-узлы кластера DP. Как следствие, количество узлов кластера Stronghold динамически обновляется при подключении новых и удалении существующих master-узлов кластера DP. Таким образом, Stronghold будет рассчитывать кворум по формуле `(n+1)/2`, где `n` — по умолчанию равно количеству master-узлов в кластере DP. В случае кластера из 3 узлов полученное число значит, что для функционирования кластера Stronghold потребуется как минимум 2 рабочих пода, `(3+1)/2 = 2`. В частности, для выполнения операций чтения и записи потребуется 2 **постоянно** активных пода.
 
 {{< alert level="info" >}}
-Существует исключение из этого правила, если при присоединении к кластеру используется опция `-non-voter`. Эта функция доступна только в версии Stronghold формата отдельной инсталляции.
+Существует исключение из этого правила, если при присоединении к кластеру используется опция `-non-voter`. Эта функция доступна только при установке Stronghold в виде отдельной инсталляции.
 {{< /alert >}}
 
-## Обзор сценария
+## Признаки потери кворума
 
-Когда статус `Ready` у двух из трёх подов равен `False`, кластер теряет кворум и перестает функционировать.
+Если в кластере у 2 из 3 подов Stronghold зафиксирован статус `Ready: False`, кластер теряет кворум и перестает функционировать.
 
 Несмотря на один полностью работоспособный узел, кластер не может обрабатывать запросы на чтение или запись.
 
-**Примеры:**
-Вывод команд в консоли, при наличии ошибки:
+Далее приведены примеры ошибок при потере кворума.
 
 {{< tabs name="stronghold_cmd_6115" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
-```text
-$ d8 stronghold operator raft list-peers
-* local node not active but active cluster node not found
+- Попытка получить список узлов Raft-кластера:
 
-$ d8 stronghold kv get kv/apikey
-* local node not active but active cluster node not found
-```
+  ```shell
+  d8 stronghold operator raft list-peers
+  ```
+
+  Пример вывода:
+
+  ```text
+  * local node not active but active cluster node not found
+  ```
+
+- Попытка получить данные из хранилища:
+
+  ```shell
+  d8 stronghold kv get kv/apikey
+  ```
+
+  Пример вывода:
+
+  ```text
+  * local node not active but active cluster node not found
+  ```
 
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
 
-```text
-$ stronghold operator raft list-peers
-* local node not active but active cluster node not found
+- Попытка получить список узлов Raft-кластера:
 
-$ stronghold kv get kv/apikey
-* local node not active but active cluster node not found
-```
+  ```shell
+  stronghold operator raft list-peers
+  ```
+
+  Пример вывода:
+
+  ```text
+  * local node not active but active cluster node not found
+  ```
+
+- Попытка получить данные из хранилища:
+
+  ```shell
+  stronghold kv get kv/apikey
+  ```
+
+  Пример вывода:
+
+  ```text
+  * local node not active but active cluster node not found
+  ```
 
 {{% /tab %}}
 {{< /tabs >}}
 
-В логах нерабочего узла:
+В логах нерабочего узла могут появляться следующие сообщения:
 
 ```text
 {"@level":"info","@message":"attempting to join possible raft leader node","@module":"core","@timestamp":"2025-10-20T10:54:02.578963Z","leader_addr":"https://stronghold-0.stronghold-internal:8300"}
 {"@level":"error","@message":"failed to get raft challenge","@module":"core","@timestamp":"2025-10-20T10:54:32.597558Z","error":"error during raft bootstrap init call: Put \"https://10.0.12.69:8300/v1/sys/storage/raft/bootstrap/challenge\": dial tcp 10.10.12.69:8300: i/o timeout","leader_addr":"https://stronghold-0.stronghold-internal:8300"}
 ```
 
-Процесс восстановления работы Stronghold при потере 2 из 3 узлов будет выполнена путем преобразования кластера в вариант из одного узла.
-
-Для выполнения этой процедуры обязательно, чтобы один сервер был полностью работоспособным.
+Для восстановления Stronghold после потери 2 из 3 узлов необходимо временно преобразовать кластер в одноузловой. Для выполнения процедуры необходим как минимум один полностью работоспособный сервер.
 
 {{< alert level="info" >}}
-Иногда Stronghold теряет кворум из-за некорректного добавления/удаления мастер узла в DKP. В таком случае на неработоспособных узлах необходимо остановить запуск подов со Stronghold, перед запуском процедуры peers.json. Например, временно через cordon узлов.
+Иногда Stronghold может потерять кворум из-за некорректного добавления или удаления master-узла в DP. В таком случае перед восстановлением с помощью `peers.json` на неработоспособных узлах необходимо остановить запуск подов со Stronghold. Например, через временный cordon соответствующих узлов.
 
-В кластере из 5 серверов или в случае отсутствия голосующих нужно остановить другие исправные серверы перед выполнением восстановления peers.json.
+В кластере из 5 серверов или в случае отсутствия голосующих узлов перед восстановлением с помощью `peers.json` нужно остановить другие работоспособные серверы.
 {{< /alert >}}
 
-## Найдите каталог хранилища
+## Шаг 1. Перейдите в каталог хранилища
 
-На мастер ноде DKP с исправным узлом Stronghold найдите каталог хранилища Raft по пути `/var/lib/deckhouse/stronghold/`. В этом катологе проверьте наличие непустого файла `node-id`. Если всё получилось, двигаемся дальше.
+На master-узле DP с исправным экземпляром Stronghold перейдите в каталог хранилища Raft `/var/lib/deckhouse/stronghold/`. Убедитесь, что в каталоге находится непустой файл `node-id`.
 
-## Создайте файл peers.json
+## Шаг 2. Создайте файл peers.json
 
-Внутри каталога хранилища (`/var/lib/deckhouse/stronghold/`) находится папка с именем `raft`.
+В каталоге хранилища `/var/lib/deckhouse/stronghold/` находится подкаталог `raft`.
 
 ```text
 stronghold
@@ -80,12 +110,12 @@ stronghold
 └── node-id
 ```
 
-Чтобы единственный оставшийся сервер Stronghold мог достичь кворума и избрать себя лидером, создайте файл `raft/peers.json`, содержащий информацию о сервере. Формат файла — массив JSON, содержащий ID работоспособного узла Stronghold (`node-id`), его *адрес:порт* и информацию о возможности голосовать.
+Чтобы оставшийся сервер Stronghold мог достичь кворума и избрать себя лидером, создайте файл `peers.json` в подкаталоге `raft`. В файле укажите идентификатор экземпляра Stronghold из `node-id`, его адрес и порт, а также возможность участвовать в голосовании.
 
-**Пример:**
+Пример команды для создания файла:
 
 ```bash
-$ cat > /var/lib/deckhouse/stronghold/raft/peers.json << EOF
+cat > /var/lib/deckhouse/stronghold/raft/peers.json << EOF
 [
   {
     "id": "`cat /var/lib/deckhouse/stronghold/node-id`",
@@ -96,88 +126,109 @@ $ cat > /var/lib/deckhouse/stronghold/raft/peers.json << EOF
 EOF
 ```
 
-Параметры:
-- **id** (строка: \<обязательно\>) — указывает идентификатор сервера.
-- **address** (строка: \<обязательно\>) — указывает хост и порт сервера. Порт — это порт кластера сервера.
-- **non_voter** (bool: \<false\>) — указывает, участвует ли сервер в голосовании.
+Описание параметров:
 
-Убедитесь, что файл `peers.json` содержит корректные права на файл:
+- `id` (обязательный) — идентификатор сервера Stronghold;
+- `address` (обязательный) — адрес и порт сервера. В качестве порта укажите порт кластера сервера;
+- `non_voter` — указывает, участвует ли сервер в голосовании. Для участия укажите `false`.
+
+Установите для файла `peers.json` владельца `deckhouse:deckhouse` и права доступа `600`:
 
 ```bash
 chown deckhouse:deckhouse /var/lib/deckhouse/stronghold/raft/peers.json
 chmod 600 /var/lib/deckhouse/stronghold/raft/peers.json
 ```
 
-## Перезапустите *под* Stronghold
+## Шаг 3. Перезапустите под Stronghold
 
-Перезапустите *под* (`stronghold-0` в примере), чтобы Stronghold мог загрузить новый файл `peers.json`.
+Перезапустите под с работоспособным экземпляром Stronghold (`stronghold-0` в примере), чтобы Stronghold мог загрузить созданный файл `peers.json`.
 
-## Распечатайте Stronghold
+## Шаг 4. Распечатайте Stronghold
 
-Если не настроено использование автоматической распечатки, распечатайте Stronghold, а затем проверьте статус.
-
-**Пример:**
+Если автоматическая распечатка не настроена, распечатайте Stronghold, а затем проверьте его статус.
 
 {{< tabs name="stronghold_cmd_96020" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
-```bash
-$ d8 stronghold operator unseal
-Unseal Key (will be hidden):
+1. Распечатайте Stronghold и введите unseal-ключ:
 
-$ d8 stronghold status
-Key                      Value
----                      -----
-Recovery Seal Type       shamir
-Initialized              true
-Sealed                   false
-Total Recovery Shares    1
-Threshold                1
-Version                  1.16.8+ee
-Storage Type             raft
-Cluster Name             stronghold-cluster-4a1a40af
-Cluster ID               d09df2c7-1d3e-f7d0-a9f7-93fadcc29110
-HA Enabled               true
-HA Cluster               https://stronghold-0.stronghold-internal:8301
-HA Mode                  active
-Active Since             2021-07-20T00:07:32.215236307Z
-Raft Committed Index     155344
-Raft Applied Index       155344
-```
+   ```bash
+   d8 stronghold operator unseal
+   Unseal Key (will be hidden):
+   ```
+
+1. Проверьте статус Stronghold:
+
+   ```bash
+   d8 stronghold status
+   ```
+
+   Пример вывода:
+
+   ```console
+   Key                      Value
+   ---                      -----
+   Recovery Seal Type       shamir
+   Initialized              true
+   Sealed                   false
+   Total Recovery Shares    1
+   Threshold                1
+   Version                  1.16.8+ee
+   Storage Type             raft
+   Cluster Name             stronghold-cluster-4a1a40af
+   Cluster ID               d09df2c7-1d3e-f7d0-a9f7-93fadcc29110
+   HA Enabled               true
+   HA Cluster               https://stronghold-0.stronghold-internal:8301
+   HA Mode                  active
+   Active Since             2021-07-20T00:07:32.215236307Z
+   Raft Committed Index     155344
+   Raft Applied Index       155344
+   ```
 
 {{% /tab %}}
 {{% tab name="Stronghold в Linux" %}}
 
-```bash
-$ stronghold operator unseal
-Unseal Key (will be hidden):
+1. Распечатайте Stronghold и введите unseal-ключ:
 
-$ stronghold status
-Key                      Value
----                      -----
-Recovery Seal Type       shamir
-Initialized              true
-Sealed                   false
-Total Recovery Shares    1
-Threshold                1
-Version                  1.16.8+ee
-Storage Type             raft
-Cluster Name             stronghold-cluster-4a1a40af
-Cluster ID               d09df2c7-1d3e-f7d0-a9f7-93fadcc29110
-HA Enabled               true
-HA Cluster               https://stronghold-0.stronghold-internal:8301
-HA Mode                  active
-Active Since             2021-07-20T00:07:32.215236307Z
-Raft Committed Index     155344
-Raft Applied Index       155344
-```
+   ```bash
+   stronghold operator unseal
+   Unseal Key (will be hidden):
+   ```
+
+1. Проверьте статус Stronghold:
+
+   ```bash
+   stronghold status
+   ```
+
+   Пример вывода:
+
+   ```console
+   Key                      Value
+   ---                      -----
+   Recovery Seal Type       shamir
+   Initialized              true
+   Sealed                   false
+   Total Recovery Shares    1
+   Threshold                1
+   Version                  1.16.8+ee
+   Storage Type             raft
+   Cluster Name             stronghold-cluster-4a1a40af
+   Cluster ID               d09df2c7-1d3e-f7d0-a9f7-93fadcc29110
+   HA Enabled               true
+   HA Cluster               https://stronghold-0.stronghold-internal:8301
+   HA Mode                  active
+   Active Since             2021-07-20T00:07:32.215236307Z
+   Raft Committed Index     155344
+   Raft Applied Index       155344
+   ```
 
 {{% /tab %}}
 {{< /tabs >}}
 
-## Проверка успешности
+## Шаг 5. Проверьте результат восстановления
 
-Процедура восстановления прошла успешно, если Stronghold запустился и отобразил следующие сообщения в логах.
+Процедура восстановления считается успешной, если Stronghold запустился и отобразил следующие сообщения в логах:
 
 ```text
 ...
@@ -188,15 +239,18 @@ Raft Applied Index       155344
 ...
 ```
 
-## Просмотр списка узлов
-
-Теперь в кластере числится только один сервер. Это позволило Stronghold достичь кворума и восстановить работоспособность. Чтобы убедиться в их количестве, выполните команду `d8 stronghold operator raft list-peers`.
+После восстановления в кластере должен числиться только один сервер. Это позволяет Stronghold достичь кворума и восстановить работоспособность. Чтобы убедиться в количестве серверов, выполните следующую команду.
 
 {{< tabs name="stronghold_cmd_75226" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```bash
-$ d8 stronghold operator raft list-peers
+d8 stronghold operator raft list-peers
+```
+
+Пример вывода:
+
+```console
 Node                                    Address                                  State       Voter
 ----                                    -------                                  -----       -----
 d3816d62-29eb-4f42-98cb-f25ab05e8fbd    stronghold-0.stronghold-internal:8301    leader      true
@@ -206,7 +260,12 @@ d3816d62-29eb-4f42-98cb-f25ab05e8fbd    stronghold-0.stronghold-internal:8301   
 {{% tab name="Stronghold в Linux" %}}
 
 ```bash
-$ stronghold operator raft list-peers
+stronghold operator raft list-peers
+```
+
+Пример вывода:
+
+```console
 Node                                    Address                                  State       Voter
 ----                                    -------                                  -----       -----
 d3816d62-29eb-4f42-98cb-f25ab05e8fbd    stronghold-0.stronghold-internal:8301    leader      true
@@ -219,9 +278,11 @@ d3816d62-29eb-4f42-98cb-f25ab05e8fbd    stronghold-0.stronghold-internal:8301   
 
 ## Следующие шаги
 
-В этом руководстве мы восстановили кворум, преобразовав кластер из 3 узлов в кластер из одного узла с помощью файла `peers.json`. Файл `peers.json` позволил нам вручную обновить список узлов Raft оставив единственный работоспособный узел, что позволило этому серверу достичь кворума и успешно выборать лидера.
+Следуя указаниям руководства, вы восстановили кворум, преобразовав кластер из 3 узлов в кластер из одного узла с помощью файла `peers.json`. Этот файл позволил вручную обновить список узлов Raft, оставив единственный работоспособный узел, в результате чего был восстановлен кворум и успешно выбран лидер.
 
-Если вышедшие из строя узлы **поддаются восстановлению**, лучшим вариантом будет вернуть их в сеть и подключить к кластеру с использованием тех же адресов хостов. Это вернет кластер в полностью рабочее состояние. Для этого в файле `raft/peers.json` должны быть указаны данные: идентификатор сервера, *адрес:порт* и информация о возможности голосовать, для каждого сервера, который вы хотите включить в кластер.
+Если вышедшие из строя узлы поддаются восстановлению, верните их в кластер, используя прежние адреса. Это вернет кластер в полностью рабочее состояние. Для этого в файле `raft/peers.json` укажите идентификатор сервера, его адрес и порт, а также информацию о возможности участия в голосовании для каждого сервера, который вы хотите включить в кластер.
+
+Пример конфигурации для трёх серверов Stronghold:
 
 ```json
 [
