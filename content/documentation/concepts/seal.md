@@ -267,7 +267,7 @@ threshold of unseal keys, Stronghold migrates the unseal keys to recovery
 keys.
 
 {{< tabs name="stronghold_cmd_64419" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```bash
 d8 stronghold operator unseal -migrate

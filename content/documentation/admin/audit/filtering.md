@@ -84,7 +84,7 @@ Assume you have an audit file named `stronghold-audit.log` and you want to route
 1. Enable a `file` audit device filtered by `mount_type`:
 
    {{< tabs name="stronghold_cmd_8360" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```shell
    d8 stronghold audit enable             \
@@ -111,7 +111,7 @@ Assume you have an audit file named `stronghold-audit.log` and you want to route
 2. Enable a fallback device:
 
    {{< tabs name="stronghold_cmd_38609" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```shell
    d8 stronghold audit enable             \
@@ -140,7 +140,7 @@ Assume you have an audit file named `stronghold-audit.log` and you want to route
 3. Verify that the devices are enabled:
 
    {{< tabs name="stronghold_cmd_16152" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```shell
    d8 stronghold audit list --detailed
@@ -159,7 +159,7 @@ Assume you have an audit file named `stronghold-audit.log` and you want to route
 4. Enable the KV secrets engine:
 
    {{< tabs name="stronghold_cmd_97241" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```shell
    d8 stronghold secrets enable -path my-kv kv-v2
@@ -178,7 +178,7 @@ Assume you have an audit file named `stronghold-audit.log` and you want to route
 5. Write a secret:
 
    {{< tabs name="stronghold_cmd_62847" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```shell
    d8 stronghold kv put -mount=my-kv my_secret the_value=always_angry

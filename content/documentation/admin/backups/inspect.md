@@ -17,7 +17,7 @@ The `inspect` command applies to integrated Raft storage snapshots. If Stronghol
 To check a snapshot, run the following command specifying a path to the snapshot file instead of `<SNAPSHOT_FILE>`:
 
 {{< tabs name="stronghold_cmd_30895" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold operator raft snapshot inspect <SNAPSHOT_FILE>
@@ -36,7 +36,7 @@ stronghold operator raft snapshot inspect <SNAPSHOT_FILE>
 Example:
 
 {{< tabs name="stronghold_cmd_60240" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold operator raft snapshot inspect raft.snap
@@ -97,7 +97,7 @@ core/cluster                                      2          236 B
 You can inspect the file immediately after creating it:
 
 {{< tabs name="stronghold_cmd_11011" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold operator raft snapshot save /backup/raft.snap
@@ -120,7 +120,7 @@ stronghold operator raft snapshot inspect /backup/raft.snap
 Use the `-validate` flag for a thorough backup check:
 
 {{< tabs name="stronghold_cmd_82428" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold operator raft snapshot inspect -validate raft.snap
@@ -149,7 +149,7 @@ This is useful for automated backup checks, but it does not replace a real resto
 To inspect a specific part of the stored data, use `-filter` together with `-depth`:
 
 {{< tabs name="stronghold_cmd_98176" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold operator raft snapshot inspect -depth 3 -filter=core raft.snap
@@ -172,7 +172,7 @@ This is useful when troubleshooting storage growth or identifying unusually larg
 For scripts and monitoring workflows, use JSON output:
 
 {{< tabs name="stronghold_cmd_96016" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold operator raft snapshot inspect -format=json raft.snap

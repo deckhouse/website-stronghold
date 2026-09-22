@@ -130,7 +130,7 @@ Do the following to create a token, generate a key pair and configure Stronghold
 1. Start Stronghold while specifying the SoftHSM2 configuration:
 
    {{< tabs name="stronghold_cmd_65285" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```shell
    export SOFTHSM2_CONF=/home/stronghold/softhsm2.conf
@@ -170,7 +170,7 @@ Do the following to create a token, generate a key pair and configure Stronghold
 1. Perform the migration by entering the unseal keys:
 
    {{< tabs name="stronghold_cmd_66874" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```shell
    d8 stronghold operator unseal -migrate
@@ -207,7 +207,7 @@ After the migration is complete, Stronghold will automatically unseal using PKCS
 1. Perform the migration by entering the recovery keys:
 
    {{< tabs name="stronghold_cmd_66874" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```shell
    d8 stronghold operator unseal -migrate

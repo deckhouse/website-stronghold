@@ -257,7 +257,7 @@ rekey выполняется флагом `-target=recovery` у команды `
 порога unseal-ключей Stronghold мигрирует unseal-ключи в recovery-ключи.
 
 {{< tabs name="stronghold_cmd_64419" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```bash
 d8 stronghold operator unseal -migrate

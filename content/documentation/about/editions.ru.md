@@ -5,9 +5,9 @@ weight: 20
 
 Deckhouse Stronghold поставляется в редакциях Community Edition (CE), Enterprise Edition (EE) и Certified Security Edition (CSE), сертифицированной ФСТЭК России для сред с повышенными требованиями к информационной безопасности.
 
-Deckhouse Stronghold CE доступен для использования в любой редакции Deckhouse Kubernetes Platform (DKP).
+Deckhouse Stronghold CE доступен для использования в любой редакции Deckhouse Platform (DP).
 
-Deckhouse Stronghold EE и Deckhouse Stronghold CSE лицензируются отдельно. Deckhouse Stronghold EE доступен для использования в любой **коммерческой редакции** DKP. Deckhouse Stronghold CSE доступен для использования только в редакции DKP CSE.
+Deckhouse Stronghold EE и Deckhouse Stronghold CSE лицензируются отдельно. Deckhouse Stronghold EE доступен для использования в любой **коммерческой редакции** DP. Deckhouse Stronghold CSE доступен для использования только в редакции DKP CSE.
 
 Краткое сравнение ключевых возможностей и особенностей редакций Deckhouse Stronghold:
 
@@ -31,4 +31,4 @@ Deckhouse Stronghold EE и Deckhouse Stronghold CSE лицензируются �
 | Поддержка ГОСТ-алгоритмов для PKI/Transit | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} | {{< icon-edition type="not_supported" >}} |
 | Возможность поставки в виде исполняемого файла (standalone) | {{< icon-edition type="not_supported" >}} | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} |
 | Сертификат соответствия требованиям Приказа ФСТЭК России №76 по 4 уровню доверия | {{< icon-edition type="not_supported" >}} | {{< icon-edition type="not_supported" >}} | {{< icon-edition type="supported" >}} |
-| Возможность запуска в DKP CE | {{< icon-edition type="supported" >}} | {{< icon-edition type="not_supported" >}} | {{< icon-edition type="not_supported" >}} |
+| Возможность запуска в DP Open | {{< icon-edition type="supported" >}} | {{< icon-edition type="not_supported" >}} | {{< icon-edition type="not_supported" >}} |

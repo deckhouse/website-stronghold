@@ -6,7 +6,7 @@ weight: 20
 Stronghold Enterprise Edition (EE) можно обновить до Stronghold Certified Security Edition (CSE) одним из следующих способов:
 
 - [в исполнении Standalone](../../../standalone/switching-editions/ee-to-cse/);
-- в исполнении DKP.
+- в исполнении DP.
 
 {{< alert level="warning" >}}
 Поддерживается обновление с Stronghold EE 1.15.x до Stronghold CSE 1.16.0. Если используется версия Stronghold EE ниже 1.15.x, сначала [обновитесь до последней версии ветки](../../../update/update/).
@@ -16,7 +16,7 @@ Stronghold Enterprise Edition (EE) можно обновить до Stronghold C
 При обновлении до Stronghold CSE возможна временная недоступность сервиса.
 {{< /alert >}}
 
-## Обновление в исполнении DKP
+## Обновление в исполнении DP
 
 {{< alert level="warning" >}}
 Для перехода на Stronghold CSE требуется DKP CSE версии 1.73 и выше.
@@ -40,7 +40,7 @@ Stronghold Enterprise Edition (EE) можно обновить до Stronghold C
 1. Создайте резервную копию или снимок (snapshot) кластера Stronghold. Пример:
 
    {{< tabs name="stronghold_cmd_21012" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```sh
    export STRONGHOLD_ADDR=https://$(d8 k -n d8-stronghold get ing stronghold -o json | jq -r '.spec.rules[0].host')
@@ -71,7 +71,7 @@ Stronghold Enterprise Edition (EE) можно обновить до Stronghold C
    ```
 
    {{< alert level="info" >}}
-   Полученные файлы храните за пределами кластера DKP.
+   Полученные файлы храните за пределами кластера DP.
    {{< /alert >}}
 
 1. Подготовьте пакет или бинарный файл Stronghold CSE 1.16.0 на каждом узле.
@@ -167,21 +167,21 @@ Stronghold Enterprise Edition (EE) можно обновить до Stronghold C
 
 ### Проверки перед началом обновления
 
-1. Проверьте версию DKP. Для перехода на Stronghold CSE требуется DKP CSE версии 1.73 и выше. Проверить версию DKP можно с помощью команды:
+1. Проверьте версию DP. Для перехода на Stronghold CSE требуется DKP CSE версии 1.73 и выше. Проверить версию DP можно с помощью команды:
 
    ```shell
    d8 k -n d8-system get configmap d8-deckhouse-version-info -o yaml
    ```
 
-   Также проверить версию DKP можно в веб-интерфейсе Deckhouse на главной странице панели управления кластером (`https://console.<CLUSTER_DOMAIN>`).
+   Также проверить версию DP можно в веб-интерфейсе Deckhouse на главной странице панели управления кластером (`https://console.<CLUSTER_DOMAIN>`).
 
    {{< alert level="info" >}}
-   Если понадобится обновить или переключить редакцию DKP, воспользуйтесь инструкциями:
-    - [инструкция по обновлению DKP](/products/kubernetes-platform/documentation/v1/admin/configuration/update/configuration.html);
+   Если понадобится обновить или переключить редакцию DP, воспользуйтесь инструкциями:
+    - [инструкция по обновлению DP](/products/kubernetes-platform/documentation/v1/admin/configuration/update/configuration.html);
     - [инструкция по переключению DKP EE на DKP CSE](/products/kubernetes-platform/documentation/v1/admin/configuration/registry/switching-editions.html).
     {{< /alert >}}
 
-1. Убедитесь, что DKP работает штатно, leader-узел определён, очередь пуста:
+1. Убедитесь, что DP работает штатно, leader-узел определён, очередь пуста:
 
    ```shell
    d8 k -n d8-system get deploy deckhouse
@@ -266,8 +266,8 @@ Stronghold Enterprise Edition (EE) можно обновить до Stronghold C
    # Адрес хоста хранилища образов. Например, 10.129.0.18:5000 или my-registry.com
    export REGISTRY_HOST="<REGISTRY_HOST:PORT>"
 
-   # Адрес хранилища образов DKP. Например, 10.129.0.18:5000/dkp-cse/stable
-   export MODULES_MODULE_REPO="${REGISTRY_HOST}/<PATH_TO_DKP_REPO>"
+   # Адрес хранилища образов DP. Например, 10.129.0.18:5000/dkp-cse/stable
+   export MODULES_MODULE_REPO="${REGISTRY_HOST}/<PATH_TO_DP_REPO>"
 
    # Используйте учётную запись с правами на запись в хранилище образов.
    d8 mirror push modules $MODULES_MODULE_REPO -u <USERNAME> -p <PASSWORD>
@@ -360,7 +360,7 @@ Stronghold Enterprise Edition (EE) можно обновить до Stronghold C
    d8 system module enable stronghold
    ```
 
-1. Дождитесь стабилизации DKP и пустой очереди:
+1. Дождитесь стабилизации DP и пустой очереди:
 
    ```shell
    d8 k -n d8-system get pods -l app=deckhouse
@@ -436,11 +436,11 @@ Stronghold Enterprise Edition (EE) можно обновить до Stronghold C
 
 ### Альтернативный способ через установку нового кластера требуемой версии
 
-Если не удалось пройти [проверки перед началом обновления](#проверки-перед-началом-обновления), то есть привести текущий кластер DKP и модуль `stronghold` к требуемым версиям DKP CSE 1.73 и выше и Stronghold EE 1.15.x, можно перенести кластер Stronghold на новый кластер DKP CSE 1.73 путём восстановления резервной копии.
+Если не удалось пройти [проверки перед началом обновления](#проверки-перед-началом-обновления), то есть привести текущий кластер DP и модуль `stronghold` к требуемым версиям DKP CSE 1.73 и выше и Stronghold EE 1.15.x, можно перенести кластер Stronghold на новый кластер DKP CSE 1.73 путём восстановления резервной копии.
 
 Для этого выполните следующие действия:
 
-1. Выполните [резервное копирование данных кластера](#обновление-в-исполнении-dkp).
+1. Выполните [резервное копирование данных кластера](#обновление-в-исполнении-dp).
 1. Разверните кластер DKP CSE 1.73.
 1. Начиная с раздела [Отключение автообновления модуля](#отключение-автообновления-модуля),  последовательно выполните все шаги на новом кластере.
 1. Восстановите резервную копию, unseal-ключи и root-токен. Команды выполняются на хосте, где находятся файлы резервной копии `stronghold-*.snap` и ключи `stronghold-keys.yaml`. Пример восстановления резервной копии кластера Stronghold:
@@ -448,7 +448,7 @@ Stronghold Enterprise Edition (EE) можно обновить до Stronghold C
    - Восстановите снимок (snapshot):
 
      {{< tabs name="stronghold_cmd_70751" >}}
-     {{% tab name="Stronghold в DKP" %}}
+     {{% tab name="Stronghold в DP" %}}
 
      ```shell
      export STRONGHOLD_ADDR=https://$(d8 k -n d8-stronghold get ing stronghold -o json | jq -r '.spec.rules[0].host')

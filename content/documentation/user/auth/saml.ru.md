@@ -28,7 +28,7 @@ Stronghold поддерживает два режима клиента:
 ## Включение метода
 
 {{< tabs name="stronghold_cmd_62772" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold auth enable saml
@@ -47,7 +47,7 @@ stronghold auth enable saml
 По умолчанию метод будет смонтирован по пути `auth/saml`. При необходимости можно использовать другой путь:
 
 {{< tabs name="stronghold_cmd_98944" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold auth enable -path=corp-saml saml
@@ -80,7 +80,7 @@ stronghold auth enable -path=corp-saml saml
 ### Настройка через метаданные IdP
 
 {{< tabs name="stronghold_cmd_61004" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold write auth/saml/config \
@@ -113,7 +113,7 @@ stronghold write auth/saml/config \
 Если метаданные IdP недоступны, можно задать параметры вручную:
 
 {{< tabs name="stronghold_cmd_66352" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold write auth/saml/config \
@@ -158,7 +158,7 @@ stronghold write auth/saml/config \
 Если Stronghold доступен по нескольким публичным адресам, можно указать несколько ACS URL:
 
 {{< tabs name="stronghold_cmd_99652" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold write auth/saml/config \
@@ -199,7 +199,7 @@ stronghold write auth/saml/config \
 Пример роли:
 
 {{< tabs name="stronghold_cmd_51229" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold write auth/saml/role/employees \
@@ -239,7 +239,7 @@ stronghold write auth/saml/role/employees \
 Это позволяет выдавать доступ только выбранным пользователям или группам из Identity Provider. Например:
 
 {{< tabs name="stronghold_cmd_8682" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold write auth/saml/role/support \
@@ -280,7 +280,7 @@ stronghold write auth/saml/role/support \
 Пример команд:
 
 {{< tabs name="stronghold_cmd_9795" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold write identity/group \
@@ -303,7 +303,7 @@ stronghold write identity/group \
 {{< /tabs >}}
 
 {{< tabs name="stronghold_cmd_95645" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold auth list -format=json
@@ -320,7 +320,7 @@ stronghold auth list -format=json
 {{< /tabs >}}
 
 {{< tabs name="stronghold_cmd_7643" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold write identity/group-alias \

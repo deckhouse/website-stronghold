@@ -31,7 +31,7 @@ description: "Настройка репликации Performance между к�
 ## Шаг 1. Включите primary
 
 {{< tabs name="stronghold_cmd_10766" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold write -force sys/replication/performance/primary/enable
@@ -59,7 +59,7 @@ stronghold write -force sys/replication/performance/primary/enable
 `id`:
 
 {{< tabs name="stronghold_cmd_30185" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold write sys/replication/performance/primary/secondary-token \
@@ -126,7 +126,7 @@ root-токен secondary перестаёт работать. Выполняй�
 ## Шаг 4. Проверьте статус
 
 {{< tabs name="stronghold_cmd_33280" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold read -address="${SECONDARY_ADDR}" sys/replication/performance/status
@@ -153,7 +153,7 @@ stronghold read -address="${SECONDARY_ADDR}" sys/replication/performance/status
 недействителен.
 
 {{< tabs name="stronghold_cmd_48194" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 # Запись на primary.

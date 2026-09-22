@@ -1,6 +1,6 @@
 ---
 title: "Переключение Stronghold на редакцию EE"
-description: "Переход с базового Stronghold на Stronghold EE в DKP путём указания лицензионного ключа в ModuleConfig."
+description: "Переход с базового Stronghold на Stronghold EE в DP путём указания лицензионного ключа в ModuleConfig."
 weight: 10
 params:
   relatedLinks:
@@ -17,7 +17,7 @@ params:
 Модуль `stronghold` переключается с базового Stronghold на Stronghold EE указанием лицензионного ключа в параметре [`spec.settings.license`](/modules/stronghold/stable/configuration.html#parameters-license) ресурса ModuleConfig `stronghold`. Переустанавливать модуль и переносить данные не требуется: секреты, политики, механизмы секретов и настроенные методы аутентификации сохраняются.
 
 {{< alert level="warning" >}}
-Stronghold EE лицензируется отдельно и доступен для использования только в коммерческих редакциях DKP. В DKP CE переключение на Stronghold EE невозможно. Подробнее — в разделе [«Редакции»](../../../../../about/editions/).
+Stronghold EE лицензируется отдельно и доступен для использования только в коммерческих редакциях DP. В DP Open переключение на Stronghold EE невозможно. Подробнее — в разделе [«Редакции»](../../../../../about/editions/).
 {{< /alert >}}
 
 {{< alert level="warning" >}}
@@ -26,7 +26,7 @@ Stronghold EE лицензируется отдельно и доступен д
 
 ## Перед переключением
 
-1. Убедитесь, что в кластере используется коммерческая редакция DKP:
+1. Убедитесь, что в кластере используется коммерческая редакция DP:
 
    ```shell
    d8 k -n d8-system get configmap d8-deckhouse-version-info -o jsonpath='{.data.data\.json}'
@@ -38,10 +38,10 @@ Stronghold EE лицензируется отдельно и доступен д
    { "channel":"Stable", "version":"v1.72.5", "edition":"EE" }
    ```
 
-   Также редакцию и версию DKP можно посмотреть в веб-интерфейсе Deckhouse на главной странице панели управления кластером (`https://console.<CLUSTER_DOMAIN>`).
+   Также редакцию и версию DP можно посмотреть в веб-интерфейсе Deckhouse на главной странице панели управления кластером (`https://console.<CLUSTER_DOMAIN>`).
 
    {{< alert level="info" >}}
-   Если требуется сменить редакцию DKP, воспользуйтесь [инструкцией по переключению редакции DKP](/products/kubernetes-platform/documentation/v1/admin/configuration/registry/switching-editions.html).
+   Если требуется сменить редакцию DP, воспользуйтесь [инструкцией по переключению редакции DP](/products/kubernetes-platform/documentation/v1/admin/configuration/registry/switching-editions.html).
    {{< /alert >}}
 
 1. Убедитесь, что модуль `stronghold` включён и находится в рабочем состоянии:
@@ -80,7 +80,7 @@ Stronghold EE лицензируется отдельно и доступен д
    ```
 
    {{< alert level="info" >}}
-   Полученные файлы храните за пределами кластера DKP.
+   Полученные файлы храните за пределами кластера DP.
    {{< /alert >}}
 
 ## Указание лицензионного ключа

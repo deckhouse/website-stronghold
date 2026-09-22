@@ -41,6 +41,6 @@ weight: 10
   - [«Обзор»](./cryptography/overview/) — обзор TLS, шифрования хранилища, HSM, а также доступных алгоритмов в PKI и Transit.
 
 - Расширения и интеграции
-  - [«Обзор»](./plugins/overview/) - обзор встроенных и внешних плагинов Stronghold и различий между Standalone и DKP.
+  - [«Обзор»](./plugins/overview/) - обзор встроенных и внешних плагинов Stronghold и различий между Standalone и DP.
   - [«Плагины в Standalone»](./plugins/standalone/) - plugin directory, регистрация, versioning и подключение внешних плагинов на Linux-сервере.
-  - [«Плагины в DKP»](./plugins/dkp/) - загрузка плагинов через `ModuleConfig`, регистрация и включение в Deckhouse Kubernetes Platform.
+  - [«Плагины в DP»](./plugins/dp/) - загрузка плагинов через ModuleConfig, регистрация и включение в Deckhouse Platform.

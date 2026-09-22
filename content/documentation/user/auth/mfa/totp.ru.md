@@ -15,7 +15,7 @@ Time-Based One-Time Password (TOTP) — одноразовых короткож�
 1. Включите метод MFA TOTP и получите его идентификатор:
 
    {{< tabs name="stronghold_cmd_49406" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```shell
    TOTP_METHOD_ID=$(d8 stronghold write identity/mfa/method/totp \
@@ -56,7 +56,7 @@ Time-Based One-Time Password (TOTP) — одноразовых короткож�
 1. Сгенерируйте QR-код для настройки OTP:
 
    {{< tabs name="stronghold_cmd_64039" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```shell
    d8 stronghold write -field=barcode \
@@ -89,7 +89,7 @@ Time-Based One-Time Password (TOTP) — одноразовых короткож�
 1. Получите идентификатор метода:
 
    {{< tabs name="stronghold_cmd_18206" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```shell
    LDAP_ACCESSOR=$(d8 stronghold auth list -format=json \
@@ -112,7 +112,7 @@ Time-Based One-Time Password (TOTP) — одноразовых короткож�
 1. Включите MFA:
 
    {{< tabs name="stronghold_cmd_35603" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```shell
    d8 stronghold write /identity/mfa/login-enforcement/userpass-totp-enforcement \
@@ -135,7 +135,7 @@ Time-Based One-Time Password (TOTP) — одноразовых короткож�
 1. Выполните вход:
 
    {{< tabs name="stronghold_cmd_84099" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```shell
    d8 stronghold login -method=userpass username=user password='My-Password-1234'
@@ -158,7 +158,7 @@ Time-Based One-Time Password (TOTP) — одноразовых короткож�
 Чтобы отключить проверку MFA, выполните:
 
 {{< tabs name="stronghold_cmd_42432" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold delete identity/mfa/login-enforcement/userpass-totp-enforcement

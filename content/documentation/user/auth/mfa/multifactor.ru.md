@@ -65,7 +65,7 @@ Multifactor MFA рассчитан на интерактивное подтве�
 Чтобы создать метод MFA Multifactor и получить его идентификатор, выполните следующую команду:
 
 {{< tabs name="stronghold_cmd_91754" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold write identity/mfa/method/multifactor \
@@ -117,7 +117,7 @@ method_id    93964fd0-dd7e-e22a-74d0-0880ca5e0398
 1. Получите идентификатор (accessor) метода аутентификации:
 
    {{< tabs name="stronghold_cmd_95992" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```shell
    USERPASS_ACCESSOR=$(d8 stronghold auth list -format=json \
@@ -140,7 +140,7 @@ method_id    93964fd0-dd7e-e22a-74d0-0880ca5e0398
 1. Включите MFA:
 
    {{< tabs name="stronghold_cmd_99643" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```shell
    d8 stronghold write /identity/mfa/login-enforcement/userpass-multifactor-enforcement \
@@ -163,7 +163,7 @@ method_id    93964fd0-dd7e-e22a-74d0-0880ca5e0398
 1. Выполните вход:
 
    {{< tabs name="stronghold_cmd_88070" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```shell
    d8 stronghold login -method=userpass username=mfa-user
@@ -208,7 +208,7 @@ method_id    93964fd0-dd7e-e22a-74d0-0880ca5e0398
 Чтобы отключить проверку MFA для метода Userpass, выполните следующую команду:
 
 {{< tabs name="stronghold_cmd_13727" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold delete identity/mfa/login-enforcement/userpass-multifactor-enforcement

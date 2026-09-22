@@ -48,7 +48,7 @@ To configure this mode, follow these steps:
 1. Enable and configure JWT auth in Stronghold.
 
    {{< tabs name="stronghold_cmd_81485" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```bash
    d8 stronghold auth enable jwt
@@ -98,7 +98,7 @@ To configure JWT auth using Kubernetes public keys, follow these steps:
 1. Configure the JWT auth endpoint to use the retrieved keys.
 
    {{< tabs name="stronghold_cmd_39007" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```bash
    d8 stronghold write auth/jwt/config \
@@ -155,7 +155,7 @@ d8 k exec my-pod -- cat /var/run/secrets/kubernetes.io/serviceaccount/token | cu
 Create a role for JWT auth that the `default` service account in the `default` namespace can use.
 
 {{< tabs name="stronghold_cmd_14558" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```bash
 d8 stronghold write auth/jwt/role/my-role \
@@ -188,7 +188,7 @@ Pods or clients that have access to the service account JWT can now authenticate
 Authentication example using the Deckhouse CLI:
 
 {{< tabs name="stronghold_cmd_96573" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```bash
 d8 stronghold write auth/jwt/login \

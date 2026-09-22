@@ -23,7 +23,7 @@ description: "Ручное создание снимка встроенного 
 Для создания снимка используйте команду:
 
 {{< tabs name="stronghold_cmd_86904" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold operator raft snapshot save backup.snap

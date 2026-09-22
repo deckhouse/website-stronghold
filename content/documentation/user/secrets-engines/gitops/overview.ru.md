@@ -21,7 +21,7 @@ weight: 10
 1. Включите механизм секретов GitOps:
 
    {{< tabs name="stronghold_cmd_429" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```bash
    d8 stronghold secrets enable gitops
@@ -42,7 +42,7 @@ weight: 10
 1. Настройте Git-репозиторий для мониторинга:
 
    {{< tabs name="stronghold_cmd_97842" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```bash
    d8 stronghold write gitops/configure/git_repository \
@@ -76,7 +76,7 @@ weight: 10
 1. Если репозиторий приватный, настройте учётные данные:
 
    {{< tabs name="stronghold_cmd_46118" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```bash
    d8 stronghold write gitops/configure/git_credential \
@@ -106,7 +106,7 @@ weight: 10
 1. Экспортируйте открытые ключи и загрузите их в Stronghold:
 
    {{< tabs name="stronghold_cmd_91259" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```bash
    gpg --armor --output key1.pgp --export key1
@@ -133,7 +133,7 @@ weight: 10
 1. Настройте доступ механизма к API. Предпочтительнее передавать обёрнутый обновляемый periodic-токен. Механизм разворачивает токен и сохраняет его; позже токен прочитать нельзя:
 
    {{< tabs name="stronghold_cmd_11329" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```bash
    TOKEN=$(d8 stronghold token create -orphan -period=7d -policy=gitops-apply \
@@ -215,7 +215,7 @@ weight: 10
 Проверьте текущий статус:
 
 {{< tabs name="stronghold_cmd_43910" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```bash
 d8 stronghold read gitops/status
@@ -241,7 +241,7 @@ stronghold read gitops/status
 ## Отключение
 
 {{< tabs name="stronghold_cmd_9753" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```bash
 d8 stronghold secrets disable gitops

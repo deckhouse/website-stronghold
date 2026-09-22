@@ -20,12 +20,12 @@ weight: 80
 
 ### Через CLI
 
-Имя метода аутентификации зависит от способа его создания. В составе Deckhouse Kubernetes Platform (DKP) автоматически создаётся метод `kubernetes_local`, связанный с кластером, в котором запущен Stronghold. Если метод Kubernetes auth создается вручную, по умолчанию используется имя `kubernetes`, если не указан другой путь.
+Имя метода аутентификации зависит от способа его создания. В составе Deckhouse Platform (DP) автоматически создаётся метод `kubernetes_local`, связанный с кластером, в котором запущен Stronghold. Если метод Kubernetes auth создается вручную, по умолчанию используется имя `kubernetes`, если не указан другой путь.
 
 Если метод аутентификации создан под другим именем, укажите его с помощью параметра `-path` в CLI. Например:
 
 {{< tabs name="stronghold_cmd_58862" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold write -path=your-path auth/kubernetes/login role=demo jwt=...
@@ -43,7 +43,7 @@ stronghold write -path=your-path auth/kubernetes/login role=demo jwt=...
 
 ### Через API
 
-Используйте эндпоинт, соответствующий имени метода аутентификации. Если Stronghold развернут в составе DKP, автоматически созданный метод использует эндпоинт `auth/kubernetes_local/login`. Если метод аутентификации создан под другим именем, используйте соответствующий эндпоинт. В примере ниже используется метод аутентификации с именем `kubernetes`.
+Используйте эндпоинт, соответствующий имени метода аутентификации. Если Stronghold развернут в составе DP, автоматически созданный метод использует эндпоинт `auth/kubernetes_local/login`. Если метод аутентификации создан под другим именем, используйте соответствующий эндпоинт. В примере ниже используется метод аутентификации с именем `kubernetes`.
 
 ```shell-session
 curl \
@@ -82,7 +82,7 @@ curl \
 1. Включите метод аутентификации Kubernetes:
 
    {{< tabs name="stronghold_cmd_52748" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```bash
    d8 stronghold auth enable kubernetes
@@ -101,7 +101,7 @@ curl \
 1. Используйте эндпоинт `/config`, чтобы настроить Stronghold для работы с новым кластером Kubernetes. Адрес Kubernetes API и TCP-порт можно получить с помощью команды `d8 k cluster-info`.
 
    {{< tabs name="stronghold_cmd_45453" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```bash
    d8 stronghold write auth/kubernetes/config \
@@ -130,7 +130,7 @@ curl \
 1. Создайте именованную роль:
 
    {{< tabs name="stronghold_cmd_29773" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```shell
    d8 stronghold write auth/kubernetes/role/demo \
@@ -194,7 +194,7 @@ curl \
 Чтобы использовать локальный токен и сертификат центра сертификации, не указывайте параметры `token_reviewer_jwt` и `kubernetes_ca_cert` при настройке метода аутентификации. Stronghold автоматически загрузит их из файлов `token` и `ca.crt`, расположенных в каталоге `/var/run/secrets/kubernetes.io/serviceaccount/`.
 
 {{< tabs name="stronghold_cmd_19761" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```bash
 d8 stronghold write auth/kubernetes/config \

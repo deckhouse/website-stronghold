@@ -14,7 +14,7 @@ To configure TOTP, follow these steps:
 1. Enable the TOTP MFA method and obtain its ID:
 
    {{< tabs name="stronghold_cmd_49406" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```shell
    TOTP_METHOD_ID=$(d8 stronghold write identity/mfa/method/totp \
@@ -55,7 +55,7 @@ To configure TOTP, follow these steps:
 1. Generate a QR code for OTP configuration:
 
    {{< tabs name="stronghold_cmd_64039" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```shell
    d8 stronghold write -field=barcode \
@@ -87,7 +87,7 @@ As an example, let's configure MFA verification for the Userpass authentication 
 1. Obtain the method's accessor:
 
    {{< tabs name="stronghold_cmd_18206" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```shell
    LDAP_ACCESSOR=$(d8 stronghold auth list -format=json \
@@ -110,7 +110,7 @@ As an example, let's configure MFA verification for the Userpass authentication 
 1. Enable MFA:
 
    {{< tabs name="stronghold_cmd_35603" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```shell
    d8 stronghold write /identity/mfa/login-enforcement/userpass-totp-enforcement \
@@ -133,7 +133,7 @@ As an example, let's configure MFA verification for the Userpass authentication 
 1. Log in:
 
    {{< tabs name="stronghold_cmd_84099" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```shell
    d8 stronghold login -method=userpass username=user password='My-Password-1234'
@@ -156,7 +156,7 @@ As an example, let's configure MFA verification for the Userpass authentication 
 To disable MFA verification, run:
 
 {{< tabs name="stronghold_cmd_42432" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold delete identity/mfa/login-enforcement/userpass-totp-enforcement

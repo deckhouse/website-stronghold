@@ -1,10 +1,10 @@
 ---
 title: "Обновление Deckhouse Stronghold Certified Security Edition"
-description: "Порядок обновления Stronghold CSE в Deckhouse Kubernetes Platform с версии 1.16.0 до 1.16.25."
+description: "Порядок обновления Stronghold CSE в Deckhouse Platform с версии 1.16.0 до 1.16.25."
 hidden: true
 ---
 
-В данном руководстве описан процесс обновления ПО «Deckhouse Stronghold Certified Security Edition» (далее — Stronghold CSE), развёрнутого в Deckhouse Kubernetes Platform, с версии v1.16.0 до v1.16.25.
+В данном руководстве описан процесс обновления ПО «Deckhouse Stronghold Certified Security Edition» (далее — Stronghold CSE), развёрнутого в Deckhouse Platform, с версии v1.16.0 до v1.16.25.
 
 ## Минимальные требования
 
@@ -83,7 +83,7 @@ hidden: true
 6. После перезапуска подов проверьте версию Stronghold CSE следующей командой:
 
    {{< tabs name="stronghold_cmd_594" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```shell
    d8 stronghold status

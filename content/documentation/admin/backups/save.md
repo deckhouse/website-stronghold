@@ -23,7 +23,7 @@ The `d8 stronghold operator raft snapshot save` command applies only to clusters
 To create a snapshot, run:
 
 {{< tabs name="stronghold_cmd_86904" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold operator raft snapshot save backup.snap

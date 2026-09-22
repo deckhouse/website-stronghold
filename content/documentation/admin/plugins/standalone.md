@@ -137,5 +137,5 @@ Stronghold can also validate ownership and permissions of the plugin directory a
 
 ## See also
 
-- [Plugins in DKP](./dkp/)
+- [Plugins in DP](./dp/)
 - [Standalone configuration](../../install/standalone/configuration/)

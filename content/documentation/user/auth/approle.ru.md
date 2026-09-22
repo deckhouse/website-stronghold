@@ -11,7 +11,7 @@ weight: 40
 Включение с помощью CLI:
 
 {{< tabs name="stronghold_cmd_12027" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold auth enable approle
@@ -32,7 +32,7 @@ stronghold auth enable approle
 Администраторы Stronghold с комплексными задачами могут монтировать один и тот же метод аутентификации несколько раз, используя CLI для задания пути, отличного от стандартного:
 
 {{< tabs name="stronghold_cmd_99538" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold auth enable -path=my-login approle
@@ -74,7 +74,7 @@ AppRole — это набор политик и ограничений ауте�
 Путь по умолчанию - `/approle`. Если этот метод аутентификации был включен по другому пути, укажите нужный путь вместо пути по умолчанию.
 
 {{< tabs name="stronghold_cmd_15075" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold write auth/approle/login \
@@ -148,7 +148,7 @@ curl \
 1. Включите метод аутентификации AppRole:
 
 {{< tabs name="stronghold_cmd_12027" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold auth enable approle
@@ -167,7 +167,7 @@ stronghold auth enable approle
 1. Создайте именованную роль:
 
 {{< tabs name="stronghold_cmd_71976" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold write auth/approle/role/my-role \
@@ -200,7 +200,7 @@ stronghold write auth/approle/role/my-role \
 Получите RoleID для AppRole:
 
 {{< tabs name="stronghold_cmd_58119" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold read auth/approle/role/my-role/role-id
@@ -221,7 +221,7 @@ stronghold read auth/approle/role/my-role/role-id
 Получите SecretID, выданный для AppRole:
 
 {{< tabs name="stronghold_cmd_71920" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold write -f auth/approle/role/my-role/secret-id

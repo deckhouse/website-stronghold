@@ -31,7 +31,7 @@ weight: 10
 1. Выполните вход через OIDC. Для этого авторизуйтесь в Stronghold с помощью команды:
 
    {{< tabs name="stronghold_cmd_85012" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```shell
    d8 stronghold login -path=oidc_deckhouse -method=oidc -no-print
@@ -54,7 +54,7 @@ weight: 10
 1. Для проверки доступа используйте команду:
 
    {{< tabs name="stronghold_cmd_594" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```shell
    d8 stronghold status
@@ -73,7 +73,7 @@ weight: 10
 Для работы с Deckhouse Stronghold используйте команды в формате:
 
 {{< tabs name="stronghold_cmd_86358" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold <command>

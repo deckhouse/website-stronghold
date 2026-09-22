@@ -59,7 +59,7 @@ Stronghold не делает различий между стандартным�
 1. Включить механизм секретов базы данных:
 
 {{< tabs name="stronghold_cmd_99650" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell-session
 $ d8 stronghold secrets enable database
@@ -83,7 +83,7 @@ Success! Enabled the database secrets engine at: database/
 1. Настроить Stronghold с помощью соответствующего плагина и информации о подключении:
 
    {{< tabs name="stronghold_cmd_69573" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```shell-session
    $ d8 stronghold write database/config/my-database \
@@ -127,7 +127,7 @@ Success! Enabled the database secrets engine at: database/
    никаким пользователям, кроме самого Stronghold:
 
 {{< tabs name="stronghold_cmd_23336" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell-session
 d8 stronghold write -force database/rotate-root/my-database
@@ -150,7 +150,7 @@ stronghold write -force database/rotate-root/my-database
    создания учетных данных базы данных.
 
 {{< tabs name="stronghold_cmd_14613" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell-session
 $ d8 stronghold write database/roles/my-role \
@@ -187,7 +187,7 @@ Success! Data written to: database/roles/my-role
 1. Сгенерировать новую учетную запись, используя `/creds` и имя роли:
 
 {{< tabs name="stronghold_cmd_87687" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell-session
 $ d8 stronghold read database/creds/my-role
@@ -282,7 +282,7 @@ rule "charset" {
 они останутся таковыми, а не станут `%23` и `%25` соответственно.
 
 {{< tabs name="stronghold_cmd_74473" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell-session
 $ d8 stronghold write database/config/my-mysql-database \

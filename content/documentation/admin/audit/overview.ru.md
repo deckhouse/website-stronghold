@@ -102,7 +102,7 @@ Stronghold поддерживает те же базовые бэкенды ау
 Пример включения:
 
 {{< tabs name="stronghold_cmd_20236" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold audit enable file file_path=/var/log/stronghold_audit.log
@@ -125,7 +125,7 @@ stronghold audit enable file file_path=/var/log/stronghold_audit.log
 Пример включения:
 
 {{< tabs name="stronghold_cmd_96533" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold audit enable syslog tag="stronghold" facility="AUTH"
@@ -152,7 +152,7 @@ stronghold audit enable syslog tag="stronghold" facility="AUTH"
 Пример включения:
 
 {{< tabs name="stronghold_cmd_5855" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold audit enable socket address=127.0.0.1:9090 socket_type=tcp
@@ -175,7 +175,7 @@ stronghold audit enable socket address=127.0.0.1:9090 socket_type=tcp
 Включить аудит-устройство:
 
 {{< tabs name="stronghold_cmd_20236" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold audit enable file file_path=/var/log/stronghold_audit.log
@@ -194,7 +194,7 @@ stronghold audit enable file file_path=/var/log/stronghold_audit.log
 Посмотреть список устройств:
 
 {{< tabs name="stronghold_cmd_22849" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold audit list
@@ -213,7 +213,7 @@ stronghold audit list
 Отключить устройство:
 
 {{< tabs name="stronghold_cmd_42190" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold audit disable file/

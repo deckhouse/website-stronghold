@@ -25,7 +25,7 @@ The default path is `/approle`. If this auth method was enabled at a different
 path, specify `auth/my-path/login` instead.
 
 {{< tabs name="stronghold_cmd_27297" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell-session
 $ d8 stronghold write auth/approle/login \
@@ -99,7 +99,7 @@ management tool.
 1. Enable the AppRole auth method:
 
    {{< tabs name="stronghold_cmd_6914" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```shell-session
    d8 stronghold auth enable approle
@@ -118,7 +118,7 @@ management tool.
 1. Create a named role:
 
    {{< tabs name="stronghold_cmd_91925" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```shell-session
    $ d8 stronghold write auth/approle/role/my-role \
@@ -155,7 +155,7 @@ documentation.
 1. Fetch the RoleID of the AppRole:
 
    {{< tabs name="stronghold_cmd_81093" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```shell-session
    $ d8 stronghold read auth/approle/role/my-role/role-id
@@ -176,7 +176,7 @@ documentation.
 1. Get a SecretID issued against the AppRole:
 
    {{< tabs name="stronghold_cmd_53681" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```shell-session
    $ d8 stronghold write -f auth/approle/role/my-role/secret-id

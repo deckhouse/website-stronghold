@@ -32,7 +32,7 @@ itself. You do not need to call `sys/replication/reindex` manually.
 ## Step 1. Enable the primary
 
 {{< tabs name="stronghold_cmd_10766" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold write -force sys/replication/performance/primary/enable
@@ -60,7 +60,7 @@ Generate a wrapping activation token for a specific secondary identified by
 `id`:
 
 {{< tabs name="stronghold_cmd_30185" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold write sys/replication/performance/primary/secondary-token \
@@ -127,7 +127,7 @@ replication was enabled.
 ## Step 4. Verify the status
 
 {{< tabs name="stronghold_cmd_33280" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold read -address="${SECONDARY_ADDR}" sys/replication/performance/status
@@ -154,7 +154,7 @@ method you logged in with in step 3 — the primary's root token is not valid on
 the secondary.
 
 {{< tabs name="stronghold_cmd_22692" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 # Write on the primary.

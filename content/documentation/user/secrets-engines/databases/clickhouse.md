@@ -22,7 +22,7 @@ Roles.
 1. Enable the database secrets engine if it is not already enabled:
 
     {{< tabs name="stronghold_cmd_1716" >}}
-    {{% tab name="Stronghold in DKP" %}}
+    {{% tab name="Stronghold in DP" %}}
 
     ```shell-session
     $ d8 stronghold secrets enable database
@@ -46,7 +46,7 @@ Roles.
 1. Configure Stronghold with the proper plugin and connection information:
 
    {{< tabs name="stronghold_cmd_36784" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```shell-session
    $ d8 stronghold write database/roles/my-role \
@@ -81,7 +81,7 @@ Roles.
     The example assumes that the `readonly` role has been created in the `my_cluster` database cluster.
 
    {{< tabs name="stronghold_cmd_8101" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```shell-session
    $ d8 stronghold write database/roles/my-role \
@@ -119,7 +119,7 @@ the proper permission, it can generate credentials.
 Generate a new credential by reading from the `/creds` endpoint with the name of the role:
 
 {{< tabs name="stronghold_cmd_55362" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell-session
 $ d8 stronghold read database/creds/my-role

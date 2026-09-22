@@ -40,7 +40,7 @@ Directory](http://social.technet.microsoft.com/wiki/contents/articles/5312.activ
 ### Via the CLI
 
 {{< tabs name="stronghold_cmd_53415" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell-session
 $ d8 stronghold login -method=ldap username=mitchellh
@@ -106,7 +106,7 @@ management tool.
 1. Enable the ldap auth method:
 
    {{< tabs name="stronghold_cmd_97337" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```text
    d8 stronghold auth enable ldap
@@ -206,7 +206,7 @@ _Note_: When using _Authenticated Search_ for binding parameters (see above) the
 - Group names are identified using their `cn` attribute.
 
 {{< tabs name="stronghold_cmd_94101" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell-session
 $ d8 stronghold write auth/ldap/config \
@@ -254,7 +254,7 @@ $ stronghold write auth/ldap/config \
 - Group membership will be resolved via the `memberOf` attribute of _user_ objects. That search will begin under `ou=Users,dc=example,dc=com`.
 
 {{< tabs name="stronghold_cmd_84945" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell-session
 $ d8 stronghold write auth/ldap/config \
@@ -305,7 +305,7 @@ $ stronghold write auth/ldap/config \
 - Group names are identified using the `cn` attribute.
 
 {{< tabs name="stronghold_cmd_71" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell-session
 $ d8 stronghold write auth/ldap/config \
@@ -344,7 +344,7 @@ $ stronghold write auth/ldap/config \
 Next we want to create a mapping from an LDAP group to an Stronghold policy:
 
 {{< tabs name="stronghold_cmd_42241" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell-session
 d8 stronghold write auth/ldap/groups/scientists policies=foo,bar
@@ -364,7 +364,7 @@ This maps the LDAP group "scientists" to the "foo" and "bar" Stronghold policies
 We can also add specific LDAP users to additional (potentially non-LDAP) groups. Note that policies can also be specified on LDAP users as well.
 
 {{< tabs name="stronghold_cmd_39421" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell-session
 d8 stronghold write auth/ldap/groups/engineers policies=foobar
@@ -387,7 +387,7 @@ This adds the LDAP user "tesla" to the "engineers" group, which maps to the "foo
 Finally, we can test this by authenticating:
 
 {{< tabs name="stronghold_cmd_5859" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell-session
 $ d8 stronghold login -method=ldap username=tesla

@@ -31,7 +31,7 @@ accept different lengths. The available plugins are:
 1. Enable the database secrets engine if it is not already enabled:
 
    {{< tabs name="stronghold_cmd_10649" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```text
    $ d8 stronghold secrets enable database
@@ -55,7 +55,7 @@ accept different lengths. The available plugins are:
 1. Configure Stronghold with the proper plugin and connection information:
 
    {{< tabs name="stronghold_cmd_83463" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```text
    $ d8 stronghold write database/config/my-mysql-database \
@@ -85,7 +85,7 @@ accept different lengths. The available plugins are:
    create the database credential:
 
    {{< tabs name="stronghold_cmd_47606" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```text
    $ d8 stronghold write database/roles/my-role \
@@ -120,7 +120,7 @@ the proper permission, it can generate credentials.
    of the role:
 
    {{< tabs name="stronghold_cmd_48675" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```text
    $ d8 stronghold read database/creds/my-role
@@ -157,7 +157,7 @@ This plugin supports using MySQL's [x509 Client-side Certificate Authentication]
 To use this authentication mechanism, configure the plugin:
 
 {{< tabs name="stronghold_cmd_74044" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell-session
 $ d8 stronghold write database/config/my-mysql-database \
@@ -211,7 +211,7 @@ get around this is to encode the creation statement as Base64 and feed this to S
 For example:
 
 {{< tabs name="stronghold_cmd_60475" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell-session
 $ d8 stronghold write database/roles/my-role \
@@ -242,7 +242,7 @@ in MySQL 5.7 and up. For MySQL 5.6, `root_rotation_statements`
 must be configured to use the old `SET PASSWORD` syntax. For example:
 
 {{< tabs name="stronghold_cmd_82482" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell-session
 $ d8 stronghold write database/config/my-mysql-database \

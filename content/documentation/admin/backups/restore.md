@@ -22,7 +22,7 @@ Snapshot restore is available only for integrated Raft storage snapshots. If Str
 Use the `-force` flag when restoring a snapshot:
 
 {{< tabs name="stronghold_cmd_64681" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold operator raft snapshot restore -force /tmp/snapshots/backup.snap
@@ -57,7 +57,7 @@ curl \
 After the snapshot is loaded, unseal Stronghold with the original keys:
 
 {{< tabs name="stronghold_cmd_32174" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold operator unseal

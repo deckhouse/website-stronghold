@@ -18,7 +18,7 @@ PostgreSQL это один из поддерживаемых плагинов д
 1. Включите механизм секретов базы данных, если он еще не включен:
 
    {{< tabs name="stronghold_cmd_10649" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```shell-session
    $ d8 stronghold secrets enable database
@@ -42,7 +42,7 @@ PostgreSQL это один из поддерживаемых плагинов д
    Настройте Stronghold с помощью соответствующего плагина и информации о подключении:
 
    {{< tabs name="stronghold_cmd_8534" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```shell-session
    $ d8 stronghold write database/config/my-postgresql-database \
@@ -74,7 +74,7 @@ PostgreSQL это один из поддерживаемых плагинов д
 выполняемым для создания учетной записи базы данных:
 
    {{< tabs name="stronghold_cmd_68791" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```shell-session
    $ d8 stronghold write database/roles/my-role \
@@ -110,7 +110,7 @@ PostgreSQL это один из поддерживаемых плагинов д
 1. Сгенерируйте новую учетную запись, используя `/creds` и имя роли:
 
    {{< tabs name="stronghold_cmd_55861" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```shell-session
    $ d8 stronghold read database/creds/my-role

@@ -102,7 +102,7 @@ This is the most predictable backend for local storage and later forwarding to a
 Example:
 
 {{< tabs name="stronghold_cmd_20236" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold audit enable file file_path=/var/log/stronghold_audit.log
@@ -125,7 +125,7 @@ Useful on Unix systems that already rely on a syslog-based logging stack.
 Example:
 
 {{< tabs name="stronghold_cmd_96533" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold audit enable syslog tag="stronghold" facility="AUTH"
@@ -152,7 +152,7 @@ Useful for integration with external systems over TCP, UDP, or UNIX sockets.
 Example:
 
 {{< tabs name="stronghold_cmd_5855" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold audit enable socket address=127.0.0.1:9090 socket_type=tcp
@@ -175,7 +175,7 @@ If you use UDP, account for the possibility of silent message loss. For producti
 Enable an audit device:
 
 {{< tabs name="stronghold_cmd_20236" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold audit enable file file_path=/var/log/stronghold_audit.log
@@ -194,7 +194,7 @@ stronghold audit enable file file_path=/var/log/stronghold_audit.log
 List enabled devices:
 
 {{< tabs name="stronghold_cmd_22849" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold audit list
@@ -213,7 +213,7 @@ stronghold audit list
 Disable a device:
 
 {{< tabs name="stronghold_cmd_42190" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold audit disable file/
