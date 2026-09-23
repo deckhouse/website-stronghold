@@ -137,5 +137,5 @@ sudo setcap cap_ipc_lock=+ep /opt/stronghold/plugins/<plugin-binary>
 
 ## См. также
 
-- [Плагины в DKP](./dkp/)
+- [Плагины в DP](./dp/)
 - [Настройка Standalone](../../install/standalone/configuration/)

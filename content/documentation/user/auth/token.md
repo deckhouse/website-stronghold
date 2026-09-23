@@ -21,7 +21,7 @@ operations on tokens such as renewal and revocation.
 ### Via the CLI
 
 {{< tabs name="stronghold_cmd_98272" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell-session
 d8 stronghold login token=<token>

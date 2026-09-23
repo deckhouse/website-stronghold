@@ -24,7 +24,7 @@ To configure authentication using the `userpass` method, follow these steps:
 1. Enable the `userpass` auth method:
 
    {{< tabs name="stronghold_cmd_10" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```shell
    d8 stronghold auth enable userpass
@@ -45,7 +45,7 @@ To configure authentication using the `userpass` method, follow these steps:
    To enable the method at a different path, use the `-path` flag:
 
    {{< tabs name="stronghold_cmd_24481" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```shell
    d8 stronghold auth enable -path=<userpass_mount_path> userpass
@@ -64,7 +64,7 @@ To configure authentication using the `userpass` method, follow these steps:
 1. If necessary, create a user who is allowed to authenticate:
 
    {{< tabs name="stronghold_cmd_67504" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```shell
    d8 stronghold write auth/<userpass_mount_path>/users/alice \
@@ -91,7 +91,7 @@ This creates user `alice` with password `Pass-123!` and the `admins` [policy](..
 Example command for user authentication using the `userpass` method:
 
 {{< tabs name="stronghold_cmd_13653" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold login -method=userpass username=alice password="Pass-123!"
@@ -131,7 +131,7 @@ Default values:
 You can disable user lockout with the `auth tune` command by setting the `disable_lockout` parameter to `true`:
 
 {{< tabs name="stronghold_cmd_24697" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold auth tune -user-lockout-disable=true userpass
@@ -169,7 +169,7 @@ path "auth/userpass/users/{{identity.entity.aliases.<accessor>.name}}/password" 
 Get the `<accessor>` value with the command:
 
 {{< tabs name="stronghold_cmd_55997" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold read -field=accessor sys/auth/userpass
@@ -200,7 +200,7 @@ To allow a user to change their own password using the `userpass` method, follow
 1. Get the unique method identifier:
 
    {{< tabs name="stronghold_cmd_3381" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```shell
    ACCESSOR=$(d8 stronghold read -field=accessor sys/auth/userpass)
@@ -219,7 +219,7 @@ To allow a user to change their own password using the `userpass` method, follow
 1. Create a policy that allows a user authenticated via `userpass` to change their password:
 
    {{< tabs name="stronghold_cmd_50546" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```shell
    d8 stronghold policy write self-change-password - <<EOF
@@ -249,7 +249,7 @@ To allow a user to change their own password using the `userpass` method, follow
 {{% tab "If the user exists" %}}
 
 {{< tabs name="stronghold_cmd_54664" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold write auth/userpass/users/alice/policies \
@@ -273,7 +273,7 @@ This example will apply the `self-change-password` policy to the existing user `
 {{% tab "If the user does not exist" %}}
 
 {{< tabs name="stronghold_cmd_90751" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold write auth/userpass/users/alice \
@@ -304,7 +304,7 @@ This example will create a user named `alice`, grant them authentication via `us
 1. Enable the `userpass` method:
 
    {{< tabs name="stronghold_cmd_10" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```shell
    d8 stronghold auth enable userpass
@@ -323,7 +323,7 @@ This example will create a user named `alice`, grant them authentication via `us
 1. Get the unique method identifier:
 
    {{< tabs name="stronghold_cmd_3381" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```shell
    ACCESSOR=$(d8 stronghold read -field=accessor sys/auth/userpass)
@@ -342,7 +342,7 @@ This example will create a user named `alice`, grant them authentication via `us
 1. Create a policy that allows a user authenticated via `userpass` to change their password:
 
    {{< tabs name="stronghold_cmd_50546" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```shell
    d8 stronghold policy write self-change-password - <<EOF
@@ -372,7 +372,7 @@ This example will create a user named `alice`, grant them authentication via `us
 {{% tab "If the user exists" %}}
 
 {{< tabs name="stronghold_cmd_54664" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold write auth/userpass/users/alice/policies \
@@ -396,7 +396,7 @@ This example will apply the `self-change-password` policy to the existing user `
 {{% tab "If the user does not exist" %}}
 
 {{< tabs name="stronghold_cmd_90751" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold write auth/userpass/users/alice \
@@ -431,7 +431,7 @@ After [authentication](#user-authentication-using-the-userpass-method), a user c
 Example command for a user to change their password:
 
 {{< tabs name="stronghold_cmd_95815" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold write auth/userpass/users/alice/password password="NewPass-456!"
@@ -465,7 +465,7 @@ The default policy for the `userpass` method requires:
 To use a custom policy instead of the default password policy for the `userpass` method, run the following command (replace `policy_name` with the name of the desired policy):
 
 {{< tabs name="stronghold_cmd_86644" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold write auth/userpass/password-policy/{policy_name}

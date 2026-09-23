@@ -24,7 +24,7 @@ weight: 30
 1. Создайте секрет, записав тестовые значения по выбранному пути:
 
    {{< tabs name="stronghold_cmd_58984" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```shell
    d8 stronghold kv put secret/my-first-secret username=demo password=secret123
@@ -45,7 +45,7 @@ weight: 30
 1. Проверьте сохранённые значения:
 
    {{< tabs name="stronghold_cmd_55073" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```shell
    d8 stronghold kv get secret/my-first-secret
@@ -74,7 +74,7 @@ weight: 30
 1. Измените значение секрета, повторно записав его по тому же пути:
 
    {{< tabs name="stronghold_cmd_85471" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```shell
    d8 stronghold kv put secret/my-first-secret username=demo password=new-secret
@@ -93,7 +93,7 @@ weight: 30
 1. Убедитесь, что значение обновилось:
 
    {{< tabs name="stronghold_cmd_55073" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```shell
    d8 stronghold kv get secret/my-first-secret

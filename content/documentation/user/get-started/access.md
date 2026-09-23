@@ -31,7 +31,7 @@ To configure access to your project from the command line, follow these steps.
 1. Log in through OIDC. To do this, authenticate to Stronghold using the following command:
 
    {{< tabs name="stronghold_cmd_85012" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```shell
    d8 stronghold login -path=oidc_deckhouse -method=oidc -no-print
@@ -54,7 +54,7 @@ To configure access to your project from the command line, follow these steps.
 1. Verify access using the following command:
 
    {{< tabs name="stronghold_cmd_594" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```shell
    d8 stronghold status
@@ -73,7 +73,7 @@ To configure access to your project from the command line, follow these steps.
 To work with Deckhouse Stronghold, use commands in the following format:
 
 {{< tabs name="stronghold_cmd_86358" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold <command>

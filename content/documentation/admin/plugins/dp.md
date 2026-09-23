@@ -1,10 +1,10 @@
 ---
-title: "Plugins in DKP"
+title: "Plugins in DP"
 weight: 30
-description: "Using Stronghold plugins in Deckhouse Kubernetes Platform."
+description: "Using Stronghold plugins in Deckhouse Platform."
 ---
 
-In Deckhouse Kubernetes Platform, plugin delivery differs from a Standalone installation: the operator does not copy plugin binaries to the server manually, but declares the plugin list in `ModuleConfig`.
+In Deckhouse Platform, plugin delivery differs from a Standalone installation: the operator does not copy plugin binaries to the server manually, but declares the plugin list in `ModuleConfig`.
 
 After that, the platform:
 
@@ -71,7 +71,7 @@ If a plugin cannot be downloaded or validated:
 
 ## Air-gapped environments
 
-In air-gapped environments where Stronghold does not have outbound internet access, you can host the plugin inside the DKP cluster itself.
+In air-gapped environments where Stronghold does not have outbound internet access, you can host the plugin inside the DP cluster itself.
 
 One practical approach is:
 
@@ -102,7 +102,7 @@ This approach lets you:
 After the plugin is delivered into the container, register it through the CLI:
 
 {{< tabs name="stronghold_cmd_95303" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```bash
 PLUGIN_SHA=$(sha256sum <plugin_binary> | awk '{print $1;}')
@@ -135,7 +135,7 @@ stronghold plugin register \
 Example: register the secret plugin `mykv`:
 
 {{< tabs name="stronghold_cmd_71502" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```bash
 d8 stronghold plugin register \
@@ -166,7 +166,7 @@ stronghold plugin register \
 After registration, enable the plugin as a `secret` or `auth` engine:
 
 {{< tabs name="stronghold_cmd_99722" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```bash
 d8 stronghold <secrets|auth> enable \
@@ -196,7 +196,7 @@ Meaning:
 Example:
 
 {{< tabs name="stronghold_cmd_75805" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```bash
 d8 stronghold secrets enable -path test-kv mykv
@@ -218,7 +218,7 @@ stronghold secrets enable -path test-kv mykv
 1. Deregister the plugin:
 
 {{< tabs name="stronghold_cmd_72514" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```bash
 d8 stronghold plugin deregister secret my-custom-plugin

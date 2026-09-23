@@ -41,7 +41,7 @@ Deckhouse Stronghold включает два встроенных сценари
 Для входа в систему CLI по умолчанию используется путь `/oidc_deckhouse`. Если данный метод аутентификации был включен по другому пути, укажите в CLI путь `-path=/my-path`.
 
 {{< tabs name="stronghold_cmd_96765" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold login -method=oidc -path=oidc_deckhouse role=test
@@ -83,7 +83,7 @@ https://myco.auth0.com/authorize?redirect_uri=http%3A%2F%2Flocalhost%3A8400%2Foi
 * Если параметр роли (например, `bound_claims`) требует значения карты (map), его нельзя установить отдельно с помощью Deckhouse Stronghold CLI. В таких случаях запишите конфигурацию в виде одного JSON-объекта:
 
   {{< tabs name="stronghold_cmd_97815" >}}
-  {{% tab name="Stronghold в DKP" %}}
+  {{% tab name="Stronghold в DP" %}}
 
   ```shell
   d8 stronghold write auth/oidc/role/demo -<<EOF

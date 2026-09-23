@@ -22,7 +22,7 @@ weight: 20
 1. Включите механизм секретов PKI:
 
    {{< tabs name="stronghold_cmd_54596" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```shell
    $ d8 stronghold secrets enable pki
@@ -45,7 +45,7 @@ weight: 20
 1. Увеличьте TTL, настроив механизм секретов. Значение по умолчанию в 30 дней может быть слишком коротким, поэтому увеличьте его до 1 года:
 
    {{< tabs name="stronghold_cmd_45615" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```shell
    $ d8 stronghold secrets tune -max-lease-ttl=8760h pki
@@ -68,7 +68,7 @@ weight: 20
 1. Настройте сертификат CA и приватный ключ. Stronghold может использовать уже существующую пару ключей или сгенерировать собственный самоподписанный корневой сертификат. В общем случае, мы рекомендуем поддерживать ваш корневой CA вне Stronghold и предоставлять Stronghold подписанный промежуточный CA.
 
    {{< tabs name="stronghold_cmd_68298" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```shell
    $ d8 stronghold write pki/root/generate/internal \
@@ -107,7 +107,7 @@ weight: 20
 1. Обновите местоположение CRL и выпускающие сертификаты. Эти значения могут быть обновлены в будущем.
 
    {{< tabs name="stronghold_cmd_23698" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```shell
    $ d8 stronghold write pki/config/urls \
@@ -132,7 +132,7 @@ weight: 20
 1. Настройте роль, которая сопоставляет имя в Stronghold с процедурой генерации сертификата. Когда пользователи или машины генерируют учетные данные, они генерируются для этой роли:
 
    {{< tabs name="stronghold_cmd_44323" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```shell
    $ d8 stronghold write pki/roles/example-dot-ru \
@@ -163,7 +163,7 @@ weight: 20
 1. Сгенерируйте новые учетные данные, записав их в путь `/issue` с именем роли:
 
    {{< tabs name="stronghold_cmd_86742" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```shell
    $ d8 stronghold write pki/issue/example-dot-ru \

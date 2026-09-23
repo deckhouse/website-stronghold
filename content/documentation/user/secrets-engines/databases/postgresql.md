@@ -21,7 +21,7 @@ Roles.
 1. Enable the database secrets engine if it is not already enabled:
 
     {{< tabs name="stronghold_cmd_1716" >}}
-    {{% tab name="Stronghold in DKP" %}}
+    {{% tab name="Stronghold in DP" %}}
 
     ```shell-session
     $ d8 stronghold secrets enable database
@@ -45,7 +45,7 @@ Roles.
 1. Configure Stronghold with the proper plugin and connection information:
 
     {{< tabs name="stronghold_cmd_83564" >}}
-    {{% tab name="Stronghold in DKP" %}}
+    {{% tab name="Stronghold in DP" %}}
 
     ```shell-session
     $ d8 stronghold write database/config/my-postgresql-database \
@@ -77,7 +77,7 @@ Roles.
     create the database credential:
 
     {{< tabs name="stronghold_cmd_61534" >}}
-    {{% tab name="Stronghold in DKP" %}}
+    {{% tab name="Stronghold in DP" %}}
 
     ```shell-session
     $ d8 stronghold write database/roles/my-role \
@@ -114,7 +114,7 @@ the proper permission, it can generate credentials.
     of the role:
 
     {{< tabs name="stronghold_cmd_90694" >}}
-    {{% tab name="Stronghold in DKP" %}}
+    {{% tab name="Stronghold in DP" %}}
 
     ```shell-session
     $ d8 stronghold read database/creds/my-role

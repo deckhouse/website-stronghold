@@ -132,7 +132,7 @@ If you are unsure whether a path is correct, first verify how the field is seria
 Enabling a `file` audit device and excluding response data for `kv` mounts:
 
 {{< tabs name="stronghold_cmd_19617" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold audit enable           \
@@ -159,7 +159,7 @@ stronghold audit enable           \
 Combining filtering and exclusions:
 
 {{< tabs name="stronghold_cmd_21928" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold audit enable                \

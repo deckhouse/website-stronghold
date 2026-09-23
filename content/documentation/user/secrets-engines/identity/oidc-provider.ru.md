@@ -23,7 +23,7 @@ Stronghold в качестве OIDC-провайдера.
 1. Включите метод аутентификации Stronghold:
 
 {{< tabs name="stronghold_cmd_98347" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```text
 $ d8 stronghold auth enable userpass
@@ -47,7 +47,7 @@ Success! Enabled userpass auth method at: userpass/
 1. Создайте пользователя:
 
 {{< tabs name="stronghold_cmd_15681" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```text
 $ d8 stronghold write auth/userpass/users/end-user password="securepassword"
@@ -71,7 +71,7 @@ OIDC [relying party](https://openid.net/specs/openid-connect-core-1_0.html#Termi
 1. Создайте клиентское приложение:
 
 {{< tabs name="stronghold_cmd_3004" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```text
 $ d8 stronghold write identity/oidc/client/my-webapp \
@@ -102,7 +102,7 @@ Success! Data written to: identity/oidc/client/my-webapp
 1. Считывание учетных данных клиента:
 
 {{< tabs name="stronghold_cmd_24531" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```text
 $ d8 stronghold read identity/oidc/client/my-webapp

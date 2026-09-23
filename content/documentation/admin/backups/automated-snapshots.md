@@ -115,7 +115,7 @@ Before applying the configuration, make sure the directory from `path_prefix` ex
 Apply the configuration from `local-snapshot.json` using the following command:
 
 {{< tabs name="stronghold_cmd_6865" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold write sys/storage/raft/snapshot-auto/config/my-local-snapshots @local-snapshot.json
@@ -132,7 +132,7 @@ stronghold write sys/storage/raft/snapshot-auto/config/my-local-snapshots @local
 {{< /tabs >}}
 
 {{< alert level="info" >}}
-In the example, the path `/stronghold/data/` is a path inside the container, and by default it is mounted at `/var/lib/deckhouse/stronghold/` on the master nodes of the DKP cluster. Created snapshots can be found and downloaded from the master nodes at `/var/lib/deckhouse/stronghold/backups/`. Snapshots will remain unchanged when pods are restarted.
+In the example, the path `/stronghold/data/` is a path inside the container, and by default it is mounted at `/var/lib/deckhouse/stronghold/` on the master nodes of the DP cluster. Created snapshots can be found and downloaded from the master nodes at `/var/lib/deckhouse/stronghold/backups/`. Snapshots will remain unchanged when pods are restarted.
 {{< /alert >}}
 
 ### S3-compatible storage
@@ -162,7 +162,7 @@ Before applying the configuration, make sure the bucket already exists and the p
 Apply the configuration from `minio-snapshot.json` using the following command:
 
 {{< tabs name="stronghold_cmd_45767" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold write sys/storage/raft/snapshot-auto/config/my-remote-snapshots @minio-snapshot.json
@@ -192,7 +192,7 @@ To modify only selected fields, provide a partial JSON document:
 Apply the modified configuration from `local-snapshot-update.json` using the following command:
 
 {{< tabs name="stronghold_cmd_53206" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold write sys/storage/raft/snapshot-auto/config/my-local-snapshots @local-snapshot-update.json
@@ -219,7 +219,7 @@ After any successful update, the next snapshot is scheduled immediately.
 Example command:
 
 {{< tabs name="stronghold_cmd_33978" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold list sys/storage/raft/snapshot-auto/config
@@ -244,7 +244,7 @@ stronghold list sys/storage/raft/snapshot-auto/config
 Example command:
 
 {{< tabs name="stronghold_cmd_67199" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold read sys/storage/raft/snapshot-auto/config/my-remote-snapshots
@@ -271,7 +271,7 @@ For `aws-s3`, the response does not expose `aws_access_key_id` or `aws_secret_ac
 Example command:
 
 {{< tabs name="stronghold_cmd_50803" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold delete sys/storage/raft/snapshot-auto/config/my-remote-snapshots
@@ -300,7 +300,7 @@ Deleting an automated snapshot configuration does not remove existing snapshot f
 Example command:
 
 {{< tabs name="stronghold_cmd_25509" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold read sys/storage/raft/snapshot-auto/status/my-remote-snapshots

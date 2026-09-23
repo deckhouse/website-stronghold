@@ -130,7 +130,7 @@ Stronghold поддерживает шифрование root-ключа с ис
 1. Запустите Stronghold, указав конфигурацию SoftHSM2:
 
    {{< tabs name="stronghold_cmd_65285" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```shell
    export SOFTHSM2_CONF=/home/stronghold/softhsm2.conf
@@ -205,7 +205,7 @@ Stronghold поддерживает шифрование root-ключа с ис
 1. Запустите Stronghold и выполните `init`:
 
    {{< tabs name="stronghold_cmd_16679" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```shell
    systemctl start stronghold
@@ -226,7 +226,7 @@ Stronghold поддерживает шифрование root-ключа с ис
 1. Проверьте статус Stronghold:
 
    {{< tabs name="stronghold_cmd_594" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```shell
    d8 stronghold status
@@ -282,7 +282,7 @@ Stronghold поддерживает шифрование root-ключа с ис
 1. Выполните миграцию, введя unseal-ключи:
 
    {{< tabs name="stronghold_cmd_66874" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```shell
    d8 stronghold operator unseal -migrate
@@ -319,7 +319,7 @@ Stronghold поддерживает шифрование root-ключа с ис
 1. Выполните миграцию, введя recovery-ключи:
 
    {{< tabs name="stronghold_cmd_66874" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```shell
    d8 stronghold operator unseal -migrate

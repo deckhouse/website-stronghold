@@ -190,7 +190,7 @@ management tool.
 1. Enable the Kubernetes Secrets Engine:
 
    {{< tabs name="stronghold_cmd_99999" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```shell-session
    $ d8 stronghold secrets enable kubernetes
@@ -214,7 +214,7 @@ management tool.
 1. Configure the mount point. An empty config is allowed.
 
    {{< tabs name="stronghold_cmd_26263" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```shell-session
    d8 stronghold write -f kubernetes/config
@@ -234,7 +234,7 @@ management tool.
    Kubernetes role) that can generate service account tokens for the given service account:
 
    {{< tabs name="stronghold_cmd_75004" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```shell-session
    $ d8 stronghold write kubernetes/roles/my-role \
@@ -262,7 +262,7 @@ After a user has authenticated to Stronghold and has sufficient permissions, a w
 `creds` endpoint for the Stronghold role will generate and return a new service account token.
 
 {{< tabs name="stronghold_cmd_24195" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell-session
 $ d8 stronghold write kubernetes/creds/my-role \
@@ -339,7 +339,7 @@ You can set a default (`token_default_ttl`) and a maximum TTL (`token_max_ttl`) 
 creating or tuning the Stronghold role.
 
 {{< tabs name="stronghold_cmd_51431" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell-session
 $ d8 stronghold write kubernetes/roles/my-role \
@@ -368,7 +368,7 @@ The TTL of the token will be given the default if not specified (and cannot exce
 maximum TTL of the role, if present).
 
 {{< tabs name="stronghold_cmd_43148" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell-session
 $ d8 stronghold write kubernetes/creds/my-role \
@@ -423,7 +423,7 @@ You can set default audiences (`token_default_audiences`) when creating or tunin
 The Kubernetes cluster default audiences for service account tokens will be used if not specified.
 
 {{< tabs name="stronghold_cmd_83269" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell-session
 $ d8 stronghold write kubernetes/roles/my-role \
@@ -449,7 +449,7 @@ You can also set audiences (`audiences`) when you generate the token from the cr
 The audiences of the token will be given the default audiences if not specified.
 
 {{< tabs name="stronghold_cmd_29349" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell-session
 $ d8 stronghold write kubernetes/creds/my-role \
@@ -505,7 +505,7 @@ the service account and role binding automatically, you can set the `kubernetes_
 parameter.
 
 {{< tabs name="stronghold_cmd_37869" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell-session
 $ d8 stronghold write kubernetes/roles/auto-managed-sa-role \
@@ -537,7 +537,7 @@ You can read more in the
 You can then get credentials with the automatically generated service account.
 
 {{< tabs name="stronghold_cmd_72154" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell-session
 $ d8 stronghold write kubernetes/creds/auto-managed-sa-role \
@@ -576,7 +576,7 @@ role binding by specifying the `generated_role_rules` parameter, which accepts a
 rules for the generated role.
 
 {{< tabs name="stronghold_cmd_25284" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell-session
 $ d8 stronghold write kubernetes/roles/auto-managed-sa-and-role \
@@ -599,7 +599,7 @@ $ stronghold write kubernetes/roles/auto-managed-sa-and-role \
 You can then get credentials in the same way as before.
 
 {{< tabs name="stronghold_cmd_68" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell-session
 $ d8 stronghold write kubernetes/creds/auto-managed-sa-and-role \

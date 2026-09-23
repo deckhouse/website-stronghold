@@ -31,7 +31,7 @@ team, or configuration management tooling.
     must be mounted before use.
 
     {{< tabs name="stronghold_cmd_31407" >}}
-    {{% tab name="Stronghold in DKP" %}}
+    {{% tab name="Stronghold in DP" %}}
 
     ```text
     $ d8 stronghold secrets enable -path=ssh-client-signer ssh
@@ -59,7 +59,7 @@ team, or configuration management tooling.
     you.
 
     {{< tabs name="stronghold_cmd_53619" >}}
-    {{% tab name="Stronghold in DKP" %}}
+    {{% tab name="Stronghold in DP" %}}
 
     ```text
     $ d8 stronghold write ssh-client-signer/config/ca generate_signing_key=true
@@ -85,7 +85,7 @@ team, or configuration management tooling.
     part of the payload:
 
     {{< tabs name="stronghold_cmd_82508" >}}
-    {{% tab name="Stronghold in DKP" %}}
+    {{% tab name="Stronghold in DP" %}}
 
     ```text
     $ d8 stronghold write ssh-client-signer/config/ca \
@@ -125,7 +125,7 @@ team, or configuration management tooling.
     ```
 
     {{< tabs name="stronghold_cmd_13360" >}}
-    {{% tab name="Stronghold in DKP" %}}
+    {{% tab name="Stronghold in DP" %}}
 
     ```text
     d8 stronghold read -field=public_key ssh-client-signer/config/ca > /etc/ssh/trusted-user-ca-keys.pem
@@ -160,7 +160,7 @@ team, or configuration management tooling.
     when requesting the certificate.
 
     {{< tabs name="stronghold_cmd_37289" >}}
-    {{% tab name="Stronghold in DKP" %}}
+    {{% tab name="Stronghold in DP" %}}
 
     ```text
     $ d8 stronghold write ssh-client-signer/roles/my-role -<<"EOH"
@@ -219,7 +219,7 @@ the client's local workstation.
     the contents begin with `ssh-rsa ...`.
 
     {{< tabs name="stronghold_cmd_33285" >}}
-    {{% tab name="Stronghold in DKP" %}}
+    {{% tab name="Stronghold in DP" %}}
 
     ```text
     $ d8 stronghold write ssh-client-signer/sign/my-role \
@@ -253,7 +253,7 @@ the client's local workstation.
     To customize the signing options, use a JSON payload:
 
     {{< tabs name="stronghold_cmd_45915" >}}
-    {{% tab name="Stronghold in DKP" %}}
+    {{% tab name="Stronghold in DP" %}}
 
     ```text
     $ d8 stronghold write ssh-client-signer/sign/my-role -<<"EOH"
@@ -292,7 +292,7 @@ the client's local workstation.
 1. Save the resulting signed, public key to disk. Limit permissions as needed.
 
     {{< tabs name="stronghold_cmd_92060" >}}
-    {{% tab name="Stronghold in DKP" %}}
+    {{% tab name="Stronghold in DP" %}}
 
     ```text
     $ d8 stronghold write -field=signed_key ssh-client-signer/sign/my-role \
@@ -343,7 +343,7 @@ accidentally SSHing into an unmanaged or malicious machine.
     client signer.
 
     {{< tabs name="stronghold_cmd_15148" >}}
-    {{% tab name="Stronghold in DKP" %}}
+    {{% tab name="Stronghold in DP" %}}
 
     ```text
     $ d8 stronghold secrets enable -path=ssh-host-signer ssh
@@ -366,7 +366,7 @@ accidentally SSHing into an unmanaged or malicious machine.
     you.
 
     {{< tabs name="stronghold_cmd_64533" >}}
-    {{% tab name="Stronghold in DKP" %}}
+    {{% tab name="Stronghold in DP" %}}
 
     ```text
     $ d8 stronghold write ssh-host-signer/config/ca generate_signing_key=true
@@ -392,7 +392,7 @@ accidentally SSHing into an unmanaged or malicious machine.
     part of the payload:
 
     {{< tabs name="stronghold_cmd_69325" >}}
-    {{% tab name="Stronghold in DKP" %}}
+    {{% tab name="Stronghold in DP" %}}
 
     ```text
     $ d8 stronghold write ssh-host-signer/config/ca \
@@ -418,7 +418,7 @@ accidentally SSHing into an unmanaged or malicious machine.
 1. Extend host key certificate TTLs.
 
     {{< tabs name="stronghold_cmd_8104" >}}
-    {{% tab name="Stronghold in DKP" %}}
+    {{% tab name="Stronghold in DP" %}}
 
     ```text
     d8 stronghold secrets tune -max-lease-ttl=87600h ssh-host-signer
@@ -438,7 +438,7 @@ accidentally SSHing into an unmanaged or malicious machine.
     domains, set `allow_bare_domains`, or both.
 
     {{< tabs name="stronghold_cmd_72216" >}}
-    {{% tab name="Stronghold in DKP" %}}
+    {{% tab name="Stronghold in DP" %}}
 
     ```text
     $ d8 stronghold write ssh-host-signer/roles/hostrole \
@@ -469,7 +469,7 @@ accidentally SSHing into an unmanaged or malicious machine.
 1. Sign the host's SSH public key.
 
     {{< tabs name="stronghold_cmd_49407" >}}
-    {{% tab name="Stronghold in DKP" %}}
+    {{% tab name="Stronghold in DP" %}}
 
     ```text
     $ d8 stronghold write ssh-host-signer/sign/hostrole \
@@ -501,7 +501,7 @@ accidentally SSHing into an unmanaged or malicious machine.
     configuration on the host machine.
 
     {{< tabs name="stronghold_cmd_87520" >}}
-    {{% tab name="Stronghold in DKP" %}}
+    {{% tab name="Stronghold in DP" %}}
 
     ```text
     $ d8 stronghold write -field=signed_key ssh-host-signer/sign/hostrole \
@@ -553,7 +553,7 @@ accidentally SSHing into an unmanaged or malicious machine.
     ```
 
     {{< tabs name="stronghold_cmd_4386" >}}
-    {{% tab name="Stronghold in DKP" %}}
+    {{% tab name="Stronghold in DP" %}}
 
     ```text
     d8 stronghold read -field=public_key ssh-host-signer/config/ca
@@ -622,7 +622,7 @@ issue:
     target machine:
 
     {{< tabs name="stronghold_cmd_61107" >}}
-    {{% tab name="Stronghold in DKP" %}}
+    {{% tab name="Stronghold in DP" %}}
 
     ```text
     $ d8 stronghold write ssh/roles/my-role -<<"EOH"
@@ -653,7 +653,7 @@ issue:
     signing to include the current username:
 
     {{< tabs name="stronghold_cmd_8993" >}}
-    {{% tab name="Stronghold in DKP" %}}
+    {{% tab name="Stronghold in DP" %}}
 
     ```text
     $ d8 stronghold write ssh-client-signer/sign/my-role -<<"EOH"
@@ -688,7 +688,7 @@ this extension to the signed certificate.
 - As part of the role creation
 
   {{< tabs name="stronghold_cmd_4124" >}}
-  {{% tab name="Stronghold in DKP" %}}
+  {{% tab name="Stronghold in DP" %}}
 
   ```text
   $ d8 stronghold write ssh-client-signer/roles/my-role -<<"EOH"
@@ -721,7 +721,7 @@ this extension to the signed certificate.
 - As part of the signing operation itself:
 
   {{< tabs name="stronghold_cmd_70267" >}}
-  {{% tab name="Stronghold in DKP" %}}
+  {{% tab name="Stronghold in DP" %}}
 
   ```text
   $ d8 stronghold write ssh-client-signer/sign/my-role -<<"EOH"
@@ -811,7 +811,7 @@ Adapted key values containing comments must be provided with the key related
 parameters as per the Stronghold CLI and API steps demonstrated below.
 
 {{< tabs name="stronghold_cmd_3535" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell-extension
 # Using CLI:

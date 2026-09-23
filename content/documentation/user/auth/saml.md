@@ -28,7 +28,7 @@ Stronghold supports two client modes:
 ## Enable the method
 
 {{< tabs name="stronghold_cmd_62772" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold auth enable saml
@@ -47,7 +47,7 @@ stronghold auth enable saml
 By default the method is mounted at `auth/saml`. You can mount it at a custom path if needed:
 
 {{< tabs name="stronghold_cmd_98944" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold auth enable -path=corp-saml saml
@@ -80,7 +80,7 @@ Main configuration parameters:
 ### Configure via IdP metadata
 
 {{< tabs name="stronghold_cmd_61004" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold write auth/saml/config \
@@ -113,7 +113,7 @@ stronghold write auth/saml/config \
 Use manual configuration when metadata is unavailable:
 
 {{< tabs name="stronghold_cmd_66352" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold write auth/saml/config \
@@ -158,7 +158,7 @@ When configuring `acs_urls`, make sure that each value:
 If Stronghold is exposed through multiple public addresses, you can configure several ACS URLs:
 
 {{< tabs name="stronghold_cmd_99652" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold write auth/saml/config \
@@ -199,7 +199,7 @@ Main role parameters:
 Example role:
 
 {{< tabs name="stronghold_cmd_51229" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold write auth/saml/role/employees \
@@ -239,7 +239,7 @@ After the user is authenticated by the Identity Provider, Stronghold checks the 
 This lets you allow access only to selected users or groups from the Identity Provider. For example:
 
 {{< tabs name="stronghold_cmd_8682" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold write auth/saml/role/support \
@@ -280,7 +280,7 @@ Example flow:
 Example commands:
 
 {{< tabs name="stronghold_cmd_9795" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold write identity/group \
@@ -303,7 +303,7 @@ stronghold write identity/group \
 {{< /tabs >}}
 
 {{< tabs name="stronghold_cmd_95645" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold auth list -format=json
@@ -320,7 +320,7 @@ stronghold auth list -format=json
 {{< /tabs >}}
 
 {{< tabs name="stronghold_cmd_7643" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold write identity/group-alias \

@@ -67,7 +67,7 @@ description: "Руководство администратора по репл�
 Ниже приведён пример создания политики и токена для репликации из `mount` `dev-secrets`, расположенного в пространстве имён `ns_path_1`:
 
 {{< tabs name="stronghold_cmd_42837" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold policy write -namespace=ns_path_1 replicate-dev-secrets - <<'EOF'
@@ -136,7 +136,7 @@ stronghold token create -namespace=ns_path_1 -policy=replicate-dev-secrets -orph
 Пример создания wrapping token на исходном кластере:
 
 {{< tabs name="stronghold_cmd_90364" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold token create \
@@ -171,7 +171,7 @@ stronghold token create \
 ### Без TLS
 
 {{< tabs name="stronghold_cmd_6304" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold secrets enable \
@@ -208,7 +208,7 @@ stronghold secrets enable \
 ### С TLS
 
 {{< tabs name="stronghold_cmd_40961" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold secrets enable \
@@ -276,7 +276,7 @@ stronghold secrets enable \
 Пример изменения настроек:
 
 {{< tabs name="stronghold_cmd_91012" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold secrets tune \
@@ -309,7 +309,7 @@ stronghold secrets tune \
 Для отключения репликации:
 
 {{< tabs name="stronghold_cmd_83685" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold secrets tune \
@@ -334,7 +334,7 @@ stronghold secrets tune \
 Для повторного включения:
 
 {{< tabs name="stronghold_cmd_53688" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold secrets tune \
@@ -359,7 +359,7 @@ stronghold secrets tune \
 Для чтения текущих настроек:
 
 {{< tabs name="stronghold_cmd_50008" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold read \

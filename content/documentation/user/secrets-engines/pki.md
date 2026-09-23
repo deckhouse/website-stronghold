@@ -12,7 +12,7 @@ The first step to using the PKI backend is to mount it. Unlike the `kv`
 backend, the `pki` backend is not mounted by default.
 
 {{< tabs name="stronghold_cmd_10344" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell-session
 $ d8 stronghold secrets enable pki
@@ -45,7 +45,7 @@ long maximum life time for the certificate; since it honors the maximum mount
 TTL, first we adjust that:
 
 {{< tabs name="stronghold_cmd_62118" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell-session
 $ d8 stronghold secrets tune -max-lease-ttl=87600h pki
@@ -69,7 +69,7 @@ that roles can further restrict the maximum TTL.)
 Now, we generate our root certificate:
 
 {{< tabs name="stronghold_cmd_72325" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell-session
 $ d8 stronghold write pki/root/generate/internal common_name=myopenbao.com ttl=87600h
@@ -182,7 +182,7 @@ Generated certificates can have the CRL location and the location of the
 issuing certificate encoded. These values must be set manually and typically to FQDN associated to the Stronghold server, but can be changed at any time.
 
 {{< tabs name="stronghold_cmd_70994" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell-session
 $ d8 stronghold write pki/config/urls issuing_certificates="http://openbao.example.com:8200/v1/pki/ca" crl_distribution_points="http://openbao.example.com:8200/v1/pki/crl"
@@ -207,7 +207,7 @@ policy used to generate those credentials. For example, let's create an
 "example-dot-com" role:
 
 {{< tabs name="stronghold_cmd_48235" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell-session
 $ d8 stronghold write pki/roles/example-dot-com \
@@ -237,7 +237,7 @@ to the `issue` endpoint with that role name: Stronghold is now configured to cre
 and manage certificates!
 
 {{< tabs name="stronghold_cmd_91902" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell-session
 $ d8 stronghold write pki/issue/example-dot-com \

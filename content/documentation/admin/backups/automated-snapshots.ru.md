@@ -116,7 +116,7 @@ snapshot_auto_upload_pool_shutdown = "90s"
 Примените конфигурацию из файла `local-snapshot.json` следующей командой:
 
 {{< tabs name="stronghold_cmd_6865" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold write sys/storage/raft/snapshot-auto/config/my-local-snapshots @local-snapshot.json
@@ -133,7 +133,7 @@ stronghold write sys/storage/raft/snapshot-auto/config/my-local-snapshots @local
 {{< /tabs >}}
 
 {{< alert level="info" >}}
-В примере путь `/stronghold/data/` — это путь внутри контейнера, и по умолчанию он смонтирован по пути `/var/lib/deckhouse/stronghold/` на master-узлах кластера DKP. Созданные снимки можно найти и скачать с master-узлов по пути `/var/lib/deckhouse/stronghold/backups/`. При перезагрузке подов снимки останутся неизменными.
+В примере путь `/stronghold/data/` — это путь внутри контейнера, и по умолчанию он смонтирован по пути `/var/lib/deckhouse/stronghold/` на master-узлах кластера DP. Созданные снимки можно найти и скачать с master-узлов по пути `/var/lib/deckhouse/stronghold/backups/`. При перезагрузке подов снимки останутся неизменными.
 {{< /alert >}}
 
 ### S3-совместимое хранилище
@@ -163,7 +163,7 @@ stronghold write sys/storage/raft/snapshot-auto/config/my-local-snapshots @local
 Примените конфигурацию из файла `minio-snapshot.json` следующей командой:
 
 {{< tabs name="stronghold_cmd_45767" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold write sys/storage/raft/snapshot-auto/config/my-remote-snapshots @minio-snapshot.json
@@ -195,7 +195,7 @@ stronghold write sys/storage/raft/snapshot-auto/config/my-remote-snapshots @mini
 Примените обновлённую конфигурацию из файла `local-snapshot-update.json` следующей командой:
 
 {{< tabs name="stronghold_cmd_53206" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold write sys/storage/raft/snapshot-auto/config/my-local-snapshots @local-snapshot-update.json
@@ -220,7 +220,7 @@ stronghold write sys/storage/raft/snapshot-auto/config/my-local-snapshots @local
 Пример команды:
 
 {{< tabs name="stronghold_cmd_33978" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold list sys/storage/raft/snapshot-auto/config
@@ -245,7 +245,7 @@ stronghold list sys/storage/raft/snapshot-auto/config
 Пример команды:
 
 {{< tabs name="stronghold_cmd_67199" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold read sys/storage/raft/snapshot-auto/config/my-remote-snapshots
@@ -272,7 +272,7 @@ stronghold read sys/storage/raft/snapshot-auto/config/my-remote-snapshots
 Пример команды:
 
 {{< tabs name="stronghold_cmd_50803" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold delete sys/storage/raft/snapshot-auto/config/my-remote-snapshots
@@ -301,7 +301,7 @@ stronghold delete sys/storage/raft/snapshot-auto/config/my-remote-snapshots
 Пример команды:
 
 {{< tabs name="stronghold_cmd_25509" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold read sys/storage/raft/snapshot-auto/status/my-remote-snapshots

@@ -21,7 +21,7 @@ weight: 30
 ### Аутентификация JWT через CLI
 
 {{< tabs name="stronghold_cmd_85210" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold write auth/<path-to-jwt-backend>/login role=demo jwt=...
@@ -40,7 +40,7 @@ stronghold write auth/<path-to-jwt-backend>/login role=demo jwt=...
 Путь по умолчанию для бэкенда аутентификации JWT - `/jwt`, поэтому если вы используете бэкенд по умолчанию, то команда будет выглядеть так:
 
 {{< tabs name="stronghold_cmd_95783" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold write auth/jwt/login role=demo jwt=...
@@ -93,7 +93,7 @@ curl \
 Включите метод аутентификации JWT. Можно выбрать имя `jwt` или `oidc`. Бэкенд будет монтироваться по выбранному имени.
 
 {{< tabs name="stronghold_cmd_18367" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold auth enable jwt
@@ -116,7 +116,7 @@ stronghold auth enable oidc
 Для настройки Deckhouse Stronghold используйте конечную точку `/config.` Для поддержки ролей JWT необходимо наличие локальных ключей, URL JWKS или URL OIDC Discovery. Для ролей OIDC необходимо наличие OIDC Discovery URL, OIDC Client ID и OIDC Client Secret.
 
 {{< tabs name="stronghold_cmd_43065" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold write auth/jwt/config \
@@ -143,7 +143,7 @@ stronghold write auth/jwt/config \
 Если необходимо выполнить проверку JWT с помощью валидации JWT-токена, оставьте `oidc_client_id` и `oidc_client_secret` пустыми.
 
 {{< tabs name="stronghold_cmd_76133" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold write auth/jwt/config \
@@ -168,7 +168,7 @@ stronghold write auth/jwt/config \
 Создайте именованную роль:
 
 {{< tabs name="stronghold_cmd_81282" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold write auth/jwt/role/demo \

@@ -132,7 +132,7 @@ Stronghold поддерживает включение аудит-устройс
 Включение аудит-устройства `file` с исключением данных ответа для `kv`-монтирований:
 
 {{< tabs name="stronghold_cmd_19617" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold audit enable           \
@@ -159,7 +159,7 @@ stronghold audit enable           \
 Комбинация фильтрации и исключений:
 
 {{< tabs name="stronghold_cmd_21928" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold audit enable                \

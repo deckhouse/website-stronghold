@@ -32,7 +32,7 @@ The default path is `/jwt`. If this auth method was enabled at a
 different path, specify `-path=/my-path` in the CLI.
 
 {{< tabs name="stronghold_cmd_95783" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell-session
 d8 stronghold write auth/jwt/login role=demo jwt=...
@@ -87,7 +87,7 @@ management tool.
    backend will be mounted at the chosen name.
 
    {{< tabs name="stronghold_cmd_16925" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```text
    $ d8 stronghold auth enable jwt
@@ -111,7 +111,7 @@ management tool.
    Discovery URL must be present. For OIDC roles, OIDC Discovery URL, OIDC Client ID and OIDC Client Secret are required.
 
    {{< tabs name="stronghold_cmd_75501" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```text
    $ d8 stronghold write auth/jwt/config \
@@ -138,7 +138,7 @@ management tool.
    If you need to perform JWT verification with JWT token validation, then leave the `oidc_client_id` and `oidc_client_secret` blank.
 
    {{< tabs name="stronghold_cmd_24178" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```text
    $ d8 stronghold write auth/jwt/config \
@@ -163,7 +163,7 @@ management tool.
 1. Create a named role:
 
    {{< tabs name="stronghold_cmd_74265" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```text
    d8 stronghold write auth/jwt/role/demo \

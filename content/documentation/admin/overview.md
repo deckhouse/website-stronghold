@@ -41,6 +41,6 @@ The administrator guide includes the following sections:
   - ["Overview"](./cryptography/overview/): Overview of TLS, storage encryption, HSM, and the algorithms available in PKI and Transit.
 
 - Extensions and integrations
-  - ["Overview"](./plugins/overview/): Overview of built-in and external Stronghold plugins and the differences between Standalone and DKP.
+  - ["Overview"](./plugins/overview/): Overview of built-in and external Stronghold plugins and the differences between Standalone and DP.
   - ["Plugins in Standalone"](./plugins/standalone/): Plugin directory, registration, versioning, and mounting of external plugins on Linux servers.
-  - ["Plugins in DKP"](./plugins/dkp/): Plugin delivery through `ModuleConfig`, registration, and enablement in Deckhouse Kubernetes Platform.
+  - ["Plugins in DP"](./plugins/dp/): Plugin delivery through ModuleConfig, registration, and enablement in Deckhouse Platform.

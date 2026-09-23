@@ -34,7 +34,7 @@ DR-secondary не обслуживает клиентов (кроме распе
 ## Шаг 1. Включите DR primary
 
 {{< tabs name="stronghold_cmd_7602" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold write -force sys/replication/dr/primary/enable
@@ -53,7 +53,7 @@ stronghold write -force sys/replication/dr/primary/enable
 ## Шаг 2. Создайте activation-токен для DR secondary
 
 {{< tabs name="stronghold_cmd_3365" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold write sys/replication/dr/primary/secondary-token id=dr-1 ttl=24h
@@ -99,7 +99,7 @@ curl \
 ## Шаг 4. Проверьте статус
 
 {{< tabs name="stronghold_cmd_63656" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold read -address="${SECONDARY_ADDR}" sys/replication/dr/status

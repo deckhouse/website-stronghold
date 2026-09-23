@@ -17,7 +17,7 @@ description: "Локальная проверка и анализ снимка �
 Для проверки снимка выполните следующую команду, указав вместо `<SNAPSHOT_FILE>` путь к файлу снимка:
 
 {{< tabs name="stronghold_cmd_30895" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold operator raft snapshot inspect <SNAPSHOT_FILE>
@@ -36,7 +36,7 @@ stronghold operator raft snapshot inspect <SNAPSHOT_FILE>
 Пример:
 
 {{< tabs name="stronghold_cmd_60240" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold operator raft snapshot inspect raft.snap
@@ -97,7 +97,7 @@ core/cluster                                      2          236 B
 Сразу после создания снимка можно проверить, что файл читается и содержит ожидаемые данные:
 
 {{< tabs name="stronghold_cmd_11011" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold operator raft snapshot save /backup/raft.snap
@@ -120,7 +120,7 @@ stronghold operator raft snapshot inspect /backup/raft.snap
 Для расширенной проверки используйте флаг `-validate`:
 
 {{< tabs name="stronghold_cmd_82428" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold operator raft snapshot inspect -validate raft.snap
@@ -149,7 +149,7 @@ stronghold operator raft snapshot inspect -validate raft.snap
 Чтобы посмотреть определённую часть данных, используйте флаги `-filter` и `-depth`:
 
 {{< tabs name="stronghold_cmd_98176" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold operator raft snapshot inspect -depth 3 -filter=core raft.snap
@@ -172,7 +172,7 @@ stronghold operator raft snapshot inspect -depth 3 -filter=core raft.snap
 Для интеграции со скриптами и сценариями мониторинга можно использовать JSON:
 
 {{< tabs name="stronghold_cmd_96016" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold operator raft snapshot inspect -format=json raft.snap

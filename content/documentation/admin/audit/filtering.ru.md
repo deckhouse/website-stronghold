@@ -84,7 +84,7 @@ Stronghold публикует telemetry-метрики, связанные с и
 1. Включите аудит-устройство `file` с фильтром по `mount_type`:
 
    {{< tabs name="stronghold_cmd_8360" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```shell
    d8 stronghold audit enable             \
@@ -111,7 +111,7 @@ Stronghold публикует telemetry-метрики, связанные с и
 2. Включите резервное устройство:
 
    {{< tabs name="stronghold_cmd_38609" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```shell
    d8 stronghold audit enable             \
@@ -140,7 +140,7 @@ Stronghold публикует telemetry-метрики, связанные с и
 3. Убедитесь, что устройства включены:
 
    {{< tabs name="stronghold_cmd_16152" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```shell
    d8 stronghold audit list --detailed
@@ -159,7 +159,7 @@ Stronghold публикует telemetry-метрики, связанные с и
 4. Включите KV secrets engine:
 
    {{< tabs name="stronghold_cmd_97241" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```shell
    d8 stronghold secrets enable -path my-kv kv-v2
@@ -178,7 +178,7 @@ Stronghold публикует telemetry-метрики, связанные с и
 5. Запишите секрет:
 
    {{< tabs name="stronghold_cmd_62847" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```shell
    d8 stronghold kv put -mount=my-kv my_secret the_value=always_angry

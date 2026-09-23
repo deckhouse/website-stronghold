@@ -33,7 +33,7 @@ engine allows for writing keys with arbitrary values.
 1. Write arbitrary data:
 
    {{< tabs name="stronghold_cmd_15959" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```text
    $ d8 stronghold write cubbyhole/my-secret my-value=s3cr3t
@@ -54,7 +54,7 @@ engine allows for writing keys with arbitrary values.
 2. Read arbitrary data:
 
    {{< tabs name="stronghold_cmd_31040" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```text
    $ d8 stronghold read cubbyhole/my-secret

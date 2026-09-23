@@ -24,12 +24,12 @@ See ["Changes in JWT token behavior in Kubernetes 1.21+"](#changes-in-jwt-token-
 
 ### Via the CLI
 
-The auth method name depends on how it was created. When Stronghold is deployed as part of Deckhouse Kubernetes Platform (DKP), the `kubernetes_local` auth method is created automatically and configured for the Kubernetes cluster where Stronghold is running. If the Kubernetes auth method is created manually, the default name is `kubernetes` unless a different path is specified.
+The auth method name depends on how it was created. When Stronghold is deployed as part of Deckhouse Platform (DP), the `kubernetes_local` auth method is created automatically and configured for the Kubernetes cluster where Stronghold is running. If the Kubernetes auth method is created manually, the default name is `kubernetes` unless a different path is specified.
 
 If the auth method was created under a different name, specify it using the `-path` parameter in the CLI. For example:
 
 {{< tabs name="stronghold_cmd_58862" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell-session
 d8 stronghold write -path=your-path auth/kubernetes/login role=demo jwt=...
@@ -47,7 +47,7 @@ stronghold write -path=your-path auth/kubernetes/login role=demo jwt=...
 
 ### Via the API
 
-Use the endpoint that matches the auth method name. When Stronghold is deployed as part of DKP, the automatically created auth method uses the `auth/kubernetes_local/login` endpoint. If the auth method was created under a different name, use the corresponding endpoint. The example below uses an auth method named `kubernetes`.
+Use the endpoint that matches the auth method name. When Stronghold is deployed as part of DP, the automatically created auth method uses the `auth/kubernetes_local/login` endpoint. If the auth method was created under a different name, use the corresponding endpoint. The example below uses an auth method named `kubernetes`.
 
 ```shell-session
 curl \
@@ -86,7 +86,7 @@ To configure authentication for another Kubernetes cluster, enable an additional
 1. Enable the Kubernetes auth method:
 
    {{< tabs name="stronghold_cmd_52748" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```bash
    d8 stronghold auth enable kubernetes
@@ -106,7 +106,7 @@ To configure authentication for another Kubernetes cluster, enable an additional
   `d8 k cluster-info` to validate the Kubernetes host address and TCP port.
 
    {{< tabs name="stronghold_cmd_45453" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```bash
    d8 stronghold write auth/kubernetes/config \
@@ -135,7 +135,7 @@ To configure authentication for another Kubernetes cluster, enable an additional
 1. Create a named role:
 
    {{< tabs name="stronghold_cmd_92711" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```text
    d8 stronghold write auth/kubernetes/role/demo \
@@ -208,7 +208,7 @@ Stronghold will attempt to load them from `token` and `ca.crt` respectively insi
 the default mount folder `/var/run/secrets/kubernetes.io/serviceaccount/`.
 
 {{< tabs name="stronghold_cmd_2136" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```bash
 d8 stronghold write auth/kubernetes/config \

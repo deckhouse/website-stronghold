@@ -241,7 +241,7 @@ rule "charset" {
 Пример создания политики из файла в формате HCL:
 
 {{< tabs name="stronghold_cmd_10695" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold write sys/policies/password/my-policy policy=@my-policy.hcl
@@ -260,7 +260,7 @@ stronghold write sys/policies/password/my-policy policy=@my-policy.hcl
 Пример передачи политики напрямую при создании:
 
 {{< tabs name="stronghold_cmd_89650" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold write sys/policies/password/my-policy policy=- <<EOF
@@ -289,7 +289,7 @@ EOF
 Чтобы убедиться, что политика создана, используйте команду:
 
 {{< tabs name="stronghold_cmd_15846" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```bash
 d8 stronghold read sys/policies/password/my-policy
@@ -322,7 +322,7 @@ curl \
 Пример:
 
 {{< tabs name="stronghold_cmd_12295" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```bash
 d8 stronghold read sys/policies/password
@@ -354,7 +354,7 @@ curl \
 Пример:
 
 {{< tabs name="stronghold_cmd_15846" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```bash
 d8 stronghold read sys/policies/password/my-policy
@@ -385,7 +385,7 @@ curl \
 Пример:
 
 {{< tabs name="stronghold_cmd_11334" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```bash
 d8 stronghold delete sys/policies/password/my-policy
@@ -418,7 +418,7 @@ curl \
 Пример:
 
 {{< tabs name="stronghold_cmd_16213" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold read sys/policies/password/my-policy/generate

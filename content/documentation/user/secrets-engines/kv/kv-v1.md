@@ -30,7 +30,7 @@ secret's path.
 To enable a version 1 kv store:
 
 {{< tabs name="stronghold_cmd_35718" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell-session
 d8 stronghold secrets enable -version=1 kv
@@ -55,7 +55,7 @@ allows for writing keys with arbitrary values.
 1. Write arbitrary data:
 
    {{< tabs name="stronghold_cmd_81605" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```shell-session
    $ d8 stronghold kv put kv/my-secret my-value=s3cr3t
@@ -76,7 +76,7 @@ allows for writing keys with arbitrary values.
 1. Read arbitrary data:
 
    {{< tabs name="stronghold_cmd_34392" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```shell-session
    $ d8 stronghold kv get kv/my-secret
@@ -101,7 +101,7 @@ allows for writing keys with arbitrary values.
 1. List the keys:
 
    {{< tabs name="stronghold_cmd_87945" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```shell-session
    $ d8 stronghold kv list kv/
@@ -126,7 +126,7 @@ allows for writing keys with arbitrary values.
 1. Delete a key:
 
    {{< tabs name="stronghold_cmd_3924" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```shell-session
    $ d8 stronghold kv delete kv/my-secret
@@ -149,7 +149,7 @@ You can also use Stronghold's password policy feature to generate arbitrary valu
 1. Write a password policy:
 
    {{< tabs name="stronghold_cmd_15069" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```shell-session
    $ d8 stronghold write sys/policies/password/example policy=-<<EOF
@@ -196,7 +196,7 @@ You can also use Stronghold's password policy feature to generate arbitrary valu
 1. Write data using the `example` policy:
 
    {{< tabs name="stronghold_cmd_95485" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```shell-session
    $ d8 stronghold kv put kv/my-generated-secret \
@@ -217,7 +217,7 @@ You can also use Stronghold's password policy feature to generate arbitrary valu
 1. Read the generated data:
 
    {{< tabs name="stronghold_cmd_86790" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```shell-session
    $ d8 stronghold kv get kv/my-generated-secret
@@ -251,7 +251,7 @@ If provided a key of `ttl`, the KV secrets engine will utilize this value
 as the lease duration:
 
 {{< tabs name="stronghold_cmd_62205" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell-session
 $ d8 stronghold kv put kv/my-secret ttl=30m my-value=s3cr3t
@@ -276,7 +276,7 @@ When reading a value with a `ttl`, both the `ttl` key _and_ the refresh interval
 will reflect the value:
 
 {{< tabs name="stronghold_cmd_85875" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell-session
 $ d8 stronghold kv get kv/my-secret

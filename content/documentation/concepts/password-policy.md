@@ -245,7 +245,7 @@ To create or edit a password policy, use the POST method on `/sys/policies/passw
 Example of creating a policy from an HCL file:
 
 {{< tabs name="stronghold_cmd_10695" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold write sys/policies/password/my-policy policy=@my-policy.hcl
@@ -264,7 +264,7 @@ stronghold write sys/policies/password/my-policy policy=@my-policy.hcl
 Example of passing a policy directly when creating it:
 
 {{< tabs name="stronghold_cmd_10932" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold write sys/policies/password/my-policy policy=- <<EOF
@@ -293,7 +293,7 @@ EOF
 To verify that the policy has been created, use the following command:
 
 {{< tabs name="stronghold_cmd_15846" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```bash
 d8 stronghold read sys/policies/password/my-policy
@@ -326,7 +326,7 @@ To get a list of created policies, use the GET method on `/sys/policies/password
 Example:
 
 {{< tabs name="stronghold_cmd_12295" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```bash
 d8 stronghold read sys/policies/password
@@ -358,7 +358,7 @@ To get information about a specific policy, use the GET method on `/sys/policies
 Example:
 
 {{< tabs name="stronghold_cmd_15846" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```bash
 d8 stronghold read sys/policies/password/my-policy
@@ -389,7 +389,7 @@ To delete a password policy, use the DELETE method on `/sys/policies/password/:n
 Example:
 
 {{< tabs name="stronghold_cmd_11334" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```bash
 d8 stronghold delete sys/policies/password/my-policy
@@ -422,7 +422,7 @@ To do this, use the `/sys/policies/password/:name/generate` method, replacing `:
 Example:
 
 {{< tabs name="stronghold_cmd_16213" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold read sys/policies/password/my-policy/generate

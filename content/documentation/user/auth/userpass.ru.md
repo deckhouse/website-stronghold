@@ -24,7 +24,7 @@ weight: 50
 1. Включите метод аутентификации `userpass`:
 
    {{< tabs name="stronghold_cmd_10" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```shell
    d8 stronghold auth enable userpass
@@ -45,7 +45,7 @@ weight: 50
    Чтобы включить метод по другому пути, используйте флаг `-path`:
 
    {{< tabs name="stronghold_cmd_24481" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```shell
    d8 stronghold auth enable -path=<userpass_mount_path> userpass
@@ -64,7 +64,7 @@ weight: 50
 1. Создайте пользователя (если необходимо), которому разрешена аутентификация:
 
    {{< tabs name="stronghold_cmd_67504" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```shell
    d8 stronghold write auth/<userpass_mount_path>/users/alice \
@@ -91,7 +91,7 @@ weight: 50
 Пример команды для аутентификации пользователя с помощью метода `userpass`:
 
 {{< tabs name="stronghold_cmd_13653" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold login -method=userpass username=alice password="Pass-123!"
@@ -131,7 +131,7 @@ stronghold login -method=userpass username=alice password="Pass-123!"
 Функцию блокировки пользователя можно отключить с помощью команды `auth tune`, передав параметру `disable_lockout` значение `true`:
 
 {{< tabs name="stronghold_cmd_24697" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold auth tune -user-lockout-disable=true userpass
@@ -169,7 +169,7 @@ path "auth/userpass/users/{{identity.entity.aliases.<accessor>.name}}/password" 
 Значение `<accessor>` получите с помощью команды:
 
 {{< tabs name="stronghold_cmd_55997" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold read -field=accessor sys/auth/userpass
@@ -200,7 +200,7 @@ stronghold read -field=accessor sys/auth/userpass
 1. Получите уникальный идентификатор метода:
 
    {{< tabs name="stronghold_cmd_3381" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```shell
    ACCESSOR=$(d8 stronghold read -field=accessor sys/auth/userpass)
@@ -219,7 +219,7 @@ stronghold read -field=accessor sys/auth/userpass
 1. Создайте политику, позволяющую пользователю, аутентифицированному через `userpass`, менять свой пароль:
 
    {{< tabs name="stronghold_cmd_50546" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```shell
    d8 stronghold policy write self-change-password - <<EOF
@@ -249,7 +249,7 @@ stronghold read -field=accessor sys/auth/userpass
 {{% tab "Если пользователь существует" %}}
 
 {{< tabs name="stronghold_cmd_54664" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold write auth/userpass/users/alice/policies \
@@ -273,7 +273,7 @@ stronghold write auth/userpass/users/alice/policies \
 {{% tab "Если пользователя не существует" %}}
 
 {{< tabs name="stronghold_cmd_90751" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold write auth/userpass/users/alice \
@@ -304,7 +304,7 @@ stronghold write auth/userpass/users/alice \
 1. Включите метод `userpass`:
 
    {{< tabs name="stronghold_cmd_10" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```shell
    d8 stronghold auth enable userpass
@@ -323,7 +323,7 @@ stronghold write auth/userpass/users/alice \
 1. Получите уникальный идентификатор метода:
 
    {{< tabs name="stronghold_cmd_3381" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```shell
    ACCESSOR=$(d8 stronghold read -field=accessor sys/auth/userpass)
@@ -342,7 +342,7 @@ stronghold write auth/userpass/users/alice \
 1. Создайте политику, позволяющую пользователю, аутентифицированному через `userpass`, менять свой пароль:
 
    {{< tabs name="stronghold_cmd_50546" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```shell
    d8 stronghold policy write self-change-password - <<EOF
@@ -372,7 +372,7 @@ stronghold write auth/userpass/users/alice \
 {{% tab "Если пользователь существует" %}}
 
 {{< tabs name="stronghold_cmd_54664" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold write auth/userpass/users/alice/policies \
@@ -396,7 +396,7 @@ stronghold write auth/userpass/users/alice/policies \
 {{% tab "Если пользователя не существует" %}}
 
 {{< tabs name="stronghold_cmd_90751" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold write auth/userpass/users/alice \
@@ -431,7 +431,7 @@ stronghold write auth/userpass/users/alice \
 Пример команды для смены пользователем своего пароля:
 
 {{< tabs name="stronghold_cmd_95815" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold write auth/userpass/users/alice/password password="NewPass-456!"
@@ -465,7 +465,7 @@ stronghold write auth/userpass/users/alice/password password="NewPass-456!"
 Чтобы для метода `userpass` вместо политики паролей по умолчанию использовать пользовательскую политику, выполните команду (вместо `policy_name` укажите название нужной политики):
 
 {{< tabs name="stronghold_cmd_86644" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold write auth/userpass/password-policy/{policy_name}

@@ -73,7 +73,7 @@ The CLI login defaults to path of `/oidc`. If this auth method was enabled at a
 different path, specify `-path=/my-path` in the CLI.
 
 {{< tabs name="stronghold_cmd_53172" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell-session
 $ d8 stronghold login -method=oidc port=8400 role=test
@@ -135,7 +135,7 @@ why things aren't working. Some tips for setting up OIDC:
   JSON object:
 
 {{< tabs name="stronghold_cmd_77561" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```text
 d8 stronghold write auth/oidc/role/demo -<<EOF

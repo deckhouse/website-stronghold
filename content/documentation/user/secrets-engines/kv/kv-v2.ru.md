@@ -16,7 +16,7 @@ weight: 30
 Механизм секретов v2 `kv` может быть включен с помощью команды:
 
 {{< tabs name="stronghold_cmd_12691" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell-session
 d8 stronghold secrets enable -version=2 kv
@@ -35,7 +35,7 @@ stronghold secrets enable -version=2 kv
 Или вы можете передать `kv-v2` в качестве типа механизма секретов:
 
 {{< tabs name="stronghold_cmd_77691" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell-session
 d8 stronghold secrets enable kv-v2
@@ -60,7 +60,7 @@ stronghold secrets enable kv-v2
 Существующее хранилище kv версии 1 можно обновить до хранилища kv версии 2 с помощью команды CLI:
 
 {{< tabs name="stronghold_cmd_32144" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell-session
 $ d8 stronghold kv enable-versioning secret/
@@ -166,7 +166,7 @@ path "secret/metadata/dev/team-1/*" {
  Запись ключей:
 
 {{< tabs name="stronghold_cmd_90983" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell-session
 $ d8 stronghold kv put -mount=secret my-secret foo=a bar=b
@@ -199,7 +199,7 @@ version          1
  Чтение ключей:
 
 {{< tabs name="stronghold_cmd_49352" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell-session
 $ d8 stronghold kv get -mount=secret my-secret
@@ -246,7 +246,7 @@ bar         b
 - Запишите другую версию, при этом предыдущая версия будет по-прежнему доступна. Опционально может быть передан флаг `-cas` (`check-and-set)` для выполнения проверки, что ключ существует . Если флаг не установлен, запись будет разрешена. Если же флаг `cas` установлен, то для того чтобы запись была успешной, его значение должно соответствовать текущей версию секрета. Если установлено значение 0, запись будет разрешена только в том случае, если ключ не существует, так как неустановленные ключи не имеют информации о версии. Также помните, что удаление "версии" не удаляет из хранилища информацию о версиях. Таким образом, для записи в секрет, у которого были удаленные версии, параметр cas должен соответствовать текущей версии секрета.
 
 {{< tabs name="stronghold_cmd_79541" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell-session
 $ d8 stronghold kv put -mount=secret -cas=1 my-secret foo=aa bar=bb
@@ -279,7 +279,7 @@ version          2
  Чтение вернет самую свежую версию данных:
 
 {{< tabs name="stronghold_cmd_92817" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell-session
 $ d8 stronghold kv get -mount=secret my-secret
@@ -327,7 +327,7 @@ bar         bb
 Опционально может быть передан флаг `-cas`  для выполнения проверки, что ключ существует. Он будет использоваться только в случае начального запроса `PATCH`. Вариант с последовательными чтением и записью будет использовать значение `version` из секрета, возвращенного при чтении, для выполнения проверки `cas` при последующей записи.
 
 {{< tabs name="stronghold_cmd_34536" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell-session
 $ d8 stronghold kv patch -mount=secret -cas=2 my-secret bar=bbb
@@ -362,7 +362,7 @@ version          3
 Выполнить обновление секрета используя `patch`:
 
 {{< tabs name="stronghold_cmd_17564" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell-session
 $ d8 stronghold kv patch -mount=secret -method=patch -cas=2 my-secret bar=bbb
@@ -395,7 +395,7 @@ version          3
 Выполнить обновление, используя `rw`, то есть сначала прочитать значение, а потом записать новую измененную версию:
 
 {{< tabs name="stronghold_cmd_7199" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell-session
 $ d8 stronghold kv patch -mount=secret -method=rw my-secret bar=bbb
@@ -428,7 +428,7 @@ version          3
 Чтение вернет самую новую версию, в которой были обновлены только заданные значения:
 
 {{< tabs name="stronghold_cmd_70162" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell-session
 $ d8 stronghold kv get -mount=secret my-secret
@@ -475,7 +475,7 @@ bar         bbb
 Предыдущие версии секретов можно получить используя флаг `-version`:
 
 {{< tabs name="stronghold_cmd_87322" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell-session
 $ d8 stronghold kv get -mount=secret -version=1 my-secret
@@ -524,7 +524,7 @@ bar         b
 Создать политику:
 
 {{< tabs name="stronghold_cmd_61368" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell-session
 $ d8 stronghold write sys/policies/password/example policy=-<<EOF
@@ -571,7 +571,7 @@ EOF
 Создать секрет, используя политику `example`:
 
 {{< tabs name="stronghold_cmd_64317" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell-session
 $ d8 stronghold kv put -mount=secret my-generated-secret \
@@ -606,7 +606,7 @@ version            1
 Прочитать созданный секрет:
 
 {{< tabs name="stronghold_cmd_18497" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell-session
 $ d8 stronghold kv get -mount=secret my-generated-secret
@@ -665,7 +665,7 @@ password    !hh&be1e4j16dVc0ggae
 Последняя версия ключа может быть удалена с помощью команды delete, которая также   принимает флаг `-versions` для удаления предыдущих версий:
 
 {{< tabs name="stronghold_cmd_70682" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell-session
  $ d8 stronghold kv delete -mount=secret my-secret
@@ -686,7 +686,7 @@ password    !hh&be1e4j16dVc0ggae
 Версии могут быть восстановлены:
 
 {{< tabs name="stronghold_cmd_78891" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell-session
  $ d8 stronghold kv undelete -mount=secret -versions=2 my-secret
@@ -737,7 +737,7 @@ password    !hh&be1e4j16dVc0ggae
 Уничтожение версии полностью удаляет все данные:
 
 {{< tabs name="stronghold_cmd_50979" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell-session
 $ d8 stronghold kv destroy -mount=secret -versions=2 my-secret
@@ -764,7 +764,7 @@ Success! Data written to: secret/destroy/my-secret
 Можно просмотреть все метаданные и версии для ключа:
 
 {{< tabs name="stronghold_cmd_59140" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell-session
 $ d8 stronghold kv metadata get -mount=secret my-secret
@@ -833,7 +833,7 @@ destroyed        true
 Можно настроить параметры:
 
 {{< tabs name="stronghold_cmd_41014" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell-session
 $ d8 stronghold kv metadata put -mount=secret -max-versions 2 -delete-version-after="3h25m19s" my-secret
@@ -854,7 +854,7 @@ Success! Data written to: secret/metadata/my-secret
    Настройка `delete-version-after` будет применяться только к новым версиям, параметр `max-versions` будет применен при следующей операции записи.
 
 {{< tabs name="stronghold_cmd_39812" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell-session
 $ d8 stronghold kv put -mount=secret my-secret my-value=newer-s3cr3t
@@ -887,7 +887,7 @@ version          4
    Если у ключа больше версий, чем `max-versions`б самые старые версии уничтожаются:
 
 {{< tabs name="stronghold_cmd_32881" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell-session
 $ d8 stronghold kv metadata get -mount=secret my-secret
@@ -958,7 +958,7 @@ destroyed        false
    Команда `d8 stronghold kv metadata put` может быть использована для полной перезаписи значения `custom_metadata`:
 
 {{< tabs name="stronghold_cmd_58242" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell-session
 $ d8 stronghold kv metadata put -mount=secret -custom-metadata=foo=abc -custom-metadata=bar=123 my-secret
@@ -1011,7 +1011,7 @@ bar         bb
    Команда `d8 stronghold kv metadata patch` может быть использована для частичной перезаписи значения `custom_metadata`. Следующий вызов обновит поле `custom_metadata` `foo`, но оставит `bar` нетронутым:
 
 {{< tabs name="stronghold_cmd_46238" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell-session
 $ d8 stronghold kv metadata patch -mount=secret -custom-metadata=foo=def my-secret
@@ -1030,7 +1030,7 @@ Success! Data written to: secret/metadata/my-secret
 {{< /tabs >}}
 
 {{< tabs name="stronghold_cmd_42153" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell-session
 $ d8 stronghold kv get -mount=secret my-secret
@@ -1077,7 +1077,7 @@ bar         bb
 Полное уничтожение всех метаданных и версий для ключа:
 
 {{< tabs name="stronghold_cmd_86735" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell-session
 $ d8 stronghold kv metadata delete -mount=secret my-secret

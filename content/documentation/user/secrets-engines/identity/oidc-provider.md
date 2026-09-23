@@ -26,7 +26,7 @@ Stronghold as an OIDC provider.
 1. Enable an Stronghold auth method:
 
    {{< tabs name="stronghold_cmd_47747" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```text
    $ d8 stronghold auth enable userpass
@@ -50,7 +50,7 @@ Stronghold as an OIDC provider.
 2. Create a user:
 
    {{< tabs name="stronghold_cmd_27343" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```text
    $ d8 stronghold write auth/userpass/users/end-user password="securepassword"
@@ -74,7 +74,7 @@ Stronghold as an OIDC provider.
 3. Create a client application:
 
    {{< tabs name="stronghold_cmd_67193" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```text
    $ d8 stronghold write identity/oidc/client/my-webapp \
@@ -107,7 +107,7 @@ Stronghold as an OIDC provider.
 4. Read client credentials:
 
    {{< tabs name="stronghold_cmd_65001" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```text
    $ d8 stronghold read identity/oidc/client/my-webapp

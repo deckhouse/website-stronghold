@@ -38,7 +38,7 @@ description: "Руководство администратора по изол�
 ### Через CLI
 
 {{< tabs name="stronghold_cmd_55611" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold namespace create \
@@ -96,7 +96,7 @@ curl \
 ### Чтение через CLI
 
 {{< tabs name="stronghold_cmd_41027" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold namespace lookup -namespace=<parent_namespace_name> <namespace_name>
@@ -135,7 +135,7 @@ curl \
 ### Список через CLI
 
 {{< tabs name="stronghold_cmd_58281" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold namespace list -namespace=<parent_namespace_name>
@@ -175,7 +175,7 @@ curl \
 ### Через CLI
 
 {{< tabs name="stronghold_cmd_8806" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold namespace delete -namespace=<parent_namespace_name> <namespace_name>
@@ -214,7 +214,7 @@ curl \
 Заблокировать текущее пространство имён и все дочерние:
 
 {{< tabs name="stronghold_cmd_69466" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold namespace lock
@@ -233,7 +233,7 @@ stronghold namespace lock
 Заблокировать конкретное дочернее пространство, например `ns1/ns2/`:
 
 {{< tabs name="stronghold_cmd_52362" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold namespace lock ns1/ns2
@@ -295,7 +295,7 @@ curl \
 Разблокировать текущее пространство имён с помощью ключа:
 
 {{< tabs name="stronghold_cmd_22637" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold namespace unlock -unlock-key=<key>
@@ -314,7 +314,7 @@ stronghold namespace unlock -unlock-key=<key>
 Разблокировать текущее пространство имён с помощью root-токена:
 
 {{< tabs name="stronghold_cmd_76641" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold namespace unlock
@@ -333,7 +333,7 @@ stronghold namespace unlock
 Разблокировать конкретное дочернее пространство:
 
 {{< tabs name="stronghold_cmd_32282" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold namespace unlock -unlock-key=<key> ns1/ns2
@@ -380,7 +380,7 @@ curl \
 ## Пример блокировки и разблокировки
 
 {{< tabs name="stronghold_cmd_46189" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 # Создаём пространство имён.

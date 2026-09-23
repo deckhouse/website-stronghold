@@ -14,7 +14,7 @@ Stronghold поддерживает несколько методов аутен
 Чтобы включить метод аутентификации, используйте следующую команду:
 
 {{< tabs name="stronghold_cmd_35731" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold write sys/auth/my-auth type=userpass
@@ -35,7 +35,7 @@ stronghold write sys/auth/my-auth type=userpass
 Чтобы получить дополнительные сведения об этой аутентификации, воспользуйтесь встроенной командой `path-help`:
 
 {{< tabs name="stronghold_cmd_81768" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold path-help auth/my-auth
@@ -72,7 +72,7 @@ Stronghold поддерживает одновременно несколько 
 Например, чтобы пройти аутентификацию с помощью OIDC, выполните следующую команду:
 
 {{< tabs name="stronghold_cmd_6157" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold login -method=oidc
@@ -104,7 +104,7 @@ stronghold login -method=oidc
 Чтобы найти нужный эндпоинт, используйте следующую команду:
 
 {{< tabs name="stronghold_cmd_42184" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold path-help
@@ -132,7 +132,7 @@ stronghold path-help
 Как и в случае с секретами, срок действия аренды идентификатора можно продлить без повторного прохождения аутентификации. Для этого используйте следующую команду, указав связанный с идентификатором токен:
 
 {{< tabs name="stronghold_cmd_60820" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```shell
 d8 stronghold token renew <token>

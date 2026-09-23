@@ -43,7 +43,7 @@ Kubernetes может выступать в качестве OIDC-провайд
 1. Включите и настройте аутентификацию JWT в Stronghold.
 
    {{< tabs name="stronghold_cmd_81485" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```bash
    d8 stronghold auth enable jwt
@@ -91,7 +91,7 @@ Kubernetes может выступать в качестве OIDC-провайд
 1. Настройте эндпоинт JWT auth на использование полученных ключей.
 
    {{< tabs name="stronghold_cmd_39007" >}}
-   {{% tab name="Stronghold в DKP" %}}
+   {{% tab name="Stronghold в DP" %}}
 
    ```bash
    d8 stronghold write auth/jwt/config \
@@ -144,7 +144,7 @@ d8 k exec my-pod -- cat /var/run/secrets/kubernetes.io/serviceaccount/token | cu
 Создайте роль для JWT auth, которую сможет использовать учётная запись сервиса `default` в неймспейсе `default`.
 
 {{< tabs name="stronghold_cmd_14558" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```bash
 d8 stronghold write auth/jwt/role/my-role \
@@ -175,7 +175,7 @@ ttl="1h"
 Теперь поды или клиенты, имеющие доступ к JWT учётной записи сервиса, смогут аутентифицироваться с помощью этого токена.
 
 {{< tabs name="stronghold_cmd_96573" >}}
-{{% tab name="Stronghold в DKP" %}}
+{{% tab name="Stronghold в DP" %}}
 
 ```bash
 d8 stronghold write auth/jwt/login \

@@ -61,7 +61,7 @@ management tool.
 1. Enable the database secrets engine:
 
    {{< tabs name="stronghold_cmd_10649" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```shell-session
    $ d8 stronghold secrets enable database
@@ -85,7 +85,7 @@ management tool.
 1. Configure Stronghold with the proper plugin and connection information:
 
    {{< tabs name="stronghold_cmd_69573" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```shell-session
    $ d8 stronghold write database/config/my-database \
@@ -131,7 +131,7 @@ management tool.
    Stronghold itself:
 
    {{< tabs name="stronghold_cmd_14214" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```shell-session
    d8 stronghold write -force database/rotate-root/my-database
@@ -158,7 +158,7 @@ When this is done, the password for the user specified in the previous step
    create the database credential:
 
    {{< tabs name="stronghold_cmd_39943" >}}
-   {{% tab name="Stronghold in DKP" %}}
+   {{% tab name="Stronghold in DP" %}}
 
    ```shell-session
    $ d8 stronghold write database/roles/my-role \
@@ -196,7 +196,7 @@ the proper permission, it can generate credentials.
     of the role:
 
     {{< tabs name="stronghold_cmd_25067" >}}
-    {{% tab name="Stronghold in DKP" %}}
+    {{% tab name="Stronghold in DP" %}}
 
     ```shell-session
     $ d8 stronghold read database/creds/my-role
@@ -290,7 +290,7 @@ For example, when the password contains URL-escaped characters like `#` or `%` t
 remain as so instead of becoming `%23` and `%25` respectively.
 
 {{< tabs name="stronghold_cmd_74473" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell-session
 $ d8 stronghold write database/config/my-mysql-database \

@@ -5,9 +5,9 @@ weight: 20
 
 Deckhouse Stronghold is available as Community Edition (CE) and Enterprise Edition (EE).
 
-Deckhouse Stronghold CE is available for use in any of the Deckhouse Kubernetes Platform editions.
+Deckhouse Stronghold CE is available for use in any of the Deckhouse Platform editions.
 
-Deckhouse Stronghold EE is licensed separately and available for use in any **commercial edition** of DKP.
+Deckhouse Stronghold EE is licensed separately and available for use in any **commercial edition** of DP.
 
 The table below provides a brief comparison of the Deckhouse Stronghold editions, listing their main features and details:
 
@@ -29,4 +29,4 @@ The table below provides a brief comparison of the Deckhouse Stronghold editions
 | Managed Keys | {{< icon-edition type="not_supported" >}} | {{< icon-edition type="supported" >}} |
 | GOST algorithm support for PKI/Transit | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} |
 | Delivered as a standalone executable file | {{< icon-edition type="not_supported" >}} | {{< icon-edition type="supported" >}} |
-| Can be launched in DKP CE | {{< icon-edition type="supported" >}} | {{< icon-edition type="not_supported" >}} |
+| Can be launched in DP Open | {{< icon-edition type="supported" >}} | {{< icon-edition type="not_supported" >}} |

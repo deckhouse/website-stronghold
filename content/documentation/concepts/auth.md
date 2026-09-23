@@ -21,7 +21,7 @@ Most authentication backends must be enabled before use.
 To enable an authentication method, run the following command:
 
 {{< tabs name="stronghold_cmd_35731" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold write sys/auth/my-auth type=userpass
@@ -44,7 +44,7 @@ Often you will see authentications at the same path as their name, but this is n
 To learn more about this authentication, use the built-in `path-help` command:
 
 {{< tabs name="stronghold_cmd_81768" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold path-help auth/my-auth
@@ -87,7 +87,7 @@ This supports many of the built-in authentication methods.
 For example, to authenticate with OIDC, run the following command:
 
 {{< tabs name="stronghold_cmd_6157" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold login -method=oidc
@@ -121,7 +121,7 @@ Each authentication method implements its own login endpoint.
 To find the proper endpoint, use the following command:
 
 {{< tabs name="stronghold_cmd_42184" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold path-help
@@ -149,7 +149,7 @@ And just like secrets, identities can be renewed without having to completely re
 To renew it, use the following command, specifying the token associated with your identity:
 
 {{< tabs name="stronghold_cmd_60820" >}}
-{{% tab name="Stronghold in DKP" %}}
+{{% tab name="Stronghold in DP" %}}
 
 ```shell
 d8 stronghold token renew <token>
