@@ -1,0 +1,20 @@
+{
+  "extraKnownMarketplaces": {
+    "deckhouse-ai-tools": {
+      "source": {
+        "source": "git",
+        "url": "git@fox.flant.com:deckhouse/docs/ai-tools.git"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "deckhouse-writing@deckhouse-ai-tools": true,
+    "deckhouse-product-site@deckhouse-ai-tools": true
+  },
+  "permissions": {
+    "allow": [
+      "Bash(curl -sS https://pp.flant.ru/llms.txt *)",
+      "Bash(curl -sS https://raw.githubusercontent.com/deckhouse/hugo-web-product-module/main/*)"
+    ]
+  }
+}
