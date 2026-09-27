@@ -2,9 +2,9 @@
 
 This is the source for the Deckhouse Stronghold documentation website.
 
-The project uses [Hugo](gohugo.io) SSG and the [hugo-web-product-module](https://github.com/deckhouse/hugo-web-product-module/) module for a theme (see [README.md](https://github.com/deckhouse/hugo-web-product-module/blob/main/README.md) for details about content markup).
+The project uses [Hugo](gohugo.io) SSG and the [hugo-web-product-module](https://github.com/deckhouse/hugo-web-product-module/) module for a theme (see [AUTHORING.md](https://github.com/deckhouse/hugo-web-product-module/blob/main/AUTHORING.md) for details about content markup).
 
-Read [`hugo-web-product-module` README.md](https://github.com/deckhouse/hugo-web-product-module/blob/main/README.md) for information about content markup and other details.
+Read [`hugo-web-product-module` AUTHORING.md](https://github.com/deckhouse/hugo-web-product-module/blob/main/AUTHORING.md) for content markup, and its [README.md](https://github.com/deckhouse/hugo-web-product-module/blob/main/README.md) for other details.
   
 ## How to run the documentation site locally
 

@@ -39,3 +39,4 @@ include/
 # HuGo public directory and lock file
 public
 .hugo_build.lock
+.claude/settings.local.json
