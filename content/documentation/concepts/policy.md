@@ -251,7 +251,7 @@ In addition to the standard set of capabilities, Stronghold offers finer-grained
 {{< alert level="info" >}}
 
 - The use of globs (`*`) may result in surprising or unexpected behavior.
-- The `allowed_parameters`, `denied_parameters`, and `required_parameters` fields are not supported for policies used with the KV/v2 secrets engine.
+- The `allowed_parameters`, `denied_parameters`, and `required_parameters` fields do not apply to secret fields in the KV/v2 secrets engine: KV/v2 passes them nested inside `data`, so a rule written against a secret field name matches nothing. This does not apply to query string parameters.
 {{< /alert >}}
 Policies can take into account HTTP request parameters to further constrain requests, using the following options:
 
@@ -490,6 +490,79 @@ path "secret/foo" {
   }
 }
 ```
+
+### Recursive list
+
+The recursive list operation returns every key under a path, including keys in nested directories, as a single flat response.
+
+The walk reaches exactly as far as listing directory by directory would.
+
+It descends into a nested directory only where the token may run the list operation.
+
+A subtree protected by withholding the list capability stays closed.
+
+Recursion is not a capability of its own. It is asked for with the `recursive` parameter, which the parameter constraints above govern.
+
+There is one difference from the other parameters: recursion is granted explicitly. A policy that says nothing about the parameter grants only the plain list operation.
+
+To allow the recursive list operation, add the `allowed_parameters = { "recursive" = [] }` parameter.
+
+```hcl
+path "kv/*" {
+  capabilities       = ["list"]
+  allowed_parameters = { "recursive" = [] }
+}
+```
+
+Without that rule the path is still listed one directory at a time, and a recursive request is refused with `403`.
+
+A stanza that admits every parameter through `allowed_parameters = { "*" = [] }` grants recursion as well.
+
+A grant covers the whole subtree its rule matches, so nested directories need no rule of their own. To close one of them to recursion, write a more specific rule that says nothing about the parameter: a path is judged by the single most specific rule matching it, and that rule hands out no recursion.
+
+```hcl
+path "kv/*" {
+  capabilities       = ["list"]
+  allowed_parameters = { "recursive" = [] }
+}
+
+path "kv/private*" {
+  capabilities = ["list"]
+}
+```
+
+In this example a recursive list of `kv/` returns the subtree except `kv/private`, which the walk does not enter. The plain list operation on `kv/private/` still works.
+
+The `denied_parameters = { "recursive" = [] }` rule is for the case where the winning rule does hand out recursion: it narrows a wildcard grant, and it overrides another policy that grants the parameter on the same path.
+
+```hcl
+path "kv/*" {
+  capabilities       = ["list"]
+  allowed_parameters = { "*" = [] }
+  denied_parameters  = { "recursive" = [] }
+}
+```
+
+The rule applies wherever the walk reaches, not only where it started. When several policies match the same path, a grant in any of them is enough, and a denial in any of them wins.
+
+Recursion is asked for by the presence of the parameter, not by its value, so the empty list is the only accepted form. A rule that lists values is rejected when the policy is written, because it could never match a request.
+
+```hcl
+path "kv/*" {
+  capabilities       = ["list"]
+  allowed_parameters = { "recursive" = ["true"] }
+}
+```
+
+The path checked while walking is the request path plus the nested directory, and the operation is always list. The `read` capability is not consulted: the plain list operation shows the names of secrets a token cannot open, and the recursive one keeps to the same rule. Do not encode sensitive information in key names.
+
+The plain list operation carries no parameters, so the parameter constraints never apply to it.
+
+The `recursive` parameter is passed in the query string, so it is enforced on KV/v2 paths: the note above about secret fields does not affect it.
+
+{{< alert level="info" >}}
+The recursive list operation must be supported by the path itself. It is supported by the KV/v1 and KV/v2 secrets engines, and on other paths the request is refused with `400`. A secrets engine running as an external plugin cannot serve recursive lists, and such a request is refused with `400` as well.
+{{< /alert >}}
 
 ## Required response wrapping TTLs
 

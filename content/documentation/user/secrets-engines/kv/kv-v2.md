@@ -191,9 +191,11 @@ path "secret/metadata/dev/team-1/*" {
 }
 ```
 
-The `allowed_parameters`, `denied_parameters`, and `required_parameters` fields are
-not supported for policies used with the version 2 kv store. See the [Policies Concepts](../../../concepts/policy/)
-for a description of these parameters.
+The `allowed_parameters`, `denied_parameters`, and `required_parameters` fields do not apply to secret fields in the version 2 kv store. KV/v2 passes them nested inside `data`, so a rule written against a secret field name matches nothing.
+
+This does not apply to query string parameters. For example, the `recursive` parameter on `metadata/` paths allows the recursive list operation.
+
+See the [Policies Concepts](../../../concepts/policy/) for a description of these parameters.
 
 ## Usage
 
@@ -1165,6 +1167,44 @@ See the commands below for more information:
    $ d8 stronghold kv metadata delete -mount=secret my-secret
    Success! Data deleted (if it existed) at: secret/metadata/my-secret
    ```
+
+### Recursive list
+
+By default, the list operation returns only the immediate child keys.
+
+To get the whole subtree in a single request, add the `-recursive` flag:
+
+```shell-session
+$ d8 stronghold kv list -recursive -mount=secret /
+Keys
+----
+my-secret
+team-a/db-password
+team-a/reports/token
+```
+
+Keys are returned as paths relative to the requested one.
+
+In the version 2 kv store the walk follows the metadata tree, so the policy parameters are set on the `metadata/` path rather than on `data/`.
+
+To allow the recursive list operation, add the `allowed_parameters = { "recursive" = [] }` parameter.
+
+```hcl
+path "secret/metadata/*" {
+  capabilities       = ["list"]
+  allowed_parameters = { "recursive" = [] }
+}
+```
+
+The result includes only the directories that are allowed for the plain list operation on metadata paths.
+
+A rule written for the `data/` path neither grants nor constrains recursion.
+
+The `denied_parameters = { "recursive" = [] }` rule takes recursion back on a path, leaving the plain list operation working. For details, see [Recursive list](../../../concepts/policy/#recursive-list).
+
+A single request returns at most 10,000 keys and examines at most 100,000 storage entries.
+
+When either limit is reached, Stronghold returns the keys collected so far and adds a warning that the result is incomplete.
 
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}

@@ -241,6 +241,42 @@ You can also use Stronghold's password policy feature to generate arbitrary valu
    {{% /tab %}}
    {{< /tabs >}}
 
+### Recursive list
+
+By default, the list operation returns only the immediate child keys.
+
+To get the whole subtree in a single request, add the `-recursive` flag:
+
+```shell-session
+$ d8 stronghold kv list -recursive kv/
+Keys
+----
+my-secret
+team-a/db-password
+team-a/reports/token
+```
+
+Keys are returned as paths relative to the requested one.
+
+To allow the recursive list operation, add the `allowed_parameters = { "recursive" = [] }` parameter.
+
+```hcl
+path "kv/*" {
+  capabilities       = ["list"]
+  allowed_parameters = { "recursive" = [] }
+}
+```
+
+The result includes only the directories that are allowed for the plain list operation.
+
+A subtree that cannot be reached by listing step by step is left out.
+
+The `denied_parameters = { "recursive" = [] }` rule takes recursion back on a path, leaving the plain list operation working. For details, see [Recursive list](../../../concepts/policy/#recursive-list).
+
+A single request returns at most 10,000 keys and examines at most 100,000 storage entries.
+
+When either limit is reached, Stronghold returns the keys collected so far and adds a warning that the result is incomplete.
+
 ## TTLs
 
 Unlike other secrets engines, the KV secrets engine does not enforce TTLs

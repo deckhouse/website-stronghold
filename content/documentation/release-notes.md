@@ -22,6 +22,7 @@ Version `1.19` focuses on cross-cluster replication, GitOps, and operational imp
 - Added the following features to the web interface: system log viewer, password change for the `userpass` auth method and user lockout configuration for `ldap`, `userpass`, or `approle`, as well as a redesigned sidebar navigation.
 - Added support for `nodeSelector` and `storageClass` configuration, as well as storage migration for HA installations.
 - Deployment in Deckhouse Kubernetes Platform requires DKP version 1.72 or newer.
+- Recursive list for the KV/v1 and KV/v2 secrets engines: the `-recursive` flag returns the whole subtree of a path in one request. The operation is allowed by the `allowed_parameters = { "recursive" = [] }` policy parameter on top of the `list` capability, and the walk reaches only the directories the token may list.
 - The following vulnerabilities have been fixed: CVE-2026-25645, CVE-2025-66418, CVE-2025-66471, CVE-2026-21441, CVE-2026-34986, CVE-2026-39883, CVE-2026-32952, CVE-2026-41506, CVE-2026-41889, CVE-2026-2303, CVE-2026-44973, CVE-2026-44740, CVE-2026-45571, CVE-2026-41579, CVE-2026-46600, CVE-2026-56852, GHSA-hrxh-6v49-42gf.
 
 ## v1.18 April 2026
