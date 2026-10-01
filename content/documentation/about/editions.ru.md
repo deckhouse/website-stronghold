@@ -3,21 +3,19 @@ title: "Редакции"
 weight: 20
 ---
 
-Deckhouse Stronghold поставляется в редакциях Community Edition (CE), Enterprise Edition (EE) и Certified Security Edition (CSE), сертифицированной ФСТЭК России для сред с повышенными требованиями к информационной безопасности.
-
-Deckhouse Stronghold CE доступен для использования в любой редакции Deckhouse Platform (DP).
+Deckhouse Stronghold поставляется в редакциях Enterprise Edition (EE) и Certified Security Edition (CSE), сертифицированной ФСТЭК России для сред с повышенными требованиями к информационной безопасности.
 
 Deckhouse Stronghold EE и Deckhouse Stronghold CSE лицензируются отдельно. Deckhouse Stronghold EE доступен для использования в любой **коммерческой редакции** DP. Deckhouse Stronghold CSE доступен для использования только в редакции DKP CSE.
 
-Краткое сравнение ключевых возможностей и особенностей редакций Deckhouse Stronghold:
+Краткое сравнение ключевых возможностей и особенностей редакций Deckhouse Stronghold, в сравнении с Hashicorp Vault:
 
-| Возможности | CE | EE | CSE |
+| Возможности | Vault | EE | CSE |
 | --- | --- | --- | --- |
 | Безопасное управление жизненным циклом секретов (хранение, создание, доставка, отзыв и ротация) | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} |
 | Возможность использования инструментов автоматизации IaC (Ansible, Terraform) | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} |
-| Поддержка методов аутентификации | JWT, OIDC, Kubernetes, LDAP, Token, **WebAuthn** | JWT, OIDC, Kubernetes, LDAP, Token, **WebAuthn**, **SAML** | JWT, OIDC, Kubernetes, LDAP, Token |
+| Поддержка методов аутентификации | JWT, OIDC, Kubernetes, LDAP, Token | JWT, OIDC, Kubernetes, LDAP, Token, **WebAuthn**, **SAML** | JWT, OIDC, Kubernetes, LDAP, Token |
 | Поддержка механизмов секретов KV, Kubernetes, Database, SSH, PKI | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} |
-| Поддержка российских ОС ([полный список поддерживаемых ОС](/products/kubernetes-platform/documentation/v1/supported_versions.html)) | РЕД ОС, ALT Linux, Astra Linux Special Edition, **РОСА Сервер** | РЕД ОС, ALT Linux, Astra Linux Special Edition, **РОСА Сервер** | РЕД ОС, ALT Linux, Astra Linux Special Edition |
+| Поддержка российских ОС ([полный список поддерживаемых ОС](/products/kubernetes-platform/documentation/v1/supported_versions.html)) | - | РЕД ОС, ALT Linux, Astra Linux Special Edition, **РОСА Сервер** | РЕД ОС, ALT Linux, Astra Linux Special Edition |
 | Развёртывание в закрытом контуре | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} |
 | Веб-интерфейс | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} |
 | Управление ролями и политиками доступа через веб-интерфейс | {{< icon-edition type="not_supported" >}} | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} |
@@ -26,9 +24,8 @@ Deckhouse Stronghold EE и Deckhouse Stronghold CSE лицензируются �
 | Поддержка конфигураций с высокой дсотупностью (HA) | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} |
 | Межкластерная репликация данных | {{< icon-edition type="not_supported" >}} | KV1/KV2, Performance, DR | KV1/KV2, Performance, DR |
 | Автоматическое создание резервных копий по заданному расписанию | {{< icon-edition type="not_supported" >}} | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} |
-| Поддержка аудит-логирования | {{< icon-edition type="not_supported" >}} | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} |
+| Поддержка аудит-логирования | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} |
 | Управляемые ключи (Managed Keys) | {{< icon-edition type="not_supported" >}} | {{< icon-edition type="supported" >}} | {{< icon-edition type="not_supported" >}} |
-| Поддержка ГОСТ-алгоритмов для PKI/Transit | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} | {{< icon-edition type="not_supported" >}} |
-| Возможность поставки в виде исполняемого файла (standalone) | {{< icon-edition type="not_supported" >}} | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} |
+| Поддержка ГОСТ-алгоритмов для PKI/Transit | {{< icon-edition type="not_supported" >}} | {{< icon-edition type="supported" >}} | {{< icon-edition type="not_supported" >}} |
+| Возможность поставки в виде исполняемого файла (standalone) | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} |
 | Сертификат соответствия требованиям Приказа ФСТЭК России №76 по 4 уровню доверия | {{< icon-edition type="not_supported" >}} | {{< icon-edition type="not_supported" >}} | {{< icon-edition type="supported" >}} |
-| Возможность запуска в DP Open | {{< icon-edition type="supported" >}} | {{< icon-edition type="not_supported" >}} | {{< icon-edition type="not_supported" >}} |
