@@ -15,7 +15,7 @@ The table below provides a brief comparison of the Deckhouse Stronghold editions
 | Support of IaC automation tools (Ansible, Terraform) | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} |
 | Support of authentication methods | JWT, OIDC, Kubernetes, LDAP, Token | JWT, OIDC, Kubernetes, LDAP, Token, **WebAuthn**, **SAML** | JWT, OIDC, Kubernetes, LDAP, Token |
 | Support of KV, Kubernetes, Database, SSH, and PKI secret engines | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} |
-| Support of Russian operating systems ([full list of supported OSes](/products/kubernetes-platform/documentation/v1/supported_versions.html)) | - | RED OS, ALT Linux, Astra Linux Special Edition, **ROSA Server** | RED OS, ALT Linux, Astra Linux Special Edition |
+| Support of Russian operating systems ([full list of supported OSes](/products/kubernetes-platform/documentation/v1/supported_versions.html)) | {{< icon-edition type="not_supported" >}} | RED OS, ALT Linux, Astra Linux Special Edition, **ROSA Server** | RED OS, ALT Linux, Astra Linux Special Edition |
 | Deploying to an air-gapped environment | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} |
 | Web interface | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} |
 | Role and access policy management through a web interface | {{< icon-edition type="not_supported" >}} | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} |

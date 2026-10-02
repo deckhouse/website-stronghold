@@ -15,7 +15,7 @@ Deckhouse Stronghold EE и Deckhouse Stronghold CSE лицензируются �
 | Возможность использования инструментов автоматизации IaC (Ansible, Terraform) | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} |
 | Поддержка методов аутентификации | JWT, OIDC, Kubernetes, LDAP, Token | JWT, OIDC, Kubernetes, LDAP, Token, **WebAuthn**, **SAML** | JWT, OIDC, Kubernetes, LDAP, Token |
 | Поддержка механизмов секретов KV, Kubernetes, Database, SSH, PKI | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} |
-| Поддержка российских ОС ([полный список поддерживаемых ОС](/products/kubernetes-platform/documentation/v1/supported_versions.html)) | - | РЕД ОС, ALT Linux, Astra Linux Special Edition, **РОСА Сервер** | РЕД ОС, ALT Linux, Astra Linux Special Edition |
+| Поддержка российских ОС ([полный список поддерживаемых ОС](/products/kubernetes-platform/documentation/v1/supported_versions.html)) | {{< icon-edition type="not_supported" >}} | РЕД ОС, ALT Linux, Astra Linux Special Edition, **РОСА Сервер** | РЕД ОС, ALT Linux, Astra Linux Special Edition |
 | Развёртывание в закрытом контуре | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} |
 | Веб-интерфейс | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} |
 | Управление ролями и политиками доступа через веб-интерфейс | {{< icon-edition type="not_supported" >}} | {{< icon-edition type="supported" >}} | {{< icon-edition type="supported" >}} |
