@@ -8,7 +8,7 @@ weight: 30
 
 Архитектура компонентов Deсkhouse Stronghold при установке как сервис ОС Linux на уровне 2 модели C4 изображена на следующей диаграмме:
 
-![Архитектура компонентов Deсkhouse Stronghold при установке в виде модуля DP](../../../images/architecture/c4-l2-stronghold-linux.ru.svg)
+![Архитектура компонентов Deсkhouse Stronghold при установке как сервис ОС Linux](../../../images/architecture/c4-l2-stronghold-linux.ru.svg)
 
 ## Компоненты
 

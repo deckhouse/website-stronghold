@@ -1,7 +1,7 @@
 ---
 title: Обзор
 description: Обзор архитектуры Deckhouse Stronghold
-weight: 20
+weight: 10
 ---
 
 В данном разделе документации описана архитектура Deckhouse Stronghold для различных вариантов поставки:
