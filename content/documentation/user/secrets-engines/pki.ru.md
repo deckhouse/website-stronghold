@@ -22,22 +22,22 @@ weight: 20
 1. Включите механизм секретов PKI:
 
    {{< tabs name="stronghold_cmd_54596" >}}
-   {{% tab name="Stronghold в DP" %}}
+   {{< tab name="Stronghold в DP" >}}
 
    ```shell
    $ d8 stronghold secrets enable pki
    Success! Enabled the pki secrets engine at: pki/
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold в Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold в Linux" >}}
 
    ```shell
    $ stronghold secrets enable pki
    Success! Enabled the pki secrets engine at: pki/
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
    По умолчанию механизм секретов будет установлен с именем движка. Чтобы включить механизм секретов по другому пути, используйте аргумент `-path`.
@@ -45,22 +45,22 @@ weight: 20
 1. Увеличьте TTL, настроив механизм секретов. Значение по умолчанию в 30 дней может быть слишком коротким, поэтому увеличьте его до 1 года:
 
    {{< tabs name="stronghold_cmd_45615" >}}
-   {{% tab name="Stronghold в DP" %}}
+   {{< tab name="Stronghold в DP" >}}
 
    ```shell
    $ d8 stronghold secrets tune -max-lease-ttl=8760h pki
    Success! Tuned the secrets engine at: pki/
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold в Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold в Linux" >}}
 
    ```shell
    $ stronghold secrets tune -max-lease-ttl=8760h pki
    Success! Tuned the secrets engine at: pki/
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
    Обратите внимание, что отдельные роли могут ограничивать это значение до более короткого на основе каждого сертификата. Это лишь настраивает глобальное максимальное значение для этого механизма секретов.
@@ -68,7 +68,7 @@ weight: 20
 1. Настройте сертификат CA и приватный ключ. Stronghold может использовать уже существующую пару ключей или сгенерировать собственный самоподписанный корневой сертификат. В общем случае, мы рекомендуем поддерживать ваш корневой CA вне Stronghold и предоставлять Stronghold подписанный промежуточный CA.
 
    {{< tabs name="stronghold_cmd_68298" >}}
-   {{% tab name="Stronghold в DP" %}}
+   {{< tab name="Stronghold в DP" >}}
 
    ```shell
    $ d8 stronghold write pki/root/generate/internal \
@@ -83,8 +83,8 @@ weight: 20
    serial_number    fc:f1:fb:2c:6d:4d:99:1e:82:1b:08:0a:81:ed:61:3e:1d:fa:f5:29
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold в Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold в Linux" >}}
 
    ```shell
    $ stronghold write pki/root/generate/internal \
@@ -99,7 +99,7 @@ weight: 20
    serial_number    fc:f1:fb:2c:6d:4d:99:1e:82:1b:08:0a:81:ed:61:3e:1d:fa:f5:29
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
    Возвращаемый сертификат является чисто информативным. Закрытый ключ безопасно хранится внутри Stronghold.
@@ -107,7 +107,7 @@ weight: 20
 1. Обновите местоположение CRL и выпускающие сертификаты. Эти значения могут быть обновлены в будущем.
 
    {{< tabs name="stronghold_cmd_23698" >}}
-   {{% tab name="Stronghold в DP" %}}
+   {{< tab name="Stronghold в DP" >}}
 
    ```shell
    $ d8 stronghold write pki/config/urls \
@@ -116,8 +116,8 @@ weight: 20
    Success! Data written to: pki/config/urls
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold в Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold в Linux" >}}
 
    ```shell
    $ stronghold write pki/config/urls \
@@ -126,13 +126,13 @@ weight: 20
    Success! Data written to: pki/config/urls
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
 1. Настройте роль, которая сопоставляет имя в Stronghold с процедурой генерации сертификата. Когда пользователи или машины генерируют учетные данные, они генерируются для этой роли:
 
    {{< tabs name="stronghold_cmd_44323" >}}
-   {{% tab name="Stronghold в DP" %}}
+   {{< tab name="Stronghold в DP" >}}
 
    ```shell
    $ d8 stronghold write pki/roles/example-dot-ru \
@@ -142,8 +142,8 @@ weight: 20
    Success! Data written to: pki/roles/example-dot-ru
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold в Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold в Linux" >}}
 
    ```shell
    $ stronghold write pki/roles/example-dot-ru \
@@ -153,7 +153,7 @@ weight: 20
    Success! Data written to: pki/roles/example-dot-ru
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
 ## Использование
@@ -163,7 +163,7 @@ weight: 20
 1. Сгенерируйте новые учетные данные, записав их в путь `/issue` с именем роли:
 
    {{< tabs name="stronghold_cmd_86742" >}}
-   {{% tab name="Stronghold в DP" %}}
+   {{< tab name="Stronghold в DP" >}}
 
    ```shell
    $ d8 stronghold write pki/issue/example-dot-ru \
@@ -178,8 +178,8 @@ weight: 20
    serial_number       1d:2e:c6:06:45:18:60:0e:23:d6:c5:17:43:c0:fe:46:ed:d1:50:be
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold в Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold в Linux" >}}
 
    ```shell
    $ stronghold write pki/issue/example-dot-ru \
@@ -194,7 +194,7 @@ weight: 20
    serial_number       1d:2e:c6:06:45:18:60:0e:23:d6:c5:17:43:c0:fe:46:ed:d1:50:be
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
    Вывод будет включать динамически сгенерированный закрытый ключ и сертификат, который соответствует данной роли и истекает через 72 часа (как указано в нашем определении роли). Также возвращаются выпускающий CA и цепочка доверия для упрощения автоматизации.

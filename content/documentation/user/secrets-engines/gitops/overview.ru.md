@@ -21,20 +21,20 @@ weight: 10
 1. Включите механизм секретов GitOps:
 
    {{< tabs name="stronghold_cmd_429" >}}
-   {{% tab name="Stronghold в DP" %}}
+   {{< tab name="Stronghold в DP" >}}
 
    ```bash
    d8 stronghold secrets enable gitops
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold в Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold в Linux" >}}
 
    ```bash
    stronghold secrets enable gitops
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
    По умолчанию механизм монтируется по пути `gitops/`. Чтобы использовать другой путь, укажите `-path`.
@@ -42,7 +42,7 @@ weight: 10
 1. Настройте Git-репозиторий для мониторинга:
 
    {{< tabs name="stronghold_cmd_97842" >}}
-   {{% tab name="Stronghold в DP" %}}
+   {{< tab name="Stronghold в DP" >}}
 
    ```bash
    d8 stronghold write gitops/configure/git_repository \
@@ -51,8 +51,8 @@ weight: 10
        git_poll_period=1m
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold в Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold в Linux" >}}
 
    ```bash
    stronghold write gitops/configure/git_repository \
@@ -61,7 +61,7 @@ weight: 10
        git_poll_period=1m
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
    | Параметр | Обязательный | По умолчанию | Описание |
@@ -76,7 +76,7 @@ weight: 10
 1. Если репозиторий приватный, настройте учётные данные:
 
    {{< tabs name="stronghold_cmd_46118" >}}
-   {{% tab name="Stronghold в DP" %}}
+   {{< tab name="Stronghold в DP" >}}
 
    ```bash
    d8 stronghold write gitops/configure/git_credential \
@@ -84,8 +84,8 @@ weight: 10
        password=glpat-XXXXXXXX
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold в Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold в Linux" >}}
 
    ```bash
    stronghold write gitops/configure/git_credential \
@@ -93,7 +93,7 @@ weight: 10
        password=glpat-XXXXXXXX
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
 1. Создайте PGP-ключи для подписи коммитов:
@@ -106,7 +106,7 @@ weight: 10
 1. Экспортируйте открытые ключи и загрузите их в Stronghold:
 
    {{< tabs name="stronghold_cmd_91259" >}}
-   {{% tab name="Stronghold в DP" %}}
+   {{< tab name="Stronghold в DP" >}}
 
    ```bash
    gpg --armor --output key1.pgp --export key1
@@ -116,8 +116,8 @@ weight: 10
    d8 stronghold write gitops/configure/trusted_pgp_public_key/key2 public_key=@key2.pgp
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold в Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold в Linux" >}}
 
    ```bash
    gpg --armor --output key1.pgp --export key1
@@ -127,13 +127,13 @@ weight: 10
    stronghold write gitops/configure/trusted_pgp_public_key/key2 public_key=@key2.pgp
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
 1. Настройте доступ механизма к API. Предпочтительнее передавать обёрнутый обновляемый periodic-токен. Механизм разворачивает токен и сохраняет его; позже токен прочитать нельзя:
 
    {{< tabs name="stronghold_cmd_11329" >}}
-   {{% tab name="Stronghold в DP" %}}
+   {{< tab name="Stronghold в DP" >}}
 
    ```bash
    TOKEN=$(d8 stronghold token create -orphan -period=7d -policy=gitops-apply \
@@ -144,8 +144,8 @@ weight: 10
        wrapping_token=$TOKEN
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold в Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold в Linux" >}}
 
    ```bash
    TOKEN=$(stronghold token create -orphan -period=7d -policy=gitops-apply \
@@ -156,7 +156,7 @@ weight: 10
        wrapping_token=$TOKEN
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
    | Параметр | Описание |
@@ -215,20 +215,20 @@ weight: 10
 Проверьте текущий статус:
 
 {{< tabs name="stronghold_cmd_43910" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```bash
 d8 stronghold read gitops/status
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```bash
 stronghold read gitops/status
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 В ответе:
@@ -241,20 +241,20 @@ stronghold read gitops/status
 ## Отключение
 
 {{< tabs name="stronghold_cmd_9753" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```bash
 d8 stronghold secrets disable gitops
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```bash
 stronghold secrets disable gitops
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 При отключении механизма удаляются его данные в хранилище для этой точки монтирования, включая сохранённый API-токен и состояние применения.

@@ -30,20 +30,20 @@ To learn more about authentication, see the
 Auth methods can be enabled/disabled using the CLI or the API.
 
 {{< tabs name="stronghold_cmd_16299" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```shell-session
 d8 stronghold auth enable userpass
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```shell-session
 stronghold auth enable userpass
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 When enabled, auth methods are similar to [secrets engines](../secrets-engines/):
@@ -56,20 +56,20 @@ path is customizable, allowing users with advanced use cases to mount a single
 auth method multiple times.
 
 {{< tabs name="stronghold_cmd_73169" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```shell-session
 d8 stronghold auth enable -path=my-login userpass
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```shell-session
 stronghold auth enable -path=my-login userpass
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 When an auth method is disabled, all users authenticated via that method are

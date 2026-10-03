@@ -53,7 +53,7 @@ weight: 40
 Ниже приведён пример создания политики и токена для репликации из mount <dev-secrets>, находящегося в неймспейсе <ns_path_1>. Для этого на исходном сервере создайте политику и токен, привязанный к ней.
 
 {{< tabs name="stronghold_cmd_81370" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell
 d8 stronghold policy write -namespace=ns_path_1 replicate-dev-secrets - <<EOF
@@ -81,8 +81,8 @@ EOF
 d8 stronghold token create -namespace=ns_path_1 -policy=replicate-dev-secrets -orphan=true -period=30d
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell
 stronghold policy write -namespace=ns_path_1 replicate-dev-secrets - <<EOF
@@ -110,7 +110,7 @@ EOF
 stronghold token create -namespace=ns_path_1 -policy=replicate-dev-secrets -orphan=true -period=30d
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 ### Настройка репликации через cli Stronghold
@@ -120,7 +120,7 @@ stronghold token create -namespace=ns_path_1 -policy=replicate-dev-secrets -orph
 Без использования TLS-соединения:
 
 {{< tabs name="stronghold_cmd_71033" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell
 d8 stronghold secrets enable \
@@ -135,8 +135,8 @@ d8 stronghold secrets enable \
  kv
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell
 stronghold secrets enable \
@@ -151,13 +151,13 @@ stronghold secrets enable \
  kv
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 С передачей настроек TLS-соединения:
 
 {{< tabs name="stronghold_cmd_78059" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell
 d8 stronghold secrets enable \
@@ -173,8 +173,8 @@ d8 stronghold secrets enable \
  kv
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell
 stronghold secrets enable \
@@ -190,7 +190,7 @@ stronghold secrets enable \
  kv
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Здесь:
@@ -239,7 +239,7 @@ stronghold secrets enable \
 Для изменения настроек репликации через cli Stronghold необходимо выполнить следующие команды:
 
 {{< tabs name="stronghold_cmd_87105" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell
 d8 stronghold secrets tune \
@@ -252,8 +252,8 @@ d8 stronghold secrets tune \
  <local_mount_path_name>
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell
 stronghold secrets tune \
@@ -266,7 +266,7 @@ stronghold secrets tune \
  <local_mount_path_name>
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Здесь:
@@ -287,20 +287,20 @@ stronghold secrets tune \
 Для отключения репликации заданного хранилища достаточно выполнить операцию:
 
 {{< tabs name="stronghold_cmd_62983" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell
 d8 stronghold secrets tune -sync-enable=false -namespace=<namespace_path_in_local_cluster> <local_mount_path_name>
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell
 stronghold secrets tune -sync-enable=false -namespace=<namespace_path_in_local_cluster> <local_mount_path_name>
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Если будут переданы остальные параметры настройки репликации, то они будут проигнорированы.
@@ -308,20 +308,20 @@ stronghold secrets tune -sync-enable=false -namespace=<namespace_path_in_local_c
 Для включения репликации необходимо выполнить команду:
 
 {{< tabs name="stronghold_cmd_17061" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell
 d8 stronghold secrets tune -sync-enable=true -namespace=<namespace_path_in_local_cluster> <local_mount_path_name>
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell
 stronghold secrets tune -sync-enable=true -namespace=<namespace_path_in_local_cluster> <local_mount_path_name>
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 В данном случае также можно передавать и остальные параметры настройки репликации, они будут учитываться.
@@ -329,18 +329,18 @@ stronghold secrets tune -sync-enable=true -namespace=<namespace_path_in_local_cl
 Для чтения настроек репликации необходимо выполнить команду:
 
 {{< tabs name="stronghold_cmd_88395" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell
 d8 stronghold read -namespace=<namespace_path_in_local_cluster> sys/mounts/<mount_path>/tune
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell
 stronghold read -namespace=<namespace_path_in_local_cluster> sys/mounts/<mount_path>/tune
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}

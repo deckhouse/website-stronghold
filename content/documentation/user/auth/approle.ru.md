@@ -11,20 +11,20 @@ weight: 40
 Включение с помощью CLI:
 
 {{< tabs name="stronghold_cmd_12027" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell
 d8 stronghold auth enable approle
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell
 stronghold auth enable approle
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 При включении методы аутентификации работают аналогично механизмам секретов: они монтируются в таблицу монтирования Stronghold и могут быть доступны и настраиваться с помощью стандартного API для чтения и записи. Все методы аутентификации по умолчанию монтируются в поддиректории auth/ и отображаются как auth/<type>, например, `auth/oidc/`.
@@ -32,20 +32,20 @@ stronghold auth enable approle
 Администраторы Stronghold с комплексными задачами могут монтировать один и тот же метод аутентификации несколько раз, используя CLI для задания пути, отличного от стандартного:
 
 {{< tabs name="stronghold_cmd_99538" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell
 d8 stronghold auth enable -path=my-login approle
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell
 stronghold auth enable -path=my-login approle
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Включение с помощью UI:
@@ -74,7 +74,7 @@ AppRole — это набор политик и ограничений ауте�
 Путь по умолчанию - `/approle`. Если этот метод аутентификации был включен по другому пути, укажите нужный путь вместо пути по умолчанию.
 
 {{< tabs name="stronghold_cmd_15075" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell
 d8 stronghold write auth/approle/login \
@@ -90,8 +90,8 @@ token_renewable    true
 token_policies     [default]
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell
 stronghold write auth/approle/login \
@@ -107,7 +107,7 @@ token_renewable    true
 token_policies     [default]
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 #### Аутентификация с помощью API
@@ -148,26 +148,26 @@ curl \
 1. Включите метод аутентификации AppRole:
 
 {{< tabs name="stronghold_cmd_12027" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell
 d8 stronghold auth enable approle
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell
 stronghold auth enable approle
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 1. Создайте именованную роль:
 
 {{< tabs name="stronghold_cmd_71976" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell
 d8 stronghold write auth/approle/role/my-role \
@@ -179,8 +179,8 @@ d8 stronghold write auth/approle/role/my-role \
  secret_id_num_uses=40
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell
 stronghold write auth/approle/role/my-role \
@@ -192,7 +192,7 @@ stronghold write auth/approle/role/my-role \
  secret_id_num_uses=40
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 **Примечание:** Если токен, выданный вашим approle, требует возможности создания дочерних токенов, вам необходимо установить значение token_num_uses равным 0.
@@ -200,28 +200,28 @@ stronghold write auth/approle/role/my-role \
 Получите RoleID для AppRole:
 
 {{< tabs name="stronghold_cmd_58119" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell
 d8 stronghold read auth/approle/role/my-role/role-id
   role_id     db02de05-fa49-4055-059b-67221c5c2f63
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell
 stronghold read auth/approle/role/my-role/role-id
   role_id     db02de05-fa49-4055-059b-67221c5c2f63
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Получите SecretID, выданный для AppRole:
 
 {{< tabs name="stronghold_cmd_71920" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell
 d8 stronghold write -f auth/approle/role/my-role/secret-id
@@ -231,8 +231,8 @@ d8 stronghold write -f auth/approle/role/my-role/secret-id
  secret_id_num_uses      40
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell
 stronghold write -f auth/approle/role/my-role/secret-id
@@ -242,7 +242,7 @@ stronghold write -f auth/approle/role/my-role/secret-id
  secret_id_num_uses      40
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 #### Конфигурирование через API

@@ -21,22 +21,22 @@ Roles.
 1. Enable the database secrets engine if it is not already enabled:
 
     {{< tabs name="stronghold_cmd_1716" >}}
-    {{% tab name="Stronghold in DP" %}}
+    {{< tab name="Stronghold in DP" >}}
 
     ```shell-session
     $ d8 stronghold secrets enable database
     Success! Enabled the database secrets engine at: database/
     ```
 
-    {{% /tab %}}
-    {{% tab name="Stronghold in Linux" %}}
+    {{< /tab >}}
+    {{< tab name="Stronghold in Linux" >}}
 
     ```shell-session
     $ stronghold secrets enable database
     Success! Enabled the database secrets engine at: database/
     ```
 
-    {{% /tab %}}
+    {{< /tab >}}
     {{< /tabs >}}
 
     By default, the secrets engine will enable at the name of the engine. To
@@ -45,7 +45,7 @@ Roles.
 1. Configure Stronghold with the proper plugin and connection information:
 
     {{< tabs name="stronghold_cmd_83564" >}}
-    {{% tab name="Stronghold in DP" %}}
+    {{< tab name="Stronghold in DP" >}}
 
     ```shell-session
     $ d8 stronghold write database/config/my-postgresql-database \
@@ -57,8 +57,8 @@ Roles.
         password_authentication="scram-sha-256"
     ```
 
-    {{% /tab %}}
-    {{% tab name="Stronghold in Linux" %}}
+    {{< /tab >}}
+    {{< tab name="Stronghold in Linux" >}}
 
     ```shell-session
     $ stronghold write database/config/my-postgresql-database \
@@ -70,14 +70,14 @@ Roles.
         password_authentication="scram-sha-256"
     ```
 
-    {{% /tab %}}
+    {{< /tab >}}
     {{< /tabs >}}
 
 1. Configure a role that maps a name in Stronghold to an SQL statement to execute to
     create the database credential:
 
     {{< tabs name="stronghold_cmd_61534" >}}
-    {{% tab name="Stronghold in DP" %}}
+    {{< tab name="Stronghold in DP" >}}
 
     ```shell-session
     $ d8 stronghold write database/roles/my-role \
@@ -89,8 +89,8 @@ Roles.
     Success! Data written to: database/roles/my-role
     ```
 
-    {{% /tab %}}
-    {{% tab name="Stronghold in Linux" %}}
+    {{< /tab >}}
+    {{< tab name="Stronghold in Linux" >}}
 
     ```shell-session
     $ stronghold write database/roles/my-role \
@@ -102,7 +102,7 @@ Roles.
     Success! Data written to: database/roles/my-role
     ```
 
-    {{% /tab %}}
+    {{< /tab >}}
     {{< /tabs >}}
 
 ## Usage
@@ -114,7 +114,7 @@ the proper permission, it can generate credentials.
     of the role:
 
     {{< tabs name="stronghold_cmd_90694" >}}
-    {{% tab name="Stronghold in DP" %}}
+    {{< tab name="Stronghold in DP" >}}
 
     ```shell-session
     $ d8 stronghold read database/creds/my-role
@@ -127,8 +127,8 @@ the proper permission, it can generate credentials.
     username           v-strongholduse-my-role-x
     ```
 
-    {{% /tab %}}
-    {{% tab name="Stronghold in Linux" %}}
+    {{< /tab >}}
+    {{< tab name="Stronghold in Linux" >}}
 
     ```shell-session
     $ stronghold read database/creds/my-role
@@ -141,5 +141,5 @@ the proper permission, it can generate credentials.
     username           v-strongholduse-my-role-x
     ```
 
-    {{% /tab %}}
+    {{< /tab >}}
     {{< /tabs >}}

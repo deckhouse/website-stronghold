@@ -41,7 +41,7 @@ Deckhouse Stronghold включает два встроенных сценари
 Для входа в систему CLI по умолчанию используется путь `/oidc_deckhouse`. Если данный метод аутентификации был включен по другому пути, укажите в CLI путь `-path=/my-path`.
 
 {{< tabs name="stronghold_cmd_96765" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell
 d8 stronghold login -method=oidc -path=oidc_deckhouse role=test
@@ -49,8 +49,8 @@ Complete the login via your OIDC provider. Launching browser to:
 https://myco.auth0.com/authorize?redirect_uri=http%3A%2F%2Flocalhost%3A8400%2Foidc%2Fcallback&client_id=r3qXc2bix9eF...
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell
 stronghold login -method=oidc -path=oidc_deckhouse role=test
@@ -58,7 +58,7 @@ Complete the login via your OIDC provider. Launching browser to:
 https://myco.auth0.com/authorize?redirect_uri=http%3A%2F%2Flocalhost%3A8400%2Foidc%2Fcallback&client_id=r3qXc2bix9eF...
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Браузер откроется по сгенерированному URL-адресу для завершения входа в систему провайдера. URL может быть введен вручную, если браузер не может быть открыт автоматически.
@@ -83,7 +83,7 @@ https://myco.auth0.com/authorize?redirect_uri=http%3A%2F%2Flocalhost%3A8400%2Foi
 * Если параметр роли (например, `bound_claims`) требует значения карты (map), его нельзя установить отдельно с помощью Deckhouse Stronghold CLI. В таких случаях запишите конфигурацию в виде одного JSON-объекта:
 
   {{< tabs name="stronghold_cmd_97815" >}}
-  {{% tab name="Stronghold в DP" %}}
+  {{< tab name="Stronghold в DP" >}}
 
   ```shell
   d8 stronghold write auth/oidc/role/demo -<<EOF
@@ -98,8 +98,8 @@ https://myco.auth0.com/authorize?redirect_uri=http%3A%2F%2Flocalhost%3A8400%2Foi
   EOF
   ```
 
-  {{% /tab %}}
-  {{% tab name="Stronghold в Linux" %}}
+  {{< /tab >}}
+  {{< tab name="Stronghold в Linux" >}}
 
   ```shell
   stronghold write auth/oidc/role/demo -<<EOF
@@ -114,7 +114,7 @@ https://myco.auth0.com/authorize?redirect_uri=http%3A%2F%2Flocalhost%3A8400%2Foi
   EOF
   ```
 
-  {{% /tab %}}
+  {{< /tab >}}
   {{< /tabs >}}
 
 * Проследите за выводом журнала Deckhouse Stronghold, в котором содержится важная информация о сбоях проверки OIDC.

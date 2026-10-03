@@ -116,20 +116,20 @@ snapshot_auto_upload_pool_shutdown = "90s"
 Примените конфигурацию из файла `local-snapshot.json` следующей командой:
 
 {{< tabs name="stronghold_cmd_6865" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell
 d8 stronghold write sys/storage/raft/snapshot-auto/config/my-local-snapshots @local-snapshot.json
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell
 stronghold write sys/storage/raft/snapshot-auto/config/my-local-snapshots @local-snapshot.json
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 {{< alert level="info" >}}
@@ -163,20 +163,20 @@ stronghold write sys/storage/raft/snapshot-auto/config/my-local-snapshots @local
 Примените конфигурацию из файла `minio-snapshot.json` следующей командой:
 
 {{< tabs name="stronghold_cmd_45767" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell
 d8 stronghold write sys/storage/raft/snapshot-auto/config/my-remote-snapshots @minio-snapshot.json
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell
 stronghold write sys/storage/raft/snapshot-auto/config/my-remote-snapshots @minio-snapshot.json
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 ### Обновление существующей конфигурации
@@ -195,20 +195,20 @@ stronghold write sys/storage/raft/snapshot-auto/config/my-remote-snapshots @mini
 Примените обновлённую конфигурацию из файла `local-snapshot-update.json` следующей командой:
 
 {{< tabs name="stronghold_cmd_53206" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell
 d8 stronghold write sys/storage/raft/snapshot-auto/config/my-local-snapshots @local-snapshot-update.json
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell
 stronghold write sys/storage/raft/snapshot-auto/config/my-local-snapshots @local-snapshot-update.json
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 ## Просмотр списка конфигураций
@@ -220,20 +220,20 @@ stronghold write sys/storage/raft/snapshot-auto/config/my-local-snapshots @local
 Пример команды:
 
 {{< tabs name="stronghold_cmd_33978" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell
 d8 stronghold list sys/storage/raft/snapshot-auto/config
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell
 stronghold list sys/storage/raft/snapshot-auto/config
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 ## Получение параметров конфигурации
@@ -245,20 +245,20 @@ stronghold list sys/storage/raft/snapshot-auto/config
 Пример команды:
 
 {{< tabs name="stronghold_cmd_67199" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell
 d8 stronghold read sys/storage/raft/snapshot-auto/config/my-remote-snapshots
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell
 stronghold read sys/storage/raft/snapshot-auto/config/my-remote-snapshots
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Для `aws-s3` значения `aws_access_key_id` и `aws_secret_access_key` в ответе не отображаются.
@@ -272,20 +272,20 @@ stronghold read sys/storage/raft/snapshot-auto/config/my-remote-snapshots
 Пример команды:
 
 {{< tabs name="stronghold_cmd_50803" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell
 d8 stronghold delete sys/storage/raft/snapshot-auto/config/my-remote-snapshots
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell
 stronghold delete sys/storage/raft/snapshot-auto/config/my-remote-snapshots
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 {{< alert level="info" >}}
@@ -301,20 +301,20 @@ stronghold delete sys/storage/raft/snapshot-auto/config/my-remote-snapshots
 Пример команды:
 
 {{< tabs name="stronghold_cmd_25509" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell
 d8 stronghold read sys/storage/raft/snapshot-auto/status/my-remote-snapshots
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell
 stronghold read sys/storage/raft/snapshot-auto/status/my-remote-snapshots
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Ключевые поля статуса:

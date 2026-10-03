@@ -245,26 +245,26 @@ To create or edit a password policy, use the POST method on `/sys/policies/passw
 Example of creating a policy from an HCL file:
 
 {{< tabs name="stronghold_cmd_10695" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```shell
 d8 stronghold write sys/policies/password/my-policy policy=@my-policy.hcl
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```shell
 stronghold write sys/policies/password/my-policy policy=@my-policy.hcl
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Example of passing a policy directly when creating it:
 
 {{< tabs name="stronghold_cmd_10932" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```shell
 d8 stronghold write sys/policies/password/my-policy policy=- <<EOF
@@ -275,8 +275,8 @@ rule “charset” {
 EOF
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```shell
 stronghold write sys/policies/password/my-policy policy=- <<EOF
@@ -287,26 +287,26 @@ rule “charset” {
 EOF
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 To verify that the policy has been created, use the following command:
 
 {{< tabs name="stronghold_cmd_15846" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```bash
 d8 stronghold read sys/policies/password/my-policy
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```bash
 stronghold read sys/policies/password/my-policy
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Example of creating a policy via the API:
@@ -326,20 +326,20 @@ To get a list of created policies, use the GET method on `/sys/policies/password
 Example:
 
 {{< tabs name="stronghold_cmd_12295" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```bash
 d8 stronghold read sys/policies/password
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```bash
 stronghold read sys/policies/password
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Example of getting a list of policies via the API:
@@ -358,20 +358,20 @@ To get information about a specific policy, use the GET method on `/sys/policies
 Example:
 
 {{< tabs name="stronghold_cmd_15846" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```bash
 d8 stronghold read sys/policies/password/my-policy
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```bash
 stronghold read sys/policies/password/my-policy
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Example of getting information about a specific policy via the API:
@@ -389,20 +389,20 @@ To delete a password policy, use the DELETE method on `/sys/policies/password/:n
 Example:
 
 {{< tabs name="stronghold_cmd_11334" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```bash
 d8 stronghold delete sys/policies/password/my-policy
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```bash
 stronghold delete sys/policies/password/my-policy
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Example of deleting a policy via the API:
@@ -422,20 +422,20 @@ To do this, use the `/sys/policies/password/:name/generate` method, replacing `:
 Example:
 
 {{< tabs name="stronghold_cmd_16213" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```shell
 d8 stronghold read sys/policies/password/my-policy/generate
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```shell
 stronghold read sys/policies/password/my-policy/generate
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Example of generating a password via the API:

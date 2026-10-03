@@ -32,20 +32,20 @@ itself. You do not need to call `sys/replication/reindex` manually.
 ## Step 1. Enable the primary
 
 {{< tabs name="stronghold_cmd_10766" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```shell
 d8 stronghold write -force sys/replication/performance/primary/enable
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```shell
 stronghold write -force sys/replication/performance/primary/enable
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 {{< alert level="warning" >}}
@@ -60,22 +60,22 @@ Generate a wrapping activation token for a specific secondary identified by
 `id`:
 
 {{< tabs name="stronghold_cmd_30185" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```shell
 d8 stronghold write sys/replication/performance/primary/secondary-token \
   id=sec-1 ttl=24h
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```shell
 stronghold write sys/replication/performance/primary/secondary-token \
   id=sec-1 ttl=24h
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 The `id` parameter is required; `ttl` defaults to `24h`. The command returns a
@@ -127,20 +127,20 @@ replication was enabled.
 ## Step 4. Verify the status
 
 {{< tabs name="stronghold_cmd_33280" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```shell
 d8 stronghold read -address="${SECONDARY_ADDR}" sys/replication/performance/status
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```shell
 stronghold read -address="${SECONDARY_ADDR}" sys/replication/performance/status
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 When the secondary is connected and pulling the WAL, `state` is `stream-wals`
@@ -154,7 +154,7 @@ method you logged in with in step 3 — the primary's root token is not valid on
 the secondary.
 
 {{< tabs name="stronghold_cmd_22692" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```shell
 # Write on the primary.
@@ -167,8 +167,8 @@ d8 stronghold kv get -address="${SECONDARY_ADDR}" secret/hello
 d8 stronghold kv put -address="${SECONDARY_ADDR}" secret/fromsec value=1
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```shell
 # Write on the primary.
@@ -181,7 +181,7 @@ stronghold kv get -address="${SECONDARY_ADDR}" secret/hello
 stronghold kv put -address="${SECONDARY_ADDR}" secret/fromsec value=1
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 ## Path filters

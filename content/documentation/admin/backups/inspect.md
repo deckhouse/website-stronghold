@@ -17,39 +17,39 @@ The `inspect` command applies to integrated Raft storage snapshots. If Stronghol
 To check a snapshot, run the following command specifying a path to the snapshot file instead of `<SNAPSHOT_FILE>`:
 
 {{< tabs name="stronghold_cmd_30895" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```shell
 d8 stronghold operator raft snapshot inspect <SNAPSHOT_FILE>
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```shell
 stronghold operator raft snapshot inspect <SNAPSHOT_FILE>
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Example:
 
 {{< tabs name="stronghold_cmd_60240" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```shell
 d8 stronghold operator raft snapshot inspect raft.snap
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```shell
 stronghold operator raft snapshot inspect raft.snap
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 The command prints snapshot metadata and a table that shows the number of keys and the amount of space used by each key group.
@@ -97,22 +97,22 @@ core/cluster                                      2          236 B
 You can inspect the file immediately after creating it:
 
 {{< tabs name="stronghold_cmd_11011" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```shell
 d8 stronghold operator raft snapshot save /backup/raft.snap
 d8 stronghold operator raft snapshot inspect /backup/raft.snap
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```shell
 stronghold operator raft snapshot save /backup/raft.snap
 stronghold operator raft snapshot inspect /backup/raft.snap
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 ### Validation of snapshot consistency
@@ -120,20 +120,20 @@ stronghold operator raft snapshot inspect /backup/raft.snap
 Use the `-validate` flag for a thorough backup check:
 
 {{< tabs name="stronghold_cmd_82428" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```shell
 d8 stronghold operator raft snapshot inspect -validate raft.snap
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```shell
 stronghold operator raft snapshot inspect -validate raft.snap
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 This helps confirm that:
@@ -149,20 +149,20 @@ This is useful for automated backup checks, but it does not replace a real resto
 To inspect a specific part of the stored data, use `-filter` together with `-depth`:
 
 {{< tabs name="stronghold_cmd_98176" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```shell
 d8 stronghold operator raft snapshot inspect -depth 3 -filter=core raft.snap
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```shell
 stronghold operator raft snapshot inspect -depth 3 -filter=core raft.snap
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 This is useful when troubleshooting storage growth or identifying unusually large key groups.
@@ -172,20 +172,20 @@ This is useful when troubleshooting storage growth or identifying unusually larg
 For scripts and monitoring workflows, use JSON output:
 
 {{< tabs name="stronghold_cmd_96016" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```shell
 d8 stronghold operator raft snapshot inspect -format=json raft.snap
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```shell
 stronghold operator raft snapshot inspect -format=json raft.snap
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 When combined with `-validate`, JSON output is convenient for automated processing with tools such as `jq`.

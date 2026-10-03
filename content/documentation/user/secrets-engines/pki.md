@@ -12,22 +12,22 @@ The first step to using the PKI backend is to mount it. Unlike the `kv`
 backend, the `pki` backend is not mounted by default.
 
 {{< tabs name="stronghold_cmd_10344" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```shell-session
 $ d8 stronghold secrets enable pki
 Successfully mounted 'pki' at 'pki'!
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```shell-session
 $ stronghold secrets enable pki
 Successfully mounted 'pki' at 'pki'!
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 ## Configure a CA certificate
@@ -45,22 +45,22 @@ long maximum life time for the certificate; since it honors the maximum mount
 TTL, first we adjust that:
 
 {{< tabs name="stronghold_cmd_62118" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```shell-session
 $ d8 stronghold secrets tune -max-lease-ttl=87600h pki
 Successfully tuned mount 'pki'!
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```shell-session
 $ stronghold secrets tune -max-lease-ttl=87600h pki
 Successfully tuned mount 'pki'!
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 That sets the maximum TTL for secrets issued from the mount to 10 years. (Note
@@ -69,7 +69,7 @@ that roles can further restrict the maximum TTL.)
 Now, we generate our root certificate:
 
 {{< tabs name="stronghold_cmd_72325" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```shell-session
 $ d8 stronghold write pki/root/generate/internal common_name=myopenbao.com ttl=87600h
@@ -119,8 +119,8 @@ BT55jevSPVVu
 serial_number   26:aa:f0:ff:d1:03:65:ba:78:0c:4c:5a:2e:38:74:bd:20:07:c8:18
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```shell-session
 $ stronghold write pki/root/generate/internal common_name=myopenbao.com ttl=87600h
@@ -170,7 +170,7 @@ BT55jevSPVVu
 serial_number   26:aa:f0:ff:d1:03:65:ba:78:0c:4c:5a:2e:38:74:bd:20:07:c8:18
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 The returned certificate is purely informational; it and its private key are
@@ -182,22 +182,22 @@ Generated certificates can have the CRL location and the location of the
 issuing certificate encoded. These values must be set manually and typically to FQDN associated to the Stronghold server, but can be changed at any time.
 
 {{< tabs name="stronghold_cmd_70994" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```shell-session
 $ d8 stronghold write pki/config/urls issuing_certificates="http://openbao.example.com:8200/v1/pki/ca" crl_distribution_points="http://openbao.example.com:8200/v1/pki/crl"
 Success! Data written to: pki/ca/urls
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```shell-session
 $ stronghold write pki/config/urls issuing_certificates="http://openbao.example.com:8200/v1/pki/ca" crl_distribution_points="http://openbao.example.com:8200/v1/pki/crl"
 Success! Data written to: pki/ca/urls
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 ## Configure a role
@@ -207,7 +207,7 @@ policy used to generate those credentials. For example, let's create an
 "example-dot-com" role:
 
 {{< tabs name="stronghold_cmd_48235" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```shell-session
 $ d8 stronghold write pki/roles/example-dot-com \
@@ -216,8 +216,8 @@ $ d8 stronghold write pki/roles/example-dot-com \
 Success! Data written to: pki/roles/example-dot-com
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```shell-session
 $ stronghold write pki/roles/example-dot-com \
@@ -226,7 +226,7 @@ $ stronghold write pki/roles/example-dot-com \
 Success! Data written to: pki/roles/example-dot-com
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 ## Issue certificates
@@ -237,7 +237,7 @@ to the `issue` endpoint with that role name: Stronghold is now configured to cre
 and manage certificates!
 
 {{< tabs name="stronghold_cmd_91902" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```shell-session
 $ d8 stronghold write pki/issue/example-dot-com \
@@ -318,8 +318,8 @@ private_key_type    rsa
 serial_number       59:0b:af:a4:ca:40:db:29:b7:e8:4a:22:63:27:f7:3a:ce:54:78:8a
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```shell-session
 $ stronghold write pki/issue/example-dot-com \
@@ -400,7 +400,7 @@ private_key_type    rsa
 serial_number       59:0b:af:a4:ca:40:db:29:b7:e8:4a:22:63:27:f7:3a:ce:54:78:8a
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Stronghold has now generated a new set of credentials using the `example-dot-com`

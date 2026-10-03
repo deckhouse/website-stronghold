@@ -25,7 +25,7 @@ The default path is `/approle`. If this auth method was enabled at a different
 path, specify `auth/my-path/login` instead.
 
 {{< tabs name="stronghold_cmd_27297" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```shell-session
 $ d8 stronghold write auth/approle/login \
@@ -41,8 +41,8 @@ token_renewable    true
 token_policies     [default]
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```shell-session
 $ stronghold write auth/approle/login \
@@ -58,7 +58,7 @@ token_renewable    true
 token_policies     [default]
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 **Via the API**:
@@ -99,26 +99,26 @@ management tool.
 1. Enable the AppRole auth method:
 
    {{< tabs name="stronghold_cmd_6914" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```shell-session
    d8 stronghold auth enable approle
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```shell-session
    stronghold auth enable approle
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
 1. Create a named role:
 
    {{< tabs name="stronghold_cmd_91925" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```shell-session
    $ d8 stronghold write auth/approle/role/my-role \
@@ -129,8 +129,8 @@ management tool.
        secret_id_num_uses=40
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```shell-session
    $ stronghold write auth/approle/role/my-role \
@@ -141,7 +141,7 @@ management tool.
        secret_id_num_uses=40
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
 {{< alert level="warning" >}}
@@ -155,28 +155,28 @@ documentation.
 1. Fetch the RoleID of the AppRole:
 
    {{< tabs name="stronghold_cmd_81093" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```shell-session
    $ d8 stronghold read auth/approle/role/my-role/role-id
    role_id     db02de05-fa39-4855-059b-67221c5c2f63
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```shell-session
    $ stronghold read auth/approle/role/my-role/role-id
    role_id     db02de05-fa39-4855-059b-67221c5c2f63
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
 1. Get a SecretID issued against the AppRole:
 
    {{< tabs name="stronghold_cmd_53681" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```shell-session
    $ d8 stronghold write -f auth/approle/role/my-role/secret-id
@@ -186,8 +186,8 @@ documentation.
    secret_id_num_uses      40
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```shell-session
    $ stronghold write -f auth/approle/role/my-role/secret-id
@@ -197,7 +197,7 @@ documentation.
    secret_id_num_uses      40
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
 **Via the API**:

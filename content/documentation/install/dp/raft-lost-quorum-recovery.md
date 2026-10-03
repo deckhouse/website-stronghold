@@ -22,7 +22,7 @@ Despite one fully operational node, the cluster cannot process read or write req
 The following are the error examples when quorum is lost.
 
 {{< tabs name="stronghold_cmd_6115" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 - Attempt to obtain a list of nodes in a Raft cluster:
 
@@ -48,8 +48,8 @@ The following are the error examples when quorum is lost.
   * local node not active but active cluster node not found
   ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 - Attempt to obtain a list of nodes in a Raft cluster:
 
@@ -75,7 +75,7 @@ The following are the error examples when quorum is lost.
   * local node not active but active cluster node not found
   ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 The non-operational node logs may contain the following entries:
@@ -148,7 +148,7 @@ Restart the pod with the operational Stronghold instance (named `stronghold-0` i
 If automatic unseal is not configured, unseal Stronghold and then check the status.
 
 {{< tabs name="stronghold_cmd_96020" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 1. Unseal Stronghold and enter the unseal key:
 
@@ -185,8 +185,8 @@ If automatic unseal is not configured, unseal Stronghold and then check the stat
    Raft Applied Index       155344
    ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 1. Unseal Stronghold and enter the unseal key:
 
@@ -223,7 +223,7 @@ If automatic unseal is not configured, unseal Stronghold and then check the stat
    Raft Applied Index       155344
    ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 ## Step 5. Verify the recovery success
@@ -242,7 +242,7 @@ The recovery procedure is considered successful if Stronghold starts and display
 After the recovery, only one server must be listed in the cluster. This allows Stronghold to reach quorum and restore operation. To verify the number of servers, run the following command.
 
 {{< tabs name="stronghold_cmd_75226" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```bash
 d8 stronghold operator raft list-peers
@@ -256,8 +256,8 @@ Node                                    Address                                 
 d3816d62-29eb-4f42-98cb-f25ab05e8fbd    stronghold-0.stronghold-internal:8301    leader      true
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```bash
 stronghold operator raft list-peers
@@ -271,7 +271,7 @@ Node                                    Address                                 
 d3816d62-29eb-4f42-98cb-f25ab05e8fbd    stronghold-0.stronghold-internal:8301    leader      true
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 As shown, the cluster peer list contains only one server.

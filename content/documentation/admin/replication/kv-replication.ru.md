@@ -67,7 +67,7 @@ description: "Руководство администратора по репл�
 Ниже приведён пример создания политики и токена для репликации из `mount` `dev-secrets`, расположенного в пространстве имён `ns_path_1`:
 
 {{< tabs name="stronghold_cmd_42837" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell
 d8 stronghold policy write -namespace=ns_path_1 replicate-dev-secrets - <<'EOF'
@@ -95,8 +95,8 @@ EOF
 d8 stronghold token create -namespace=ns_path_1 -policy=replicate-dev-secrets -orphan=true -period=30d
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell
 stronghold policy write -namespace=ns_path_1 replicate-dev-secrets - <<'EOF'
@@ -124,7 +124,7 @@ EOF
 stronghold token create -namespace=ns_path_1 -policy=replicate-dev-secrets -orphan=true -period=30d
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 ## Создание wrapping token
@@ -136,7 +136,7 @@ stronghold token create -namespace=ns_path_1 -policy=replicate-dev-secrets -orph
 Пример создания wrapping token на исходном кластере:
 
 {{< tabs name="stronghold_cmd_90364" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell
 d8 stronghold token create \
@@ -148,8 +148,8 @@ d8 stronghold token create \
   -field=wrapping_token
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell
 stronghold token create \
@@ -161,7 +161,7 @@ stronghold token create \
   -field=wrapping_token
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Полученный `wrapping token` нужно передать при настройке репликации на кластере-потребителе.
@@ -171,7 +171,7 @@ stronghold token create \
 ### Без TLS
 
 {{< tabs name="stronghold_cmd_6304" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell
 d8 stronghold secrets enable \
@@ -186,8 +186,8 @@ d8 stronghold secrets enable \
   kv
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell
 stronghold secrets enable \
@@ -202,13 +202,13 @@ stronghold secrets enable \
   kv
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 ### С TLS
 
 {{< tabs name="stronghold_cmd_40961" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell
 d8 stronghold secrets enable \
@@ -224,8 +224,8 @@ d8 stronghold secrets enable \
   kv
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell
 stronghold secrets enable \
@@ -241,7 +241,7 @@ stronghold secrets enable \
   kv
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Пояснение параметров:
@@ -276,7 +276,7 @@ stronghold secrets enable \
 Пример изменения настроек:
 
 {{< tabs name="stronghold_cmd_91012" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell
 d8 stronghold secrets tune \
@@ -289,8 +289,8 @@ d8 stronghold secrets tune \
   <local_mount_path_name>
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell
 stronghold secrets tune \
@@ -303,13 +303,13 @@ stronghold secrets tune \
   <local_mount_path_name>
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Для отключения репликации:
 
 {{< tabs name="stronghold_cmd_83685" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell
 d8 stronghold secrets tune \
@@ -318,8 +318,8 @@ d8 stronghold secrets tune \
   <local_mount_path_name>
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell
 stronghold secrets tune \
@@ -328,13 +328,13 @@ stronghold secrets tune \
   <local_mount_path_name>
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Для повторного включения:
 
 {{< tabs name="stronghold_cmd_53688" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell
 d8 stronghold secrets tune \
@@ -343,8 +343,8 @@ d8 stronghold secrets tune \
   <local_mount_path_name>
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell
 stronghold secrets tune \
@@ -353,13 +353,13 @@ stronghold secrets tune \
   <local_mount_path_name>
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Для чтения текущих настроек:
 
 {{< tabs name="stronghold_cmd_50008" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell
 d8 stronghold read \
@@ -367,8 +367,8 @@ d8 stronghold read \
   sys/mounts/<mount_path>/tune
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell
 stronghold read \
@@ -376,5 +376,5 @@ stronghold read \
   sys/mounts/<mount_path>/tune
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
