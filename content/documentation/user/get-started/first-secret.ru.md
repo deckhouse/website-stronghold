@@ -92,7 +92,7 @@ weight: 30
 
 1. Убедитесь, что значение обновилось:
 
-   {{< tabs name="stronghold_cmd_55073" >}}
+   {{< tabs name="stronghold_cmd_55073_2" >}}
    {{< tab name="Stronghold в DP" >}}
 
    ```shell

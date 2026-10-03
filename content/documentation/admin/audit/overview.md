@@ -174,7 +174,7 @@ If you use UDP, account for the possibility of silent message loss. For producti
 
 Enable an audit device:
 
-{{< tabs name="stronghold_cmd_20236" >}}
+{{< tabs name="stronghold_cmd_20236_2" >}}
 {{< tab name="Stronghold in DP" >}}
 
 ```shell

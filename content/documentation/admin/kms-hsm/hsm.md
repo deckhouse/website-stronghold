@@ -206,7 +206,7 @@ After the migration is complete, Stronghold will automatically unseal using PKCS
 
 1. Perform the migration by entering the recovery keys:
 
-   {{< tabs name="stronghold_cmd_66874" >}}
+   {{< tabs name="stronghold_cmd_66874_2" >}}
    {{< tab name="Stronghold in DP" >}}
 
    ```shell

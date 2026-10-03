@@ -90,7 +90,7 @@ To create a test secret, follow these steps:
 
 1. Make sure the value has been updated:
 
-   {{< tabs name="stronghold_cmd_55073" >}}
+   {{< tabs name="stronghold_cmd_55073_2" >}}
    {{< tab name="Stronghold in DP" >}}
 
    ```shell

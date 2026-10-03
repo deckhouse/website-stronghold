@@ -174,7 +174,7 @@ stronghold audit enable socket address=127.0.0.1:9090 socket_type=tcp
 
 Включить аудит-устройство:
 
-{{< tabs name="stronghold_cmd_20236" >}}
+{{< tabs name="stronghold_cmd_20236_2" >}}
 {{< tab name="Stronghold в DP" >}}
 
 ```shell

@@ -147,7 +147,7 @@ curl \
 
 1. Включите метод аутентификации AppRole:
 
-{{< tabs name="stronghold_cmd_12027" >}}
+{{< tabs name="stronghold_cmd_12027_2" >}}
 {{< tab name="Stronghold в DP" >}}
 
 ```shell

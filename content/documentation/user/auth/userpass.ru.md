@@ -303,7 +303,7 @@ stronghold write auth/userpass/users/alice \
 
 1. Включите метод `userpass`:
 
-   {{< tabs name="stronghold_cmd_10" >}}
+   {{< tabs name="stronghold_cmd_10_2" >}}
    {{< tab name="Stronghold в DP" >}}
 
    ```shell
@@ -322,7 +322,7 @@ stronghold write auth/userpass/users/alice \
 
 1. Получите уникальный идентификатор метода:
 
-   {{< tabs name="stronghold_cmd_3381" >}}
+   {{< tabs name="stronghold_cmd_3381_2" >}}
    {{< tab name="Stronghold в DP" >}}
 
    ```shell
@@ -341,7 +341,7 @@ stronghold write auth/userpass/users/alice \
 
 1. Создайте политику, позволяющую пользователю, аутентифицированному через `userpass`, менять свой пароль:
 
-   {{< tabs name="stronghold_cmd_50546" >}}
+   {{< tabs name="stronghold_cmd_50546_2" >}}
    {{< tab name="Stronghold в DP" >}}
 
    ```shell
@@ -371,7 +371,7 @@ stronghold write auth/userpass/users/alice \
 {{< tabs >}}
 {{< tab "Если пользователь существует" >}}
 
-{{< tabs name="stronghold_cmd_54664" >}}
+{{< tabs name="stronghold_cmd_54664_2" >}}
 {{< tab name="Stronghold в DP" >}}
 
 ```shell
@@ -395,7 +395,7 @@ stronghold write auth/userpass/users/alice/policies \
 {{< /tab >}}
 {{< tab "Если пользователя не существует" >}}
 
-{{< tabs name="stronghold_cmd_90751" >}}
+{{< tabs name="stronghold_cmd_90751_2" >}}
 {{< tab name="Stronghold в DP" >}}
 
 ```shell

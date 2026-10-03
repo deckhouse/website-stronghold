@@ -353,7 +353,7 @@ curl \
 
 Пример:
 
-{{< tabs name="stronghold_cmd_15846" >}}
+{{< tabs name="stronghold_cmd_15846_2" >}}
 {{< tab name="Stronghold в DP" >}}
 
 ```bash

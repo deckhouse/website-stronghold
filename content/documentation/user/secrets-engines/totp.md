@@ -122,7 +122,7 @@ management tool.
 
 1. Enable the TOTP secrets engine:
 
-    {{< tabs name="stronghold_cmd_18535" >}}
+    {{< tabs name="stronghold_cmd_18535_2" >}}
     {{< tab name="Stronghold in DP" >}}
 
     ```text

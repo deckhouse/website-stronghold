@@ -318,7 +318,7 @@ Stronghold поддерживает шифрование root-ключа с ис
 
 1. Выполните миграцию, введя recovery-ключи:
 
-   {{< tabs name="stronghold_cmd_66874" >}}
+   {{< tabs name="stronghold_cmd_66874_2" >}}
    {{< tab name="Stronghold в DP" >}}
 
    ```shell

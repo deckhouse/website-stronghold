@@ -303,7 +303,7 @@ This example will create a user named `alice`, grant them authentication via `us
 
 1. Enable the `userpass` method:
 
-   {{< tabs name="stronghold_cmd_10" >}}
+   {{< tabs name="stronghold_cmd_10_2" >}}
    {{< tab name="Stronghold in DP" >}}
 
    ```shell
@@ -322,7 +322,7 @@ This example will create a user named `alice`, grant them authentication via `us
 
 1. Get the unique method identifier:
 
-   {{< tabs name="stronghold_cmd_3381" >}}
+   {{< tabs name="stronghold_cmd_3381_2" >}}
    {{< tab name="Stronghold in DP" >}}
 
    ```shell
@@ -341,7 +341,7 @@ This example will create a user named `alice`, grant them authentication via `us
 
 1. Create a policy that allows a user authenticated via `userpass` to change their password:
 
-   {{< tabs name="stronghold_cmd_50546" >}}
+   {{< tabs name="stronghold_cmd_50546_2" >}}
    {{< tab name="Stronghold in DP" >}}
 
    ```shell
@@ -371,7 +371,7 @@ This example will create a user named `alice`, grant them authentication via `us
 {{< tabs >}}
 {{< tab "If the user exists" >}}
 
-{{< tabs name="stronghold_cmd_54664" >}}
+{{< tabs name="stronghold_cmd_54664_2" >}}
 {{< tab name="Stronghold in DP" >}}
 
 ```shell
@@ -395,7 +395,7 @@ This example will apply the `self-change-password` policy to the existing user `
 {{< /tab >}}
 {{< tab "If the user does not exist" >}}
 
-{{< tabs name="stronghold_cmd_90751" >}}
+{{< tabs name="stronghold_cmd_90751_2" >}}
 {{< tab name="Stronghold in DP" >}}
 
 ```shell
