@@ -83,20 +83,20 @@ hidden: true
 6. После перезапуска подов проверьте версию Stronghold CSE следующей командой:
 
    {{< tabs name="stronghold_cmd_594" >}}
-   {{% tab name="Stronghold в DP" %}}
+   {{< tab name="Stronghold в DP" >}}
 
    ```shell
    d8 stronghold status
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold в Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold в Linux" >}}
 
    ```shell
    stronghold status
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
    Пример вывода:

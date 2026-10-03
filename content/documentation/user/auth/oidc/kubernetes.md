@@ -48,22 +48,22 @@ To configure this mode, follow these steps:
 1. Enable and configure JWT auth in Stronghold.
 
    {{< tabs name="stronghold_cmd_81485" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```bash
    d8 stronghold auth enable jwt
    d8 stronghold write auth/jwt/config oidc_discovery_url="${ISSUER}"
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```bash
    stronghold auth enable jwt
    stronghold write auth/jwt/config oidc_discovery_url="${ISSUER}"
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
 1. Configure the [required roles](#creating-roles-and-authenticating).
@@ -98,7 +98,7 @@ To configure JWT auth using Kubernetes public keys, follow these steps:
 1. Configure the JWT auth endpoint to use the retrieved keys.
 
    {{< tabs name="stronghold_cmd_39007" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```bash
    d8 stronghold write auth/jwt/config \
@@ -109,8 +109,8 @@ To configure JWT auth using Kubernetes public keys, follow these steps:
    -----END PUBLIC KEY-----"
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```bash
    stronghold write auth/jwt/config \
@@ -121,7 +121,7 @@ To configure JWT auth using Kubernetes public keys, follow these steps:
    -----END PUBLIC KEY-----"
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
 1. Configure the [required roles](#creating-roles-and-authenticating).
@@ -155,7 +155,7 @@ d8 k exec my-pod -- cat /var/run/secrets/kubernetes.io/serviceaccount/token | cu
 Create a role for JWT auth that the `default` service account in the `default` namespace can use.
 
 {{< tabs name="stronghold_cmd_14558" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```bash
 d8 stronghold write auth/jwt/role/my-role \
@@ -167,8 +167,8 @@ policies="default" \
 ttl="1h"
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```bash
 stronghold write auth/jwt/role/my-role \
@@ -180,7 +180,7 @@ policies="default" \
 ttl="1h"
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Pods or clients that have access to the service account JWT can now authenticate with this token.
@@ -188,7 +188,7 @@ Pods or clients that have access to the service account JWT can now authenticate
 Authentication example using the Deckhouse CLI:
 
 {{< tabs name="stronghold_cmd_96573" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```bash
 d8 stronghold write auth/jwt/login \
@@ -196,8 +196,8 @@ d8 stronghold write auth/jwt/login \
   jwt=@/var/run/secrets/kubernetes.io/serviceaccount/token
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```bash
 stronghold write auth/jwt/login \
@@ -205,7 +205,7 @@ stronghold write auth/jwt/login \
   jwt=@/var/run/secrets/kubernetes.io/serviceaccount/token
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 An equivalent HTTP query example:

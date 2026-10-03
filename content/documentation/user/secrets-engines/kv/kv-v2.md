@@ -25,39 +25,39 @@ management tool.
 A v2 `kv` secrets engine can be enabled by:
 
 {{< tabs name="stronghold_cmd_12691" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```shell-session
 d8 stronghold secrets enable -version=2 kv
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```shell-session
 stronghold secrets enable -version=2 kv
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Or, you can pass `kv-v2` as the secrets engine type:
 
 {{< tabs name="stronghold_cmd_77691" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```shell-session
 d8 stronghold secrets enable kv-v2
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```shell-session
 stronghold secrets enable kv-v2
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Additionally, when running a dev-mode server, the v2 `kv` secrets engine is enabled by default at the
@@ -73,22 +73,22 @@ Once upgraded to version 2, the former paths at which the data was accessible wi
 An existing version 1 kv can be upgraded to a version 2 KV store with the CLI command:
 
 {{< tabs name="stronghold_cmd_32144" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```shell-session
 $ d8 stronghold kv enable-versioning secret/
 Success! Tuned the secrets engine at: secret/
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```shell-session
 $ stronghold kv enable-versioning secret/
 Success! Tuned the secrets engine at: secret/
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 or via the API:
@@ -211,7 +211,7 @@ real path).
 1. Write arbitrary data:
 
    {{< tabs name="stronghold_cmd_66828" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```shell-session
    $ d8 stronghold kv put -mount=secret my-secret foo=a bar=b
@@ -224,8 +224,8 @@ real path).
    version          1
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```shell-session
    $ stronghold kv put -mount=secret my-secret foo=a bar=b
@@ -238,13 +238,13 @@ real path).
    version          1
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
 1. Read arbitrary data:
 
    {{< tabs name="stronghold_cmd_33078" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```shell-session
    $ d8 stronghold kv get -mount=secret my-secret
@@ -264,8 +264,8 @@ real path).
    bar         b
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```shell-session
    $ stronghold kv get -mount=secret my-secret
@@ -285,7 +285,7 @@ real path).
    bar         b
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
 1. Write another version, the previous version will still be accessible. The
@@ -298,7 +298,7 @@ real path).
   current version.
 
    {{< tabs name="stronghold_cmd_82183" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```shell-session
    $ d8 stronghold kv put -mount=secret -cas=1 my-secret foo=aa bar=bb
@@ -311,8 +311,8 @@ real path).
    version          2
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```shell-session
    $ stronghold kv put -mount=secret -cas=1 my-secret foo=aa bar=bb
@@ -325,13 +325,13 @@ real path).
    version          2
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
 1. Reading now will return the newest version of the data:
 
    {{< tabs name="stronghold_cmd_76274" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```shell-session
    $ d8 stronghold kv get -mount=secret my-secret
@@ -351,8 +351,8 @@ real path).
    bar         bb
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```shell-session
    $ stronghold kv get -mount=secret my-secret
@@ -372,7 +372,7 @@ real path).
    bar         bb
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
 1. Partial updates can be accomplished using the `d8 stronghold kv patch` command. A
@@ -388,7 +388,7 @@ real path).
    the read to perform a check-and-set operation in the subsequent write.
 
    {{< tabs name="stronghold_cmd_48316" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```shell-session
    $ d8 stronghold kv patch -mount=secret -cas=2 my-secret bar=bbb
@@ -401,8 +401,8 @@ real path).
    version          3
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```shell-session
    $ stronghold kv patch -mount=secret -cas=2 my-secret bar=bbb
@@ -415,7 +415,7 @@ real path).
    version          3
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
 1. The `d8 stronghold kv patch` command also supports a `-method` flag which can be
@@ -425,7 +425,7 @@ real path).
    Perform a patch using the `patch` method:
 
    {{< tabs name="stronghold_cmd_30445" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```shell-session
    $ d8 stronghold kv patch -mount=secret -method=patch -cas=2 my-secret bar=bbb
@@ -438,8 +438,8 @@ real path).
    version          3
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```shell-session
    $ stronghold kv patch -mount=secret -method=patch -cas=2 my-secret bar=bbb
@@ -452,13 +452,13 @@ real path).
    version          3
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
    Perform a patch using the read-then-write method:
 
    {{< tabs name="stronghold_cmd_12154" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```shell-session
    $ d8 stronghold kv patch -mount=secret -method=rw my-secret bar=bbb
@@ -471,8 +471,8 @@ real path).
    version          3
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```shell-session
    $ stronghold kv patch -mount=secret -method=rw my-secret bar=bbb
@@ -485,14 +485,14 @@ real path).
    version          3
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
 1. Reading after a patch will return the newest version of the data in which
    only the specified fields were updated:
 
    {{< tabs name="stronghold_cmd_23464" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```shell-session
    $ d8 stronghold kv get -mount=secret my-secret
@@ -512,8 +512,8 @@ real path).
    bar         bbb
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```shell-session
    $ stronghold kv get -mount=secret my-secret
@@ -533,13 +533,13 @@ real path).
    bar         bbb
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
 1. Previous versions can be accessed with the `-version` flag:
 
    {{< tabs name="stronghold_cmd_74761" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```shell-session
    $ d8 stronghold kv get -mount=secret -version=1 my-secret
@@ -559,8 +559,8 @@ real path).
    bar         b
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```shell-session
    $ stronghold kv get -mount=secret -version=1 my-secret
@@ -580,7 +580,7 @@ real path).
    bar         b
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
 You can also use Stronghold's password policy feature to generate arbitrary values.
@@ -588,7 +588,7 @@ You can also use Stronghold's password policy feature to generate arbitrary valu
 1. Write a password policy:
 
    {{< tabs name="stronghold_cmd_15069" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```shell-session
    $ d8 stronghold write sys/policies/password/example policy=-<<EOF
@@ -608,8 +608,8 @@ You can also use Stronghold's password policy feature to generate arbitrary valu
    EOF
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```shell-session
    $ stronghold write sys/policies/password/example policy=-<<EOF
@@ -629,28 +629,28 @@ You can also use Stronghold's password policy feature to generate arbitrary valu
    EOF
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
 1. Write data using the `example` policy:
 
    {{< tabs name="stronghold_cmd_69463" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```shell-session
    $ d8 stronghold kv put -mount=secret my-generated-secret \
        password=$(d8 stronghold read -field password sys/policies/password/example/generate)
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```shell-session
    $ stronghold kv put -mount=secret my-generated-secret \
        password=$(stronghold read -field password sys/policies/password/example/generate)
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
    **Example output:**
@@ -672,7 +672,7 @@ You can also use Stronghold's password policy feature to generate arbitrary valu
 1. Read the generated data:
 
    {{< tabs name="stronghold_cmd_42455" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```shell-session
    $ d8 stronghold kv get -mount=secret my-generated-secret
@@ -694,8 +694,8 @@ You can also use Stronghold's password policy feature to generate arbitrary valu
    password    !hh&be1e4j16dVc0ggae
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```shell-session
    $ stronghold kv get -mount=secret my-generated-secret
@@ -717,7 +717,7 @@ You can also use Stronghold's password policy feature to generate arbitrary valu
    password    !hh&be1e4j16dVc0ggae
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
 ### Deleting and destroying data
@@ -740,28 +740,28 @@ See the commands below for more information:
    takes a `-versions` flag to delete prior versions:
 
    {{< tabs name="stronghold_cmd_19485" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```shell-session
    $ d8 stronghold kv delete -mount=secret my-secret
    Success! Data deleted (if it existed) at: secret/data/my-secret
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```shell-session
    $ stronghold kv delete -mount=secret my-secret
    Success! Data deleted (if it existed) at: secret/data/my-secret
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
 1. Versions can be undeleted:
 
    {{< tabs name="stronghold_cmd_48367" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```shell-session
    $ d8 stronghold kv undelete -mount=secret -versions=2 my-secret
@@ -783,8 +783,8 @@ See the commands below for more information:
    my-value    short-lived-s3cr3t
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```shell-session
    $ stronghold kv undelete -mount=secret -versions=2 my-secret
@@ -806,28 +806,28 @@ See the commands below for more information:
    my-value    short-lived-s3cr3t
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
 1. Destroying a version permanently deletes the underlying data:
 
    {{< tabs name="stronghold_cmd_62778" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```shell-session
    $ d8 stronghold kv destroy -mount=secret -versions=2 my-secret
    Success! Data written to: secret/destroy/my-secret
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```shell-session
    $ stronghold kv destroy -mount=secret -versions=2 my-secret
    Success! Data written to: secret/destroy/my-secret
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
 ### Key metadata
@@ -841,7 +841,7 @@ See the commands below for more information:
 1. All metadata and versions for a key can be viewed:
 
    {{< tabs name="stronghold_cmd_28462" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```shell-session
    $ d8 stronghold kv metadata get -mount=secret my-secret
@@ -872,8 +872,8 @@ See the commands below for more information:
    destroyed        true
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```shell-session
    $ stronghold kv metadata get -mount=secret my-secret
@@ -904,35 +904,35 @@ See the commands below for more information:
    destroyed        true
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
 1. The metadata settings for a key can be configured:
 
    {{< tabs name="stronghold_cmd_55932" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```shell-session
    $ d8 stronghold kv metadata put -mount=secret -max-versions 2 -delete-version-after="3h25m19s" my-secret
    Success! Data written to: secret/metadata/my-secret
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```shell-session
    $ stronghold kv metadata put -mount=secret -max-versions 2 -delete-version-after="3h25m19s" my-secret
    Success! Data written to: secret/metadata/my-secret
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
    Delete-version-after settings will apply only to new versions. Max versions
    changes will be applied on next write:
 
    {{< tabs name="stronghold_cmd_3266" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```shell-session
    $ d8 stronghold kv put -mount=secret my-secret my-value=newer-s3cr3t
@@ -945,8 +945,8 @@ See the commands below for more information:
    version          4
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```shell-session
    $ stronghold kv put -mount=secret my-secret my-value=newer-s3cr3t
@@ -959,14 +959,14 @@ See the commands below for more information:
    version          4
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
    Once a key has more versions than max versions the oldest versions
    are cleaned up:
 
    {{< tabs name="stronghold_cmd_93528" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```shell-session
    $ d8 stronghold kv metadata get -mount=secret my-secret
@@ -997,8 +997,8 @@ See the commands below for more information:
    destroyed        false
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```shell-session
    $ stronghold kv metadata get -mount=secret my-secret
@@ -1029,7 +1029,7 @@ See the commands below for more information:
    destroyed        false
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
    A secret's key metadata can contain custom metadata used to describe the secret.
@@ -1039,7 +1039,7 @@ See the commands below for more information:
    The `d8 stronghold kv metadata put` command can be used to fully overwrite the value of `custom_metadata`:
 
    {{< tabs name="stronghold_cmd_814" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```shell-session
    $ d8 stronghold kv metadata put -mount=secret -custom-metadata=foo=abc -custom-metadata=bar=123 my-secret
@@ -1062,8 +1062,8 @@ See the commands below for more information:
    bar         bb
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```shell-session
    $ stronghold kv metadata put -mount=secret -custom-metadata=foo=abc -custom-metadata=bar=123 my-secret
@@ -1086,33 +1086,33 @@ See the commands below for more information:
    bar         bb
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
    The `d8 stronghold kv metadata patch` command can be used to partially overwrite the value of `custom_metadata`.
    The following invocation will update `custom_metadata` sub-field `foo` but leave `bar` untouched:
 
    {{< tabs name="stronghold_cmd_61447" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```shell-session
    $ d8 stronghold kv metadata patch -mount=secret -custom-metadata=foo=def my-secret
    Success! Data written to: secret/metadata/my-secret
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```shell-session
    $ stronghold kv metadata patch -mount=secret -custom-metadata=foo=def my-secret
    Success! Data written to: secret/metadata/my-secret
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
    {{< tabs name="stronghold_cmd_44528" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```shell-session
    $ d8 stronghold kv get -mount=secret my-secret
@@ -1132,8 +1132,8 @@ See the commands below for more information:
    bar         bb
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```shell-session
    $ stronghold kv get -mount=secret my-secret
@@ -1153,26 +1153,26 @@ See the commands below for more information:
    bar         bb
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
 1. Permanently delete all metadata and versions for a key:
 
    {{< tabs name="stronghold_cmd_48173" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```shell-session
    $ d8 stronghold kv metadata delete -mount=secret my-secret
    Success! Data deleted (if it existed) at: secret/metadata/my-secret
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```shell-session
    $ stronghold kv metadata delete -mount=secret my-secret
    Success! Data deleted (if it existed) at: secret/metadata/my-secret
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}

@@ -32,45 +32,45 @@ Enable and configure the method before users can authenticate. The main paramete
 ### Enable the method
 
 {{< tabs name="stronghold_cmd_85100" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```shell
 d8 stronghold auth enable webauthn
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```shell
 stronghold auth enable webauthn
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 By default the method is mounted at `auth/webauthn`. You can mount it at a custom path if needed:
 
 {{< tabs name="stronghold_cmd_18070" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```shell
 d8 stronghold auth enable -path=my-passkeys webauthn
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```shell
 stronghold auth enable -path=my-passkeys webauthn
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 ### Configure the Relying Party
 
 {{< tabs name="stronghold_cmd_42812" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```shell
 d8 stronghold write auth/webauthn/config \
@@ -79,8 +79,8 @@ d8 stronghold write auth/webauthn/config \
   rp_origins="https://stronghold.example.com"
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```shell
 stronghold write auth/webauthn/config \
@@ -89,13 +89,13 @@ stronghold write auth/webauthn/config \
   rp_origins="https://stronghold.example.com"
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Example with self-registration disabled:
 
 {{< tabs name="stronghold_cmd_81147" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```shell
 d8 stronghold write auth/webauthn/config \
@@ -105,8 +105,8 @@ d8 stronghold write auth/webauthn/config \
   auto_registration=false
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```shell
 stronghold write auth/webauthn/config \
@@ -116,7 +116,7 @@ stronghold write auth/webauthn/config \
   auto_registration=false
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 ### Pre-create a user
@@ -124,7 +124,7 @@ stronghold write auth/webauthn/config \
 If `auto_registration=false`, an administrator must create the user in advance and define the token parameters:
 
 {{< tabs name="stronghold_cmd_19735" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```shell
 d8 stronghold write auth/webauthn/user/alice \
@@ -133,8 +133,8 @@ d8 stronghold write auth/webauthn/user/alice \
   token_ttl="1h"
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```shell
 stronghold write auth/webauthn/user/alice \
@@ -143,7 +143,7 @@ stronghold write auth/webauthn/user/alice \
   token_ttl="1h"
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 The `auth/webauthn/user/<name>` path can be used to:

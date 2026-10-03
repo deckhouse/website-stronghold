@@ -61,22 +61,22 @@ management tool.
 1. Enable the database secrets engine:
 
    {{< tabs name="stronghold_cmd_10649" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```shell-session
    $ d8 stronghold secrets enable database
    Success! Enabled the database secrets engine at: database/
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```shell-session
    $ stronghold secrets enable database
    Success! Enabled the database secrets engine at: database/
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
    By default, the secrets engine will enable at the name of the engine. To
@@ -85,7 +85,7 @@ management tool.
 1. Configure Stronghold with the proper plugin and connection information:
 
    {{< tabs name="stronghold_cmd_69573" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```shell-session
    $ d8 stronghold write database/config/my-database \
@@ -96,8 +96,8 @@ management tool.
        password="..." \
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```shell-session
    $ stronghold write database/config/my-database \
@@ -108,7 +108,7 @@ management tool.
        password="..." \
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
 {{< alert level="warning" >}}
@@ -131,20 +131,20 @@ management tool.
    Stronghold itself:
 
    {{< tabs name="stronghold_cmd_14214" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```shell-session
    d8 stronghold write -force database/rotate-root/my-database
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```shell-session
    stronghold write -force database/rotate-root/my-database
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
 {{< alert level="critical" >}}
@@ -158,7 +158,7 @@ When this is done, the password for the user specified in the previous step
    create the database credential:
 
    {{< tabs name="stronghold_cmd_39943" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```shell-session
    $ d8 stronghold write database/roles/my-role \
@@ -169,8 +169,8 @@ When this is done, the password for the user specified in the previous step
    Success! Data written to: database/roles/my-role
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```shell-session
    $ stronghold write database/roles/my-role \
@@ -181,7 +181,7 @@ When this is done, the password for the user specified in the previous step
    Success! Data written to: database/roles/my-role
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
    The `{{username}}` and `{{password}}` fields will be populated by the plugin
@@ -196,7 +196,7 @@ the proper permission, it can generate credentials.
     of the role:
 
     {{< tabs name="stronghold_cmd_25067" >}}
-    {{% tab name="Stronghold in DP" %}}
+    {{< tab name="Stronghold in DP" >}}
 
     ```shell-session
     $ d8 stronghold read database/creds/my-role
@@ -209,8 +209,8 @@ the proper permission, it can generate credentials.
     username           v-strongholduser-e2978cd0-ugp7iqI2hdlff5hfjylJ-1602537260
     ```
 
-    {{% /tab %}}
-    {{% tab name="Stronghold in Linux" %}}
+    {{< /tab >}}
+    {{< tab name="Stronghold in Linux" >}}
 
     ```shell-session
     $ stronghold read database/creds/my-role
@@ -223,7 +223,7 @@ the proper permission, it can generate credentials.
     username           v-strongholduser-e2978cd0-ugp7iqI2hdlff5hfjylJ-1602537260
     ```
 
-    {{% /tab %}}
+    {{< /tab >}}
     {{< /tabs >}}
 
 ## Database capabilities
@@ -290,7 +290,7 @@ For example, when the password contains URL-escaped characters like `#` or `%` t
 remain as so instead of becoming `%23` and `%25` respectively.
 
 {{< tabs name="stronghold_cmd_74473" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```shell-session
 $ d8 stronghold write database/config/my-mysql-database \
@@ -301,8 +301,8 @@ password='your#StrongPassword%' \
 disable_escaping="true"
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```shell-session
 $ stronghold write database/config/my-mysql-database \
@@ -313,5 +313,5 @@ password='your#StrongPassword%' \
 disable_escaping="true"
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}

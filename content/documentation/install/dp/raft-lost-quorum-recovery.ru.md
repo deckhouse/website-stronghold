@@ -22,7 +22,7 @@ Stronghold для Deckhouse Platform (DP) поставляется в виде �
 Далее приведены примеры ошибок при потере кворума.
 
 {{< tabs name="stronghold_cmd_6115" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 - Попытка получить список узлов Raft-кластера:
 
@@ -48,8 +48,8 @@ Stronghold для Deckhouse Platform (DP) поставляется в виде �
   * local node not active but active cluster node not found
   ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 - Попытка получить список узлов Raft-кластера:
 
@@ -75,7 +75,7 @@ Stronghold для Deckhouse Platform (DP) поставляется в виде �
   * local node not active but active cluster node not found
   ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 В логах нерабочего узла могут появляться следующие сообщения:
@@ -148,7 +148,7 @@ chmod 600 /var/lib/deckhouse/stronghold/raft/peers.json
 Если автоматическая распечатка не настроена, распечатайте Stronghold, а затем проверьте его статус.
 
 {{< tabs name="stronghold_cmd_96020" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 1. Распечатайте Stronghold и введите unseal-ключ:
 
@@ -185,8 +185,8 @@ chmod 600 /var/lib/deckhouse/stronghold/raft/peers.json
    Raft Applied Index       155344
    ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 1. Распечатайте Stronghold и введите unseal-ключ:
 
@@ -223,7 +223,7 @@ chmod 600 /var/lib/deckhouse/stronghold/raft/peers.json
    Raft Applied Index       155344
    ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 ## Шаг 5. Проверьте результат восстановления
@@ -242,7 +242,7 @@ chmod 600 /var/lib/deckhouse/stronghold/raft/peers.json
 После восстановления в кластере должен числиться только один сервер. Это позволяет Stronghold достичь кворума и восстановить работоспособность. Чтобы убедиться в количестве серверов, выполните следующую команду.
 
 {{< tabs name="stronghold_cmd_75226" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```bash
 d8 stronghold operator raft list-peers
@@ -256,8 +256,8 @@ Node                                    Address                                 
 d3816d62-29eb-4f42-98cb-f25ab05e8fbd    stronghold-0.stronghold-internal:8301    leader      true
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```bash
 stronghold operator raft list-peers
@@ -271,7 +271,7 @@ Node                                    Address                                 
 d3816d62-29eb-4f42-98cb-f25ab05e8fbd    stronghold-0.stronghold-internal:8301    leader      true
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Как видно, в списке узлов кластера указан только один сервер.

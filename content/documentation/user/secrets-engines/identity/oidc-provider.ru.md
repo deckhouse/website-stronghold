@@ -23,22 +23,22 @@ Stronghold в качестве OIDC-провайдера.
 1. Включите метод аутентификации Stronghold:
 
 {{< tabs name="stronghold_cmd_98347" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```text
 $ d8 stronghold auth enable userpass
 Success! Enabled userpass auth method at: userpass/
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```text
 $ stronghold auth enable userpass
 Success! Enabled userpass auth method at: userpass/
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
    В режиме OIDC можно использовать любой метод аутентификации Stronghold. Для простоты включите
@@ -47,22 +47,22 @@ Success! Enabled userpass auth method at: userpass/
 1. Создайте пользователя:
 
 {{< tabs name="stronghold_cmd_15681" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```text
 $ d8 stronghold write auth/userpass/users/end-user password="securepassword"
 Success! Data written to: auth/userpass/users/end-user
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```text
 $ stronghold write auth/userpass/users/end-user password="securepassword"
 Success! Data written to: auth/userpass/users/end-user
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Этот пользователь аутентифицируется в Stronghold через клиентское приложение, иначе известное как
@@ -71,7 +71,7 @@ OIDC [relying party](https://openid.net/specs/openid-connect-core-1_0.html#Termi
 1. Создайте клиентское приложение:
 
 {{< tabs name="stronghold_cmd_3004" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```text
 $ d8 stronghold write identity/oidc/client/my-webapp \
@@ -80,8 +80,8 @@ $ d8 stronghold write identity/oidc/client/my-webapp \
 Success! Data written to: identity/oidc/client/my-webapp
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```text
 $ stronghold write identity/oidc/client/my-webapp \
@@ -90,7 +90,7 @@ $ stronghold write identity/oidc/client/my-webapp \
 Success! Data written to: identity/oidc/client/my-webapp
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
    Эта операция создает клиентское приложение, которое может быть использовано для настройки OIDC доверяющей стороны.
@@ -102,7 +102,7 @@ Success! Data written to: identity/oidc/client/my-webapp
 1. Считывание учетных данных клиента:
 
 {{< tabs name="stronghold_cmd_24531" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```text
 $ d8 stronghold read identity/oidc/client/my-webapp
@@ -119,8 +119,8 @@ key                 default
 redirect_uris       [https://localhost:9702/auth/oidc-callback]
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```text
 $ stronghold read identity/oidc/client/my-webapp
@@ -137,7 +137,7 @@ key                 default
 redirect_uris       [https://localhost:9702/auth/oidc-callback]
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Параметры `client_id` и `client_secret` - это учетные данные клиентского приложения. Эти

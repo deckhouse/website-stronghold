@@ -65,7 +65,7 @@ Multifactor MFA рассчитан на интерактивное подтве�
 Чтобы создать метод MFA Multifactor и получить его идентификатор, выполните следующую команду:
 
 {{< tabs name="stronghold_cmd_91754" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell
 d8 stronghold write identity/mfa/method/multifactor \
@@ -74,8 +74,8 @@ d8 stronghold write identity/mfa/method/multifactor \
   shared_secret="secret"
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell
 stronghold write identity/mfa/method/multifactor \
@@ -84,7 +84,7 @@ stronghold write identity/mfa/method/multifactor \
   shared_secret="secret"
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Пример вывода:
@@ -117,7 +117,7 @@ method_id    93964fd0-dd7e-e22a-74d0-0880ca5e0398
 1. Получите идентификатор (accessor) метода аутентификации:
 
    {{< tabs name="stronghold_cmd_95992" >}}
-   {{% tab name="Stronghold в DP" %}}
+   {{< tab name="Stronghold в DP" >}}
 
    ```shell
    USERPASS_ACCESSOR=$(d8 stronghold auth list -format=json \
@@ -125,8 +125,8 @@ method_id    93964fd0-dd7e-e22a-74d0-0880ca5e0398
    echo $USERPASS_ACCESSOR
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold в Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold в Linux" >}}
 
    ```shell
    USERPASS_ACCESSOR=$(stronghold auth list -format=json \
@@ -134,13 +134,13 @@ method_id    93964fd0-dd7e-e22a-74d0-0880ca5e0398
    echo $USERPASS_ACCESSOR
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
 1. Включите MFA:
 
    {{< tabs name="stronghold_cmd_99643" >}}
-   {{% tab name="Stronghold в DP" %}}
+   {{< tab name="Stronghold в DP" >}}
 
    ```shell
    d8 stronghold write /identity/mfa/login-enforcement/userpass-multifactor-enforcement \
@@ -148,8 +148,8 @@ method_id    93964fd0-dd7e-e22a-74d0-0880ca5e0398
        auth_method_accessors=$USERPASS_ACCESSOR
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold в Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold в Linux" >}}
 
    ```shell
    stronghold write /identity/mfa/login-enforcement/userpass-multifactor-enforcement \
@@ -157,28 +157,28 @@ method_id    93964fd0-dd7e-e22a-74d0-0880ca5e0398
        auth_method_accessors=$USERPASS_ACCESSOR
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
 1. Выполните вход:
 
    {{< tabs name="stronghold_cmd_88070" >}}
-   {{% tab name="Stronghold в DP" %}}
+   {{< tab name="Stronghold в DP" >}}
 
    ```shell
    d8 stronghold login -method=userpass username=mfa-user
    Password (will be hidden):
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold в Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold в Linux" >}}
 
    ```shell
    stronghold login -method=userpass username=mfa-user
    Password (will be hidden):
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
    Пример вывода:
@@ -208,18 +208,18 @@ method_id    93964fd0-dd7e-e22a-74d0-0880ca5e0398
 Чтобы отключить проверку MFA для метода Userpass, выполните следующую команду:
 
 {{< tabs name="stronghold_cmd_13727" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell
 d8 stronghold delete identity/mfa/login-enforcement/userpass-multifactor-enforcement
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell
 stronghold delete identity/mfa/login-enforcement/userpass-multifactor-enforcement
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}

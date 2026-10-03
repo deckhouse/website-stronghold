@@ -102,7 +102,7 @@ This approach lets you:
 After the plugin is delivered into the container, register it through the CLI:
 
 {{< tabs name="stronghold_cmd_95303" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```bash
 PLUGIN_SHA=$(sha256sum <plugin_binary> | awk '{print $1;}')
@@ -115,8 +115,8 @@ d8 stronghold plugin register \
   <plugin_name>
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```bash
 PLUGIN_SHA=$(sha256sum <plugin_binary> | awk '{print $1;}')
@@ -129,13 +129,13 @@ stronghold plugin register \
   <plugin_name>
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Example: register the secret plugin `mykv`:
 
 {{< tabs name="stronghold_cmd_71502" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```bash
 d8 stronghold plugin register \
@@ -146,8 +146,8 @@ d8 stronghold plugin register \
   mykv
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```bash
 stronghold plugin register \
@@ -158,7 +158,7 @@ stronghold plugin register \
   mykv
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 ## Enable a plugin
@@ -166,7 +166,7 @@ stronghold plugin register \
 After registration, enable the plugin as a `secret` or `auth` engine:
 
 {{< tabs name="stronghold_cmd_99722" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```bash
 d8 stronghold <secrets|auth> enable \
@@ -174,8 +174,8 @@ d8 stronghold <secrets|auth> enable \
   <plugin_name>
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```bash
 stronghold <secrets|auth> enable \
@@ -183,7 +183,7 @@ stronghold <secrets|auth> enable \
   <plugin_name>
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Meaning:
@@ -196,20 +196,20 @@ Meaning:
 Example:
 
 {{< tabs name="stronghold_cmd_75805" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```bash
 d8 stronghold secrets enable -path test-kv mykv
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```bash
 stronghold secrets enable -path test-kv mykv
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 ## Disable and remove a plugin
@@ -218,20 +218,20 @@ stronghold secrets enable -path test-kv mykv
 1. Deregister the plugin:
 
 {{< tabs name="stronghold_cmd_72514" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```bash
 d8 stronghold plugin deregister secret my-custom-plugin
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```bash
 stronghold plugin deregister secret my-custom-plugin
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 1. Remove the plugin from `ModuleConfig`.

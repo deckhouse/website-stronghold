@@ -11,7 +11,7 @@ weight: 70
 ### С помощью CLI
 
 {{< tabs name="stronghold_cmd_53415" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell-session
 $ d8 stronghold login -method=ldap username=mitchellh
@@ -22,8 +22,8 @@ with this token are listed below:
 admins
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell-session
 $ stronghold login -method=ldap username=mitchellh
@@ -34,7 +34,7 @@ with this token are listed below:
 admins
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 ### С помощью API
@@ -75,20 +75,20 @@ $ curl \
 1. Включить метод аутентификации LDAP:
 
 {{< tabs name="stronghold_cmd_55411" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```text
 d8 stronghold auth enable ldap
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```text
 stronghold auth enable ldap
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 1. Настройте параметры подключения к серверу LDAP, а также информацию о том, как аутентифицировать пользователей, и как запрашивать членство в группах.
@@ -164,7 +164,7 @@ _Примечание_: При использовании _Аутентифиц�
 - Имена групп определяются на основании их атрибута `cn`.
 
 {{< tabs name="stronghold_cmd_94101" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell-session
 $ d8 stronghold write auth/ldap/config \
@@ -180,8 +180,8 @@ $ d8 stronghold write auth/ldap/config \
 ...
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell-session
 $ stronghold write auth/ldap/config \
@@ -197,7 +197,7 @@ $ stronghold write auth/ldap/config \
 ...
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 ### Сценарий 2
@@ -212,7 +212,7 @@ $ stronghold write auth/ldap/config \
 - Членство в группе будет определяться через атрибут `memberOf` объектов _user_. Этот поиск начнется в `ou=Users,dc=example,dc=com`.
 
 {{< tabs name="stronghold_cmd_84945" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell-session
 $ d8 stronghold write auth/ldap/config \
@@ -230,8 +230,8 @@ $ d8 stronghold write auth/ldap/config \
 ...
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell-session
 $ stronghold write auth/ldap/config \
@@ -249,7 +249,7 @@ $ stronghold write auth/ldap/config \
 ...
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 ### Сценарий 3
@@ -263,7 +263,7 @@ $ stronghold write auth/ldap/config \
 - Имена групп идентифицируются с использованием атрибута `cn`.
 
 {{< tabs name="stronghold_cmd_71" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell-session
 $ d8 stronghold write auth/ldap/config \
@@ -278,8 +278,8 @@ $ d8 stronghold write auth/ldap/config \
 ...
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell-session
 $ stronghold write auth/ldap/config \
@@ -294,7 +294,7 @@ $ stronghold write auth/ldap/config \
 ...
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 ## Сопоставление групп LDAP и политик
@@ -302,41 +302,41 @@ $ stronghold write auth/ldap/config \
 Далее мы хотим создать сопоставление группы LDAP с политикой Stronghold:
 
 {{< tabs name="stronghold_cmd_42241" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell-session
 d8 stronghold write auth/ldap/groups/scientists policies=foo,bar
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell-session
 stronghold write auth/ldap/groups/scientists policies=foo,bar
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Это сопоставляет группу LDAP «scientists» с политиками Stronghold «foo» и «bar». Мы также можем добавить определенных пользователей LDAP в дополнительные (потенциально не-LDAP) группы. Обратите внимание, что политики могут быть указаны и для пользователей LDAP.
 
 {{< tabs name="stronghold_cmd_39421" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell-session
 d8 stronghold write auth/ldap/groups/engineers policies=foobar
 d8 stronghold write auth/ldap/users/tesla groups=engineers policies=zoobar
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell-session
 stronghold write auth/ldap/groups/engineers policies=foobar
 stronghold write auth/ldap/users/tesla groups=engineers policies=zoobar
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Это добавляет пользователя LDAP «tesla» в группу «engineers», которая соответствует политике Stronghold «foobar». Сам пользователь «tesla» связан с политикой «zoobar».
@@ -344,7 +344,7 @@ stronghold write auth/ldap/users/tesla groups=engineers policies=zoobar
 Наконец, мы можем проверить это, пройдя аутентификацию:
 
 {{< tabs name="stronghold_cmd_5859" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell-session
 $ d8 stronghold login -method=ldap username=tesla
@@ -355,8 +355,8 @@ with this token are listed below:
 default, foobar, zoobar
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell-session
 $ stronghold login -method=ldap username=tesla
@@ -367,7 +367,7 @@ with this token are listed below:
 default, foobar, zoobar
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 ## Примечание о сопоставлении политик

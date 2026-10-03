@@ -102,7 +102,7 @@ spec:
 После доставки плагина в контейнер его нужно зарегистрировать через CLI:
 
 {{< tabs name="stronghold_cmd_95303" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```bash
 PLUGIN_SHA=$(sha256sum <plugin_binary> | awk '{print $1;}')
@@ -115,8 +115,8 @@ d8 stronghold plugin register \
   <plugin_name>
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```bash
 PLUGIN_SHA=$(sha256sum <plugin_binary> | awk '{print $1;}')
@@ -129,13 +129,13 @@ stronghold plugin register \
   <plugin_name>
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Пример регистрации secret-плагина `mykv`:
 
 {{< tabs name="stronghold_cmd_71502" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```bash
 d8 stronghold plugin register \
@@ -146,8 +146,8 @@ d8 stronghold plugin register \
   mykv
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```bash
 stronghold plugin register \
@@ -158,7 +158,7 @@ stronghold plugin register \
   mykv
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 ## Включение плагина
@@ -166,7 +166,7 @@ stronghold plugin register \
 После регистрации плагин можно включить как `secret` или `auth` engine:
 
 {{< tabs name="stronghold_cmd_99722" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```bash
 d8 stronghold <secrets|auth> enable \
@@ -174,8 +174,8 @@ d8 stronghold <secrets|auth> enable \
   <plugin_name>
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```bash
 stronghold <secrets|auth> enable \
@@ -183,7 +183,7 @@ stronghold <secrets|auth> enable \
   <plugin_name>
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Пояснение:
@@ -196,20 +196,20 @@ stronghold <secrets|auth> enable \
 Пример:
 
 {{< tabs name="stronghold_cmd_75805" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```bash
 d8 stronghold secrets enable -path test-kv mykv
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```bash
 stronghold secrets enable -path test-kv mykv
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 ## Отключение и удаление плагина
@@ -218,20 +218,20 @@ stronghold secrets enable -path test-kv mykv
 1. Снимите плагин с регистрации:
 
 {{< tabs name="stronghold_cmd_72514" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```bash
 d8 stronghold plugin deregister secret my-custom-plugin
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```bash
 stronghold plugin deregister secret my-custom-plugin
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 1. Удалите плагин из конфигурации `ModuleConfig`.

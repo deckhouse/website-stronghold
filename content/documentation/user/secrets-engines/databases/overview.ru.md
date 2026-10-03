@@ -59,22 +59,22 @@ Stronghold не делает различий между стандартным�
 1. Включить механизм секретов базы данных:
 
 {{< tabs name="stronghold_cmd_99650" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell-session
 $ d8 stronghold secrets enable database
 Success! Enabled the database secrets engine at: database/
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell-session
 $ stronghold secrets enable database
 Success! Enabled the database secrets engine at: database/
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
    По умолчанию, механизм секретов будет включаться по имени движка.
@@ -83,7 +83,7 @@ Success! Enabled the database secrets engine at: database/
 1. Настроить Stronghold с помощью соответствующего плагина и информации о подключении:
 
    {{< tabs name="stronghold_cmd_69573" >}}
-   {{% tab name="Stronghold в DP" %}}
+   {{< tab name="Stronghold в DP" >}}
 
    ```shell-session
    $ d8 stronghold write database/config/my-database \
@@ -94,8 +94,8 @@ Success! Enabled the database secrets engine at: database/
        password="..." \
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold в Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold в Linux" >}}
 
    ```shell-session
    $ stronghold write database/config/my-database \
@@ -106,7 +106,7 @@ Success! Enabled the database secrets engine at: database/
        password="..." \
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
    > **Внимание!** Настоятельно рекомендуется создать пользователя в базе данных специально для Stronghold. Этот пользователь будет использоваться
@@ -127,20 +127,20 @@ Success! Enabled the database secrets engine at: database/
    никаким пользователям, кроме самого Stronghold:
 
 {{< tabs name="stronghold_cmd_23336" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell-session
 d8 stronghold write -force database/rotate-root/my-database
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell-session
 stronghold write -force database/rotate-root/my-database
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
    > **Внимание!** После этого пароль для пользователя, указанного в предыдущем шаге, будет недоступен.
@@ -150,7 +150,7 @@ stronghold write -force database/rotate-root/my-database
    создания учетных данных базы данных.
 
 {{< tabs name="stronghold_cmd_14613" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell-session
 $ d8 stronghold write database/roles/my-role \
@@ -161,8 +161,8 @@ $ d8 stronghold write database/roles/my-role \
 Success! Data written to: database/roles/my-role
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell-session
 $ stronghold write database/roles/my-role \
@@ -173,7 +173,7 @@ $ stronghold write database/roles/my-role \
 Success! Data written to: database/roles/my-role
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Поля `{{username}}` and `{{password}}` будут заполнены плагином динамически
@@ -187,7 +187,7 @@ Success! Data written to: database/roles/my-role
 1. Сгенерировать новую учетную запись, используя `/creds` и имя роли:
 
 {{< tabs name="stronghold_cmd_87687" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell-session
 $ d8 stronghold read database/creds/my-role
@@ -200,8 +200,8 @@ password           FSREZ1S0kFsZtLat-y94
 username           v-strongholduser-e2978cd0-ugp7iqI2hdlff5hfjylJ-1602537260
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell-session
 $ stronghold read database/creds/my-role
@@ -214,7 +214,7 @@ password           FSREZ1S0kFsZtLat-y94
 username           v-strongholduser-e2978cd0-ugp7iqI2hdlff5hfjylJ-1602537260
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 ## Возможности базы данных
@@ -282,7 +282,7 @@ rule "charset" {
 они останутся таковыми, а не станут `%23` и `%25` соответственно.
 
 {{< tabs name="stronghold_cmd_74473" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell-session
 $ d8 stronghold write database/config/my-mysql-database \
@@ -293,8 +293,8 @@ password='your#StrongPassword%' \
 disable_escaping="true"
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell-session
 $ stronghold write database/config/my-mysql-database \
@@ -305,5 +305,5 @@ password='your#StrongPassword%' \
 disable_escaping="true"
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
