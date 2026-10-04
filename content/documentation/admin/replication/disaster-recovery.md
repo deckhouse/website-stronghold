@@ -13,7 +13,7 @@ waits for a promote to take over when the primary fails.
 ## Before you start
 
 - Make sure both clusters run Stronghold EE with integrated Raft storage and
-  that replication is enabled (see [Overview](../overview/)).
+  that replication is enabled (see [Overview](overview/)).
 - Make sure the primary cluster port is reachable from the secondary and that
   you have the primary CA certificate for TLS.
 - Prepare a token with permissions for `sys/replication/*` on the primary.

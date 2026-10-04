@@ -136,7 +136,7 @@ node-discovery caches.
 
 ## Available pages
 
-- [Architecture and diagrams](../architecture/) for what nodes and clusters are,
+- [Architecture and diagrams](architecture/) for what nodes and clusters are,
   plus combined topologies.
 - [Performance replication](../performance/) for read scaling, secondary setup,
   and path filters.
