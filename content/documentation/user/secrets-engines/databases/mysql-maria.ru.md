@@ -29,22 +29,22 @@ MySQL - один из поддерживаемых плагинов для ме�
 1. Включите механизм секретов базы данных, если он еще не включен:
 
 {{< tabs name="stronghold_cmd_99650" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```text
 $ d8 stronghold secrets enable database
 Success! Enabled the database secrets engine at: database/
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```text
 $ stronghold secrets enable database
 Success! Enabled the database secrets engine at: database/
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
    По умолчанию механизм секретов будет включаться на основе его имени.
@@ -53,7 +53,7 @@ Success! Enabled the database secrets engine at: database/
 1. Настройте Stronghold с помощью соответствующего плагина и информации о подключении:
 
 {{< tabs name="stronghold_cmd_33266" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```text
 $ d8 stronghold write database/config/my-mysql-database \
@@ -64,8 +64,8 @@ $ d8 stronghold write database/config/my-mysql-database \
     password="strongholdpass"
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```text
 $ stronghold write database/config/my-mysql-database \
@@ -76,14 +76,14 @@ $ stronghold write database/config/my-mysql-database \
     password="strongholdpass"
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 1. Настройте роль, которая сопоставляет имя в Stronghold с SQL запросом,
    выполняемым для создания учетной записи базы данных:
 
 {{< tabs name="stronghold_cmd_93540" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```text
 $ d8 stronghold write database/roles/my-role \
@@ -94,8 +94,8 @@ $ d8 stronghold write database/roles/my-role \
 Success! Data written to: database/roles/my-role
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```text
 $ stronghold write database/roles/my-role \
@@ -106,7 +106,7 @@ $ stronghold write database/roles/my-role \
 Success! Data written to: database/roles/my-role
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 ## Использование
@@ -117,7 +117,7 @@ Success! Data written to: database/roles/my-role
 1. Сгенерируйте новую учетную запись, используя `/creds` и имя роли:
 
 {{< tabs name="stronghold_cmd_30896" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```text
 $ d8 stronghold read database/creds/my-role
@@ -130,8 +130,8 @@ password           yY-57n3X5UQhxnmFRP3f
 username           v_strongholduser_my-role_crBWVqVh2Hc1
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```text
 $ stronghold read database/creds/my-role
@@ -144,7 +144,7 @@ password           yY-57n3X5UQhxnmFRP3f
 username           v_strongholduser_my-role_crBWVqVh2Hc1
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 ## Проверка подлинности сертификата клиента x509
@@ -154,7 +154,7 @@ username           v_strongholduser_my-role_crBWVqVh2Hc1
 Чтобы использовать этот механизм аутентификации, настройте плагин:
 
 {{< tabs name="stronghold_cmd_74044" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell-session
 $ d8 stronghold write database/config/my-mysql-database \
@@ -165,8 +165,8 @@ $ d8 stronghold write database/config/my-mysql-database \
     tls_ca=@/path/to/client.ca
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell-session
 $ stronghold write database/config/my-mysql-database \
@@ -177,7 +177,7 @@ $ stronghold write database/config/my-mysql-database \
     tls_ca=@/path/to/client.ca
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Примечание: `tls_certificate_key` и `tls_ca` соответствуют [`ssl-cert (combined with ssl-key)`](https://dev.mysql.com/doc/refman/8.0/en/connection-options.html#option_general_ssl-cert)
@@ -209,7 +209,7 @@ CLI, потому что shell интерпретирует текст межд�
 Например:
 
 {{< tabs name="stronghold_cmd_60475" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell-session
 $ d8 stronghold write database/roles/my-role \
@@ -219,8 +219,8 @@ $ d8 stronghold write database/roles/my-role \
     max_ttl="24h"
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell-session
 $ stronghold write database/roles/my-role \
@@ -230,7 +230,7 @@ $ stronghold write database/roles/my-role \
     max_ttl="24h"
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 ### Изменение root учетных данных in MySQL 5.6
@@ -241,7 +241,7 @@ $ stronghold write database/roles/my-role \
 Например:
 
 {{< tabs name="stronghold_cmd_82482" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell-session
 $ d8 stronghold write database/config/my-mysql-database \
@@ -253,8 +253,8 @@ $ d8 stronghold write database/config/my-mysql-database \
     password="mysql"
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell-session
 $ stronghold write database/config/my-mysql-database \
@@ -266,5 +266,5 @@ $ stronghold write database/config/my-mysql-database \
     password="mysql"
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}

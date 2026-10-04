@@ -21,20 +21,20 @@ operations on tokens such as renewal and revocation.
 ### Via the CLI
 
 {{< tabs name="stronghold_cmd_98272" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```shell-session
 d8 stronghold login token=<token>
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```shell-session
 stronghold login token=<token>
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 ### Via the API

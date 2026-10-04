@@ -32,45 +32,45 @@ weight: 85
 ### Включение метода
 
 {{< tabs name="stronghold_cmd_85100" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell
 d8 stronghold auth enable webauthn
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell
 stronghold auth enable webauthn
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 По умолчанию метод будет доступен по пути `auth/webauthn`. При необходимости можно использовать другой путь монтирования:
 
 {{< tabs name="stronghold_cmd_18070" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell
 d8 stronghold auth enable -path=my-passkeys webauthn
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell
 stronghold auth enable -path=my-passkeys webauthn
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 ### Настройка `Relying Party`
 
 {{< tabs name="stronghold_cmd_42812" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell
 d8 stronghold write auth/webauthn/config \
@@ -79,8 +79,8 @@ d8 stronghold write auth/webauthn/config \
   rp_origins="https://stronghold.example.com"
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell
 stronghold write auth/webauthn/config \
@@ -89,13 +89,13 @@ stronghold write auth/webauthn/config \
   rp_origins="https://stronghold.example.com"
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Пример конфигурации, в которой самостоятельная регистрация отключена:
 
 {{< tabs name="stronghold_cmd_81147" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell
 d8 stronghold write auth/webauthn/config \
@@ -105,8 +105,8 @@ d8 stronghold write auth/webauthn/config \
   auto_registration=false
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell
 stronghold write auth/webauthn/config \
@@ -116,7 +116,7 @@ stronghold write auth/webauthn/config \
   auto_registration=false
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 ### Предварительное создание пользователя
@@ -124,7 +124,7 @@ stronghold write auth/webauthn/config \
 Если `auto_registration=false`, администратор должен заранее создать пользователя и назначить ему параметры будущего токена:
 
 {{< tabs name="stronghold_cmd_19735" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell
 d8 stronghold write auth/webauthn/user/alice \
@@ -133,8 +133,8 @@ d8 stronghold write auth/webauthn/user/alice \
   token_ttl="1h"
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell
 stronghold write auth/webauthn/user/alice \
@@ -143,7 +143,7 @@ stronghold write auth/webauthn/user/alice \
   token_ttl="1h"
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Через путь `auth/webauthn/user/<name>` можно:

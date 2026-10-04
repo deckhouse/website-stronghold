@@ -267,20 +267,20 @@ threshold of unseal keys, Stronghold migrates the unseal keys to recovery
 keys.
 
 {{< tabs name="stronghold_cmd_64419" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```bash
 d8 stronghold operator unseal -migrate
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```bash
 stronghold operator unseal -migrate
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 #### Migration from auto unseal to Shamir

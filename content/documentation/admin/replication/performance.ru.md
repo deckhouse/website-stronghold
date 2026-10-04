@@ -31,20 +31,20 @@ description: "Настройка репликации Performance между к�
 ## Шаг 1. Включите primary
 
 {{< tabs name="stronghold_cmd_10766" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell
 d8 stronghold write -force sys/replication/performance/primary/enable
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell
 stronghold write -force sys/replication/performance/primary/enable
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 {{< alert level="warning" >}}
@@ -59,22 +59,22 @@ stronghold write -force sys/replication/performance/primary/enable
 `id`:
 
 {{< tabs name="stronghold_cmd_30185" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell
 d8 stronghold write sys/replication/performance/primary/secondary-token \
   id=sec-1 ttl=24h
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell
 stronghold write sys/replication/performance/primary/secondary-token \
   id=sec-1 ttl=24h
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Параметр `id` обязателен, `ttl` по умолчанию — `24h`. Команда возвращает
@@ -126,20 +126,20 @@ root-токен secondary перестаёт работать. Выполняй�
 ## Шаг 4. Проверьте статус
 
 {{< tabs name="stronghold_cmd_33280" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell
 d8 stronghold read -address="${SECONDARY_ADDR}" sys/replication/performance/status
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell
 stronghold read -address="${SECONDARY_ADDR}" sys/replication/performance/status
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Когда secondary подключён и тянет WAL, поле `state` равно `stream-wals`, а
@@ -153,7 +153,7 @@ stronghold read -address="${SECONDARY_ADDR}" sys/replication/performance/status
 недействителен.
 
 {{< tabs name="stronghold_cmd_48194" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell
 # Запись на primary.
@@ -166,8 +166,8 @@ d8 stronghold kv get -address="${SECONDARY_ADDR}" secret/hello
 d8 stronghold kv put -address="${SECONDARY_ADDR}" secret/fromsec value=1
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell
 # Запись на primary.
@@ -180,7 +180,7 @@ stronghold kv get -address="${SECONDARY_ADDR}" secret/hello
 stronghold kv put -address="${SECONDARY_ADDR}" secret/fromsec value=1
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 ## Фильтры путей

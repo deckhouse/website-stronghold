@@ -24,39 +24,39 @@ To create a test secret, follow these steps:
 1. Create a secret by writing test values to the selected path:
 
    {{< tabs name="stronghold_cmd_58984" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```shell
    d8 stronghold kv put secret/my-first-secret username=demo password=secret123
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```shell
    stronghold kv put secret/my-first-secret username=demo password=secret123
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
 1. Verify the saved values:
 
    {{< tabs name="stronghold_cmd_55073" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```shell
    d8 stronghold kv get secret/my-first-secret
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```shell
    stronghold kv get secret/my-first-secret
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
    Example output:
@@ -72,39 +72,39 @@ To create a test secret, follow these steps:
 1. Edit the secret value by rewriting it to the same path:
 
    {{< tabs name="stronghold_cmd_85471" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```shell
    d8 stronghold kv put secret/my-first-secret username=demo password=new-secret
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```shell
    stronghold kv put secret/my-first-secret username=demo password=new-secret
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
 1. Make sure the value has been updated:
 
-   {{< tabs name="stronghold_cmd_55073" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tabs name="stronghold_cmd_55073_2" >}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```shell
    d8 stronghold kv get secret/my-first-secret
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```shell
    stronghold kv get secret/my-first-secret
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
 {{< alert level="info" >}}

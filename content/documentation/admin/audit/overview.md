@@ -102,20 +102,20 @@ This is the most predictable backend for local storage and later forwarding to a
 Example:
 
 {{< tabs name="stronghold_cmd_20236" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```shell
 d8 stronghold audit enable file file_path=/var/log/stronghold_audit.log
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```shell
 stronghold audit enable file file_path=/var/log/stronghold_audit.log
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 ### Syslog
@@ -125,20 +125,20 @@ Useful on Unix systems that already rely on a syslog-based logging stack.
 Example:
 
 {{< tabs name="stronghold_cmd_96533" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```shell
 d8 stronghold audit enable syslog tag="stronghold" facility="AUTH"
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```shell
 stronghold audit enable syslog tag="stronghold" facility="AUTH"
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 {{< alert level="warning" >}}
@@ -152,20 +152,20 @@ Useful for integration with external systems over TCP, UDP, or UNIX sockets.
 Example:
 
 {{< tabs name="stronghold_cmd_5855" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```shell
 d8 stronghold audit enable socket address=127.0.0.1:9090 socket_type=tcp
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```shell
 stronghold audit enable socket address=127.0.0.1:9090 socket_type=tcp
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 If you use UDP, account for the possibility of silent message loss. For production scenarios, it is best to combine `socket` with another, more reliable audit device.
@@ -174,59 +174,59 @@ If you use UDP, account for the possibility of silent message loss. For producti
 
 Enable an audit device:
 
-{{< tabs name="stronghold_cmd_20236" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tabs name="stronghold_cmd_20236_2" >}}
+{{< tab name="Stronghold in DP" >}}
 
 ```shell
 d8 stronghold audit enable file file_path=/var/log/stronghold_audit.log
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```shell
 stronghold audit enable file file_path=/var/log/stronghold_audit.log
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 List enabled devices:
 
 {{< tabs name="stronghold_cmd_22849" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```shell
 d8 stronghold audit list
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```shell
 stronghold audit list
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Disable a device:
 
 {{< tabs name="stronghold_cmd_42190" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```shell
 d8 stronghold audit disable file/
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```shell
 stronghold audit disable file/
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 ## Advanced capabilities

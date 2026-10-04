@@ -115,20 +115,20 @@ Before applying the configuration, make sure the directory from `path_prefix` ex
 Apply the configuration from `local-snapshot.json` using the following command:
 
 {{< tabs name="stronghold_cmd_6865" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```shell
 d8 stronghold write sys/storage/raft/snapshot-auto/config/my-local-snapshots @local-snapshot.json
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```shell
 stronghold write sys/storage/raft/snapshot-auto/config/my-local-snapshots @local-snapshot.json
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 {{< alert level="info" >}}
@@ -162,20 +162,20 @@ Before applying the configuration, make sure the bucket already exists and the p
 Apply the configuration from `minio-snapshot.json` using the following command:
 
 {{< tabs name="stronghold_cmd_45767" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```shell
 d8 stronghold write sys/storage/raft/snapshot-auto/config/my-remote-snapshots @minio-snapshot.json
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```shell
 stronghold write sys/storage/raft/snapshot-auto/config/my-remote-snapshots @minio-snapshot.json
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 ### Updating an existing configuration
@@ -192,20 +192,20 @@ To modify only selected fields, provide a partial JSON document:
 Apply the modified configuration from `local-snapshot-update.json` using the following command:
 
 {{< tabs name="stronghold_cmd_53206" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```shell
 d8 stronghold write sys/storage/raft/snapshot-auto/config/my-local-snapshots @local-snapshot-update.json
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```shell
 stronghold write sys/storage/raft/snapshot-auto/config/my-local-snapshots @local-snapshot-update.json
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 After any successful update, the next snapshot is scheduled immediately.
@@ -219,20 +219,20 @@ After any successful update, the next snapshot is scheduled immediately.
 Example command:
 
 {{< tabs name="stronghold_cmd_33978" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```shell
 d8 stronghold list sys/storage/raft/snapshot-auto/config
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```shell
 stronghold list sys/storage/raft/snapshot-auto/config
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 ## Read configuration parameters
@@ -244,20 +244,20 @@ stronghold list sys/storage/raft/snapshot-auto/config
 Example command:
 
 {{< tabs name="stronghold_cmd_67199" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```shell
 d8 stronghold read sys/storage/raft/snapshot-auto/config/my-remote-snapshots
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```shell
 stronghold read sys/storage/raft/snapshot-auto/config/my-remote-snapshots
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 For `aws-s3`, the response does not expose `aws_access_key_id` or `aws_secret_access_key`.
@@ -271,20 +271,20 @@ For `aws-s3`, the response does not expose `aws_access_key_id` or `aws_secret_ac
 Example command:
 
 {{< tabs name="stronghold_cmd_50803" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```shell
 d8 stronghold delete sys/storage/raft/snapshot-auto/config/my-remote-snapshots
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```shell
 stronghold delete sys/storage/raft/snapshot-auto/config/my-remote-snapshots
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 {{< alert level="info" >}}
@@ -300,20 +300,20 @@ Deleting an automated snapshot configuration does not remove existing snapshot f
 Example command:
 
 {{< tabs name="stronghold_cmd_25509" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```shell
 d8 stronghold read sys/storage/raft/snapshot-auto/status/my-remote-snapshots
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```shell
 stronghold read sys/storage/raft/snapshot-auto/status/my-remote-snapshots
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Main status fields:

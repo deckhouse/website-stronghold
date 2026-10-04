@@ -18,22 +18,22 @@ PostgreSQL это один из поддерживаемых плагинов д
 1. Включите механизм секретов базы данных, если он еще не включен:
 
    {{< tabs name="stronghold_cmd_10649" >}}
-   {{% tab name="Stronghold в DP" %}}
+   {{< tab name="Stronghold в DP" >}}
 
    ```shell-session
    $ d8 stronghold secrets enable database
    Success! Enabled the database secrets engine at: database/
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold в Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold в Linux" >}}
 
    ```shell-session
    $ stronghold secrets enable database
    Success! Enabled the database secrets engine at: database/
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
 2. По умолчанию механизм секретов будет включаться на основе его имени.
@@ -42,7 +42,7 @@ PostgreSQL это один из поддерживаемых плагинов д
    Настройте Stronghold с помощью соответствующего плагина и информации о подключении:
 
    {{< tabs name="stronghold_cmd_8534" >}}
-   {{% tab name="Stronghold в DP" %}}
+   {{< tab name="Stronghold в DP" >}}
 
    ```shell-session
    $ d8 stronghold write database/config/my-postgresql-database \
@@ -54,8 +54,8 @@ PostgreSQL это один из поддерживаемых плагинов д
      password_authentication="scram-sha-256"
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold в Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold в Linux" >}}
 
    ```shell-session
    $ stronghold write database/config/my-postgresql-database \
@@ -67,14 +67,14 @@ PostgreSQL это один из поддерживаемых плагинов д
      password_authentication="scram-sha-256"
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
 3. Настройте роль, которая сопоставляет имя в Stronghold SQL-запросом,
 выполняемым для создания учетной записи базы данных:
 
    {{< tabs name="stronghold_cmd_68791" >}}
-   {{% tab name="Stronghold в DP" %}}
+   {{< tab name="Stronghold в DP" >}}
 
    ```shell-session
    $ d8 stronghold write database/roles/my-role \
@@ -86,8 +86,8 @@ PostgreSQL это один из поддерживаемых плагинов д
    Success! Data written to: database/roles/my-role
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold в Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold в Linux" >}}
 
    ```shell-session
    $ stronghold write database/roles/my-role \
@@ -99,7 +99,7 @@ PostgreSQL это один из поддерживаемых плагинов д
    Success! Data written to: database/roles/my-role
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
 ## Использование
@@ -110,7 +110,7 @@ PostgreSQL это один из поддерживаемых плагинов д
 1. Сгенерируйте новую учетную запись, используя `/creds` и имя роли:
 
    {{< tabs name="stronghold_cmd_55861" >}}
-   {{% tab name="Stronghold в DP" %}}
+   {{< tab name="Stronghold в DP" >}}
 
    ```shell-session
    $ d8 stronghold read database/creds/my-role
@@ -123,8 +123,8 @@ PostgreSQL это один из поддерживаемых плагинов д
    username           v-strongholduse-my-role-x
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold в Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold в Linux" >}}
 
    ```shell-session
    $ stronghold read database/creds/my-role
@@ -137,5 +137,5 @@ PostgreSQL это один из поддерживаемых плагинов д
    username           v-strongholduse-my-role-x
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}

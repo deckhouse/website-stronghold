@@ -25,20 +25,20 @@ weight: 80
 Если метод аутентификации создан под другим именем, укажите его с помощью параметра `-path` в CLI. Например:
 
 {{< tabs name="stronghold_cmd_58862" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell
 d8 stronghold write -path=your-path auth/kubernetes/login role=demo jwt=...
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell
 stronghold write -path=your-path auth/kubernetes/login role=demo jwt=...
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 ### Через API
@@ -82,26 +82,26 @@ curl \
 1. Включите метод аутентификации Kubernetes:
 
    {{< tabs name="stronghold_cmd_52748" >}}
-   {{% tab name="Stronghold в DP" %}}
+   {{< tab name="Stronghold в DP" >}}
 
    ```bash
    d8 stronghold auth enable kubernetes
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold в Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold в Linux" >}}
 
    ```bash
    stronghold auth enable kubernetes
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
 1. Используйте эндпоинт `/config`, чтобы настроить Stronghold для работы с новым кластером Kubernetes. Адрес Kubernetes API и TCP-порт можно получить с помощью команды `d8 k cluster-info`.
 
    {{< tabs name="stronghold_cmd_45453" >}}
-   {{% tab name="Stronghold в DP" %}}
+   {{< tab name="Stronghold в DP" >}}
 
    ```bash
    d8 stronghold write auth/kubernetes/config \
@@ -110,8 +110,8 @@ curl \
    kubernetes_ca_cert=@ca.crt
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold в Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold в Linux" >}}
 
    ```bash
    stronghold write auth/kubernetes/config \
@@ -120,7 +120,7 @@ curl \
    kubernetes_ca_cert=@ca.crt
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
    {{< alert level="warning" >}}
@@ -130,7 +130,7 @@ curl \
 1. Создайте именованную роль:
 
    {{< tabs name="stronghold_cmd_29773" >}}
-   {{% tab name="Stronghold в DP" %}}
+   {{< tab name="Stronghold в DP" >}}
 
    ```shell
    d8 stronghold write auth/kubernetes/role/demo \
@@ -140,8 +140,8 @@ curl \
       ttl=1h
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold в Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold в Linux" >}}
 
    ```shell
    stronghold write auth/kubernetes/role/demo \
@@ -151,7 +151,7 @@ curl \
       ttl=1h
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
    Эта роль разрешает учётной записи сервиса `myapp` в неймспейсе `default` проходить аутентификацию и назначает ей политику по умолчанию.
@@ -194,22 +194,22 @@ curl \
 Чтобы использовать локальный токен и сертификат центра сертификации, не указывайте параметры `token_reviewer_jwt` и `kubernetes_ca_cert` при настройке метода аутентификации. Stronghold автоматически загрузит их из файлов `token` и `ca.crt`, расположенных в каталоге `/var/run/secrets/kubernetes.io/serviceaccount/`.
 
 {{< tabs name="stronghold_cmd_19761" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```bash
 d8 stronghold write auth/kubernetes/config \
   kubernetes_host=https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```bash
 stronghold write auth/kubernetes/config \
   kubernetes_host=https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 #### Использование JWT клиента в качестве рецензента JWT

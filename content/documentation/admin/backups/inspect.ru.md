@@ -17,39 +17,39 @@ description: "Локальная проверка и анализ снимка �
 Для проверки снимка выполните следующую команду, указав вместо `<SNAPSHOT_FILE>` путь к файлу снимка:
 
 {{< tabs name="stronghold_cmd_30895" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell
 d8 stronghold operator raft snapshot inspect <SNAPSHOT_FILE>
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell
 stronghold operator raft snapshot inspect <SNAPSHOT_FILE>
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Пример:
 
 {{< tabs name="stronghold_cmd_60240" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell
 d8 stronghold operator raft snapshot inspect raft.snap
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell
 stronghold operator raft snapshot inspect raft.snap
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Команда выводит сводную информацию о снимке и таблицу с количеством ключей и их суммарным размером по группам.
@@ -97,22 +97,22 @@ core/cluster                                      2          236 B
 Сразу после создания снимка можно проверить, что файл читается и содержит ожидаемые данные:
 
 {{< tabs name="stronghold_cmd_11011" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell
 d8 stronghold operator raft snapshot save /backup/raft.snap
 d8 stronghold operator raft snapshot inspect /backup/raft.snap
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell
 stronghold operator raft snapshot save /backup/raft.snap
 stronghold operator raft snapshot inspect /backup/raft.snap
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 ### Проверка консистентности снимка
@@ -120,20 +120,20 @@ stronghold operator raft snapshot inspect /backup/raft.snap
 Для расширенной проверки используйте флаг `-validate`:
 
 {{< tabs name="stronghold_cmd_82428" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell
 d8 stronghold operator raft snapshot inspect -validate raft.snap
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell
 stronghold operator raft snapshot inspect -validate raft.snap
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Такая проверка помогает убедиться, что:
@@ -149,20 +149,20 @@ stronghold operator raft snapshot inspect -validate raft.snap
 Чтобы посмотреть определённую часть данных, используйте флаги `-filter` и `-depth`:
 
 {{< tabs name="stronghold_cmd_98176" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell
 d8 stronghold operator raft snapshot inspect -depth 3 -filter=core raft.snap
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell
 stronghold operator raft snapshot inspect -depth 3 -filter=core raft.snap
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Это удобно для диагностики роста хранилища или поиска крупных групп ключей.
@@ -172,20 +172,20 @@ stronghold operator raft snapshot inspect -depth 3 -filter=core raft.snap
 Для интеграции со скриптами и сценариями мониторинга можно использовать JSON:
 
 {{< tabs name="stronghold_cmd_96016" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell
 d8 stronghold operator raft snapshot inspect -format=json raft.snap
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell
 stronghold operator raft snapshot inspect -format=json raft.snap
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 При использовании `-validate` JSON-вывод удобно обрабатывать автоматически, например, через `jq`.

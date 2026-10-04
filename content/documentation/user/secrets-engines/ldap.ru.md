@@ -16,20 +16,20 @@ weight: 80
 Включите механизм секретов LDAP:
 
 {{< tabs name="stronghold_cmd_26337" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```sh
 d8 stronghold secrets enable ldap
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```sh
 stronghold secrets enable ldap
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
    По умолчанию подключение произойдет по пусти `ldap`. Для подключения по другому пути используйте аргумент `-path`.
@@ -37,7 +37,7 @@ stronghold secrets enable ldap
 Настройте учетные данные, которые Stronghold использует для подключения к LDAP для генерации паролей:
 
 {{< tabs name="stronghold_cmd_72315" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```sh
 d8 stronghold write ldap/config \
@@ -46,8 +46,8 @@ d8 stronghold write ldap/config \
     url=ldaps://138.91.247.105
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```sh
 stronghold write ldap/config \
@@ -56,7 +56,7 @@ stronghold write ldap/config \
     url=ldaps://138.91.247.105
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
    Примечание: рекомендуется создать отдельную учетную запись специально для Stronghold.
@@ -64,20 +64,20 @@ stronghold write ldap/config \
 Ротируйте пароль, чтобы он харнился только в Stronghold:
 
 {{< tabs name="stronghold_cmd_50537" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```sh
 d8 stronghold write -f ldap/rotate-root
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```sh
 stronghold write -f ldap/rotate-root
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
    Примечание: получить сгенерированный пароль после ротации в Stronghold невозможно.
@@ -109,7 +109,7 @@ stronghold write -f ldap/rotate-root
 Для поддержки RACF генерируемые пароли должны состоять из 8 символов или меньше. Длина пароля может быть настроена с помощью политики паролей:
 
 {{< tabs name="stronghold_cmd_91814" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```bash
 d8 stronghold write ldap/config \
@@ -120,8 +120,8 @@ d8 stronghold write ldap/config \
  password_policy=racf_password_policy
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```bash
 stronghold write ldap/config \
@@ -132,7 +132,7 @@ stronghold write ldap/config \
  password_policy=racf_password_policy
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 #### Active directory (AD)
@@ -140,7 +140,7 @@ stronghold write ldap/config \
 Для управления паролями в Active Directory механизм секретов должен быть настроен на использование схемы `ad`.
 
 {{< tabs name="stronghold_cmd_93682" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```bash
 d8 stronghold write ldap/config \
@@ -150,8 +150,8 @@ d8 stronghold write ldap/config \
  schema=ad
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```bash
 stronghold write ldap/config \
@@ -161,7 +161,7 @@ stronghold write ldap/config \
  schema=ad
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 ### Статические роли {#static-roles}
@@ -172,7 +172,7 @@ stronghold write ldap/config \
    Настройки ротации паролей будут управляться этой ролью.
 
 {{< tabs name="stronghold_cmd_53273" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```sh
 d8 stronghold write ldap/static-role/lf-edge\
@@ -181,8 +181,8 @@ d8 stronghold write ldap/static-role/lf-edge\
     rotation_period="24h"
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```sh
 stronghold write ldap/static-role/lf-edge\
@@ -191,26 +191,26 @@ stronghold write ldap/static-role/lf-edge\
     rotation_period="24h"
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Запросите учетные данные для роли "stronghold":
 
 {{< tabs name="stronghold_cmd_10588" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```sh
 d8 stronghold read ldap/static-cred/lf-edge
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```sh
 stronghold read ldap/static-cred/lf-edge
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 ### Ротация паролей
@@ -241,7 +241,7 @@ stronghold read ldap/static-cred/lf-edge
 Динамическую роль можно настроить с помощью вызова `/role/:role_name`:
 
 {{< tabs name="stronghold_cmd_144" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```bash
 d8 stronghold write ldap/role/dynamic-role \
@@ -252,8 +252,8 @@ d8 stronghold write ldap/role/dynamic-role \
   max_ttl=24h
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```bash
 stronghold write ldap/role/dynamic-role \
@@ -264,7 +264,7 @@ stronghold write ldap/role/dynamic-role \
   max_ttl=24h
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 {{< alert level="warning" >}}
@@ -274,20 +274,20 @@ stronghold write ldap/role/dynamic-role \
 Чтобы сгенерировать учетные данные, выполните:
 
 {{< tabs name="stronghold_cmd_19125" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```bash
 d8 stronghold read ldap/creds/dynamic-role
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```bash
 stronghold read ldap/creds/dynamic-role
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Пример вывода:
@@ -382,7 +382,7 @@ Stronghold может автоматически менять пароли дл�
 Пример:
 
 {{< tabs name="stronghold_cmd_68847" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell-session
 $ d8 stronghold secrets enable ldap
@@ -395,8 +395,8 @@ $ d8 stronghold write ldap/config \
     userdn='dc=example,dc=com'
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell-session
 $ stronghold secrets enable ldap
@@ -409,13 +409,13 @@ $ stronghold write ldap/config \
     userdn='dc=example,dc=com'
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Далее настроим список учетных записей, для которых требуется выполнинять ротацию пароля.
 
 {{< tabs name="stronghold_cmd_64185" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell-session
 d8 stronghold write ldap/library/accounting-team \
@@ -425,8 +425,8 @@ d8 stronghold write ldap/library/accounting-team \
     disable_check_in_enforcement=false
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell-session
 stronghold write ldap/library/accounting-team \
@@ -436,7 +436,7 @@ stronghold write ldap/library/accounting-team \
     disable_check_in_enforcement=false
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 В этом примере имена учетных записей служб `fizz@example.com` и `buzz@example.com` уже были созданы на удаленном сервере AD. `ttl` - это время, через которое Stronghold повторно выполнить ротацию пароля учетной записи. `max_ttl` - максимальное время, которое может действовать пароль после ротации. По умолчанию значения обоихпараметров равны `24h`. Также по умолчанию учетная запись службы должна быть зарегистрирована тем же субъектом Stronghold или клиентским токеном, который выполняет ротацию. Однако если такое поведение вызывает проблемы, установите `disable_check_in_enforcement=true`.
@@ -446,20 +446,20 @@ stronghold write ldap/library/accounting-team \
 Пример:
 
 {{< tabs name="stronghold_cmd_5453" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell-session
 d8 stronghold read ldap/library/accounting-team/status
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell-session
 stronghold read ldap/library/accounting-team/status
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Пример вывода:
@@ -474,20 +474,20 @@ fizz@example.com    map[available:true]
 Для ротации паролей, выполните команду:
 
 {{< tabs name="stronghold_cmd_34855" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell-session
 d8 stronghold write -f ldap/library/accounting-team/check-out
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell-session
 stronghold write -f ldap/library/accounting-team/check-out
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Пример вывода:
@@ -505,20 +505,20 @@ service_account_name    fizz@example.com
 Если стандартное значение `ttl` больше, чем требуется, установите более короткое время с помощью команды:
 
 {{< tabs name="stronghold_cmd_98460" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell-session
 d8 stronghold write ldap/library/accounting-team/check-out ttl=30m
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell-session
 stronghold write ldap/library/accounting-team/check-out ttl=30m
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Пример вывода:
@@ -536,20 +536,20 @@ service_account_name    buzz@example.com
 Вы можете продлить аренду паролей для набора учетных записей.
 
 {{< tabs name="stronghold_cmd_76471" >}}
-{{% tab name="Stronghold в DP" %}}
+{{< tab name="Stronghold в DP" >}}
 
 ```shell-session
 d8 stronghold lease renew ldap/library/accounting-team/check-out/0C2wmeaDmsToVFc0zDiX9cMq
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold в Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold в Linux" >}}
 
 ```shell-session
 stronghold lease renew ldap/library/accounting-team/check-out/0C2wmeaDmsToVFc0zDiX9cMq
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 Пример вывода:

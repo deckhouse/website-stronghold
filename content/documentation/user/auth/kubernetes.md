@@ -29,20 +29,20 @@ The auth method name depends on how it was created. When Stronghold is deployed 
 If the auth method was created under a different name, specify it using the `-path` parameter in the CLI. For example:
 
 {{< tabs name="stronghold_cmd_58862" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```shell-session
 d8 stronghold write -path=your-path auth/kubernetes/login role=demo jwt=...
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```shell-session
 stronghold write -path=your-path auth/kubernetes/login role=demo jwt=...
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 ### Via the API
@@ -86,27 +86,27 @@ To configure authentication for another Kubernetes cluster, enable an additional
 1. Enable the Kubernetes auth method:
 
    {{< tabs name="stronghold_cmd_52748" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```bash
    d8 stronghold auth enable kubernetes
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```bash
    stronghold auth enable kubernetes
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
 1. Use the `/config` endpoint to configure Stronghold to talk to Kubernetes. Use
   `d8 k cluster-info` to validate the Kubernetes host address and TCP port.
 
    {{< tabs name="stronghold_cmd_45453" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```bash
    d8 stronghold write auth/kubernetes/config \
@@ -115,8 +115,8 @@ To configure authentication for another Kubernetes cluster, enable an additional
    kubernetes_ca_cert=@ca.crt
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```bash
    stronghold write auth/kubernetes/config \
@@ -125,7 +125,7 @@ To configure authentication for another Kubernetes cluster, enable an additional
    kubernetes_ca_cert=@ca.crt
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
    {{< alert level="warning" >}}
@@ -135,7 +135,7 @@ To configure authentication for another Kubernetes cluster, enable an additional
 1. Create a named role:
 
    {{< tabs name="stronghold_cmd_92711" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```text
    d8 stronghold write auth/kubernetes/role/demo \
@@ -145,8 +145,8 @@ To configure authentication for another Kubernetes cluster, enable an additional
      ttl=1h
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```text
    stronghold write auth/kubernetes/role/demo \
@@ -156,7 +156,7 @@ To configure authentication for another Kubernetes cluster, enable an additional
      ttl=1h
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
    This role authorizes the `myapp` service account in the `default`
@@ -208,22 +208,22 @@ Stronghold will attempt to load them from `token` and `ca.crt` respectively insi
 the default mount folder `/var/run/secrets/kubernetes.io/serviceaccount/`.
 
 {{< tabs name="stronghold_cmd_2136" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```bash
 d8 stronghold write auth/kubernetes/config \
 kubernetes_host=https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```bash
 stronghold write auth/kubernetes/config \
 kubernetes_host=https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 #### Using the Stronghold client's JWT as the reviewer JWT

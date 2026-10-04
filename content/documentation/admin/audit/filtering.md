@@ -84,7 +84,7 @@ Assume you have an audit file named `stronghold-audit.log` and you want to route
 1. Enable a `file` audit device filtered by `mount_type`:
 
    {{< tabs name="stronghold_cmd_8360" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```shell
    d8 stronghold audit enable             \
@@ -94,8 +94,8 @@ Assume you have an audit file named `stronghold-audit.log` and you want to route
      file_path=/logs/kv-audit.log
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```shell
    stronghold audit enable             \
@@ -105,13 +105,13 @@ Assume you have an audit file named `stronghold-audit.log` and you want to route
      file_path=/logs/kv-audit.log
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
 2. Enable a fallback device:
 
    {{< tabs name="stronghold_cmd_38609" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```shell
    d8 stronghold audit enable             \
@@ -122,8 +122,8 @@ Assume you have an audit file named `stronghold-audit.log` and you want to route
      file_path=/tmp/kv-audit.fallback.log
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```shell
    stronghold audit enable             \
@@ -134,64 +134,64 @@ Assume you have an audit file named `stronghold-audit.log` and you want to route
      file_path=/tmp/kv-audit.fallback.log
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
 3. Verify that the devices are enabled:
 
    {{< tabs name="stronghold_cmd_16152" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```shell
    d8 stronghold audit list --detailed
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```shell
    stronghold audit list --detailed
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
 4. Enable the KV secrets engine:
 
    {{< tabs name="stronghold_cmd_97241" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```shell
    d8 stronghold secrets enable -path my-kv kv-v2
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```shell
    stronghold secrets enable -path my-kv kv-v2
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
 5. Write a secret:
 
    {{< tabs name="stronghold_cmd_62847" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```shell
    d8 stronghold kv put -mount=my-kv my_secret the_value=always_angry
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```shell
    stronghold kv put -mount=my-kv my_secret the_value=always_angry
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
 After that, `kv-audit.log` will contain records for operations on `my-kv`, while the fallback device will capture records that do not match the filter.

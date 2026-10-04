@@ -26,22 +26,22 @@ Stronghold as an OIDC provider.
 1. Enable an Stronghold auth method:
 
    {{< tabs name="stronghold_cmd_47747" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```text
    $ d8 stronghold auth enable userpass
    Success! Enabled userpass auth method at: userpass/
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```text
    $ stronghold auth enable userpass
    Success! Enabled userpass auth method at: userpass/
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
    Any Stronghold auth method may be used within the OIDC flow. For simplicity, enable the
@@ -50,22 +50,22 @@ Stronghold as an OIDC provider.
 2. Create a user:
 
    {{< tabs name="stronghold_cmd_27343" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```text
    $ d8 stronghold write auth/userpass/users/end-user password="securepassword"
    Success! Data written to: auth/userpass/users/end-user
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```text
    $ stronghold write auth/userpass/users/end-user password="securepassword"
    Success! Data written to: auth/userpass/users/end-user
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
    This user will authenticate to Stronghold through a client application, otherwise known as
@@ -74,7 +74,7 @@ Stronghold as an OIDC provider.
 3. Create a client application:
 
    {{< tabs name="stronghold_cmd_67193" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```text
    $ d8 stronghold write identity/oidc/client/my-webapp \
@@ -83,8 +83,8 @@ Stronghold as an OIDC provider.
    Success! Data written to: identity/oidc/client/my-webapp
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```text
    $ stronghold write identity/oidc/client/my-webapp \
@@ -93,7 +93,7 @@ Stronghold as an OIDC provider.
    Success! Data written to: identity/oidc/client/my-webapp
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
    This operation creates a client application which can be used to configure an OIDC
@@ -107,7 +107,7 @@ Stronghold as an OIDC provider.
 4. Read client credentials:
 
    {{< tabs name="stronghold_cmd_65001" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```text
    $ d8 stronghold read identity/oidc/client/my-webapp
@@ -124,8 +124,8 @@ Stronghold as an OIDC provider.
    redirect_uris       [https://localhost:9702/auth/oidc-callback]
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```text
    $ stronghold read identity/oidc/client/my-webapp
@@ -142,7 +142,7 @@ Stronghold as an OIDC provider.
    redirect_uris       [https://localhost:9702/auth/oidc-callback]
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
    The `client_id` and `client_secret` are the client application's credentials. These

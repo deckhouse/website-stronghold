@@ -32,20 +32,20 @@ The default path is `/jwt`. If this auth method was enabled at a
 different path, specify `-path=/my-path` in the CLI.
 
 {{< tabs name="stronghold_cmd_95783" >}}
-{{% tab name="Stronghold in DP" %}}
+{{< tab name="Stronghold in DP" >}}
 
 ```shell-session
 d8 stronghold write auth/jwt/login role=demo jwt=...
 ```
 
-{{% /tab %}}
-{{% tab name="Stronghold in Linux" %}}
+{{< /tab >}}
+{{< tab name="Stronghold in Linux" >}}
 
 ```shell-session
 stronghold write auth/jwt/login role=demo jwt=...
 ```
 
-{{% /tab %}}
+{{< /tab >}}
 {{< /tabs >}}
 
 ### Via the API
@@ -87,7 +87,7 @@ management tool.
    backend will be mounted at the chosen name.
 
    {{< tabs name="stronghold_cmd_16925" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```text
    $ d8 stronghold auth enable jwt
@@ -95,8 +95,8 @@ management tool.
    $ d8 stronghold auth enable oidc
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```text
    $ stronghold auth enable jwt
@@ -104,14 +104,14 @@ management tool.
    $ stronghold auth enable oidc
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
 1. Use the `/config` endpoint to configure Stronghold. To support JWT roles, either local keys, a JWKS URL, or an OIDC
    Discovery URL must be present. For OIDC roles, OIDC Discovery URL, OIDC Client ID and OIDC Client Secret are required.
 
    {{< tabs name="stronghold_cmd_75501" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```text
    $ d8 stronghold write auth/jwt/config \
@@ -121,8 +121,8 @@ management tool.
        default_role="demo"
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```text
    $ stronghold write auth/jwt/config \
@@ -132,13 +132,13 @@ management tool.
        default_role="demo"
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
    If you need to perform JWT verification with JWT token validation, then leave the `oidc_client_id` and `oidc_client_secret` blank.
 
    {{< tabs name="stronghold_cmd_24178" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```text
    $ d8 stronghold write auth/jwt/config \
@@ -147,8 +147,8 @@ management tool.
       oidc_client_secret="" \
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```text
    $ stronghold write auth/jwt/config \
@@ -157,13 +157,13 @@ management tool.
       oidc_client_secret="" \
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
 1. Create a named role:
 
    {{< tabs name="stronghold_cmd_74265" >}}
-   {{% tab name="Stronghold in DP" %}}
+   {{< tab name="Stronghold in DP" >}}
 
    ```text
    d8 stronghold write auth/jwt/role/demo \
@@ -176,8 +176,8 @@ management tool.
        ttl=1h
    ```
 
-   {{% /tab %}}
-   {{% tab name="Stronghold in Linux" %}}
+   {{< /tab >}}
+   {{< tab name="Stronghold in Linux" >}}
 
    ```text
    stronghold write auth/jwt/role/demo \
@@ -190,7 +190,7 @@ management tool.
        ttl=1h
    ```
 
-   {{% /tab %}}
+   {{< /tab >}}
    {{< /tabs >}}
 
    This role authorizes JWTs with the given subject and audience claims, gives
