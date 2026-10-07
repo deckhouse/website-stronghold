@@ -4895,7 +4895,7 @@ Remove a peer from the raft cluster.
 
 **Operation ID:** `system-read-storage-raft-snapshot`
 
-Returns a snapshot of the current state of stronghold.
+Returns a snapshot of the current state of vault.
 
 #### Responses
 
@@ -4981,7 +4981,7 @@ Update automated raft snapshot configuration
 | `azure_blob_environment` | string (default: AZUREPUBLICCLOUD) | no | Azure blob environment |
 | `azure_container_name` | string | no | Azure container name |
 | `azure_endpoint` | string | no | Azure blob storage endpoint |
-| `file_prefix` | string (default: stronghold-snapshot) | no | file/object prefix prepended to snapshot ID |
+| `file_prefix` | string (default: vault-snapshot) | no | file/object prefix prepended to snapshot ID |
 | `google_disable_tls` | boolean | no | Disable TLS, normally only for testing |
 | `google_endpoint` | string | no | GCS endpoint |
 | `google_gcs_bucket` | string | no | GCS bucket |

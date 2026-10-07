@@ -111,7 +111,7 @@ Configure connection details to a database plugin.
 |----------|-----|--------------|----------|
 | `allowed_roles` | array | no | Comma separated string or array of the role names allowed to get creds from this database connection. If empty no roles are allowed. If "*" all roles are allowed. |
 | `password_policy` | string | no | Password policy to use when generating passwords. |
-| `plugin_name` | string | no | The name of a builtin or previously registered plugin known to stronghold. This endpoint will create an instance of that plugin type. |
+| `plugin_name` | string | no | The name of a builtin or previously registered plugin known to vault. This endpoint will create an instance of that plugin type. |
 | `plugin_version` | string | no | The version of the plugin to use. |
 | `root_rotation_statements` | array | no | Specifies the database statements to be executed to rotate the root user's credentials. See the plugin's API page for more information on support and formatting for this parameter. |
 | `verify_connection` | boolean (default: True) | no | If true, the connection details are verified by actually connecting to the database. Defaults to true. |
@@ -524,7 +524,7 @@ Update gitops configuration.
 
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
-| `path` | string (default: ) | no | Path to YAML files in the repository (e.g. 'stronghold' or empty for root). |
+| `path` | string (default: ) | no | Path to YAML files in the repository (e.g. 'vault' or empty for root). |
 
 #### Responses
 
@@ -622,11 +622,11 @@ CRUD operations for trusted PGP public key
 
 **204**: empty body
 
-### GET /{gitops_mount_path}/configure/stronghold
+### GET /{gitops_mount_path}/configure/vault
 
-**Operation ID:** `gitops-read-configure-stronghold`
+**Operation ID:** `gitops-read-configure-vault`
 
-Read the current stronghold client configuration.
+Read the current vault client configuration.
 
 #### Parameters
 
@@ -638,11 +638,11 @@ Read the current stronghold client configuration.
 
 **200**: OK
 
-### POST /{gitops_mount_path}/configure/stronghold
+### POST /{gitops_mount_path}/configure/vault
 
-**Operation ID:** `gitops-write-configure-stronghold`
+**Operation ID:** `gitops-write-configure-vault`
 
-Update the current stronghold client configuration.
+Update the current vault client configuration.
 
 **Creation supported:** yes
 
@@ -656,22 +656,22 @@ Update the current stronghold client configuration.
 
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
-| `rotate` | boolean (default: False) | no | Rotate stronghold token. |
+| `rotate` | boolean (default: False) | no | Rotate vault token. |
 | `vault_addr` | string | no | Stronghold API address. |
 | `vault_cacert_bytes` | string | no | PEM-encoded CA certificate for Stronghold TLS verification. |
 | `vault_namespace` | string | no | Stronghold namespace for API access. |
 | `vault_token` | string | no | Stronghold token for API access. |
-| `wrapping_token` | string | no | Wrapping stronghold token for API access. |
+| `wrapping_token` | string | no | Wrapping vault token for API access. |
 
 #### Responses
 
 **200**: OK
 
-### DELETE /{gitops_mount_path}/configure/stronghold
+### DELETE /{gitops_mount_path}/configure/vault
 
-**Operation ID:** `gitops-delete-configure-stronghold`
+**Operation ID:** `gitops-delete-configure-vault`
 
-Delete the current stronghold client configuration.
+Delete the current vault client configuration.
 
 #### Parameters
 
@@ -2713,7 +2713,7 @@ Set cluster-local configuration, including address to this PR cluster.
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
 | `aia_path` | string | no | Optional URI to this mount's AIA distribution point; may refer to an external non-Stronghold responder. This is for resolving AIA URLs and providing the {{cluster_aia_path}} template parameter and will not be used for other purposes. As such, unlike path above, this could safely be an insecure transit mechanism (like HTTP without TLS). For example: <http://cdn.example.com/pr1/pki> |
-| `path` | string | no | Canonical URI to this mount on this performance replication cluster's external address. This is for resolving AIA URLs and providing the {{cluster_path}} template parameter but might be used for other purposes in the future. This should only point back to this particular PR replica and should not ever point to another PR cluster. It may point to any node in the PR replica, including standby nodes, and need not always point to the active node. For example: <https://pr1.stronghold.example.com:8200/v1/pki> |
+| `path` | string | no | Canonical URI to this mount on this performance replication cluster's external address. This is for resolving AIA URLs and providing the {{cluster_path}} template parameter but might be used for other purposes in the future. This should only point back to this particular PR replica and should not ever point to another PR cluster. It may point to any node in the PR replica, including standby nodes, and need not always point to the active node. For example: <https://pr1.vault.example.com:8200/v1/pki> |
 
 ### POST /{pki_mount_path}/config/cluster
 
@@ -2732,7 +2732,7 @@ Set cluster-local configuration, including address to this PR cluster.
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
 | `aia_path` | string | no | Optional URI to this mount's AIA distribution point; may refer to an external non-Stronghold responder. This is for resolving AIA URLs and providing the {{cluster_aia_path}} template parameter and will not be used for other purposes. As such, unlike path above, this could safely be an insecure transit mechanism (like HTTP without TLS). For example: <http://cdn.example.com/pr1/pki> |
-| `path` | string | no | Canonical URI to this mount on this performance replication cluster's external address. This is for resolving AIA URLs and providing the {{cluster_path}} template parameter but might be used for other purposes in the future. This should only point back to this particular PR replica and should not ever point to another PR cluster. It may point to any node in the PR replica, including standby nodes, and need not always point to the active node. For example: <https://pr1.stronghold.example.com:8200/v1/pki> |
+| `path` | string | no | Canonical URI to this mount on this performance replication cluster's external address. This is for resolving AIA URLs and providing the {{cluster_path}} template parameter but might be used for other purposes in the future. This should only point back to this particular PR replica and should not ever point to another PR cluster. It may point to any node in the PR replica, including standby nodes, and need not always point to the active node. For example: <https://pr1.vault.example.com:8200/v1/pki> |
 
 #### Responses
 
@@ -2741,7 +2741,7 @@ Set cluster-local configuration, including address to this PR cluster.
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
 | `aia_path` | string | no | Optional URI to this mount's AIA distribution point; may refer to an external non-Stronghold responder. This is for resolving AIA URLs and providing the {{cluster_aia_path}} template parameter and will not be used for other purposes. As such, unlike path above, this could safely be an insecure transit mechanism (like HTTP without TLS). For example: <http://cdn.example.com/pr1/pki> |
-| `path` | string | no | Canonical URI to this mount on this performance replication cluster's external address. This is for resolving AIA URLs and providing the {{cluster_path}} template parameter but might be used for other purposes in the future. This should only point back to this particular PR replica and should not ever point to another PR cluster. It may point to any node in the PR replica, including standby nodes, and need not always point to the active node. For example: <https://pr1.stronghold.example.com:8200/v1/pki> |
+| `path` | string | no | Canonical URI to this mount on this performance replication cluster's external address. This is for resolving AIA URLs and providing the {{cluster_path}} template parameter but might be used for other purposes in the future. This should only point back to this particular PR replica and should not ever point to another PR cluster. It may point to any node in the PR replica, including standby nodes, and need not always point to the active node. For example: <https://pr1.vault.example.com:8200/v1/pki> |
 
 ### GET /{pki_mount_path}/config/crl
 
@@ -8122,12 +8122,12 @@ Verify a signature or HMAC for input data created using the named key
 | `batch_input` | array | no | Specifies a list of items for processing. When this parameter is set, any supplied 'input', 'hmac' or 'signature' parameters will be ignored. Responses are returned in the 'batch_results' array component of the 'data' element of the response. Any batch output will preserve the order of the batch input |
 | `context` | string | no | Base64 encoded context for key derivation. Required if key derivation is enabled; currently only available with ed25519 keys. |
 | `hash_algorithm` | string (default: sha2-256) | no | Hash algorithm to use (POST body parameter). Valid values are: \* sha1 \* sha2-224 \* sha2-256 \* sha2-384 \* sha2-512 \* sha3-224 \* sha3-256 \* sha3-384 \* sha3-512 \* none Defaults to "sha2-256". Not valid for all key types. See note about none on signing path. |
-| `hmac` | string | no | The HMAC, including stronghold header/key version |
+| `hmac` | string | no | The HMAC, including vault header/key version |
 | `input` | string | no | The base64-encoded input data to verify |
 | `marshaling_algorithm` | string (default: asn1) | no | The method by which to unmarshal the signature when verifying. The default is 'asn1' which is used by openssl and X.509; can also be set to 'jws' which is used for JWT signatures in which case the signature is also expected to be url-safe base64 encoding instead of standard base64 encoding. Currently only valid for ECDSA P-256 key types". |
 | `prehashed` | boolean | no | Set to 'true' when the input is already hashed. If the key type is 'rsa-2048', 'rsa-3072' or 'rsa-4096', then the algorithm used to hash the input should be indicated by the 'algorithm' parameter. |
 | `salt_length` | string (default: auto) | no | The salt length used to sign. Currently only applies to the RSA PSS signature scheme. Options are 'auto' (the default used by Golang, causing the salt to be as large as possible when signing), 'hash' (causes the salt length to equal the length of the hash used in the signature), or an integer between the minimum and the maximum permissible salt lengths for the given RSA key size. Defaults to 'auto'. |
-| `signature` | string | no | The signature, including stronghold header/key version |
+| `signature` | string | no | The signature, including vault header/key version |
 | `signature_algorithm` | string | no | The signature algorithm to use for signature verification. Currently only applies to RSA key types. Options are 'pss' or 'pkcs1v15'. Defaults to 'pss' |
 | `urlalgorithm` | string | no | Hash algorithm to use (POST URL parameter) |
 
@@ -8157,12 +8157,12 @@ Verify a signature or HMAC for input data created using the named key
 | `batch_input` | array | no | Specifies a list of items for processing. When this parameter is set, any supplied 'input', 'hmac' or 'signature' parameters will be ignored. Responses are returned in the 'batch_results' array component of the 'data' element of the response. Any batch output will preserve the order of the batch input |
 | `context` | string | no | Base64 encoded context for key derivation. Required if key derivation is enabled; currently only available with ed25519 keys. |
 | `hash_algorithm` | string (default: sha2-256) | no | Hash algorithm to use (POST body parameter). Valid values are: \* sha1 \* sha2-224 \* sha2-256 \* sha2-384 \* sha2-512 \* sha3-224 \* sha3-256 \* sha3-384 \* sha3-512 \* none Defaults to "sha2-256". Not valid for all key types. See note about none on signing path. |
-| `hmac` | string | no | The HMAC, including stronghold header/key version |
+| `hmac` | string | no | The HMAC, including vault header/key version |
 | `input` | string | no | The base64-encoded input data to verify |
 | `marshaling_algorithm` | string (default: asn1) | no | The method by which to unmarshal the signature when verifying. The default is 'asn1' which is used by openssl and X.509; can also be set to 'jws' which is used for JWT signatures in which case the signature is also expected to be url-safe base64 encoding instead of standard base64 encoding. Currently only valid for ECDSA P-256 key types". |
 | `prehashed` | boolean | no | Set to 'true' when the input is already hashed. If the key type is 'rsa-2048', 'rsa-3072' or 'rsa-4096', then the algorithm used to hash the input should be indicated by the 'algorithm' parameter. |
 | `salt_length` | string (default: auto) | no | The salt length used to sign. Currently only applies to the RSA PSS signature scheme. Options are 'auto' (the default used by Golang, causing the salt to be as large as possible when signing), 'hash' (causes the salt length to equal the length of the hash used in the signature), or an integer between the minimum and the maximum permissible salt lengths for the given RSA key size. Defaults to 'auto'. |
-| `signature` | string | no | The signature, including stronghold header/key version |
+| `signature` | string | no | The signature, including vault header/key version |
 | `signature_algorithm` | string | no | The signature algorithm to use for signature verification. Currently only applies to RSA key types. Options are 'pss' or 'pkcs1v15'. Defaults to 'pss' |
 
 #### Responses
@@ -8362,13 +8362,13 @@ Configure ELF binary signing via Delivery Kit
 |----------|-----|--------------|----------|
 | `certificate` | string | yes | Certificate data base64 encoded |
 | `intermediates` | string | no | Certificate chain (intermediates and root) base64 encoded, as a single PEM bundle |
-| `key` | string | yes | Private key data base64 encoded or a Stronghold key reference in the form hashistronghold://<key>. When a hashistronghold:// reference is used, configure the vault_* parameters |
-| `password` | string | no | Private key password. Must not be set when key is a hashistronghold:// reference |
-| `vault_addr` | string | no | Stronghold server address. Applies only when key is a hashistronghold:// reference |
-| `vault_auth_path` | string (default: ar) | no | Mount path of Stronghold auth method. Applies only when key is a hashistronghold:// reference |
-| `vault_auth_role_id` | string | no | AppRole RoleID used to authenticate to Stronghold. Applies only when key is a hashistronghold:// reference |
-| `vault_auth_secret_id` | string | no | AppRole SecretID used to authenticate to Stronghold. Applies only when key is a hashistronghold:// reference |
-| `vault_transit_path` | string | no | Mount path of Stronghold transit engine. Applies only when key is a hashistronghold:// reference |
+| `key` | string | yes | Private key data base64 encoded or a Stronghold key reference in the form hashivault://<key>. When a hashivault:// reference is used, configure the vault_* parameters |
+| `password` | string | no | Private key password. Must not be set when key is a hashivault:// reference |
+| `vault_addr` | string | no | Stronghold server address. Applies only when key is a hashivault:// reference |
+| `vault_auth_path` | string (default: ar) | no | Mount path of Stronghold auth method. Applies only when key is a hashivault:// reference |
+| `vault_auth_role_id` | string | no | AppRole RoleID used to authenticate to Stronghold. Applies only when key is a hashivault:// reference |
+| `vault_auth_secret_id` | string | no | AppRole SecretID used to authenticate to Stronghold. Applies only when key is a hashivault:// reference |
+| `vault_transit_path` | string | no | Mount path of Stronghold transit engine. Applies only when key is a hashivault:// reference |
 
 #### Responses
 
