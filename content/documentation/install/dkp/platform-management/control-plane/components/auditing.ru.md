@@ -64,7 +64,7 @@ d8 k patch mc control-plane-manager --type=strategic -p '{"settings":{"apiserver
    d8 k patch mc control-plane-manager --type=strategic -p '{"settings":{"apiserver":{"auditPolicyEnabled":true}}}'
    ```
 
-2. Создайте Secret `kube-system/audit-policy` с YAML-файлом политик, закодированным в Base64:
+1. Создайте Secret `kube-system/audit-policy` с YAML-файлом политик, закодированным в Base64:
 
    ```yaml
    apiVersion: v1

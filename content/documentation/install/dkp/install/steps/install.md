@@ -130,7 +130,9 @@ kind: ModuleConfig
 metadata:
   name: global
 spec:
-  version: 1apiVersion: deckhouse.io/v1
+  version: 1
+---
+apiVersion: deckhouse.io/v1
 kind: IngressNginxController
 metadata:
   name: main
@@ -391,7 +393,7 @@ The `EXTERNAL-IP` should be populated with a public IP address or DNS name.
 To access the web interfaces of platform components, you need to:
 
 1. Set up DNS.
-2. Specify a DNS name template in the platform parameters.
+1. Specify a DNS name template in the platform parameters.
 
 The DNS name template is used for configuring Ingress resources of system applications. For example, the Grafana interface is assigned the name `grafana`. Thus, for the template `%s.kube.company.my`, Grafana will be accessible at `grafana.kube.company.my`, etc.
 

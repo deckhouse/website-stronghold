@@ -64,14 +64,13 @@ Stronghold EE adds two layers, and **where** they sit matters: `Stronghold API �
 Two replication properties follow from the Stronghold EE layer order:
 
 1. **WAL Backend is below the barrier** → the log (and therefore the replication stream) contains ciphertext, not plaintext.
-2. **Sealwrap is below the WAL Backend** → the seal wrap is applied only after the write has entered the log → the data encrypted by the seal never enters the replication stream, and each cluster seals its data with its own seal.
+1. **Sealwrap is below the WAL Backend** → the seal wrap is applied only after the write has entered the log → the data encrypted by the seal never enters the replication stream, and each cluster seals its data with its own seal.
 {{< /alert >}}
 
 {{< alert level="warning" >}}
 In a Standalone Stronghold EE installation some layers and the features tied to them can be turned off in the server configuration:
 
 - `disable_sealwrap = true` disables the **Sealwrap** layer; sensitive paths are protected only by the Security Barrier, without a second encryption layer.
-- `disable_wal_replication = true` disables the **WAL Backend**, and with it native replication and performance standby; the node boots as an ordinary one.
 - `disable_performance_standby = true` keeps replication but disables **performance standby**: standby nodes stop serving reads and forward all requests to the active node.
 {{< /alert >}}
 

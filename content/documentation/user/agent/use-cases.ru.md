@@ -78,7 +78,7 @@ template {
 Stronghold поддерживает динамическую генерацию временных credentials для различных систем:
 
 **Database credentials:**
-- PostgreSQL, MySQL, MongoDB, Oracle.
+- PostgreSQL, MySQL/MariaDB, ClickHouse.
 - Временные пользователи с ограниченным TTL.
 - Автоматическая ротация.
 
@@ -117,3 +117,12 @@ deploy:
 - Рендерит его в файл /var/run/stronghold-agent/deploy_key с правами 0600.
 - При ротации ключа в Stronghold - agent автоматически обновляет файл.
 - GitLab Runner просто использует этот ключ - он всегда актуальный.
+
+## Примеры использования
+
+Готовые примеры с этим механизмом:
+
+- [Приложение на виртуальной машине со Stronghold Agent](../../../examples/delivery/legacy-app-on-vm/)
+- [TLS-сертификат для веб-сервера на ВМ из PKI Stronghold](../../../examples/delivery/web-server-tls/)
+
+Все примеры собраны в разделе [«Примеры использования»](../../../examples/).

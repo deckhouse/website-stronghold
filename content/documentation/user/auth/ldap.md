@@ -9,7 +9,7 @@ The `ldap` auth method allows authentication using an existing LDAP
 server and user/password credentials. This allows Stronghold to be integrated
 into environments using LDAP without duplicating the user/pass configuration
 in multiple places. Stronghold supports integration with various LDAP directory
-services, including the Russian directory service [ALD Pro](https://www.aldpro.ru/).
+services, including the Russian directory service [ALD Pro](https://www.aldpro.ru/). For step-by-step setup, see the [Integration with ALD Pro](../../../examples/access/ald-pro/) example.
 
 The mapping of groups and users in LDAP to Stronghold policies is managed by using
 the `users/` and `groups/` paths.
@@ -437,3 +437,13 @@ The user lockout feature can be disabled using "auth tune" by setting `disable_l
 {{< alert level="warning" >}}
 This feature is only supported by the userpass, ldap, and approle auth methods.
 {{< /alert >}}
+
+## Usage examples
+
+Ready-made examples that use this feature:
+
+- [Integration with ALD Pro](../../../examples/access/ald-pro/)
+- [Integration with Active Directory](../../../examples/access/active-directory/)
+- [MFA for administrators](../../../examples/access/admin-mfa/)
+
+See all examples in [Usage examples](../../../examples/).

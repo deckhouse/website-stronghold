@@ -5,7 +5,7 @@ weight: 10
 
 ## Monitoring
 
-For node groups (NodeGroup resource), DKP exports availability metrics for the group.
+For node groups (NodeGroup resource), DP exports availability metrics for the group.
 
 ### What information does Prometheus collect?
 

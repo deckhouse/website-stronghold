@@ -25,7 +25,7 @@ description: "Подключение внешних плагинов Stronghold 
 - поместить бинарные файлы плагинов в этот каталог;
 - зарегистрировать плагин в каталоге плагинов.
 
-## Настройка `plugin_directory`
+## Настройка plugin_directory
 
 Stronghold использует параметр `plugin_directory` в конфигурационном файле, чтобы определить каталог, из которого разрешено запускать внешние плагины.
 
@@ -84,11 +84,11 @@ stronghold secrets enable -path=my-secrets passthrough-plugin
 Success! Enabled the passthrough-plugin secrets engine at: my-secrets/
 ```
 
-После этого плагин будет отображаться в списке подключённых движков.
+После этого плагин будет отображаться в списке подключённых механизмов секретов.
 
 ## Отключение плагина
 
-Отключение внешнего плагина выполняется так же, как и для встроенных движков:
+Отключение внешнего плагина выполняется так же, как и для встроенных механизмов секретов:
 
 ```shell
 stronghold secrets disable my-secrets
@@ -113,10 +113,10 @@ stronghold plugin deregister secret passthrough-plugin
 Если версия не указана при монтировании, Stronghold выбирает плагин по следующему приоритету:
 
 1. Плагин, зарегистрированный без версии.
-2. Плагин с наиболее новой semantic version.
-3. Встроенный плагин.
+1. Плагин с наиболее новой semantic version.
+1. Встроенный плагин.
 
-## Права на файлы и `mlock`
+## Права на файлы и mlock
 
 Если Stronghold использует `mlock`, бинарным файлам внешних плагинов также может понадобиться право на использование `mlock`.
 
@@ -137,5 +137,5 @@ sudo setcap cap_ipc_lock=+ep /opt/stronghold/plugins/<plugin-binary>
 
 ## См. также
 
-- [Плагины в DKP](./dkp/)
+- [Плагины в DP](./dkp/)
 - [Настройка Standalone](../../install/standalone/configuration/)

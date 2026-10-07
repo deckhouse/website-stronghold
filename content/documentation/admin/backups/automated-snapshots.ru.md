@@ -75,7 +75,7 @@ snapshot_auto_upload_pool_shutdown = "90s"
 |----------|-----|--------------|-----------------------|----------|
 | `local_max_space` | Целое число | Нет | `0` | Максимальный объём в байтах, который можно занять резервными копиями с указанным `file_prefix` в директории `path_prefix`. Значение `0` отключает проверку |
 
-### Дополнительные параметры для `aws-s3`
+### Дополнительные параметры для aws-s3
 
 <div class="table__styling--container"></div>
 
@@ -133,7 +133,7 @@ stronghold write sys/storage/raft/snapshot-auto/config/my-local-snapshots @local
 {{< /tabs >}}
 
 {{< alert level="info" >}}
-В примере путь `/stronghold/data/` — это путь внутри контейнера, и по умолчанию он смонтирован по пути `/var/lib/deckhouse/stronghold/` на master-узлах кластера DKP. Созданные снимки можно найти и скачать с master-узлов по пути `/var/lib/deckhouse/stronghold/backups/`. При перезагрузке подов снимки останутся неизменными.
+В примере путь `/stronghold/data/` — это путь внутри контейнера, и по умолчанию он смонтирован по пути `/var/lib/deckhouse/stronghold/` на master-узлах кластера DP. Созданные снимки можно найти и скачать с master-узлов по пути `/var/lib/deckhouse/stronghold/backups/`. При перезагрузке подов снимки останутся неизменными.
 {{< /alert >}}
 
 ### S3-совместимое хранилище

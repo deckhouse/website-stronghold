@@ -142,7 +142,7 @@ If not configured to use auto-unseal, unseal Stronghold and then check the statu
 
 **Example:**
 
-```bash
+```console
 $ stronghold operator unseal
 Unseal Key (will be hidden):
 

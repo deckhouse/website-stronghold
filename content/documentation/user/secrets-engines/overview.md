@@ -20,6 +20,28 @@ secrets engine. In this way, each secrets engine defines its own paths and
 properties. To the user, secrets engines behave similar to a virtual filesystem,
 supporting operations like read, write, and delete.
 
+## Available secrets engines
+
+| Secrets engine | Type (`secrets enable`) | Purpose | Editions |
+|----------------|-------------------------|---------|----------|
+| [Cubbyhole](../cubbyhole/) | `cubbyhole` | Per-token private secret storage. Enabled by default. | All editions |
+| [Databases](../databases/overview/): [PostgreSQL](../databases/postgresql/), [MySQL/MariaDB](../databases/mysql-maria/), [ClickHouse](../databases/clickhouse/) | `database` | Dynamic and static database credentials. | Stronghold, Stronghold EE, Stronghold CSE |
+| [GitOps](../gitops/overview/) | `gitops` | Applying Stronghold configuration from a Git repository gated by a quorum of commit signatures. | Stronghold EE |
+| [Identity](../identity/overview/) | `identity` | Entities, groups, the OIDC provider, and identity tokens. Enabled by default. | All editions |
+| [Kubernetes](../kubernetes/) | `kubernetes` | Dynamic Kubernetes service account tokens and accounts. | Stronghold, Stronghold EE, Stronghold CSE |
+| [KV version 1](../kv/kv-v1/) and [KV version 2](../kv/kv-v2/) | `kv` | Storing arbitrary static secrets; KV v2 supports versioning. | Stronghold, Stronghold EE, Stronghold CSE |
+| [LDAP](../ldap/) | `ldap` | Managing LDAP/Active Directory accounts: static and dynamic credentials, service account check-out. | Not specified |
+| [PKI](../pki/) | `pki` | Issuing and revoking X.509 certificates, including GOST. | Stronghold, Stronghold EE, Stronghold CSE (GOST: Stronghold and Stronghold EE) |
+| [RabbitMQ](../rabbitmq/) | `rabbitmq` | Dynamic RabbitMQ user credentials. | Not specified |
+| [SSH](../signed-ssh-certificates/) | `ssh` | SSH certificate signing (CA) and [one-time passwords (OTP)](../ssh-otp/). | Stronghold, Stronghold EE, Stronghold CSE |
+| [TOTP](../totp/) | `totp` | Generating and validating TOTP codes. | Not specified |
+| [Transit](../transit/) | `transit` | Encryption as a service: encryption, signing, and HMAC without storing data. | Not specified (GOST: Stronghold and Stronghold EE) |
+| [trdl](../trdl/) | `trdl` | Building, signing, and publishing releases from Git gated by a quorum of signatures. | Stronghold EE |
+
+For an edition comparison, see [Editions](../../../about/editions/). KV replication is available in Stronghold EE and Stronghold CSE; see [KV1/KV2 replication](../kv/kv-replication/).
+
+<!-- TODO(verify): edition availability of ldap, rabbitmq, totp, transit; the editions page does not list them. The gitops and trdl edition is taken from the release notes. -->
+
 ## Secrets engines lifecycle
 
 Most secrets engines can be enabled, disabled, tuned, and moved via the CLI or

@@ -6,7 +6,7 @@ weight: 20
 Stronghold Enterprise Edition (EE) можно обновить до Stronghold Certified Security Edition (CSE) одним из следующих способов:
 
 - в исполнении Standalone;
-- [в исполнении DKP](../../../dkp/platform-management/switching-editions/ee-to-cse/).
+- [в исполнении DP](../../../dkp/platform-management/switching-editions/ee-to-cse/).
 
 {{< alert level="warning" >}}
 Поддерживается обновление с Stronghold EE 1.15.x до Stronghold CSE 1.16.0. Если используется версия Stronghold EE ниже 1.15.x, сначала [обновитесь до последней версии ветки](../../../dkp/update/update/).
@@ -26,7 +26,7 @@ Stronghold Enterprise Edition (EE) можно обновить до Stronghold C
    stronghold version
    ```
 
-1. Сохраните unseal-ключи и root-токен в защищённое хранилище.
+1. Сохраните ключи распечатывания и root-токен в защищённое хранилище.
 
 1. Создайте снимок (snapshot) кластера Stronghold. Пример:
 
@@ -35,7 +35,7 @@ Stronghold Enterprise Edition (EE) можно обновить до Stronghold C
    ls -lh stronghold-*.snap
    ```
 
-   Проверьте, что снапшот создан:
+   Проверьте, что снимок создан:
 
    ```shell
    ls -lh ./stronghold-*.snap

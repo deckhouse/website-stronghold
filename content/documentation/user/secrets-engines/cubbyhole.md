@@ -51,7 +51,7 @@ engine allows for writing keys with arbitrary values.
    {{% /tab %}}
    {{< /tabs >}}
 
-2. Read arbitrary data:
+1. Read arbitrary data:
 
    {{< tabs name="stronghold_cmd_31040" >}}
    {{% tab name="Stronghold in DKP" %}}
@@ -75,3 +75,11 @@ engine allows for writing keys with arbitrary values.
 
    {{% /tab %}}
    {{< /tabs >}}
+
+## Usage examples
+
+Ready-made examples that use this feature:
+
+- [One-time secret handover with response wrapping](../../../examples/operations/secret-sharing-wrapping/)
+
+See all examples in [Usage examples](../../../examples/).

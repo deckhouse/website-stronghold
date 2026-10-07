@@ -272,3 +272,11 @@ A parameter of `"division"` will reference "North America", as this is a top lev
 `"/groups/primary"` uses JSON Pointer syntax to reference "Engineering" at a lower level. Any valid
 JSON Pointer can be used as a selector. Refer to the
 [JSON Pointer RFC](https://tools.ietf.org/html/rfc6901) for a full description of the syntax.
+
+## Usage examples
+
+Ready-made examples that use this feature:
+
+- [CI/CD](../../../examples/delivery/ci-cd/)
+
+See all examples in [Usage examples](../../../examples/).

@@ -64,8 +64,8 @@ If neither `oauth_token` nor `service_account_key_file` is set, Stronghold attem
 For Yandex Cloud KMS, authentication values are resolved in the following order:
 
 1. Environment variables.
-2. Stronghold configuration file values.
-3. Yandex Cloud VM service account credentials.
+1. Stronghold configuration file values.
+1. Yandex Cloud VM service account credentials.
 
 Therefore, environment variables take precedence over values from the `seal "yandexcloudkms"` section.
 
@@ -95,3 +95,11 @@ ENsure that you meet the following requirements for `seal "yandexcloudkms"` conf
 - For production environments, prefer a VM service account or a dedicated service account with minimum required permissions.
 - When rotating KMS keys, plan for rewrap operations and verify access to older key material versions.
 - If you use double encryption, account for the availability of Yandex Cloud KMS during normal Stronghold runtime.
+
+## Usage examples
+
+Ready-made examples that use this feature:
+
+- [Auto-unseal with Yandex Cloud KMS](../../../examples/encryption/yandex-kms-unseal/)
+
+See all examples in [Usage examples](../../../examples/).

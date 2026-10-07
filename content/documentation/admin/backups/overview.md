@@ -47,3 +47,11 @@ Follow these recommendations when using Stronghold backups:
 - Keep backups outside the same environment they are intended to protect.
 - Periodically verify snapshot creation with `d8 stronghold operator raft snapshot inspect` and the backup restore procedure in a test environment.
 - For production environments, prefer external object storage over local disk whenever possible.
+
+## Usage examples
+
+Ready-made examples that use this feature:
+
+- [Regular disaster recovery drills](../../../examples/operations/dr-drill/)
+
+See all examples in [Usage examples](../../../examples/).

@@ -9,7 +9,7 @@ weight: 50
 
 Чтобы включить модуль kube-dns с настройками по умолчанию, примените ресурс `ModuleConfig` указав свои NTP-сервера для синхронизации. Пример конфигурации с NTP-сервером по умолчанию:
 
-```yaml
+```bash
 d8 k apply -f - <<EOF
 apiVersion: deckhouse.io/v1alpha1
 kind: ModuleConfig
@@ -40,7 +40,7 @@ EOF
 
 1. Создайте [NodeGroupConfiguration](/modules/node-manager/cr.html#nodegroupconfiguration) custom step, чтобы включить NTP-демоны на узлах (пример для systemd-timesyncd):
 
-   ```yaml
+   ```bash
    d8 k apply -f - <<EOF
    apiVersion: deckhouse.io/v1alpha1
    kind: NodeGroupConfiguration

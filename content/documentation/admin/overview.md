@@ -8,6 +8,15 @@ This section is intended for Deckhouse Stronghold administrators.
 
 The administrator guide includes the following sections:
 
+- Operations
+  - [Monitoring](./operations/monitoring/), [Server logs](./operations/logs/), [Troubleshooting](./operations/troubleshooting/);
+  - [Production checklist](./operations/production-checklist/), [Key management](./operations/key-management/), [TLS certificates](./operations/tls-certificates/);
+  - [Quotas](./operations/quotas/), [Sizing](./operations/sizing/), [FAQ](./operations/faq/).
+
+- Architecture
+  - [Overview](./architecture/overview/), [Deployment in DP](./architecture/deployment-dkp/), [Standalone deployment](./architecture/deployment-standalone/);
+  - [Network ports](./architecture/ports/), [Threat model](./architecture/threat-model/), [Functional specifications](./architecture/functional-specifications/).
+
 - Audit
   - ["Overview"](./audit/overview/): What Stronghold audit logs contain, which backends are supported, and how to configure auditing safely.
   - ["Audit log record schema"](./audit/log-format/): Audit record structure, key objects, and protection of sensitive data.
@@ -41,6 +50,6 @@ The administrator guide includes the following sections:
   - ["Overview"](./cryptography/overview/): Overview of TLS, storage encryption, HSM, and the algorithms available in PKI and Transit.
 
 - Extensions and integrations
-  - ["Overview"](./plugins/overview/): Overview of built-in and external Stronghold plugins and the differences between Standalone and DKP.
+  - ["Overview"](./plugins/overview/): Overview of built-in and external Stronghold plugins and the differences between Standalone and DP.
   - ["Plugins in Standalone"](./plugins/standalone/): Plugin directory, registration, versioning, and mounting of external plugins on Linux servers.
-  - ["Plugins in DKP"](./plugins/dkp/): Plugin delivery through `ModuleConfig`, registration, and enablement in Deckhouse Kubernetes Platform.
+  - ["Plugins in DP"](./plugins/dkp/): Plugin delivery through `ModuleConfig`, registration, and enablement in Deckhouse Platform.

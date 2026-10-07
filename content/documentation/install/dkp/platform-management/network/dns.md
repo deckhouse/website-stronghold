@@ -11,7 +11,7 @@ kube-dns deletes resources previously installed via kubeadm, including Deploymen
 
 To enable kube-dns with default settings, use the following ModuleConfig resource:
 
-```yaml
+```bash
 d8 k apply -f - <<EOF
 apiVersion: deckhouse.io/v1alpha1
 kind: ModuleConfig
@@ -28,7 +28,7 @@ For detailed description of kube-dns settings, refer to the [corresponding artic
 
 Example of the kube-dns module configuration using the ModuleConfig resource:
 
-```yaml
+```bash
 d8 k apply -f - <<EOF
 apiVersion: deckhouse.io/v1alpha1
 kind: ModuleConfig

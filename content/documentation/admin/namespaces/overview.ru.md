@@ -429,3 +429,11 @@ stronghold secrets list -namespace=production
 
 {{% /tab %}}
 {{< /tabs >}}
+
+## Примеры использования
+
+Готовые примеры с этим механизмом:
+
+- [Мультиарендность на основе пространств имён](../../../examples/operations/multi-tenancy-namespaces/)
+
+Все примеры собраны в разделе [«Примеры использования»](../../../examples/).

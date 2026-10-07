@@ -60,7 +60,5 @@ they would without the Enterprise standby capability.
 
 {{< alert level="info" >}}
 The `disable_performance_standby` parameter applies to the server configuration
-of a Standalone Stronghold installation. Turning off the whole replication
-pipeline with `disable_wal_replication = true` also disables performance
-standby.
+of a Standalone Stronghold installation.
 {{< /alert >}}

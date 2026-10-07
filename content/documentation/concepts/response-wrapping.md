@@ -56,10 +56,10 @@ In the Go API, the [`SetWrappingLookupFunc`](https://godoc.org/github.com/hashic
 Wrapping process:
 
 1. The original HTTP response is serialized.
-2. A one-time token is generated with the TTL set by the client.
-3. The response is stored in the `cubbyhole` associated with the token.
-4. A new response is generated with additional fields containing token information (ID, TTL, and path).
-5. The new response is returned to the client.
+1. A one-time token is generated with the TTL set by the client.
+1. The response is stored in the `cubbyhole` associated with the token.
+1. A new response is generated with additional fields containing token information (ID, TTL, and path).
+1. The new response is returned to the client.
 
 {{< alert level="info" >}}
 The minimum and maximum TTL of wrapping tokens is controlled by [policies](../policy/).
@@ -76,3 +76,12 @@ To reduce abuse risks, it is recommended to validate wrapping tokens using the f
 1. After verifying the prefix, unwrap the token. If unwrapping fails, initiate an incident investigation.
 
 By following these steps, you can be sure that only the intended client has seen the data inside the wrapping token, and any attempt at substitution or interception will be detected.
+
+## Usage examples
+
+Ready-made examples that use this feature:
+
+- [One-time secret handover with response wrapping](../../examples/operations/secret-sharing-wrapping/)
+- [Application on a virtual machine with Stronghold Agent](../../examples/delivery/legacy-app-on-vm/)
+
+See all examples in [Usage examples](../../examples/).

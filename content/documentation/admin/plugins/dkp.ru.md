@@ -4,7 +4,7 @@ weight: 30
 description: "Подключение плагинов Stronghold в Deckhouse Kubernetes Platform."
 ---
 
-В Deckhouse Kubernetes Platform порядок загрузки плагинов отличается от Standalone-установки: администратор не копирует бинарные файлы на сервер вручную, а описывает список плагинов в `ModuleConfig`.
+В Deckhouse Platform порядок загрузки плагинов отличается от Standalone-установки: администратор не копирует бинарные файлы на сервер вручную, а описывает список плагинов в `ModuleConfig`.
 
 После этого платформа:
 
@@ -35,7 +35,7 @@ spec:
         url: "https://github.com/martinbaillie/vault-plugin-secrets-github/releases/download/v2.3.2/vault-plugin-secrets-github-linux-amd64"
         sha256: "72cb1f2775ee2abf12ffb725e469d0377fe7bbb93cd7aaa6921c141eddecab87"
       - name: "vault-plugin-auth-any"
-        url: "https://plugins.example.local/myplugins/vault-plugin-auth-any-v1.0.0-linux-amd64"
+        url: "https://plugins.example.local/myplugins/vault-plugin-auth-any-linux-amd64"
         sha256: "c943b505b39b53e1f4cb07f2a3455b59eac523ebf600cb04813b9ad28a848b21"
         ignoreFailure: true
         insecureSkipVerify: false
@@ -53,11 +53,11 @@ spec:
 ## Параметры загрузки
 
 - `name` — имя бинарного файла плагина;
-- `url` — URL, откуда нужно скачать плагин;
+- `url` — URL, откуда нужно скачать плагин. Последний сегмент URL (имя файла) не должен содержать точек, поэтому не включайте в него версию (например, `vault-plugin-auth-any-linux-amd64`): передавайте её флагом `-version` при [регистрации плагина](#регистрация-плагина);
 - `sha256` — SHA256 контрольная сумма плагина;
 - `ignoreFailure` — разрешает продолжить запуск Stronghold, даже если данный плагин не удалось скачать;
 - `insecureSkipVerify` — отключает проверку TLS-сертификата удалённого сервера;
-- `ca` — дополнительный CA-сертификат для проверки TLS-соединения.
+- `ca` — CA-сертификат в формате PEM для проверки TLS-соединения. Это единственный доверенный CA для URL этого плагина: системные CA не используются.
 
 ## Что происходит при обновлении списка плагинов
 
@@ -71,14 +71,14 @@ spec:
 
 ## Закрытые контуры
 
-В закрытых контурах, где у Stronghold нет доступа во внешний интернет, плагин можно разместить внутри самого кластера DKP.
+В закрытых контурах, где у Stronghold нет доступа во внешний интернет, плагин можно разместить внутри самого кластера DP.
 
 Один из практических вариантов:
 
 1. Подготовить контейнер с `nginx`, в который помещён бинарный файл плагина.
-2. Запустить этот контейнер в Kubernetes.
-3. Создать внутренний `Service`, который публикует `nginx` внутри кластера.
-4. Указать в `ModuleConfig` URL вида `http://<service>.<namespace>.svc.cluster.local/...`, чтобы платформа скачивала плагин через внутренний Kubernetes-сервис.
+1. Запустить этот контейнер в Kubernetes.
+1. Создать внутренний `Service`, который публикует `nginx` внутри кластера.
+1. Указать в `ModuleConfig` URL вида `http://<service>.<namespace>.svc.cluster.local/...`, чтобы платформа скачивала плагин через внутренний Kubernetes-сервис.
 
 Пример фрагмента `ModuleConfig`:
 

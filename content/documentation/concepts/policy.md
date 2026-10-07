@@ -44,7 +44,7 @@ Policies are written in HCL or JSON and describe which paths in Stronghold a use
 
 Here is a simple policy which grants read capabilities to the KV/v1 path `secret/foo`:
 
-```json
+```hcl
 path "secret/foo" {
   capabilities = ["read"]
 }
@@ -54,7 +54,7 @@ When this policy is assigned to a token, the token can read from `secret/foo`. H
 
 Here is a more detailed policy, and it is documented inline:
 
-```json
+```hcl
 # This section grants all access on "secret/*".
 # Further restrictions can be applied to this broad policy, as shown below.
 path "secret/*" {
@@ -80,7 +80,7 @@ path "secret/restricted" {
 
 Policies use path-based matching to test the set of capabilities against a request. A policy path may specify an exact path to match, or it could specify a glob pattern which instructs Stronghold to use a prefix match:
 
-```json
+```hcl
 # Permit reading only "secret/foo".
 # An attached token cannot read "secret/food" or "secret/foo/bar".
 path "secret/foo" {
@@ -102,7 +102,7 @@ path "secret/zip-*" {
 
 In addition, a `+` (plus) can be used to denote any number of characters bounded within a single path segment:
 
-```json
+```hcl
 # Permit reading the "teamb" path under any top-level path under "secret/".
 path "secret/+/teamb" {
   capabilities = ["read"]
@@ -178,7 +178,7 @@ The policy syntax allows for doing variable replacement in some policy strings w
 
 The following policy creates a section of the KVv2 Secret Engine to a specific user
 
-```json
+```hcl
 path "secret/data/{{identity.entity.id}}/*" {
   capabilities = ["create", "update", "patch", "read", "delete"]
 }
@@ -190,7 +190,7 @@ path "secret/metadata/{{identity.entity.id}}/*" {
 
 If you wanted to create a shared section of KV that is associated with entities that are in a group.
 
-```json
+```hcl
 # In the example below, the group ID maps a group and the path
 path "secret/data/groups/{{identity.groups.ids.fb036ebc-2f62-4124-9503-42aa7A869741.name}}/*" {
   capabilities = ["create", "update", "patch", "read", "delete"]
@@ -236,7 +236,7 @@ token/         token         auth_token_yyyy             token based credentials
 
 The following templated policy allow to read the path associated with the Kubernetes service account namespace of the identity:
 
-```json
+```hcl
 path "secret/data/{{identity.entity.aliases.auth_kubernetes_xxxx.metadata.service_account_namespace}}/*" {
   capabilities = ["read"]
 }
@@ -257,7 +257,7 @@ Policies can take into account HTTP request parameters to further constrain requ
 
 - `required_parameters`: A list of parameters that must be specified.
 
-  ```json
+  ```hcl
   # This requires the user to create "secret/profile" with a parameter/key named
   # "name" and "id" where kv v1 is enabled at "secret/".
   path "secret/profile" {
@@ -270,7 +270,7 @@ Policies can take into account HTTP request parameters to further constrain requ
 
   Setting a parameter with a value of the empty list allows the parameter to contain any value.
 
-  ```json
+  ```hcl
   # This allows the user to update the password parameter value set on any
   # users configured for userpass auth method. The password value can be
   # anything. However, the user cannot update other parameter values such as
@@ -285,7 +285,7 @@ Policies can take into account HTTP request parameters to further constrain requ
 
   Setting a parameter with a value of a populated list allows the parameter to contain only those values.
 
-  ```json
+  ```hcl
   # This allows the user to create or update an encryption key for transit
   # secrets engine enabled at "transit/". When you do, you can set the
   # "auto_rotate_period" parameter value so that the key gets rotated.
@@ -301,7 +301,7 @@ Policies can take into account HTTP request parameters to further constrain requ
 
   If any keys are specified, all non-specified parameters will be denied unless the parameter "*" is set to an empty array, which will allow all other parameters to be modified. Parameters with specific values will still be restricted to those values.
 
-  ```json
+  ```hcl
   # When kv v1 secrets engine is enabled at "secret/", this allows the user to
   # create "secret/foo" with a parameter named "bar". The parameter "bar" can
   # only contain the values "zip" or "zap", but any other parameters may be
@@ -319,7 +319,7 @@ Policies can take into account HTTP request parameters to further constrain requ
 
   Setting a parameter with a value of the empty list denies any changes to that parameter.
 
-  ```json
+  ```hcl
   # This allows the user to update the userpass auth method's user
   # configurations (e.g., "password") but cannot update the "token_policies"
   # and "policies" parameter values.
@@ -334,7 +334,7 @@ Policies can take into account HTTP request parameters to further constrain requ
 
   Setting a parameter with a value of a populated list denies any parameter containing those values.
 
-  ```json
+  ```hcl
   # This allows the user to create or update token roles. However, the
   # "allowed_policies" parameter value cannot be "admin", but the user can
   # assign any other policies to the parameter.
@@ -348,7 +348,7 @@ Policies can take into account HTTP request parameters to further constrain requ
 
   Setting to `*` will deny any parameter.
 
-  ```json
+  ```hcl
   # This allows the user to create or update an encryption key for transit
   # secrets engine enabled at "transit/". However, the user cannot set any of
   # the configuration parameters. As a result, the created key will have all
@@ -365,7 +365,7 @@ Policies can take into account HTTP request parameters to further constrain requ
 
 Parameter values also support prefix/suffix globbing. Globbing is enabled by prepending or appending or prepending a splat (`*`) to the value:
 
-```json
+```hcl
 # Only allow a parameter named "bar" with a value starting with "foo-*".
 path "secret/foo" {
   capabilities = ["create"]
@@ -385,7 +385,7 @@ Evaluation of policies with `allowed_parameters`, `denied_parameters`, and `requ
 
 Given the following policy:
 
-```json
+```hcl
 # The "no_store" parameter cannot be "false".
 path "secret/foo" {
   capabilities = ["create"]
@@ -439,7 +439,7 @@ This is because the policy evaluator does not know what the default value is for
 
 This can be resolved by requiring the `no_store` parameter in your policy:
 
-```json
+```hcl
 path "secret/foo" {
   capabilities = ["create"]
   required_parameters = ["no_store"]
@@ -472,7 +472,7 @@ stronghold write secret/foo value=bar
 
 It's also important to note that the use of globbing may result in surprising or unexpected behavior:
 
-```json
+```hcl
 # This allows the user to create, update, or patch "secret/foo" with a parameter
 # named "bar". the values passed to parameter "bar" must start with "baz/"
 # so values like "baz/quux" are fine. however, values like
@@ -573,7 +573,7 @@ In practice, setting a minimum TTL of one second effectively makes response wrap
 - `min_wrapping_ttl`: The minimum allowed TTL that clients can specify for a wrapped response. In practice, setting a minimum TTL of one second effectively makes response wrapping mandatory for a particular path. It can also be used to ensure that the TTL is not too low, leading to end targets being unable to unwrap before the token expires.
 - `max_wrapping_ttl`: The maximum allowed TTL that clients can specify for a wrapped response.
 
-```json
+```hcl
 # This effectively makes response wrapping mandatory for this path by setting "min_wrapping_ttl" to 1 second.
 # This also sets this path's wrapped response maximum allowed TTL to 90 seconds.
 path "auth/approle/role/my-role/secret-id" {
@@ -926,3 +926,11 @@ Normally the only policies that may be specified are those which are present in 
 There is no way to modify the policies associated with a token once the token has been issued. The token must be revoked and a new one acquired to receive a new set of policies.
 
 However, the contents of policies are parsed in real-time whenever the token is used. As a result, if a policy is modified, the modified rules will be in force the next time a token, with that policy attached, is used to make a call to Stronghold.
+
+## Usage examples
+
+Ready-made examples that use this feature:
+
+- [Multi-tenancy with namespaces](../../examples/operations/multi-tenancy-namespaces/)
+
+See all examples in [Usage examples](../../examples/).

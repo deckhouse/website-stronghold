@@ -165,7 +165,7 @@ The following is an MFA configuration example for the Userpass authentication me
    {{< tabs name="stronghold_cmd_88070" >}}
    {{% tab name="Stronghold in DKP" %}}
 
-   ```shell
+   ```console
    d8 stronghold login -method=userpass username=mfa-user
    Password (will be hidden):
    ```
@@ -173,7 +173,7 @@ The following is an MFA configuration example for the Userpass authentication me
    {{% /tab %}}
    {{% tab name="Stronghold in Linux" %}}
 
-   ```shell
+   ```console
    stronghold login -method=userpass username=mfa-user
    Password (will be hidden):
    ```
@@ -223,3 +223,11 @@ stronghold delete identity/mfa/login-enforcement/userpass-multifactor-enforcemen
 
 {{% /tab %}}
 {{< /tabs >}}
+
+## Usage examples
+
+Ready-made examples that use this feature:
+
+- [MFA for administrators](../../../../examples/access/admin-mfa/)
+
+See all examples in [Usage examples](../../../../examples/).

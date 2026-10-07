@@ -143,3 +143,12 @@ the proper permission, it can generate credentials.
 
     {{% /tab %}}
     {{< /tabs >}}
+
+## Usage examples
+
+Ready-made examples that use this feature:
+
+- [Dynamic PostgreSQL credentials for an application in DP](../../../../examples/dynamic-credentials/postgresql/)
+- [Rotating service account passwords](../../../../examples/dynamic-credentials/static-credentials-rotation/)
+
+See all examples in [Usage examples](../../../../examples/).

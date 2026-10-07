@@ -224,3 +224,11 @@ After the migration is complete, Stronghold will automatically unseal using PKCS
    {{< /tabs >}}
 
 After the migration is complete, Stronghold will require manual entry of unseal keys on each restart.
+
+## Usage examples
+
+Ready-made examples that use this feature:
+
+- [Auto-unseal and seal wrap with an HSM](../../../examples/encryption/hsm-unseal/)
+
+See all examples in [Usage examples](../../../examples/).

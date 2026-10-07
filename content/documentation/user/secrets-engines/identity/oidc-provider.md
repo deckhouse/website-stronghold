@@ -47,7 +47,7 @@ Stronghold as an OIDC provider.
    Any Stronghold auth method may be used within the OIDC flow. For simplicity, enable the
    `userpass` auth method.
 
-2. Create a user:
+1. Create a user:
 
    {{< tabs name="stronghold_cmd_27343" >}}
    {{% tab name="Stronghold in DKP" %}}
@@ -71,7 +71,7 @@ Stronghold as an OIDC provider.
    This user will authenticate to Stronghold through a client application, otherwise known as
    an OIDC [relying party](https://openid.net/specs/openid-connect-core-1_0.html#Terminology).
 
-3. Create a client application:
+1. Create a client application:
 
    {{< tabs name="stronghold_cmd_67193" >}}
    {{% tab name="Stronghold in DKP" %}}
@@ -104,7 +104,7 @@ Stronghold as an OIDC provider.
    To allow all Stronghold entities to authenticate, the built-in `allow_all`
    assignment is provided.
 
-4. Read client credentials:
+1. Read client credentials:
 
    {{< tabs name="stronghold_cmd_65001" >}}
    {{% tab name="Stronghold in DKP" %}}
@@ -148,14 +148,14 @@ Stronghold as an OIDC provider.
    The `client_id` and `client_secret` are the client application's credentials. These
    values are typically required when configuring an OIDC relying party.
 
-5. Read OIDC discovery configuration:
+1. Read OIDC discovery configuration:
 
    ```text
    $ curl -s http://127.0.0.1:8200/v1/identity/oidc/provider/default/.well-known/openid-configuration
    {
      "issuer": "http://127.0.0.1:8200/v1/identity/oidc/provider/default",
      "jwks_uri": "http://127.0.0.1:8200/v1/identity/oidc/provider/default/.well-known/keys",
-     "authorization_endpoint": "http://127.0.0.1:8200/ui/vault/identity/oidc/provider/default/authorize",
+     "authorization_endpoint": "http://127.0.0.1:8200/ui/stronghold/identity/oidc/provider/default/authorize",
      "token_endpoint": "http://127.0.0.1:8200/v1/identity/oidc/provider/default/token",
      "userinfo_endpoint": "http://127.0.0.1:8200/v1/identity/oidc/provider/default/userinfo",
      "request_parameter_supported": false,
@@ -208,3 +208,11 @@ Otherwise, refer to the documentation of the specific OIDC relying party for usa
 The Stronghold OIDC provider feature currently supports the following authentication flow:
 
 - [Authorization Code Flow](https://openid.net/specs/openid-connect-core-1_0.html#CodeFlowAuth).
+
+## Usage examples
+
+Ready-made examples that use this feature:
+
+- [Stronghold as an OIDC provider for internal applications](../../../../examples/identity-provider/oidc-provider-for-apps/)
+
+See all examples in [Usage examples](../../../../examples/).

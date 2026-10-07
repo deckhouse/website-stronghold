@@ -125,3 +125,11 @@ Rewrap duration depends on the number of seal-wrapped values and the performance
 
 - [HSM support](./hsm/)
 - [Standalone configuration](../../install/standalone/configuration/)
+
+## Usage examples
+
+Ready-made examples that use this feature:
+
+- [Auto-unseal and seal wrap with an HSM](../../../examples/encryption/hsm-unseal/)
+
+See all examples in [Usage examples](../../../examples/).

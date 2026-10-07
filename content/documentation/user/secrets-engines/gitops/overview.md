@@ -260,3 +260,11 @@ stronghold secrets disable gitops
 {{< /tabs >}}
 
 Disabling the engine deletes its storage data for that mount, including the stored API token and apply state.
+
+## Usage examples
+
+Ready-made examples that use this feature:
+
+- [GitOps](../../../../examples/delivery/gitops/)
+
+See all examples in [Usage examples](../../../../examples/).

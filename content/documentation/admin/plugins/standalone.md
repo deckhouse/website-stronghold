@@ -25,7 +25,7 @@ To use external plugins in a Standalone configuration, you must:
 - place plugin binaries in that directory;
 - register the plugin in the plugin catalog.
 
-## Configure `plugin_directory`
+## Configure plugin_directory
 
 Stronghold uses the `plugin_directory` setting in the configuration file to define the directory from which external plugins may be started.
 
@@ -113,10 +113,10 @@ If you specify a version manually:
 If no version is specified when mounting, Stronghold chooses the plugin with the following precedence:
 
 1. A plugin registered without a version.
-2. The plugin with the most recent semantic version.
-3. The built-in plugin.
+1. The plugin with the most recent semantic version.
+1. The built-in plugin.
 
-## File permissions and `mlock`
+## File permissions and mlock
 
 If Stronghold uses `mlock`, external plugin binaries may also need the capability to use `mlock`.
 
@@ -137,5 +137,5 @@ Stronghold can also validate ownership and permissions of the plugin directory a
 
 ## See also
 
-- [Plugins in DKP](./dkp/)
+- [Plugins in DP](./dkp/)
 - [Standalone configuration](../../install/standalone/configuration/)

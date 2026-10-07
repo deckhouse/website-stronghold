@@ -11,7 +11,7 @@ weight: 30
 
 Чтобы включить модуль static-routing-manager с настройками по умолчанию, примените следующий ресурс `ModuleConfig`:
 
-```yaml
+```bash
 d8 k apply -f - <<EOF
 apiVersion: deckhouse.io/v1alpha1
 kind: ModuleConfig
@@ -31,7 +31,7 @@ EOF
 
 1. Примените ресурс `RoutingTable`, согласно которому на узлах, подпадающих под nodeSelector, будет создан маршрут `10.0.0.0/8 via 192.168.0.1`:
 
-   ```yaml
+   ```bash
    d8 k apply -f - <<EOF
    apiVersion: network.deckhouse.io/v1alpha1
    kind: RoutingTable
@@ -66,7 +66,7 @@ EOF
 
 1. Примените ресурс `RoutingTable`, согласно которому на узлах, подпадающих под nodeSelector, будет создан маршрут `0.0.0.0/0 via 192.168.0.1` в таблице 10000:
 
-   ```yaml
+   ```bash
    d8 k apply -f - <<EOF
    apiVersion: network.deckhouse.io/v1alpha1
    kind: RoutingTable
@@ -106,7 +106,7 @@ EOF
 
 1. Создайте ресурс IPRuleSet, согласно которому на узлах, подпадающих под nodeSelector, будет создан IP-rule:
 
-   ```yaml
+   ```bash
    d8 k apply -f - <<EOF
    apiVersion: network.deckhouse.io/v1alpha1
    kind: IPRuleSet

@@ -37,7 +37,7 @@ The secrets engine has three primary features:
    By default, the secrets engine will mount at the name of the engine. To
    enable the secrets engine at a different path, use the `-path` argument.
 
-2. Configure the credentials that Stronghold uses to communicate with LDAP
+1. Configure the credentials that Stronghold uses to communicate with LDAP
    to generate passwords:
 
    {{< tabs name="stronghold_cmd_29364" >}}
@@ -65,7 +65,7 @@ The secrets engine has three primary features:
 
    Note: it's recommended a dedicated entry management account be created specifically for Stronghold.
 
-3. Rotate the root password so only Stronghold knows the credentials:
+1. Rotate the root password so only Stronghold knows the credentials:
 
    {{< tabs name="stronghold_cmd_27218" >}}
    {{% tab name="Stronghold in DKP" %}}
@@ -202,7 +202,7 @@ $ stronghold write ldap/config \
    {{% /tab %}}
    {{< /tabs >}}
 
-2. Request credentials for the "stronghold" role:
+1. Request credentials for the "stronghold" role:
 
    {{< tabs name="stronghold_cmd_15348" >}}
    {{% tab name="Stronghold in DKP" %}}
@@ -779,3 +779,13 @@ olcPPolicyForwardUpdates: FALSE
 olcPPolicyHashCleartext: TRUE
 olcPPolicyUseLockout: TRUE
 ```
+
+## Usage examples
+
+Ready-made examples that use this feature:
+
+- [Integration with ALD Pro](../../../examples/access/ald-pro/)
+- [Integration with Active Directory](../../../examples/access/active-directory/)
+- [Rotating service account passwords](../../../examples/dynamic-credentials/static-credentials-rotation/)
+
+See all examples in [Usage examples](../../../examples/).

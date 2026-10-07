@@ -17,16 +17,16 @@ params:
 Модуль `stronghold` переключается с базового Stronghold на Stronghold EE указанием лицензионного ключа в параметре [`spec.settings.license`](/modules/stronghold/stable/configuration.html#parameters-license) ресурса ModuleConfig `stronghold`. Переустанавливать модуль и переносить данные не требуется: секреты, политики, механизмы секретов и настроенные методы аутентификации сохраняются.
 
 {{< alert level="warning" >}}
-Stronghold EE лицензируется отдельно и доступен для использования только в коммерческих редакциях DKP. В DKP CE переключение на Stronghold EE невозможно. Подробнее — в разделе [«Редакции»](../../../../../about/editions/).
+Stronghold EE лицензируется отдельно и доступен для использования только в коммерческих редакциях DP. В DP CE переключение на Stronghold EE невозможно. Подробнее — в разделе [«Редакции»](../../../../../about/editions/).
 {{< /alert >}}
 
 {{< alert level="warning" >}}
-После применения лицензионного ключа поды `stronghold-*` пересоздаются на образе Stronghold EE по очереди, поэтому доступность сервиса остаётся прежней. Тем не менее выполняйте переключение строго в окне обслуживания.
+После применения лицензионного ключа в режиме `Automatic` поды `stronghold-*` пересоздаются на образе Stronghold EE по очереди, поэтому доступность сервиса остаётся прежней. В режиме `Manual` поды нужно пересоздать вручную. Тем не менее выполняйте переключение строго в окне обслуживания.
 {{< /alert >}}
 
 ## Перед переключением
 
-1. Убедитесь, что в кластере используется коммерческая редакция DKP:
+1. Убедитесь, что в кластере используется коммерческая редакция DP:
 
    ```shell
    d8 k -n d8-system get configmap d8-deckhouse-version-info -o jsonpath='{.data.data\.json}'
@@ -35,13 +35,13 @@ Stronghold EE лицензируется отдельно и доступен д
    В `json` объекте должна быть указана редакция, отличная от `CE`. Пример вывода:
 
    ```console
-   { "channel":"Stable", "version":"v1.72.5", "edition":"EE" }
+   { "channel":"Stable", "version":"v1.76.0", "edition":"EE" }
    ```
 
-   Также редакцию и версию DKP можно посмотреть в веб-интерфейсе Deckhouse на главной странице панели управления кластером (`https://console.<CLUSTER_DOMAIN>`).
+   Также редакцию и версию DP можно посмотреть в веб-интерфейсе Deckhouse на главной странице панели управления кластером (`https://console.<CLUSTER_DOMAIN>`).
 
    {{< alert level="info" >}}
-   Если требуется сменить редакцию DKP, воспользуйтесь [инструкцией по переключению редакции DKP](/products/kubernetes-platform/documentation/v1/admin/configuration/registry/switching-editions.html).
+   Если требуется сменить редакцию DP, воспользуйтесь [инструкцией по переключению редакции DP](/products/kubernetes-platform/documentation/v1/admin/configuration/registry/switching-editions.html).
    {{< /alert >}}
 
 1. Убедитесь, что модуль `stronghold` включён и находится в рабочем состоянии:
@@ -56,14 +56,14 @@ Stronghold EE лицензируется отдельно и доступен д
    - для модуля `stronghold` значения `Enabled` и `Ready` равны `True`;
    - объект ModuleConfig `stronghold` существует.
 
-1. Сохраните unseal-ключи и root-токен в защищённое хранилище:
+1. Сохраните ключи распечатывания и root-токен в защищённое хранилище:
 
    ```shell
    d8 k -n d8-stronghold get secret stronghold-keys -o yaml > stronghold-keys.yaml
    chmod 600 stronghold-keys.yaml
    ```
 
-1. Создайте [снимок хранилища](../../../../admin/backups/save/):
+1. Создайте [снимок хранилища](../../../../admin/backups/save/). Пример ниже подходит только для инлета `Ingress` (хост берётся из Ingress `stronghold`) и режима `Automatic` (вход через OIDC Dex); для других инлетов и режимов задайте `STRONGHOLD_ADDR` самостоятельно и используйте другой метод входа:
 
    ```shell
    export STRONGHOLD_ADDR=https://$(d8 k -n d8-stronghold get ing stronghold -o json | jq -r '.spec.rules[0].host')
@@ -80,12 +80,12 @@ Stronghold EE лицензируется отдельно и доступен д
    ```
 
    {{< alert level="info" >}}
-   Полученные файлы храните за пределами кластера DKP.
+   Полученные файлы храните за пределами кластера DP.
    {{< /alert >}}
 
 ## Указание лицензионного ключа
 
-1. Получите лицензионный ключ Stronghold EE у поставщика продукта.
+1. Получите лицензионный ключ Stronghold EE у поставщика продукта. Параметр `license` должен быть строкой ровно из 32 символов, иначе конфигурация будет отклонена с ошибкой `Invalid license format`.
 
 1. Добавьте ключ в параметр `spec.settings.license` ресурса ModuleConfig `stronghold`:
 
@@ -153,7 +153,7 @@ Stronghold EE лицензируется отдельно и доступен д
    Version: Stronghold v1.19.0+ee
    ```
 
-1. Убедитесь, что хранилище разблокировано:
+1. Убедитесь, что хранилище распечатано (как и выше, пример подходит для инлета `Ingress`):
 
    ```shell
    export STRONGHOLD_ADDR=https://$(d8 k -n d8-stronghold get ing stronghold -o json | jq -r '.spec.rules[0].host')
@@ -169,6 +169,8 @@ Stronghold EE лицензируется отдельно и доступен д
 {{< alert level="warning" >}}
 После удаления лицензионного ключа возможности Stronghold EE перестанут работать. Заранее отключите их использование, иначе модуль может не запуститься. В частности, установите `enableAuditLog: false`, остановите репликацию между кластерами и удалите созданные пространства имён.
 {{< /alert >}}
+
+1. Сначала отключите журнал аудита: установите `enableAuditLog: false` в ModuleConfig `stronghold`. Значение `enableAuditLog: true` без лицензии отклоняется, поэтому сделайте это до удаления лицензии.
 
 1. Удалите параметр `spec.settings.license` целиком:
 

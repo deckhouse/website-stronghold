@@ -194,3 +194,11 @@ Notes:
 - Planned switchover: `demote` the current primary, `promote` the standby, then
   `update-primary` to bring the former primary back as a secondary (see
   [Recover the former primary](#recover-the-former-primary)).
+
+## Usage examples
+
+Ready-made examples that use this feature:
+
+- [Regular disaster recovery drills](../../../examples/operations/dr-drill/)
+
+See all examples in [Usage examples](../../../examples/).

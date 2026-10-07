@@ -4,7 +4,7 @@ weight: 30
 description: "Using Stronghold plugins in Deckhouse Kubernetes Platform."
 ---
 
-In Deckhouse Kubernetes Platform, plugin delivery differs from a Standalone installation: the operator does not copy plugin binaries to the server manually, but declares the plugin list in `ModuleConfig`.
+In Deckhouse Platform, plugin delivery differs from a Standalone installation: the operator does not copy plugin binaries to the server manually, but declares the plugin list in `ModuleConfig`.
 
 After that, the platform:
 
@@ -35,7 +35,7 @@ spec:
         url: "https://github.com/martinbaillie/vault-plugin-secrets-github/releases/download/v2.3.2/vault-plugin-secrets-github-linux-amd64"
         sha256: "72cb1f2775ee2abf12ffb725e469d0377fe7bbb93cd7aaa6921c141eddecab87"
       - name: "vault-plugin-auth-any"
-        url: "https://plugins.example.local/myplugins/vault-plugin-auth-any-v1.0.0-linux-amd64"
+        url: "https://plugins.example.local/myplugins/vault-plugin-auth-any-linux-amd64"
         sha256: "c943b505b39b53e1f4cb07f2a3455b59eac523ebf600cb04813b9ad28a848b21"
         ignoreFailure: true
         insecureSkipVerify: false
@@ -53,11 +53,11 @@ spec:
 ## Download parameters
 
 - `name`: plugin binary name;
-- `url`: URL used to download the plugin;
+- `url`: URL used to download the plugin. The last URL segment (the file name) must not contain dots, so keep the version out of it (for example, `vault-plugin-auth-any-linux-amd64`) and pass it with the `-version` flag when [registering the plugin](#register-a-plugin);
 - `sha256`: SHA256 checksum of the plugin;
 - `ignoreFailure`: allows Stronghold startup to continue even if this plugin could not be downloaded;
 - `insecureSkipVerify`: disables TLS certificate verification for the remote server;
-- `ca`: additional CA certificate used to validate TLS.
+- `ca`: PEM-encoded CA certificate used to validate TLS. It is the only trusted CA for this plugin's URL: system CAs are not used.
 
 ## What happens when the plugin list changes
 
@@ -71,14 +71,14 @@ If a plugin cannot be downloaded or validated:
 
 ## Air-gapped environments
 
-In air-gapped environments where Stronghold does not have outbound internet access, you can host the plugin inside the DKP cluster itself.
+In air-gapped environments where Stronghold does not have outbound internet access, you can host the plugin inside the DP cluster itself.
 
 One practical approach is:
 
 1. Build or prepare an `nginx` container image that includes the plugin binary.
-2. Run that container in Kubernetes.
-3. Expose it through an internal Kubernetes `Service`.
-4. Point `ModuleConfig` to a URL such as `http://<service>.<namespace>.svc.cluster.local/...` so the platform downloads the plugin through the internal Kubernetes service.
+1. Run that container in Kubernetes.
+1. Expose it through an internal Kubernetes `Service`.
+1. Point `ModuleConfig` to a URL such as `http://<service>.<namespace>.svc.cluster.local/...` so the platform downloads the plugin through the internal Kubernetes service.
 
 Example `ModuleConfig` fragment:
 

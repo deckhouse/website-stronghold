@@ -8,7 +8,7 @@ weight: 10
 Есть несколько встроенных типов баз данных, а также фреймворк для запуска
 пользовательских типов баз данных для расширения возможностей. Это означает, что
 сервисам, которым нужен доступ к базе данных, больше не нужно жестко кодировать
-учетные данные: они могут запрашивать их у Stronghold и использовать [leasing mechanism](../../../concepts/lease/)
+учетные данные: они могут запрашивать их у Stronghold и использовать [leasing mechanism](../../../../concepts/lease/)
 для более удобного распространения ключей. Такие ключи называются «динамические роли» или «динамические секреты».
 
 Поскольку каждая служба обращается к базе данных с уникальными учетными
@@ -77,7 +77,7 @@ Success! Enabled the database secrets engine at: database/
 {{% /tab %}}
 {{< /tabs >}}
 
-   По умолчанию, механизм секретов будет включаться по имени движка.
+   По умолчанию, механизм секретов будет включаться по имени механизма секретов.
    Чтобы включить механизм секретов по другому пути, используйте аргумент `-path`.
 
 1. Настроить Stronghold с помощью соответствующего плагина и информации о подключении:
@@ -217,6 +217,22 @@ username           v-strongholduser-e2978cd0-ugp7iqI2hdlff5hfjylJ-1602537260
 {{% /tab %}}
 {{< /tabs >}}
 
+## Поддерживаемые базы данных
+
+В Stronghold встроены следующие плагины механизма секретов баз данных:
+
+| База данных | Плагины (`plugin_name`) |
+|-------------|-------------------------|
+| [PostgreSQL](../postgresql/) | `postgresql-database-plugin` |
+| [MySQL/MariaDB](../mysql-maria/) | `mysql-database-plugin`, `mysql-legacy-database-plugin` |
+| [ClickHouse](../clickhouse/) | `clickhouse-database-plugin` |
+
+Плагины для других СУБД, например MongoDB, Redis, Microsoft SQL Server, Oracle, Cassandra, Elasticsearch или Snowflake, в Stronghold не встроены и не поддерживаются.
+
+Если нужна СУБД, для которой нет встроенного плагина, её можно подключить через внешний плагин типа `database`. Порядок загрузки, регистрации и включения внешних плагинов описан в разделе [«Плагины Stronghold»](../../../../admin/plugins/overview/).
+
+<!-- TODO(verify): в реестре встроенных плагинов кода также зарегистрированы cassandra, elasticsearch, influxdb, mongodb, mssql, redis (helper/builtinplugins/registry.go); решить, как отразить это в документации (текст выше говорит, что они не встроены). -->
+
 ## Возможности базы данных
 
 Все базы данных поддерживают динамические и статические роли. Все плагины
@@ -224,9 +240,9 @@ username           v-strongholduser-e2978cd0-ugp7iqI2hdlff5hfjylJ-1602537260
 
 | База данных                                           | Изменение Root пользователя | Динамические роли | Статические роли | Кастомизация имени пользователя  | Тип учетных данных |
 |-------------------------------------------------------|-----------------------------|-------------------|------------------|----------------------------------|--------------------|
-| [MySQL/MariaDB](mysql-maria/)  | Yes                         | Yes               | Yes              | Yes                              | password           |
-| [PostgreSQL](postgresql/)      | Yes                         | Yes               | Yes              | Yes                              | password           |
-| [Clickhouse](clickhouse/)      | Yes                         | Yes               | Yes              | Yes                              | password           |
+| [MySQL/MariaDB](../mysql-maria/)  | Yes                         | Yes               | Yes              | Yes                              | password           |
+| [PostgreSQL](../postgresql/)      | Yes                         | Yes               | Yes              | Yes                              | password           |
+| [Clickhouse](../clickhouse/)      | Yes                         | Yes               | Yes              | Yes                              | password           |
 
 ## Типы учетных данных
 
@@ -307,3 +323,14 @@ disable_escaping="true"
 
 {{% /tab %}}
 {{< /tabs >}}
+
+## Примеры использования
+
+Готовые примеры с этим механизмом:
+
+- [Динамические учётные данные PostgreSQL для приложения в DP](../../../../examples/dynamic-credentials/postgresql/)
+- [Динамические учётные данные MySQL и MariaDB для приложения](../../../../examples/dynamic-credentials/mysql/)
+- [Динамические учётные данные ClickHouse для приложения](../../../../examples/dynamic-credentials/clickhouse/)
+- [Ротация паролей служебных учётных записей](../../../../examples/dynamic-credentials/static-credentials-rotation/)
+
+Все примеры собраны в разделе [«Примеры использования»](../../../../examples/).

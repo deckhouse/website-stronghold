@@ -74,7 +74,7 @@ The endpoint requires `sudo` privileges.
 |-----------|------|----------|---------|-------------|
 | `local_max_space` | Integer | No | `0` | Maximum number of bytes backup files with the specified `file_prefix` may use in the `path_prefix` directory. A value of `0` disables the check |
 
-### Additional parameters for `aws-s3`
+### Additional parameters for aws-s3
 
 <div class="table__styling--container"></div>
 
@@ -132,7 +132,7 @@ stronghold write sys/storage/raft/snapshot-auto/config/my-local-snapshots @local
 {{< /tabs >}}
 
 {{< alert level="info" >}}
-In the example, the path `/stronghold/data/` is a path inside the container, and by default it is mounted at `/var/lib/deckhouse/stronghold/` on the master nodes of the DKP cluster. Created snapshots can be found and downloaded from the master nodes at `/var/lib/deckhouse/stronghold/backups/`. Snapshots will remain unchanged when pods are restarted.
+In the example, the path `/stronghold/data/` is a path inside the container, and by default it is mounted at `/var/lib/deckhouse/stronghold/` on the master nodes of the DP cluster. Created snapshots can be found and downloaded from the master nodes at `/var/lib/deckhouse/stronghold/backups/`. Snapshots will remain unchanged when pods are restarted.
 {{< /alert >}}
 
 ### S3-compatible storage

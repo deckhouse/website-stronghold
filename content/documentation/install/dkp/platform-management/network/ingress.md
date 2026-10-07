@@ -18,7 +18,7 @@ ensuring their isolation and more flexible access control.
 
 To create a Ingress NGINX Controller, apply the following IngressNginxController resource:
 
-```yaml
+```bash
 d8 k apply -f - <<EOF
 apiVersion: deckhouse.io/v1
 kind: IngressNginxController

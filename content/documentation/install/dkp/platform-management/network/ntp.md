@@ -11,7 +11,7 @@ To enable the kube-dns module with default settings,
 apply the `ModuleConfig` resource, specifying your NTP servers for synchronization.
 Example of configuration with a default NTP server:
 
-```yaml
+```bash
 d8 k apply -f - <<EOF
 apiVersion: deckhouse.io/v1alpha1
 kind: ModuleConfig
@@ -43,7 +43,7 @@ EOF
 1. To enable NTP daemons on nodes, create [NodeGroupConfiguration](/modules/node-manager/cr.html#nodegroupconfiguration).
    Below is an example configuration using systemd-timesyncd:
 
-   ```yaml
+   ```bash
    d8 k apply -f - <<EOF
    apiVersion: deckhouse.io/v1alpha1
    kind: NodeGroupConfiguration

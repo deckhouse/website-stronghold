@@ -171,3 +171,11 @@ stronghold delete identity/mfa/login-enforcement/userpass-totp-enforcement
 
 {{% /tab %}}
 {{< /tabs >}}
+
+## Usage examples
+
+Ready-made examples that use this feature:
+
+- [MFA for administrators](../../../../examples/access/admin-mfa/)
+
+See all examples in [Usage examples](../../../../examples/).

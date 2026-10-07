@@ -282,7 +282,7 @@ spec:
 
 И посмотрите логи:
 
-```shell
+```console
 $ d8 k logs job/nvidia-cuda-test
 Tue Jan 24 11:36:18 2023
 +-----------------------------------------------------------------------------+
@@ -351,7 +351,7 @@ Done
    d8 k -n default get ep kubernetes -o json | jq '.subsets[0].addresses[0].ip + ":" + (.subsets[0].ports[0].port | tostring)' -r
    ```
 
-   Проверьте версию K8s. Если версия >= 1.25, создайте токен `node-group`:
+   Проверьте версию Kubernetes. Если версия >= 1.25, создайте токен `node-group`:
 
    ```shell
    d8 k create token node-group --namespace d8-cloud-instance-manager --duration 1h

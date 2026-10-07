@@ -108,7 +108,7 @@ Stronghold публикует telemetry-метрики, связанные с и
    {{% /tab %}}
    {{< /tabs >}}
 
-2. Включите резервное устройство:
+1. Включите резервное устройство:
 
    {{< tabs name="stronghold_cmd_38609" >}}
    {{% tab name="Stronghold в DKP" %}}
@@ -137,7 +137,7 @@ Stronghold публикует telemetry-метрики, связанные с и
    {{% /tab %}}
    {{< /tabs >}}
 
-3. Убедитесь, что устройства включены:
+1. Убедитесь, что устройства включены:
 
    {{< tabs name="stronghold_cmd_16152" >}}
    {{% tab name="Stronghold в DKP" %}}
@@ -156,7 +156,7 @@ Stronghold публикует telemetry-метрики, связанные с и
    {{% /tab %}}
    {{< /tabs >}}
 
-4. Включите KV secrets engine:
+1. Включите KV secrets engine:
 
    {{< tabs name="stronghold_cmd_97241" >}}
    {{% tab name="Stronghold в DKP" %}}
@@ -175,7 +175,7 @@ Stronghold публикует telemetry-метрики, связанные с и
    {{% /tab %}}
    {{< /tabs >}}
 
-5. Запишите секрет:
+1. Запишите секрет:
 
    {{< tabs name="stronghold_cmd_62847" >}}
    {{% tab name="Stronghold в DKP" %}}

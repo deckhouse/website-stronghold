@@ -632,3 +632,11 @@ service_account_token        eyJHbGci0iJSUzI1Ni...
 
 {{% /tab %}}
 {{< /tabs >}}
+
+## Usage examples
+
+Ready-made examples that use this feature:
+
+- [Temporary Kubernetes access with ServiceAccount tokens](../../../examples/dynamic-credentials/kubernetes-tokens/)
+
+See all examples in [Usage examples](../../../examples/).

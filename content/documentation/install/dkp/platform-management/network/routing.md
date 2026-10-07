@@ -11,7 +11,7 @@ To control static routes and IP rules on cluster nodes, use the static-routing-m
 
 To enable the module with default settings, apply the following `ModuleConfig` resource:
 
-```yaml
+```bash
 d8 k apply -f - <<EOF
 apiVersion: deckhouse.io/v1alpha1
 kind: ModuleConfig
@@ -31,7 +31,7 @@ To create a route in the main routing table, do the following:
 
 1. Apply the `RoutingTable` resource to create a new route (`10.0.0.0/8 via 192.168.0.1`) on nodes that match the specified nodeSelector:
 
-   ```yaml
+   ```bash
    d8 k apply -f - <<EOF
    apiVersion: network.deckhouse.io/v1alpha1
    kind: RoutingTable
@@ -66,7 +66,7 @@ To create a route in an additional table, do the following:
 
 1. Apply the `RoutingTable` resource to create a new route (`0.0.0.0/0 via 192.168.0.1`) in table 10000 on nodes that match the specified nodeSelector:
 
-   ```yaml
+   ```bash
    d8 k apply -f - <<EOF
    apiVersion: network.deckhouse.io/v1alpha1
    kind: RoutingTable
@@ -106,7 +106,7 @@ To apply a rule, do the following:
 
 1. Create the IPRuleSet resource to create an IP rule on nodes that match the specified nodeSelector:
 
-   ```yaml
+   ```bash
    d8 k apply -f - <<EOF
    apiVersion: network.deckhouse.io/v1alpha1
    kind: IPRuleSet

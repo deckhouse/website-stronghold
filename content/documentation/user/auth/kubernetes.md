@@ -24,7 +24,7 @@ See ["Changes in JWT token behavior in Kubernetes 1.21+"](#changes-in-jwt-token-
 
 ### Via the CLI
 
-The auth method name depends on how it was created. When Stronghold is deployed as part of Deckhouse Kubernetes Platform (DKP), the `kubernetes_local` auth method is created automatically and configured for the Kubernetes cluster where Stronghold is running. If the Kubernetes auth method is created manually, the default name is `kubernetes` unless a different path is specified.
+The auth method name depends on how it was created. When Stronghold is deployed as part of Deckhouse Platform (DP), the `kubernetes_local` auth method is created automatically and configured for the Kubernetes cluster where Stronghold is running. If the Kubernetes auth method is created manually, the default name is `kubernetes` unless a different path is specified.
 
 If the auth method was created under a different name, specify it using the `-path` parameter in the CLI. For example:
 
@@ -47,7 +47,7 @@ stronghold write -path=your-path auth/kubernetes/login role=demo jwt=...
 
 ### Via the API
 
-Use the endpoint that matches the auth method name. When Stronghold is deployed as part of DKP, the automatically created auth method uses the `auth/kubernetes_local/login` endpoint. If the auth method was created under a different name, use the corresponding endpoint. The example below uses an auth method named `kubernetes`.
+Use the endpoint that matches the auth method name. When Stronghold is deployed as part of DP, the automatically created auth method uses the `auth/kubernetes_local/login` endpoint. If the auth method was created under a different name, use the corresponding endpoint. The example below uses an auth method named `kubernetes`.
 
 ```shell-session
 curl \
@@ -304,3 +304,13 @@ subjects:
     name: myapp-auth
     namespace: default
 ```
+
+## Usage examples
+
+Ready-made examples that use this feature:
+
+- [Delivering secrets to Kubernetes pods](../../../examples/delivery/kubernetes-workloads/)
+- [Dynamic PostgreSQL credentials for an application in DKP](../../../examples/dynamic-credentials/postgresql/)
+- [cert-manager](../../../examples/certificates/cert-manager/)
+
+See all examples in [Usage examples](../../../examples/).

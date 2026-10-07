@@ -25,6 +25,27 @@ method is the recommended choice.
 To learn more about authentication, see the
 [authentication concepts page](../../concepts/auth/).
 
+## Available auth methods
+
+| Method | Type (`auth enable`) | Purpose | Editions |
+|--------|----------------------|---------|----------|
+| [AppRole](../approle/) | `approle` | Authentication of applications and automation with `role_id` and `secret_id`. | Not specified |
+| [JWT](../jwt/) | `jwt` | Login with a JWT whose signature is verified with keys or JWKS. | Stronghold, Stronghold EE, Stronghold CSE |
+| [OIDC](../oidc/) | `oidc` (`jwt` plugin) | Browser login through an OIDC provider: [GitLab](../oidc/gitlab/), [Keycloak](../oidc/keycloak/), [Kubernetes](../oidc/kubernetes/). | Stronghold, Stronghold EE, Stronghold CSE |
+| [Kubernetes](../kubernetes/) | `kubernetes` | Login with a Kubernetes service account token. | Stronghold, Stronghold EE, Stronghold CSE |
+| [LDAP](../ldap/) | `ldap` | Login with an LDAP or Active Directory account. | Stronghold, Stronghold EE, Stronghold CSE |
+| [SAML](../saml/) | `saml` | Browser-based Web SSO through an external SAML 2.0 identity provider. | Stronghold EE |
+| [Token](../token/) | `token` | Login with a Stronghold token. Built in and cannot be disabled. | Stronghold, Stronghold EE, Stronghold CSE |
+| [Userpass](../userpass/) | `userpass` | Login with a username and password stored in Stronghold. | Not specified |
+| [WebAuthn](../webauthn/) | `webauthn` | Passwordless login with FIDO2 authenticators and passkeys. | Stronghold, Stronghold EE |
+| Kerberos | `kerberos` | Kerberos (SPNEGO) login. There is no dedicated guide yet; see the [auth methods API reference](../../../reference/api/auth/). | Not specified |
+
+Multi-factor authentication ([TOTP](../mfa/totp/), [Multifactor](../mfa/multifactor/)) is not a separate login method: it adds a second factor to the methods above. See [2FA / MFA](../mfa/).
+
+Editions are listed according to the [Editions](../../../about/editions/) page.
+
+<!-- TODO(verify): edition availability of approle, userpass, kerberos, and MFA (not listed on the editions page); whether the kerberos method is shipped (it appears only in the API reference). -->
+
 ## Enabling/Disabling auth methods
 
 Auth methods can be enabled/disabled using the CLI or the API.

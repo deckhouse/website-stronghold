@@ -413,3 +413,15 @@ restricted in the credentials they are allowed to read.
 
 If you get stuck at any time, simply run `d8 stronghold path-help pki` or with a
 subpath for interactive help output.
+
+## Usage examples
+
+Ready-made examples that use this feature:
+
+- [Internal PKI with Stronghold](../../../examples/certificates/internal-pki/)
+- [Automatic certificates with ACME](../../../examples/certificates/acme/)
+- [cert-manager](../../../examples/certificates/cert-manager/)
+- [TLS certificate for a web server on a VM from Stronghold PKI](../../../examples/delivery/web-server-tls/)
+- [Service mesh](../../../examples/certificates/service-mesh/)
+
+See all examples in [Usage examples](../../../examples/).

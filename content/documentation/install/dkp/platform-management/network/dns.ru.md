@@ -11,7 +11,7 @@ weight: 40
 
 Чтобы включить модуль kube-dns с настройками по умолчанию, примените ресурс `ModuleConfig`:
 
-```yaml
+```bash
 d8 k apply -f - <<EOF
 apiVersion: deckhouse.io/v1alpha1
 kind: ModuleConfig
@@ -28,7 +28,7 @@ EOF
 
 Пример конфигурации модуля kube-dns с помощью ресурса ModuleConfig:
 
-```yaml
+```bash
 d8 k apply -f - <<EOF
 apiVersion: deckhouse.io/v1alpha1
 kind: ModuleConfig

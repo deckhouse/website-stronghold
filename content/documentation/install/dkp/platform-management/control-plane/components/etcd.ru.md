@@ -48,7 +48,7 @@ rm -r ./kubernetes ./etcd-backup.snapshot
 - манифесты и конфигурация компонентов [control-plane](https://kubernetes.io/docs/concepts/overview/components/#control-plane-components);
 - [PKI кластера Kubernetes](https://kubernetes.io/docs/setup/best-practices/certificates/).
 
-Мы рекомендуем хранить резервные копии снимков состояния кластера etcd, а также бэкап директории `/etc/kubernetes/` в зашифрованном виде вне кластера Deckhouse.
+Храните резервные копии снимков состояния кластера etcd, а также бэкап директории `/etc/kubernetes/` в зашифрованном виде вне кластера Deckhouse.
 Для этого вы можете использовать сторонние инструменты резервного копирования файлов, например [Restic](https://restic.net/), [Borg](https://borgbackup.readthedocs.io/en/stable/), [Duplicity](https://duplicity.gitlab.io/) и т.д.
 
 ## Полное восстановление состояния кластера из резервной копии etcd
@@ -308,7 +308,7 @@ done
 Данный вариант может понадобиться, если запуск с аргументом `--force-new-cluster` не восстанавливает работу etcd. Такое может случиться при неудачном converge master-узлов, когда новый master-узел был создан со старым диском etcd, поменял свой адрес из локальной сети, и другие master-узлы отсутствуют. Стоит использовать данный способ, если контейнер etcd в бесконечном рестарте, а в его логе ошибка: `panic: unexpected removal of unknown remote peer`.
 
 1. Установите утилиту [etcdutl](https://github.com/etcd-io/etcd/releases).
-1. С текущего локального снапшота базы etcd (`/var/lib/etcd/member/snap/db`) выполните создание нового снапшота:
+1. С текущего локального снимка базы etcd (`/var/lib/etcd/member/snap/db`) выполните создание нового снимка:
 
    ```shell
    ./etcdutl snapshot restore /var/lib/etcd/member/snap/db --name <HOSTNAME> \
@@ -321,7 +321,7 @@ done
 - `<HOSTNAME>` — название master-узла;
 - `<ADDRESS>` — адрес master-узла.
 
-1. Выполните команды для использования нового снапшота:
+1. Выполните команды для использования нового снимка:
 
    ```shell
    cp -r /var/lib/etcd /tmp/etcd-backup

@@ -12,8 +12,8 @@ Performance standby позволяет standby-узлам (неведущим у
 снижает задержки, при этом записи и другие операции, изменяющие состояние,
 по-прежнему перенаправляются на активный узел.
 
-В отличие от [репликации Performance](../performance/) и
-[Disaster recovery](../disaster-recovery/), которые работают между отдельными
+В отличие от [межкластерной репликации (PR)](../performance/) и
+[репликации для аварийного восстановления (DR)](../disaster-recovery/), которые работают между отдельными
 кластерами, performance standby работает внутри одного кластера и не требует
 межкластерной настройки.
 
@@ -62,6 +62,5 @@ disable_performance_standby = true
 
 {{< alert level="info" >}}
 Параметр `disable_performance_standby` применяется в конфигурации сервера
-Standalone-установки Stronghold. Отключение всего пайплайна репликации через
-`disable_wal_replication = true` также отключает performance standby.
+Standalone-установки Stronghold.
 {{< /alert >}}

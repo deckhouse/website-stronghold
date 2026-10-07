@@ -588,3 +588,13 @@ olcPPolicyForwardUpdates: FALSE
 olcPPolicyHashCleartext: TRUE
 olcPPolicyUseLockout: TRUE
 ```
+
+## Примеры использования
+
+Готовые примеры с этим механизмом:
+
+- [Интеграция с ALD Pro](../../../examples/access/ald-pro/)
+- [Интеграция с Active Directory](../../../examples/access/active-directory/)
+- [Ротация паролей служебных учётных записей](../../../examples/dynamic-credentials/static-credentials-rotation/)
+
+Все примеры собраны в разделе [«Примеры использования»](../../../examples/).

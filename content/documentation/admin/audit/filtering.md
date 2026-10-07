@@ -108,7 +108,7 @@ Assume you have an audit file named `stronghold-audit.log` and you want to route
    {{% /tab %}}
    {{< /tabs >}}
 
-2. Enable a fallback device:
+1. Enable a fallback device:
 
    {{< tabs name="stronghold_cmd_38609" >}}
    {{% tab name="Stronghold in DKP" %}}
@@ -137,7 +137,7 @@ Assume you have an audit file named `stronghold-audit.log` and you want to route
    {{% /tab %}}
    {{< /tabs >}}
 
-3. Verify that the devices are enabled:
+1. Verify that the devices are enabled:
 
    {{< tabs name="stronghold_cmd_16152" >}}
    {{% tab name="Stronghold in DKP" %}}
@@ -156,7 +156,7 @@ Assume you have an audit file named `stronghold-audit.log` and you want to route
    {{% /tab %}}
    {{< /tabs >}}
 
-4. Enable the KV secrets engine:
+1. Enable the KV secrets engine:
 
    {{< tabs name="stronghold_cmd_97241" >}}
    {{% tab name="Stronghold in DKP" %}}
@@ -175,7 +175,7 @@ Assume you have an audit file named `stronghold-audit.log` and you want to route
    {{% /tab %}}
    {{< /tabs >}}
 
-5. Write a secret:
+1. Write a secret:
 
    {{< tabs name="stronghold_cmd_62847" >}}
    {{% tab name="Stronghold in DKP" %}}

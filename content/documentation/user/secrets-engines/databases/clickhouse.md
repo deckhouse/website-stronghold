@@ -148,3 +148,11 @@ username           v-strongholduse-my-role-x
 
 {{% /tab %}}
 {{< /tabs >}}
+
+## Usage examples
+
+Ready-made examples that use this feature:
+
+- [Dynamic ClickHouse credentials for an application](../../../../examples/dynamic-credentials/clickhouse/)
+
+See all examples in [Usage examples](../../../../examples/).

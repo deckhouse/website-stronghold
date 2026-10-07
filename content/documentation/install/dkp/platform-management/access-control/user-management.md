@@ -156,9 +156,9 @@ To create an application in GitLab, follow the steps below.
 For a self-managed GitLab instance:
 
 1. Go to **Admin area** → **Application** → **New application**.
-2. In the **Redirect URI (Callback URL)** field, enter the address:  
+1. In the **Redirect URI (Callback URL)** field, enter the address:  
    `https://dex.<modules.publicDomainTemplate>/callback`.
-3. Select the following scopes:
+1. Select the following scopes:
    - `read_user`
    - `openid`
 

@@ -40,7 +40,7 @@ ClickHouse это один из поддерживаемых плагинов д
    По умолчанию механизм секретов будет включаться на основе его имени.
    Чтобы включить механизм секретов по другому пути, используйте аргумент `-path`.
 
-2. Настройте Stronghold с помощью соответствующего плагина и информации о подключении:
+1. Настройте Stronghold с помощью соответствующего плагина и информации о подключении:
 
    {{< tabs name="stronghold_cmd_92590" >}}
    {{% tab name="Stronghold в DKP" %}}
@@ -49,7 +49,7 @@ ClickHouse это один из поддерживаемых плагинов д
    $ d8 stronghold write database/config/my-clickhouse-database \
        plugin_name="clickhouse-database-plugin" \
        allowed_roles="my-role" \
-       connection_url="clickhouse://clickhouse-server.my:9000??username={{username}}&password={{password}}&secure=true&skip_verify=true" \
+       connection_url="clickhouse://clickhouse-server.my:9000?username={{username}}&password={{password}}&secure=true&skip_verify=true" \
        username="strongholduser" \
        password="strongholdpass"
    ```
@@ -61,7 +61,7 @@ ClickHouse это один из поддерживаемых плагинов д
    $ stronghold write database/config/my-clickhouse-database \
        plugin_name="clickhouse-database-plugin" \
        allowed_roles="my-role" \
-       connection_url="clickhouse://clickhouse-server.my:9000??username={{username}}&password={{password}}&secure=true&skip_verify=true" \
+       connection_url="clickhouse://clickhouse-server.my:9000?username={{username}}&password={{password}}&secure=true&skip_verify=true" \
        username="strongholduser" \
        password="strongholdpass"
    ```
@@ -69,7 +69,7 @@ ClickHouse это один из поддерживаемых плагинов д
    {{% /tab %}}
    {{< /tabs >}}
 
-3. Настройте роль, которая сопоставляет имя в Stronghold SQL-запросом,
+1. Настройте роль, которая сопоставляет имя в Stronghold SQL-запросом,
 выполняемым для создания учетной записи базы данных.
    В примере предполагается, что в кластере баз данных `my_cluster` создана роль `readonly`
 
@@ -141,3 +141,11 @@ ClickHouse это один из поддерживаемых плагинов д
 
    {{% /tab %}}
    {{< /tabs >}}
+
+## Примеры использования
+
+Готовые примеры с этим механизмом:
+
+- [Динамические учётные данные ClickHouse для приложения](../../../../examples/dynamic-credentials/clickhouse/)
+
+Все примеры собраны в разделе [«Примеры использования»](../../../../examples/).

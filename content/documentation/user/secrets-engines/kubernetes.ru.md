@@ -13,7 +13,7 @@ Kubernetes Secrets Engine для Stronghold генерирует токены д
 и [Kubernetes RBAC](https://kubernetes.io/docs/reference/access-authn-authz/rbac/).
 
 {{< alert level="warning" >}}
-Мы не рекомендуем использовать токены, созданные механизмом секретов Kubernetes, для аутентификации с помощью [Kubernetes Auth Method](../../auth/kubernetes/). Это приведет к созданию множества уникальных идентификаторов в Stronghold, которыми будет сложно управлять.
+Не используйте токены, созданные механизмом секретов Kubernetes, для аутентификации с помощью [Kubernetes Auth Method](../../auth/kubernetes/). Это приведет к созданию множества уникальных идентификаторов в Stronghold, которыми будет сложно управлять.
 {{< /alert >}}
 
 ## Настройка
@@ -111,8 +111,8 @@ roleRef:
  name: k8s-minimal-secrets-abilities
 subjects:
 - kind: ServiceAccount
- name: stronghold
- namespace: stronghold
+  name: stronghold
+  namespace: stronghold
 ```
 
 Для получения дополнительной информации о ролях Kubernetes, учетных записях сервиса, привязках и токенах посетите раздел документации
@@ -125,7 +125,7 @@ subjects:
 {{< alert level="warning" >}} Настоятельно рекомендуется, чтобы учетная запись сервиса, для которой Stronghold выпускает токены, **НЕ** совпадала с учетной записью сервиса, которую использует сам Stronghold.
 {{< /alert >}}
 
-Примеры, которые мы будем использовать, будут находиться в пространстве
+Примеры ниже находятся в пространстве
 имен `test`, которое вы можете создать, если оно еще не существует.
 
 ```shell-session
@@ -135,7 +135,7 @@ namespace/test created
 
 Здесь представлена простая настройка учетной записи сервиса, роли и
 привязки роли в пространстве имен Kubernetes `test` с базовыми разрешениями,
-которые мы будем использовать:
+используемые в примерах:
 
 ```yaml
 apiVersion: v1
@@ -151,8 +151,8 @@ metadata:
  namespace: test
 rules:
 - apiGroups: [""]
- resources: ["pods"]
- verbs: ["list"]
+  resources: ["pods"]
+  verbs: ["list"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -165,8 +165,8 @@ roleRef:
  name: test-role-list-pods
 subjects:
 - kind: ServiceAccount
- name: test-service-account-with-generated-token
- namespace: test
+  name: test-service-account-with-generated-token
+  namespace: test
 ```
 
 Вы можете создать эти объекты с помощью команды `d8 k apply -f`.
@@ -179,7 +179,7 @@ Success! Enabled the kubernetes Secrets Engine at: kubernetes/
 ```
 
 По умолчанию движок секретов будет монтироваться по тому же имени, что и его название,
-т.е. `kubernetes/`. Это можно изменить, передав аргумент `-path` при включении.
+то есть `kubernetes/`. Это можно изменить, передав аргумент `-path` при включении.
 
 Настройте точку монтирования. Допускается пустая конфигурация.
 
@@ -200,7 +200,7 @@ $ stronghold write kubernetes/roles/my-role \
 ## Создание учетных данных
 
 После того как пользователь прошел аутентификацию в Stronghold и получил достаточные права,
-запись в конечную точку `creds` для роли Stronghold сгенерирует и вернет новый токен учетной записи сервиса.
+запись в эндпоинт `creds` для роли Stronghold сгенерирует и вернет новый токен учетной записи сервиса.
 
 ```shell-session
 $ stronghold write kubernetes/creds/my-role \
@@ -264,7 +264,7 @@ $ stronghold write kubernetes/roles/my-role \
     token_max_ttl="2h"
 ```
 
-Вы также можете задать время жизни (`ttl`) при генерации токена из конечной точки `creds`.
+Вы также можете задать время жизни (`ttl`) при генерации токена из эндпоинта `creds`.
 Если время жизни токена не указан, он будет использоваться по умолчанию (и не может превышать максимальный срок (`token_max_ttl`) роли, если он есть).
 
 ```shell-session
@@ -293,7 +293,7 @@ $ echo 'eyJhbGc...' | cut -d'.' -f2 | base64 -d  | jq -r '.iat,.exp|todate'
 
 ## Аудитория (aud)
 
-Токены в Kubernetes имеют формат JWT, а значит, используют механизм "утверждений" (claims).
+Токены в Kubernetes имеют формат JWT, а значит, используют механизм «утверждений» (claims).
 Одним из таких является утверждение `aud` (аудитория) - это строка или массив строк, которые
 идентифицируют получателей, для которых предназначен JWT. Для более подробной информации ознакомьтесь со спецификацией [JWT audience claim](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1.3)
 
@@ -307,7 +307,7 @@ $ stronghold write kubernetes/roles/my-role \
     token_default_audiences="custom-audience"
 ```
 
-Вы также можете задать аудитории (`audiences`) при генерации токена из конечной точки `creds`.
+Вы также можете задать аудитории (`audiences`) при генерации токена из эндпоинта `creds`.
 Если аудитории токена не заданы, то они будут заданы по умолчанию из значения поля `token_default_audiences`, которое мы указывали ранее.
 
 ```shell-session
@@ -393,3 +393,11 @@ service_account_name         v-token-auto-man-1653002096-4imxf3ytjh5hbyro9s1oqdo
 service_account_namespace    test
 service_account_token        eyJHbGci0iJSUzI1Ni...
 ```
+
+## Примеры использования
+
+Готовые примеры с этим механизмом:
+
+- [Временный доступ к Kubernetes через токены ServiceAccount](../../../examples/dynamic-credentials/kubernetes-tokens/)
+
+Все примеры собраны в разделе [«Примеры использования»](../../../examples/).

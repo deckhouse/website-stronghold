@@ -11,15 +11,15 @@ weight: 50
 Рекомендуется пробный запуск с автоматическим завершением:
 
 ```bash
-stronghold -config=/etc/stronghold-agent/agent.hcl -exit-after-auth -log-level=debug
+stronghold agent -config=/etc/stronghold-agent/agent.hcl -exit-after-auth -log-level=debug
 ```
 
 Эта команда:
 1. Проверяет синтаксис HCL конфигурации.
-2. Подключается к Stronghold серверу.
-3. Выполняет полную аутентификацию.
-4. Создает файлы/шаблоны.
-5. Автоматически завершается (не нужен Ctrl+C).
+1. Подключается к Stronghold серверу.
+1. Выполняет полную аутентификацию.
+1. Создает файлы/шаблоны.
+1. Автоматически завершается (не нужен Ctrl+C).
 
 **Успешный результат:**
 
@@ -36,13 +36,13 @@ stronghold -config=/etc/stronghold-agent/agent.hcl -exit-after-auth -log-level=d
 
 ```bash
 # Базовый запуск.
-stronghold -config=/etc/stronghold-agent/agent.hcl
+stronghold agent -config=/etc/stronghold-agent/agent.hcl
 
 # С повышенным уровнем логирования.
-stronghold -config=/etc/stronghold-agent/agent.hcl -log-level=debug
+stronghold agent -config=/etc/stronghold-agent/agent.hcl -log-level=debug
 
 # Выход после первой успешной аутентификации (для проверки).
-stronghold -config=/etc/stronghold-agent/agent.hcl -exit-after-auth
+stronghold agent -config=/etc/stronghold-agent/agent.hcl -exit-after-auth
 ```
 
 ### Запуск Agent как systemd сервис
@@ -61,7 +61,7 @@ ConditionFileNotEmpty=/etc/stronghold-agent/agent.hcl
 Type=notify
 User=stronghold-agent
 Group=stronghold-agent
-ExecStart=/usr/local/bin/stronghold -config=/etc/stronghold-agent/agent.hcl
+ExecStart=/usr/local/bin/stronghold agent -config=/etc/stronghold-agent/agent.hcl
 ExecReload=/bin/kill -HUP $MAINPID
 KillMode=process
 KillSignal=SIGTERM

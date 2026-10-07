@@ -165,7 +165,7 @@ method_id    93964fd0-dd7e-e22a-74d0-0880ca5e0398
    {{< tabs name="stronghold_cmd_88070" >}}
    {{% tab name="Stronghold в DKP" %}}
 
-   ```shell
+   ```console
    d8 stronghold login -method=userpass username=mfa-user
    Password (will be hidden):
    ```
@@ -173,7 +173,7 @@ method_id    93964fd0-dd7e-e22a-74d0-0880ca5e0398
    {{% /tab %}}
    {{% tab name="Stronghold в Linux" %}}
 
-   ```shell
+   ```console
    stronghold login -method=userpass username=mfa-user
    Password (will be hidden):
    ```
@@ -223,3 +223,11 @@ stronghold delete identity/mfa/login-enforcement/userpass-multifactor-enforcemen
 
 {{% /tab %}}
 {{< /tabs >}}
+
+## Примеры использования
+
+Готовые примеры с этим механизмом:
+
+- [MFA для администраторов](../../../../examples/access/admin-mfa/)
+
+Все примеры собраны в разделе [«Примеры использования»](../../../../examples/).

@@ -188,4 +188,4 @@ stronghold audit enable                \
 In this example the device:
 
 1. Accepts only records from `transit` mounts.
-2. Removes `request.data` from them before writing the record.
+1. Removes `request.data` from them before writing the record.

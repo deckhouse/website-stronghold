@@ -28,7 +28,7 @@ If the active node fails and a new node is assigned, the sender IP address in ne
 
 To create an Egress gateway, apply the following EgressGateway resource:
 
-```yaml
+```bash
 d8 k apply -f - <<EOF
 apiVersion: network.deckhouse.io/v1alpha1
 kind: EgressGateway
@@ -58,7 +58,7 @@ The client IP address will remain unchanged for external services.
 
 To create an Egress gateway with a virtual address, apply the following EgressGateway resource:
 
-```yaml
+```bash
 d8 k apply -f - <<EOF
 apiVersion: network.deckhouse.io/v1alpha1
 kind: EgressGateway
@@ -127,7 +127,7 @@ create an EgressGatewayPolicy resource by specifying criteria in the `.spec.sele
 to select the virtual machines to which the policy will apply.
 Use the following example:
 
-```yaml
+```bash
 d8 k apply -f - <<EOF
 apiVersion: network.deckhouse.io/v1alpha1
 kind: EgressGatewayPolicy

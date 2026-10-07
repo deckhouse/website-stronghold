@@ -480,3 +480,11 @@ stronghold write auth/userpass/password-policy/{policy_name}
 
 {{% /tab %}}
 {{< /tabs >}}
+
+## Usage examples
+
+Ready-made examples that use this feature:
+
+- [Break-glass access](../../../examples/access/break-glass-access/)
+
+See all examples in [Usage examples](../../../examples/).

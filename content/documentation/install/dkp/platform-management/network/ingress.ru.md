@@ -12,7 +12,7 @@ weight: 10
 
 Чтобы создать контроллер Ingress NGINX, примените следующий ресурс IngressNginxController:
 
-```yaml
+```bash
 d8 k apply -f - <<EOF
 apiVersion: deckhouse.io/v1
 kind: IngressNginxController

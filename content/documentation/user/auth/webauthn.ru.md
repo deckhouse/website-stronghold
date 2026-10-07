@@ -67,7 +67,7 @@ stronghold auth enable -path=my-passkeys webauthn
 {{% /tab %}}
 {{< /tabs >}}
 
-### Настройка `Relying Party`
+### Настройка Relying Party
 
 {{< tabs name="stronghold_cmd_42812" >}}
 {{% tab name="Stronghold в DKP" %}}

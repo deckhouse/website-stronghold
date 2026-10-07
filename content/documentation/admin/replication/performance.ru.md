@@ -1,11 +1,11 @@
 ---
-title: "Репликация Performance"
-linkTitle: "Репликация Performance"
+title: "Межкластерная репликация (PR)"
+linkTitle: "Межкластерная репликация (PR)"
 weight: 20
-description: "Настройка репликации Performance между кластерами Stronghold, её проверка и управление фильтрами путей."
+description: "Настройка межкластерной репликации (PR) между кластерами Stronghold, её проверка и управление фильтрами путей."
 ---
 
-Репликация Performance копирует хранилище primary-кластера (кроме локальных
+Межкластерная репликация (PR, performance replication) копирует хранилище primary-кластера (кроме локальных
 путей) на один или несколько performance-secondary. Secondary обслуживает чтения
 локально, а записи перенаправляет на primary. Так нагрузку чтения можно
 масштабировать и размещать ближе к потребителям.
@@ -55,7 +55,7 @@ stronghold write -force sys/replication/performance/primary/enable
 
 ## Шаг 2. Создайте activation-токен для secondary
 
-Сгенерируйте wrapping-токен активации для конкретного secondary, заданного через
+Сгенерируйте оборачивающий токен активации для конкретного secondary, заданного через
 `id`:
 
 {{< tabs name="stronghold_cmd_30185" >}}
@@ -78,12 +78,12 @@ stronghold write sys/replication/performance/primary/secondary-token \
 {{< /tabs >}}
 
 Параметр `id` обязателен, `ttl` по умолчанию — `24h`. Команда возвращает
-одноразовый wrapping-токен в поле `wrap_info.token` — его и передайте на
+одноразовый оборачивающий токен в поле `wrap_info.token` — его и передайте на
 secondary.
 
 ## Шаг 3. Включите secondary
 
-Передайте wrapping-токен из предыдущего шага. Для окружений с самоподписанными
+Передайте оборачивающий токен из предыдущего шага. Для окружений с самоподписанными
 сертификатами параметр `ca_cert` (CA primary в формате PEM) обязателен, иначе
 TLS-соединение с primary не пройдёт проверку.
 
@@ -107,7 +107,7 @@ curl \
 
 Поля `secondary/enable`:
 
-- `token` — обязательный; wrapping-токен из шага 2.
+- `token` — обязательный; оборачивающий токен из шага 2.
 - `primary_api_addr` — адрес primary для разворачивания токена; обязателен, если
   в токене нет claim `addr`.
 - `ca_cert` — inline PEM CA primary для TLS при unwrap.

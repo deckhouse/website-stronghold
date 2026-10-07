@@ -10,7 +10,7 @@ configured roles. It works with a number of different databases through a plugin
 interface. There are a number of built-in database types, and an exposed framework
 for running custom database types for extendability. This means that services
 that need to access a database no longer need to hardcode credentials: they can
-request them from Stronghold, and use Stronghold's [leasing mechanism](../../../concepts/lease/)
+request them from Stronghold, and use Stronghold's [leasing mechanism](../../../../concepts/lease/)
 to more easily roll keys. These are referred to as "dynamic roles" or "dynamic
 secrets".
 
@@ -226,6 +226,22 @@ the proper permission, it can generate credentials.
     {{% /tab %}}
     {{< /tabs >}}
 
+## Supported databases
+
+Stronghold includes the following built-in database secrets engine plugins:
+
+| Database | Plugins (`plugin_name`) |
+|----------|-------------------------|
+| [PostgreSQL](../postgresql/) | `postgresql-database-plugin` |
+| [MySQL/MariaDB](../mysql-maria/) | `mysql-database-plugin`, `mysql-legacy-database-plugin` |
+| [ClickHouse](../clickhouse/) | `clickhouse-database-plugin` |
+
+Plugins for other database systems, such as MongoDB, Redis, Microsoft SQL Server, Oracle, Cassandra, Elasticsearch, or Snowflake, are not built into Stronghold and are not supported.
+
+If you need a database system without a built-in plugin, you can connect it through an external plugin of the `database` type. Loading, registering, and enabling external plugins is described in [Stronghold plugins](../../../../admin/plugins/overview/).
+
+<!-- TODO(verify): the built-in plugin registry in the code also registers cassandra, elasticsearch, influxdb, mongodb, mssql, redis (helper/builtinplugins/registry.go); decide how to reflect this in the documentation (the text above says they are not built in). -->
+
 ## Database capabilities
 
 All databases support dynamic roles and static roles. All plugins support rotating
@@ -233,8 +249,9 @@ the root user's credentials.
 
 | Database                                                   | Root Credential Rotation | Dynamic Roles | Static Roles | Username Customization | Credential Types |
 |------------------------------------------------------------|--------------------------|---------------|--------------|------------------------|------------------|
-| [MySQL/MariaDB](mysql-maria/) | Yes                      | Yes           | Yes          | Yes                    | password         |
-| [PostgreSQL](postgresql/)     | Yes                      | Yes           | Yes          | Yes                    | password         |
+| [MySQL/MariaDB](../mysql-maria/) | Yes                      | Yes           | Yes          | Yes                    | password         |
+| [PostgreSQL](../postgresql/)     | Yes                      | Yes           | Yes          | Yes                    | password         |
+| [ClickHouse](../clickhouse/)     | Yes                      | Yes           | Yes          | Yes                    | password         |
 
 ## Credential types
 
@@ -315,3 +332,14 @@ disable_escaping="true"
 
 {{% /tab %}}
 {{< /tabs >}}
+
+## Usage examples
+
+Ready-made examples that use this feature:
+
+- [Dynamic PostgreSQL credentials for an application in DP](../../../../examples/dynamic-credentials/postgresql/)
+- [Dynamic MySQL and MariaDB credentials for an application](../../../../examples/dynamic-credentials/mysql/)
+- [Dynamic ClickHouse credentials for an application](../../../../examples/dynamic-credentials/clickhouse/)
+- [Rotating service account passwords](../../../../examples/dynamic-credentials/static-credentials-rotation/)
+
+See all examples in [Usage examples](../../../../examples/).

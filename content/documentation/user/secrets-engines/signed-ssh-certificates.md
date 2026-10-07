@@ -13,7 +13,9 @@ performing the SSH operation. The "**host**" refers to the target machine. If
 this is confusing, substitute "client" with "user".
 
 This page will show a quick start for this secrets engine. For detailed documentation
-on every path, use `bao path-help` after mounting the secrets engine.
+on every path, use `d8 stronghold path-help` after mounting the secrets engine.
+
+The SSH secrets engine also supports one-time passwords. See [SSH one-time passwords (OTP)](../ssh-otp/).
 
 ## Client key signing
 
@@ -895,3 +897,11 @@ Destroy the keypair and `payload.json` from your hosts immediately after they ha
   ```
 
   The ssh-rsa algorithm is no longer supported in [OpenSSH 8.2](https://www.openssh.com/txt/release-8.2)
+
+## Usage examples
+
+Ready-made examples that use this feature:
+
+- [SSH access with signed certificates](../../../examples/certificates/ssh-certificates-access/)
+
+See all examples in [Usage examples](../../../examples/).

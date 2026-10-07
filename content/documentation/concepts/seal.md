@@ -327,3 +327,12 @@ When the quorum of nodes are back up, Raft elects a leader and the leader
 node performs the migration. The migrated information is replicated to
 all other cluster peers. When the peers eventually become the leader,
 migration does not happen again on the peer nodes.
+
+## Usage examples
+
+Ready-made examples that use this feature:
+
+- [Auto-unseal with Yandex Cloud KMS](../../examples/encryption/yandex-kms-unseal/)
+- [Auto-unseal and seal wrap with an HSM](../../examples/encryption/hsm-unseal/)
+
+See all examples in [Usage examples](../../examples/).

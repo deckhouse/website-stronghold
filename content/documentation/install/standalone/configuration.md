@@ -102,8 +102,6 @@ To apply new parameters after modifying the configuration file, you need to rest
 
 * `plugin_directory` — optional string parameter. Defines the directory from which plugins are allowed to be loaded. For successful plugin loading, Stronghold must have read permissions for the files in this directory, and the value cannot be a symbolic link. By default, this parameter is not set and has the value `""`.
 
-* `plugin_tmpdir` — optional string parameter. Specifies the directory where Stronghold can create temporary files to support interaction with Unix sockets for containerized plugins. If this value is not set, Stronghold will use the default temporary file directory. In most cases, this parameter does not need to be configured, except when containerized plugins are used and Stronghold shares the temporary folder with other processes, such as when using the `PrivateTmp` parameter in systemd.
-
 * `plugin_file_uid` — optional integer parameter. User ID (UID) for plugin directories and executable files in case they belong to a user different from the one running Stronghold.
 
 * `plugin_file_permissions` — optional string parameter. A string of octal permissions for plugin directories and executable files in case write or execute permissions are set for the group or other users.
@@ -158,6 +156,27 @@ To apply new parameters after modifying the configuration file, you need to rest
   The TLS 1.3 cipher suite order in Go is process-global, so this setting applies to the entire Stronghold process (all of its listeners and its outbound TLS 1.3 connections), not to a single listener in isolation. It does not affect the CLI, agent, or proxy when they run as separate processes — each of those processes has its own `tls_13_cipher_policy` setting. Only listeners with TLS enabled and `tls_max_version` equal to `"tls13"` (or unset) are taken into account when resolving `auto` and validating strict modes. The setting is re-evaluated on `SIGHUP` reload.
 
   GOST record ciphers (Magma / Kuznechik) are available **only in TLS 1.3**. Do not set `tls_max_version = "tls12"` on listeners that use GOST certificates — that disables GOST TLS on those listeners.
+
+* `administrative_namespace_path` — optional string parameter. Specifies the path of the administrative namespace. This namespace has access to the `sys/audit-hash`, `sys/audit-monitor`, and `sys/monitor` endpoints, which are otherwise available only in the root namespace. By default, the parameter is not set.
+
+* `allow_audit_log_prefixing` — optional boolean parameter. Allows the `prefix` option for file audit devices. If the parameter is not enabled, an attempt to enable a file audit device with `prefix` fails with the error `audit prefixing is not enabled in configuration`. By default, `false`.
+
+* `cluster_cipher_suites` — optional string parameter. Specifies the cipher suites for connections between cluster nodes (the cluster port). Accepted values: `tls12` or `tls13` (use the Go defaults for the corresponding protocol version) or a comma-separated list of suite names from the [Go TLS documentation](https://go.dev/src/crypto/tls/cipher_suites.go). If the parameter is not set, Stronghold uses a fixed set of TLS 1.3 suites and ECDSA-based TLS 1.2 suites with AES-GCM and ChaCha20-Poly1305.
+
+* `disable_indexing` — optional boolean parameter. Disables the replication subsystem on the node: Stronghold does not create the Merkle index, the WAL, or the log shippers for performance (PR) and disaster recovery (DR) replication, and does not wrap storage in the read-only layer used by performance standby nodes. As a result, replication cannot be enabled on such a node. The same subsystem is also not created if the storage does not support transactions or the server runs in recovery mode. Set the parameter at the first start, before you enable replication. By default, `false`. See [Replication](../../admin/replication/overview/).
+
+* `disable_performance_standby` — optional boolean parameter. Disables performance standby nodes in the cluster. By default, `false`. See [Performance standby](../../admin/replication/performance-standby/).
+
+* `disable_printable_check` — optional boolean parameter. Disables the check that storage keys contain only printable characters. The UTF-8 validity check of keys is also disabled. Use the parameter only if keys with non-printable characters already exist in storage. By default, `false`.
+
+* `enable_unauthenticated_access` — optional array of strings. A list of endpoint groups that are available without authentication. Accepted values:
+  * `rekey` — the `sys/rekey/*` endpoints.
+  * `generate-root` — the `sys/generate-root/*` endpoints.
+  * `generate-operation-token` — the endpoints for generating a DR operation token.
+
+  Unknown values are ignored. By default, the list is empty and all these endpoints require authentication.
+
+* `log_requests_level` — optional string parameter. Enables logging of completed requests at the specified level: `trace`, `debug`, `info`, `warn`, or `error`. If the value is not set, completed requests are not logged. An invalid value is ignored, and Stronghold writes the warning `invalid log_requests_level` to the log. The value is re-read on `SIGHUP` reload.
 
 ### High availability parameters
 
@@ -247,12 +266,6 @@ If the same header is specified both in the configuration file and via the `/sys
 
 * `proxy_protocol_authorized_addrs` — string parameter or array of strings. Specifies the list of allowed source IP addresses for use with the PROXY protocol. It is not required if `proxy_protocol_behavior` is set to `use_always`. When specified as a string, values should be comma-separated. The value `proxy_protocol_authorized_addrs` cannot be empty; at least one source IP address must be specified.
 
-* `redact_addresses` — boolean parameter. Hides the values of `leader_address` and `cluster_leader_address` in the corresponding API responses when set to `true`.
-
-* `redact_cluster_name` — boolean parameter. Hides the value of `cluster_name` in the corresponding API responses when set to `true`.
-
-* `redact_version` — boolean parameter. Hides the values of `version` and `build_date` in the corresponding API responses when set to `true`.
-
 * `tls_disable` — boolean parameter. Specifies whether TLS is disabled. Stronghold uses TLS by default, so it is necessary to explicitly disable TLS if insecure communication is not desired. Disabling TLS may cause some UI features to be disabled.
 
 * `tls_cert_file` — string parameter. Specifies the path to the TLS certificate file. The file must be in PEM format. To configure the listener to use the CA certificate, the primary certificate and the CA certificate should be concatenated. The path specified in the `tls_cert_file` parameter is used when starting Stronghold. Changing this value during Stronghold operation will have no effect.
@@ -285,8 +298,6 @@ If the same header is specified both in the configuration file and via the `/sys
 
 * `x_forwarded_for_reject_not_present` — boolean parameter. When set to `false`, it allows using the client address as is if the `X-Forwarded-For` header is missing or empty, instead of rejecting the client connection.
 
-* `disable_replication_status_endpoints` — boolean parameter. When set to `true`, it disables replication status endpoints for this listener.
-
 Telemetry parameters:
 
 * `unauthenticated_metrics_access` — boolean parameter. When set to `true`, it allows unauthenticated access to the `/v1/sys/metrics` endpoint.
@@ -303,7 +314,7 @@ Custom response headers parameters:
 
 A list of mappings of type:
 
-```json
+```text
 {
   "key1" = ["value1", "value 2", ...],
   "key2" = ["value1", "value 2", ...],
@@ -314,7 +325,7 @@ allows mapping default header names to an array of values. Default headers are s
 
 The list of mappings is of the type:
 
-```json
+```text
 {
   "key1" = ["value1", "value 2", ...],
   "key2" = ["value1", "value 2", ...],
@@ -325,7 +336,7 @@ allows mapping header names to an array of values. The headers specified in this
 
 The list of mappings is of the type:
 
-```json
+```text
 {
   "key1" = ["value1", "value2", ...],
   "key2" = ["value1", "value2", ...],
@@ -457,128 +468,6 @@ Declaring a non-loopback interface:
 ```console
 api_addr = "https://[2001:1c04:90d:1c00:a00:27ff:fefa:58ec]:8200"
 cluster_addr = "https://[2001:1c04:90d:1c00:a00:27ff:fefa:58ec]:8201"
-```
-
-#### Example of hiding information
-
-**Example 1.** Configuration using `redact_addresses`, `redact_cluster_name`, and `redact_version` to hide information in responses.
-
-```console
-ui            = true
-cluster_addr  = "https://127.0.0.1:8201"
-api_addr      = "https://127.0.0.1:8200"
-disable_mlock = true
-
-storage "raft" {
-  path = "/path/to/raft/data"
-  node_id = "raft_node_1"
-}
-
-listener "tcp" {
-  address             = "127.0.0.1:8200",
-  tls_cert_file = "/path/to/full-chain.pem"
-  tls_key_file  = "/path/to/private-key.pem"
-  redact_addresses    = "true"
-  redact_cluster_name = "true"
-  redact_version      = "true"
-}
-
-telemetry {
-  statsite_address = "127.0.0.1:8125"
-  disable_hostname = true
-}
-```
-
-**Example 2.** Result of applying redaction parameters for `API: /sys/health`.
-
-In the `/sys/health/` API call, the `cluster_name` is completely omitted from the response, and version is returned as an empty string (`""`).
-
-```console
-$ curl -s https://127.0.0.1:8200/v1/sys/health | jq
-
-{
-  "initialized": true,
-  "sealed": false,
-  "standby": false,
-  "performance_standby": false,
-  "replication_performance_mode": "disabled",
-  "replication_dr_mode": "disabled",
-  "server_time_utc": 1715935559,
-  "version": "",
-  "cluster_id": "be574716-e7e9-a950-ee34-d62d56cd6d4a"
-}
-```
-
-**Example 3.** Result of applying redaction parameters for `API: /sys/leader`.
-
-In the `/sys/leader/` API call, the `leader_address` and `leader_cluster_address` are set to empty strings (`""`).
-
-```console
-$ curl -s https://127.0.0.1:8200/v1/sys/leader | jq
-
-{
-  "ha_enabled": true,
-  "is_self": true,
-  "active_time": "2024-05-13T07:54:20.471072843Z",
-  "leader_address": "",
-  "leader_cluster_address": "",
-  "performance_standby": false,
-  "performance_standby_last_remote_wal": 0,
-  "raft_committed_index": 78,
-  "raft_applied_index": 78
-}
-```
-
-**Example 4.** Result of applying redaction parameters for `API: /sys/seal-status`.
-
-In the `/sys/seal-status/` API call, the `cluster_name`, `build_date`, and version fields are hidden. The `cluster_name` is completely omitted from the response, while `build_date` and version are returned as empty strings (`""`).
-
-```console
-$ curl -s https://127.0.0.1:8200/v1/sys/seal-status | jq
-
-{
-  "type": "shamir",
-  "initialized": true,
-  "sealed": false,
-  "t": 3,
-  "n": 6,
-  "progress": 0,
-  "nonce": "",
-  "version": "",
-  "build_date": "",
-  "migration": false,
-  "cluster_id": "be574716-e7e9-a950-ee34-d62d56cd6d4a",
-  "recovery_seal": false,
-  "storage_type": "raft"
-}
-```
-
-**Example 5**. CLI: `stronghold status`
-
-The CLI command `stronghold status` uses endpoints that support data redaction, so the output hides `Version`, `Build Date`, `HA Cluster`, and `Active Node Address`.
-
-`Version`, `Build Date`, and `HA Cluster` show `n/a` because the corresponding endpoint returned an empty string. On the other hand, `Active Node Address` is shown as `<none>` because the address was omitted in the API response.
-
-```console
-stronghold status
-
-Key                     Value
----                     -----
-Seal Type               shamir
-Initialized             true
-Sealed                  false
-Total Shares            6
-Threshold               3
-Version                 n/a
-Build Date              n/a
-Storage Type            raft
-HA Enabled              true
-HA Cluster              n/a
-HA Mode                 active
-Active Since            2024-05-13T07:54:20.471072843Z
-Active Node Address     <none>
-Raft Committed Index    78
-Raft Applied Index      78
 ```
 
 ### Unix
@@ -724,7 +613,7 @@ Additionally, when using the integrated storage backend, you cannot declare a se
 
 * `trailing_logs` — integer parameter. Controls the number of log entries that remain in the log storage on disk after a snapshot is created. This parameter should only be adjusted if followers cannot catch up with the leader due to a very large snapshot size and high write throughput, which causes log truncation before the snapshot can be fully applied.
 
-  If you need to use this for cluster recovery, consider lowering the write throughput or the volume of data stored in Stronghold. The default value is `10000`, which is suitable for most normal workloads. The `trailing_logs` metric is not equivalent to the `max_trailing_logs` parameter.
+  If you need to use this for cluster recovery, consider lowering the write throughput or the volume of data stored in Stronghold. The default value is `10240`, which is suitable for most normal workloads. The `trailing_logs` metric is not equivalent to the `max_trailing_logs` parameter.
 
 * `snapshot_threshold` — integer parameter. Controls the minimum number of Raft log entries between snapshots that are saved to disk. Typically, this low-level parameter does not require modification. In highly loaded clusters with excessive disk I/O, increasing the value can reduce disk load and minimize the likelihood of simultaneous snapshot creation on all servers.
 
@@ -750,14 +639,14 @@ Additionally, when using the integrated storage backend, you cannot declare a se
 
   State changes can indicate various things, such as:
   1. A node, initially added as a non-voting node in the Raft cluster, has successfully completed the stabilization period, qualifying it to be promoted to voting status.
-  2. A node should be marked as `unhealthy` in the state API.
-  3. A node has been marked as `dead` and should be removed from the Raft configuration.
+  1. A node should be marked as `unhealthy` in the state API.
+  1. A node has been marked as `dead` and should be removed from the Raft configuration.
 
   The value is specified with a time suffix, for example, `"40s"` (40 seconds) or `"1h"` (1 hour).
 
 * `autopilot_update_interval` — string parameter. Specifies the time interval after which the autopilot will query Stronghold for updates on the relevant information. This includes data such as autopilot configuration and current state, Raft configuration, known servers, the latest Raft index, and statistics for all known servers. The retrieved information will be used to calculate the autopilot's next state. The value is specified with a time suffix, for example, `"40s"` (40 seconds) or `"1h"` (1 hour).
 
-#### Parameters for `retry_join` section
+#### Parameters for retry_join section
 
 * `leader_api_addr` — string parameter. The IP address of a potential leader node.
 
@@ -812,7 +701,7 @@ The `user_lockout` section defines the settings for locking users after unsucces
 
 Configurations specified for a specific authentication method take precedence over settings for all authentication methods using the `user_lockout "all"` section. If both configurations are present, the parameters for the specific method will be applied.
 
-### Parameters for the `user_lockout` section
+### Parameters for the user_lockout section
 
 * `lockout_threshold` — string parameter. Specifies the number of failed login attempts after which the user will be locked out.
 

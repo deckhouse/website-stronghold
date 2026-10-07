@@ -335,3 +335,11 @@ ttl                 30m
 
 {{% /tab %}}
 {{< /tabs >}}
+
+## Usage examples
+
+Ready-made examples that use this feature:
+
+- [Migrating from HashiCorp Vault](../../../../examples/operations/migration-from-vault/)
+
+See all examples in [Usage examples](../../../../examples/).

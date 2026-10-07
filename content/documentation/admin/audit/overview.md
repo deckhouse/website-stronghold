@@ -249,3 +249,11 @@ Filtering and field exclusion are advanced features. Incorrect configuration can
 - Use more than one audit device in production.
 - Test filter and exclusion rules in a non-production environment.
 - Treat auditing as part of the security model, not just a troubleshooting tool.
+
+## Usage examples
+
+Ready-made examples that use this feature:
+
+- [Shipping audit logs to SIEM](../../../examples/operations/siem/)
+
+See all examples in [Usage examples](../../../examples/).

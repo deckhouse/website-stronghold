@@ -7,7 +7,7 @@ Quorum is the minimum number of nodes in a cluster required to vote and reach co
 
 In the `stronghold` module, HA mode is enabled by default and relies on the Raft consensus algorithm. Maintaining Raft quorum is an important factor when operating a Stronghold environment. When there is no way to restore enough healthy Stronghold nodes, the Stronghold cluster permanently loses quorum and can no longer reach consensus or elect a leader. Without a leader, Stronghold can no longer perform read and write operations for clients.
 
-Stronghold for Deckhouse Kubernetes Platform is delivered as a module. Each Stronghold **node** runs in a container inside a separate **Pod**, and each Pod is scheduled one-to-one onto a control-plane (master) node of the DKP cluster. As a result, the number of Stronghold cluster nodes is updated dynamically when master nodes are added to or removed from the DKP cluster. Stronghold calculates quorum with the formula `(n+1)/2`, where `n` by default equals the number of master nodes in the DKP cluster. For a Stronghold cluster of 3 nodes, this means at least 2 healthy Pods are required for the cluster to function, `(3+1)/2 = 2`. In particular, 2 **permanently** active Pods are required to perform read and write operations.
+Stronghold for Deckhouse Platform is delivered as a module. Each Stronghold **node** runs in a container inside a separate **Pod**, and each Pod is scheduled one-to-one onto a control-plane (master) node of the DP cluster. As a result, the number of Stronghold cluster nodes is updated dynamically when master nodes are added to or removed from the DP cluster. Stronghold calculates quorum with the formula `(n+1)/2`, where `n` by default equals the number of master nodes in the DP cluster. For a Stronghold cluster of 3 nodes, this means at least 2 healthy Pods are required for the cluster to function, `(3+1)/2 = 2`. In particular, 2 **permanently** active Pods are required to perform read and write operations.
 
 {{< alert level="info" >}}
 There is an exception to this rule if you use the `-non-voter` option while joining the cluster. This feature is available only in Stronghold as a standalone installation.
@@ -60,14 +60,14 @@ Recovery of Stronghold after the loss of 2 out of 3 nodes is performed by conver
 One server must be fully operational to complete this procedure.
 
 {{< alert level="info" >}}
-Sometimes Stronghold loses quorum because of incorrect addition or removal of a master node in DKP. In that case, stop Stronghold Pods on the inoperative nodes before starting the `peers.json` procedure. For example, temporarily cordon the nodes.
+Sometimes Stronghold loses quorum because of incorrect addition or removal of a master node in DP. In that case, stop Stronghold Pods on the inoperative nodes before starting the `peers.json` procedure. For example, temporarily cordon the nodes.
 
 In a 5-server cluster or when voting nodes are absent, stop the other healthy servers before performing the `peers.json` recovery.
 {{< /alert >}}
 
 ## Locate the storage directory
 
-On the DKP master node with the healthy Stronghold node, locate the Raft storage directory at `/var/lib/deckhouse/stronghold/`. In that directory, check that a non-empty `node-id` file exists. If this step is successful, proceed.
+On the DP master node with the healthy Stronghold node, locate the Raft storage directory at `/var/lib/deckhouse/stronghold/`. In that directory, check that a non-empty `node-id` file exists. If this step is successful, proceed.
 
 ## Create the peers.json file
 
@@ -124,7 +124,7 @@ If automatic unseal is not configured, unseal Stronghold and then check the stat
 {{< tabs name="stronghold_cmd_96020" >}}
 {{% tab name="Stronghold in DKP" %}}
 
-```bash
+```console
 $ d8 stronghold operator unseal
 Unseal Key (will be hidden):
 
@@ -151,7 +151,7 @@ Raft Applied Index       155344
 {{% /tab %}}
 {{% tab name="Stronghold in Linux" %}}
 
-```bash
+```console
 $ stronghold operator unseal
 Unseal Key (will be hidden):
 

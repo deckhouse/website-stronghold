@@ -33,6 +33,16 @@ Deckhouse Stronghold обеспечивает безопасное хранен�
 Бесплатный практический курс [«Обзор возможностей Deckhouse Stronghold»](https://education.flant.ru/course/obzor-vozmozhnostej-deckhouse-stronghold/) в [Академии Deckhouse](https://deckhouse.ru/course-catalog/) поможет быстро познакомиться с продуктом.
 {{< /alert >}}
 
+## С чего начать
+
+Готовые решения типовых задач собраны в разделе [«Примеры использования»](./examples/): вход через ALD Pro и Active Directory, секреты в Kubernetes, CI/CD и GitOps, динамические учётные данные, PKI, шифрование, миграция с Vault.
+
+- **Разработчику** — [первый секрет](./user/get-started/first-secret/), [клиентские библиотеки](./examples/delivery/app-clients/), [секреты в подах Kubernetes](./examples/delivery/kubernetes-workloads/).
+- **DevOps-инженеру** — [CI/CD](./examples/delivery/ci-cd/), [GitOps](./examples/delivery/gitops/), [Terraform и Ansible](./examples/delivery/terraform-ansible/), [все примеры](./examples/).
+- **Администратору** — [установка](./install/), [архитектура](./admin/architecture/overview/), [эксплуатация](./admin/operations/), [резервное копирование](./admin/backups/overview/).
+- **Специалисту по ИБ** — [модель угроз](./admin/architecture/threat-model/), [соответствие требованиям ИБ](./about/compliance/), [аудит](./admin/audit/overview/), [криптоалгоритмы](./admin/cryptography/overview/).
+- **Переходите с HashiCorp Vault** — [совместимость](./about/vault-compatibility/) и [руководство по миграции](./examples/operations/migration-from-vault/).
+
 Если вам нужна помощь:
 
 - задайте вопрос [в Telegram-канале «Deckhouse | RU-сообщество»](https://t.me/deckhouse_ru);

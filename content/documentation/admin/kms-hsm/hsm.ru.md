@@ -279,7 +279,7 @@ Stronghold поддерживает шифрование root-ключа с ис
    2025-04-03T17:08:13.431+0300 [WARN]  core: entering seal migration mode; Stronghold will not automatically unseal even if using an autoseal: from_barrier_type=shamir to_barrier_type=pkcs11
    ```
 
-1. Выполните миграцию, введя unseal-ключи:
+1. Выполните миграцию, введя ключи распечатывания:
 
    {{< tabs name="stronghold_cmd_66874" >}}
    {{% tab name="Stronghold в DKP" %}}
@@ -316,7 +316,7 @@ Stronghold поддерживает шифрование root-ключа с ис
 
 1. Перезапустите Stronghold.
 
-1. Выполните миграцию, введя recovery-ключи:
+1. Выполните миграцию, введя ключи восстановления:
 
    {{< tabs name="stronghold_cmd_66874" >}}
    {{% tab name="Stronghold в DKP" %}}
@@ -335,4 +335,12 @@ Stronghold поддерживает шифрование root-ключа с ис
    {{% /tab %}}
    {{< /tabs >}}
 
-После завершения миграции при каждом перезапуске Stronghold потребуется вводить unseal-ключи вручную.
+После завершения миграции при каждом перезапуске Stronghold потребуется вводить ключи распечатывания вручную.
+
+## Примеры использования
+
+Готовые примеры с этим механизмом:
+
+- [Автоматическое распечатывание и seal wrap через HSM](../../../examples/encryption/hsm-unseal/)
+
+Все примеры собраны в разделе [«Примеры использования»](../../../examples/).

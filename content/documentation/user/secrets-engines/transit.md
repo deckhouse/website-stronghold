@@ -197,3 +197,11 @@ If the target key is not stored in an HSM or KMS, the following steps can be use
 - Delete the ephemeral AES key.
 - Append the wrapped target key to the wrapped AES key.
 - Base64 encode the result.
+
+## Usage examples
+
+Ready-made examples that use this feature:
+
+- [Encrypting database fields with Transit](../../../examples/encryption/transit-encryption/)
+
+See all examples in [Usage examples](../../../examples/).

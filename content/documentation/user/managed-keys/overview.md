@@ -32,7 +32,7 @@ Stronghold supports the following managed key types:
 - `pkcs11`
 - `yandexcloudkms`
 
-### `pkcs11`
+### pkcs11
 
 The `pkcs11` type is used for HSMs and PKCS#11-compatible libraries. A managed key of this type references a previously defined `kms_library "pkcs11"` stanza in Stronghold server configuration.
 
@@ -54,7 +54,7 @@ stronghold write sys/managed-keys/pkcs11/my-hsm-key \
   usages=sign,verify
 ```
 
-### `yandexcloudkms`
+### yandexcloudkms
 
 The `yandexcloudkms` type is used for integration with Yandex Cloud KMS.
 

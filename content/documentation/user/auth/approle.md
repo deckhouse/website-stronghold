@@ -312,3 +312,13 @@ more constraint parameters to support varied set of Apps. Some constraints will
 not require a credential, but still enforce constraints for login. For
 example, `secret_id_bound_cidrs` will only allow logins coming from IP addresses
 belonging to configured CIDR blocks on the AppRole.
+
+## Usage examples
+
+Ready-made examples that use this feature:
+
+- [Application on a virtual machine with Stronghold Agent](../../../examples/delivery/legacy-app-on-vm/)
+- [CI/CD](../../../examples/delivery/ci-cd/)
+- [TLS certificate for a web server on a VM from Stronghold PKI](../../../examples/delivery/web-server-tls/)
+
+See all examples in [Usage examples](../../../examples/).

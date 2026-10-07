@@ -1216,3 +1216,14 @@ When either limit is reached, Stronghold returns the keys collected so far and a
 
    {{% /tab %}}
    {{< /tabs >}}
+
+## Usage examples
+
+Ready-made examples that use this feature:
+
+- [Delivering secrets to Kubernetes pods](../../../../examples/delivery/kubernetes-workloads/)
+- [GitOps](../../../../examples/delivery/gitops/)
+- [Application clients](../../../../examples/delivery/app-clients/)
+- [Migrating from HashiCorp Vault](../../../../examples/operations/migration-from-vault/)
+
+See all examples in [Usage examples](../../../../examples/).

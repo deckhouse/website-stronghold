@@ -28,7 +28,7 @@ d8 k label node <имя узла> dedicated/egress=
 
 Чтобы создать Egress-шлюз, примените ресурс `EgressGateway`:
 
-```yaml
+```bash
 d8 k apply -f - <<EOF
 apiVersion: network.deckhouse.io/v1alpha1
 kind: EgressGateway
@@ -56,7 +56,7 @@ EOF
 
 Чтобы создать Egress-шлюз с виртуальным адресом, примените ресурс `EgressGateway`:
 
-```yaml
+```bash
 d8 k apply -f - <<EOF
 apiVersion: network.deckhouse.io/v1alpha1
 kind: EgressGateway
@@ -120,7 +120,7 @@ d8 k label vm <имя виртуальной машины> app=backend
 Чтобы настроить политику перенаправления трафика, создайте ресурс `EgressGatewayPolicy`, указав в поле `.spec.selectors` критерии для выбора виртуальных машин, к которым будет применяться эта политика.
 Пример:
 
-```yaml
+```bash
 d8 k apply -f - <<EOF
 apiVersion: network.deckhouse.io/v1alpha1
 kind: EgressGatewayPolicy

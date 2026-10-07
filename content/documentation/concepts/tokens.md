@@ -232,3 +232,11 @@ Leases created by batch tokens are constrained to the remaining TTL of the batch
 if the batch token is not an orphan, are tracked by the parent.
 They are revoked when the batch token's TTL expires,
 or when the batch token's parent is revoked (at which point the batch token is also denied access to Stronghold).
+
+## Usage examples
+
+Ready-made examples that use this feature:
+
+- [Break-glass access](../../examples/access/break-glass-access/)
+
+See all examples in [Usage examples](../../examples/).
