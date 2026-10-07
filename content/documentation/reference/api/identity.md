@@ -1517,7 +1517,7 @@ OIDC configuration
 
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
-| `issuer` | string | no | Issuer URL to be used in the iss claim of the token. If not set, app_addr will be used. |
+| `issuer` | string | no | Issuer URL to be used in the iss claim of the token. If not set, Stronghold's app_addr will be used. |
 
 #### Responses
 

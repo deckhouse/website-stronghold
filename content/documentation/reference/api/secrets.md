@@ -111,7 +111,7 @@ Configure connection details to a database plugin.
 |----------|-----|--------------|----------|
 | `allowed_roles` | array | no | Comma separated string or array of the role names allowed to get creds from this database connection. If empty no roles are allowed. If "*" all roles are allowed. |
 | `password_policy` | string | no | Password policy to use when generating passwords. |
-| `plugin_name` | string | no | The name of a builtin or previously registered plugin known to vault. This endpoint will create an instance of that plugin type. |
+| `plugin_name` | string | no | The name of a builtin or previously registered plugin known to stronghold. This endpoint will create an instance of that plugin type. |
 | `plugin_version` | string | no | The version of the plugin to use. |
 | `root_rotation_statements` | array | no | Specifies the database statements to be executed to rotate the root user's credentials. See the plugin's API page for more information on support and formatting for this parameter. |
 | `verify_connection` | boolean (default: True) | no | If true, the connection details are verified by actually connecting to the database. Defaults to true. |
@@ -365,7 +365,7 @@ Manage the static roles that can be created with this backend.
 | `db_name` | string | no | Name of the database this role acts on. |
 | `rotation_period` | integer | no | Period for automatic credential rotation of the given username. Not valid unless used with "username". |
 | `rotation_statements` | array | no | Specifies the database statements to be executed to rotate the accounts credentials. Not every plugin type will support this functionality. See the plugin's API page for more information on support and formatting for this parameter. |
-| `username` | string | no | Name of the static user account for Vault to manage. Requires "rotation_period" to be specified |
+| `username` | string | no | Name of the static user account for Stronghold to manage. Requires "rotation_period" to be specified |
 
 #### Responses
 
@@ -524,7 +524,7 @@ Update gitops configuration.
 
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
-| `path` | string (default: ) | no | Path to YAML files in the repository (e.g. 'vault' or empty for root). |
+| `path` | string (default: ) | no | Path to YAML files in the repository (e.g. 'stronghold' or empty for root). |
 
 #### Responses
 
@@ -622,11 +622,11 @@ CRUD operations for trusted PGP public key
 
 **204**: empty body
 
-### GET /{gitops_mount_path}/configure/vault
+### GET /{gitops_mount_path}/configure/stronghold
 
-**Operation ID:** `gitops-read-configure-vault`
+**Operation ID:** `gitops-read-configure-stronghold`
 
-Read the current vault client configuration.
+Read the current stronghold client configuration.
 
 #### Parameters
 
@@ -638,11 +638,11 @@ Read the current vault client configuration.
 
 **200**: OK
 
-### POST /{gitops_mount_path}/configure/vault
+### POST /{gitops_mount_path}/configure/stronghold
 
-**Operation ID:** `gitops-write-configure-vault`
+**Operation ID:** `gitops-write-configure-stronghold`
 
-Update the current vault client configuration.
+Update the current stronghold client configuration.
 
 **Creation supported:** yes
 
@@ -656,22 +656,22 @@ Update the current vault client configuration.
 
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
-| `rotate` | boolean (default: False) | no | Rotate vault token. |
-| `vault_addr` | string | no | Vault API address. |
-| `vault_cacert_bytes` | string | no | PEM-encoded CA certificate for Vault TLS verification. |
-| `vault_namespace` | string | no | Vault namespace for API access. |
-| `vault_token` | string | no | Vault token for API access. |
-| `wrapping_token` | string | no | Wrapping vault token for API access. |
+| `rotate` | boolean (default: False) | no | Rotate stronghold token. |
+| `vault_addr` | string | no | Stronghold API address. |
+| `vault_cacert_bytes` | string | no | PEM-encoded CA certificate for Stronghold TLS verification. |
+| `vault_namespace` | string | no | Stronghold namespace for API access. |
+| `vault_token` | string | no | Stronghold token for API access. |
+| `wrapping_token` | string | no | Wrapping stronghold token for API access. |
 
 #### Responses
 
 **200**: OK
 
-### DELETE /{gitops_mount_path}/configure/vault
+### DELETE /{gitops_mount_path}/configure/stronghold
 
-**Operation ID:** `gitops-delete-configure-vault`
+**Operation ID:** `gitops-delete-configure-stronghold`
 
-Delete the current vault client configuration.
+Delete the current stronghold client configuration.
 
 #### Parameters
 
@@ -776,13 +776,13 @@ Configure the Kubernetes secret engine plugin.
 
 **Operation ID:** `kubernetes-generate-credentials`
 
-Request Kubernetes service account credentials for a given Vault role.
+Request Kubernetes service account credentials for a given Stronghold role.
 
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `name` | string | path | yes | Name of the Vault role |
+| `name` | string | path | yes | Name of the Stronghold role |
 | `kubernetes_mount_path` | string | path | yes | Path that the backend was mounted at |
 
 #### Request body parameters
@@ -790,7 +790,7 @@ Request Kubernetes service account credentials for a given Vault role.
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
 | `audiences` | array | no | The intended audiences of the generated credentials |
-| `cluster_role_binding` | boolean | no | If true, generate a ClusterRoleBinding to grant permissions across the whole cluster instead of within a namespace. Requires the Vault role to have kubernetes_role_type set to ClusterRole. |
+| `cluster_role_binding` | boolean | no | If true, generate a ClusterRoleBinding to grant permissions across the whole cluster instead of within a namespace. Requires the Stronghold role to have kubernetes_role_type set to ClusterRole. |
 | `kubernetes_namespace` | string | yes | The name of the Kubernetes namespace in which to generate the credentials |
 | `ttl` | integer | no | The TTL of the generated credentials |
 
@@ -898,7 +898,6 @@ Pass-through secret storage to the storage backend, allowing you to read/write a
 | `path` | string | path | yes | Location of the secret. |
 | `kv_v1_mount_path` | string | path | yes | Path that the backend was mounted at |
 | `list` | string | query | no | Return a list if `true` |
-| `recursive` | boolean | query | no | Return every key beneath the path rather than only its immediate children, as paths relative to it. Requires `list=true` and the `allow_recursive` capability on the path. |
 
 #### Responses
 
@@ -1120,7 +1119,6 @@ Configures settings for the KV store
 | `path` | string | path | yes | Location of the secret. |
 | `kv_v2_mount_path` | string | path | yes | Path that the backend was mounted at |
 | `list` | string | query | no | Return a list if `true` |
-| `recursive` | boolean | query | no | Return every key beneath the path rather than only its immediate children, as paths relative to it. Requires `list=true` and the `allow_recursive` capability on the path. |
 
 #### Responses
 
@@ -1280,7 +1278,7 @@ Configure the LDAP secrets engine plugin.
 | `groupdn` | string | no | LDAP search base to use for group membership search (eg: ou=Groups,dc=example,dc=org) |
 | `groupfilter` | string (default: (\|(memberUid={{.Username}})(member={{.UserDN}})(uniqueMember={{.UserDN}}))) | no | Go template for querying group membership of user (optional) The template can access the following context variables: UserDN, Username Example: (&(objectClass=group)(member:1.2.840.113556.1.4.1941:={{.UserDN}})) Default: (\|(memberUid={{.Username}})(member={{.UserDN}})(uniqueMember={{.UserDN}})) |
 | `insecure_tls` | boolean | no | Skip LDAP server SSL Certificate verification - VERY insecure (optional) |
-| `length` | integer | no | ⚠️ Deprecated. The desired length of passwords that Vault generates. |
+| `length` | integer | no | ⚠️ Deprecated. The desired length of passwords that Stronghold generates. |
 | `max_page_size` | integer (default: 0) | no | If set to a value greater than 0, the LDAP backend will use the LDAP server's paged search control to request pages of up to the given size. This can be used to avoid hitting the LDAP server's maximum result size limit. Otherwise, the LDAP backend will not use the paged search control. |
 | `max_ttl` | integer | no | The maximum password time-to-live. |
 | `password_policy` | string | no | Password policy to use to generate passwords |
@@ -1293,7 +1291,7 @@ Configure the LDAP secrets engine plugin.
 | `ttl` | integer | no | The default password time-to-live. |
 | `upndomain` | string | no | Enables userPrincipalDomain login with [username]@UPNDomain (optional) |
 | `url` | string (default: ldap://127.0.0.1) | no | LDAP URL to connect to (default: ldap://127.0.0.1). Multiple URLs can be specified by concatenating them with commas; they will be tried in-order. |
-| `use_pre111_group_cn_behavior` | boolean | no | In Vault 1.1.1 a fix for handling group CN values of different cases unfortunately introduced a regression that could cause previously defined groups to not be found due to a change in the resulting name. If set true, the pre-1.1.1 behavior for matching group CNs will be used. This is only needed in some upgrade scenarios for backwards compatibility. It is enabled by default if the config is upgraded but disabled by default on new configurations. |
+| `use_pre111_group_cn_behavior` | boolean | no | In Stronghold 1.1.1 a fix for handling group CN values of different cases unfortunately introduced a regression that could cause previously defined groups to not be found due to a change in the resulting name. If set true, the pre-1.1.1 behavior for matching group CNs will be used. This is only needed in some upgrade scenarios for backwards compatibility. It is enabled by default if the config is upgraded but disabled by default on new configurations. |
 | `use_token_groups` | boolean (default: False) | no | If true, use the Active Directory tokenGroups constructed attribute of the user to find the group memberships. This will find all security groups including nested ones. |
 | `userattr` | string (default: cn) | no | Attribute used for users (default: cn) |
 | `userdn` | string | no | LDAP domain to use for users (eg: ou=People,dc=example,dc=org) |
@@ -1542,7 +1540,7 @@ List the name of each set of service accounts currently stored.
 
 **Operation ID:** `ldap-list-dynamic-roles`
 
-List all the dynamic roles Vault is currently managing in LDAP.
+List all the dynamic roles Stronghold is currently managing in LDAP.
 
 #### Parameters
 
@@ -1623,7 +1621,7 @@ Manage the static roles that can be created with this backend.
 
 **Operation ID:** `ldap-list-role-path`
 
-List all the dynamic roles Vault is currently managing in LDAP.
+List all the dynamic roles Stronghold is currently managing in LDAP.
 
 #### Parameters
 
@@ -1641,7 +1639,7 @@ List all the dynamic roles Vault is currently managing in LDAP.
 
 **Operation ID:** `ldap-list-role-path`
 
-List all the dynamic roles Vault is currently managing in LDAP.
+List all the dynamic roles Stronghold is currently managing in LDAP.
 
 #### Parameters
 
@@ -1683,7 +1681,7 @@ Request to rotate the credentials for a static user account.
 
 **Operation ID:** `ldap-rotate-root-credentials`
 
-Request to rotate the root credentials Vault uses for the LDAP administrator account.
+Request to rotate the root credentials Stronghold uses for the LDAP administrator account.
 
 #### Parameters
 
@@ -1716,7 +1714,7 @@ Request LDAP credentials for a certain static role. These credentials are rotate
 
 **Operation ID:** `ldap-list-static-roles`
 
-This path lists all the static roles Vault is currently managing within the LDAP system.
+This path lists all the static roles Stronghold is currently managing within the LDAP system.
 
 #### Parameters
 
@@ -1795,7 +1793,7 @@ Manage the static roles that can be created with this backend.
 
 **Operation ID:** `ldap-list-static-role-path`
 
-This path lists all the static roles Vault is currently managing within the LDAP system.
+This path lists all the static roles Stronghold is currently managing within the LDAP system.
 
 #### Parameters
 
@@ -1813,7 +1811,7 @@ This path lists all the static roles Vault is currently managing within the LDAP
 
 **Operation ID:** `ldap-list-static-role-path`
 
-This path lists all the static roles Vault is currently managing within the LDAP system.
+This path lists all the static roles Stronghold is currently managing within the LDAP system.
 
 #### Parameters
 
@@ -2636,7 +2634,7 @@ Modifies the current configuration for automatic tidy execution.
 | `tidy_cert_store` | boolean | no | Set to true to enable tidying up the certificate store |
 | `tidy_cross_cluster_revoked_certs` | boolean | no | Set to true to enable tidying up the cross-cluster revoked certificate store. Only runs on the active primary node. |
 | `tidy_expired_issuers` | boolean | no | Set to true to automatically remove expired issuers past the issuer_safety_buffer. No keys will be removed as part of this operation. |
-| `tidy_move_legacy_ca_bundle` | boolean | no | Set to true to move the legacy ca_bundle from /config/ca_bundle to /config/ca_bundle.bak. This prevents downgrades to pre-Vault 1.11 versions (as older PKI engines do not know about the new multi-issuer storage layout), but improves the performance on seal wrapped PKI mounts. This will only occur if at least issuer_safety_buffer time has occurred after the initial storage migration. This backup is saved in case of an issue in future migrations. Operators may consider removing it via sys/raw if they desire. The backup will be removed via a DELETE /root call, but note that this removes ALL issuers within the mount (and is thus not desirable in most operational scenarios). |
+| `tidy_move_legacy_ca_bundle` | boolean | no | Set to true to move the legacy ca_bundle from /config/ca_bundle to /config/ca_bundle.bak. This prevents downgrades to pre-Stronghold 1.11 versions (as older PKI engines do not know about the new multi-issuer storage layout), but improves the performance on seal wrapped PKI mounts. This will only occur if at least issuer_safety_buffer time has occurred after the initial storage migration. This backup is saved in case of an issue in future migrations. Operators may consider removing it via sys/raw if they desire. The backup will be removed via a DELETE /root call, but note that this removes ALL issuers within the mount (and is thus not desirable in most operational scenarios). |
 | `tidy_revocation_list` | boolean | no | Deprecated; synonym for 'tidy_revoked_certs |
 | `tidy_revocation_queue` | boolean (default: False) | no | Set to true to remove stale revocation queue entries that haven't been confirmed by any active cluster. Only runs on the active primary node |
 | `tidy_revoked_cert_issuer_associations` | boolean | no | Set to true to validate issuer associations on revocation entries. This helps increase the performance of CRL building and OCSP responses. |
@@ -2714,8 +2712,8 @@ Set cluster-local configuration, including address to this PR cluster.
 
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
-| `aia_path` | string | no | Optional URI to this mount's AIA distribution point; may refer to an external non-Vault responder. This is for resolving AIA URLs and providing the {{cluster_aia_path}} template parameter and will not be used for other purposes. As such, unlike path above, this could safely be an insecure transit mechanism (like HTTP without TLS). For example: <http://cdn.example.com/pr1/pki> |
-| `path` | string | no | Canonical URI to this mount on this performance replication cluster's external address. This is for resolving AIA URLs and providing the {{cluster_path}} template parameter but might be used for other purposes in the future. This should only point back to this particular PR replica and should not ever point to another PR cluster. It may point to any node in the PR replica, including standby nodes, and need not always point to the active node. For example: <https://pr1.vault.example.com:8200/v1/pki> |
+| `aia_path` | string | no | Optional URI to this mount's AIA distribution point; may refer to an external non-Stronghold responder. This is for resolving AIA URLs and providing the {{cluster_aia_path}} template parameter and will not be used for other purposes. As such, unlike path above, this could safely be an insecure transit mechanism (like HTTP without TLS). For example: <http://cdn.example.com/pr1/pki> |
+| `path` | string | no | Canonical URI to this mount on this performance replication cluster's external address. This is for resolving AIA URLs and providing the {{cluster_path}} template parameter but might be used for other purposes in the future. This should only point back to this particular PR replica and should not ever point to another PR cluster. It may point to any node in the PR replica, including standby nodes, and need not always point to the active node. For example: <https://pr1.stronghold.example.com:8200/v1/pki> |
 
 ### POST /{pki_mount_path}/config/cluster
 
@@ -2733,8 +2731,8 @@ Set cluster-local configuration, including address to this PR cluster.
 
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
-| `aia_path` | string | no | Optional URI to this mount's AIA distribution point; may refer to an external non-Vault responder. This is for resolving AIA URLs and providing the {{cluster_aia_path}} template parameter and will not be used for other purposes. As such, unlike path above, this could safely be an insecure transit mechanism (like HTTP without TLS). For example: <http://cdn.example.com/pr1/pki> |
-| `path` | string | no | Canonical URI to this mount on this performance replication cluster's external address. This is for resolving AIA URLs and providing the {{cluster_path}} template parameter but might be used for other purposes in the future. This should only point back to this particular PR replica and should not ever point to another PR cluster. It may point to any node in the PR replica, including standby nodes, and need not always point to the active node. For example: <https://pr1.vault.example.com:8200/v1/pki> |
+| `aia_path` | string | no | Optional URI to this mount's AIA distribution point; may refer to an external non-Stronghold responder. This is for resolving AIA URLs and providing the {{cluster_aia_path}} template parameter and will not be used for other purposes. As such, unlike path above, this could safely be an insecure transit mechanism (like HTTP without TLS). For example: <http://cdn.example.com/pr1/pki> |
+| `path` | string | no | Canonical URI to this mount on this performance replication cluster's external address. This is for resolving AIA URLs and providing the {{cluster_path}} template parameter but might be used for other purposes in the future. This should only point back to this particular PR replica and should not ever point to another PR cluster. It may point to any node in the PR replica, including standby nodes, and need not always point to the active node. For example: <https://pr1.stronghold.example.com:8200/v1/pki> |
 
 #### Responses
 
@@ -2742,8 +2740,8 @@ Set cluster-local configuration, including address to this PR cluster.
 
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
-| `aia_path` | string | no | Optional URI to this mount's AIA distribution point; may refer to an external non-Vault responder. This is for resolving AIA URLs and providing the {{cluster_aia_path}} template parameter and will not be used for other purposes. As such, unlike path above, this could safely be an insecure transit mechanism (like HTTP without TLS). For example: <http://cdn.example.com/pr1/pki> |
-| `path` | string | no | Canonical URI to this mount on this performance replication cluster's external address. This is for resolving AIA URLs and providing the {{cluster_path}} template parameter but might be used for other purposes in the future. This should only point back to this particular PR replica and should not ever point to another PR cluster. It may point to any node in the PR replica, including standby nodes, and need not always point to the active node. For example: <https://pr1.vault.example.com:8200/v1/pki> |
+| `aia_path` | string | no | Optional URI to this mount's AIA distribution point; may refer to an external non-Stronghold responder. This is for resolving AIA URLs and providing the {{cluster_aia_path}} template parameter and will not be used for other purposes. As such, unlike path above, this could safely be an insecure transit mechanism (like HTTP without TLS). For example: <http://cdn.example.com/pr1/pki> |
+| `path` | string | no | Canonical URI to this mount on this performance replication cluster's external address. This is for resolving AIA URLs and providing the {{cluster_path}} template parameter but might be used for other purposes in the future. This should only point back to this particular PR replica and should not ever point to another PR cluster. It may point to any node in the PR replica, including standby nodes, and need not always point to the active node. For example: <https://pr1.stronghold.example.com:8200/v1/pki> |
 
 ### GET /{pki_mount_path}/config/crl
 
@@ -4510,7 +4508,7 @@ Issue an intermediate CA certificate based on the provided CSR.
 | `province` | array | no | If set, Province will be set to this value. |
 | `serial_number` | string | no | The Subject's requested serial number, if any. See RFC 4519 Section 2.31 'serialNumber' for a description of this field. If you want more than one, specify alternative names in the alt_names map using OID 2.5.4.5. This has no impact on the final certificate's Serial Number field. |
 | `signature_bits` | integer (default: 0) | no | The number of bits to use in the signature algorithm; accepts 256 for SHA-2-256, 384 for SHA-2-384, and 512 for SHA-2-512. Defaults to 0 to automatically detect based on key length (SHA-2-256 for RSA keys, and matching the curve size for NIST P-Curves). |
-| `skid` | string (default: ) | no | Value for the Subject Key Identifier field (RFC 5280 Section 4.2.1.2). This value should ONLY be used when cross-signing to mimic the existing certificate's SKID value; this is necessary to allow certain TLS implementations (such as OpenSSL) which use SKID/AKID matches in chain building to restrict possible valid chains. Specified as a string in hex format. Default is empty, allowing Vault to automatically calculate the SKID according to method one in the above RFC section. |
+| `skid` | string (default: ) | no | Value for the Subject Key Identifier field (RFC 5280 Section 4.2.1.2). This value should ONLY be used when cross-signing to mimic the existing certificate's SKID value; this is necessary to allow certain TLS implementations (such as OpenSSL) which use SKID/AKID matches in chain building to restrict possible valid chains. Specified as a string in hex format. Default is empty, allowing Stronghold to automatically calculate the SKID according to method one in the above RFC section. |
 | `street_address` | array | no | If set, Street Address will be set to this value. |
 | `ttl` | integer | no | The requested Time To Live for the certificate; sets the expiration date. If not specified the role default, backend default, or system default TTL is used, in that order. Cannot be larger than the mount max TTL. Note: this only has an effect when generating a CA cert or signing a CA cert, not when generating a CSR for an intermediate CA. |
 | `uri_sans` | array | no | The requested URI SANs, if any, in a comma-delimited list. |
@@ -5463,7 +5461,7 @@ Manage the roles that can be created with this backend.
 | `enforce_hostnames` | boolean | no | If set, only valid host names are allowed for CN and DNS SANs, and the host part of email addresses. Defaults to true. |
 | `ext_key_usage` | array | no | A comma-separated string or list of extended key usages. Valid values can be found at <https://golang.org/pkg/crypto/x509/#ExtKeyUsage> -- simply drop the "ExtKeyUsage" part of the name. To remove all key usages from being set, set this value to an empty list. See also RFC 5280 Section 4.2.1.12. |
 | `ext_key_usage_oids` | array | no | A comma-separated string or list of extended key usage oids. |
-| `generate_lease` | boolean | no | If set, certificates issued/signed against this role will have Vault leases attached to them. Defaults to "false". Certificates can be added to the CRL by "vault revoke <lease_id>" when certificates are associated with leases. It can also be done using the "pki/revoke" endpoint. However, when lease generation is disabled, invoking "pki/revoke" would be the only way to add the certificates to the CRL. When large number of certificates are generated with long lifetimes, it is recommended that lease generation be disabled, as large amount of leases adversely affect the startup time of Vault. |
+| `generate_lease` | boolean | no | If set, certificates issued/signed against this role will have Stronghold leases attached to them. Defaults to "false". Certificates can be added to the CRL by "stronghold revoke <lease_id>" when certificates are associated with leases. It can also be done using the "pki/revoke" endpoint. However, when lease generation is disabled, invoking "pki/revoke" would be the only way to add the certificates to the CRL. When large number of certificates are generated with long lifetimes, it is recommended that lease generation be disabled, as large amount of leases adversely affect the startup time of Stronghold. |
 | `issuer_ref` | string | no | Reference to the issuer used to sign requests serviced by this role. |
 | `key_bits` | integer | no | The number of bits to use. Allowed values are 0 (universal default); with rsa key_type: 2048 (default), 3072, or 4096; with ec key_type: 224, 256 (default), 384, or 521; ignored with ed25519. |
 | `key_type` | string | no | The type of key to use; defaults to RSA. "rsa" "ec", "ed25519", "gost3410-256-paramset-a", "gost3410-256-paramset-b", "gost3410-256-paramset-c", "gost3410-256-paramset-d", "gost3410-512-paramset-a", "gost3410-512-paramset-b", "gost3410-512-paramset-c" and "any" are the only valid values. |
@@ -5529,7 +5527,7 @@ Manage the roles that can be created with this backend.
 | `enforce_hostnames` | boolean (default: True) | no | If set, only valid host names are allowed for CN and DNS SANs, and the host part of email addresses. Defaults to true. |
 | `ext_key_usage` | array (default: []) | no | A comma-separated string or list of extended key usages. Valid values can be found at <https://golang.org/pkg/crypto/x509/#ExtKeyUsage> -- simply drop the "ExtKeyUsage" part of the name. To remove all key usages from being set, set this value to an empty list. See also RFC 5280 Section 4.2.1.12. |
 | `ext_key_usage_oids` | array | no | A comma-separated string or list of extended key usage oids. |
-| `generate_lease` | boolean | no | If set, certificates issued/signed against this role will have Vault leases attached to them. Defaults to "false". Certificates can be added to the CRL by "vault revoke <lease_id>" when certificates are associated with leases. It can also be done using the "pki/revoke" endpoint. However, when lease generation is disabled, invoking "pki/revoke" would be the only way to add the certificates to the CRL. When large number of certificates are generated with long lifetimes, it is recommended that lease generation be disabled, as large amount of leases adversely affect the startup time of Vault. |
+| `generate_lease` | boolean | no | If set, certificates issued/signed against this role will have Stronghold leases attached to them. Defaults to "false". Certificates can be added to the CRL by "stronghold revoke <lease_id>" when certificates are associated with leases. It can also be done using the "pki/revoke" endpoint. However, when lease generation is disabled, invoking "pki/revoke" would be the only way to add the certificates to the CRL. When large number of certificates are generated with long lifetimes, it is recommended that lease generation be disabled, as large amount of leases adversely affect the startup time of Stronghold. |
 | `issuer_ref` | string (default: default) | no | Reference to the issuer used to sign requests serviced by this role. |
 | `key_bits` | integer (default: 0) | no | The number of bits to use. Allowed values are 0 (universal default); with rsa key_type: 2048 (default), 3072, or 4096; with ec key_type: 224, 256 (default), 384, or 521; ignored with ed25519. |
 | `key_type` | string (rsa, ec, ed25519, gost3410-256-paramset-a, gost3410-256-paramset-b, gost3410-256-paramset-c, gost3410-256-paramset-d, gost3410-512-paramset-a, gost3410-512-paramset-b, gost3410-512-paramset-c, any) (default: rsa) | no | The type of key to use; defaults to RSA. "rsa" "ec", "ed25519", "gost3410-256-paramset-a", "gost3410-256-paramset-b", "gost3410-256-paramset-c", "gost3410-256-paramset-d", "gost3410-512-paramset-a", "gost3410-512-paramset-b", "gost3410-512-paramset-c" and "any" are the only valid values. |
@@ -5584,7 +5582,7 @@ Manage the roles that can be created with this backend.
 | `enforce_hostnames` | boolean | no | If set, only valid host names are allowed for CN and DNS SANs, and the host part of email addresses. Defaults to true. |
 | `ext_key_usage` | array | no | A comma-separated string or list of extended key usages. Valid values can be found at <https://golang.org/pkg/crypto/x509/#ExtKeyUsage> -- simply drop the "ExtKeyUsage" part of the name. To remove all key usages from being set, set this value to an empty list. See also RFC 5280 Section 4.2.1.12. |
 | `ext_key_usage_oids` | array | no | A comma-separated string or list of extended key usage oids. |
-| `generate_lease` | boolean | no | If set, certificates issued/signed against this role will have Vault leases attached to them. Defaults to "false". Certificates can be added to the CRL by "vault revoke <lease_id>" when certificates are associated with leases. It can also be done using the "pki/revoke" endpoint. However, when lease generation is disabled, invoking "pki/revoke" would be the only way to add the certificates to the CRL. When large number of certificates are generated with long lifetimes, it is recommended that lease generation be disabled, as large amount of leases adversely affect the startup time of Vault. |
+| `generate_lease` | boolean | no | If set, certificates issued/signed against this role will have Stronghold leases attached to them. Defaults to "false". Certificates can be added to the CRL by "stronghold revoke <lease_id>" when certificates are associated with leases. It can also be done using the "pki/revoke" endpoint. However, when lease generation is disabled, invoking "pki/revoke" would be the only way to add the certificates to the CRL. When large number of certificates are generated with long lifetimes, it is recommended that lease generation be disabled, as large amount of leases adversely affect the startup time of Stronghold. |
 | `issuer_ref` | string | no | Reference to the issuer used to sign requests serviced by this role. |
 | `key_bits` | integer | no | The number of bits to use. Allowed values are 0 (universal default); with rsa key_type: 2048 (default), 3072, or 4096; with ec key_type: 224, 256 (default), 384, or 521; ignored with ed25519. |
 | `key_type` | string | no | The type of key to use; defaults to RSA. "rsa" "ec", "ed25519", "gost3410-256-paramset-a", "gost3410-256-paramset-b", "gost3410-256-paramset-c", "gost3410-256-paramset-d", "gost3410-512-paramset-a", "gost3410-512-paramset-b", "gost3410-512-paramset-c" and "any" are the only valid values. |
@@ -6177,7 +6175,7 @@ Issue an intermediate CA certificate based on the provided CSR.
 | `province` | array | no | If set, Province will be set to this value. |
 | `serial_number` | string | no | The Subject's requested serial number, if any. See RFC 4519 Section 2.31 'serialNumber' for a description of this field. If you want more than one, specify alternative names in the alt_names map using OID 2.5.4.5. This has no impact on the final certificate's Serial Number field. |
 | `signature_bits` | integer (default: 0) | no | The number of bits to use in the signature algorithm; accepts 256 for SHA-2-256, 384 for SHA-2-384, and 512 for SHA-2-512. Defaults to 0 to automatically detect based on key length (SHA-2-256 for RSA keys, and matching the curve size for NIST P-Curves). |
-| `skid` | string (default: ) | no | Value for the Subject Key Identifier field (RFC 5280 Section 4.2.1.2). This value should ONLY be used when cross-signing to mimic the existing certificate's SKID value; this is necessary to allow certain TLS implementations (such as OpenSSL) which use SKID/AKID matches in chain building to restrict possible valid chains. Specified as a string in hex format. Default is empty, allowing Vault to automatically calculate the SKID according to method one in the above RFC section. |
+| `skid` | string (default: ) | no | Value for the Subject Key Identifier field (RFC 5280 Section 4.2.1.2). This value should ONLY be used when cross-signing to mimic the existing certificate's SKID value; this is necessary to allow certain TLS implementations (such as OpenSSL) which use SKID/AKID matches in chain building to restrict possible valid chains. Specified as a string in hex format. Default is empty, allowing Stronghold to automatically calculate the SKID according to method one in the above RFC section. |
 | `street_address` | array | no | If set, Street Address will be set to this value. |
 | `ttl` | integer | no | The requested Time To Live for the certificate; sets the expiration date. If not specified the role default, backend default, or system default TTL is used, in that order. Cannot be larger than the mount max TTL. Note: this only has an effect when generating a CA cert or signing a CA cert, not when generating a CSR for an intermediate CA. |
 | `uri_sans` | array | no | The requested URI SANs, if any, in a comma-delimited list. |
@@ -6403,7 +6401,7 @@ Tidy up the backend by removing expired certificates, revocation information, or
 | `tidy_cert_store` | boolean | no | Set to true to enable tidying up the certificate store |
 | `tidy_cross_cluster_revoked_certs` | boolean | no | Set to true to enable tidying up the cross-cluster revoked certificate store. Only runs on the active primary node. |
 | `tidy_expired_issuers` | boolean | no | Set to true to automatically remove expired issuers past the issuer_safety_buffer. No keys will be removed as part of this operation. |
-| `tidy_move_legacy_ca_bundle` | boolean | no | Set to true to move the legacy ca_bundle from /config/ca_bundle to /config/ca_bundle.bak. This prevents downgrades to pre-Vault 1.11 versions (as older PKI engines do not know about the new multi-issuer storage layout), but improves the performance on seal wrapped PKI mounts. This will only occur if at least issuer_safety_buffer time has occurred after the initial storage migration. This backup is saved in case of an issue in future migrations. Operators may consider removing it via sys/raw if they desire. The backup will be removed via a DELETE /root call, but note that this removes ALL issuers within the mount (and is thus not desirable in most operational scenarios). |
+| `tidy_move_legacy_ca_bundle` | boolean | no | Set to true to move the legacy ca_bundle from /config/ca_bundle to /config/ca_bundle.bak. This prevents downgrades to pre-Stronghold 1.11 versions (as older PKI engines do not know about the new multi-issuer storage layout), but improves the performance on seal wrapped PKI mounts. This will only occur if at least issuer_safety_buffer time has occurred after the initial storage migration. This backup is saved in case of an issue in future migrations. Operators may consider removing it via sys/raw if they desire. The backup will be removed via a DELETE /root call, but note that this removes ALL issuers within the mount (and is thus not desirable in most operational scenarios). |
 | `tidy_revocation_list` | boolean | no | Deprecated; synonym for 'tidy_revoked_certs |
 | `tidy_revocation_queue` | boolean (default: False) | no | Set to true to remove stale revocation queue entries that haven't been confirmed by any active cluster. Only runs on the active primary node |
 | `tidy_revoked_cert_issuer_associations` | boolean | no | Set to true to validate issuer associations on revocation entries. This helps increase the performance of CRL building and OCSP responses. |
@@ -7065,7 +7063,7 @@ Manage the 'roles' that can be created with this backend.
 | `key_type` | string (otp, ca) | no | [Required for all types] Type of key used to login to hosts. It can be either 'otp' or 'ca'. 'otp' type requires agent to be installed in remote hosts. |
 | `max_ttl` | integer | no | [Not applicable for OTP type] [Optional for CA type] The maximum allowed lease duration |
 | `not_before_duration` | integer (default: 30) | no | [Not applicable for OTP type] [Optional for CA type] The duration that the SSH certificate should be backdated by at issuance. |
-| `port` | integer | no | [Optional for OTP type] [Not applicable for CA type] Port number for SSH connection. Default is '22'. Port number does not play any role in creation of OTP. For 'otp' type, this is just a way to inform client about the port number to use. Port number will be returned to client by Vault server along with OTP. |
+| `port` | integer | no | [Optional for OTP type] [Not applicable for CA type] Port number for SSH connection. Default is '22'. Port number does not play any role in creation of OTP. For 'otp' type, this is just a way to inform client about the port number to use. Port number will be returned to client by Stronghold server along with OTP. |
 | `ttl` | integer | no | [Not applicable for OTP type] [Optional for CA type] The lease duration if no specific lease duration is requested. The lease duration controls the expiration of certificates issued by this backend. Defaults to the value of max_ttl. |
 
 #### Responses
@@ -7138,7 +7136,7 @@ This endpoint removes the stored host keys used for the removed Dynamic Key feat
 
 **Operation ID:** `ssh-verify-otp`
 
-Validate the OTP provided by Vault SSH Agent.
+Validate the OTP provided by Stronghold SSH Agent.
 
 **Available without authentication:** yes
 
@@ -7254,7 +7252,7 @@ Manage the keys that can be created with this backend.
 | `algorithm` | string (default: SHA1) | no | The hashing algorithm used to generate the TOTP token. Options include SHA1, SHA256 and SHA512. |
 | `digits` | integer (default: 6) | no | The number of digits in the generated TOTP token. This value can either be 6 or 8. |
 | `exported` | boolean (default: True) | no | Determines if a QR code and url are returned upon generating a key. Only used if generate is true. |
-| `generate` | boolean (default: False) | no | Determines if a key should be generated by Vault or if a key is being passed from another service. |
+| `generate` | boolean (default: False) | no | Determines if a key should be generated by Stronghold or if a key is being passed from another service. |
 | `issuer` | string | no | The name of the key's issuing organization. Required if generate is true. |
 | `key` | string | no | The shared master key used to generate a TOTP token. Only used if generate is false. |
 | `key_size` | integer (default: 20) | no | Determines the size in bytes of the generated key. Only used if generate is true. |
@@ -7436,8 +7434,8 @@ Generate a data key
 |----------|-----|--------------|----------|
 | `bits` | integer (default: 256) | no | Number of bits for the key; currently 128, 256, and 512 bits are supported. Defaults to 256. |
 | `context` | string | no | Context for key derivation. Required for derived keys. |
-| `key_version` | integer | no | The version of the Vault key to use for encryption of the data key. Must be 0 (for latest) or a value greater than or equal to the min_encryption_version configured on the key. |
-| `nonce` | string | no | Nonce for when convergent encryption v1 is used (only in Vault 0.6.1) |
+| `key_version` | integer | no | The version of the Stronghold key to use for encryption of the data key. Must be 0 (for latest) or a value greater than or equal to the min_encryption_version configured on the key. |
+| `nonce` | string | no | Nonce for when convergent encryption v1 is used (only in Stronghold 0.6.1) |
 
 #### Responses
 
@@ -7464,7 +7462,7 @@ Decrypt a ciphertext value using a named key
 | `batch_input` | array | no | Specifies a list of items to be decrypted in a single batch. When this parameter is set, if the parameters 'ciphertext', 'context' and 'nonce' are also set, they will be ignored. Any batch output will preserve the order of the batch input. |
 | `ciphertext` | string | no | The ciphertext to decrypt, provided as returned by encrypt. |
 | `context` | string | no | Base64 encoded context for key derivation. Required if key derivation is enabled. |
-| `nonce` | string | no | Base64 encoded nonce value used during encryption. Must be provided if convergent encryption is enabled for this key and the key was generated with Vault 0.6.1. Not required for keys created in 0.6.2+. |
+| `nonce` | string | no | Base64 encoded nonce value used during encryption. Must be provided if convergent encryption is enabled for this key and the key was generated with Stronghold 0.6.1. Not required for keys created in 0.6.2+. |
 | `partial_failure_response_code` | integer | no | Ordinarily, if a batch item fails to decrypt due to a bad input, but other batch items succeed, the HTTP response code is 400 (Bad Request). Some applications may want to treat partial failures differently. Providing the parameter returns the given response code integer instead of a 400 in this case. If all values fail HTTP 400 is still returned. |
 
 #### Responses
@@ -7496,7 +7494,7 @@ blocks using a named key
 | `context` | string | no | Base64 encoded context for key derivation. Required if key derivation is enabled |
 | `convergent_encryption` | boolean | no | This parameter will only be used when a key is expected to be created. Whether to support convergent encryption. This is only supported when using a key with key derivation enabled and will require all requests to carry both a context and 96-bit (12-byte) nonce. The given nonce will be used in place of a randomly generated nonce. As a result, when the same context and nonce are supplied, the same ciphertext is generated. It is \*very important* when using this mode that you ensure that all nonces are unique for a given context. Failing to do so will severely impact the ciphertext's security. |
 | `key_version` | integer | no | The version of the key to use for encryption. Must be 0 (for latest) or a value greater than or equal to the min_encryption_version configured on the key. |
-| `nonce` | string | no | Base64 encoded nonce value. Must be provided if convergent encryption is enabled for this key and the key was generated with Vault 0.6.1. Not required for keys created in 0.6.2+. The value must be exactly 96 bits (12 bytes) long and the user must ensure that for any given context (and thus, any given encryption key) this nonce value is \**never reused**. |
+| `nonce` | string | no | Base64 encoded nonce value. Must be provided if convergent encryption is enabled for this key and the key was generated with Stronghold 0.6.1. Not required for keys created in 0.6.2+. The value must be exactly 96 bits (12 bytes) long and the user must ensure that for any given context (and thus, any given encryption key) this nonce value is \**never reused**. |
 | `partial_failure_response_code` | integer | no | Ordinarily, if a batch item fails to encrypt due to a bad input, but other batch items succeed, the HTTP response code is 400 (Bad Request). Some applications may want to treat partial failures differently. Providing the parameter returns the given response code integer instead of a 400 in this case. If all values fail HTTP 400 is still returned. |
 | `plaintext` | string | no | Base64 encoded plaintext value to be encrypted |
 | `type` | string (default: aes256-gcm96) | no | This parameter is required when encryption key is expected to be created. When performing an upsert operation, the type of key to create. Currently, "aes128-gcm96" (symmetric) and "aes256-gcm96" (symmetric) are the only types supported. Defaults to "aes256-gcm96". |
@@ -7775,7 +7773,7 @@ Imports an externally-generated key into a new transit key
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
 | `allow_plaintext_backup` | boolean | no | Enables taking a backup of the named key in plaintext format. Once set, this cannot be disabled. |
-| `allow_rotation` | boolean | no | True if the imported key may be rotated within Vault; false otherwise. |
+| `allow_rotation` | boolean | no | True if the imported key may be rotated within Stronghold; false otherwise. |
 | `auto_rotate_period` | integer (default: 0) | no | Amount of time the key should live before being automatically rotated. A value of 0 (default) disables automatic rotation for the key. |
 | `ciphertext` | string | no | The base64-encoded ciphertext of the keys. The AES key should be encrypted using OAEP with the wrapping key and then concatenated with the import key, wrapped by the AES key. |
 | `context` | string | no | Base64 encoded context for key derivation. When reading a key with key derivation enabled, if the key type supports public keys, this will return the public key for the given context. |
@@ -8124,12 +8122,12 @@ Verify a signature or HMAC for input data created using the named key
 | `batch_input` | array | no | Specifies a list of items for processing. When this parameter is set, any supplied 'input', 'hmac' or 'signature' parameters will be ignored. Responses are returned in the 'batch_results' array component of the 'data' element of the response. Any batch output will preserve the order of the batch input |
 | `context` | string | no | Base64 encoded context for key derivation. Required if key derivation is enabled; currently only available with ed25519 keys. |
 | `hash_algorithm` | string (default: sha2-256) | no | Hash algorithm to use (POST body parameter). Valid values are: \* sha1 \* sha2-224 \* sha2-256 \* sha2-384 \* sha2-512 \* sha3-224 \* sha3-256 \* sha3-384 \* sha3-512 \* none Defaults to "sha2-256". Not valid for all key types. See note about none on signing path. |
-| `hmac` | string | no | The HMAC, including vault header/key version |
+| `hmac` | string | no | The HMAC, including stronghold header/key version |
 | `input` | string | no | The base64-encoded input data to verify |
 | `marshaling_algorithm` | string (default: asn1) | no | The method by which to unmarshal the signature when verifying. The default is 'asn1' which is used by openssl and X.509; can also be set to 'jws' which is used for JWT signatures in which case the signature is also expected to be url-safe base64 encoding instead of standard base64 encoding. Currently only valid for ECDSA P-256 key types". |
 | `prehashed` | boolean | no | Set to 'true' when the input is already hashed. If the key type is 'rsa-2048', 'rsa-3072' or 'rsa-4096', then the algorithm used to hash the input should be indicated by the 'algorithm' parameter. |
 | `salt_length` | string (default: auto) | no | The salt length used to sign. Currently only applies to the RSA PSS signature scheme. Options are 'auto' (the default used by Golang, causing the salt to be as large as possible when signing), 'hash' (causes the salt length to equal the length of the hash used in the signature), or an integer between the minimum and the maximum permissible salt lengths for the given RSA key size. Defaults to 'auto'. |
-| `signature` | string | no | The signature, including vault header/key version |
+| `signature` | string | no | The signature, including stronghold header/key version |
 | `signature_algorithm` | string | no | The signature algorithm to use for signature verification. Currently only applies to RSA key types. Options are 'pss' or 'pkcs1v15'. Defaults to 'pss' |
 | `urlalgorithm` | string | no | Hash algorithm to use (POST URL parameter) |
 
@@ -8159,12 +8157,12 @@ Verify a signature or HMAC for input data created using the named key
 | `batch_input` | array | no | Specifies a list of items for processing. When this parameter is set, any supplied 'input', 'hmac' or 'signature' parameters will be ignored. Responses are returned in the 'batch_results' array component of the 'data' element of the response. Any batch output will preserve the order of the batch input |
 | `context` | string | no | Base64 encoded context for key derivation. Required if key derivation is enabled; currently only available with ed25519 keys. |
 | `hash_algorithm` | string (default: sha2-256) | no | Hash algorithm to use (POST body parameter). Valid values are: \* sha1 \* sha2-224 \* sha2-256 \* sha2-384 \* sha2-512 \* sha3-224 \* sha3-256 \* sha3-384 \* sha3-512 \* none Defaults to "sha2-256". Not valid for all key types. See note about none on signing path. |
-| `hmac` | string | no | The HMAC, including vault header/key version |
+| `hmac` | string | no | The HMAC, including stronghold header/key version |
 | `input` | string | no | The base64-encoded input data to verify |
 | `marshaling_algorithm` | string (default: asn1) | no | The method by which to unmarshal the signature when verifying. The default is 'asn1' which is used by openssl and X.509; can also be set to 'jws' which is used for JWT signatures in which case the signature is also expected to be url-safe base64 encoding instead of standard base64 encoding. Currently only valid for ECDSA P-256 key types". |
 | `prehashed` | boolean | no | Set to 'true' when the input is already hashed. If the key type is 'rsa-2048', 'rsa-3072' or 'rsa-4096', then the algorithm used to hash the input should be indicated by the 'algorithm' parameter. |
 | `salt_length` | string (default: auto) | no | The salt length used to sign. Currently only applies to the RSA PSS signature scheme. Options are 'auto' (the default used by Golang, causing the salt to be as large as possible when signing), 'hash' (causes the salt length to equal the length of the hash used in the signature), or an integer between the minimum and the maximum permissible salt lengths for the given RSA key size. Defaults to 'auto'. |
-| `signature` | string | no | The signature, including vault header/key version |
+| `signature` | string | no | The signature, including stronghold header/key version |
 | `signature_algorithm` | string | no | The signature algorithm to use for signature verification. Currently only applies to RSA key types. Options are 'pss' or 'pkcs1v15'. Defaults to 'pss' |
 
 #### Responses
@@ -8364,13 +8362,13 @@ Configure ELF binary signing via Delivery Kit
 |----------|-----|--------------|----------|
 | `certificate` | string | yes | Certificate data base64 encoded |
 | `intermediates` | string | no | Certificate chain (intermediates and root) base64 encoded, as a single PEM bundle |
-| `key` | string | yes | Private key data base64 encoded or a Vault key reference in the form hashivault://<key>. When a hashivault:// reference is used, configure the vault_* parameters |
-| `password` | string | no | Private key password. Must not be set when key is a hashivault:// reference |
-| `vault_addr` | string | no | Vault server address. Applies only when key is a hashivault:// reference |
-| `vault_auth_path` | string (default: ar) | no | Mount path of Vault auth method. Applies only when key is a hashivault:// reference |
-| `vault_auth_role_id` | string | no | AppRole RoleID used to authenticate to Vault. Applies only when key is a hashivault:// reference |
-| `vault_auth_secret_id` | string | no | AppRole SecretID used to authenticate to Vault. Applies only when key is a hashivault:// reference |
-| `vault_transit_path` | string | no | Mount path of Vault transit engine. Applies only when key is a hashivault:// reference |
+| `key` | string | yes | Private key data base64 encoded or a Stronghold key reference in the form hashistronghold://<key>. When a hashistronghold:// reference is used, configure the vault_* parameters |
+| `password` | string | no | Private key password. Must not be set when key is a hashistronghold:// reference |
+| `vault_addr` | string | no | Stronghold server address. Applies only when key is a hashistronghold:// reference |
+| `vault_auth_path` | string (default: ar) | no | Mount path of Stronghold auth method. Applies only when key is a hashistronghold:// reference |
+| `vault_auth_role_id` | string | no | AppRole RoleID used to authenticate to Stronghold. Applies only when key is a hashistronghold:// reference |
+| `vault_auth_secret_id` | string | no | AppRole SecretID used to authenticate to Stronghold. Applies only when key is a hashistronghold:// reference |
+| `vault_transit_path` | string | no | Mount path of Stronghold transit engine. Applies only when key is a hashistronghold:// reference |
 
 #### Responses
 
