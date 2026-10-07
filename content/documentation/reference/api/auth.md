@@ -1562,7 +1562,7 @@ Configure the JWT authentication backend.
 | `jwks_url` | string | no | JWKS URL to use to authenticate signatures. Cannot be used with "oidc_discovery_url" or "jwt_validation_pubkeys". |
 | `jwt_supported_algs` | array | no | A list of supported signing algorithms. Defaults to RS256. |
 | `jwt_validation_pubkeys` | array | no | A list of PEM-encoded public keys to use to authenticate signatures locally. Cannot be used with "jwks_url" or "oidc_discovery_url". |
-| `namespace_in_state` | boolean | no | Pass namespace in the OIDC state parameter instead of as a separate query parameter. With this setting, the allowed redirect URL(s) in Vault and on the provider side should not contain a namespace query parameter. This means only one redirect URL entry needs to be maintained on the provider side for all vault namespaces that will be authenticating against it. Defaults to true for new configs. |
+| `namespace_in_state` | boolean | no | Pass namespace in the OIDC state parameter instead of as a separate query parameter. With this setting, the allowed redirect URL(s) in Stronghold and on the provider side should not contain a namespace query parameter. This means only one redirect URL entry needs to be maintained on the provider side for all stronghold namespaces that will be authenticating against it. Defaults to true for new configs. |
 | `oidc_client_id` | string | no | The OAuth Client ID configured with your OIDC provider. |
 | `oidc_client_secret` | string | no | The OAuth Client Secret configured with your OIDC provider. |
 | `oidc_discovery_ca_pem` | string | no | The CA certificate or chain of certificates, in PEM format, to use to validate connections to the OIDC Discovery URL. If not set, system certificates are used. |
@@ -1570,7 +1570,7 @@ Configure the JWT authentication backend.
 | `oidc_response_mode` | string | no | The response mode to be used in the OAuth2 request. Allowed values are 'query' and 'form_post'. |
 | `oidc_response_types` | array | no | The response types to request. Allowed values are 'code' and 'id_token'. Defaults to 'code'. |
 | `provider_config` | object | no | Provider-specific configuration. Optional. |
-| `unsupported_critical_cert_extensions` | array | no | A list of ASN1 OIDs of certificate extensions marked Critical that are unsupported by Vault and should be ignored. This option should very rarely be needed except in specialized PKI environments. |
+| `unsupported_critical_cert_extensions` | array | no | A list of ASN1 OIDs of certificate extensions marked Critical that are unsupported by Stronghold and should be ignored. This option should very rarely be needed except in specialized PKI environments. |
 
 #### Responses
 
@@ -1580,7 +1580,7 @@ Configure the JWT authentication backend.
 
 **Operation ID:** `jwt-login`
 
-Authenticates to Vault using a JWT (or OIDC) token.
+Authenticates to Stronghold using a JWT (or OIDC) token.
 
 **Available without authentication:** yes
 
@@ -1887,7 +1887,7 @@ Configure the LDAP server to connect to, along with its options.
 | `token_type` | string (default: default-service) | no | The type of token to generate, service or batch |
 | `upndomain` | string | no | Enables userPrincipalDomain login with [username]@UPNDomain (optional) |
 | `url` | string (default: ldap://127.0.0.1) | no | LDAP URL to connect to (default: ldap://127.0.0.1). Multiple URLs can be specified by concatenating them with commas; they will be tried in-order. |
-| `use_pre111_group_cn_behavior` | boolean | no | In Vault 1.1.1 a fix for handling group CN values of different cases unfortunately introduced a regression that could cause previously defined groups to not be found due to a change in the resulting name. If set true, the pre-1.1.1 behavior for matching group CNs will be used. This is only needed in some upgrade scenarios for backwards compatibility. It is enabled by default if the config is upgraded but disabled by default on new configurations. |
+| `use_pre111_group_cn_behavior` | boolean | no | In Stronghold 1.1.1 a fix for handling group CN values of different cases unfortunately introduced a regression that could cause previously defined groups to not be found due to a change in the resulting name. If set true, the pre-1.1.1 behavior for matching group CNs will be used. This is only needed in some upgrade scenarios for backwards compatibility. It is enabled by default if the config is upgraded but disabled by default on new configurations. |
 | `use_token_groups` | boolean (default: False) | no | If true, use the Active Directory tokenGroups constructed attribute of the user to find the group memberships. This will find all security groups including nested ones. |
 | `userattr` | string (default: cn) | no | Attribute used for users (default: cn) |
 | `userdn` | string | no | LDAP domain to use for users (eg: ou=People,dc=example,dc=org) |
@@ -2049,7 +2049,7 @@ Configures the JWT Public Key and Kubernetes API information.
 | `kubernetes_host` | string | no | Host must be a host string, a host:port pair, or a URL to the base of the Kubernetes API server. |
 | `pem_keys` | array | no | Optional list of PEM-formated public keys or certificates used to verify the signatures of kubernetes service account JWTs. If a certificate is given, its public key will be extracted. Not every installation of Kubernetes exposes these keys. |
 | `token_reviewer_jwt` | string | no | A service account JWT (or other token) used as a bearer token to access the TokenReview API to validate other JWTs during login. If not set the JWT used for login will be used to access the API. |
-| `use_annotations_as_alias_metadata` | boolean (default: False) | no | Use annotations from the client token's associated service account as alias metadata for the Vault entity. Only annotations with the prefix "vault.hashicorp.com/alias-metadata-" will be used. Note that Vault will need permission to read service accounts from the Kubernetes API. |
+| `use_annotations_as_alias_metadata` | boolean (default: False) | no | Use annotations from the client token's associated service account as alias metadata for the Stronghold entity. Only annotations with the prefix "stronghold.hashicorp.com/alias-metadata-" will be used. Note that Stronghold will need permission to read service accounts from the Kubernetes API. |
 
 #### Responses
 
@@ -2059,7 +2059,7 @@ Configures the JWT Public Key and Kubernetes API information.
 
 **Operation ID:** `kubernetes-login`
 
-Authenticates Kubernetes service accounts with Vault.
+Authenticates Kubernetes service accounts with Stronghold.
 
 **Available without authentication:** yes
 
@@ -2133,7 +2133,7 @@ Register an role with the backend.
 
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
-| `alias_name_source` | string (default: serviceaccount_uid) | no | Source to use when deriving the Alias name. valid choices: "serviceaccount_uid" : <token.uid> e.g. 474b11b5-0f20-4f9d-8ca5-65715ab325e0 (most secure choice) "serviceaccount_name" : <namespace>/<serviceaccount> e.g. vault/vault-agent default: "serviceaccount_uid" |
+| `alias_name_source` | string (default: serviceaccount_uid) | no | Source to use when deriving the Alias name. valid choices: "serviceaccount_uid" : <token.uid> e.g. 474b11b5-0f20-4f9d-8ca5-65715ab325e0 (most secure choice) "serviceaccount_name" : <namespace>/<serviceaccount> e.g. stronghold/stronghold-agent default: "serviceaccount_uid" |
 | `audience` | string | no | Optional Audience claim to verify in the jwt. |
 | `bound_cidrs` | array | no | ⚠️ Deprecated. Use "token_bound_cidrs" instead. If this and "token_bound_cidrs" are both specified, only "token_bound_cidrs" will be used. |
 | `bound_service_account_names` | array | no | List of service account names able to access this role. If set to "*" all names are allowed. |
@@ -2239,7 +2239,7 @@ Configure the LDAP server to connect to, along with its options.
 | `token_type` | string (default: default-service) | no | The type of token to generate, service or batch |
 | `upndomain` | string | no | Enables userPrincipalDomain login with [username]@UPNDomain (optional) |
 | `url` | string (default: ldap://127.0.0.1) | no | LDAP URL to connect to (default: ldap://127.0.0.1). Multiple URLs can be specified by concatenating them with commas; they will be tried in-order. |
-| `use_pre111_group_cn_behavior` | boolean | no | In Vault 1.1.1 a fix for handling group CN values of different cases unfortunately introduced a regression that could cause previously defined groups to not be found due to a change in the resulting name. If set true, the pre-1.1.1 behavior for matching group CNs will be used. This is only needed in some upgrade scenarios for backwards compatibility. It is enabled by default if the config is upgraded but disabled by default on new configurations. |
+| `use_pre111_group_cn_behavior` | boolean | no | In Stronghold 1.1.1 a fix for handling group CN values of different cases unfortunately introduced a regression that could cause previously defined groups to not be found due to a change in the resulting name. If set true, the pre-1.1.1 behavior for matching group CNs will be used. This is only needed in some upgrade scenarios for backwards compatibility. It is enabled by default if the config is upgraded but disabled by default on new configurations. |
 | `use_token_groups` | boolean (default: False) | no | If true, use the Active Directory tokenGroups constructed attribute of the user to find the group memberships. This will find all security groups including nested ones. |
 | `userattr` | string (default: cn) | no | Attribute used for users (default: cn) |
 | `userdn` | string | no | LDAP domain to use for users (eg: ou=People,dc=example,dc=org) |
@@ -2554,7 +2554,7 @@ Update a role's configuration.
 | `bound_attributes_type` | string (string, glob) | no | The type of matching assertion to perform on bound_attributes key-value pairs. If 'string', requires a direct string match in values. If 'glob', allows for wildcard matching using the '*' character in values. |
 | `bound_subjects` | array | no | The subject to assert is in the SAML Response. The subject in theSAML Response needs to match one of the values configured. |
 | `bound_subjects_type` | string (string, glob) | no | The type of matching assertion to perform on bound_subject. If 'string', requires a direct string match. If 'glob', allows for wildcardmatching using the '*' character. |
-| `groups_attribute` | string | no | The attribute to use for Vault Identity group alias names. |
+| `groups_attribute` | string | no | The attribute to use for Stronghold Identity group alias names. |
 | `token_bound_cidrs` | array | no | Comma separated string or JSON list of CIDR blocks. If set, specifies the blocks of IP addresses which are allowed to use the generated token. |
 | `token_explicit_max_ttl` | integer | no | If set, tokens created via this role carry an explicit maximum TTL. During renewal, the current maximum TTL values of the role and the mount are not checked for changes, and any updates to these values will have no effect on the token being renewed. |
 | `token_max_ttl` | integer | no | The maximum lifetime of the generated token |
@@ -2617,7 +2617,7 @@ Obtain an SSO Service URL to start a SAML authentication flow.
 
 **Operation ID:** `saml-write-token`
 
-Obtain a Vault token to complete the authentication flow.
+Obtain a Stronghold token to complete the authentication flow.
 
 **Available without authentication:** yes
 
@@ -2662,6 +2662,54 @@ Log in with a username and password.
 #### Responses
 
 **200**: OK
+
+### POST /auth/{userpass_mount_path}/login/{username}/change-password
+
+**Operation ID:** `userpass-change-password`
+
+Change your own password by presenting the current one.
+
+**Available without authentication:** yes
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `username` | string | path | yes | Username of the user. |
+| `userpass_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `current_password` | string | no | Current password of the user. |
+| `new_password` | string | no | New password to set for the user. |
+
+#### Responses
+
+**204**: OK
+
+### GET /auth/{userpass_mount_path}/password-expiry
+
+**Operation ID:** `userpass-read-password-expiry`
+
+Read the password expiry settings in force for this userpass mount.
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `userpass_mount_path` | string | path | yes | Path that the backend was mounted at |
+
+#### Responses
+
+**200**: OK
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `epoch` | string | no | Reference point from which passwords with an unknown set time are counted; empty when none is recorded. |
+| `max_age_days` | integer | no | Days a password stays valid; 0 means expiry is disabled. |
+| `warning_days` | integer | no | Days before expiry at which a login starts warning the user. |
 
 ### GET /auth/{userpass_mount_path}/password-policy/{policy_name}
 
@@ -2955,7 +3003,7 @@ Configure WebAuthn backend
 | `auto_registration` | boolean (default: False) | no | If true, new users can self-register. If false (default), only pre-created users can register. |
 | `rp_display_name` | string | no | Human-readable name for the Relying Party. |
 | `rp_id` | string | no | Relying Party ID (e.g. localhost or your domain). Must match the origin's host. |
-| `rp_origins` | array | no | Allowed origins for WebAuthn (e.g. <https://vault.example.com>, <http://localhost:8200>). |
+| `rp_origins` | array | no | Allowed origins for WebAuthn (e.g. <https://stronghold.example.com>, <http://localhost:8200>). |
 
 #### Responses
 

@@ -404,7 +404,9 @@ Disable auditing of the given request header.
 
 ### GET /sys/config/control-group
 
-**Operation ID:** `enterprise-stub-read-config-control-group`
+**Operation ID:** `system-read-config-control-group`
+
+Configure control group global settings.
 
 #### Responses
 
@@ -412,7 +414,15 @@ Disable auditing of the given request header.
 
 ### POST /sys/config/control-group
 
-**Operation ID:** `enterprise-stub-write-config-control-group`
+**Operation ID:** `system-write-config-control-group`
+
+Configure control group global settings.
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `max_ttl` | integer | no | The max TTL for a control group token. |
 
 #### Responses
 
@@ -420,7 +430,9 @@ Disable auditing of the given request header.
 
 ### DELETE /sys/config/control-group
 
-**Operation ID:** `enterprise-stub-delete-config-control-group`
+**Operation ID:** `system-delete-config-control-group`
+
+Configure control group global settings.
 
 #### Responses
 
@@ -478,15 +490,29 @@ Remove any CORS settings.
 
 ### GET /sys/config/group-policy-application
 
-**Operation ID:** `enterprise-stub-read-config-group-policy-application`
+**Operation ID:** `system-read-config-group-policy-application`
+
+Gets the current status of the policy application mode for Stronghold.
 
 #### Responses
 
 **200**: OK
 
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `group_policy_application_mode` | string | no | The current-set group_policy_application_mode. Will be either within_namespace_hierarchy or any. |
+
 ### POST /sys/config/group-policy-application
 
-**Operation ID:** `enterprise-stub-write-config-group-policy-application`
+**Operation ID:** `system-write-config-group-policy-application`
+
+Updates the policy application mode for Stronghold.
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `group_policy_application_mode` | string | no | Configures how policies in groups should be applied, accepting 'within_namespace_hierarchy' (default) and 'any',which will allow policies to grant permissions in groups outside of those sharing a namespace hierarchy. |
 
 #### Responses
 
@@ -606,7 +632,15 @@ Remove a UI header.
 
 ### POST /sys/control-group/authorize
 
-**Operation ID:** `enterprise-stub-write-control-group-authorize`
+**Operation ID:** `system-write-control-group-authorize`
+
+Authorize a control group request
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `accessor` | string | no | The accessor of the request to authorize. |
 
 #### Responses
 
@@ -614,7 +648,15 @@ Remove a UI header.
 
 ### POST /sys/control-group/request
 
-**Operation ID:** `enterprise-stub-write-control-group-request`
+**Operation ID:** `system-write-control-group-request`
+
+Check the status of a control group request
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `accessor` | string | no | The accessor of the request. |
 
 #### Responses
 
@@ -1435,6 +1477,22 @@ This endpoint performs cleanup tasks that can be run if certain error conditions
 
 **204**: OK
 
+### GET /sys/license/status
+
+**Operation ID:** `system-read-license-status`
+
+The path responds to the following HTTP methods.
+
+    GET /
+        Returns information on the installed license
+
+    POST
+        Sets the license for the server
+
+#### Responses
+
+**200**: OK
+
 ### GET /sys/locked-users
 
 **Operation ID:** `locked-users-list`
@@ -1605,26 +1663,45 @@ Create, update and read the managed key configurations.
 
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
+| `access_key` | string | no | Access key for authenticating to AWS |
+| `algorithm` | string | no | The signature algorithm to use with this key |
 | `allow_generate_key` | boolean | no | If true, allows users of the key to trigger key generation. If false and generation is needed, it will fail. |
 | `allow_replace_key` | boolean | no | If true, allows users of the key to provide key material which may replace keys that were previously present. allow_store_key being false overrides this behavior. |
 | `allow_store_key` | boolean | no | If true, allows users of the key to provide key material where none was present. |
 | `any_mount` | boolean | no | If true, this key may be accessed by any mount without the mount's allowed_manage_keys field being set. |
-| `curve` | string | no | For ECDSA mechanisms, the desired elliptic curve if the key is to be generated, either P256, P384, or P521. |
-| `endpoint` | string | no | [yandexcloudkms] Custom Yandex Cloud API endpoint (optional). |
+| `client_id` | string | no | The client ID for credentials to invoke the Azure APIs. |
+| `client_secret` | string | no | The client secret for credentials to invoke the Azure APIs. |
+| `credentials` | string | no | The path for the GCP credential file |
+| `crypto_key` | string | no | The name of the key in GCP Cloud KMS |
+| `crypto_key_version` | integer | no | The key version of an existing key in GCP Cloud KMS |
+| `curve` | string | no | For ECDSA keys, the desired elliptic curve if the key is to be generated, either P256, P384, or P521. |
+| `endpoint` | string | no | The AWS endpoint to use |
+| `environment` | string | no | The Azure Cloud environment API endpoints to use. |
 | `force_rw_session` | boolean (default: False) | no | If true, forces read/write sessions on the HSM, to work around some buggy HSMs. |
-| `key_bits` | integer | no | For RSA mechanisms, the desired key length in bits if the key is to be generated, either 2048, 3072, or 4096. |
+| `key-bits` | integer | no | The desired key length in bits if the RSA key is to be generated, either 2048, 3072, or 4096. |
+| `key_bits` | integer | no | For RSA keys, the desired key length in bits if the key is to be generated, either 2048, 3072, or 4096. |
 | `key_id` | string | no | The id of a PKCS#11 key to use. As key ids are created by the HSM, it is an error if the key does not yet exist. This value or key_label must be specified. |
 | `key_label` | string | no | The label of a PKCS#11 key to use. If the key does not exist and generation is enabled, this is the label that will be given to the generated key. This value or key_id must be specified. |
+| `key_name` | string | no | The name of the Azure Key Vault Key. |
+| `key_ring` | string | no | The name of the key ring in GCP Cloud KMS |
+| `key_type` | string | no | The type of the Azure Key Vault Key. Currently only `RSA-HSM` is supported. |
+| `kms_key` | string | no | An identifier for the AWS KMS key. If the key already exists, this can be either the AWS-generated key ID or an alias. If the key is to be generated and the field is non-empty, the provided value will be used to create an alias for the key. |
 | `kms_key_id` | string | no | [yandexcloudkms] The ID of the key in Yandex Cloud KMS (symmetric or asymmetric). |
-| `library` | string | no | The name of a managed key access library, as defined in the server configuration. |
+| `library` | string | no | The name of a managed key access library, as defined in the Stronghold server configuration. |
 | `max_parallel` | integer | no | The maximum number of concurrent operations that may be submitted to the HSM at a time. |
 | `mechanism` | string | no | The mechanism for the given key, specified as a decimal or hexadecimal (prefixed by 0x) string. |
 | `oauth_token` | string | no | [yandexcloudkms] OAuth token for Yandex Cloud authentication. Mutually exclusive with service_account_key_json. |
 | `pin` | string | no | The access PIN for the slot. |
+| `project` | string | no | The name of the GCP project |
+| `region` | string | no | The GCP region used for the key ring |
+| `resource` | string | no | The Azure Key Vault resource's DNS Suffix to connect to. Needs to be changed to connect to Azure's Managed HSM KeyVault instance type. |
+| `secret_key` | string | no | Secret key ID for authenticating to AWS |
 | `service_account_key_json` | string | no | [yandexcloudkms] JSON of the authorized key for a Yandex Cloud service account. Stored inside Stronghold, not on the filesystem. Mutually exclusive with oauth_token. |
 | `slot` | string | no | The slot number to use, specified as a string (e.g. "0"). |
+| `tenant_id` | string | no | The tenant ID for the Azure Active Directory organization. |
 | `token_label` | string | no | The slot token label to use. |
 | `usages` | string | no | A comma-delimited list of the allowed usages of this key. Valid values are encrypt, decrypt, sign, verify, wrap, unwrap, mac, and random. |
+| `vault_name` | string | no | The name of an existing Azure Key Vault instance. |
 
 #### Responses
 
@@ -1666,8 +1743,8 @@ Test a managed key by signing and verifying some random data.
 
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
-| `hash_algorithm` | string (default: sha2-256) | no | Hash for the test digest. If omitted, inferred from the managed key PKCS#11 mechanism for GOST (streebog-256 / streebog-512); otherwise sha2-256. |
-| `use_pss` | boolean (default: False) | no | For RSA backed managed keys attempt to sign with PSS |
+| `hash_algorithm` | string (default: sha2-256) | no | The hashing algorithm to use when signing/verifying the random data. If omitted, GOST PKCS#11 keys use streebog-256 / streebog-512 according to the mechanism; otherwise sha2-256. |
+| `use_pss` | boolean (default: False) | no | For RSA backed managed keys attempt to sign with PSS. Defaults to true for Yandex Cloud KMS RSA keys, which sign PSS only. |
 
 #### Responses
 
@@ -1691,7 +1768,9 @@ Export the metrics aggregated for telemetry purpose.
 
 ### GET /sys/mfa/method
 
-**Operation ID:** `enterprise-stub-list-mfa-method`
+**Operation ID:** `system-list-mfa-method`
+
+Lists all the available MFA methods by their name.
 
 #### Parameters
 
@@ -1705,13 +1784,15 @@ Export the metrics aggregated for telemetry purpose.
 
 ### GET /sys/mfa/method/duo/{name}
 
-**Operation ID:** `enterprise-stub-read-mfa-method-duo-name`
+**Operation ID:** `system-read-mfa-method-duo-name`
+
+Defines or updates a Duo MFA method.
 
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `name` | string | path | yes |  |
+| `name` | string | path | yes | Name of the MFA method. |
 
 #### Responses
 
@@ -1719,13 +1800,27 @@ Export the metrics aggregated for telemetry purpose.
 
 ### POST /sys/mfa/method/duo/{name}
 
-**Operation ID:** `enterprise-stub-write-mfa-method-duo-name`
+**Operation ID:** `system-write-mfa-method-duo-name`
+
+Defines or updates a Duo MFA method.
 
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `name` | string | path | yes |  |
+| `name` | string | path | yes | Name of the MFA method. |
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `api_hostname` | string | no | API host name for Duo. |
+| `integration_key` | string | no | Integration key for Duo. |
+| `mount_accessor` | string | no | The mount to tie this method to for use in automatic mappings. The mapping will use the Name field of Aliases associated with this mount as the username in the mapping. |
+| `push_info` | string | no | Push information for Duo. |
+| `secret_key` | string | no | Secret key for Duo. |
+| `use_passcode` | boolean | no | If true, the user is reminded to use the passcode upon MFA validation. This option does not enforce using the passcode. Defaults to false. |
+| `username_format` | string | no | A format string for mapping Identity names to MFA method names. Values to subtitute should be placed in {{}}. For example, "{{alias.name}}@example.com". Currently-supported mappings: alias.name: The name returned by the mount configured via the mount_accessor parameter If blank, the Alias's name field will be used as-is. |
 
 #### Responses
 
@@ -1733,13 +1828,15 @@ Export the metrics aggregated for telemetry purpose.
 
 ### DELETE /sys/mfa/method/duo/{name}
 
-**Operation ID:** `enterprise-stub-delete-mfa-method-duo-name`
+**Operation ID:** `system-delete-mfa-method-duo-name`
+
+Defines or updates a Duo MFA method.
 
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `name` | string | path | yes |  |
+| `name` | string | path | yes | Name of the MFA method. |
 
 #### Responses
 
@@ -1747,13 +1844,15 @@ Export the metrics aggregated for telemetry purpose.
 
 ### GET /sys/mfa/method/multifactor/{name}
 
-**Operation ID:** `enterprise-stub-read-mfa-method-multifactor-name`
+**Operation ID:** `system-read-mfa-method-multifactor-name`
+
+Defines or updates a Multifactor MFA method.
 
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `name` | string | path | yes |  |
+| `name` | string | path | yes | Name of the MFA method. |
 
 #### Responses
 
@@ -1761,13 +1860,26 @@ Export the metrics aggregated for telemetry purpose.
 
 ### POST /sys/mfa/method/multifactor/{name}
 
-**Operation ID:** `enterprise-stub-write-mfa-method-multifactor-name`
+**Operation ID:** `system-write-mfa-method-multifactor-name`
+
+Defines or updates a Multifactor MFA method.
 
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `name` | string | path | yes |  |
+| `name` | string | path | yes | Name of the MFA method. |
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `api_url` | string | no | Base URL for the Multifactor API. Defaults to "<https://api.multifactor.ru>". |
+| `mount_accessor` | string | no | The mount to tie this method to for use in automatic mappings. The mapping will use the Name field of Aliases associated with this mount as the username in the mapping. |
+| `nas_identifier` | string | no | Multifactor NAS Identifier from the resource settings. |
+| `shared_secret` | string | no | Multifactor Shared Secret from the resource settings. |
+| `timeout_seconds` | integer | no | Maximum number of seconds to wait for Multifactor push confirmation. Defaults to 90. Minimum 65. |
+| `username_format` | string | no | A format string for mapping Identity names to Multifactor identities. Values to subtitute should be placed in {{}}. For example, "{{alias.name}}@example.com". Currently-supported mappings: alias.name: The name returned by the mount configured via the mount_accessor parameter If blank, the Alias's name field will be used as-is. |
 
 #### Responses
 
@@ -1775,13 +1887,15 @@ Export the metrics aggregated for telemetry purpose.
 
 ### DELETE /sys/mfa/method/multifactor/{name}
 
-**Operation ID:** `enterprise-stub-delete-mfa-method-multifactor-name`
+**Operation ID:** `system-delete-mfa-method-multifactor-name`
+
+Defines or updates a Multifactor MFA method.
 
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `name` | string | path | yes |  |
+| `name` | string | path | yes | Name of the MFA method. |
 
 #### Responses
 
@@ -1789,13 +1903,15 @@ Export the metrics aggregated for telemetry purpose.
 
 ### GET /sys/mfa/method/okta/{name}
 
-**Operation ID:** `enterprise-stub-read-mfa-method-okta-name`
+**Operation ID:** `system-read-mfa-method-okta-name`
+
+Defines or updates an Okta MFA method.
 
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `name` | string | path | yes |  |
+| `name` | string | path | yes | Name of the MFA method. |
 
 #### Responses
 
@@ -1803,13 +1919,27 @@ Export the metrics aggregated for telemetry purpose.
 
 ### POST /sys/mfa/method/okta/{name}
 
-**Operation ID:** `enterprise-stub-write-mfa-method-okta-name`
+**Operation ID:** `system-write-mfa-method-okta-name`
+
+Defines or updates an Okta MFA method.
 
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `name` | string | path | yes |  |
+| `name` | string | path | yes | Name of the MFA method. |
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `api_token` | string | no | Okta API key. |
+| `base_url` | string | no | The base domain to use for the Okta API. When not specified in the configuration, "okta.com" is used. |
+| `mount_accessor` | string | no | The mount to tie this method to for use in automatic mappings. The mapping will use the Name field of Aliases associated with this mount as the username in the mapping. |
+| `org_name` | string | no | Name of the organization to be used in the Okta API. |
+| `primary_email` | boolean | no | If true, the username will only match the primary email for the account. Defaults to false. |
+| `production` | boolean | no | (DEPRECATED) Use base_url instead. |
+| `username_format` | string | no | A format string for mapping Identity names to MFA method names. Values to subtitute should be placed in {{}}. For example, "{{alias.name}}@example.com". Currently-supported mappings: alias.name: The name returned by the mount configured via the mount_accessor parameter If blank, the Alias's name field will be used as-is. |
 
 #### Responses
 
@@ -1817,13 +1947,15 @@ Export the metrics aggregated for telemetry purpose.
 
 ### DELETE /sys/mfa/method/okta/{name}
 
-**Operation ID:** `enterprise-stub-delete-mfa-method-okta-name`
+**Operation ID:** `system-delete-mfa-method-okta-name`
+
+Defines or updates an Okta MFA method.
 
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `name` | string | path | yes |  |
+| `name` | string | path | yes | Name of the MFA method. |
 
 #### Responses
 
@@ -1831,13 +1963,15 @@ Export the metrics aggregated for telemetry purpose.
 
 ### GET /sys/mfa/method/pingid/{name}
 
-**Operation ID:** `enterprise-stub-read-mfa-method-pingid-name`
+**Operation ID:** `system-read-mfa-method-pingid-name`
+
+Defines or updates a PingID MFA method.
 
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `name` | string | path | yes |  |
+| `name` | string | path | yes | Name of the MFA method. |
 
 #### Responses
 
@@ -1845,13 +1979,23 @@ Export the metrics aggregated for telemetry purpose.
 
 ### POST /sys/mfa/method/pingid/{name}
 
-**Operation ID:** `enterprise-stub-write-mfa-method-pingid-name`
+**Operation ID:** `system-write-mfa-method-pingid-name`
+
+Defines or updates a PingID MFA method.
 
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `name` | string | path | yes |  |
+| `name` | string | path | yes | Name of the MFA method. |
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `mount_accessor` | string | no | The mount to tie this method to for use in automatic mappings. The mapping will use the Name field of Aliases associated with this mount as the username in the mapping. |
+| `settings_file_base64` | string | no | The settings file provided by Ping, Base64-encoded. This must be a settings file suitable for third-party clients, not the PingID SDK or PingFederate. |
+| `username_format` | string | no | A format string for mapping Identity names to MFA method names. Values to subtitute should be placed in {{}}. For example, "{{alias.name}}@example.com". Currently-supported mappings: alias.name: The name returned by the mount configured via the mount_accessor parameter If blank, the Alias's name field will be used as-is. |
 
 #### Responses
 
@@ -1859,13 +2003,15 @@ Export the metrics aggregated for telemetry purpose.
 
 ### DELETE /sys/mfa/method/pingid/{name}
 
-**Operation ID:** `enterprise-stub-delete-mfa-method-pingid-name`
+**Operation ID:** `system-delete-mfa-method-pingid-name`
+
+Defines or updates a PingID MFA method.
 
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `name` | string | path | yes |  |
+| `name` | string | path | yes | Name of the MFA method. |
 
 #### Responses
 
@@ -1873,13 +2019,15 @@ Export the metrics aggregated for telemetry purpose.
 
 ### GET /sys/mfa/method/totp/{name}
 
-**Operation ID:** `enterprise-stub-read-mfa-method-totp-name`
+**Operation ID:** `system-read-mfa-method-totp-name`
+
+Defines or updates a TOTP MFA method.
 
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `name` | string | path | yes |  |
+| `name` | string | path | yes | Name of the MFA method. |
 
 #### Responses
 
@@ -1887,13 +2035,28 @@ Export the metrics aggregated for telemetry purpose.
 
 ### POST /sys/mfa/method/totp/{name}
 
-**Operation ID:** `enterprise-stub-write-mfa-method-totp-name`
+**Operation ID:** `system-write-mfa-method-totp-name`
+
+Defines or updates a TOTP MFA method.
 
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `name` | string | path | yes |  |
+| `name` | string | path | yes | Name of the MFA method. |
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `algorithm` | string (default: SHA1) | no | The hashing algorithm used to generate the TOTP token. Options include SHA1, SHA256 and SHA512. |
+| `digits` | integer (default: 6) | no | The number of digits in the generated TOTP token. This value can either be 6 or 8. |
+| `issuer` | string | no | The name of the key's issuing organization. |
+| `key_size` | integer (default: 20) | no | Determines the size in bytes of the generated key. |
+| `max_validation_attempts` | integer | no | Max number of allowed validation attempts. |
+| `period` | integer (default: 30) | no | The length of time used to generate a counter for the TOTP token calculation. |
+| `qr_size` | integer (default: 200) | no | The pixel size of the generated square QR code. |
+| `skew` | integer (default: 1) | no | The number of delay periods that are allowed when validating a TOTP token. This value can either be 0 or 1. |
 
 #### Responses
 
@@ -1901,13 +2064,15 @@ Export the metrics aggregated for telemetry purpose.
 
 ### DELETE /sys/mfa/method/totp/{name}
 
-**Operation ID:** `enterprise-stub-delete-mfa-method-totp-name`
+**Operation ID:** `system-delete-mfa-method-totp-name`
+
+Defines or updates a TOTP MFA method.
 
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `name` | string | path | yes |  |
+| `name` | string | path | yes | Name of the MFA method. |
 
 #### Responses
 
@@ -1915,13 +2080,21 @@ Export the metrics aggregated for telemetry purpose.
 
 ### POST /sys/mfa/method/totp/{name}/admin-destroy
 
-**Operation ID:** `enterprise-stub-write-mfa-method-totp-name-admin-destroy`
+**Operation ID:** `system-write-mfa-method-totp-name-admin-destroy`
+
+Deletes the TOTP secret for the given method name on the given entity.
 
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `name` | string | path | yes |  |
+| `name` | string | path | yes | Name of the MFA method. |
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `entity_id` | string | no | Identifier of the entity from which the MFA method secret needs to be removed. |
 
 #### Responses
 
@@ -1929,13 +2102,21 @@ Export the metrics aggregated for telemetry purpose.
 
 ### POST /sys/mfa/method/totp/{name}/admin-generate
 
-**Operation ID:** `enterprise-stub-write-mfa-method-totp-name-admin-generate`
+**Operation ID:** `system-write-mfa-method-totp-name-admin-generate`
+
+Generates a TOTP secret for the given method name on the given entity.
 
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `name` | string | path | yes |  |
+| `name` | string | path | yes | Name of the MFA method. |
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `entity_id` | string | no | Entity ID on which the generated secret needs to get stored. |
 
 #### Responses
 
@@ -1943,13 +2124,16 @@ Export the metrics aggregated for telemetry purpose.
 
 ### GET /sys/mfa/method/totp/{name}/generate
 
-**Operation ID:** `enterprise-stub-read-mfa-method-totp-name-generate`
+**Operation ID:** `system-read-mfa-method-totp-name-generate`
+
+Generates a TOTP secret for the given method name on the entity of the
+		calling token.
 
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `name` | string | path | yes |  |
+| `name` | string | path | yes | Name of the MFA method. |
 
 #### Responses
 
@@ -2157,11 +2341,9 @@ Tune backend configuration parameters for this mount.
 
 **200**: OK
 
-### GET /sys/namespaces/
+### GET /sys/namespaces
 
-**Operation ID:** `namespaces-list-namespaces`
-
-Create a new namespace at a new path.
+**Operation ID:** `system-list-namespaces`
 
 #### Parameters
 
@@ -2175,15 +2357,15 @@ Create a new namespace at a new path.
 
 ### POST /sys/namespaces/api-lock/lock
 
-**Operation ID:** `namespaces-lock-namespace-api`
+**Operation ID:** `system-write-namespaces-api-lock-lock`
 
-Lock the API for a namespace and all its descendants.
+Lock the API for a namespace and its descendants
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
-| `path` | string | no | Optional child namespace path to lock. If not provided, locks the current namespace. |
+| `path` | string | no | Optional relative path for locking descendants of the current namespace. |
 
 #### Responses
 
@@ -2191,15 +2373,15 @@ Lock the API for a namespace and all its descendants.
 
 ### POST /sys/namespaces/api-lock/lock/{path}
 
-**Operation ID:** `namespaces-lock-namespaces-api-lock-lock-path`
+**Operation ID:** `system-write-namespaces-api-lock-lock-path`
 
-Lock the API for a namespace and all its descendants.
+Lock the API for a namespace and its descendants
 
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `path` | string | path | yes | Optional child namespace path to lock. If not provided, locks the current namespace. |
+| `path` | string | path | yes | Optional relative path for locking descendants of the current namespace. |
 
 #### Responses
 
@@ -2207,16 +2389,16 @@ Lock the API for a namespace and all its descendants.
 
 ### POST /sys/namespaces/api-lock/unlock
 
-**Operation ID:** `namespaces-unlock-namespace-api`
+**Operation ID:** `system-write-namespaces-api-lock-unlock`
 
-Unlock the API for a namespace and all its descendants.
+Unlock the API for a namespace and its descendants
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
-| `path` | string | no | Optional child namespace path to unlock. If not provided, unlocks the current namespace. |
-| `unlock_key` | string | no | The unlock key returned when the namespace was locked. Required unless using a root token. |
+| `path` | string | no | Optional relative path for unlocking descendants of the current namespace. |
+| `unlock_key` | string | no | Key to unlock the namespace. |
 
 #### Responses
 
@@ -2224,21 +2406,21 @@ Unlock the API for a namespace and all its descendants.
 
 ### POST /sys/namespaces/api-lock/unlock/{path}
 
-**Operation ID:** `namespaces-unlock-namespaces-api-lock-unlock-path`
+**Operation ID:** `system-write-namespaces-api-lock-unlock-path`
 
-Unlock the API for a namespace and all its descendants.
+Unlock the API for a namespace and its descendants
 
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `path` | string | path | yes | Optional child namespace path to unlock. If not provided, unlocks the current namespace. |
+| `path` | string | path | yes | Optional relative path for unlocking descendants of the current namespace. |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
-| `unlock_key` | string | no | The unlock key returned when the namespace was locked. Required unless using a root token. |
+| `unlock_key` | string | no | Key to unlock the namespace. |
 
 #### Responses
 
@@ -2246,9 +2428,7 @@ Unlock the API for a namespace and all its descendants.
 
 ### GET /sys/namespaces/{path}
 
-**Operation ID:** `namespaces-read-namespace`
-
-Read namespace info
+**Operation ID:** `system-read-namespaces-path`
 
 #### Parameters
 
@@ -2262,9 +2442,7 @@ Read namespace info
 
 ### POST /sys/namespaces/{path}
 
-**Operation ID:** `namespaces-create-namespace`
-
-Create a new namespace at the given path.
+**Operation ID:** `system-write-namespaces-path`
 
 #### Parameters
 
@@ -2276,17 +2454,15 @@ Create a new namespace at the given path.
 
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
-| `custom_metadata` | object | no | User-provided key-value pairs that are used to describe information about a secret. |
+| `custom_metadata` | object | no | User-provided key-value pairs that are used to describe arbitrary information about a namespace. |
 
 #### Responses
 
-**204**: OK
+**200**: OK
 
 ### DELETE /sys/namespaces/{path}
 
-**Operation ID:** `namespaces-delete-namespace`
-
-Delete namespace specified at the given path.
+**Operation ID:** `system-delete-namespaces-path`
 
 #### Parameters
 
@@ -2296,7 +2472,7 @@ Delete namespace specified at the given path.
 
 #### Responses
 
-**200**: OK
+**204**: empty body
 
 ### GET /sys/plugins/catalog
 
@@ -2517,7 +2693,9 @@ Reload mounted plugin backends.
 
 ### GET /sys/plugins/reload/backend/status
 
-**Operation ID:** `enterprise-stub-read-plugins-reload-backend-status`
+**Operation ID:** `system-read-plugins-reload-backend-status`
+
+Get the status of a cluster-scoped reload.
 
 #### Responses
 
@@ -2606,7 +2784,9 @@ Delete the ACL policy with the given name.
 
 ### GET /sys/policies/egp
 
-**Operation ID:** `enterprise-stub-list-policies-egp`
+**Operation ID:** `system-list-policies-egp`
+
+List the configured access control policies.
 
 #### Parameters
 
@@ -2620,13 +2800,15 @@ Delete the ACL policy with the given name.
 
 ### GET /sys/policies/egp/{name}
 
-**Operation ID:** `enterprise-stub-read-policies-egp-name`
+**Operation ID:** `system-read-policies-egp-name`
+
+Read, Modify, or Delete an access control policy.
 
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `name` | string | path | yes |  |
+| `name` | string | path | yes | The name of the policy. Example: "ops" |
 
 #### Responses
 
@@ -2634,13 +2816,23 @@ Delete the ACL policy with the given name.
 
 ### POST /sys/policies/egp/{name}
 
-**Operation ID:** `enterprise-stub-write-policies-egp-name`
+**Operation ID:** `system-write-policies-egp-name`
+
+Read, Modify, or Delete an access control policy.
 
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `name` | string | path | yes |  |
+| `name` | string | path | yes | The name of the policy. Example: "ops" |
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `enforcement_level` | string | no | The enforcement level to apply to the policy. |
+| `paths` | array | no | The paths on which the policy should be applied. |
+| `policy` | string | no | The rules of the policy. |
 
 #### Responses
 
@@ -2648,13 +2840,15 @@ Delete the ACL policy with the given name.
 
 ### DELETE /sys/policies/egp/{name}
 
-**Operation ID:** `enterprise-stub-delete-policies-egp-name`
+**Operation ID:** `system-delete-policies-egp-name`
+
+Read, Modify, or Delete an access control policy.
 
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `name` | string | path | yes |  |
+| `name` | string | path | yes | The name of the policy. Example: "ops" |
 
 #### Responses
 
@@ -2760,7 +2954,9 @@ Generate a password from an existing password policy.
 
 ### GET /sys/policies/rgp
 
-**Operation ID:** `enterprise-stub-list-policies-rgp`
+**Operation ID:** `system-list-policies-rgp`
+
+List the configured access control policies.
 
 #### Parameters
 
@@ -2774,13 +2970,15 @@ Generate a password from an existing password policy.
 
 ### GET /sys/policies/rgp/{name}
 
-**Operation ID:** `enterprise-stub-read-policies-rgp-name`
+**Operation ID:** `system-read-policies-rgp-name`
+
+Read, Modify, or Delete an access control policy.
 
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `name` | string | path | yes |  |
+| `name` | string | path | yes | The name of the policy. Example: "ops" |
 
 #### Responses
 
@@ -2788,13 +2986,22 @@ Generate a password from an existing password policy.
 
 ### POST /sys/policies/rgp/{name}
 
-**Operation ID:** `enterprise-stub-write-policies-rgp-name`
+**Operation ID:** `system-write-policies-rgp-name`
+
+Read, Modify, or Delete an access control policy.
 
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `name` | string | path | yes |  |
+| `name` | string | path | yes | The name of the policy. Example: "ops" |
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `enforcement_level` | string | no | The enforcement level to apply to the policy. |
+| `policy` | string | no | The rules of the policy. |
 
 #### Responses
 
@@ -2802,13 +3009,15 @@ Generate a password from an existing password policy.
 
 ### DELETE /sys/policies/rgp/{name}
 
-**Operation ID:** `enterprise-stub-delete-policies-rgp-name`
+**Operation ID:** `system-delete-policies-rgp-name`
+
+Read, Modify, or Delete an access control policy.
 
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `name` | string | path | yes |  |
+| `name` | string | path | yes | The name of the policy. Example: "ops" |
 
 #### Responses
 
@@ -3042,7 +3251,9 @@ Create, update and read the quota configuration.
 
 ### GET /sys/quotas/lease-count
 
-**Operation ID:** `enterprise-stub-list-quotas-lease-count`
+**Operation ID:** `system-list-quotas-lease-count`
+
+Lists the names of all the lease count quotas.
 
 #### Parameters
 
@@ -3056,13 +3267,15 @@ Create, update and read the quota configuration.
 
 ### GET /sys/quotas/lease-count/{name}
 
-**Operation ID:** `enterprise-stub-read-quotas-lease-count-name`
+**Operation ID:** `system-read-quotas-lease-count-name`
+
+Get, create or update lease count resource quota for an optional namespace or mount.
 
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `name` | string | path | yes |  |
+| `name` | string | path | yes | Name of the quota rule. |
 
 #### Responses
 
@@ -3070,13 +3283,24 @@ Create, update and read the quota configuration.
 
 ### POST /sys/quotas/lease-count/{name}
 
-**Operation ID:** `enterprise-stub-write-quotas-lease-count-name`
+**Operation ID:** `system-write-quotas-lease-count-name`
+
+Get, create or update lease count resource quota for an optional namespace or mount.
 
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `name` | string | path | yes |  |
+| `name` | string | path | yes | Name of the quota rule. |
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `max_leases` | integer | no | Maximum number of leases allowed by the quota rule. |
+| `path` | string | no | Path including the applicable namespace prefix. |
+| `role` | string | no | Login role to apply this quota to. Note that when set, path must be configured to a valid auth method with a concept of roles. |
+| `type` | string | no | Type of the quota rule. |
 
 #### Responses
 
@@ -3084,13 +3308,15 @@ Create, update and read the quota configuration.
 
 ### DELETE /sys/quotas/lease-count/{name}
 
-**Operation ID:** `enterprise-stub-delete-quotas-lease-count-name`
+**Operation ID:** `system-delete-quotas-lease-count-name`
+
+Get, create or update lease count resource quota for an optional namespace or mount.
 
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `name` | string | path | yes |  |
+| `name` | string | path | yes | Name of the quota rule. |
 
 #### Responses
 
@@ -3218,7 +3444,7 @@ Initializes a new recovery key rekey attempt.
 
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
-| `backup` | boolean | no | Specifies if using PGP-encrypted keys, whether Vault should also store a plaintext backup of the PGP-encrypted keys. |
+| `backup` | boolean | no | Specifies if using PGP-encrypted keys, whether Stronghold should also store a plaintext backup of the PGP-encrypted keys. |
 | `pgp_keys` | array | no | Specifies an array of PGP public keys used to encrypt the output recovery keys. |
 | `require_verification` | boolean | no | Turns on verification functionality |
 | `secret_shares` | integer | no | Specifies the number of shares to split the recovery key into. |
@@ -3256,7 +3482,7 @@ Cancels any in-progress recovery key rekey.
 
 **Operation ID:** `rekey-recovery-key-attempt-update`
 
-Enter a single recovery key share to progress the rekey of the Vault.
+Enter a single recovery key share to progress the rekey of the Stronghold.
 
 #### Request body parameters
 
@@ -3650,10 +3876,7 @@ Renews a lease, requesting to extend the lease.
 
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
-| `dr_operation_token` | string | no |  |
-| `id` | string | no |  |
-| `primary_api_addr` | string | no |  |
-| `primary_cluster_addr` | string | no |  |
+| `primary_cluster_addr` | string | no | The address the secondary cluster should connect to. Defaults to the primary's cluster address. |
 
 #### Responses
 
@@ -3667,7 +3890,7 @@ Renews a lease, requesting to extend the lease.
 
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
-| `id` | string | no |  |
+| `id` | string | no | The secondary cluster ID to revoke |
 
 #### Responses
 
@@ -3683,8 +3906,25 @@ Renews a lease, requesting to extend the lease.
 
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
-| `id` | string | no |  |
-| `ttl` | integer (default: 24h) | no |  |
+| `id` | string | no | An opaque identifier that can be used to identify and revoke a secondary cluster's access later. |
+| `secondary_public_key` | string | no | A base64-encoded public key generated by the secondary cluster. |
+| `ttl` | integer (default: 30m) | no | The TTL to use for the secondary activation token. Defaults to 30 minutes. |
+
+#### Responses
+
+**200**: OK
+
+### POST /sys/replication/dr/secondary/config/reload/{subsystem}
+
+**Operation ID:** `system-write-replication-dr-secondary-config-reload-subsystem`
+
+Reload the given subsystem
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `subsystem` | string | path | yes |  |
 
 #### Responses
 
@@ -3695,6 +3935,12 @@ Renews a lease, requesting to extend the lease.
 **Operation ID:** `system-write-replication-dr-secondary-disable`
 
 **Available without authentication:** yes
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `dr_operation_token` | string | no | DR operation token used to authorize this request. |
 
 #### Responses
 
@@ -3708,13 +3954,12 @@ Renews a lease, requesting to extend the lease.
 
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
-| `ca_cert` | string | no |  |
-| `ca_file` | string | no |  |
-| `ca_path` | string | no |  |
-| `client_cert_pem` | string | no |  |
-| `client_key_pem` | string | no |  |
-| `primary_api_addr` | string | no |  |
-| `token` | string | no |  |
+| `ca_file` | string | no | A path to a file containing a PEM-encoded CA certificate to verify the call against the primary's API address |
+| `ca_path` | string | no | A path to a directory containing PEM-encoded CA certificates to verify the call against the primary's API address |
+| `client_cert_pem` | string | no | The client certificate to use for authentication, in PEM format. Note: client authentication for this operation will always use TLS 1.2 or higher. |
+| `client_key_pem` | string | no | The client key to use for authentication, in PEM format. |
+| `primary_api_addr` | string | no | The API address of the primary. If not set, the value the primary supplies in the token will be used, which is the primary's redirect address. |
+| `token` | string | no | The token given by the primary to activate secondary status for this cluster. |
 
 #### Responses
 
@@ -3766,6 +4011,40 @@ Renews a lease, requesting to extend the lease.
 
 **200**: OK
 
+### POST /sys/replication/dr/secondary/generate-public-key
+
+**Operation ID:** `system-write-replication-dr-secondary-generate-public-key`
+
+#### Responses
+
+**200**: OK
+
+### GET /sys/replication/dr/secondary/license/status
+
+**Operation ID:** `system-read-replication-dr-secondary-license-status`
+
+The path responds to the following HTTP methods. GET / Returns information on the installed license POST Sets the license for the server
+
+**Available without authentication:** yes
+
+#### Responses
+
+**200**: OK
+
+### POST /sys/replication/dr/secondary/merkle-check
+
+**Operation ID:** `system-write-replication-dr-secondary-merkle-check`
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `dr_operation_token` | string | no | DR operation token used to authorize this request. |
+
+#### Responses
+
+**200**: OK
+
 ### POST /sys/replication/dr/secondary/operation-token/delete
 
 **Operation ID:** `system-write-replication-dr-secondary-operation-token-delete`
@@ -3776,7 +4055,7 @@ Renews a lease, requesting to extend the lease.
 
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
-| `data` | string | no |  |
+| `dr_operation_token` | string | no | DR operation token used to authorize this request. |
 
 #### Responses
 
@@ -3792,10 +4071,44 @@ Renews a lease, requesting to extend the lease.
 
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
-| `dr_operation_token` | string | no |  |
-| `id` | string | no |  |
-| `primary_api_addr` | string | no |  |
-| `primary_cluster_addr` | string | no |  |
+| `dr_operation_token` | string | no | DR operation token used to authorize this request. |
+| `force` | boolean | no | Set to true if the cluster should be promoted despite replication being in an error state. This could mean some data was not replicated to the secondary |
+| `primary_cluster_addr` | string | no | The address the secondary cluster should connect to. Defaults to the primary's cluster address. |
+
+#### Responses
+
+**200**: OK
+
+### POST /sys/replication/dr/secondary/recover
+
+**Operation ID:** `system-write-replication-dr-secondary-recover`
+
+**Available without authentication:** yes
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `dr_operation_token` | string | no | DR operation token used to authorize this request. |
+
+#### Responses
+
+**200**: OK
+
+### POST /sys/replication/dr/secondary/reindex
+
+**Operation ID:** `system-write-replication-dr-secondary-reindex`
+
+**Available without authentication:** yes
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `diff` | boolean | no | Enables a slower re-indexing which will perform a key level check to diagnose issues. Defaults false. |
+| `dr_operation_token` | string | no | DR operation token used to authorize this request. |
+| `force` | boolean | no | Forces a complete re-indexing which only scans data available in the storage. Defaults false. |
+| `skip_flush` | boolean | no | Skips the tree flushing stage of the reindex process. This setting can be used to reduce the amount of time the tree is locked during a reindex process. If this node is killed before the full tree has been asynchronously flushed the reindex may not have applied fully and a new reindex may need to be done. Shutting down this node cleanly will cause the tree to be flushed prior to shutdown. Defaults false. |
 
 #### Responses
 
@@ -3811,15 +4124,14 @@ Renews a lease, requesting to extend the lease.
 
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
-| `ca_cert` | string | no |  |
-| `ca_file` | string | no |  |
-| `ca_path` | string | no |  |
-| `client_cert_pem` | string | no |  |
-| `client_key_pem` | string | no |  |
-| `dr_operation_token` | string | no |  |
-| `primary_api_addr` | string | no |  |
-| `primary_cluster_addr` | string | no |  |
-| `token` | string | no |  |
+| `ca_file` | string | no | A path to a file containing a PEM-encoded CA certificate to verify the call against the primary's API address |
+| `ca_path` | string | no | A path to a directory containing PEM-encoded CA certificates to verify the call against the primary's API address |
+| `client_cert_pem` | string | no | The client certificate to use for authentication, in PEM format. Note: client authentication for this operation will always use TLS 1.2 or higher. |
+| `client_key_pem` | string | no | The client key to use for authentication, in PEM format. |
+| `dr_operation_token` | string | no | DR operation token used to authorize this request. |
+| `primary_api_addr` | string | no | The API address of the primary. If not set, the value the primary supplies in the token will be used, which is the primary's redirect address. |
+| `token` | string | no | The token given by the primary to activate secondary status for this cluster. |
+| `update_primary_addrs` | array | no | A comma separated list of host:port strings to serve as new addresses for the primary cluster |
 
 #### Responses
 
@@ -3835,19 +4147,9 @@ Renews a lease, requesting to extend the lease.
 
 **200**: OK
 
-### GET /sys/replication/merkle-check
+### POST /sys/replication/merkle-check
 
-**Operation ID:** `system-read-replication-merkle-check`
-
-#### Responses
-
-**200**: OK
-
-### GET /sys/replication/merkle-status
-
-**Operation ID:** `system-read-replication-merkle-status`
-
-**Available without authentication:** yes
+**Operation ID:** `system-write-replication-merkle-check`
 
 #### Responses
 
@@ -3869,6 +4171,20 @@ Renews a lease, requesting to extend the lease.
 
 **200**: OK
 
+### GET /sys/replication/performance/primary/dynamic-filter/{id}
+
+**Operation ID:** `system-read-replication-performance-primary-dynamic-filter-id`
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `id` | string | path | yes | The opaque identifier used to identify the secondary. |
+
+#### Responses
+
+**200**: OK
+
 ### POST /sys/replication/performance/primary/enable
 
 **Operation ID:** `system-write-replication-performance-primary-enable`
@@ -3877,9 +4193,7 @@ Renews a lease, requesting to extend the lease.
 
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
-| `id` | string | no |  |
-| `primary_api_addr` | string | no |  |
-| `primary_cluster_addr` | string | no |  |
+| `primary_cluster_addr` | string | no | The address the secondary cluster should connect to. Defaults to the primary's cluster address. |
 
 #### Responses
 
@@ -3893,7 +4207,7 @@ Renews a lease, requesting to extend the lease.
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `id` | string | path | yes |  |
+| `id` | string | path | yes | The opaque identifier used to identify the secondary. |
 
 #### Responses
 
@@ -3907,14 +4221,14 @@ Renews a lease, requesting to extend the lease.
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `id` | string | path | yes |  |
+| `id` | string | path | yes | The opaque identifier used to identify the secondary. |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
-| `mode` | string (default: deny) | no |  |
-| `paths` | array | no |  |
+| `mode` | string (default: allow) | no | The filter mode for the paths filter (allow or deny). Defaults to allow. |
+| `paths` | array | no | The paths to filter in replication. Must be a mount or a namespace. |
 
 #### Responses
 
@@ -3928,25 +4242,11 @@ Renews a lease, requesting to extend the lease.
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `id` | string | path | yes |  |
+| `id` | string | path | yes | The opaque identifier used to identify the secondary. |
 
 #### Responses
 
 **204**: empty body
-
-### GET /sys/replication/performance/primary/paths-filter/{id}/dynamic
-
-**Operation ID:** `system-read-replication-performance-primary-paths-filter-id-dynamic`
-
-#### Parameters
-
-| Parameter | Type | Location | Required | Description |
-|----------|-----|--------------|--------------|----------|
-| `id` | string | path | yes |  |
-
-#### Responses
-
-**200**: OK
 
 ### POST /sys/replication/performance/primary/revoke-secondary
 
@@ -3956,7 +4256,7 @@ Renews a lease, requesting to extend the lease.
 
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
-| `id` | string | no |  |
+| `id` | string | no | The secondary cluster ID to revoke |
 
 #### Responses
 
@@ -3972,8 +4272,9 @@ Renews a lease, requesting to extend the lease.
 
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
-| `id` | string | no |  |
-| `ttl` | integer (default: 24h) | no |  |
+| `id` | string | no | An opaque identifier that can be used to identify and revoke a secondary cluster's access later. |
+| `secondary_public_key` | string | no | A base64-encoded public key generated by the secondary cluster. |
+| `ttl` | integer (default: 30m) | no | The TTL to use for the secondary activation token. Defaults to 30 minutes. |
 
 #### Responses
 
@@ -3987,6 +4288,20 @@ Renews a lease, requesting to extend the lease.
 
 **200**: OK
 
+### GET /sys/replication/performance/secondary/dynamic-filter/{id}
+
+**Operation ID:** `system-read-replication-performance-secondary-dynamic-filter-id`
+
+#### Parameters
+
+| Parameter | Type | Location | Required | Description |
+|----------|-----|--------------|--------------|----------|
+| `id` | string | path | yes | The opaque identifier used to identify the secondary. |
+
+#### Responses
+
+**200**: OK
+
 ### POST /sys/replication/performance/secondary/enable
 
 **Operation ID:** `system-write-replication-performance-secondary-enable`
@@ -3995,13 +4310,20 @@ Renews a lease, requesting to extend the lease.
 
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
-| `ca_cert` | string | no |  |
-| `ca_file` | string | no |  |
-| `ca_path` | string | no |  |
-| `client_cert_pem` | string | no |  |
-| `client_key_pem` | string | no |  |
-| `primary_api_addr` | string | no |  |
-| `token` | string | no |  |
+| `ca_file` | string | no | A path to a file containing a PEM-encoded CA certificate to verify the call against the primary's API address |
+| `ca_path` | string | no | A path to a directory containing PEM-encoded CA certificates to verify the call against the primary's API address |
+| `client_cert_pem` | string | no | The client certificate to use for authentication, in PEM format. Note: client authentication for this operation will always use TLS 1.2 or higher. |
+| `client_key_pem` | string | no | The client key to use for authentication, in PEM format. |
+| `primary_api_addr` | string | no | The API address of the primary. If not set, the value the primary supplies in the token will be used, which is the primary's redirect address. |
+| `token` | string | no | The token given by the primary to activate secondary status for this cluster. |
+
+#### Responses
+
+**200**: OK
+
+### POST /sys/replication/performance/secondary/generate-public-key
+
+**Operation ID:** `system-write-replication-performance-secondary-generate-public-key`
 
 #### Responses
 
@@ -4015,9 +4337,8 @@ Renews a lease, requesting to extend the lease.
 
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
-| `id` | string | no |  |
-| `primary_api_addr` | string | no |  |
-| `primary_cluster_addr` | string | no |  |
+| `force` | boolean | no | Set to true if the cluster should be promoted despite replication being in an error state. This could mean some data was not replicated to the secondary |
+| `primary_cluster_addr` | string | no | The address the secondary cluster should connect to. Defaults to the primary's cluster address. |
 
 #### Responses
 
@@ -4031,14 +4352,13 @@ Renews a lease, requesting to extend the lease.
 
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
-| `ca_cert` | string | no |  |
-| `ca_file` | string | no |  |
-| `ca_path` | string | no |  |
-| `client_cert_pem` | string | no |  |
-| `client_key_pem` | string | no |  |
-| `primary_api_addr` | string | no |  |
-| `primary_cluster_addr` | string | no |  |
-| `token` | string | no |  |
+| `ca_file` | string | no | A path to a file containing a PEM-encoded CA certificate to verify the call against the primary's API address |
+| `ca_path` | string | no | A path to a directory containing PEM-encoded CA certificates to verify the call against the primary's API address |
+| `client_cert_pem` | string | no | The client certificate to use for authentication, in PEM format. Note: client authentication for this operation will always use TLS 1.2 or higher. |
+| `client_key_pem` | string | no | The client key to use for authentication, in PEM format. |
+| `primary_api_addr` | string | no | The API address of the primary. If not set, the value the primary supplies in the token will be used, which is the primary's redirect address. |
+| `token` | string | no | The token given by the primary to activate secondary status for this cluster. |
+| `update_primary_addrs` | array | no | A comma separated list of host:port strings to serve as new addresses for the primary cluster |
 
 #### Responses
 
@@ -4049,6 +4369,68 @@ Renews a lease, requesting to extend the lease.
 **Operation ID:** `system-read-replication-performance-status`
 
 **Available without authentication:** yes
+
+#### Responses
+
+**200**: OK
+
+### POST /sys/replication/primary/demote
+
+**Operation ID:** `system-write-replication-primary-demote`
+
+#### Responses
+
+**200**: OK
+
+### POST /sys/replication/primary/disable
+
+**Operation ID:** `system-write-replication-primary-disable`
+
+#### Responses
+
+**200**: OK
+
+### POST /sys/replication/primary/enable
+
+**Operation ID:** `system-write-replication-primary-enable`
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `primary_cluster_addr` | string | no | The address the secondary cluster should connect to. Defaults to the primary's cluster address. |
+
+#### Responses
+
+**200**: OK
+
+### POST /sys/replication/primary/revoke-secondary
+
+**Operation ID:** `system-write-replication-primary-revoke-secondary`
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `id` | string | no | The secondary cluster ID to revoke |
+
+#### Responses
+
+**200**: OK
+
+### POST /sys/replication/primary/secondary-token
+
+**Operation ID:** `system-write-replication-primary-secondary-token`
+
+**Required sudo:** yes
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `id` | string | no | An opaque identifier that can be used to identify and revoke a secondary cluster's access later. |
+| `secondary_public_key` | string | no | A base64-encoded public key generated by the secondary cluster. |
+| `ttl` | integer (default: 30m) | no | The TTL to use for the secondary activation token. Defaults to 30 minutes. |
 
 #### Responses
 
@@ -4072,9 +4454,70 @@ Renews a lease, requesting to extend the lease.
 
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
-| `diagnose_only` | boolean | no |  |
-| `force_reindex` | boolean | no |  |
-| `replay_wals` | boolean | no |  |
+| `diff` | boolean | no | Enables a slower re-indexing which will perform a key level check to diagnose issues. Defaults false. |
+| `force` | boolean | no | Forces a complete re-indexing which only scans data available in the storage. Defaults false. |
+| `skip_flush` | boolean | no | Skips the tree flushing stage of the reindex process. This setting can be used to reduce the amount of time the tree is locked during a reindex process. If this node is killed before the full tree has been asynchronously flushed the reindex may not have applied fully and a new reindex may need to be done. Shutting down this node cleanly will cause the tree to be flushed prior to shutdown. Defaults false. |
+
+#### Responses
+
+**200**: OK
+
+### POST /sys/replication/secondary/disable
+
+**Operation ID:** `system-write-replication-secondary-disable`
+
+#### Responses
+
+**200**: OK
+
+### POST /sys/replication/secondary/enable
+
+**Operation ID:** `system-write-replication-secondary-enable`
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `ca_file` | string | no | A path to a file containing a PEM-encoded CA certificate to verify the call against the primary's API address |
+| `ca_path` | string | no | A path to a directory containing PEM-encoded CA certificates to verify the call against the primary's API address |
+| `client_cert_pem` | string | no | The client certificate to use for authentication, in PEM format. Note: client authentication for this operation will always use TLS 1.2 or higher. |
+| `client_key_pem` | string | no | The client key to use for authentication, in PEM format. |
+| `primary_api_addr` | string | no | The API address of the primary. If not set, the value the primary supplies in the token will be used, which is the primary's redirect address. |
+| `token` | string | no | The token given by the primary to activate secondary status for this cluster. |
+
+#### Responses
+
+**200**: OK
+
+### POST /sys/replication/secondary/promote
+
+**Operation ID:** `system-write-replication-secondary-promote`
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `force` | boolean | no | Set to true if the cluster should be promoted despite replication being in an error state. This could mean some data was not replicated to the secondary |
+| `primary_cluster_addr` | string | no | The address the secondary cluster should connect to. Defaults to the primary's cluster address. |
+
+#### Responses
+
+**200**: OK
+
+### POST /sys/replication/secondary/update-primary
+
+**Operation ID:** `system-write-replication-secondary-update-primary`
+
+#### Request body parameters
+
+| Parameter | Type | Required | Description |
+|----------|-----|--------------|----------|
+| `ca_file` | string | no | A path to a file containing a PEM-encoded CA certificate to verify the call against the primary's API address |
+| `ca_path` | string | no | A path to a directory containing PEM-encoded CA certificates to verify the call against the primary's API address |
+| `client_cert_pem` | string | no | The client certificate to use for authentication, in PEM format. Note: client authentication for this operation will always use TLS 1.2 or higher. |
+| `client_key_pem` | string | no | The client key to use for authentication, in PEM format. |
+| `primary_api_addr` | string | no | The API address of the primary. If not set, the value the primary supplies in the token will be used, which is the primary's redirect address. |
+| `token` | string | no | The token given by the primary to activate secondary status for this cluster. |
 
 #### Responses
 
@@ -4225,8 +4668,6 @@ Configures settings related to the backend encryption key management.
 
 Seal the Stronghold.
 
-**Required sudo:** yes
-
 #### Responses
 
 **204**: OK
@@ -4266,6 +4707,8 @@ Check the seal status of a Stronghold.
 
 **Operation ID:** `system-read-sealwrap-rewrap`
 
+Retrieve the state of any ongoing seal rewrap process
+
 #### Responses
 
 **200**: OK
@@ -4273,6 +4716,8 @@ Check the seal status of a Stronghold.
 ### POST /sys/sealwrap/rewrap
 
 **Operation ID:** `system-write-sealwrap-rewrap`
+
+Start a seal rewrap process
 
 #### Responses
 
@@ -4283,8 +4728,6 @@ Check the seal status of a Stronghold.
 **Operation ID:** `step-down-leader`
 
 Cause the node to give up active status.
-
-**Required sudo:** yes
 
 #### Responses
 
@@ -4402,12 +4845,13 @@ Returns the configuration of the raft cluster in a DR secondary cluster.
 
 **Operation ID:** `system-write-storage-raft-demote`
 
-Demotes a voter to a permanent non-voter.
+Demotes a voter to a non-voter.
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
+| `force` | boolean | no | Demote the server even if the remaining voters would be fewer than min_quorum or would not tolerate a voter failure. |
 | `server_id` | string | no |  |
 
 #### Responses
@@ -4418,7 +4862,7 @@ Demotes a voter to a permanent non-voter.
 
 **Operation ID:** `system-write-storage-raft-promote`
 
-Promotes a permanent non-voter to a voter.
+Promotes a non-voter to a voter.
 
 #### Request body parameters
 
@@ -4451,7 +4895,7 @@ Remove a peer from the raft cluster.
 
 **Operation ID:** `system-read-storage-raft-snapshot`
 
-Returns a snapshot of the current state of vault.
+Returns a snapshot of the current state of stronghold.
 
 #### Responses
 
@@ -4467,11 +4911,13 @@ Installs the provided snapshot, returning the cluster to the state defined in it
 
 **200**: OK
 
-### GET /sys/storage/raft/snapshot-auto/config
+### GET /sys/storage/raft/snapshot-auto/config/
 
 **Operation ID:** `system-list-storage-raft-snapshot-auto-config`
 
-Lists all automatic snapshot configuration names.
+List automated raft snapshot configurations
+
+**Required sudo:** yes
 
 #### Parameters
 
@@ -4487,7 +4933,7 @@ Lists all automatic snapshot configuration names.
 
 **Operation ID:** `system-read-storage-raft-snapshot-auto-config-name`
 
-Gets the configuration of the automatic snapshot.
+Read automated raft snapshot configuration
 
 **Required sudo:** yes
 
@@ -4495,7 +4941,7 @@ Gets the configuration of the automatic snapshot.
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `name` | string | path | yes | Name of the configuration to modify. |
+| `name` | string | path | yes | name of configuration to update |
 
 #### Responses
 
@@ -4505,37 +4951,46 @@ Gets the configuration of the automatic snapshot.
 
 **Operation ID:** `system-write-storage-raft-snapshot-auto-config-name`
 
-Updates the configuration of the automatic snapshot.
+Update automated raft snapshot configuration
 
 **Required sudo:** yes
-
-**Creation supported:** yes
 
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `name` | string | path | yes | Name of the configuration to modify. |
+| `name` | string | path | yes | name of configuration to update |
 
 #### Request body parameters
 
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
-| `aws_access_key_id` | string | no | S3 access key ID. |
-| `aws_s3_bucket` | string | yes | S3 bucket to write snapshots to. |
-| `aws_s3_ca_certificate` | string (default: ) | no | S3 CA certificate PEM. |
-| `aws_s3_disable_tls` | boolean (default: False) | no | Disable TLS for the S3 endpoint. This should only be used for testing purposes, typically in conjunction with `aws_s3_endpoint`. |
-| `aws_s3_endpoint` | string | no | S3 endpoint. |
-| `aws_s3_region` | string (default: ) | no | S3 region bucket is in. |
-| `aws_secret_access_key` | string | no | S3 secret access key. |
-| `file_prefix` | string (default: stronghold-snapshot) | no | Within the directory or bucket prefix given by `path_prefix`, the file or object name of snapshot files will start with this string. |
-| `interval` | integer | yes | Time between snapshots. Must be at least 3m. Accepts an integer number of seconds or a duration string. Duration strings may combine Go duration units ns, us/µs, ms, s, m, and h, for example 15m, 1h, 1h30m, or 24h3m. A standalone day value such as 1d is also accepted; combine days with smaller units by using equivalent hours, for example 24h3m. |
-| `local_max_space` | integer (default: 0) | yes | For `storage_type=local`, the maximum space, in bytes, to use for all snapshots with the given `file_prefix` in the `path_prefix` directory. Snapshot attempts will fail if there is not enough space left in this allowance. Value `0` disables limit. |
-| `path_prefix` | string | yes | For `storage_type=local`, the directory to write the snapshots in. For cloud storage types, the bucket prefix to use, also leading `/` is ignored. The trailing `/` is optional. |
-| `retain` | integer (default: 3) | no | How many snapshots are to be kept; when writing a snapshot, if there are more snapshots already stored than this number, the oldest ones will be deleted. |
-| `retry_enabled` | boolean (default: False) | no | Enable retry for failed S3 uploads. Only applicable when `storage_type=aws-s3`. |
-| `retry_max_attempts` | integer (default: 5) | no | Maximum number of retry attempts for failed S3 uploads. Backoff schedule: 1m, 5m, 15m, then 30m. Only applicable when `storage_type=aws-s3`. |
-| `storage_type` | string (local, aws-s3) | yes | One of "local" or "aws-s3". The remaining parameters described below are all specific to the selected `storage_type` and prefixed accordingly. |
+| `aws_access_key_id` | string | no | AWS access key ID |
+| `aws_s3_bucket` | string | no | AWS bucket |
+| `aws_s3_ca_certificate` | string | no | PEM-encoded CA certificate used to verify the TLS certificate of the S3 endpoint |
+| `aws_s3_disable_tls` | boolean | no | Disable TLS for the AWS endpoint, intended only for testing |
+| `aws_s3_enable_kms` | boolean | no | Use KMS to encrypt bucket contents |
+| `aws_s3_endpoint` | string | no | AWS endpoint, typically only set when using a non-AWS S3 instance like Minio |
+| `aws_s3_kms_key` | string | no | Use named KMS key |
+| `aws_s3_region` | string | no | AWS region |
+| `aws_s3_server_side_encryption` | boolean | no | Use AES256 to encrypt bucket contents |
+| `aws_secret_access_key` | string | no | AWS secret access key |
+| `aws_session_token` | string | no | AWS session token |
+| `azure_account_key` | string | no | Azure account key |
+| `azure_account_name` | string | no | Azure account name |
+| `azure_blob_environment` | string (default: AZUREPUBLICCLOUD) | no | Azure blob environment |
+| `azure_container_name` | string | no | Azure container name |
+| `azure_endpoint` | string | no | Azure blob storage endpoint |
+| `file_prefix` | string (default: stronghold-snapshot) | no | file/object prefix prepended to snapshot ID |
+| `google_disable_tls` | boolean | no | Disable TLS, normally only for testing |
+| `google_endpoint` | string | no | GCS endpoint |
+| `google_gcs_bucket` | string | no | GCS bucket |
+| `google_service_account_key` | string | no | Service account key in JSON format |
+| `interval` | integer (default: 3600000000000) | no | snapshot schedule |
+| `local_max_space` | integer | no | max space on disk to use for snapshots |
+| `path_prefix` | string | no | directory (local) or bucket prefix (cloud) for snapshot |
+| `retain` | integer (default: 1) | no | how many snapshots to keep |
+| `storage_type` | string (local, aws-s3) | no | type of storage to use for the snapshots |
 
 #### Responses
 
@@ -4545,7 +5000,7 @@ Updates the configuration of the automatic snapshot.
 
 **Operation ID:** `system-delete-storage-raft-snapshot-auto-config-name`
 
-Deletes the configuration of the automatic snapshot.
+Delete automated raft snapshot configuration
 
 **Required sudo:** yes
 
@@ -4553,7 +5008,7 @@ Deletes the configuration of the automatic snapshot.
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `name` | string | path | yes | Name of the configuration to modify. |
+| `name` | string | path | yes | name of configuration to update |
 
 #### Responses
 
@@ -4563,13 +5018,13 @@ Deletes the configuration of the automatic snapshot.
 
 **Operation ID:** `system-read-storage-raft-snapshot-auto-status-name`
 
-Shows the status of the automatic snapshot.
+Read status of automated raft snapshots
 
 #### Parameters
 
 | Parameter | Type | Location | Required | Description |
 |----------|-----|--------------|--------------|----------|
-| `name` | string | path | yes | Name of the status to get. |
+| `name` | string | path | yes | name of configuration to update |
 
 #### Responses
 
