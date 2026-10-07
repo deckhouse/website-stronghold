@@ -2049,7 +2049,7 @@ Configures the JWT Public Key and Kubernetes API information.
 | `kubernetes_host` | string | no | Host must be a host string, a host:port pair, or a URL to the base of the Kubernetes API server. |
 | `pem_keys` | array | no | Optional list of PEM-formated public keys or certificates used to verify the signatures of kubernetes service account JWTs. If a certificate is given, its public key will be extracted. Not every installation of Kubernetes exposes these keys. |
 | `token_reviewer_jwt` | string | no | A service account JWT (or other token) used as a bearer token to access the TokenReview API to validate other JWTs during login. If not set the JWT used for login will be used to access the API. |
-| `use_annotations_as_alias_metadata` | boolean (default: False) | no | Use annotations from the client token's associated service account as alias metadata for the Stronghold entity. Only annotations with the prefix "stronghold.hashicorp.com/alias-metadata-" will be used. Note that Stronghold will need permission to read service accounts from the Kubernetes API. |
+| `use_annotations_as_alias_metadata` | boolean (default: False) | no | Use annotations from the client token's associated service account as alias metadata for the Stronghold entity. Only annotations with the prefix "vault.hashicorp.com/alias-metadata-" will be used. Note that Stronghold will need permission to read service accounts from the Kubernetes API. |
 
 #### Responses
 
@@ -2133,7 +2133,7 @@ Register an role with the backend.
 
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
-| `alias_name_source` | string (default: serviceaccount_uid) | no | Source to use when deriving the Alias name. valid choices: "serviceaccount_uid" : <token.uid> e.g. 474b11b5-0f20-4f9d-8ca5-65715ab325e0 (most secure choice) "serviceaccount_name" : <namespace>/<serviceaccount> e.g. stronghold/stronghold-agent default: "serviceaccount_uid" |
+| `alias_name_source` | string (default: serviceaccount_uid) | no | Source to use when deriving the Alias name. valid choices: "serviceaccount_uid" : <token.uid> e.g. 474b11b5-0f20-4f9d-8ca5-65715ab325e0 (most secure choice) "serviceaccount_name" : <namespace>/<serviceaccount> e.g. vault/vault-agent default: "serviceaccount_uid" |
 | `audience` | string | no | Optional Audience claim to verify in the jwt. |
 | `bound_cidrs` | array | no | ⚠️ Deprecated. Use "token_bound_cidrs" instead. If this and "token_bound_cidrs" are both specified, only "token_bound_cidrs" will be used. |
 | `bound_service_account_names` | array | no | List of service account names able to access this role. If set to "*" all names are allowed. |
