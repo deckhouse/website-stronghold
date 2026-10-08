@@ -4895,7 +4895,7 @@ Remove a peer from the raft cluster.
 
 **Operation ID:** `system-read-storage-raft-snapshot`
 
-Returns a snapshot of the current state of vault.
+Returns a snapshot of the current state of stronghold.
 
 #### Responses
 
