@@ -28,7 +28,6 @@ The administrator guide includes the following sections:
 
 - Replication
   - ["Overview"](./replication/overview/): Native Performance and DR replication between Stronghold clusters.
-  - ["Architecture: CE and EE"](./replication/architecture/): Node layers and how their order shapes replication behavior.
   - ["Performance replication"](./replication/performance/): Read scaling, secondary setup, and path filters.
   - ["Disaster recovery"](./replication/disaster-recovery/): Hot standby, failover, and the promote ceremony.
   - ["Performance standby"](./replication/performance-standby/): Serving reads from non-active HA nodes within a cluster.

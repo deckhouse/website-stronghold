@@ -1,7 +1,7 @@
 ---
-title: "Архитектура: Stronghold и Stronghold EE"
-linkTitle: "Архитектура"
-weight: 12
+title: "Архитектура репликации: Stronghold и Stronghold EE"
+linkTitle: "Архитектура репликации"
+weight: 30
 description: "Слои узла Stronghold, различия базового Stronghold и Stronghold EE и как порядок слоёв определяет поведение репликации."
 ---
 
@@ -27,7 +27,7 @@ description: "Слои узла Stronghold, различия базового St
 
 ### Узел Stronghold
 
-![Слои узла Stronghold](../../../../images/stronghold-node-ce.png "Узел Stronghold: API → Security Barrier → Raft → Physical storage")
+![Слои узла Stronghold](../../../images/stronghold-node-ce.png "Узел Stronghold: API → Security Barrier → Raft → Physical storage")
 
 _Условные обозначения — в разделе [Обозначения на схемах](#обозначения-на-схемах)._
 
@@ -42,7 +42,7 @@ _Условные обозначения — в разделе [Обозначе
 
 ### Узел Stronghold EE
 
-![Слои узла Stronghold EE](../../../../images/stronghold-node-ee.png "Узел Stronghold EE: API → Barrier → WAL Backend → Raft → Sealwrap → Physical storage")
+![Слои узла Stronghold EE](../../../images/stronghold-node-ee.png "Узел Stronghold EE: API → Barrier → WAL Backend → Raft → Sealwrap → Physical storage")
 
 _Условные обозначения — в разделе [Обозначения на схемах](#обозначения-на-схемах)._
 
@@ -81,7 +81,7 @@ Stronghold EE добавляет два слоя, и важно, **где име
 
 ### HA-кластер (Stronghold)
 
-![HA-кластер Stronghold](../../../../images/stronghold-cluster-ha-ce.png "HA-кластер Stronghold: активный узел и standby, синхронизация по Raft")
+![HA-кластер Stronghold](../../../images/stronghold-cluster-ha-ce.png "HA-кластер Stronghold: активный узел и standby, синхронизация по Raft")
 
 _Условные обозначения — в разделе [Обозначения на схемах](#обозначения-на-схемах)._
 
@@ -89,13 +89,13 @@ _Условные обозначения — в разделе [Обозначе
 
 ### Performance standby (Stronghold EE)
 
-![Performance standby кластер Stronghold EE](../../../../images/stronghold-cluster-perf-standby-ee.png "Кластер Stronghold EE: performance standby и WAL streaming, внешний Sealwrapper")
+![Performance standby кластер Stronghold EE](../../../images/stronghold-cluster-perf-standby-ee.png "Кластер Stronghold EE: performance standby и WAL streaming, внешний Sealwrapper")
 
 _Условные обозначения — в разделе [Обозначения на схемах](#обозначения-на-схемах)._
 
 Тот же HA-кластер, но в Stronghold EE standby-узлы работают как performance standby: чтения они обслуживают локально, а запись перенаправляют на активный узел (Forward only Write). Чтобы standby отдавали свежие данные, активный узел стримит им события журнала (синие стрелки `WAL`). Так как WAL Backend ниже барьера, эти события несут уже зашифрованные данные. Seal у кластера по-прежнему один — общий внешний `Sealwrapper`.
 
-Подробнее — на странице [Performance standby](../performance-standby/).
+Подробнее — на странице [Performance standby](../../admin/replication/performance-standby/).
 
 ## Кластеры между собой
 
@@ -103,19 +103,19 @@ _Условные обозначения — в разделе [Обозначе
 
 ### Performance
 
-![Performance: primary → secondary](../../../../images/stronghold-clusters-performance.png "Performance-репликация: filtered WAL; у primary и secondary свои Sealwrapper (1 и 2)")
+![Performance: primary → secondary](../../../images/stronghold-clusters-performance.png "Performance-репликация: filtered WAL; у primary и secondary свои Sealwrapper (1 и 2)")
 
 _Условные обозначения — в разделе [Обозначения на схемах](#обозначения-на-схемах)._
 
-Primary стримит на secondary только нелокальные данные — на схеме это отфильтрованный журнал `filtered WAL`. Локальные маунты и данные остаются на каждом кластере и не покидают его. Secondary обслуживает чтения локально, а записи перенаправляет на primary. Secondary-кластеров может быть несколько — primary раздаёт поток всем. Отдельному secondary можно ограничить набор реплицируемых данных [фильтрами путей](../performance/#фильтры-путей). У primary и secondary — свой seal (`Sealwrapper 1` и `Sealwrapper 2`).
+Primary стримит на secondary только нелокальные данные — на схеме это отфильтрованный журнал `filtered WAL`. Локальные маунты и данные остаются на каждом кластере и не покидают его. Secondary обслуживает чтения локально, а записи перенаправляет на primary. Secondary-кластеров может быть несколько — primary раздаёт поток всем. Отдельному secondary можно ограничить набор реплицируемых данных [фильтрами путей](../../admin/replication/performance/#фильтры-путей). У primary и secondary — свой seal (`Sealwrapper 1` и `Sealwrapper 2`).
 
 ### Disaster Recovery
 
-![Disaster Recovery: primary → secondary](../../../../images/stronghold-clusters-dr.png "DR-репликация: WAL (все данные); у primary и secondary свои Sealwrapper (1 и 2)")
+![Disaster Recovery: primary → secondary](../../../images/stronghold-clusters-dr.png "DR-репликация: WAL (все данные); у primary и secondary свои Sealwrapper (1 и 2)")
 
 _Условные обозначения — в разделе [Обозначения на схемах](#обозначения-на-схемах)._
 
-DR копирует всё, включая локальные данные — на схеме это `WAL`. Secondary — полная копия primary, но клиентов он не обслуживает и ждёт promote (`Promote Request`). При отказе primary secondary повышают (promote), и он берёт нагрузку на себя. Порядок promote и возврата прежнего primary — на странице [Disaster recovery](../disaster-recovery/). У primary и secondary — свой seal (`Sealwrapper 1` и `Sealwrapper 2`).
+DR копирует всё, включая локальные данные — на схеме это `WAL`. Secondary — полная копия primary, но клиентов он не обслуживает и ждёт promote (`Promote Request`). При отказе primary secondary повышают (promote), и он берёт нагрузку на себя. Порядок promote и возврата прежнего primary — на странице [Disaster recovery](../../admin/replication/disaster-recovery/). У primary и secondary — свой seal (`Sealwrapper 1` и `Sealwrapper 2`).
 
 ### Почему seal может отличаться на кластерах
 
@@ -125,11 +125,11 @@ DR копирует всё, включая локальные данные — �
 - primary и secondary могут использовать даже разный тип seal (например, разные KMS);
 - seal wrap настраивается на каждом кластере отдельно и не зависит от репликации.
 
-Подробнее — на странице [seal wrap](../../kms-hsm/sealwrap/). Что именно реплицируется в каждом режиме — на странице [Обзор репликации](overview/).
+Подробнее — на странице [seal wrap](../../admin/kms-hsm/sealwrap/). Что именно реплицируется в каждом режиме — на странице [Обзор репликации](../../admin/replication/overview/).
 
 ## KV-репликация (на уровне API)
 
-![Узел Stronghold EE с KV-репликацией](../../../../images/stronghold-node-kv-replication.png "KV-репликация: KV replicator в слое Stronghold API, синхронизация по API")
+![Узел Stronghold EE с KV-репликацией](../../../images/stronghold-node-kv-replication.png "KV-репликация: KV replicator в слое Stronghold API, синхронизация по API")
 
 _Условные обозначения — в разделе [Обозначения на схемах](#обозначения-на-схемах)._
 
@@ -146,7 +146,7 @@ KV-репликация стоит особняком от межкластер�
 
 KV-репликация — независимый оверлей: она не связана с seal, WAL и межкластерной репликацией и настраивается отдельно по каждому маунту.
 
-Подробнее — на странице [Репликация KV1/KV2](../kv-replication/).
+Подробнее — на странице [Репликация KV1/KV2](../../admin/replication/kv-replication/).
 
 ## Комбинированные топологии
 
@@ -158,19 +158,19 @@ KV-репликация — независимый оверлей: она не �
 
 Ниже — несколько примеров таких комбинаций. Размер (HA или один узел) выбирается для каждого кластера отдельно, KV-репликацию можно навесить на любой кластер, кроме DR secondary, а seal у каждого кластера свой — поэтому seal wrap в топологии может быть настроен по-разному: где-то у каждого кластера свой seal, где-то один и тот же, а где-то его нет вовсе (`disable_sealwrap`).
 
-![Комбинированная топология: одноузловой primary, KV-репликация и разные seal](../../../../images/stronghold-topology-combined-1.png "Одноузловой DR+Performance primary, HA-secondary, KV-репликация в primary; у каждого кластера свой Sealwrapper")
+![Комбинированная топология: одноузловой primary, KV-репликация и разные seal](../../../images/stronghold-topology-combined-1.png "Одноузловой DR+Performance primary, HA-secondary, KV-репликация в primary; у каждого кластера свой Sealwrapper")
 
 _Условные обозначения — в разделе [Обозначения на схемах](#обозначения-на-схемах)._
 
 Primary одновременно DR- и Performance-primary и состоит из одного узла; оба secondary — HA-кластеры, а отдельный кластер подаёт данные в primary по KV-репликации. Seal у каждого кластера свой — `Sealwrapper 1`…`4` в этой топологии все разные.
 
-![Комбинированная топология: HA-primary, KV в performance-secondary и разные seal](../../../../images/stronghold-topology-combined-2.png "HA-primary с perf standby, HA-secondary, KV-репликация в performance-secondary; у кластеров разные Sealwrapper")
+![Комбинированная топология: HA-primary, KV в performance-secondary и разные seal](../../../images/stronghold-topology-combined-2.png "HA-primary с perf standby, HA-secondary, KV-репликация в performance-secondary; у кластеров разные Sealwrapper")
 
 _Условные обозначения — в разделе [Обозначения на схемах](#обозначения-на-схемах)._
 
 Тот же комбинированный primary, но HA с performance standby; оба secondary — тоже HA-кластеры. KV-репликация подключена к performance-secondary — то есть навесить её можно не только на primary. Seal у кластеров разный — `Sealwrapper 1` и `Sealwrapper 2`, а у primary кластера слой дополнительного Seal отсутствует.
 
-![Комбинированная топология: HA-primary, одноузловые secondary и общий seal](../../../../images/stronghold-topology-combined-3.png "HA-primary с perf standby, одноузловые secondary, единый Sealwrapper 1, без KV")
+![Комбинированная топология: HA-primary, одноузловые secondary и общий seal](../../../images/stronghold-topology-combined-3.png "HA-primary с perf standby, одноузловые secondary, единый Sealwrapper 1, без KV")
 
 _Условные обозначения — в разделе [Обозначения на схемах](#обозначения-на-схемах)._
 

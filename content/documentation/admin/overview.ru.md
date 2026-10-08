@@ -28,7 +28,6 @@ weight: 10
 
 - Репликация
   - [«Обзор»](./replication/overview/) — нативная репликация Performance и DR между кластерами Stronghold;
-  - [«Архитектура: CE и EE»](./replication/architecture/) — слои узла и как их порядок определяет поведение репликации;
   - [«Репликация Performance»](./replication/performance/) — масштабирование чтений, настройка secondary и фильтры путей;
   - [«Disaster recovery»](./replication/disaster-recovery/) — горячий резерв, аварийное переключение и церемония promote;
   - [«Performance standby»](./replication/performance-standby/) — чтения на неактивных HA-узлах внутри кластера;
