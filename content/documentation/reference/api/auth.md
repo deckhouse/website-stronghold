@@ -1887,7 +1887,7 @@ Configure the LDAP server to connect to, along with its options.
 | `token_type` | string (default: default-service) | no | The type of token to generate, service or batch |
 | `upndomain` | string | no | Enables userPrincipalDomain login with [username]@UPNDomain (optional) |
 | `url` | string (default: ldap://127.0.0.1) | no | LDAP URL to connect to (default: ldap://127.0.0.1). Multiple URLs can be specified by concatenating them with commas; they will be tried in-order. |
-| `use_pre111_group_cn_behavior` | boolean | no | In Stronghold 1.1.1 a fix for handling group CN values of different cases unfortunately introduced a regression that could cause previously defined groups to not be found due to a change in the resulting name. If set true, the pre-1.1.1 behavior for matching group CNs will be used. This is only needed in some upgrade scenarios for backwards compatibility. It is enabled by default if the config is upgraded but disabled by default on new configurations. |
+| `use_pre111_group_cn_behavior` | boolean | no | In Vault 1.1.1 a fix for handling group CN values of different cases unfortunately introduced a regression that could cause previously defined groups to not be found due to a change in the resulting name. If set true, the pre-1.1.1 behavior for matching group CNs will be used. This is only needed in some upgrade scenarios for backwards compatibility. It is enabled by default if the config is upgraded but disabled by default on new configurations. |
 | `use_token_groups` | boolean (default: False) | no | If true, use the Active Directory tokenGroups constructed attribute of the user to find the group memberships. This will find all security groups including nested ones. |
 | `userattr` | string (default: cn) | no | Attribute used for users (default: cn) |
 | `userdn` | string | no | LDAP domain to use for users (eg: ou=People,dc=example,dc=org) |
@@ -2133,7 +2133,7 @@ Register an role with the backend.
 
 | Parameter | Type | Required | Description |
 |----------|-----|--------------|----------|
-| `alias_name_source` | string (default: serviceaccount_uid) | no | Source to use when deriving the Alias name. valid choices: "serviceaccount_uid" : <token.uid> e.g. 474b11b5-0f20-4f9d-8ca5-65715ab325e0 (most secure choice) "serviceaccount_name" : <namespace>/<serviceaccount> e.g. vault/vault-agent default: "serviceaccount_uid" |
+| `alias_name_source` | string (default: serviceaccount_uid) | no | Source to use when deriving the Alias name. valid choices: "serviceaccount_uid" : <token.uid> e.g. 474b11b5-0f20-4f9d-8ca5-65715ab325e0 (most secure choice) "serviceaccount_name" : <namespace>/<serviceaccount> e.g. stronghold/stronghold-agent default: "serviceaccount_uid" |
 | `audience` | string | no | Optional Audience claim to verify in the jwt. |
 | `bound_cidrs` | array | no | ⚠️ Deprecated. Use "token_bound_cidrs" instead. If this and "token_bound_cidrs" are both specified, only "token_bound_cidrs" will be used. |
 | `bound_service_account_names` | array | no | List of service account names able to access this role. If set to "*" all names are allowed. |
@@ -2239,7 +2239,7 @@ Configure the LDAP server to connect to, along with its options.
 | `token_type` | string (default: default-service) | no | The type of token to generate, service or batch |
 | `upndomain` | string | no | Enables userPrincipalDomain login with [username]@UPNDomain (optional) |
 | `url` | string (default: ldap://127.0.0.1) | no | LDAP URL to connect to (default: ldap://127.0.0.1). Multiple URLs can be specified by concatenating them with commas; they will be tried in-order. |
-| `use_pre111_group_cn_behavior` | boolean | no | In Stronghold 1.1.1 a fix for handling group CN values of different cases unfortunately introduced a regression that could cause previously defined groups to not be found due to a change in the resulting name. If set true, the pre-1.1.1 behavior for matching group CNs will be used. This is only needed in some upgrade scenarios for backwards compatibility. It is enabled by default if the config is upgraded but disabled by default on new configurations. |
+| `use_pre111_group_cn_behavior` | boolean | no | In Vault 1.1.1 a fix for handling group CN values of different cases unfortunately introduced a regression that could cause previously defined groups to not be found due to a change in the resulting name. If set true, the pre-1.1.1 behavior for matching group CNs will be used. This is only needed in some upgrade scenarios for backwards compatibility. It is enabled by default if the config is upgraded but disabled by default on new configurations. |
 | `use_token_groups` | boolean (default: False) | no | If true, use the Active Directory tokenGroups constructed attribute of the user to find the group memberships. This will find all security groups including nested ones. |
 | `userattr` | string (default: cn) | no | Attribute used for users (default: cn) |
 | `userdn` | string | no | LDAP domain to use for users (eg: ou=People,dc=example,dc=org) |
