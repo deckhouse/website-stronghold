@@ -1,7 +1,7 @@
 ---
-title: "Architecture: Stronghold and Stronghold EE"
-linkTitle: "Architecture"
-weight: 12
+title: "Replication architecture: Stronghold and Stronghold EE"
+linkTitle: "Replication architecture"
+weight: 30
 description: "Stronghold node layers, the difference between Stronghold and Stronghold EE, and how the layer order shapes replication behavior."
 ---
 
@@ -27,7 +27,7 @@ A request passes through the node layers top to bottom. The key point is the **o
 
 ### Stronghold node
 
-![Stronghold node layers](../../../../images/stronghold-node-ce.png "Stronghold node: API → Security Barrier → Raft → Physical storage")
+![Stronghold node layers](../../../images/stronghold-node-ce.png "Stronghold node: API → Security Barrier → Raft → Physical storage")
 
 _See the [Legend](#legend) for the diagram notation._
 
@@ -42,7 +42,7 @@ Base Stronghold has neither a WAL Backend nor seal wrap. That is why such a clus
 
 ### Stronghold EE node
 
-![Stronghold EE node layers](../../../../images/stronghold-node-ee.png "Stronghold EE node: API → Barrier → WAL Backend → Raft → Sealwrap → Physical storage")
+![Stronghold EE node layers](../../../images/stronghold-node-ee.png "Stronghold EE node: API → Barrier → WAL Backend → Raft → Sealwrap → Physical storage")
 
 _See the [Legend](#legend) for the diagram notation._
 
@@ -81,7 +81,7 @@ Several nodes form a cluster on top of shared Raft storage: one node is active, 
 
 ### HA cluster (Stronghold)
 
-![Stronghold HA cluster](../../../../images/stronghold-cluster-ha-ce.png "Stronghold HA cluster: active node and standby, Raft sync")
+![Stronghold HA cluster](../../../images/stronghold-cluster-ha-ce.png "Stronghold HA cluster: active node and standby, Raft sync")
 
 _See the [Legend](#legend) for the diagram notation._
 
@@ -89,13 +89,13 @@ The client reads from and writes to the active node (green R/W). In base Strongh
 
 ### Performance standby (Stronghold EE)
 
-![Stronghold EE performance standby cluster](../../../../images/stronghold-cluster-perf-standby-ee.png "Stronghold EE cluster: performance standby and WAL streaming, external Sealwrapper")
+![Stronghold EE performance standby cluster](../../../images/stronghold-cluster-perf-standby-ee.png "Stronghold EE cluster: performance standby and WAL streaming, external Sealwrapper")
 
 _See the [Legend](#legend) for the diagram notation._
 
 The same HA cluster, but in Stronghold EE the standby nodes act as performance standby: they serve reads locally and forward writes to the active node (Forward only Write). To keep the standby nodes serving fresh data, the active node streams log events to them (blue `WAL` arrows). Because the WAL Backend is below the barrier, these events carry already-encrypted data. The cluster still has a single seal — one shared external `Sealwrapper`.
 
-See the [Performance standby](../performance-standby/) page for details.
+See the [Performance standby](../../admin/replication/performance-standby/) page for details.
 
 ## Clusters between each other
 
@@ -103,19 +103,19 @@ Cross-cluster replication is available only in Stronghold EE. It links whole clu
 
 ### Performance
 
-![Performance: primary → secondary](../../../../images/stronghold-clusters-performance.png "Performance replication: filtered WAL; the primary and the secondary have their own Sealwrappers (1 and 2)")
+![Performance: primary → secondary](../../../images/stronghold-clusters-performance.png "Performance replication: filtered WAL; the primary and the secondary have their own Sealwrappers (1 and 2)")
 
 _See the [Legend](#legend) for the diagram notation._
 
-The primary streams only non-local data to the secondary — shown on the diagram as the filtered log `filtered WAL`. Local mounts and data stay on each cluster and never leave it. The secondary serves reads locally and forwards writes to the primary. There can be several secondary clusters — the primary streams to all of them. You can limit the data replicated to a specific secondary with [path filters](../performance/#path-filters). The primary and the secondary each have their own seal (`Sealwrapper 1` and `Sealwrapper 2`).
+The primary streams only non-local data to the secondary — shown on the diagram as the filtered log `filtered WAL`. Local mounts and data stay on each cluster and never leave it. The secondary serves reads locally and forwards writes to the primary. There can be several secondary clusters — the primary streams to all of them. You can limit the data replicated to a specific secondary with [path filters](../../admin/replication/performance/#path-filters). The primary and the secondary each have their own seal (`Sealwrapper 1` and `Sealwrapper 2`).
 
 ### Disaster Recovery
 
-![Disaster Recovery: primary → secondary](../../../../images/stronghold-clusters-dr.png "DR replication: WAL (all data); the primary and the secondary have their own Sealwrappers (1 and 2)")
+![Disaster Recovery: primary → secondary](../../../images/stronghold-clusters-dr.png "DR replication: WAL (all data); the primary and the secondary have their own Sealwrappers (1 and 2)")
 
 _See the [Legend](#legend) for the diagram notation._
 
-DR copies everything, including local data — shown on the diagram as `WAL`. The secondary is a full copy of the primary, but it does not serve clients and waits for a promote (`Promote Request`). When the primary fails, the secondary is promoted and takes over. The promote steps and how to recover the former primary are on the [Disaster recovery](../disaster-recovery/) page. The primary and the secondary each have their own seal (`Sealwrapper 1` and `Sealwrapper 2`).
+DR copies everything, including local data — shown on the diagram as `WAL`. The secondary is a full copy of the primary, but it does not serve clients and waits for a promote (`Promote Request`). When the primary fails, the secondary is promoted and takes over. The promote steps and how to recover the former primary are on the [Disaster recovery](../../admin/replication/disaster-recovery/) page. The primary and the secondary each have their own seal (`Sealwrapper 1` and `Sealwrapper 2`).
 
 ### Why the seal can differ between clusters
 
@@ -125,11 +125,11 @@ The replication stream is captured at the WAL Backend level, that is **above** t
 - the primary and the secondary may even use different seal types (for example, different KMS);
 - seal wrap is configured per cluster and does not depend on replication.
 
-For more, see the [seal wrap](../../kms-hsm/sealwrap/) page. For what exactly is replicated in each mode, see the [Replication overview](overview/).
+For more, see the [seal wrap](../../admin/kms-hsm/sealwrap/) page. For what exactly is replicated in each mode, see the [Replication overview](../../admin/replication/overview/).
 
 ## KV replication (at the API level)
 
-![Stronghold EE node with KV replication](../../../../images/stronghold-node-kv-replication.png "KV replication: the KV replicator in the Stronghold API layer, syncing over the API")
+![Stronghold EE node with KV replication](../../../images/stronghold-node-kv-replication.png "KV replication: the KV replicator in the Stronghold API layer, syncing over the API")
 
 _See the [Legend](#legend) for the diagram notation._
 
@@ -146,7 +146,7 @@ Hence **where KV replication can be enabled**: on any node that serves API endpo
 
 KV replication is an independent overlay: it is unrelated to the seal, the WAL, and cross-cluster replication, and is configured per mount.
 
-See the [KV1/KV2 replication](../kv-replication/) page for details.
+See the [KV1/KV2 replication](../../admin/replication/kv-replication/) page for details.
 
 ## Combined topologies
 
@@ -158,19 +158,19 @@ The modes are independent and can be combined:
 
 Below are a few examples of such combinations. The size (HA or a single node) is chosen per cluster, KV replication can be attached to any cluster except a DR secondary, and each cluster owns its own seal — so seal wrap can be configured differently across a topology: every cluster with its own seal somewhere, one and the same seal elsewhere, or none at all (`disable_sealwrap`).
 
-![Combined topology: single-node primary, KV replication and different seals](../../../../images/stronghold-topology-combined-1.png "A single-node DR+Performance primary, HA secondaries, KV replication into the primary; each cluster has its own Sealwrapper")
+![Combined topology: single-node primary, KV replication and different seals](../../../images/stronghold-topology-combined-1.png "A single-node DR+Performance primary, HA secondaries, KV replication into the primary; each cluster has its own Sealwrapper")
 
 _See the [Legend](#legend) for the diagram notation._
 
 The primary is a DR and a Performance primary at once and consists of a single node; both secondaries are HA clusters, and a separate cluster feeds the primary over KV replication. Each cluster owns its own seal — `Sealwrapper 1`…`4` are all different in this topology.
 
-![Combined topology: HA primary, KV into a performance secondary and different seals](../../../../images/stronghold-topology-combined-2.png "An HA primary with perf standby, HA secondaries, KV replication into a performance secondary; the clusters use different Sealwrappers")
+![Combined topology: HA primary, KV into a performance secondary and different seals](../../../images/stronghold-topology-combined-2.png "An HA primary with perf standby, HA secondaries, KV replication into a performance secondary; the clusters use different Sealwrappers")
 
 _See the [Legend](#legend) for the diagram notation._
 
 The same combined primary, but HA with performance standby; both secondaries are HA clusters too. KV replication is attached to a performance secondary — so it can be added not only to the primary. The clusters use different seals — `Sealwrapper 1` and `Sealwrapper 2`.
 
-![Combined topology: HA primary, single-node secondaries and a shared seal](../../../../images/stronghold-topology-combined-3.png "An HA primary with perf standby, single-node secondaries, a single Sealwrapper 1, no KV")
+![Combined topology: HA primary, single-node secondaries and a shared seal](../../../images/stronghold-topology-combined-3.png "An HA primary with perf standby, single-node secondaries, a single Sealwrapper 1, no KV")
 
 _See the [Legend](#legend) for the diagram notation._
 
