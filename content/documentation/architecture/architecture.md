@@ -26,8 +26,8 @@ For more details about key capabilities, refer to the [corresponding documentati
 
 Delivery options
 
-- Linux package.
-- [`stronghold`](/modules/stronghold/) module for Deckhouse Platform (DP).
+- As a Linux package.
+- As the [`stronghold`](/modules/stronghold/) module for Deckhouse Platform (DP).
 
 ## Architecture
 
@@ -56,15 +56,15 @@ Deckhouse Stronghold consists of the following components:
 
 1. **Stronghold** (StatefulSet): Component implementing the core system functionality.  
 
-    It consists of the following containers:
+   It consists of the following containers:
 
-    - **plugin-fetcher**: Init container that downloads Stronghold plugins specified in the [`settings.plugins`](/modules/stronghold/configuration.html#parameters-plugins) module setting.
-    - **stronghold**: Main container.
-    - **kube-rbac-proxy**: Sidecar container with an authorization proxy based on Kubernetes RBAC for secure access to component metrics. It is an [Open Source project](https://github.com/brancz/kube-rbac-proxy).
+   - **plugin-fetcher**: Init container that downloads Stronghold plugins specified in the [`settings.plugins`](/modules/stronghold/configuration.html#parameters-plugins) module setting.
+   - **stronghold**: Main container.
+   - **kube-rbac-proxy**: Sidecar container with an authorization proxy based on Kubernetes RBAC for secure access to component metrics. It is an [Open Source project](https://github.com/brancz/kube-rbac-proxy).
 
 1. **Stronghold-automatic** (Deployment): Optional component consisting of one **stronghold-automatic** container and providing initial secret store initialization. Stronghold-automatic also performs [automatic unsealing](../../concepts/seal//#auto-unseal-with-inner-cluster) of the secret store.  
 
-    The component is created by the Deckhouse controller if the [`settings.management.mode`](/modules/stronghold/configuration.html#parameters-management-mode) module setting is set to `Automatic`.
+   The component is created by the Deckhouse controller if the [`settings.management.mode`](/modules/stronghold/configuration.html#parameters-management-mode) module setting is set to `Automatic`.
 
 ## Interactions
 
@@ -82,8 +82,8 @@ Deckhouse Stronghold delivered as a DP module also interacts with the following 
 
 1. **Kube-apiserver**:
 
-    - Authenticates for the Kubernetes auth method.
-    - Manages Pod and Secret resources.
+   - Authenticates for the Kubernetes auth method.
+   - Manages Pod and Secret resources.
 
 1. **Dex**: Requests authentication in cluster OIDC.
 

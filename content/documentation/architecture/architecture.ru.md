@@ -1,6 +1,6 @@
 ---
 title: Архитектура Deckhouse Stronghold
-description: Архитектура компонентов Deсkhouse Stronghold
+description: Архитектура компонентов Deckhouse Stronghold
 weight: 20
 ---
 
@@ -22,7 +22,7 @@ Deckhouse Stronghold предназначен для безопасного хр
 - выполнение [Performance и Disaster Recovery (DR)](../admin/replication/overview/) репликаций состояния кластера Stronghold;
 - обработка API-запросов пользователя, поступающих через веб-интерфейс, а также при использовании утилиты [Deckhouse CLI](/products/kubernetes-platform/documentation/v1/cli/d8/).
 
-Подробнее можно ознакомиться [в соответствующем разделе документации](../about/overview/).
+Подробнее о возможностях Stronghold — [в соответствующем разделе документации](../about/overview/).
 
 Варианты поставки:
 
@@ -56,15 +56,15 @@ Deckhouse Stronghold состоит из следующих компоненто
 
 1. **Stronghold** (StatefulSet) — компонент, реализующий основной функционал системы.
 
-    Состоит из следующих контейнеров:
+   Состоит из следующих контейнеров:
 
-    - **plugin-fetcher** — init-контейнер, выполняющий загрузку плагинов для Stronghold, указанных в параметре [`settings.plugins`](/modules/stronghold/configuration.html#parameters-plugins) в настройках модуля;
-    - **stronghold** — основной контейнер;
-    - **kube-rbac-proxy** — сайдкар-контейнер с авторизующим прокси на основе Kubernetes RBAC для организации защищенного доступа к метрикам компонента. Является [Open Source-проектом](https://github.com/brancz/kube-rbac-proxy).
+   - **plugin-fetcher** — init-контейнер, выполняющий загрузку плагинов для Stronghold, указанных в параметре [`settings.plugins`](/modules/stronghold/configuration.html#parameters-plugins) в настройках модуля;
+   - **stronghold** — основной контейнер;
+   - **kube-rbac-proxy** — сайдкар-контейнер с авторизующим прокси на основе Kubernetes RBAC для организации защищенного доступа к метрикам компонента. Является [Open Source-проектом](https://github.com/brancz/kube-rbac-proxy).
 
 1. **Stronghold-automatic** (Deployment) — опциональный компонент, состоящий из одного контейнера **stronghold-automatic** и обеспечивающий первичную инициализацию хранилища секретов. Stronghold-automatic также выполняет [автоматическое распечатывание](../../concepts/seal/#автоматическое-распечатывание-через-inner-cluster) хранилища секретов.
 
-    Компонент создаётся контроллером Deckhouse, если параметр [`settings.management.mode`](/modules/stronghold/configuration.html#parameters-management-mode) принимает значение `Automatic` в настройках модуля.
+   Компонент создаётся контроллером Deckhouse, если параметр [`settings.management.mode`](/modules/stronghold/configuration.html#parameters-management-mode) принимает значение `Automatic` в настройках модуля.
 
 ## Взаимодействия
 
@@ -82,13 +82,13 @@ Deckhouse Stronghold, поставляемый в виде модуля DP, та
 
 1. **Kube-apiserver**:
 
-    - аутентификация для метода Kubernetes auth;
-    - управление ресурсами Pod и Secret.
+   - аутентификация для метода Kubernetes auth;
+   - управление ресурсами Pod и Secret.
 
 1. **Dex** — аутентификация запросов в кластерном OIDC.
 
 С Deckhouse Stronghold, поставляемым в виде модуля DP, взаимодействуют следующие внешние компоненты:
 
-1. **Gateway/Ingress контроллер** — пересылка запросов пользователя к веб-интерфейсу Deckhouse Stronghold. Зависит от выбранного способа публикации ресурсов в DP: с использованием Ingress-контроллера модуля [`ingress-nginx`](/modules/ingress-nginx/) или с использованием Gateway-контроллера модуля [`alb`](/modules/alb/).
+1. **Gateway/Ingress-контроллер** — пересылка запросов пользователя к веб-интерфейсу Deckhouse Stronghold. Зависит от выбранного способа публикации ресурсов в DP: с использованием Ingress-контроллера модуля [`ingress-nginx`](/modules/ingress-nginx/) или с использованием Gateway-контроллера модуля [`alb`](/modules/alb/).
 
 1. **Prometheus-main** — сбор метрик компонента stronghold.

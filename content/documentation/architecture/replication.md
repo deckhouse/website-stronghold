@@ -125,11 +125,7 @@ The replication stream is captured at the WAL Backend level, that is **above** t
 - the primary and the secondary may even use different seal types (for example, different KMS);
 - seal wrap is configured per cluster and does not depend on replication.
 
-<<<<<<< HEAD:content/documentation/admin/replication/architecture.md
-For more, see the [seal wrap](../../kms-hsm/sealwrap/) page. For what exactly is replicated in each mode, see the [Replication overview](overview/).
-=======
 For more, see the [seal wrap](../../admin/kms-hsm/sealwrap/) page. For what exactly is replicated in each mode, see the [Replication overview](../../admin/replication/overview/).
->>>>>>> 4f207dc (Review update):content/documentation/architecture/replication.md
 
 ## KV replication (at the API level)
 
