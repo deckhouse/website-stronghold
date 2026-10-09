@@ -2127,7 +2127,7 @@ Generates a TOTP secret for the given method name on the given entity.
 **Operation ID:** `system-read-mfa-method-totp-name-generate`
 
 Generates a TOTP secret for the given method name on the entity of the
-		calling token.
+  calling token.
 
 #### Parameters
 
